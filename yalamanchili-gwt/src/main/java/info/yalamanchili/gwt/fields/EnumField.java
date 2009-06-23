@@ -1,6 +1,5 @@
 package info.yalamanchili.gwt.fields;
 
-
 import info.yalamanchili.gwt.composite.ALComposite;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -18,6 +17,19 @@ public class EnumField extends ALComposite {
 	protected ListBox listBox = new ListBox();
 	protected Boolean readOnly;
 	protected Boolean isValid = false;
+
+	public EnumField(String text, Boolean readOnly) {
+		this.readOnly = readOnly;
+		init(panel);
+		if (readOnly) {
+			label.setText(text);
+			textbox.setReadOnly(readOnly);
+			fieldPanel.add(textbox);
+		} else {
+			label.setText(text);
+			fieldPanel.add(listBox);
+		}
+	}
 
 	public Boolean getIsValid() {
 		return isValid;
@@ -41,19 +53,6 @@ public class EnumField extends ALComposite {
 
 	public Boolean getReadOnly() {
 		return readOnly;
-	}
-
-	public EnumField(String text, Boolean readOnly) {
-		this.readOnly = readOnly;
-		init(panel);
-		if (readOnly) {
-			label.setText(text);
-			textbox.setReadOnly(readOnly);
-			fieldPanel.add(textbox);
-		} else {
-			label.setText(text);
-			fieldPanel.add(listBox);
-		}
 	}
 
 	@Override
