@@ -1,4 +1,4 @@
-package info.yalamanchili.gwt.fields;
+package info.yalamanchili.gwt.composite;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;

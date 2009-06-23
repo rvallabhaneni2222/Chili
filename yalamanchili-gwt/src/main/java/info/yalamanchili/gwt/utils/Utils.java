@@ -1,4 +1,4 @@
-package info.yalamanchili.gwt.fields;
+package info.yalamanchili.gwt.utils;
 
 import java.util.Date;
 
