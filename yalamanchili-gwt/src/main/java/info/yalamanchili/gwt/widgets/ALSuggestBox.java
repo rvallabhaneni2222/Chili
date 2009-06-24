@@ -1,4 +1,4 @@
-package info.yalamanchili.gwt.utils;
+package info.yalamanchili.gwt.widgets;
 
 import java.util.List;
 

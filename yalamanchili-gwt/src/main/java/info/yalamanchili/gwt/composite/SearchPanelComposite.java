@@ -1,6 +1,6 @@
 package info.yalamanchili.gwt.composite;
 
-import info.yalamanchili.gwt.utils.ALSuggestBox;
+import info.yalamanchili.gwt.widgets.ALSuggestBox;
 
 import java.util.HashMap;
 import java.util.List;

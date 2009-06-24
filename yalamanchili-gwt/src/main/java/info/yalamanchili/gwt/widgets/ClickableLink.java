@@ -1,4 +1,4 @@
-package info.yalamanchili.gwt.utils;
+package info.yalamanchili.gwt.widgets;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MouseListener;

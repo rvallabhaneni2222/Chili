@@ -1,4 +1,4 @@
-package info.yalamanchili.gwt.utils;
+package info.yalamanchili.gwt.widgets;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;

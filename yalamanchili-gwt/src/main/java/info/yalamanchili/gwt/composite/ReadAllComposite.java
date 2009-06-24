@@ -2,7 +2,7 @@ package info.yalamanchili.gwt.composite;
 
 import info.yalamanchili.gwt.fields.ListBoxField;
 import info.yalamanchili.gwt.utils.Alignment;
-import info.yalamanchili.gwt.utils.ClickableLink;
+import info.yalamanchili.gwt.widgets.ClickableLink;
 
 import java.util.List;
 import java.util.MissingResourceException;

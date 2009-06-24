@@ -1,4 +1,4 @@
-package info.yalamanchili.gwt.utils;
+package info.yalamanchili.gwt.widgets;
 
 import info.yalamanchili.gwt.composite.ALComposite;
 

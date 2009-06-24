@@ -1,6 +1,6 @@
 package info.yalamanchili.gwt.composite;
 
-import info.yalamanchili.gwt.utils.ClickableLink;
+import info.yalamanchili.gwt.widgets.ClickableLink;
 
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
