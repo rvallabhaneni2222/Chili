@@ -16,7 +16,10 @@ import java.util.Map;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public abstract class ReadUpdateCreateComposite extends Composite {
+public abstract class ReadUpdateCreateComposite<T> extends Composite {
+
+	protected T entity;
+	protected Long entityId;
 
 	public ReadUpdateCreateComposite() {
 		initWidget(panel);
@@ -134,6 +137,22 @@ public abstract class ReadUpdateCreateComposite extends Composite {
 	protected String getPasswordField(String fieldName) {
 		PasswordField passwordField = (PasswordField) fields.get(fieldName);
 		return passwordField.getPassword();
+	}
+
+	public T getEntity() {
+		return entity;
+	}
+
+	public void setEntity(T entity) {
+		this.entity = entity;
+	}
+
+	public Long getEntityId() {
+		return entityId;
+	}
+
+	public void setEntityId(Long entityId) {
+		this.entityId = entityId;
 	}
 
 }

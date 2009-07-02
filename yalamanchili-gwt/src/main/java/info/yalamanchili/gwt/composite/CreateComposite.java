@@ -6,16 +6,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public abstract class CreateComposite<T> extends ReadUpdateCreateComposite
 		implements ClickListener {
-	protected T entity;
-	protected Long entityId;
+	
 
-	public Long getId() {
-		return entityId;
-	}
-
-	public T getEntity() {
-		return entity;
-	}
 
 	public Button create = new Button("CREATE");
 

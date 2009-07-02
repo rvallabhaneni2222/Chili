@@ -10,7 +10,15 @@ public class ClickableLink extends Label implements MouseListener {
 
 	public ClickableLink(String name) {
 		this.setText(name);
-		this.setStyleName("ClickableLink");
+		this.addStyleName("ClickableLink");
+		addMouseListener(this);
+	}
+
+	public ClickableLink(String name, Boolean isLabel) {
+		this.setText(name);
+		this.addStyleName("ClickableLink");
+		if (isLabel)
+			this.addStyleName("LabelLink");
 		addMouseListener(this);
 	}
 
