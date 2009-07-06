@@ -57,6 +57,24 @@
 			<version>r29</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.gilead</groupId>
+			<artifactId>adapter-core</artifactId>
+			<version>1.2.2.598</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.gilead</groupId>
+			<artifactId>adapter4gwt</artifactId>
+			<version>1.2.2.598</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gwt-log</groupId>
+			<artifactId>gwt-log</artifactId>
+			<version>2.5.3</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<properties>
 		<gwtVersion>1.5.3</gwtVersion>
