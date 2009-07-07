@@ -6,7 +6,6 @@ import com.google.gwt.user.client.ui.Widget;
 
 public abstract class CreateComposite<T> extends ReadUpdateCreateComposite
 		implements ClickListener {
-	
 
 
 	public Button create = new Button("CREATE");

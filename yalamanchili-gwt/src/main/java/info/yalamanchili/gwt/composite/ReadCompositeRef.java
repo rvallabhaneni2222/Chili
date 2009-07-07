@@ -3,16 +3,19 @@ package info.yalamanchili.gwt.composite;
 import net.sf.gilead.pojo.java5.LightEntity;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
+import com.google.gwt.i18n.client.Messages;
 
 public abstract class ReadCompositeRef<T extends LightEntity> extends
 		ReadUpdateCreateCompositeRef<T> {
 
-	protected void initReadComposite(T entity, ConstantsWithLookup constants) {
+	protected void initReadComposite(T entity, ConstantsWithLookup constants,
+			Messages messages) {
 		this.entity = entity;
 		init(entity, true, constants);
 	}
 
-	protected void initReadComposite(T t, Long id, ConstantsWithLookup constants) {
+	protected void initReadComposite(T t, Long id,
+			ConstantsWithLookup constants, Messages messages) {
 		this.entityId = id;
 		init(t, true, constants);
 	}

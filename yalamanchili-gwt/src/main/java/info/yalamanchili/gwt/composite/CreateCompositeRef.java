@@ -5,6 +5,7 @@ import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
 import net.sf.gilead.pojo.java5.LightEntity;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
+import com.google.gwt.i18n.client.Messages;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Widget;
@@ -14,7 +15,8 @@ public abstract class CreateCompositeRef<T extends LightEntity> extends
 
 	public Button create = new Button("CREATE");
 
-	public void initCreateComposite(T t, ConstantsWithLookup constants) {
+	public void initCreateComposite(T t, ConstantsWithLookup constants,
+			Messages messages) {
 		init(t, false, constants);
 	}
 

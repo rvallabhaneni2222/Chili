@@ -379,7 +379,7 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 							enumf.setIsValid(true);
 						} else {
 							enumf.setIsValid(true);
-							enumf.setMessage(response.get(0));
+							enumf.setMessage(getErrorMessages(response));
 						}
 
 					}
@@ -406,7 +406,7 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 							booleanf.setValid(true);
 						} else {
 							booleanf.setValid(false);
-							booleanf.setMessage(response.get(0));
+							booleanf.setMessage(getErrorMessages(response));
 						}
 
 					}
@@ -431,7 +431,7 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 							datef.setValid(true);
 						} else {
 							datef.setValid(false);
-							datef.setMessage(response.get(0));
+							datef.setMessage(getErrorMessages(response));
 						}
 
 					}
@@ -457,7 +457,7 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 							intf.setValid(true);
 						} else {
 							intf.setValid(false);
-							intf.setMessage(response.get(0));
+							intf.setMessage(getErrorMessages(response));
 						}
 
 					}
@@ -482,7 +482,7 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 							longf.setValid(true);
 						} else {
 							longf.setValid(false);
-							longf.setMessage(response.get(0));
+							longf.setMessage(getErrorMessages(response));
 						}
 
 					}
@@ -508,7 +508,7 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 							sf.setValid(true);
 						} else {
 							sf.setValid(false);
-							sf.setMessage(response.get(0));
+							sf.setMessage(getErrorMessages(response));
 						}
 					}
 
@@ -517,6 +517,15 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 						validateAllFields(itr);
 					}
 				});
+	}
+
+	protected String getErrorMessages(List<String> messages) {
+		String message = ":";
+		for (String str : messages) {
+			message = message.concat(str);
+			message = message.concat(", ");
+		}
+		return message;
 	}
 
 	protected LinkedHashMap<String, Object> populateEntityFromFields() {

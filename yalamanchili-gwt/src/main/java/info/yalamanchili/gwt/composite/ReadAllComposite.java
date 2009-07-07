@@ -45,7 +45,7 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	protected void configure() {
 		table.addStyleName("Table");
 		table.getRowFormatter().addStyleName(0, "tableHeader");
-		table.setBorderWidth(2);
+		table.setBorderWidth(1);
 		pagingPanel.setSpacing(5);
 		pagingPanel.addStyleName("PagingBar");
 	}
