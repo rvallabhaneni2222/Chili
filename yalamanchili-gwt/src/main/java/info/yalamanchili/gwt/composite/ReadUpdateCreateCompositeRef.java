@@ -520,7 +520,7 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	}
 
 	protected String getErrorMessages(List<String> messages) {
-		String message = ":";
+		String message = new String();
 		for (String str : messages) {
 			message = message.concat(str);
 			message = message.concat(", ");
