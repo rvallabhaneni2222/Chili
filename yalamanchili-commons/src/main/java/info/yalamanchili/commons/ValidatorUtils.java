@@ -33,15 +33,15 @@ public class ValidatorUtils {
 	private static final Log log = LogFactory.getLog(ValidatorUtils.class);
 
 	/** The properties. */
-	protected static Properties properties = new Properties();
+	protected static Properties validatorProperties = new Properties();
 
 	/**
 	 * Gets the properties.
 	 * 
 	 * @return the properties
 	 */
-	public static Properties getProperties() {
-		return properties;
+	public static Properties getValidatorProperties() {
+		return validatorProperties;
 	}
 
 	/**
@@ -55,18 +55,8 @@ public class ValidatorUtils {
 	 * Load properties.
 	 */
 	public void loadProperties() {
-		properties = PropertyLoader
+		validatorProperties = PropertyFileLoader
 				.loadProperties("yalamanchili-validator.properties");
-		// InputStream stream = this.getClass().getClassLoader()
-		// .getResourceAsStream("yalamanchili-validator.properties");
-		// try {
-		// properties.load(stream);
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// throw new RuntimeException(
-		// "Error loading validatorproperties file:yalamanchili-validator.properties",
-		// e);
-		// }
 	}
 
 	/*
@@ -283,7 +273,7 @@ public class ValidatorUtils {
 	 */
 	public String getValue(String string) {
 		log.debug("get value:" + string);
-		String value = (String) properties.get(string);
+		String value = (String) validatorProperties.get(string);
 		log.debug("property value:" + string + ":" + value);
 		if (value == null)
 			return string;

@@ -13,8 +13,8 @@ import org.apache.commons.logging.LogFactory;
 /**
  * The Class PropertyLoader.
  */
-public class PropertyLoader {
-	private static final Log log = LogFactory.getLog(PropertyLoader.class);
+public class PropertyFileLoader {
+	private static final Log log = LogFactory.getLog(PropertyFileLoader.class);
 
 	/**
 	 * Looks up a resource named 'name' in the classpath. The resource must map

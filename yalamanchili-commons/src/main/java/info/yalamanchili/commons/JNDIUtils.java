@@ -17,29 +17,22 @@ import org.apache.commons.logging.LogFactory;
 public class JNDIUtils {
 	private static final Log log = LogFactory.getLog(JNDIUtils.class);
 	/** The properties. */
-	protected static Properties properties = new Properties();
+	protected static Properties jndiProperties = new Properties();
 
 	/**
 	 * Gets the properties.
 	 * 
 	 * @return the properties
 	 */
-	public static Properties getProperties() {
-		return properties;
+	public static Properties getJNDIProperties() {
+		return jndiProperties;
 	}
 
 	/**
 	 * Instantiates a new jNDI utils.
 	 */
-	public JNDIUtils() {
-		loadProperties();
-	}
-
-	/**
-	 * Load properties.
-	 */
-	public void loadProperties() {
-		properties = PropertyLoader
+	static {
+		jndiProperties = PropertyFileLoader
 				.loadProperties("yalamanchili-jndi.properties");
 	}
 
@@ -54,14 +47,14 @@ public class JNDIUtils {
 	 * @throws NamingException
 	 *             the naming exception
 	 */
-	protected Context getSecureInitialContext(HttpSession session)
+	protected static Context getSecureInitialContext(HttpSession session)
 			throws NamingException {
 		Properties props = new Properties();
-		props.put(Context.INITIAL_CONTEXT_FACTORY, properties.get(
+		props.put(Context.INITIAL_CONTEXT_FACTORY, jndiProperties.get(
 				JNDIConstants.SECURE_INITIAL_CONTEXT_FACTORY).toString());
-		props.put(Context.URL_PKG_PREFIXES, properties.get(
+		props.put(Context.URL_PKG_PREFIXES, jndiProperties.get(
 				JNDIConstants.SECURE_URL_PKG_PREFIXES).toString());
-		props.put(Context.PROVIDER_URL, properties.get(
+		props.put(Context.PROVIDER_URL, jndiProperties.get(
 				JNDIConstants.SECURE_PROVIDER_URL).toString());
 		props.setProperty(Context.SECURITY_PRINCIPAL, session.getAttribute(
 				"username").toString());
@@ -78,17 +71,17 @@ public class JNDIUtils {
 	 * @throws NamingException
 	 *             the naming exception
 	 */
-	protected Context getSecureInitialContext() throws NamingException {
+	protected static Context getSecureInitialContext() throws NamingException {
 		Properties props = new Properties();
-		props.put(Context.INITIAL_CONTEXT_FACTORY, properties.get(
+		props.put(Context.INITIAL_CONTEXT_FACTORY, jndiProperties.get(
 				JNDIConstants.SECURE_INITIAL_CONTEXT_FACTORY).toString());
-		props.put(Context.URL_PKG_PREFIXES, properties.get(
+		props.put(Context.URL_PKG_PREFIXES, jndiProperties.get(
 				JNDIConstants.SECURE_URL_PKG_PREFIXES).toString());
-		props.put(Context.PROVIDER_URL, properties.get(
+		props.put(Context.PROVIDER_URL, jndiProperties.get(
 				JNDIConstants.SECURE_PROVIDER_URL).toString());
-		props.setProperty(Context.SECURITY_PRINCIPAL, properties.get(
+		props.setProperty(Context.SECURITY_PRINCIPAL, jndiProperties.get(
 				JNDIConstants.SECURE_SECURITY_PRINCIPAL).toString());
-		props.setProperty(Context.SECURITY_CREDENTIALS, properties.get(
+		props.setProperty(Context.SECURITY_CREDENTIALS, jndiProperties.get(
 				JNDIConstants.SECURE_SECURITY_CREDENTIALS).toString());
 		return new InitialContext(props);
 	}
@@ -101,11 +94,11 @@ public class JNDIUtils {
 	 * @throws NamingException
 	 *             the naming exception
 	 */
-	protected Context getInitialContext() throws NamingException {
+	protected static Context getInitialContext() throws NamingException {
 		Properties props = new Properties();
-		props.put(Context.URL_PKG_PREFIXES, properties.get(
+		props.put(Context.URL_PKG_PREFIXES, jndiProperties.get(
 				JNDIConstants.URL_PKG_PREFIXES).toString());
-		props.put(Context.PROVIDER_URL, properties.get(
+		props.put(Context.PROVIDER_URL, jndiProperties.get(
 				JNDIConstants.PROVIDER_URL).toString());
 		return new InitialContext(props);
 	}
@@ -118,7 +111,7 @@ public class JNDIUtils {
 	 * 
 	 * @return the object
 	 */
-	public Object lookup(String jndiName) {
+	public static Object lookup(String jndiName) {
 		Object object;
 		try {
 			Context ctx = getInitialContext();
