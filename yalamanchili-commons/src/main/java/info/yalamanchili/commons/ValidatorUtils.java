@@ -55,8 +55,15 @@ public class ValidatorUtils {
 	 * Load properties.
 	 */
 	public void loadProperties() {
-		validatorProperties = PropertyFileLoader
-				.loadProperties("yalamanchili-validator.properties");
+		try {
+			validatorProperties = PropertyFileLoader
+					.loadProperties("yalamanchili-validator.properties");
+			log.debug("loaded yalamanchili-validator.properties");
+		} catch (IllegalArgumentException exception) {
+			validatorProperties = PropertyFileLoader
+					.loadProperties("default-yalamanchili-jndi.properties");
+			log.debug("loaded default-yalamanchili-validator.properties");
+		}
 	}
 
 	/*

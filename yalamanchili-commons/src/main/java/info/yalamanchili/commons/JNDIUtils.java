@@ -32,8 +32,15 @@ public class JNDIUtils {
 	 * Instantiates a new jNDI utils.
 	 */
 	static {
-		jndiProperties = PropertyFileLoader
-				.loadProperties("yalamanchili-jndi.properties");
+		try {
+			jndiProperties = PropertyFileLoader
+					.loadProperties("yalamanchili-jndi.properties");
+			log.debug("loaded yalamanchili-jndi.properties");
+		} catch (IllegalArgumentException exception) {
+			jndiProperties = PropertyFileLoader
+					.loadProperties("default-yalamanchili-jndi.properties");
+			log.debug("loaded default-yalamanchili-jndi.properties");
+		}
 	}
 
 	/**
