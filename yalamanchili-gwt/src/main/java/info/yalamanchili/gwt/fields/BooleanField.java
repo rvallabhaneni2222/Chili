@@ -5,18 +5,40 @@ import info.yalamanchili.gwt.composite.GenericFieldComposite;
 
 import com.google.gwt.user.client.ui.CheckBox;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BooleanField.
+ */
 public class BooleanField extends GenericFieldComposite {
+	
+	/** The box. */
 	protected CheckBox box = new CheckBox();
 
+	/**
+	 * Gets the box.
+	 * 
+	 * @return the box
+	 */
 	public CheckBox getBox() {
 		return box;
 	}
 
+	/**
+	 * Instantiates a new boolean field.
+	 * 
+	 * @param text the text
+	 */
 	public BooleanField(String text) {
 		super(text);
 		box.setText(text);
 	}
 
+	/**
+	 * Instantiates a new boolean field.
+	 * 
+	 * @param text the text
+	 * @param readOnly the read only
+	 */
 	public BooleanField(String text, Boolean readOnly) {
 		super(text);
 		if (readOnly)
@@ -24,6 +46,11 @@ public class BooleanField extends GenericFieldComposite {
 		box.setText(text);
 	}
 
+	/**
+	 * Sets the value.
+	 * 
+	 * @param value the new value
+	 */
 	public void setValue(Boolean value) {
 		if (value == null) {
 			box.setChecked(false);
@@ -32,6 +59,11 @@ public class BooleanField extends GenericFieldComposite {
 		}
 	}
 
+	/**
+	 * Gets the value.
+	 * 
+	 * @return the value
+	 */
 	public Boolean getValue() {
 		if (box.isChecked())
 			return true;

@@ -28,29 +28,67 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ReadUpdateCreateCompositeRef.
+ */
 public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		extends Composite {
+	
+	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
+	
+	/** The fields. */
 	protected Map<String, Object> fields = new HashMap<String, Object>();
+	
+	/** The class canonical name. */
 	protected String classCanonicalName;
+	
+	/** The read only. */
 	protected Boolean readOnly;
+	
+	/** The entity. */
 	protected T entity;
+	
+	/** The entity id. */
 	protected Long entityId;
 
+	/**
+	 * Gets the entity.
+	 * 
+	 * @return the entity
+	 */
 	public T getEntity() {
 		return entity;
 	}
 
+	/**
+	 * Gets the id.
+	 * 
+	 * @return the id
+	 */
 	public Long getId() {
 		return entityId;
 	}
 
+	/**
+	 * Instantiates a new read update create composite ref.
+	 */
 	public ReadUpdateCreateCompositeRef() {
 		initWidget(panel);
 	}
 
+	/**
+	 * Post init.
+	 */
 	protected abstract void postInit();
 
+	/**
+	 * Inits the.
+	 * 
+	 * @param t the t
+	 * @param readOnly the read only
+	 */
 	public void init(T t, final Boolean readOnly) {
 		this.readOnly = readOnly;
 		GwtServiceAsync.instance().getClassCanonicalName(t,
@@ -63,6 +101,11 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				});
 	}
 
+	/**
+	 * Gets the attributes.
+	 * 
+	 * @return the attributes
+	 */
 	protected void getAttributes() {
 		GwtServiceAsync.instance().getAttributes(classCanonicalName,
 				new ALAsyncCallback<LinkedHashMap<String, DataType>>() {
@@ -79,6 +122,13 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				});
 	}
 
+	/**
+	 * Inits the.
+	 * 
+	 * @param t the t
+	 * @param readOnly the read only
+	 * @param constants the constants
+	 */
 	public void init(T t, final Boolean readOnly,
 			final ConstantsWithLookup constants) {
 		this.readOnly = readOnly;
@@ -93,6 +143,13 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 
 	}
 
+	/**
+	 * Gets the attributes with constants.
+	 * 
+	 * @param constants the constants
+	 * 
+	 * @return the attributes with constants
+	 */
 	protected void getAttributesWithConstants(
 			final ConstantsWithLookup constants) {
 		GwtServiceAsync.instance().getAttributes(classCanonicalName,
@@ -110,12 +167,26 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				});
 	}
 
+	/**
+	 * Adds the listeners.
+	 */
 	protected abstract void addListeners();
 
+	/**
+	 * Configure.
+	 */
 	protected abstract void configure();
 
+	/**
+	 * Adds the widgets.
+	 */
 	protected abstract void addWidgets();
 
+	/**
+	 * Adds the fields.
+	 * 
+	 * @param attributes the attributes
+	 */
 	protected void addFields(LinkedHashMap<String, DataType> attributes) {
 		for (String fieldName : attributes.keySet()) {
 			addField(fieldName.toUpperCase(), fieldName.toUpperCase(),
@@ -123,6 +194,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		}
 	}
 
+	/**
+	 * Adds the fields.
+	 * 
+	 * @param attributes the attributes
+	 * @param constants the constants
+	 */
 	protected void addFields(LinkedHashMap<String, DataType> attributes,
 			ConstantsWithLookup constants) {
 		for (String fieldName : attributes.keySet()) {
@@ -140,6 +217,13 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		}
 	}
 
+	/**
+	 * Adds the field.
+	 * 
+	 * @param id the id
+	 * @param text the text
+	 * @param type the type
+	 */
 	protected void addField(String id, String text, DataType type) {
 		if (DataType.LONG_FIELD.equals(type)) {
 			LongField longField = new LongField(text, readOnly);
@@ -180,76 +264,173 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		}
 	}
 
+	/**
+	 * Sets the field.
+	 * 
+	 * @param fieldName the field name
+	 * @param var the var
+	 */
 	protected void setField(String fieldName, Enum<?>[] var) {
 		EnumField enumField = (EnumField) getField(fieldName);
 		enumField.setValue(var);
 	}
 
+	/**
+	 * Sets the field.
+	 * 
+	 * @param fieldName the field name
+	 * @param number the number
+	 */
 	protected void setField(String fieldName, Long number) {
 		LongField longField = (LongField) getField(fieldName);
 		longField.setLong(number);
 	}
 
+	/**
+	 * Sets the field.
+	 * 
+	 * @param fieldName the field name
+	 * @param number the number
+	 */
 	protected void setField(String fieldName, Integer number) {
 		IntegerField integerField = (IntegerField) getField(fieldName);
 		integerField.setInteger(number);
 	}
 
+	/**
+	 * Sets the field.
+	 * 
+	 * @param fieldName the field name
+	 * @param text the text
+	 */
 	protected void setField(String fieldName, String text) {
 		StringField stringField = (StringField) getField(fieldName);
 		stringField.setText(text);
 	}
 
+	/**
+	 * Sets the field.
+	 * 
+	 * @param fieldName the field name
+	 * @param value the value
+	 */
 	protected void setField(String fieldName, Boolean value) {
 		BooleanField booleanField = (BooleanField) getField(fieldName);
 		booleanField.setValue(value);
 	}
 
+	/**
+	 * Sets the field.
+	 * 
+	 * @param fieldName the field name
+	 * @param date the date
+	 */
 	protected void setField(String fieldName, Date date) {
 		DateField dateField = (DateField) getField(fieldName);
 		dateField.setDate(date);
 	}
 
+	/**
+	 * Sets the enum feild.
+	 * 
+	 * @param fieldName the field name
+	 * @param value the value
+	 */
 	protected void setEnumFeild(String fieldName, String value) {
 		EnumField enumField = (EnumField) getField(fieldName);
 		enumField.setValue(value);
 	}
 
+	/**
+	 * Gets the enum field.
+	 * 
+	 * @param fieldName the field name
+	 * 
+	 * @return the enum field
+	 */
 	protected String getEnumField(String fieldName) {
 		EnumField enumField = (EnumField) getField(fieldName);
 		return enumField.getValue();
 	}
 
+	/**
+	 * Gets the integer field.
+	 * 
+	 * @param fieldName the field name
+	 * 
+	 * @return the integer field
+	 */
 	protected Integer getIntegerField(String fieldName) {
 		IntegerField integerField = (IntegerField) getField(fieldName);
 		return integerField.getInteger();
 	}
 
+	/**
+	 * Gets the long field.
+	 * 
+	 * @param fieldName the field name
+	 * 
+	 * @return the long field
+	 */
 	protected Long getLongField(String fieldName) {
 		LongField longField = (LongField) getField(fieldName);
 		return longField.getLong();
 	}
 
+	/**
+	 * Gets the string field.
+	 * 
+	 * @param fieldName the field name
+	 * 
+	 * @return the string field
+	 */
 	protected String getStringField(String fieldName) {
 		StringField stringField = (StringField) getField(fieldName);
 		return stringField.getText();
 	}
 
+	/**
+	 * Gets the date field.
+	 * 
+	 * @param fieldName the field name
+	 * 
+	 * @return the date field
+	 */
 	protected Date getDateField(String fieldName) {
 		DateField dateField = (DateField) getField(fieldName);
 		return dateField.getDate();
 	}
 
+	/**
+	 * Gets the boolean field.
+	 * 
+	 * @param fieldName the field name
+	 * 
+	 * @return the boolean field
+	 */
 	protected Boolean getBooleanField(String fieldName) {
 		BooleanField booleanField = (BooleanField) getField(fieldName);
 		return booleanField.getValue();
 	}
 
+	/**
+	 * Gets the password field.
+	 * 
+	 * @param fieldName the field name
+	 * 
+	 * @return the password field
+	 */
 	protected String getPasswordField(String fieldName) {
 		PasswordField passwordField = (PasswordField) getField(fieldName);
 		return passwordField.getPassword();
 	}
 
+	/**
+	 * Populate enum fields.
+	 * 
+	 * @param enumField the enum field
+	 * @param attributeName the attribute name
+	 */
 	protected void populateEnumFields(final EnumField enumField,
 			String attributeName) {
 		GwtServiceAsync.instance().getEnumValues(classCanonicalName,
@@ -263,11 +444,23 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				});
 	}
 
+	/**
+	 * Removes the field.
+	 * 
+	 * @param id the id
+	 */
 	protected void removeField(String id) {
 		if (fields.get(id) != null)
 			panel.remove((Widget) fields.get(id));
 	}
 
+	/**
+	 * Gets the field.
+	 * 
+	 * @param id the id
+	 * 
+	 * @return the field
+	 */
 	protected Object getField(String id) {
 		if (fields.containsKey(id)) {
 			return fields.get(id);
@@ -278,12 +471,23 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 
 	}
 
+	/**
+	 * Pre validate.
+	 */
 	protected void preValidate() {
 		validateAllFields(fields.keySet().iterator());
 	}
 
+	/**
+	 * Post validate.
+	 */
 	protected abstract void postValidate();
 
+	/**
+	 * Post validate impl.
+	 * 
+	 * @return the boolean
+	 */
 	protected Boolean postValidateImpl() {
 		Boolean valid = true;
 		for (String fieldId : fields.keySet()) {
@@ -333,6 +537,11 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		return valid;
 	}
 
+	/**
+	 * Validate all fields.
+	 * 
+	 * @param itr the itr
+	 */
 	protected void validateAllFields(final Iterator<String> itr) {
 		while (itr.hasNext()) {
 			String fieldId = itr.next();
@@ -368,6 +577,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		postValidate();
 	}
 
+	/**
+	 * Validate enum field.
+	 * 
+	 * @param fieldId the field id
+	 * @param itr the itr
+	 */
 	protected void validateEnumField(String fieldId, final Iterator<String> itr) {
 		final EnumField enumf = (EnumField) fields.get(fieldId);
 		GwtServiceAsync.instance().validateEnumField(classCanonicalName,
@@ -393,6 +608,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				});
 	}
 
+	/**
+	 * Validate boolean field.
+	 * 
+	 * @param fieldId the field id
+	 * @param itr the itr
+	 */
 	protected void validateBooleanField(String fieldId,
 			final Iterator<String> itr) {
 		final BooleanField booleanf = (BooleanField) fields.get(fieldId);
@@ -420,6 +641,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				});
 	}
 
+	/**
+	 * Validate date field.
+	 * 
+	 * @param fieldId the field id
+	 * @param itr the itr
+	 */
 	protected void validateDateField(String fieldId, final Iterator<String> itr) {
 		final DateField datef = (DateField) fields.get(fieldId);
 		GwtServiceAsync.instance().validateDateField(classCanonicalName,
@@ -445,6 +672,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				});
 	}
 
+	/**
+	 * Validate integer field.
+	 * 
+	 * @param fieldId the field id
+	 * @param itr the itr
+	 */
 	protected void validateIntegerField(String fieldId,
 			final Iterator<String> itr) {
 		final IntegerField intf = (IntegerField) fields.get(fieldId);
@@ -471,6 +704,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				});
 	}
 
+	/**
+	 * Validate long field.
+	 * 
+	 * @param fieldId the field id
+	 * @param itr the itr
+	 */
 	protected void validateLongField(String fieldId, final Iterator<String> itr) {
 		final LongField longf = (LongField) fields.get(fieldId);
 		GwtServiceAsync.instance().validateLongField(classCanonicalName,
@@ -496,6 +735,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				});
 	}
 
+	/**
+	 * Validate string field.
+	 * 
+	 * @param fieldId the field id
+	 * @param itr the itr
+	 */
 	protected void validateStringField(String fieldId,
 			final Iterator<String> itr) {
 		final StringField sf = (StringField) fields.get(fieldId);
@@ -519,6 +764,13 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				});
 	}
 
+	/**
+	 * Gets the error messages.
+	 * 
+	 * @param messages the messages
+	 * 
+	 * @return the error messages
+	 */
 	protected String getErrorMessages(List<String> messages) {
 		String message = new String();
 		for (String str : messages) {
@@ -528,6 +780,11 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		return message;
 	}
 
+	/**
+	 * Populate entity from fields.
+	 * 
+	 * @return the linked hash map< string, object>
+	 */
 	protected LinkedHashMap<String, Object> populateEntityFromFields() {
 		LinkedHashMap<String, Object> flds = new LinkedHashMap<String, Object>();
 		for (String fieldName : fields.keySet()) {
@@ -559,6 +816,11 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		return flds;
 	}
 
+	/**
+	 * Populate fields with data.
+	 * 
+	 * @param t the t
+	 */
 	protected void populateFieldsWithData(T t) {
 		GwtServiceAsync.instance().getFieldsDataFromEntity(t,
 				new ALAsyncCallback<LinkedHashMap<String, Object>>() {

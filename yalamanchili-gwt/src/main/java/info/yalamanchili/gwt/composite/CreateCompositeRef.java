@@ -10,16 +10,31 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Widget;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CreateCompositeRef.
+ */
 public abstract class CreateCompositeRef<T extends LightEntity> extends
 		ReadUpdateCreateCompositeRef<T> implements ClickListener {
 
+	/** The create. */
 	public Button create = new Button("CREATE");
 
+	/**
+	 * Inits the create composite.
+	 * 
+	 * @param t the t
+	 * @param constants the constants
+	 * @param messages the messages
+	 */
 	public void initCreateComposite(T t, ConstantsWithLookup constants,
 			Messages messages) {
 		init(t, false, constants);
 	}
 
+	/* (non-Javadoc)
+	 * @see info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postInit()
+	 */
 	protected void postInit() {
 		panel.setSpacing(5);
 		panel.add(create);
@@ -27,6 +42,9 @@ public abstract class CreateCompositeRef<T extends LightEntity> extends
 		create.addClickListener(this);
 	}
 
+	/**
+	 * Pre create button clicked.
+	 */
 	protected void preCreateButtonClicked() {
 		GwtServiceAsync.instance().createEntityFromFields(classCanonicalName,
 				populateEntityFromFields(), new ALAsyncCallback<T>() {
@@ -41,19 +59,33 @@ public abstract class CreateCompositeRef<T extends LightEntity> extends
 				});
 	}
 
+	/**
+	 * Creates the button clicked.
+	 */
 	protected abstract void createButtonClicked();
 
+	/* (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user.client.ui.Widget)
+	 */
 	public void onClick(Widget widget) {
 		if (widget == create) {
 			preValidate();
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postValidate()
+	 */
 	protected void postValidate() {
 		if (postValidateImpl())
 			preCreateButtonClicked();
 	}
 
+	/**
+	 * Creates the entity from fields.
+	 * 
+	 * @return the t
+	 */
 	protected T createEntityFromFields() {
 		return null;
 	}

@@ -6,16 +6,36 @@ import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TreePanelComposite.
+ */
 public abstract class TreePanelComposite<T> extends Composite implements
 		ClickListener {
+	
+	/** The entity. */
 	protected T entity;
+	
+	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
+	
+	/** The tree. */
 	protected Tree tree = new Tree();
 
+	/**
+	 * Gets the entity.
+	 * 
+	 * @return the entity
+	 */
 	public T getEntity() {
 		return entity;
 	}
 
+	/**
+	 * Inits the tree panel composite.
+	 * 
+	 * @param id the id
+	 */
 	public void initTreePanelComposite(Long id) {
 		initWidget(panel);
 		addListeners();
@@ -25,6 +45,9 @@ public abstract class TreePanelComposite<T> extends Composite implements
 		panel.add(tree);
 	}
 
+	/**
+	 * Inits the tree panel composite.
+	 */
 	public void initTreePanelComposite() {
 		initWidget(panel);
 		addListeners();
@@ -33,13 +56,30 @@ public abstract class TreePanelComposite<T> extends Composite implements
 		panel.add(tree);
 	}
 
+	/**
+	 * Adds the listeners.
+	 */
 	protected abstract void addListeners();
 
+	/**
+	 * Configure.
+	 */
 	protected abstract void configure();
 
+	/**
+	 * Adds the widgets.
+	 */
 	protected abstract void addWidgets();
 
+	/* (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user.client.ui.Widget)
+	 */
 	public abstract void onClick(Widget widget);
 
+	/**
+	 * Load entity.
+	 * 
+	 * @param id the id
+	 */
 	public abstract void loadEntity(Long id);
 }

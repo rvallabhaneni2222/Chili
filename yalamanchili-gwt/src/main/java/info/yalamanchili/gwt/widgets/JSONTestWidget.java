@@ -10,9 +10,18 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class JSONTestWidget.
+ */
 public class JSONTestWidget extends Composite {
+	
+	/** The panel. */
 	VerticalPanel panel = new VerticalPanel();
 
+	/**
+	 * Instantiates a new jSON test widget.
+	 */
 	public JSONTestWidget() {
 		initWidget(panel);
 		final Label label = new Label();

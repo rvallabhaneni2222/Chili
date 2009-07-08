@@ -1,5 +1,14 @@
 package info.yalamanchili.gwt.utils;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Enum Alignment.
+ */
 public enum Alignment {
-	HORIZONTAL, VERTICAL
+	
+	/** The HORIZONTAL. */
+	HORIZONTAL, 
+ 
+ /** The VERTICAL. */
+ VERTICAL
 }

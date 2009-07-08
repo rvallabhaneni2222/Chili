@@ -10,19 +10,37 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Widget;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class UpdateCompositeRef.
+ */
 public abstract class UpdateCompositeRef<T extends LightEntity> extends
 		ReadUpdateCreateCompositeRef<T> implements ClickListener {
 
+	/** The update. */
 	protected Button update = new Button("UPDATE");
 
+	/**
+	 * Inits the update composite.
+	 * 
+	 * @param t the t
+	 * @param constants the constants
+	 * @param messages the messages
+	 */
 	public void initUpdateComposite(T t, ConstantsWithLookup constants,
 			Messages messages) {
 		init(t, false, constants);
 
 	}
 
+	/**
+	 * Populate fields.
+	 */
 	public abstract void populateFields();
 
+	/**
+	 * Pre update button clicked.
+	 */
 	protected void preUpdateButtonClicked() {
 		GwtServiceAsync.instance().updateEntityFromFields(entity,
 				populateEntityFromFields(), new ALAsyncCallback<T>() {
@@ -37,14 +55,23 @@ public abstract class UpdateCompositeRef<T extends LightEntity> extends
 				});
 	}
 
+	/**
+	 * Update button clicked.
+	 */
 	public abstract void updateButtonClicked();
 
+	/* (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user.client.ui.Widget)
+	 */
 	public void onClick(Widget widget) {
 		if (widget == update) {
 			preValidate();
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postInit()
+	 */
 	@Override
 	protected void postInit() {
 		update.addClickListener(this);
@@ -53,6 +80,9 @@ public abstract class UpdateCompositeRef<T extends LightEntity> extends
 		populateFields();
 	}
 
+	/* (non-Javadoc)
+	 * @see info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postValidate()
+	 */
 	protected void postValidate() {
 		if (postValidateImpl())
 			preUpdateButtonClicked();
