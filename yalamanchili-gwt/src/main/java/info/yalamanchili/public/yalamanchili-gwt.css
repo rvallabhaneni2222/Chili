@@ -1,0 +1,69 @@
+.ClickableLink{
+color: blue;
+text-decoration: underline;
+}
+
+.ClickableLink-enter {
+  cursor:pointer;
+  cursor:hand; 
+}
+.LabelLink{
+color: #4D4DFF;
+text-align:center;
+ font-size: 12pt;
+font-weight: bold;
+} 
+.ResponseMessage{
+background-color: #FFA54F;
+}
+.PagingBar{
+font-weight: bold;
+font-size: 10pt;
+/* grey 90 */
+background-color             :    #E5E5E5;
+}
+.ErrorMessage{
+font-size: 8pt;
+color: red;
+}
+
+.gwt-Button{
+  font-size: 10pt;
+  font-weight: bold; 
+}
+.gwt-SuggestBox
+{
+    border                      :    1px solid #666;
+    text-align                  :    left;
+}
+.gwt-SuggestBoxPopup
+{
+    text-align                   :    left;
+    cursor                       :    pointer;
+    cursor                       :    hand;
+    border                       :    1px solid #666;
+    border-top                   :    0;
+    background-color             :    #E8E8E8;
+
+}
+.gwt-SuggestBoxPopup .item
+{
+    border                       :    1px dotted #aaa;
+}
+.gwt-SuggestBoxPopup .item-selected
+{
+    background-color             :    #E8E8E8;
+}
+
+.tableHeader
+{
+    background-color             :    #D9D9D9;
+    font-weight: bold;
+	font-size: 11pt;
+}
+.Table
+{
+font-size: 10pt;
+	font-family:	helvetica, arial sans-serif ;
+    background-color             :    #CCCCFF;
+}

@@ -44,26 +44,24 @@ public class ValidatorUtils {
 		return validatorProperties;
 	}
 
-	/**
-	 * Instantiates a new validator utils.
-	 */
-	public ValidatorUtils() {
+	static {
 		loadProperties();
 	}
 
 	/**
 	 * Load properties.
 	 */
-	public void loadProperties() {
+	public static Properties loadProperties() {
 		try {
 			validatorProperties = PropertyFileLoader
 					.loadProperties("yalamanchili-validator.properties");
 			log.debug("loaded yalamanchili-validator.properties");
 		} catch (IllegalArgumentException exception) {
 			validatorProperties = PropertyFileLoader
-					.loadProperties("default-yalamanchili-jndi.properties");
+					.loadProperties("default-yalamanchili-validator.properties");
 			log.debug("loaded default-yalamanchili-validator.properties");
 		}
+		return validatorProperties;
 	}
 
 	/*
@@ -79,7 +77,7 @@ public class ValidatorUtils {
 	 * @param errorMessages
 	 *            the error messages
 	 */
-	public void validateLength(Length annotation, String value,
+	public static void validateLength(Length annotation, String value,
 			List<String> errorMessages) {
 		LengthValidator validator = new LengthValidator();
 		validator.initialize(annotation);
@@ -102,7 +100,7 @@ public class ValidatorUtils {
 	 * @param errorMessages
 	 *            the error messages
 	 */
-	public void validateNotNull(NotNull annotation, Object value,
+	public static void validateNotNull(NotNull annotation, Object value,
 			List<String> errorMessages) {
 		if (value == null) {
 			errorMessages.add(getValue(annotation.message()));
@@ -122,7 +120,7 @@ public class ValidatorUtils {
 	 * @param errorMessages
 	 *            the error messages
 	 */
-	public void validateEmail(org.hibernate.validator.Email annotation,
+	public static void validateEmail(org.hibernate.validator.Email annotation,
 			String value, List<String> errorMessages) {
 		EmailValidator validator = new EmailValidator();
 		validator.initialize(null);
@@ -145,7 +143,7 @@ public class ValidatorUtils {
 	 * @param errorMessages
 	 *            the error messages
 	 */
-	public void validateMax(Max annotation, Object value,
+	public static void validateMax(Max annotation, Object value,
 			List<String> errorMessages) {
 		MaxValidator validator = new MaxValidator();
 		validator.initialize(annotation);
@@ -168,7 +166,7 @@ public class ValidatorUtils {
 	 * @param errorMessages
 	 *            the error messages
 	 */
-	public void validateMin(Min annotation, Object value,
+	public static void validateMin(Min annotation, Object value,
 			List<String> errorMessages) {
 		MinValidator validator = new MinValidator();
 		validator.initialize(annotation);
@@ -191,7 +189,7 @@ public class ValidatorUtils {
 	 * @param errorMessages
 	 *            the error messages
 	 */
-	public void validateRange(Range annotation, Object value,
+	public static void validateRange(Range annotation, Object value,
 			List<String> errorMessages) {
 		RangeValidator validator = new RangeValidator();
 		validator.initialize(annotation);
@@ -214,7 +212,7 @@ public class ValidatorUtils {
 	 * @param errorMessages
 	 *            the error messages
 	 */
-	public void validateDigits(Digits annotation, Object value,
+	public static void validateDigits(Digits annotation, Object value,
 			List<String> errorMessages) {
 		DigitsValidator validator = new DigitsValidator();
 		validator.initialize(annotation);
@@ -237,7 +235,7 @@ public class ValidatorUtils {
 	 * @param errorMessages
 	 *            the error messages
 	 */
-	public void validatePast(Past annotation, Date value,
+	public static void validatePast(Past annotation, Date value,
 			List<String> errorMessages) {
 		PastValidator validator = new PastValidator();
 		validator.initialize(annotation);
@@ -260,7 +258,7 @@ public class ValidatorUtils {
 	 * @param errorMessages
 	 *            the error messages
 	 */
-	public void validateFuture(Future annotation, Date value,
+	public static void validateFuture(Future annotation, Date value,
 			List<String> errorMessages) {
 		FutureValidator validator = new FutureValidator();
 		validator.initialize(annotation);
@@ -278,7 +276,7 @@ public class ValidatorUtils {
 	 * 
 	 * @return the value
 	 */
-	public String getValue(String string) {
+	public static String getValue(String string) {
 		log.debug("get value:" + string);
 		String value = (String) validatorProperties.get(string);
 		log.debug("property value:" + string + ":" + value);

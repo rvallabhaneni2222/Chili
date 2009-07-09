@@ -2,7 +2,6 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.GenericFieldCompositeWithTextBox;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class StringField.
@@ -14,7 +13,8 @@ public class StringField extends GenericFieldCompositeWithTextBox {
 	/**
 	 * Instantiates a new string field.
 	 * 
-	 * @param labelName the label name
+	 * @param labelName
+	 *            the label name
 	 */
 	public StringField(String labelName) {
 		super(labelName);
@@ -23,8 +23,10 @@ public class StringField extends GenericFieldCompositeWithTextBox {
 	/**
 	 * Instantiates a new string field.
 	 * 
-	 * @param labelName the label name
-	 * @param readOnly the read only
+	 * @param labelName
+	 *            the label name
+	 * @param readOnly
+	 *            the read only
 	 */
 	public StringField(String labelName, Boolean readOnly) {
 		super(labelName, readOnly);
@@ -42,7 +44,8 @@ public class StringField extends GenericFieldCompositeWithTextBox {
 	/**
 	 * Sets the text.
 	 * 
-	 * @param text the new text
+	 * @param text
+	 *            the new text
 	 */
 	public void setText(String text) {
 		textbox.setText(text);
