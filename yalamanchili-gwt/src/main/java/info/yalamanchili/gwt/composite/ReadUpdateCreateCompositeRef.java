@@ -6,6 +6,7 @@ import info.yalamanchili.gwt.fields.BooleanField;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.fields.DateField;
 import info.yalamanchili.gwt.fields.EnumField;
+import info.yalamanchili.gwt.fields.FloatField;
 import info.yalamanchili.gwt.fields.IntegerField;
 import info.yalamanchili.gwt.fields.LongField;
 import info.yalamanchili.gwt.fields.PasswordField;
@@ -34,22 +35,22 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		extends Composite {
-	
+
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
-	
+
 	/** The fields. */
 	protected Map<String, Object> fields = new HashMap<String, Object>();
-	
+
 	/** The class canonical name. */
 	protected String classCanonicalName;
-	
+
 	/** The read only. */
 	protected Boolean readOnly;
-	
+
 	/** The entity. */
 	protected T entity;
-	
+
 	/** The entity id. */
 	protected Long entityId;
 
@@ -86,8 +87,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Inits the.
 	 * 
-	 * @param t the t
-	 * @param readOnly the read only
+	 * @param t
+	 *            the t
+	 * @param readOnly
+	 *            the read only
 	 */
 	public void init(T t, final Boolean readOnly) {
 		this.readOnly = readOnly;
@@ -125,9 +128,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Inits the.
 	 * 
-	 * @param t the t
-	 * @param readOnly the read only
-	 * @param constants the constants
+	 * @param t
+	 *            the t
+	 * @param readOnly
+	 *            the read only
+	 * @param constants
+	 *            the constants
 	 */
 	public void init(T t, final Boolean readOnly,
 			final ConstantsWithLookup constants) {
@@ -146,7 +152,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Gets the attributes with constants.
 	 * 
-	 * @param constants the constants
+	 * @param constants
+	 *            the constants
 	 * 
 	 * @return the attributes with constants
 	 */
@@ -185,7 +192,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Adds the fields.
 	 * 
-	 * @param attributes the attributes
+	 * @param attributes
+	 *            the attributes
 	 */
 	protected void addFields(LinkedHashMap<String, DataType> attributes) {
 		for (String fieldName : attributes.keySet()) {
@@ -197,8 +205,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Adds the fields.
 	 * 
-	 * @param attributes the attributes
-	 * @param constants the constants
+	 * @param attributes
+	 *            the attributes
+	 * @param constants
+	 *            the constants
 	 */
 	protected void addFields(LinkedHashMap<String, DataType> attributes,
 			ConstantsWithLookup constants) {
@@ -220,9 +230,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Adds the field.
 	 * 
-	 * @param id the id
-	 * @param text the text
-	 * @param type the type
+	 * @param id
+	 *            the id
+	 * @param text
+	 *            the text
+	 * @param type
+	 *            the type
 	 */
 	protected void addField(String id, String text, DataType type) {
 		if (DataType.LONG_FIELD.equals(type)) {
@@ -262,13 +275,21 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 			fields.put(id, passwordField);
 			panel.add(passwordField);
 		}
+		if (DataType.FLOAT_FEILD.equals(type)) {
+			FloatField floatField = new FloatField(text);
+			fields.put(id, floatField);
+			panel.add(floatField);
+		}
+
 	}
 
 	/**
 	 * Sets the field.
 	 * 
-	 * @param fieldName the field name
-	 * @param var the var
+	 * @param fieldName
+	 *            the field name
+	 * @param var
+	 *            the var
 	 */
 	protected void setField(String fieldName, Enum<?>[] var) {
 		EnumField enumField = (EnumField) getField(fieldName);
@@ -278,8 +299,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Sets the field.
 	 * 
-	 * @param fieldName the field name
-	 * @param number the number
+	 * @param fieldName
+	 *            the field name
+	 * @param number
+	 *            the number
 	 */
 	protected void setField(String fieldName, Long number) {
 		LongField longField = (LongField) getField(fieldName);
@@ -289,8 +312,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Sets the field.
 	 * 
-	 * @param fieldName the field name
-	 * @param number the number
+	 * @param fieldName
+	 *            the field name
+	 * @param number
+	 *            the number
 	 */
 	protected void setField(String fieldName, Integer number) {
 		IntegerField integerField = (IntegerField) getField(fieldName);
@@ -300,8 +325,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Sets the field.
 	 * 
-	 * @param fieldName the field name
-	 * @param text the text
+	 * @param fieldName
+	 *            the field name
+	 * @param text
+	 *            the text
 	 */
 	protected void setField(String fieldName, String text) {
 		StringField stringField = (StringField) getField(fieldName);
@@ -311,8 +338,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Sets the field.
 	 * 
-	 * @param fieldName the field name
-	 * @param value the value
+	 * @param fieldName
+	 *            the field name
+	 * @param value
+	 *            the value
 	 */
 	protected void setField(String fieldName, Boolean value) {
 		BooleanField booleanField = (BooleanField) getField(fieldName);
@@ -322,8 +351,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Sets the field.
 	 * 
-	 * @param fieldName the field name
-	 * @param date the date
+	 * @param fieldName
+	 *            the field name
+	 * @param date
+	 *            the date
 	 */
 	protected void setField(String fieldName, Date date) {
 		DateField dateField = (DateField) getField(fieldName);
@@ -333,18 +364,26 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Sets the enum feild.
 	 * 
-	 * @param fieldName the field name
-	 * @param value the value
+	 * @param fieldName
+	 *            the field name
+	 * @param value
+	 *            the value
 	 */
 	protected void setEnumFeild(String fieldName, String value) {
 		EnumField enumField = (EnumField) getField(fieldName);
 		enumField.setValue(value);
 	}
 
+	protected void setField(String fieldName, Float var) {
+		FloatField floatField = (FloatField) getField(fieldName);
+		floatField.setFloat(var);
+	}
+
 	/**
 	 * Gets the enum field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the enum field
 	 */
@@ -356,7 +395,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Gets the integer field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the integer field
 	 */
@@ -368,7 +408,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Gets the long field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the long field
 	 */
@@ -380,7 +421,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Gets the string field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the string field
 	 */
@@ -392,7 +434,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Gets the date field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the date field
 	 */
@@ -404,7 +447,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Gets the boolean field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the boolean field
 	 */
@@ -416,7 +460,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Gets the password field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the password field
 	 */
@@ -425,11 +470,18 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		return passwordField.getPassword();
 	}
 
+	protected Float getFloatField(String fieldName) {
+		FloatField floatField = (FloatField) getField(fieldName);
+		return floatField.getFloat();
+	}
+
 	/**
 	 * Populate enum fields.
 	 * 
-	 * @param enumField the enum field
-	 * @param attributeName the attribute name
+	 * @param enumField
+	 *            the enum field
+	 * @param attributeName
+	 *            the attribute name
 	 */
 	protected void populateEnumFields(final EnumField enumField,
 			String attributeName) {
@@ -447,7 +499,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Removes the field.
 	 * 
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	protected void removeField(String id) {
 		if (fields.get(id) != null)
@@ -457,7 +510,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Gets the field.
 	 * 
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * 
 	 * @return the field
 	 */
@@ -527,6 +581,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 					valid = false;
 				}
 			}
+			if (fields.get(fieldId) instanceof FloatField) {
+				FloatField field = (FloatField) fields.get(fieldId);
+				if (!field.getValid()) {
+					valid = false;
+				}
+			}
 			if (fields.get(fieldId) instanceof EnumField) {
 				EnumField field = (EnumField) fields.get(fieldId);
 				if (!field.getIsValid()) {
@@ -540,7 +600,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Validate all fields.
 	 * 
-	 * @param itr the itr
+	 * @param itr
+	 *            the itr
 	 */
 	protected void validateAllFields(final Iterator<String> itr) {
 		while (itr.hasNext()) {
@@ -565,10 +626,15 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				validateDateField(fieldId, itr);
 				return;
 			}
+			if (fields.get(fieldId) instanceof FloatField) {
+				validateFloatField(fieldId, itr);
+				return;
+			}
 			if (fields.get(fieldId) instanceof BooleanField) {
 				validateBooleanField(fieldId, itr);
 				return;
 			}
+
 			if (fields.get(fieldId) instanceof EnumField) {
 				validateEnumField(fieldId, itr);
 				return;
@@ -580,8 +646,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Validate enum field.
 	 * 
-	 * @param fieldId the field id
-	 * @param itr the itr
+	 * @param fieldId
+	 *            the field id
+	 * @param itr
+	 *            the itr
 	 */
 	protected void validateEnumField(String fieldId, final Iterator<String> itr) {
 		final EnumField enumf = (EnumField) fields.get(fieldId);
@@ -611,8 +679,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Validate boolean field.
 	 * 
-	 * @param fieldId the field id
-	 * @param itr the itr
+	 * @param fieldId
+	 *            the field id
+	 * @param itr
+	 *            the itr
 	 */
 	protected void validateBooleanField(String fieldId,
 			final Iterator<String> itr) {
@@ -644,8 +714,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Validate date field.
 	 * 
-	 * @param fieldId the field id
-	 * @param itr the itr
+	 * @param fieldId
+	 *            the field id
+	 * @param itr
+	 *            the itr
 	 */
 	protected void validateDateField(String fieldId, final Iterator<String> itr) {
 		final DateField datef = (DateField) fields.get(fieldId);
@@ -675,8 +747,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Validate integer field.
 	 * 
-	 * @param fieldId the field id
-	 * @param itr the itr
+	 * @param fieldId
+	 *            the field id
+	 * @param itr
+	 *            the itr
 	 */
 	protected void validateIntegerField(String fieldId,
 			final Iterator<String> itr) {
@@ -707,8 +781,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Validate long field.
 	 * 
-	 * @param fieldId the field id
-	 * @param itr the itr
+	 * @param fieldId
+	 *            the field id
+	 * @param itr
+	 *            the itr
 	 */
 	protected void validateLongField(String fieldId, final Iterator<String> itr) {
 		final LongField longf = (LongField) fields.get(fieldId);
@@ -738,8 +814,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Validate string field.
 	 * 
-	 * @param fieldId the field id
-	 * @param itr the itr
+	 * @param fieldId
+	 *            the field id
+	 * @param itr
+	 *            the itr
 	 */
 	protected void validateStringField(String fieldId,
 			final Iterator<String> itr) {
@@ -764,10 +842,36 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				});
 	}
 
+	protected void validateFloatField(String fieldId, final Iterator<String> itr) {
+		final FloatField floatf = (FloatField) fields.get(fieldId);
+		GwtServiceAsync.instance().validateFloatField(classCanonicalName,
+				fieldId, floatf.getFloat(), new ALSyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> response) {
+						if (response.size() < 1) {
+							floatf.setValid(true);
+						} else {
+							floatf.setValid(false);
+							floatf.setMessage(getErrorMessages(response));
+						}
+
+					}
+
+					@Override
+					public void postResponse(List<String> response) {
+						validateAllFields(itr);
+
+					}
+
+				});
+	}
+
 	/**
 	 * Gets the error messages.
 	 * 
-	 * @param messages the messages
+	 * @param messages
+	 *            the messages
 	 * 
 	 * @return the error messages
 	 */
@@ -808,6 +912,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				BooleanField bf = (BooleanField) fields.get(fieldName);
 				flds.put(fieldName, bf.getValue());
 			}
+			if (fields.get(fieldName) instanceof FloatField) {
+				FloatField bf = (FloatField) fields.get(fieldName);
+				flds.put(fieldName, bf.getFloat());
+			}
 			if (fields.get(fieldName) instanceof EnumField) {
 				EnumField enumf = (EnumField) fields.get(fieldName);
 				flds.put(fieldName, enumf.getValue());
@@ -819,7 +927,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/**
 	 * Populate fields with data.
 	 * 
-	 * @param t the t
+	 * @param t
+	 *            the t
 	 */
 	protected void populateFieldsWithData(T t) {
 		GwtServiceAsync.instance().getFieldsDataFromEntity(t,
@@ -846,6 +955,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 							}
 							if (fields.get(str.toUpperCase()) instanceof BooleanField) {
 								setField(str.toUpperCase(), (Boolean) data
+										.get(str));
+							}
+							if (fields.get(str.toUpperCase()) instanceof FloatField) {
+								setField(str.toUpperCase(), (Float) data
 										.get(str));
 							}
 							if (fields.get(str.toUpperCase()) instanceof EnumField) {

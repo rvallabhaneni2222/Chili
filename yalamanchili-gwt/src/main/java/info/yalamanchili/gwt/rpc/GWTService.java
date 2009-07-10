@@ -21,7 +21,8 @@ public interface GWTService extends RemoteService {
 	/**
 	 * Gets the class canonical name.
 	 * 
-	 * @param t the t
+	 * @param t
+	 *            the t
 	 * 
 	 * @return the class canonical name
 	 */
@@ -30,7 +31,8 @@ public interface GWTService extends RemoteService {
 	/**
 	 * Gets the attributes.
 	 * 
-	 * @param className the class name
+	 * @param className
+	 *            the class name
 	 * 
 	 * @return the attributes
 	 */
@@ -39,8 +41,10 @@ public interface GWTService extends RemoteService {
 	/**
 	 * Gets the enum values.
 	 * 
-	 * @param className the class name
-	 * @param attributeName the attribute name
+	 * @param className
+	 *            the class name
+	 * @param attributeName
+	 *            the attribute name
 	 * 
 	 * @return the enum values
 	 */
@@ -49,21 +53,30 @@ public interface GWTService extends RemoteService {
 	/**
 	 * Validate string field.
 	 * 
-	 * @param className the class name
-	 * @param attributeName the attribute name
-	 * @param value the value
+	 * @param className
+	 *            the class name
+	 * @param attributeName
+	 *            the attribute name
+	 * @param value
+	 *            the value
 	 * 
 	 * @return the list< string>
 	 */
 	List<String> validateStringField(String className, String attributeName,
 			String value);
 
+	List<String> validateFloatField(String className, String attributeName,
+			Float value);
+
 	/**
 	 * Validate integer field.
 	 * 
-	 * @param className the class name
-	 * @param attributeName the attribute name
-	 * @param value the value
+	 * @param className
+	 *            the class name
+	 * @param attributeName
+	 *            the attribute name
+	 * @param value
+	 *            the value
 	 * 
 	 * @return the list< string>
 	 */
@@ -73,9 +86,12 @@ public interface GWTService extends RemoteService {
 	/**
 	 * Validate long field.
 	 * 
-	 * @param className the class name
-	 * @param attributeName the attribute name
-	 * @param value the value
+	 * @param className
+	 *            the class name
+	 * @param attributeName
+	 *            the attribute name
+	 * @param value
+	 *            the value
 	 * 
 	 * @return the list< string>
 	 */
@@ -85,9 +101,12 @@ public interface GWTService extends RemoteService {
 	/**
 	 * Validate date field.
 	 * 
-	 * @param className the class name
-	 * @param attributeName the attribute name
-	 * @param value the value
+	 * @param className
+	 *            the class name
+	 * @param attributeName
+	 *            the attribute name
+	 * @param value
+	 *            the value
 	 * 
 	 * @return the list< string>
 	 */
@@ -97,9 +116,12 @@ public interface GWTService extends RemoteService {
 	/**
 	 * Validate boolean field.
 	 * 
-	 * @param className the class name
-	 * @param attributeName the attribute name
-	 * @param value the value
+	 * @param className
+	 *            the class name
+	 * @param attributeName
+	 *            the attribute name
+	 * @param value
+	 *            the value
 	 * 
 	 * @return the list< string>
 	 */
@@ -109,9 +131,12 @@ public interface GWTService extends RemoteService {
 	/**
 	 * Validate enum field.
 	 * 
-	 * @param className the class name
-	 * @param attributeName the attribute name
-	 * @param value the value
+	 * @param className
+	 *            the class name
+	 * @param attributeName
+	 *            the attribute name
+	 * @param value
+	 *            the value
 	 * 
 	 * @return the list< string>
 	 */
@@ -121,8 +146,10 @@ public interface GWTService extends RemoteService {
 	/**
 	 * Creates the entity from fields.
 	 * 
-	 * @param className the class name
-	 * @param fields the fields
+	 * @param className
+	 *            the class name
+	 * @param fields
+	 *            the fields
 	 * 
 	 * @return the t
 	 */
@@ -132,8 +159,10 @@ public interface GWTService extends RemoteService {
 	/**
 	 * Update entity from fields.
 	 * 
-	 * @param t the t
-	 * @param fields the fields
+	 * @param t
+	 *            the t
+	 * @param fields
+	 *            the fields
 	 * 
 	 * @return the t
 	 */
@@ -143,7 +172,8 @@ public interface GWTService extends RemoteService {
 	/**
 	 * Gets the fields data from entity.
 	 * 
-	 * @param t the t
+	 * @param t
+	 *            the t
 	 * 
 	 * @return the fields data from entity
 	 */
@@ -155,7 +185,7 @@ public interface GWTService extends RemoteService {
 	 * The Class GwtServiceAsync.
 	 */
 	public static class GwtServiceAsync {
-		
+
 		/** The gwtservice. */
 		private static info.yalamanchili.gwt.rpc.GWTServiceAsync gwtservice;
 
