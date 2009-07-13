@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface UIElement {
-	
+
 	/**
 	 * Position.
 	 * 
@@ -21,4 +21,7 @@ public @interface UIElement {
 	Position position();
 
 	// String name() default "";
+
+	DisplayType displayType() default DisplayType.DEFAULT;
+
 }

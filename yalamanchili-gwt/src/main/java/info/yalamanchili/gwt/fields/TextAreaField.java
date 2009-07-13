@@ -15,12 +15,20 @@ public class TextAreaField extends GenericFieldComposite {
 	public TextAreaField(String labelName, Boolean readOnly) {
 		super(labelName);
 		textArea.setReadOnly(readOnly);
-
+		setup();
 	}
 
 	@Override
 	public void setup() {
 		fieldPanel.insert(textArea, 0);
 		textArea.setVisibleLines(5);
+	}
+
+	public String getText() {
+		return textArea.getText();
+	}
+
+	public void setText(String text) {
+		textArea.setText(text);
 	}
 }

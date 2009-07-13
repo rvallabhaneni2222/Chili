@@ -28,6 +28,6 @@ public enum DataType {
 	ENUM_FIELD,
 
 	/** The DUMM y_ feild. */
-	DUMMY_FEILD, FLOAT_FEILD
+	FLOAT_FEILD, TEXT_AREA_FIELD, DUMMY_FEILD
 
 }

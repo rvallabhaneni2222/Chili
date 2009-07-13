@@ -11,6 +11,7 @@ import info.yalamanchili.gwt.fields.IntegerField;
 import info.yalamanchili.gwt.fields.LongField;
 import info.yalamanchili.gwt.fields.PasswordField;
 import info.yalamanchili.gwt.fields.StringField;
+import info.yalamanchili.gwt.fields.TextAreaField;
 import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
 
 import java.util.Date;
@@ -253,6 +254,11 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 			fields.put(id, stringField);
 			panel.add(stringField);
 		}
+		if (DataType.TEXT_AREA_FIELD.equals(type)) {
+			TextAreaField textAreaField = new TextAreaField(text, readOnly);
+			fields.put(id, textAreaField);
+			panel.add(textAreaField);
+		}
 		if (DataType.DATE_FIELD.equals(type)) {
 			DateField dateField = new DateField(text, readOnly);
 			fields.put(id, dateField);
@@ -331,8 +337,13 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	 *            the text
 	 */
 	protected void setField(String fieldName, String text) {
-		StringField stringField = (StringField) getField(fieldName);
-		stringField.setText(text);
+		if (getField(fieldName) instanceof TextAreaField) {
+			TextAreaField textAreaField = (TextAreaField) getField(fieldName);
+			textAreaField.setText(text);
+		} else {
+			StringField stringField = (StringField) getField(fieldName);
+			stringField.setText(text);
+		}
 	}
 
 	/**
@@ -427,8 +438,14 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	 * @return the string field
 	 */
 	protected String getStringField(String fieldName) {
-		StringField stringField = (StringField) getField(fieldName);
-		return stringField.getText();
+		if (getField(fieldName) instanceof TextAreaField) {
+			TextAreaField textAreaField = (TextAreaField) getField(fieldName);
+			return textAreaField.getText();
+		} else {
+			StringField stringField = (StringField) getField(fieldName);
+			return stringField.getText();
+		}
+
 	}
 
 	/**
@@ -551,6 +568,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 					valid = false;
 				}
 			}
+			if (fields.get(fieldId) instanceof TextAreaField) {
+				TextAreaField field = (TextAreaField) fields.get(fieldId);
+				if (!field.getValid()) {
+					valid = false;
+				}
+			}
 			if (fields.get(fieldId) instanceof PasswordField) {
 				PasswordField field = (PasswordField) fields.get(fieldId);
 				if (!field.getValid()) {
@@ -608,6 +631,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 			String fieldId = itr.next();
 			if (fields.get(fieldId) instanceof StringField) {
 				validateStringField(fieldId, itr);
+				return;
+			}
+			if (fields.get(fieldId) instanceof TextAreaField) {
+				validateTextAreaField(fieldId, itr);
 				return;
 			}
 			if (fields.get(fieldId) instanceof PasswordField) {
@@ -842,6 +869,29 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				});
 	}
 
+	protected void validateTextAreaField(String fieldId,
+			final Iterator<String> itr) {
+		final TextAreaField sf = (TextAreaField) fields.get(fieldId);
+		GwtServiceAsync.instance().validateStringField(classCanonicalName,
+				fieldId, sf.getText(), new ALSyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> response) {
+						if (response.size() < 1) {
+							sf.setValid(true);
+						} else {
+							sf.setValid(false);
+							sf.setMessage(getErrorMessages(response));
+						}
+					}
+
+					@Override
+					public void postResponse(List<String> response) {
+						validateAllFields(itr);
+					}
+				});
+	}
+
 	protected void validateFloatField(String fieldId, final Iterator<String> itr) {
 		final FloatField floatf = (FloatField) fields.get(fieldId);
 		GwtServiceAsync.instance().validateFloatField(classCanonicalName,
@@ -896,6 +946,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				StringField sf = (StringField) fields.get(fieldName);
 				flds.put(fieldName, sf.getText());
 			}
+			if (fields.get(fieldName) instanceof TextAreaField) {
+				TextAreaField sf = (TextAreaField) fields.get(fieldName);
+				flds.put(fieldName, sf.getText());
+			}
 			if (fields.get(fieldName) instanceof IntegerField) {
 				IntegerField intf = (IntegerField) fields.get(fieldName);
 				flds.put(fieldName, intf.getInteger());
@@ -938,6 +992,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 					public void onResponse(LinkedHashMap<String, Object> data) {
 						for (String str : data.keySet()) {
 							if (fields.get(str.toUpperCase()) instanceof StringField) {
+								setField(str.toUpperCase(), (String) data
+										.get(str));
+							}
+							if (fields.get(str.toUpperCase()) instanceof TextAreaField) {
 								setField(str.toUpperCase(), (String) data
 										.get(str));
 							}
