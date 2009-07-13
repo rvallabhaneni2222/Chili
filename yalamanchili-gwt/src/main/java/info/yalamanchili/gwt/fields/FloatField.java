@@ -28,6 +28,7 @@ public class FloatField extends GenericFieldCompositeWithTextBox {
 	}
 
 	public void setFloat(Float var) {
-		textbox.setText(var.toString());
+		if (var != null)
+			textbox.setText(var.toString());
 	}
 }

@@ -276,7 +276,7 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 			panel.add(passwordField);
 		}
 		if (DataType.FLOAT_FEILD.equals(type)) {
-			FloatField floatField = new FloatField(text);
+			FloatField floatField = new FloatField(text, readOnly);
 			fields.put(id, floatField);
 			panel.add(floatField);
 		}

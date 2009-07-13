@@ -9,20 +9,20 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class GenericFieldComposite.
  */
-public class GenericFieldComposite extends Composite {
-	
+public abstract class GenericFieldComposite extends Composite {
+
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
-	
+
 	/** The field panel. */
 	protected HorizontalPanel fieldPanel = new HorizontalPanel();
-	
+
 	/** The label. */
 	protected Label label = new Label();
-	
+
 	/** The message. */
 	protected Label message = new Label();
-	
+
 	/** The is valid. */
 	protected Boolean isValid = false;
 
@@ -47,7 +47,8 @@ public class GenericFieldComposite extends Composite {
 	/**
 	 * Instantiates a new generic field composite.
 	 * 
-	 * @param labelName the label name
+	 * @param labelName
+	 *            the label name
 	 */
 	public GenericFieldComposite(String labelName) {
 		label.setText(labelName);
@@ -76,7 +77,8 @@ public class GenericFieldComposite extends Composite {
 	/**
 	 * Sets the message.
 	 * 
-	 * @param text the new message
+	 * @param text
+	 *            the new message
 	 */
 	public void setMessage(String text) {
 		message.setText(text);
@@ -101,9 +103,12 @@ public class GenericFieldComposite extends Composite {
 	/**
 	 * Sets the valid.
 	 * 
-	 * @param valid the new valid
+	 * @param valid
+	 *            the new valid
 	 */
 	public void setValid(Boolean valid) {
 		this.isValid = valid;
 	}
+
+	public abstract void setup();
 }

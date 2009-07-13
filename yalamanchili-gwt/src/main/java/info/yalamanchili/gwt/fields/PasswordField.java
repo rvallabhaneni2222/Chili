@@ -32,4 +32,10 @@ public class PasswordField extends GenericFieldComposite {
 	public String getPassword() {
 		return password.getText();
 	}
+
+	@Override
+	public void setup() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -1,14 +1,13 @@
 package info.yalamanchili.gwt.fields;
 
-
 import info.yalamanchili.gwt.utils.Alignment;
 
+import com.google.gwt.user.client.ui.CellPanel;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 // TODO: Auto-generated Javadoc
@@ -16,22 +15,24 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * The Class ListBoxField.
  */
 public class ListBoxField extends Composite {
-	
+
 	/** The panel. */
-	Panel panel = new VerticalPanel();
+	CellPanel panel;
 
 	/** The label. */
 	Label label = new Label();
-	
+
 	/** The listbox. */
 	ListBox listbox = new ListBox();
 
 	/**
 	 * Instantiates a new list box field.
 	 * 
-	 * @param labelName the label name
+	 * @param labelName
+	 *            the label name
 	 */
 	public ListBoxField(String labelName) {
+		panel = new VerticalPanel();
 		initWidget(panel);
 		label.setText(labelName);
 		configure();
@@ -41,11 +42,20 @@ public class ListBoxField extends Composite {
 	/**
 	 * Instantiates a new list box field.
 	 * 
-	 * @param labelName the label name
-	 * @param alignment the alignment
+	 * @param labelName
+	 *            the label name
+	 * @param alignment
+	 *            the alignment
 	 */
 	public ListBoxField(String labelName, Alignment alignment) {
-		panel = new HorizontalPanel();
+		switch (alignment) {
+		case HORIZONTAL:
+			panel = new HorizontalPanel();
+			break;
+		case VERTICAL:
+			panel = new VerticalPanel();
+			break;
+		}
 		initWidget(panel);
 		label.setText(labelName);
 		configure();
@@ -78,8 +88,10 @@ public class ListBoxField extends Composite {
 	/**
 	 * Adds the value.
 	 * 
-	 * @param value the value
-	 * @param item the item
+	 * @param value
+	 *            the value
+	 * @param item
+	 *            the item
 	 */
 	public void addValue(Long value, String item) {
 		listbox.addItem(item, value.toString());
@@ -88,7 +100,8 @@ public class ListBoxField extends Composite {
 	/**
 	 * Adds the change listener.
 	 * 
-	 * @param changeListener the change listener
+	 * @param changeListener
+	 *            the change listener
 	 */
 	public void addChangeListener(ChangeListener changeListener) {
 		listbox.addChangeListener(changeListener);

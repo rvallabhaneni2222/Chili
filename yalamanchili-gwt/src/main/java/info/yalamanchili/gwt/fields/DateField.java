@@ -1,6 +1,5 @@
 package info.yalamanchili.gwt.fields;
 
-
 import info.yalamanchili.gwt.composite.GenericFieldComposite;
 import info.yalamanchili.gwt.utils.Utils;
 
@@ -31,22 +30,25 @@ public class DateField extends GenericFieldComposite {
 	/**
 	 * Instantiates a new date field.
 	 * 
-	 * @param labelName the label name
+	 * @param labelName
+	 *            the label name
 	 */
 	public DateField(String labelName) {
 		super(labelName);
-		fieldPanel.insert(datePicker, 1);
+		setup();
 	}
 
 	/**
 	 * Instantiates a new date field.
 	 * 
-	 * @param labelName the label name
-	 * @param readOnly the read only
+	 * @param labelName
+	 *            the label name
+	 * @param readOnly
+	 *            the read only
 	 */
 	public DateField(String labelName, Boolean readOnly) {
 		super(labelName);
-		fieldPanel.insert(datePicker, 0);
+		setup();
 		setReadOnly(readOnly);
 	}
 
@@ -70,7 +72,8 @@ public class DateField extends GenericFieldComposite {
 	/**
 	 * Sets the date.
 	 * 
-	 * @param date the new date
+	 * @param date
+	 *            the new date
 	 */
 	public void setDate(Date date) {
 		if (date != null)
@@ -80,10 +83,17 @@ public class DateField extends GenericFieldComposite {
 	/**
 	 * Sets the read only.
 	 * 
-	 * @param readOnly the new read only
+	 * @param readOnly
+	 *            the new read only
 	 */
 	public void setReadOnly(Boolean readOnly) {
 		datePicker.setReadOnly(readOnly);
+	}
+
+	@Override
+	public void setup() {
+		fieldPanel.insert(datePicker, 0);
+
 	}
 
 }
