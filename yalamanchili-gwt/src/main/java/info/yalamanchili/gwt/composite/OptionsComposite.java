@@ -41,17 +41,13 @@ public abstract class OptionsComposite extends ALComposite implements
 			break;
 		}
 		init(panel);
-		updateLink.addClickListener(this);
-		deleteLink.addClickListener(this);
-		createLink.addClickListener(this);
+		setup();
 	}
 
 	public OptionsComposite() {
 		panel = new HorizontalPanel();
 		init(panel);
-		updateLink.addClickListener(this);
-		deleteLink.addClickListener(this);
-		createLink.addClickListener(this);
+		setup();
 	}
 
 	/*
@@ -71,6 +67,13 @@ public abstract class OptionsComposite extends ALComposite implements
 		if (widget == createLink) {
 			createLinkClicked();
 		}
+	}
+
+	public void setup() {
+		this.addStyleName("OptionsComposite");
+		updateLink.addClickListener(this);
+		deleteLink.addClickListener(this);
+		createLink.addClickListener(this);
 	}
 
 	/**

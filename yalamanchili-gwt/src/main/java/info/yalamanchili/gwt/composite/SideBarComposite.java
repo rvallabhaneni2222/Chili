@@ -1,6 +1,5 @@
 package info.yalamanchili.gwt.composite;
 
-
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -11,7 +10,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class SideBarComposite extends ALComposite implements
 		ClickListener {
-	
+
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
 
@@ -19,10 +18,20 @@ public abstract class SideBarComposite extends ALComposite implements
 	 * Instantiates a new side bar composite.
 	 */
 	public SideBarComposite() {
+		
 	}
 
-	/* (non-Javadoc)
-	 * @see com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user.client.ui.Widget)
+	public void setup() {
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user
+	 * .client.ui.Widget)
 	 */
 	public abstract void onClick(Widget widget);
+
 }
