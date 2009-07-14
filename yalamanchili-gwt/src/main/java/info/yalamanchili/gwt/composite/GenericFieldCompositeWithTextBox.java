@@ -14,19 +14,19 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite {
 
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
-	
+
 	/** The field panel. */
 	protected HorizontalPanel fieldPanel = new HorizontalPanel();
-	
+
 	/** The label. */
 	protected Label label = new Label();
-	
+
 	/** The textbox. */
 	protected TextBox textbox = new TextBox();
-	
+
 	/** The message. */
 	protected Label message = new Label();
-	
+
 	/** The is valid. */
 	protected Boolean isValid = false;
 
@@ -60,7 +60,8 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite {
 	/**
 	 * Instantiates a new generic field composite with text box.
 	 * 
-	 * @param labelName the label name
+	 * @param labelName
+	 *            the label name
 	 */
 	public GenericFieldCompositeWithTextBox(String labelName) {
 		label.setText(labelName);
@@ -72,8 +73,10 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite {
 	/**
 	 * Instantiates a new generic field composite with text box.
 	 * 
-	 * @param labelName the label name
-	 * @param readOnly the read only
+	 * @param labelName
+	 *            the label name
+	 * @param readOnly
+	 *            the read only
 	 */
 	public GenericFieldCompositeWithTextBox(String labelName, Boolean readOnly) {
 		label.setText(labelName);
@@ -89,6 +92,7 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite {
 	 */
 	protected void configure() {
 		panel.setSpacing(5);
+		label.addStyleName("FieldHeader");
 		message.addStyleName("ErrorMessage");
 	}
 
@@ -105,7 +109,8 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite {
 	/**
 	 * Sets the read only.
 	 * 
-	 * @param readOnly the new read only
+	 * @param readOnly
+	 *            the new read only
 	 */
 	public void setReadOnly(Boolean readOnly) {
 		textbox.setReadOnly(true);
@@ -114,7 +119,8 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite {
 	/**
 	 * Sets the message.
 	 * 
-	 * @param text the new message
+	 * @param text
+	 *            the new message
 	 */
 	public void setMessage(String text) {
 		message.setText(text);
@@ -139,7 +145,8 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite {
 	/**
 	 * Sets the valid.
 	 * 
-	 * @param valid the new valid
+	 * @param valid
+	 *            the new valid
 	 */
 	public void setValid(Boolean valid) {
 		this.isValid = valid;

@@ -62,6 +62,7 @@ public abstract class GenericFieldComposite extends Composite {
 	 */
 	protected void configure() {
 		panel.setSpacing(5);
+		label.addStyleName("FieldHeader");
 		message.addStyleName("ErrorMessage");
 	}
 
