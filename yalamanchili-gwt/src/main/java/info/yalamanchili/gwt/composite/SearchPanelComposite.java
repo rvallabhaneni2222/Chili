@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class SearchPanelComposite<T> extends Composite implements
 		ClickListener {
-	
+
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
 
@@ -31,7 +31,8 @@ public abstract class SearchPanelComposite<T> extends Composite implements
 	/**
 	 * Adds the suggest box.
 	 * 
-	 * @param attributeName the attribute name
+	 * @param attributeName
+	 *            the attribute name
 	 */
 	public void addSuggestBox(String attributeName) {
 		ALSuggestBox keyWordSuggestBox = new ALSuggestBox(attributeName);
@@ -52,12 +53,17 @@ public abstract class SearchPanelComposite<T> extends Composite implements
 		populateSuggestBoxs();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user.client.ui.Widget)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user
+	 * .client.ui.Widget)
 	 */
-	public void onClick(Widget arg0) {
-		searchButtonClicked();
-
+	public void onClick(Widget widget) {
+		if (widget == searchB) {
+			searchButtonClicked();
+		}
 	}
 
 	/**
@@ -88,7 +94,8 @@ public abstract class SearchPanelComposite<T> extends Composite implements
 	/**
 	 * Gets the key word text.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the key word text
 	 */
@@ -99,8 +106,10 @@ public abstract class SearchPanelComposite<T> extends Composite implements
 	/**
 	 * Load data.
 	 * 
-	 * @param fieldName the field name
-	 * @param data the data
+	 * @param fieldName
+	 *            the field name
+	 * @param data
+	 *            the data
 	 */
 	public void loadData(String fieldName, List<String> data) {
 		fields.get(fieldName).loadData(data);

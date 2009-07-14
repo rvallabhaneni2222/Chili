@@ -70,6 +70,7 @@ font-size: 10pt;
 }
 .SideBarComposite{
  border   :    2px solid #88ACE0;
+ width: 180px;
 }
 .OptionsComposite{
  border   :    2px solid #88ACE0;

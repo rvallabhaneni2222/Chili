@@ -1,6 +1,5 @@
 package info.yalamanchili.gwt.fields;
 
-
 import info.yalamanchili.gwt.composite.GenericFieldCompositeWithTextBox;
 
 import com.google.gwt.user.client.Window;
@@ -14,7 +13,8 @@ public class IntegerField extends GenericFieldCompositeWithTextBox {
 	/**
 	 * Instantiates a new integer field.
 	 * 
-	 * @param text the text
+	 * @param text
+	 *            the text
 	 */
 	public IntegerField(String text) {
 		super(text);
@@ -23,8 +23,10 @@ public class IntegerField extends GenericFieldCompositeWithTextBox {
 	/**
 	 * Instantiates a new integer field.
 	 * 
-	 * @param text the text
-	 * @param readOnly the read only
+	 * @param text
+	 *            the text
+	 * @param readOnly
+	 *            the read only
 	 */
 	public IntegerField(String text, Boolean readOnly) {
 		super(text, readOnly);
@@ -33,10 +35,12 @@ public class IntegerField extends GenericFieldCompositeWithTextBox {
 	/**
 	 * Sets the integer.
 	 * 
-	 * @param number the new integer
+	 * @param number
+	 *            the new integer
 	 */
 	public void setInteger(Integer number) {
-		textbox.setText(number.toString());
+		if (number != null)
+			textbox.setText(number.toString());
 	}
 
 	/**

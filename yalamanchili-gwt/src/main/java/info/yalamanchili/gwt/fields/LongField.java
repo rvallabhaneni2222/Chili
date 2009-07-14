@@ -1,6 +1,5 @@
 package info.yalamanchili.gwt.fields;
 
-
 import info.yalamanchili.gwt.composite.GenericFieldCompositeWithTextBox;
 
 import com.google.gwt.user.client.Window;
@@ -14,7 +13,8 @@ public class LongField extends GenericFieldCompositeWithTextBox {
 	/**
 	 * Instantiates a new long field.
 	 * 
-	 * @param labelName the label name
+	 * @param labelName
+	 *            the label name
 	 */
 	public LongField(String labelName) {
 		super(labelName);
@@ -23,8 +23,10 @@ public class LongField extends GenericFieldCompositeWithTextBox {
 	/**
 	 * Instantiates a new long field.
 	 * 
-	 * @param labelName the label name
-	 * @param readOnly the read only
+	 * @param labelName
+	 *            the label name
+	 * @param readOnly
+	 *            the read only
 	 */
 	public LongField(String labelName, Boolean readOnly) {
 		super(labelName, readOnly);
@@ -51,10 +53,12 @@ public class LongField extends GenericFieldCompositeWithTextBox {
 	/**
 	 * Sets the long.
 	 * 
-	 * @param number the new long
+	 * @param number
+	 *            the new long
 	 */
 	public void setLong(Long number) {
-		textbox.setText(number.toString());
+		if (number != null)
+			textbox.setText(number.toString());
 	}
 
 }
