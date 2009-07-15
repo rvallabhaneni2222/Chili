@@ -46,11 +46,11 @@ public abstract class SearchPanelComposite<T> extends Composite implements
 	public void initSearchComposite() {
 		initWidget(panel);
 		searchB.addClickListener(this);
-		panel.add(searchB);
 		addListeners();
 		addWidgets();
 		configure();
 		populateSuggestBoxs();
+		panel.add(searchB);
 	}
 
 	/*

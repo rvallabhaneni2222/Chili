@@ -34,6 +34,7 @@ public abstract class SideBarComposite extends ALComposite implements
 		panel.add(searchPanel);
 		panel.setSpacing(5);
 		panel.addStyleName("SideBarComposite");
+		searchPanel.addStyleName("SearchDisclosurePanel");
 		searchPanel.addEventHandler(new DisclosureHandler() {
 			public void onClose(DisclosureEvent arg0) {
 				onSearchClose(arg0);
