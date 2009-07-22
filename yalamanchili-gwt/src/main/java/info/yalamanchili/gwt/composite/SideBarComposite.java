@@ -2,8 +2,10 @@ package info.yalamanchili.gwt.composite;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.DisclosureEvent;
-import com.google.gwt.user.client.ui.DisclosureHandler;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
+import com.google.gwt.event.logical.shared.OpenEvent;
+import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -35,20 +37,29 @@ public abstract class SideBarComposite extends ALComposite implements
 		panel.setSpacing(5);
 		panel.addStyleName("SideBarComposite");
 		searchPanel.addStyleName("SearchDisclosurePanel");
-		searchPanel.addEventHandler(new DisclosureHandler() {
-			public void onClose(DisclosureEvent arg0) {
-				onSearchClose(arg0);
+		searchPanel.addOpenHandler(new OpenHandler<DisclosurePanel>() {
+
+			@Override
+			public void onOpen(OpenEvent<DisclosurePanel> arg0) {
+				onSearchOpen(arg0);
+
 			}
 
-			public void onOpen(DisclosureEvent arg0) {
-				onSearchOpen(arg0);
+		});
+		searchPanel.addCloseHandler(new CloseHandler<DisclosurePanel>() {
+
+			@Override
+			public void onClose(CloseEvent<DisclosurePanel> arg0) {
+				onSearchClose(arg0);
+
 			}
+
 		});
 	}
 
-	public abstract void onSearchOpen(DisclosureEvent arg0);
+	public abstract void onSearchOpen(OpenEvent<DisclosurePanel> arg0);
 
-	public abstract void onSearchClose(DisclosureEvent arg0);
+	public abstract void onSearchClose(CloseEvent<DisclosurePanel> arg0);
 
 	/*
 	 * (non-Javadoc)

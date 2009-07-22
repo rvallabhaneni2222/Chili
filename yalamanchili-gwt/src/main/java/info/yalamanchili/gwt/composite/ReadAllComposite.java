@@ -7,16 +7,15 @@ import info.yalamanchili.gwt.widgets.ClickableLink;
 import java.util.List;
 import java.util.MissingResourceException;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
-import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SourcesTableEvents;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
 
 // TODO: Auto-generated Javadoc
@@ -24,7 +23,7 @@ import com.google.gwt.user.client.ui.HTMLTable.Cell;
  * The Class ReadAllComposite.
  */
 public abstract class ReadAllComposite<T> extends ALComposite implements
-		ClickHandler, ChangeListener {
+		ClickHandler, ChangeHandler {
 
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
@@ -97,7 +96,7 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	 */
 	@Override
 	protected void addListeners() {
-		goToPage.addChangeListener(this);
+		goToPage.addChangeHandler(this);
 		table.addClickHandler(this);
 	}
 
@@ -218,18 +217,6 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	 */
 	public abstract void fillData(List<T> entities);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.client.ui.TableListener#onCellClicked(com.google.
-	 * gwt.user.client.ui.SourcesTableEvents, int, int)
-	 */
-	public void onCellClicked(SourcesTableEvents arg0, int row, int col) {
-		if (row != 0)
-			viewClicked(row, col);
-	}
-
 	/**
 	 * View clicked.
 	 * 
@@ -263,9 +250,8 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	 * com.google.gwt.user.client.ui.ChangeListener#onChange(com.google.gwt.
 	 * user.client.ui.Widget)
 	 */
-	public void onChange(Widget widget) {
-
-		if (widget == goToPage.getListBox()) {
+	public void onChange(ChangeEvent event) {
+		if (event.getSource() == goToPage.getListBox()) {
 			loadPage((goToPage.getValue().intValue() * pageSize) - 10);
 		}
 	}

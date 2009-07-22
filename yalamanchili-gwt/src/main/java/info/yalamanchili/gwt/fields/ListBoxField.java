@@ -2,8 +2,8 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.utils.Alignment;
 
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.CellPanel;
-import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -103,8 +103,8 @@ public class ListBoxField extends Composite {
 	 * @param changeListener
 	 *            the change listener
 	 */
-	public void addChangeListener(ChangeListener changeListener) {
-		listbox.addChangeListener(changeListener);
+	public void addChangeHandler(ChangeHandler changeHandler) {
+		listbox.addChangeHandler(changeHandler);
 	}
 
 	/**
