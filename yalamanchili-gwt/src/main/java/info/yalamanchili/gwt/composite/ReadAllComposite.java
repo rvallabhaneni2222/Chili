@@ -15,16 +15,16 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SourcesTableEvents;
-import com.google.gwt.user.client.ui.TableListener;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HTMLTable.Cell;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReadAllComposite.
  */
 public abstract class ReadAllComposite<T> extends ALComposite implements
-		TableListener, ClickHandler, ChangeListener {
+		ClickHandler, ChangeListener {
 
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
@@ -98,7 +98,6 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	@Override
 	protected void addListeners() {
 		goToPage.addChangeListener(this);
-		table.addTableListener(this);
 		table.addClickHandler(this);
 	}
 
@@ -249,7 +248,12 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	 * .client.ui.Widget)
 	 */
 	public void onClick(ClickEvent event) {
-		// Log.debug("table click handler");
+		if (event.getSource() == table) {
+			Cell clickedCell = table.getCellForEvent(event);
+			if (clickedCell.getRowIndex() != 0)
+				viewClicked(clickedCell.getRowIndex(), clickedCell
+						.getCellIndex());
+		}
 	}
 
 	/*
@@ -260,6 +264,7 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	 * user.client.ui.Widget)
 	 */
 	public void onChange(Widget widget) {
+
 		if (widget == goToPage.getListBox()) {
 			loadPage((goToPage.getValue().intValue() * pageSize) - 10);
 		}
