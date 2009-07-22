@@ -1,24 +1,24 @@
 package info.yalamanchili.gwt.composite;
 
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TreePanelComposite.
  */
 public abstract class TreePanelComposite<T> extends Composite implements
-		ClickListener {
-	
+		ClickHandler {
+
 	/** The entity. */
 	protected T entity;
-	
+
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
-	
+
 	/** The tree. */
 	protected Tree tree = new Tree();
 
@@ -34,7 +34,8 @@ public abstract class TreePanelComposite<T> extends Composite implements
 	/**
 	 * Inits the tree panel composite.
 	 * 
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	public void initTreePanelComposite(Long id) {
 		initWidget(panel);
@@ -71,15 +72,20 @@ public abstract class TreePanelComposite<T> extends Composite implements
 	 */
 	protected abstract void addWidgets();
 
-	/* (non-Javadoc)
-	 * @see com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user.client.ui.Widget)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user
+	 * .client.ui.Widget)
 	 */
-	public abstract void onClick(Widget widget);
+	public abstract void onClick(ClickEvent event);
 
 	/**
 	 * Load entity.
 	 * 
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	public abstract void loadEntity(Long id);
 }

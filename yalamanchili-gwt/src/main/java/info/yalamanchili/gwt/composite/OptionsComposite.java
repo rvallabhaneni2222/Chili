@@ -3,18 +3,18 @@ package info.yalamanchili.gwt.composite;
 import info.yalamanchili.gwt.utils.Alignment;
 import info.yalamanchili.gwt.widgets.ClickableLink;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.CellPanel;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class OptionsComposite.
  */
 public abstract class OptionsComposite extends ALComposite implements
-		ClickListener {
+		ClickHandler {
 
 	/** The panel. */
 	protected CellPanel panel;
@@ -57,23 +57,23 @@ public abstract class OptionsComposite extends ALComposite implements
 	 * com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user
 	 * .client.ui.Widget)
 	 */
-	public void onClick(Widget widget) {
-		if (widget == updateLink) {
+	public void onClick(ClickEvent event) {
+		if (event.getSource() == updateLink) {
 			updateLinkClicked();
 		}
-		if (widget == deleteLink) {
+		if (event.getSource() == deleteLink) {
 			deleteLinkClicked();
 		}
-		if (widget == createLink) {
+		if (event.getSource() == createLink) {
 			createLinkClicked();
 		}
 	}
 
 	public void setup() {
 		this.addStyleName("OptionsComposite");
-		updateLink.addClickListener(this);
-		deleteLink.addClickListener(this);
-		createLink.addClickListener(this);
+		updateLink.addClickHandler(this);
+		deleteLink.addClickHandler(this);
+		createLink.addClickHandler(this);
 	}
 
 	/**

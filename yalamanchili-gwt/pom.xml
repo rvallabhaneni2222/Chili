@@ -93,8 +93,8 @@
 		</dependency>
 	</dependencies>
 	<properties>
-		<gwtVersion>1.5.3</gwtVersion>
-		<google.webtoolkit.home>C:\gwt-windows-1.5.3
+		<gwtVersion>1.6.4</gwtVersion>
+		<google.webtoolkit.home>C:\gwt-windows-1.6.4
 		</google.webtoolkit.home>
 		<platform>windows</platform>
 	</properties>

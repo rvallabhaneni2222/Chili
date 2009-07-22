@@ -1,21 +1,24 @@
 package info.yalamanchili.gwt.composite;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Widget;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class UpdateComposite.
  */
 public abstract class UpdateComposite<T> extends ReadUpdateCreateComposite
-		implements ClickListener {
-	
+		implements ClickHandler {
+
 	/** The entity. */
 	protected T entity;
 
-	/* (non-Javadoc)
-	 * @see info.yalamanchili.gwt.composite.ReadUpdateCreateComposite#getEntity()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * info.yalamanchili.gwt.composite.ReadUpdateCreateComposite#getEntity()
 	 */
 	public T getEntity() {
 		return entity;
@@ -30,7 +33,7 @@ public abstract class UpdateComposite<T> extends ReadUpdateCreateComposite
 	public void initUpdateComposite() {
 		init();
 		panel.add(update);
-		update.addClickListener(this);
+		update.addClickHandler(this);
 		populateFields();
 	}
 
@@ -44,13 +47,16 @@ public abstract class UpdateComposite<T> extends ReadUpdateCreateComposite
 	 */
 	public abstract void updateButtonClicked();
 
-	/* (non-Javadoc)
-	 * @see com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user.client.ui.Widget)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user
+	 * .client.ui.Widget)
 	 */
-	public void onClick(Widget widget) {
-		if (widget == update) {
+	public void onClick(ClickEvent event) {
+		if (event.getSource() == update) {
 			updateButtonClicked();
 		}
 	}
-
 }

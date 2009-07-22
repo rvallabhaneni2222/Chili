@@ -4,13 +4,16 @@ package info.yalamanchili.gwt.composite;
 /**
  * The Class ReadComposite.
  */
-public abstract class ReadComposite<T> extends ReadUpdateCreateComposite {
-	
+public abstract class ReadComposite<T> extends ReadUpdateCreateComposite<T> {
+
 	/** The entity. */
 	protected T entity;
 
-	/* (non-Javadoc)
-	 * @see info.yalamanchili.gwt.composite.ReadUpdateCreateComposite#getEntity()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * info.yalamanchili.gwt.composite.ReadUpdateCreateComposite#getEntity()
 	 */
 	public T getEntity() {
 		return entity;
@@ -26,7 +29,8 @@ public abstract class ReadComposite<T> extends ReadUpdateCreateComposite {
 	/**
 	 * Inits the read composite.
 	 * 
-	 * @param entity the entity
+	 * @param entity
+	 *            the entity
 	 */
 	protected void initReadComposite(T entity) {
 		init();
@@ -36,7 +40,8 @@ public abstract class ReadComposite<T> extends ReadUpdateCreateComposite {
 	/**
 	 * Inits the read composite.
 	 * 
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	protected void initReadComposite(Long id) {
 		init();
@@ -46,14 +51,16 @@ public abstract class ReadComposite<T> extends ReadUpdateCreateComposite {
 	/**
 	 * Read data.
 	 * 
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	protected abstract void readData(Long id);
 
 	/**
 	 * Read data.
 	 * 
-	 * @param entity the entity
+	 * @param entity
+	 *            the entity
 	 */
 	protected abstract void readData(T entity);
 

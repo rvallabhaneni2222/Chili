@@ -6,18 +6,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SearchPanelComposite.
  */
 public abstract class SearchPanelComposite<T> extends Composite implements
-		ClickListener {
+		ClickHandler {
 
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
@@ -45,7 +45,7 @@ public abstract class SearchPanelComposite<T> extends Composite implements
 	 */
 	public void initSearchComposite() {
 		initWidget(panel);
-		searchB.addClickListener(this);
+		searchB.addClickHandler(this);
 		addListeners();
 		addWidgets();
 		configure();
@@ -60,8 +60,8 @@ public abstract class SearchPanelComposite<T> extends Composite implements
 	 * com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user
 	 * .client.ui.Widget)
 	 */
-	public void onClick(Widget widget) {
-		if (widget == searchB) {
+	public void onClick(ClickEvent event) {
+		if (event.getSource() == searchB) {
 			searchButtonClicked();
 		}
 	}

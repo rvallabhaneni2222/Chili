@@ -7,9 +7,10 @@ import info.yalamanchili.gwt.widgets.ClickableLink;
 import java.util.List;
 import java.util.MissingResourceException;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.ChangeListener;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -23,47 +24,49 @@ import com.google.gwt.user.client.ui.Widget;
  * The Class ReadAllComposite.
  */
 public abstract class ReadAllComposite<T> extends ALComposite implements
-		TableListener, ClickListener, ChangeListener {
-	
+		TableListener, ClickHandler, ChangeListener {
+
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
-	
+
 	/** The paging panel. */
 	protected HorizontalPanel pagingPanel = new HorizontalPanel();
-	
+
 	/** The table panel. */
 	protected VerticalPanel tablePanel = new VerticalPanel();
-	
+
 	/** The table. */
 	protected FlexTable table = new FlexTable();
-	
+
 	/** The number of records. */
 	protected Long numberOfRecords;
-	
+
 	/** The page size. */
 	protected Integer pageSize = 10;// default
-	
+
 	/** The number of pages. */
 	protected Integer numberOfPages;
-	
+
 	/** The class canonical name. */
 	protected String classCanonicalName;
-	
+
 	/** The constants. */
 	protected ConstantsWithLookup constants;
-	
+
 	/** The go to page. */
 	protected ListBoxField goToPage = new ListBoxField("Page: ",
 			Alignment.HORIZONTAL);
-	
+
 	/** The no of results l. */
 	protected Label noOfResultsL = new Label("Total Results:");
 
 	/**
 	 * Inits the table.
 	 * 
-	 * @param classCanonicalName the class canonical name
-	 * @param constants the constants
+	 * @param classCanonicalName
+	 *            the class canonical name
+	 * @param constants
+	 *            the constants
 	 */
 	protected void initTable(String classCanonicalName,
 			ConstantsWithLookup constants) {
@@ -73,7 +76,9 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 		configureTable();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see info.yalamanchili.gwt.composite.ALComposite#configure()
 	 */
 	@Override
@@ -85,16 +90,21 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 		pagingPanel.addStyleName("PagingBar");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see info.yalamanchili.gwt.composite.ALComposite#addListeners()
 	 */
 	@Override
 	protected void addListeners() {
 		goToPage.addChangeListener(this);
 		table.addTableListener(this);
+		table.addClickHandler(this);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see info.yalamanchili.gwt.composite.ALComposite#addWidgets()
 	 */
 	@Override
@@ -110,7 +120,8 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	/**
 	 * Inits the load.
 	 * 
-	 * @param noOfRecords the no of records
+	 * @param noOfRecords
+	 *            the no of records
 	 */
 	public void initLoad(Long noOfRecords) {
 		pageSize = new Integer(10);
@@ -138,14 +149,16 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	/**
 	 * Load page.
 	 * 
-	 * @param startIndex the start index
+	 * @param startIndex
+	 *            the start index
 	 */
 	public abstract void loadPage(int startIndex);
 
 	/**
 	 * Populate table.
 	 * 
-	 * @param entities the entities
+	 * @param entities
+	 *            the entities
 	 */
 	public void populateTable(List<T> entities) {
 		createTableHeader();
@@ -160,8 +173,10 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	/**
 	 * Creates the view icon.
 	 * 
-	 * @param row the row
-	 * @param id the id
+	 * @param row
+	 *            the row
+	 * @param id
+	 *            the id
 	 */
 	protected void createViewIcon(int row, Long id) {
 		ClickableLink link = new ClickableLink("view");
@@ -172,7 +187,8 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	/**
 	 * Gets the entity id.
 	 * 
-	 * @param row the row
+	 * @param row
+	 *            the row
 	 * 
 	 * @return the entity id
 	 */
@@ -183,7 +199,8 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	/**
 	 * Fill table.
 	 * 
-	 * @param entities the entities
+	 * @param entities
+	 *            the entities
 	 */
 	public void fillTable(List<T> entities) {
 		/*
@@ -197,12 +214,17 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	/**
 	 * Fill data.
 	 * 
-	 * @param entities the entities
+	 * @param entities
+	 *            the entities
 	 */
 	public abstract void fillData(List<T> entities);
 
-	/* (non-Javadoc)
-	 * @see com.google.gwt.user.client.ui.TableListener#onCellClicked(com.google.gwt.user.client.ui.SourcesTableEvents, int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.ui.TableListener#onCellClicked(com.google.
+	 * gwt.user.client.ui.SourcesTableEvents, int, int)
 	 */
 	public void onCellClicked(SourcesTableEvents arg0, int row, int col) {
 		if (row != 0)
@@ -212,20 +234,30 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	/**
 	 * View clicked.
 	 * 
-	 * @param row the row
-	 * @param col the col
+	 * @param row
+	 *            the row
+	 * @param col
+	 *            the col
 	 */
 	public abstract void viewClicked(int row, int col);
 
-	/* (non-Javadoc)
-	 * @see com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user.client.ui.Widget)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user
+	 * .client.ui.Widget)
 	 */
-	public void onClick(Widget widget) {
-
+	public void onClick(ClickEvent event) {
+		// Log.debug("table click handler");
 	}
 
-	/* (non-Javadoc)
-	 * @see com.google.gwt.user.client.ui.ChangeListener#onChange(com.google.gwt.user.client.ui.Widget)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.ui.ChangeListener#onChange(com.google.gwt.
+	 * user.client.ui.Widget)
 	 */
 	public void onChange(Widget widget) {
 		if (widget == goToPage.getListBox()) {
@@ -236,7 +268,8 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	/**
 	 * Gets the class value.
 	 * 
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * 
 	 * @return the class value
 	 */
@@ -254,7 +287,8 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	/**
 	 * Gets the key value.
 	 * 
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * 
 	 * @return the key value
 	 */

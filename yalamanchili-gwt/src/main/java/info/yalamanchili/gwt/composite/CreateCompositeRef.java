@@ -4,18 +4,18 @@ import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
 import net.sf.gilead.pojo.java5.LightEntity;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.i18n.client.Messages;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Widget;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CreateCompositeRef.
  */
 public abstract class CreateCompositeRef<T extends LightEntity> extends
-		ReadUpdateCreateCompositeRef<T> implements ClickListener {
+		ReadUpdateCreateCompositeRef<T> implements ClickHandler {
 
 	/** The create. */
 	public Button create = new Button("CREATE");
@@ -23,23 +23,29 @@ public abstract class CreateCompositeRef<T extends LightEntity> extends
 	/**
 	 * Inits the create composite.
 	 * 
-	 * @param t the t
-	 * @param constants the constants
-	 * @param messages the messages
+	 * @param t
+	 *            the t
+	 * @param constants
+	 *            the constants
+	 * @param messages
+	 *            the messages
 	 */
 	public void initCreateComposite(T t, ConstantsWithLookup constants,
 			Messages messages) {
 		init(t, false, constants);
 	}
 
-	/* (non-Javadoc)
-	 * @see info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postInit()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postInit()
 	 */
 	protected void postInit() {
 		panel.setSpacing(5);
 		panel.add(create);
 		removeField("ID");
-		create.addClickListener(this);
+		create.addClickHandler(this);
 	}
 
 	/**
@@ -64,17 +70,25 @@ public abstract class CreateCompositeRef<T extends LightEntity> extends
 	 */
 	protected abstract void createButtonClicked();
 
-	/* (non-Javadoc)
-	 * @see com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user.client.ui.Widget)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user
+	 * .client.ui.Widget)
 	 */
-	public void onClick(Widget widget) {
-		if (widget == create) {
+	public void onClick(ClickEvent event) {
+		if (event.getSource() == create) {
 			preValidate();
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postValidate()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postValidate
+	 * ()
 	 */
 	protected void postValidate() {
 		if (postValidateImpl())
