@@ -82,3 +82,18 @@ border   :    1px solid #88ACE0;
 background-color             :    #E5E5E5;
 width:100%;
 }
+.gwt-DatePicker { 
+background-color: #C3D9FF;
+        color: #112ABB;
+        width: 165px;
+}
+.gwt-DatePickerPopup .datePickerMonth{ 
+width: 165px;
+        color: #112ABB;
+        font-size: 8pt;
+        font-weight: bold;
+        font-family: Verdana;
+        text-align: center;
+        cursor: pointer;
+
+}

@@ -4,7 +4,15 @@ import info.yalamanchili.gwt.composite.GenericFieldComposite;
 
 import java.util.Date;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 // TODO: Auto-generated Javadoc
@@ -14,7 +22,10 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 public class DateField extends GenericFieldComposite {
 
 	/** The date picker. */
-	protected DatePicker datePicker = new DatePicker();
+
+	final TextBox dateField = new TextBox();
+	final Button dateButton = new Button("Date");
+	final DatePicker datePicker = new DatePicker();
 
 	/**
 	 * Gets the date picker.
@@ -90,7 +101,31 @@ public class DateField extends GenericFieldComposite {
 
 	@Override
 	public void setup() {
-		fieldPanel.insert(datePicker, 0);
+
+		datePicker.addValueChangeHandler(new ValueChangeHandler() {
+			public void onValueChange(ValueChangeEvent event) {
+				Date date = (Date) event.getValue();
+				String dateString = DateTimeFormat.getFormat("d MMMM yyyy")
+						.format(date);
+				dateField.setText(dateString);
+			}
+		});
+
+		ClickHandler dateButtonHandler = new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				PopupPanel popupPanel = new PopupPanel(true);
+				popupPanel.add(datePicker);
+				popupPanel.setPopupPosition(dateButton.getAbsoluteLeft()
+						+ dateButton.getOffsetWidth(), dateButton
+						.getAbsoluteTop()
+						+ dateButton.getOffsetHeight());
+				popupPanel.show();
+			}
+		};
+		dateButton.addClickHandler(dateButtonHandler);
+		fieldPanel.insert(dateField, 0);
+		fieldPanel.insert(dateButton, 1);
+		// fieldPanel.insert(datePicker, 2);
 
 	}
 

@@ -61,12 +61,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.gwt</groupId>
-			<artifactId>gwt-datepicker</artifactId>
-			<version>r29</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>net.sf.gilead</groupId>
 			<artifactId>adapter-core</artifactId>
 			<version>1.2.2.598</version>
