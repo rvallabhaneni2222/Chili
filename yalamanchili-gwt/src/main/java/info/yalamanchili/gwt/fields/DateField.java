@@ -1,13 +1,11 @@
 package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.GenericFieldComposite;
-import info.yalamanchili.gwt.utils.Utils;
 
 import java.util.Date;
 
-import org.zenika.widget.client.datePicker.DatePicker;
-
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.datepicker.client.DatePicker;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -59,10 +57,10 @@ public class DateField extends GenericFieldComposite {
 	 */
 	public Date getDate() {
 		Date dt = null;
-		if (datePicker.getSelectedDate() == null)
+		if (datePicker.getValue() == null)
 			return null;
 		try {
-			dt = datePicker.getSelectedDate();
+			dt = datePicker.getValue();
 		} catch (Exception e) {
 			Window.alert("enter valid date");
 		}
@@ -77,7 +75,7 @@ public class DateField extends GenericFieldComposite {
 	 */
 	public void setDate(Date date) {
 		if (date != null)
-			datePicker.setText(Utils.getShortDate(date));
+			datePicker.setValue(date);
 	}
 
 	/**
@@ -87,7 +85,7 @@ public class DateField extends GenericFieldComposite {
 	 *            the new read only
 	 */
 	public void setReadOnly(Boolean readOnly) {
-		datePicker.setReadOnly(readOnly);
+		// datePicker.setReadOnly(readOnly);
 	}
 
 	@Override
