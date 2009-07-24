@@ -69,8 +69,48 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	 * 
 	 * @return the id
 	 */
-	public Long getId() {
+	public Long getEntityId() {
 		return entityId;
+	}
+
+	public VerticalPanel getPanel() {
+		return panel;
+	}
+
+	public void setPanel(VerticalPanel panel) {
+		this.panel = panel;
+	}
+
+	public Map<String, Object> getFields() {
+		return fields;
+	}
+
+	public void setFields(Map<String, Object> fields) {
+		this.fields = fields;
+	}
+
+	public String getClassCanonicalName() {
+		return classCanonicalName;
+	}
+
+	public void setClassCanonicalName(String classCanonicalName) {
+		this.classCanonicalName = classCanonicalName;
+	}
+
+	public Boolean getReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(Boolean readOnly) {
+		this.readOnly = readOnly;
+	}
+
+	public void setEntity(T entity) {
+		this.entity = entity;
+	}
+
+	public void setEntityId(Long entityId) {
+		this.entityId = entityId;
 	}
 
 	/**
