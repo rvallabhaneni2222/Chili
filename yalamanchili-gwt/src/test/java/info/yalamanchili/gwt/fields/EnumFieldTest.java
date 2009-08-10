@@ -2,6 +2,7 @@ package info.yalamanchili.gwt.fields;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 // TODO: Auto-generated Javadoc
@@ -9,7 +10,7 @@ import org.junit.Test;
  * The Class EnumFieldTest.
  */
 public class EnumFieldTest {
-	
+
 	/**
 	 * Inits the enum field.
 	 */
@@ -22,6 +23,7 @@ public class EnumFieldTest {
 	 * Test enum field.
 	 */
 	@Test
+	@Ignore
 	public void testEnumField() {
 
 	}

@@ -163,6 +163,9 @@ public interface GWTServiceAsync {
 	<T extends LightEntity> void createEntityFromFields(String className,
 			LinkedHashMap<String, Object> fields, AsyncCallback<T> entity);
 
+	<T extends LightEntity> void createEntityFromFieldsWithID(String className,
+			LinkedHashMap<String, Object> fields, AsyncCallback<T> entity);
+
 	/**
 	 * Update entity from fields.
 	 * 

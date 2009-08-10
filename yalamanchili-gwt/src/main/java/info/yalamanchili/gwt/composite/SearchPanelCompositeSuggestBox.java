@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class SearchPanelComposite.
  */
-public abstract class SearchPanelComposite<T> extends Composite implements
+public abstract class SearchPanelCompositeSuggestBox<T> extends Composite implements
 		ClickHandler {
 
 	/** The panel. */

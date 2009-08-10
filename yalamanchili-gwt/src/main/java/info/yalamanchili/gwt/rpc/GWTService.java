@@ -156,6 +156,9 @@ public interface GWTService extends RemoteService {
 	<T extends LightEntity> T createEntityFromFields(String className,
 			LinkedHashMap<String, Object> fields);
 
+	<T extends LightEntity> T createEntityFromFieldsWithID(String className,
+			LinkedHashMap<String, Object> fields);
+
 	/**
 	 * Update entity from fields.
 	 * 

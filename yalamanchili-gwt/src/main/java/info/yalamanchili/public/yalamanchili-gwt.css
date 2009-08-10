@@ -97,3 +97,10 @@ width: 165px;
         cursor: pointer;
 
 }
+.SearchPanelCompositeGeneric{
+font-size: 10pt;
+}
+
+.SearchPanelCompositeGeneric .gwt-TextBox{
+
+}
