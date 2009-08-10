@@ -11,8 +11,10 @@ import info.yalamanchili.gwt.fields.LongField;
 import info.yalamanchili.gwt.fields.PasswordField;
 import info.yalamanchili.gwt.fields.StringField;
 import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
+import info.yalamanchili.gwt.widgets.ALSuggestBox;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.MissingResourceException;
 
 import net.sf.gilead.pojo.java5.LightEntity;
@@ -21,6 +23,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Widget;
 
 public abstract class SearchPanelCompositeGeneric<T extends LightEntity>
 		extends ReadUpdateCreateCompositeRef<T> implements ClickHandler {
@@ -116,6 +119,16 @@ public abstract class SearchPanelCompositeGeneric<T extends LightEntity>
 	protected abstract void configure();
 
 	protected abstract void searchButtonClicked(T entity);
+
+	protected void addSuggestBox(String name, List<String> values) {
+		ALSuggestBox suggestBox = new ALSuggestBox(name);
+		suggestBox.loadData(values);
+		int index = panel.getWidgetIndex((Widget) fields.get(name));
+		panel.remove((Widget) fields.get(name));
+		fields.remove(name);
+		fields.put(name, suggestBox);
+		panel.insert(suggestBox, index);
+	}
 
 	protected void populateEntity() {
 		GwtServiceAsync.instance().createEntityFromFieldsWithID(

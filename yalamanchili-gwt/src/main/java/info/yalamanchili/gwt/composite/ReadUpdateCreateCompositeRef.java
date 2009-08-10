@@ -13,6 +13,7 @@ import info.yalamanchili.gwt.fields.PasswordField;
 import info.yalamanchili.gwt.fields.StringField;
 import info.yalamanchili.gwt.fields.TextAreaField;
 import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
+import info.yalamanchili.gwt.widgets.ALSuggestBox;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -1013,6 +1014,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 			if (fields.get(fieldName) instanceof EnumField) {
 				EnumField enumf = (EnumField) fields.get(fieldName);
 				flds.put(fieldName, enumf.getValue());
+			}
+			if (fields.get(fieldName) instanceof ALSuggestBox) {
+				ALSuggestBox suggestBox = (ALSuggestBox) fields.get(fieldName);
+				flds.put(fieldName, suggestBox.getText());
 			}
 		}
 		return flds;

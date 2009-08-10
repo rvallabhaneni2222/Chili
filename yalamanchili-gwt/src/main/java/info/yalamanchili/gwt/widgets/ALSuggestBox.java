@@ -36,6 +36,7 @@ public class ALSuggestBox extends Composite {
 		label.setText(name);
 		panel.add(label);
 		panel.add(box);
+		panel.setSpacing(5);
 	}
 
 	/**
