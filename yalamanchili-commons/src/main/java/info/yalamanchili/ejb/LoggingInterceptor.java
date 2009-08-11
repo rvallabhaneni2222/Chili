@@ -1,4 +1,4 @@
-package info.yalamanchili.ejb.interceptor;
+package info.yalamanchili.ejb;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;

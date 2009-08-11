@@ -1,4 +1,4 @@
-package info.yalamanchili.jpa.callback;
+package info.yalamanchili.ejb;
 
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
