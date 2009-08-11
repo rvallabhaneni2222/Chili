@@ -93,4 +93,15 @@
 		</google.webtoolkit.home>
 		<platform>windows</platform>
 	</properties>
+	<repositories>
+			<repository>
+				<id>yalamanchili</id>
+				<url> http://yalamanchili.googlecode.com/svn/maven2  </url>
+			</repository>
+			<repository>
+				<id>jboss</id>
+				<url>
+					http://repository.jboss.com/maven2/ </url>
+			</repository>
+	</repositories>
 </project>
