@@ -1,5 +1,8 @@
 package info.yalamanchili.gwt.composite;
 
+import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -9,7 +12,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class GenericFieldComposite.
  */
-public abstract class GenericFieldComposite extends Composite {
+public abstract class GenericFieldComposite extends Composite implements
+		KeyPressHandler, KeyUpHandler, KeyDownHandler {
 
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();

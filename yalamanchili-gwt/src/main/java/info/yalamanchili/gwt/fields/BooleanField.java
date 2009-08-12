@@ -2,6 +2,9 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.GenericFieldComposite;
 
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.user.client.ui.CheckBox;
 
 // TODO: Auto-generated Javadoc
@@ -76,6 +79,24 @@ public class BooleanField extends GenericFieldComposite {
 
 	@Override
 	public void setup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyPress(KeyPressEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyUp(KeyUpEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyDown(KeyDownEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}

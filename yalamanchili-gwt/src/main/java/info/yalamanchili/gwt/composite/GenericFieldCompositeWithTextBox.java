@@ -1,5 +1,8 @@
 package info.yalamanchili.gwt.composite;
 
+import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -10,7 +13,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class GenericFieldCompositeWithTextBox.
  */
-public abstract class GenericFieldCompositeWithTextBox extends Composite {
+public abstract class GenericFieldCompositeWithTextBox extends Composite
+		implements KeyPressHandler, KeyUpHandler, KeyDownHandler {
 
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
@@ -66,6 +70,7 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite {
 	public GenericFieldCompositeWithTextBox(String labelName) {
 		label.setText(labelName);
 		configure();
+		addListeners();
 		addWidgets();
 		initWidget(panel);
 	}
@@ -84,6 +89,7 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite {
 			setReadOnly(readOnly);
 		configure();
 		addWidgets();
+		addListeners();
 		initWidget(panel);
 	}
 
@@ -104,6 +110,12 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite {
 		fieldPanel.add(textbox);
 		fieldPanel.add(message);
 		panel.add(fieldPanel);
+	}
+
+	protected void addListeners() {
+		textbox.addKeyPressHandler(this);
+		textbox.addKeyUpHandler(this);
+		textbox.addKeyDownHandler(this);
 	}
 
 	/**

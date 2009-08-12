@@ -6,6 +6,9 @@ import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -126,6 +129,23 @@ public class DateField extends GenericFieldComposite {
 		fieldPanel.insert(dateField, 0);
 		fieldPanel.insert(dateButton, 1);
 		// fieldPanel.insert(datePicker, 2);
+
+	}
+
+	@Override
+	public void onKeyPress(KeyPressEvent event) {
+
+	}
+
+	@Override
+	public void onKeyUp(KeyUpEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onKeyDown(KeyDownEvent arg0) {
+		// TODO Auto-generated method stub
 
 	}
 

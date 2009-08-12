@@ -2,6 +2,9 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.GenericFieldCompositeWithTextBox;
 
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.user.client.Window;
 
 public class FloatField extends GenericFieldCompositeWithTextBox {
@@ -30,5 +33,30 @@ public class FloatField extends GenericFieldCompositeWithTextBox {
 	public void setFloat(Float var) {
 		if (var != null)
 			textbox.setText(var.toString());
+	}
+
+	@Override
+	public void onKeyPress(KeyPressEvent event) {
+		Integer eventValue = (int) event.getCharCode();
+		if (!(Character.isDigit(event.getCharCode()) || eventValue
+				.equals(new Integer(46)))) {
+			setMessage("invalid value");
+			textbox.cancelKey();
+		} else {
+			clearMessage();
+		}
+
+	}
+
+	@Override
+	public void onKeyUp(KeyUpEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onKeyDown(KeyDownEvent arg0) {
+		// TODO Auto-generated method stub
+
 	}
 }

@@ -2,6 +2,10 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.GenericFieldCompositeWithTextBox;
 
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class StringField.
@@ -49,6 +53,24 @@ public class StringField extends GenericFieldCompositeWithTextBox {
 	 */
 	public void setText(String text) {
 		textbox.setText(text);
+	}
+
+	@Override
+	public void onKeyPress(KeyPressEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyUp(KeyUpEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyDown(KeyDownEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

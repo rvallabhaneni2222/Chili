@@ -2,6 +2,9 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.GenericFieldCompositeWithTextBox;
 
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.user.client.Window;
 
 // TODO: Auto-generated Javadoc
@@ -60,5 +63,28 @@ public class IntegerField extends GenericFieldCompositeWithTextBox {
 			return null;
 		}
 		return number;
+	}
+
+	@Override
+	public void onKeyPress(KeyPressEvent event) {
+		if (!Character.isDigit(event.getCharCode())) {
+			setMessage("invalid value");
+			textbox.cancelKey();
+		} else {
+			clearMessage();
+		}
+
+	}
+
+	@Override
+	public void onKeyUp(KeyUpEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onKeyDown(KeyDownEvent arg0) {
+		// TODO Auto-generated method stub
+
 	}
 }
