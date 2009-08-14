@@ -1,5 +1,7 @@
 package info.yalamanchili.gwt.rpc;
 
+import info.yalamanchili.gwt.beans.TableObj;
+
 import java.util.List;
 
 import net.sf.gilead.pojo.java5.LightEntity;
@@ -20,6 +22,8 @@ public interface GenericCRUDService extends RemoteService {
 	public <T extends LightEntity> Long getEntitySize(T entity);
 
 	public <T extends LightEntity> List<T> getEntities(T entity, int start);
+
+	public <T extends LightEntity> TableObj<T> getTableObj(T entity, int start);
 
 	public <T extends LightEntity> List<T> getAllEntities(T entity);
 
