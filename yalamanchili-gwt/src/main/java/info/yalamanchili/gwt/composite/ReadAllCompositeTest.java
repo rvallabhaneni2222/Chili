@@ -35,7 +35,7 @@ public abstract class ReadAllCompositeTest<T> extends ALComposite implements
 	protected FlexTable table = new FlexTable();
 
 	/** The number of records. */
-	protected Long numberOfRecords;
+	protected Long numberOfRecords = new Long(0);
 
 	/** The page size. */
 	protected Integer pageSize = 10;// default
@@ -143,6 +143,11 @@ public abstract class ReadAllCompositeTest<T> extends ALComposite implements
 		initPaging(table.getNumberOfRecords());
 		createTableHeader();
 		fillData(table.getRecords());
+	}
+
+	public void postFetchTable(List<T> entities) {
+		createTableHeader();
+		fillData(entities);
 	}
 
 	public abstract void createTableHeader();

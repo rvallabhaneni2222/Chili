@@ -38,7 +38,7 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	protected FlexTable table = new FlexTable();
 
 	/** The number of records. */
-	protected Long numberOfRecords;
+	protected Long numberOfRecords = new Long(0);
 
 	/** The page size. */
 	protected Integer pageSize = 10;// default
@@ -124,7 +124,8 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	public void initLoad(Long noOfRecords) {
 		pageSize = new Integer(10);
 		numberOfRecords = noOfRecords;
-		noOfResultsL.setText("Total Results:" + noOfRecords.toString());
+		if (noOfRecords != null)
+			noOfResultsL.setText("Total Results:" + noOfRecords.toString());
 		createPageLinks();
 		loadPage(0);
 	}
