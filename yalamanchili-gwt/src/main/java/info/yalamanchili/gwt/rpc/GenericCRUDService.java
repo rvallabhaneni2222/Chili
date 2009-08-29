@@ -19,10 +19,6 @@ public interface GenericCRUDService extends RemoteService {
 
 	public <T extends LightEntity> void delete(T entity);
 
-	public <T extends LightEntity> Long getEntitySize(T entity);
-
-	public <T extends LightEntity> List<T> getEntities(T entity, int start);
-
 	public <T extends LightEntity> TableObj<T> getTableObj(T entity, int start);
 
 	public <T extends LightEntity> List<T> getAllEntities(T entity);

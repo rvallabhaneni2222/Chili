@@ -15,9 +15,12 @@ public abstract class ReadCompositeRef<T extends LightEntity> extends
 	/**
 	 * Inits the read composite.
 	 * 
-	 * @param entity the entity
-	 * @param constants the constants
-	 * @param messages the messages
+	 * @param entity
+	 *            the entity
+	 * @param constants
+	 *            the constants
+	 * @param messages
+	 *            the messages
 	 */
 	protected void initReadComposite(T entity, ConstantsWithLookup constants,
 			Messages messages) {
@@ -28,10 +31,14 @@ public abstract class ReadCompositeRef<T extends LightEntity> extends
 	/**
 	 * Inits the read composite.
 	 * 
-	 * @param t the t
-	 * @param id the id
-	 * @param constants the constants
-	 * @param messages the messages
+	 * @param t
+	 *            the t
+	 * @param id
+	 *            the id
+	 * @param constants
+	 *            the constants
+	 * @param messages
+	 *            the messages
 	 */
 	protected void initReadComposite(T t, Long id,
 			ConstantsWithLookup constants, Messages messages) {
@@ -39,8 +46,11 @@ public abstract class ReadCompositeRef<T extends LightEntity> extends
 		init(t, true, constants);
 	}
 
-	/* (non-Javadoc)
-	 * @see info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postInit()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postInit()
 	 */
 	protected void postInit() {
 		if (entityId != null) {
@@ -55,19 +65,25 @@ public abstract class ReadCompositeRef<T extends LightEntity> extends
 	/**
 	 * Read data.
 	 * 
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	protected abstract void readData(Long id);
 
 	/**
 	 * Read data.
 	 * 
-	 * @param entity the entity
+	 * @param entity
+	 *            the entity
 	 */
 	protected abstract void readData(T entity);
 
-	/* (non-Javadoc)
-	 * @see info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postValidate()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postValidate
+	 * ()
 	 */
 	protected void postValidate() {
 

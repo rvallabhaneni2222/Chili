@@ -21,12 +21,6 @@ public interface GenericCRUDServiceAsync {
 	public <T extends LightEntity> void delete(T entity,
 			AsyncCallback<java.lang.Void> response);
 
-	public <T extends LightEntity> void getEntitySize(T entity,
-			AsyncCallback<Long> response);
-
-	public <T extends LightEntity> void getEntities(T entity, int start,
-			AsyncCallback<List<T>> response);
-
 	public <T extends LightEntity> void getTableObj(T entity, int start,
 			AsyncCallback<TableObj<T>> response);
 
