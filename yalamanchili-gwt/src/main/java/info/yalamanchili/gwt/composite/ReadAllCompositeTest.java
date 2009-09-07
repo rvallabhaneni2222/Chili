@@ -128,10 +128,11 @@ public abstract class ReadAllCompositeTest<T> extends ALComposite implements
 	 * Creates the page links.
 	 */
 	protected void createPageLinks() {
-		numberOfPages = (numberOfRecords.intValue() / pageSize) + 1;
-		goToPage = new ListBoxField("Page: ", Alignment.HORIZONTAL);
-		for (int i = 1; i <= numberOfPages; i++) {
-			goToPage.addValue(new Long(i), new Integer(i).toString());
+		if (numberOfPages == null || numberOfPages == 0) {
+			numberOfPages = (numberOfRecords.intValue() / pageSize) + 1;
+			for (int i = 1; i <= numberOfPages; i++) {
+				goToPage.addValue(new Long(i), new Integer(i).toString());
+			}
 		}
 	}
 
