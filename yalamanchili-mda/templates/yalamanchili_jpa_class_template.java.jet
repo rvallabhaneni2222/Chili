@@ -6,6 +6,19 @@ package <c:get select="$package/@name" />;
 
 public class <c:get select="$class/@name" /> {
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
+		<%-- If UIElement--%>
+		<c:if test="$stereotype/@href = 'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F54'">
+			<c:iterate select="$attribute/ModelElement.taggedValue" var="taggedvalue">
+				<c:iterate select="$taggedvalue/TaggedValue" var="subtag">
+				<%-- If POSITION TAG--%>
+					<c:if test="$subtag/TaggedValue.type/TagDefinition/@href = 'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F76'">
+@UIElement (position = Position.<c:get select="$subtag/TaggedValue.dataValue" />)			
+					</c:if>
+				</c:iterate>
+			</c:iterate>
+		</c:if>
+	</c:iterate>
 	protected <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when> </c:choose> <c:get select="$attribute/@name" />;
 </c:iterate>
 
@@ -25,6 +38,9 @@ public class <c:get select="$class/@name" /> {
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+  					  		 			
+  					  		 			
+  					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
   					  		 			<%-- check if the multiplicityis one to one--%>
   					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
@@ -63,18 +79,18 @@ public class <c:get select="$class/@name" /> {
   					    							<%-- Composite @ManyToOne--%>
   					    							
   					    							<c:if test="$association_connection_end/@aggregation = 'composite'">
- @OneToMany 					    							
+ @OneToMany(mappedBy="<c:get select="$association_connection_end/@name" />")					    							
   					    							</c:if>  
   					    							<%-- Aggregate @ManyToOne--%>
   					    							<c:if test="$association_connection_end/@aggregation = 'aggregate'">
- @OneToMany 					    							
+ @OneToMany(mappedBy="<c:get select="$association_connection_end/@name" />")			    							
   					    							</c:if> 
   					    							<%-- Association OneToOne or OneToMany--%>
    					    							<c:if test="$association_connection_end/@aggregation = 'none'">
   					    								<%-- check for one or many realations--%>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
- @OneToMany 					    				
+ @OneToMany (mappedBy="<c:get select="$association_connection_end/@name" />")				    				
 				    										</c:if>
 				    									</c:if>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
