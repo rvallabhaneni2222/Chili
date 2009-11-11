@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Nov 10 16:33:48 EST 2009'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Nov 10 20:16:55 EST 2009'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.28.1(6) revised on $Date: 2007-05-12 08:08:08 +0200 (Sat, 12 May 2007) $ </XMI.exporterVersion>
@@ -13,6 +13,15 @@
         <UML:Stereotype href = 'http://argouml.org/profiles/uml14/default-uml14.xmi#.:0000000000000877'/>
         <UML:Stereotype href = 'http://argouml.org/profiles/uml14/default-java.xmi#-64--88-1-3--3c483fe3:119aa9cff00:-8000:00000000000007A3'/>
       </UML:ModelElement.stereotype>
+      <UML:ModelElement.taggedValue>
+        <UML:TaggedValue xmi.id = '-91--119--6-96--2a64a0f4:124e02d5998:-8000:000000000000186D'
+          isSpecification = 'false'>
+          <UML:TaggedValue.dataValue></UML:TaggedValue.dataValue>
+          <UML:TaggedValue.type>
+            <UML:TagDefinition xmi.idref = '-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F76'/>
+          </UML:TaggedValue.type>
+        </UML:TaggedValue>
+      </UML:ModelElement.taggedValue>
       <UML:Namespace.ownedElement>
         <UML:Package xmi.id = '-91--119--6-96--3f25fb15:124dfdeb2d0:-8000:0000000000000F25'
           name = 'info.yalamanchili.mda' isSpecification = 'false' isRoot = 'false'
@@ -46,9 +55,9 @@
               isAbstract = 'false'>
               <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
               <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F7D'
+                <UML:TaggedValue xmi.id = '-91--119--6-96--2a64a0f4:124e02d5998:-8000:000000000000186C'
                   isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>ONE</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.dataValue></UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition xmi.idref = '-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F76'/>
                   </UML:TaggedValue.type>
