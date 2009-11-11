@@ -28,12 +28,62 @@ public class <c:get select="$class/@name" /> {
   					  		 			<%-- check if the multiplicityis one to one--%>
   					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+  					    						<%--check the relations--%>
+  					    							<%-- Composite @ManyToOne--%>
+  					    							
+  					    							<c:if test="$association_connection_end2/@aggregation = 'composite'">
+ @ManyToOne 					    							
+  					    							</c:if>  
+  					    							<%-- Aggregate @ManyToOne--%>
+  					    							<c:if test="$association_connection_end2/@aggregation = 'aggregate'">
+ @ManyToOne 					    							
+  					    							</c:if> 
+ 													<%-- Association OneToOne or OneToMany--%>
+   					    							<c:if test="$association_connection_end2/@aggregation = 'none'">
+  					    								<%-- check for one or many realations--%>
+  					    								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+  					    									<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+ @OneToOne 					    				
+				    										</c:if>
+				    									</c:if>
+  					    								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  					    									<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+ @ManyToOne 					    				
+				    										</c:if>
+				    									</c:if>		    							
+  					    							</c:if> 
+ 													
  protected 	<c:get select="$class2/@name" />  <c:get select="$association_connection_end2/@name" />;
   					  		 					</c:if>  
   					  		 			</c:if>
   										 <%-- check if the multiplicityis one to many--%>
    					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
-  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">			    						
+  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+   					    						<%--check the relations--%>
+  					    							<%-- Composite @ManyToOne--%>
+  					    							
+  					    							<c:if test="$association_connection_end/@aggregation = 'composite'">
+ @OneToMany 					    							
+  					    							</c:if>  
+  					    							<%-- Aggregate @ManyToOne--%>
+  					    							<c:if test="$association_connection_end/@aggregation = 'aggregate'">
+ @OneToMany 					    							
+  					    							</c:if> 
+  					    							<%-- Association OneToOne or OneToMany--%>
+   					    							<c:if test="$association_connection_end/@aggregation = 'none'">
+  					    								<%-- check for one or many realations--%>
+  					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+  					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+ @OneToMany 					    				
+				    										</c:if>
+				    									</c:if>
+  					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+ @ManyToMany 					    				
+				    										</c:if>
+				    									</c:if>		    							
+  					    							</c:if> 
+  					    											    									    						
  protected 	List<<c:get select="$class2/@name" />>  <c:get select="$association_connection_end2/@name" />;
   					  		 					</c:if>  
   					  		 			</c:if>
