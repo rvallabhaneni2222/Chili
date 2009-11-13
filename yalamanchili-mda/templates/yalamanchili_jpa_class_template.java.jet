@@ -128,7 +128,10 @@ public class <c:get select="$class/@name" /> implements Serializable{
 	protected void set<c:get select="uppercaseFirst($attribute/@name)" />(<c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when> </c:choose> <c:get select="$attribute/@name" />){
 	this.<c:get select="$attribute/@name" />=<c:get select="$attribute/@name" />;
 	}
-	<%--getters for collection attributes --%>
+	
+</c:iterate>
+<%-- colletions getters and setters-->
+<%--getters for collection attributes --%>
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 	<c:iterate select="$association/Association.connection" var="association_connection">
 	
@@ -182,7 +185,6 @@ public class <c:get select="$class/@name" /> implements Serializable{
 					</c:if> 											
 		</c:iterate>
 	</c:iterate>
-</c:iterate>
 
 </c:iterate>
 
