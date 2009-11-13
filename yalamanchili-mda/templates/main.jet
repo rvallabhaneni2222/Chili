@@ -3,14 +3,39 @@
 <c:if test="isVariableDefined('org.eclipse.jet.resource.project.name')">
     <ws:file template="templates/dump.jet" path="{$org.eclipse.jet.resource.project.name}/dump.xml"/>
 </c:if>
+<%--Set Global varibles like projectId,groupId,version...--%>
 
+<c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
+<c:setVariable select="'info.yalamanchili.test'" var="groupID"/>
+<c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
+<%--create the jpa project --%>
 
+<%--creates the master project--%>
+<ws:project name="{$projectName}-master" location="C:/MDA/{$projectName}-master">
+	<ws:file path="pom.xml" template="templates/master_pom_template.xml.jet"/>
+    
+</ws:project>
+
+<%--creates the JPA project--%>
+<ws:project name="{$projectName}-jpa" location="C:/MDA/{$projectName}-jpa">
+	<ws:file path="pom.xml" template="templates/jpa_pom_template.xml.jet"/>
+    <ws:folder path="src/main/java">
+    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+			
+		</c:iterate>
+    </ws:folder>
+    <ws:folder path="src/main/resources">
+    <ws:file template="templates/jpa_persistence_template.xml.jet" path="META-INF/persistence.xml"/>
+    </ws:folder>
+    <ws:folder path="src/test/java"/>
+    <ws:folder path="src/test/resources"/>
+
+</ws:project>
 
 <%-- --%>
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
 	<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-<java:class name="{$class/@name}" package="{$package/@name}" srcFolder="jet2sample" template="templates/yalamanchili_jpa_class_template.java.jet"/>
-<%-- --%>
+	<java:class name="{$class/@name}" package="{$package/@name}" srcFolder="jet2sample" template="templates/yalamanchili_jpa_class_template.java.jet"/>
 		<ws:file template="templates/yalamanchili_jpa_class_template.java.jet"
 		path="{$org.eclipse.jet.resource.project.name}/generated/{$class/@name}.java">
 	</c:iterate>

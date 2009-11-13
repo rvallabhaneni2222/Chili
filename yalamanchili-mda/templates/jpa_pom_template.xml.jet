@@ -1,2 +1,79 @@
-<xml>
-</xml>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<groupId><c:get select="$groupID" /></groupId>
+		<artifactId><c:get select="$projectName" />-master</artifactId>
+		<version><c:get select="$version" /></version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId><c:get select="$groupID" /></groupId>
+	<artifactId><c:get select="$projectName" />-jpa</artifactId>
+	<name><c:get select="$projectName" />-jpa</name>
+	<version><c:get select="$version" /></version>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<dependency>
+			<groupId>net.sf.gilead</groupId>
+			<artifactId>adapter-core</artifactId>
+			<version>1.2.4</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>hibernate3-maven-plugin
+				</artifactId>
+				<version>2.0-alpha-2</version>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>hbm2ddl</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<components>
+						<component>
+							<name>hbm2ddl</name>
+							<implementation>
+								annotationconfiguration</implementation>
+						</component>
+					</components>
+					<componentProperties>
+						<implementation>jpaconfiguration</implementation>
+						<persistenceunit><c:get select="$projectName" /></persistenceunit>
+						<outputfilename>schema.ddl</outputfilename>
+						<drop>false</drop>
+						<create>true</create>
+						<export>false</export>
+						<format>true</format>
+					</componentProperties>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
+		<repository>
+			<id>gilead</id>
+			<url>
+				https://gilead.svn.sourceforge.net/svnroot/gilead/gilead/maven-repo/
+			</url>
+		</repository>
+	</repositories>
+</project>

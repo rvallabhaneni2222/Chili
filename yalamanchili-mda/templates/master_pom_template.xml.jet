@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId><c:get select="$groupID" /></groupId>
+	<artifactId><c:get select="$projectName" />-master</artifactId>
+	<packaging>pom</packaging>
+	<version><c:get select="$version" /></version>
+	<name><c:get select="$projectName" />-master</name>
+	<url>http://somecompany.com</url>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.yalamanchili</groupId>
+			<artifactId>yalamanchili-embedded-jboss
+			</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.yalamanchili.gwt</groupId>
+			<artifactId>yalamanchili-gwt</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.gilead</groupId>
+			<artifactId>hibernate-util</artifactId>
+			<version>1.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.gilead</groupId>
+			<artifactId>adapter4gwt</artifactId>
+			<version>1.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>info.yalamanchili.commons</groupId>
+			<artifactId>yalamanchili-commons</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss-annotations-ejb3</artifactId>
+			<version>4.2.2.GA</version>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+			<dependency> <groupId>org.jboss.security</groupId>
+			<artifactId>jboss-security-acl-impl</artifactId>
+			<version>2.0.2.SP1</version> <scope>provided</scope> </dependency>
+		-->
+	</dependencies>
+	<modules>
+		<module>../<c:get select="$projectName" />-jpa</module>
+	</modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins
+						</groupId>
+				<artifactId>maven-compiler-plugin
+						</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
+		<repository>
+			<id>yalamanchili</id>
+			<url> http://yalamanchili.googlecode.com/svn/maven2  </url>
+		</repository>
+		<repository>
+			<id>jboss</id>
+			<url>
+				http://repository.jboss.com/maven2/ </url>
+		</repository>
+	</repositories>
+	<properties>
+		<gwtVersion>1.7.0</gwtVersion>
+		<gileadVersion>1.2.4</gileadVersion>
+		<google.webtoolkit.home>C:\gwt-windows-1.7.0
+		</google.webtoolkit.home>
+		<platform>windows</platform>
+	</properties>
+</project>
