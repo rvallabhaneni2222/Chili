@@ -1,4 +1,4 @@
-
+<java:merge/>
 <java:format>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 
@@ -7,6 +7,8 @@ package <c:get select="$package/@name" />;
 
 @Entity
 public class <c:get select="$class/@name" /> implements Serializable{
+
+/** @generated */
 	@Id
 	protected Long id;
 	<%-- attributes --%>
@@ -73,7 +75,7 @@ public class <c:get select="$class/@name" /> implements Serializable{
 				    										</c:if>
 				    									</c:if>		    							
   					    							</c:if> 
- 													
+ 	/** @generated */												
  protected 	<c:get select="$class2/@name" />  <c:get select="$association_connection_end2/@name" />;
   					  		 					</c:if>  
   					  		 			</c:if>
@@ -104,7 +106,7 @@ public class <c:get select="$class/@name" /> implements Serializable{
 				    										</c:if>
 				    									</c:if>		    							
   					    							</c:if> 
-  					    											    									    						
+  /** @generated */					    											    									    						
  protected 	List<<c:get select="$class2/@name" />>  <c:get select="$association_connection_end2/@name" />;
   					  		 					</c:if>  
   					  		 			</c:if>
@@ -117,14 +119,20 @@ public class <c:get select="$class/@name" /> implements Serializable{
 	</c:iterate>
 </c:iterate>
 
+<%-- constructor --%>
+/** @generated */
+public <c:get select="$class/@name" />() {
+super();   
+}
 
 <%-- getters and setters --%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 	<%--getters for basic attributes --%>
+	/** @generated */
 	protected  <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when> </c:choose> get<c:get select="uppercaseFirst($attribute/@name)" />(){
 	return <c:get select="$attribute/@name" />;
 	}
-	
+	/** @generated */
 	protected void set<c:get select="uppercaseFirst($attribute/@name)" />(<c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when> </c:choose> <c:get select="$attribute/@name" />){
 	this.<c:get select="$attribute/@name" />=<c:get select="$attribute/@name" />;
 	}
@@ -153,12 +161,12 @@ public class <c:get select="$class/@name" /> implements Serializable{
   					  		 			<%-- check if the multiplicityis one to one--%>
   					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-
+/** @generated */
  													
  protected 	<c:get select="$class2/@name" /> get<c:get select="$class2/@name" />() {
  return  this.<c:get select="$association_connection_end2/@name" />;
  }
- 
+ /** @generated */
   protected 	void set<c:get select="$class2/@name" />(<c:get select="$class2/@name" /> <c:get select="$association_connection_end2/@name" />) {
    this.<c:get select="$association_connection_end2/@name" />=<c:get select="$association_connection_end2/@name" />;
  }
@@ -168,11 +176,11 @@ public class <c:get select="$class/@name" /> implements Serializable{
    					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
    					    						
-  					    											    									    						
+  	/** @generated */				    											    									    						
  protected 	List<<c:get select="$class2/@name" />>  get<c:get select="$class2/@name" />s(){
  return this.<c:get select="$association_connection_end2/@name" />;
  }
- 
+ /** @generated */
  protected 	  void set<c:get select="$class2/@name" />(List<<c:get select="$class2/@name" />> <c:get select="$association_connection_end2/@name" />){
  this.<c:get select="$association_connection_end2/@name" />=<c:get select="$association_connection_end2/@name" />;
  }
