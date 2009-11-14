@@ -21,7 +21,9 @@
 	<ws:file path="pom.xml" template="templates/jpa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-			
+			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+			<java:class name="{$class/@name}" package="{$package/@name}" template="templates/yalamanchili_jpa_class_template.java.jet"/>
+			</c:iterate>
 		</c:iterate>
     </ws:folder>
     <ws:folder path="src/main/resources">
@@ -31,12 +33,5 @@
     <ws:folder path="src/test/resources"/>
 
 </ws:project>
+<ws:rebuildWorkspace/>
 
-<%-- --%>
-<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-	<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-	<java:class name="{$class/@name}" package="{$package/@name}" srcFolder="jet2sample" template="templates/yalamanchili_jpa_class_template.java.jet"/>
-		<ws:file template="templates/yalamanchili_jpa_class_template.java.jet"
-		path="{$org.eclipse.jet.resource.project.name}/generated/{$class/@name}.java">
-	</c:iterate>
-</c:iterate>
