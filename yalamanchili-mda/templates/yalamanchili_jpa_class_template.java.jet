@@ -1,7 +1,6 @@
-<java:merge/>
+
 <java:format>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
-
 package <c:get select="$package/@name" />;
  
 <java:importsLocation package="{$package/@name}"/>
@@ -35,7 +34,9 @@ import org.hibernate.validator.Past;
 import org.hibernate.validator.Range;
 
 @Entity
-public class <c:get select="$class/@name" /> implements Serializable{
+public class <c:get select="$class/@name" /> extends LightEntity implements Serializable{
+/** @generated */
+private static final long serialVersionUID = 1L;
 
 /** @generated */
 	@Id
@@ -115,7 +116,7 @@ public class <c:get select="$class/@name" /> implements Serializable{
   					    							<%-- Composite @ManyToOne--%>
   					    							
   					    							<c:if test="$association_connection_end/@aggregation = 'composite'">
- @OneToMany(mappedBy="<c:get select="$association_connection_end/@name" />")					    							
+ @OneToMany(mappedBy="<c:get select="$association_connection_end/@name" />", cascade = CascadeType.ALL)					    							
   					    							</c:if>  
   					    							<%-- Aggregate @ManyToOne--%>
   					    							<c:if test="$association_connection_end/@aggregation = 'aggregate'">
