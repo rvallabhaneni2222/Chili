@@ -3,7 +3,36 @@
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 
 package <c:get select="$package/@name" />;
+ 
+<java:importsLocation package="{$package/@name}"/>
+import info.yalamanchili.gwt.ui.Position;
+import info.yalamanchili.gwt.ui.UIElement;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+
+import net.sf.gilead.pojo.java5.LightEntity;
+
+import org.hibernate.validator.Length;
+import org.hibernate.validator.NotNull;
+import org.hibernate.validator.Past;
+import org.hibernate.validator.Range;
 
 @Entity
 public class <c:get select="$class/@name" /> implements Serializable{
