@@ -41,7 +41,8 @@ private static final long serialVersionUID = 1L;
 /** @generated */
 	@Id
 	protected Long id;
-	<%-- attributes --%>
+
+	<%-- basic data types attributes and Enumerations--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
 		<%-- If UIElement--%>
@@ -50,14 +51,30 @@ private static final long serialVersionUID = 1L;
 				<c:iterate select="$taggedvalue/TaggedValue" var="subtag">
 				<%-- If POSITION TAG--%>
 					<c:if test="$subtag/TaggedValue.type/TagDefinition/@href = 'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F76'">
-@UIElement (position = Position.<c:get select="$subtag/TaggedValue.dataValue" />)			
+@UIElement(position = Position.<c:get select="$subtag/TaggedValue.dataValue" />)			
 					</c:if>
 				</c:iterate>
 			</c:iterate>
 		</c:if>
 	</c:iterate>
-	protected <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when> </c:choose> <c:get select="$attribute/@name" />;
+	
+ 
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > protected String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > protected Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > protected Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" >protected  Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > protected Long </c:when>
+	 <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			@Enumerated(EnumType.STRING)
+	 			protected  <c:get select="$enumeration/@name" /> 
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise>
+</c:choose> 
+<c:get select="$attribute/@name" />;
+
 </c:iterate>
+
+
+
 <%-- collections --%>
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 
@@ -159,11 +176,23 @@ super();
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 	<%--getters for basic attributes --%>
 	/** @generated */
-	protected  <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when> </c:choose> get<c:get select="uppercaseFirst($attribute/@name)" />(){
+	protected  <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when> <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			 <c:get select="$enumeration/@name" /> 
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise> </c:choose> get<c:get select="uppercaseFirst($attribute/@name)" />(){
 	return <c:get select="$attribute/@name" />;
 	}
 	/** @generated */
-	protected void set<c:get select="uppercaseFirst($attribute/@name)" />(<c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when> </c:choose> <c:get select="$attribute/@name" />){
+	protected void set<c:get select="uppercaseFirst($attribute/@name)" />(<c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when><c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			 <c:get select="$enumeration/@name" /> 
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise> </c:choose> <c:get select="$attribute/@name" />){
 	this.<c:get select="$attribute/@name" />=<c:get select="$attribute/@name" />;
 	}
 	

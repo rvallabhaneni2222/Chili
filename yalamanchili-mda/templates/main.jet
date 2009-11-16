@@ -8,7 +8,17 @@
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
 <c:setVariable select="'info.yalamanchili.test'" var="groupID"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
-<%--create the jpa project --%>
+
+
+	<%-- load the yalamanchiliMDA prifile--%>
+<c:load url="templates/YalamanchiliMDAProfile.xml" var="myprofile"  />
+	
+<%--Iterate through the yalamanchiliMDA model and get the datatypes,stereotypes and tagged values --%>
+<c:iterate select="$myprofile/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Stereotype" var="stereotype">
+	<c:if test="$stereotype/@name = 'UIElement'">
+		<c:setVariable select="concat('http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#',$stereotype/@xmi.id)" var="UIElementID"/>		
+	</c:if>
+</c:iterate>	
 
 <%--creates the master project--%>
 <ws:project name="{$projectName}-master" location="C:/MDA/{$projectName}-master">
@@ -21,8 +31,13 @@
 	<ws:file path="pom.xml" template="templates/jpa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		<%-- create enumerations in the package--%>
+    		<c:iterate select="$package/Namespace.ownedElement/Enumeration" var="enumeration">
+			<java:class name="{$enumeration/@name}" package="{$package/@name}" template="templates/enumeration_template.java.jet"/>
+			</c:iterate>
+			<%-- create classes in the package--%>
 			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-			<java:class name="{$class/@name}" package="{$package/@name}" template="templates/yalamanchili_jpa_class_template.java.jet"/>
+			<java:class name="{$class/@name}" package="{$package/@name}" template="templates/jpa_class_template.java.jet"/>
 			</c:iterate>
 		</c:iterate>
     </ws:folder>

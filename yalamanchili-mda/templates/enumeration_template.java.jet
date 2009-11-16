@@ -1,0 +1,6 @@
+package <c:get select="$package/@name" />;
+ 
+<java:importsLocation package="{$package/@name}"/>
+
+public enum <c:get select="$enumeration/@name" /> {
+}
