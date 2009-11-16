@@ -1,6 +1,11 @@
+<java:format>
 package <c:get select="$package/@name" />;
  
 <java:importsLocation package="{$package/@name}"/>
 
 public enum <c:get select="$enumeration/@name" /> {
+<c:iterate select="$enumeration/Enumeration.literal/EnumerationLiteral" var="enumerationlit">
+<c:get select="$enumerationlit/@name" />,
+</c:iterate>
 }
+</java:format>
