@@ -25,13 +25,34 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.Inheritance;
 import net.sf.gilead.pojo.java5.LightEntity;
 
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Past;
 import org.hibernate.validator.Range;
+<%-- Check inheritance support--%>
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+ <%-- if parent class--%>
+	<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $classID">
+		<c:setVariable select="$generalization/Generalization.parent/Class/@xmi.idref" var="isParentClass"/>
+	</c:if>
+ <%-- if child class--%>
+	<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
+		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.child/Class/@xmi.idref">
+  			//child class
+  			<c:setVariable select="$otherClass/@name" var="parentClass"/>
+  			<c:setVariable select="$generalization/Generalization.parent/Class/@xmi.idref" var="isParentClass"/>
+  			</c:if>
+		</c:iterate>  					  		 			 
+	</c:if>
+</c:iterate>
+
+<c:if test="$isParentClass = $classID">
+@Inheritance
+</c:if> 
 
 @Entity
 public class <c:get select="$class/@name" /> extends LightEntity implements Serializable{
