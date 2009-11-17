@@ -1,6 +1,8 @@
 
 <java:format>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
+<%--This is used to check for inhereritance --%>
+<c:setVariable select="$class/@name" var="parentClass"/>
 package <c:get select="$package/@name" />;
  
 <java:importsLocation package="{$package/@name}"/>
@@ -26,6 +28,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
 import net.sf.gilead.pojo.java5.LightEntity;
 
 import org.hibernate.validator.Length;
@@ -41,27 +45,34 @@ import org.hibernate.validator.Range;
  <%-- if child class--%>
 	<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
-  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.child/Class/@xmi.idref">
-  			//child class
+  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
   			<c:setVariable select="$otherClass/@name" var="parentClass"/>
-  			<c:setVariable select="$generalization/Generalization.parent/Class/@xmi.idref" var="isParentClass"/>
   			</c:if>
 		</c:iterate>  					  		 			 
 	</c:if>
 </c:iterate>
 
 <c:if test="$isParentClass = $classID">
-@Inheritance
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 </c:if> 
 
 @Entity
-public class <c:get select="$class/@name" /> extends LightEntity implements Serializable{
+public class <c:get select="$class/@name" />  <c:choose select="$parentClass" > <c:when test="$class/@name" > extends  LightEntity </c:when> <c:otherwise> extends <c:get select="$parentClass" /></c:otherwise>  </c:choose> implements Serializable{
 /** @generated */
 private static final long serialVersionUID = 1L;
 
-/** @generated */
+<%-- if this is not a child class--%> 
+ <c:choose select="$parentClass" > 
+ 	<c:when test="$class/@name" > /** @generated */
 	@Id
-	protected Long id;
+	protected Long id; 
+	</c:when>
+	 <c:otherwise> 
+	 </c:otherwise> 
+ </c:choose>
+
+ 
+
 
 	<%-- basic data types attributes and Enumerations--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
