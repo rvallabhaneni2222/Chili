@@ -6,7 +6,7 @@
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 <%--This is used to check for inhereritance --%>
 <c:setVariable select="$class/@name" var="parentClass"/>
-package <c:get select="$package/@name" />;
+package ${$package/@name};
  
 <java:importsLocation package="{$package/@name}"/>
 import info.yalamanchili.gwt.ui.Position;
@@ -61,7 +61,7 @@ import org.hibernate.validator.Range;
 </c:if> 
 
 @Entity
-public class <c:get select="$class/@name" />  <c:choose select="$parentClass" > <c:when test="$class/@name" > extends  LightEntity </c:when> <c:otherwise> extends <c:get select="$parentClass" /></c:otherwise>  </c:choose> implements Serializable{
+public class ${$class/@name}  <c:choose select="$parentClass" > <c:when test="$class/@name" > extends  LightEntity </c:when> <c:otherwise> extends ${$parentClass}</c:otherwise>  </c:choose> implements Serializable{
 /** @generated */
 private static final long serialVersionUID = 1L;
 
@@ -88,8 +88,7 @@ private static final long serialVersionUID = 1L;
 				<c:iterate select="$taggedvalue/TaggedValue" var="subtag">
 				<%-- If POSITION TAG--%>
 					<c:if test="$subtag/TaggedValue.type/TagDefinition/@href = 'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F76'">
-					 
-@UIElement(position = Position.<c:get select="$subtag/TaggedValue.dataValue" />)			
+@UIElement(position = Position.${$subtag/TaggedValue.dataValue})			
 					</c:if>
 				</c:iterate>
 			</c:iterate>
@@ -102,12 +101,12 @@ private static final long serialVersionUID = 1L;
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
 	 			@Enumerated(EnumType.STRING)
-	 			protected  <c:get select="$enumeration/@name" /> 
+	 			protected  ${$enumeration/@name} 
 	 			</c:if>
 	 	</c:iterate>	
 	 	  </c:otherwise>
 </c:choose> 
-<c:get select="$attribute/@name" />;
+${$attribute/@name};
 
 </c:iterate>
 
@@ -161,7 +160,7 @@ private static final long serialVersionUID = 1L;
 				    									</c:if>		    							
   					    							</c:if> 
  										
- protected 	<c:get select="$class2/@name" />  <c:get select="$association_connection_end2/@name" />;
+ protected 	${$class2/@name}  ${$association_connection_end2/@name};
   					  		 					</c:if>  
   					  		 			</c:if>
   										 <%-- check if the multiplicityis one to many--%>
@@ -171,18 +170,18 @@ private static final long serialVersionUID = 1L;
   					    							<%-- Composite @ManyToOne--%>
   					    							
   					    							<c:if test="$association_connection_end/@aggregation = 'composite'">
- @OneToMany(mappedBy="<c:get select="$association_connection_end/@name" />", cascade = CascadeType.ALL)					    							
+ @OneToMany(mappedBy="${$association_connection_end/@name}", cascade = CascadeType.ALL)					    							
   					    							</c:if>  
   					    							<%-- Aggregate @ManyToOne--%>
   					    							<c:if test="$association_connection_end/@aggregation = 'aggregate'">
- @OneToMany(mappedBy="<c:get select="$association_connection_end/@name" />")			    							
+ @OneToMany(mappedBy="${$association_connection_end/@name}")			    							
   					    							</c:if> 
   					    							<%-- Association OneToOne or OneToMany--%>
    					    							<c:if test="$association_connection_end/@aggregation = 'none'">
   					    								<%-- check for one or many realations--%>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
- @OneToMany (mappedBy="<c:get select="$association_connection_end/@name" />")				    				
+ @OneToMany (mappedBy="${$association_connection_end/@name}")				    				
 				    										</c:if>
 				    									</c:if>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
@@ -192,7 +191,7 @@ private static final long serialVersionUID = 1L;
 				    									</c:if>		    							
   					    							</c:if> 
 				    											    									    						
- protected 	List<<c:get select="$class2/@name" />>  <c:get select="$association_connection_end2/@name" />;
+ protected 	List<${$class2/@name}>  ${$association_connection_end2/@name};
   					  		 					</c:if>  
   					  		 			</c:if>
   					  		 			</c:if> 
@@ -206,7 +205,7 @@ private static final long serialVersionUID = 1L;
 
 <%-- constructor --%>
 <f:message>generated.comment</f:message>
-public <c:get select="$class/@name" />() {
+public ${$class/@name}() {
 super();   
 }
 
@@ -217,21 +216,21 @@ super();
 	protected  <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when> <c:otherwise> 
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-	 			 <c:get select="$enumeration/@name" /> 
+	 			 ${$enumeration/@name} 
 	 			</c:if>
 	 	</c:iterate>	
-	 	  </c:otherwise> </c:choose> get<c:get select="uppercaseFirst($attribute/@name)" />(){
-	return <c:get select="$attribute/@name" />;
+	 	  </c:otherwise> </c:choose> get${uppercaseFirst($attribute/@name)}(){
+	return ${$attribute/@name};
 	}
 	<f:message>generated.comment</f:message>
-	protected void set<c:get select="uppercaseFirst($attribute/@name)" />(<c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when><c:otherwise> 
+	protected void set${uppercaseFirst($attribute/@name)}(<c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when><c:otherwise> 
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-	 			 <c:get select="$enumeration/@name" /> 
+	 			 ${$enumeration/@name} 
 	 			</c:if>
 	 	</c:iterate>	
 	 	  </c:otherwise> </c:choose> <c:get select="$attribute/@name" />){
-	this.<c:get select="$attribute/@name" />=<c:get select="$attribute/@name" />;
+	this.${$attribute/@name}=${$attribute/@name};
 	}
 	
 </c:iterate>
@@ -260,12 +259,12 @@ super();
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
 <f:message>generated.comment</f:message>
  													
- protected 	<c:get select="$class2/@name" /> get<c:get select="$class2/@name" />() {
- return  this.<c:get select="$association_connection_end2/@name" />;
+ protected 	${$class2/@name} get${$class2/@name}() {
+ return  this.${$association_connection_end2/@name};
  }
 <f:message>generated.comment</f:message>
-  protected 	void set<c:get select="$class2/@name" />(<c:get select="$class2/@name" /> <c:get select="$association_connection_end2/@name" />) {
-   this.<c:get select="$association_connection_end2/@name" />=<c:get select="$association_connection_end2/@name" />;
+  protected 	void set${$class2/@name}(${$class2/@name} ${$association_connection_end2/@name}) {
+   this.${$association_connection_end2/@name}=${$association_connection_end2/@name};
  }
   					  		 					</c:if>  
   					  		 			</c:if>
@@ -274,12 +273,12 @@ super();
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
    					    						
   <f:message>generated.comment</f:message>				    											    									    						
- protected 	List<<c:get select="$class2/@name" />>  get<c:get select="$class2/@name" />s(){
- return this.<c:get select="$association_connection_end2/@name" />;
+ protected 	List<${$class2/@name}>  get${$class2/@name}s(){
+ return this.${$association_connection_end2/@name};
  }
 <f:message>generated.comment</f:message>
- protected 	  void set<c:get select="$class2/@name" />(List<<c:get select="$class2/@name" />> <c:get select="$association_connection_end2/@name" />){
- this.<c:get select="$association_connection_end2/@name" />=<c:get select="$association_connection_end2/@name" />;
+ protected 	  void set${$class2/@name}(List<${$class2/@name}> ${$association_connection_end2/@name}){
+ this.${$association_connection_end2/@name}=${$association_connection_end2/@name};
  }
   					  		 					</c:if>  
   					  		 			</c:if>
