@@ -1,5 +1,8 @@
 
 <java:format>
+
+<f:bundle basename="templates/resources/messages">
+
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 <%--This is used to check for inhereritance --%>
 <c:setVariable select="$class/@name" var="parentClass"/>
@@ -52,6 +55,7 @@ import org.hibernate.validator.Range;
 	</c:if>
 </c:iterate>
 
+<f:message>generated.comment</f:message>
 <c:if test="$isParentClass = $classID">
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 </c:if> 
@@ -63,7 +67,7 @@ private static final long serialVersionUID = 1L;
 
 <%-- if this is not a child class--%> 
  <c:choose select="$parentClass" > 
- 	<c:when test="$class/@name" > /** @generated */
+ 	<c:when test="$class/@name" > <f:message>generated.comment</f:message>
 	@Id
 	protected Long id; 
 	</c:when>
@@ -76,6 +80,7 @@ private static final long serialVersionUID = 1L;
 
 	<%-- basic data types attributes and Enumerations--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+<f:message>generated.comment</f:message>
 	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
 		<%-- If UIElement--%>
 		<c:if test="$stereotype/@href = 'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F54'">
@@ -83,6 +88,7 @@ private static final long serialVersionUID = 1L;
 				<c:iterate select="$taggedvalue/TaggedValue" var="subtag">
 				<%-- If POSITION TAG--%>
 					<c:if test="$subtag/TaggedValue.type/TagDefinition/@href = 'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F76'">
+					 
 @UIElement(position = Position.<c:get select="$subtag/TaggedValue.dataValue" />)			
 					</c:if>
 				</c:iterate>
@@ -90,7 +96,7 @@ private static final long serialVersionUID = 1L;
 		</c:if>
 	</c:iterate>
 	
- 
+
 	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > protected String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > protected Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > protected Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" >protected  Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > protected Long </c:when>
 	 <c:otherwise> 
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
@@ -125,7 +131,7 @@ private static final long serialVersionUID = 1L;
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
   					  		 			
-  					  		 			
+  <f:message>generated.comment</f:message>					  		 			
   					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
   					  		 			<%-- check if the multiplicityis one to one--%>
   					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
@@ -154,7 +160,7 @@ private static final long serialVersionUID = 1L;
 				    										</c:if>
 				    									</c:if>		    							
   					    							</c:if> 
- 	/** @generated */												
+ 										
  protected 	<c:get select="$class2/@name" />  <c:get select="$association_connection_end2/@name" />;
   					  		 					</c:if>  
   					  		 			</c:if>
@@ -185,7 +191,7 @@ private static final long serialVersionUID = 1L;
 				    										</c:if>
 				    									</c:if>		    							
   					    							</c:if> 
-  /** @generated */					    											    									    						
+				    											    									    						
  protected 	List<<c:get select="$class2/@name" />>  <c:get select="$association_connection_end2/@name" />;
   					  		 					</c:if>  
   					  		 			</c:if>
@@ -199,7 +205,7 @@ private static final long serialVersionUID = 1L;
 </c:iterate>
 
 <%-- constructor --%>
-/** @generated */
+<f:message>generated.comment</f:message>
 public <c:get select="$class/@name" />() {
 super();   
 }
@@ -207,7 +213,7 @@ super();
 <%-- getters and setters --%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 	<%--getters for basic attributes --%>
-	/** @generated */
+	<f:message>generated.comment</f:message>
 	protected  <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when> <c:otherwise> 
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -217,7 +223,7 @@ super();
 	 	  </c:otherwise> </c:choose> get<c:get select="uppercaseFirst($attribute/@name)" />(){
 	return <c:get select="$attribute/@name" />;
 	}
-	/** @generated */
+	<f:message>generated.comment</f:message>
 	protected void set<c:get select="uppercaseFirst($attribute/@name)" />(<c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when><c:otherwise> 
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -252,12 +258,12 @@ super();
   					  		 			<%-- check if the multiplicityis one to one--%>
   					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-/** @generated */
+<f:message>generated.comment</f:message>
  													
  protected 	<c:get select="$class2/@name" /> get<c:get select="$class2/@name" />() {
  return  this.<c:get select="$association_connection_end2/@name" />;
  }
- /** @generated */
+<f:message>generated.comment</f:message>
   protected 	void set<c:get select="$class2/@name" />(<c:get select="$class2/@name" /> <c:get select="$association_connection_end2/@name" />) {
    this.<c:get select="$association_connection_end2/@name" />=<c:get select="$association_connection_end2/@name" />;
  }
@@ -267,11 +273,11 @@ super();
    					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
    					    						
-  	/** @generated */				    											    									    						
+  <f:message>generated.comment</f:message>				    											    									    						
  protected 	List<<c:get select="$class2/@name" />>  get<c:get select="$class2/@name" />s(){
  return this.<c:get select="$association_connection_end2/@name" />;
  }
- /** @generated */
+<f:message>generated.comment</f:message>
  protected 	  void set<c:get select="$class2/@name" />(List<<c:get select="$class2/@name" />> <c:get select="$association_connection_end2/@name" />){
  this.<c:get select="$association_connection_end2/@name" />=<c:get select="$association_connection_end2/@name" />;
  }
@@ -289,4 +295,5 @@ super();
 
 
 }
+</f:bundle>
 </java:format>
