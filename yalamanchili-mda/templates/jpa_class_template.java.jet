@@ -214,7 +214,7 @@ super();
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 	<%--getters for basic attributes --%>
 	<f:message>generated.comment</f:message>
-	protected  <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when> <c:otherwise> 
+	protected  <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >  <c:when test="${'$StringID'}" >String</c:when> <c:when test="${'$IntegerID'}" >Integer</c:when><c:when test="${'$DateID'}" >Date</c:when><c:when test="${'$BooleanID'}" >Boolean</c:when><c:when test="${'$LongID'}" > Long </c:when><c:when test="${'$FloatID'}" >Float</c:when> <c:otherwise> 
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
 	 			 ${$enumeration/@name} 
@@ -224,7 +224,7 @@ super();
 	return ${$attribute/@name};
 	}
 	<f:message>generated.comment</f:message>
-	protected void set${uppercaseFirst($attribute/@name)}(<c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" > Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > Long </c:when><c:otherwise> 
+	protected void set${uppercaseFirst($attribute/@name)}(<c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" >String</c:when> <c:when test="${'$IntegerID'}" >Integer</c:when><c:when test="${'$DateID'}" >Date</c:when><c:when test="${'$BooleanID'}" >Boolean</c:when><c:when test="${'$LongID'}" > Long </c:when><c:when test="${'$FloatID'}" >Float</c:when><c:otherwise> 
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
 	 			 ${$enumeration/@name} 
