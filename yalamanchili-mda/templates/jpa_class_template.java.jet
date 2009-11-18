@@ -78,16 +78,17 @@ private static final long serialVersionUID = 1L;
  
 
 
-	<%-- basic data types attributes and Enumerations--%>
+<%-- primitive DataTypes--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 <f:message>generated.comment</f:message>
+<%-- processes yalamanchili gwt tags Tag--%>
 	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
 		<%-- If UIElement--%>
-		<c:if test="$stereotype/@href = 'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F54'">
+		<c:if test="$stereotype/@href = ${'$UIElementID'}">
 			<c:iterate select="$attribute/ModelElement.taggedValue" var="taggedvalue">
 				<c:iterate select="$taggedvalue/TaggedValue" var="subtag">
 				<%-- If POSITION TAG--%>
-					<c:if test="$subtag/TaggedValue.type/TagDefinition/@href = 'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F76'">
+					<c:if test="$subtag/TaggedValue.type/TagDefinition/@href = ${'$PositionID'}">
 @UIElement(position = Position.${$subtag/TaggedValue.dataValue})			
 					</c:if>
 				</c:iterate>
@@ -95,8 +96,8 @@ private static final long serialVersionUID = 1L;
 		</c:if>
 	</c:iterate>
 	
-
-	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4B'" > protected String </c:when> <c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'" > protected Integer </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4E'" > protected Date </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'" >protected  Boolean </c:when><c:when test="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4D'" > protected Long </c:when>
+<%-- processes the premitive datatypes and enums--%>
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > protected String </c:when> <c:when test="${'$IntegerID'}" > protected Integer </c:when><c:when test="${'$DateID'}" > protected Date </c:when><c:when test="${'$BooleanID'}" >protected  Boolean </c:when><c:when test="${'$LongID'}" > protected Long </c:when><c:when test="${'$FloatID'}" > protected Float </c:when>
 	 <c:otherwise> 
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -112,7 +113,7 @@ ${$attribute/@name};
 
 
 
-<%-- collections --%>
+<%-- collections Datatypes --%>
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 
 	<c:iterate select="$association/Association.connection" var="association_connection">
@@ -272,7 +273,7 @@ super();
    					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
    					    						
-  <f:message>generated.comment</f:message>				    											    									    						
+ <f:message>generated.comment</f:message>				    											    									    						
  protected 	List<${$class2/@name}>  get${$class2/@name}s(){
  return this.${$association_connection_end2/@name};
  }
