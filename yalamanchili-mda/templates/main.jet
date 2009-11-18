@@ -8,17 +8,82 @@
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
 <c:setVariable select="'info.yalamanchili.test'" var="groupID"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
-
+<c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
 
 	<%-- load the yalamanchiliMDA prifile--%>
 <c:load url="templates/YalamanchiliMDAProfile.xml" var="myprofile"  />
 	
 <%--Iterate through the yalamanchiliMDA model and get the datatypes,stereotypes and tagged values --%>
-<c:iterate select="$myprofile/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Stereotype" var="stereotype">
+<c:iterate select="$myprofile/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+<%-- check all packages for stereotypes --%>
+<c:iterate select="$package/Namespace.ownedElement/Stereotype" var="stereotype">
 	<c:if test="$stereotype/@name = 'UIElement'">
-		<c:setVariable select="concat('http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#',$stereotype/@xmi.id)" var="UIElementID"/>		
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="UIElementID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Digits'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="DigitsID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Future'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="FutureID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Length'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="LengthID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Max'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="MaxID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Min'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="MinID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'NotNull'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="NotNullID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Past'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="PastID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Range'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="RangeID"/>		
+	</c:if>
+</c:iterate>
+<%-- check all packages for tagged Values --%>	
+<c:iterate select="$package/Namespace.ownedElement/TagDefinition" var="tagdefinition">
+	<c:if test="$tagdefinition/@name = 'Position'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="PositionID"/>		
+	</c:if>
+	<c:if test="$tagdefinition/@name = 'DisplayType'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="DisplayTypeID"/>		
+	</c:if>
+	<c:if test="$tagdefinition/@name = 'max'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="maxID"/>		
+	</c:if>
+	<c:if test="$tagdefinition/@name = 'min'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="minID"/>		
+	</c:if>
+</c:iterate>
+<%-- check all packages for DataTypes  --%>	
+<c:iterate select="$package/Namespace.ownedElement/DataType" var="datatype">
+	<c:if test="$datatype/@name = 'String'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="StringID"/>		
+	</c:if>
+	<c:if test="$datatype/@name = 'Integer'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="IntegerID"/>		
+	</c:if>
+	<c:if test="$datatype/@name = 'Long'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="LongID"/>		
+	</c:if>
+	<c:if test="$datatype/@name = 'Date'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="DateID"/>		
+	</c:if>
+	<c:if test="$datatype/@name = 'Boolean'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="BooleanID"/>		
+	</c:if>
+	<c:if test="$datatype/@name = 'Float'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="FloatID"/>		
 	</c:if>
 </c:iterate>	
+</c:iterate>
+
+
 
 <%--creates the master project--%>
 <ws:project name="{$projectName}-master" location="C:/MDA/{$projectName}-master">
@@ -48,5 +113,4 @@
     <ws:folder path="src/test/resources"/>
 
 </ws:project>
-<ws:rebuildWorkspace/>
 
