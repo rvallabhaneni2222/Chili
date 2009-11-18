@@ -1,6 +1,6 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
 <XMI xmi.version='1.2' xmlns:UML='org.omg.xmi.namespace.UML'
-	timestamp='Wed Nov 11 16:38:54 EST 2009'>
+	timestamp='Wed Nov 18 15:36:38 EST 2009'>
 	<XMI.header>
 		<XMI.documentation>
 			<XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
@@ -49,6 +49,10 @@
 						<UML:DataType
 							xmi.id='-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4F'
 							name='Boolean' isSpecification='false' isRoot='false' isLeaf='false'
+							isAbstract='false' />
+						<UML:DataType
+							xmi.id='-91--119--6-96-3d25f9c2:12507ba3d1c:-8000:00000000000013ED'
+							name='Float' isSpecification='false' isRoot='false' isLeaf='false'
 							isAbstract='false' />
 					</UML:Namespace.ownedElement>
 				</UML:Package>
