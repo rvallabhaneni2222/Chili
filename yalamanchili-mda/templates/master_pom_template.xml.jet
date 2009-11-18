@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId><c:get select="$groupID" /></groupId>
-	<artifactId><c:get select="$projectName" />-master</artifactId>
+	<groupId>${$groupID}</groupId>
+	<artifactId>${$projectName}-master</artifactId>
 	<packaging>pom</packaging>
-	<version><c:get select="$version" /></version>
-	<name><c:get select="$projectName" />-master</name>
+	<version>${$version}</version>
+	<name>${$projectName}-master</name>
 	<url>http://somecompany.com</url>
 	<dependencies>
 		<dependency>
@@ -55,7 +55,7 @@
 		-->
 	</dependencies>
 	<modules>
-		<module>../<c:get select="$projectName" />-jpa</module>
+		<module>../${$projectName}-jpa</module>
 	</modules>
 	<build>
 		<plugins>

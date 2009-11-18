@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
-		<groupId><c:get select="$groupID" /></groupId>
-		<artifactId><c:get select="$projectName" />-master</artifactId>
-		<version><c:get select="$version" /></version>
+		<groupId>${$groupID}</groupId>
+		<artifactId>${$projectName}-master</artifactId>
+		<version>${$version}</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId><c:get select="$groupID" /></groupId>
-	<artifactId><c:get select="$projectName" />-jpa</artifactId>
-	<name><c:get select="$projectName" />-jpa</name>
-	<version><c:get select="$version" /></version>
+	<groupId>${$groupID}</groupId>
+	<artifactId>${$projectName}-jpa</artifactId>
+	<name>${$projectName}-jpa</name>
+	<version>${$version}</version>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
@@ -44,7 +44,7 @@
 					</components>
 					<componentProperties>
 						<implementation>jpaconfiguration</implementation>
-						<persistenceunit><c:get select="$projectName" /></persistenceunit>
+						<persistenceunit>${$projectName}</persistenceunit>
 						<outputfilename>schema.ddl</outputfilename>
 						<drop>false</drop>
 						<create>true</create>
