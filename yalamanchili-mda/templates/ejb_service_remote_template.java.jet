@@ -1,6 +1,6 @@
 <java:format>
 package ${$package/@name}.${lower-case($class/@name)};
-import ${$package/@name}.${$class/@name};
+
 import javax.ejb.Remote;
 
 @Remote

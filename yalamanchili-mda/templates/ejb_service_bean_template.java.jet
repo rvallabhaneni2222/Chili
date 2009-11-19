@@ -1,0 +1,135 @@
+<java:format>
+package ${$package/@name}.${lower-case($class/@name)};
+import ${$package/@name}.${$class/@name};
+import ${$package/@name}.${lower-case($class/@name)}.${$class/@name}ServiceLocal;
+import ${$package/@name}.${lower-case($class/@name)}.${$class/@name}ServiceRemote;
+import javax.ejb.Stateful;
+import info.yalamanchili.gwt.beans.TableObj;
+import java.util.List;
+import java.util.ArrayList;
+import info.yalamanchili.server.GWTServletUtils;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.annotation.PostConstruct;
+import javax.persistence.Query;
+import javax.persistence.PersistenceUnit;
+
+
+import net.sf.gilead.core.PersistentBeanManager;
+import net.sf.gilead.core.hibernate.jboss.HibernateJBossUtil;
+import net.sf.gilead.core.store.stateless.StatelessProxyStore;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import net.sf.gilead.pojo.java5.LightEntity;
+
+
+@Stateful(name = "${lower-case($class/@name)}")
+public class ${$class/@name}ServiceBean implements  ${$class/@name}ServiceLocal, ${$class/@name}ServiceRemote{
+
+private static final Log log = LogFactory
+			.getLog(${$class/@name}ServiceBean.class);
+			
+@PersistenceUnit
+	protected EntityManagerFactory factory;
+	
+@PersistenceContext(unitName = "${$projectName}")
+	EntityManager entityManager;
+	
+	protected PersistentBeanManager bm;
+	
+	
+
+	@Override
+	public ${$class/@name} create(${$class/@name} entity) {
+		return entityManager.merge(entity);
+	}
+
+	@Override
+	public void delete(${$class/@name} entity) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public List<${$class/@name}> getAllEntities(${$class/@name} entity) {
+		List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
+		String query = "from " + entity.getClass().getCanonicalName();
+		log.debug(query);
+		Query getEntitites = entityManager.createQuery(query);
+		for (Object obj : getEntitites.getResultList()) {
+			${$class/@name} clone = (${$class/@name}) bm.clone((${$class/@name}) obj);
+			entities.add(clone);
+		}
+		return entities;
+	}
+
+	@Override
+	public List<${$class/@name}> getEntities(${$class/@name} entity) {
+	List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
+		Query getEntities = entityManager.createQuery(GWTServletUtils
+				.getQueryString(entity));
+		for (Object obj : getEntities.getResultList()) {
+			entities.add((${$class/@name}) bm.clone(obj));
+		}
+		return entities;
+	}
+
+	@Override
+	public List<String> getSuggestionsForName(String name, ${$class/@name} entity) {
+		Query query = entityManager.createQuery(GWTServletUtils
+				.getSuggestionsQueryForName(name, entity));
+		return query.getResultList();
+	}
+
+	@Override
+	public TableObj getTableObj(${$class/@name} entity, int start) {
+		TableObj<${$class/@name}> tableObj = new TableObj<${$class/@name}>();
+		tableObj.setNumberOfRecords(getEntitySizeT(entity));
+		tableObj.setRecords(getEntitiesT(entity, start));
+		return tableObj;
+	}
+
+	@Override
+	public ${$class/@name} read(${$class/@name} entity, Long id) {
+		return entityManager.find(${$class/@name}.class, new Long(id));
+	}
+
+	@Override
+	public ${$class/@name} update(${$class/@name} entity) {
+		return entityManager.merge(entity);
+	}
+	
+	public <T extends LightEntity> List<${$class/@name}> getEntitiesT(${$class/@name} entity, int start) {
+		List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
+		String query = "from " + entity.getClass().getCanonicalName();
+		log.debug(query);
+		Query getEntitites = entityManager.createQuery(query);
+		getEntitites.setFirstResult(start);
+		getEntitites.setMaxResults(10);
+		for (Object obj : getEntitites.getResultList()) {
+			${$class/@name} clone = (${$class/@name}) bm.clone((T) obj);
+			entities.add(clone);
+		}
+		return entities;
+	}
+
+	public <T extends LightEntity> Long getEntitySizeT(T entity) {
+		String query = "select count(entity) from "
+				+ entity.getClass().getCanonicalName() + " entity";
+		log.debug(query);
+		Query getEntitiesSize = entityManager.createQuery(query);
+		return (Long) getEntitiesSize.getSingleResult();
+	}
+	
+	@PostConstruct
+	public void initGileadManager() {
+		bm = new PersistentBeanManager();
+		HibernateJBossUtil persistenceUtil = new HibernateJBossUtil();
+		persistenceUtil.setEntityManagerFactory(factory);
+		bm.setPersistenceUtil(persistenceUtil);
+		bm.setProxyStore(new StatelessProxyStore());
+	}
+
+}
+</java:format>

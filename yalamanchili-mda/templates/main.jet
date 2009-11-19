@@ -126,6 +126,8 @@
 			<java:class name="{$class/@name}ServiceLocal" package="{$package/@name}.{lower-case($class/@name)}" template="templates/ejb_service_local_template.java.jet"/>
 			<%-- CRUD EJB Remote interface--%>
 			<java:class name="{$class/@name}ServiceRemote" package="{$package/@name}.{lower-case($class/@name)}" template="templates/ejb_service_remote_template.java.jet"/>
+			<%-- CRUD EJB Service Impl class--%>
+			<java:class name="{$class/@name}ServiceBean" package="{$package/@name}.{lower-case($class/@name)}" template="templates/ejb_service_bean_template.java.jet"/>
 			</c:iterate>
 		</c:iterate>
     </ws:folder>
