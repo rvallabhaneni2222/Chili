@@ -139,3 +139,27 @@
 
 </ws:project>
 
+<%--creates the APP project--%>
+<ws:project name="{$projectName}-app" location="C:/MDA/{$projectName}-app">
+	<ws:file path="pom.xml" template="templates/app_pom_template.xml.jet"/>
+    <ws:folder path="jboss/conf"/>
+    <ws:folder path="jboss/deploy"/>
+
+</ws:project>
+
+<%--creates the webapp project--%>
+<ws:project name="{$projectName}-webapp" location="C:/MDA/{$projectName}-webapp">
+	<ws:file path="pom.xml" template="templates/webapp_pom_template.xml.jet"/>
+    <ws:folder path="src/main/java">
+    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		
+		</c:iterate>
+    </ws:folder>
+    <ws:folder path="src/main/resources">
+    
+    </ws:folder>
+    <ws:folder path="src/test/java"/>
+    <ws:folder path="src/test/resources"/>
+
+</ws:project>
+

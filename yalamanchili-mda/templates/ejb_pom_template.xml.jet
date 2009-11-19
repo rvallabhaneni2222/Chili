@@ -9,7 +9,7 @@
 	<groupId>${$groupID}</groupId>
 	<artifactId>${$projectName}-ejb</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0</version>
+	<version>${$version}</version>
 	<name>${$projectName}-ejb</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
