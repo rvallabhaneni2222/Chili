@@ -114,3 +114,26 @@
 
 </ws:project>
 
+<%--creates the EJB project--%>
+<ws:project name="{$projectName}-ejb" location="C:/MDA/{$projectName}-ejb">
+	<ws:file path="pom.xml" template="templates/ejb_pom_template.xml.jet"/>
+    <ws:folder path="src/main/java">
+    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		<%-- CRUD EJB interface--%>
+			<java:class name="{$class/@name}Service" package="{$package/@name}.{lower-case($class/@name)}" template="templates/ejb_service_template.java.jet"/>
+			<%-- CRUD EJB Local interface--%>
+			<java:class name="{$class/@name}ServiceLocal" package="{$package/@name}.{lower-case($class/@name)}" template="templates/ejb_service_local_template.java.jet"/>
+			<%-- CRUD EJB Remote interface--%>
+			<java:class name="{$class/@name}ServiceRemote" package="{$package/@name}.{lower-case($class/@name)}" template="templates/ejb_service_remote_template.java.jet"/>
+			</c:iterate>
+		</c:iterate>
+    </ws:folder>
+    <ws:folder path="src/main/resources">
+   
+    </ws:folder>
+    <ws:folder path="src/test/java"/>
+    <ws:folder path="src/test/resources"/>
+
+</ws:project>
+

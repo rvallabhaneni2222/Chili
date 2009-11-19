@@ -1,0 +1,9 @@
+<java:format>
+package ${$package/@name}.${lower-case($class/@name)};
+import ${$package/@name}.${$class/@name};
+import info.yalamanchili.server.GenericCRUDEJB;
+
+public interface ${$class/@name}Service extends GenericCRUDEJB<${$class/@name}>{
+
+}
+</java:format>
