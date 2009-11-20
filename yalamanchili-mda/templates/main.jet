@@ -155,8 +155,9 @@
 		</c:iterate>
     </ws:folder>
     <ws:folder path="src/main/resources">
-     <ws:file template="templates/webapp_appxml_template.xml.jet" path="{$projectName}.xml"/>
+     <ws:file template="templates/webapp_appxml_template.properties.jet" path="{$projectName}.properties"/>
     </ws:folder>
+    
     <ws:folder path="src/main/webapp/WEB-INF">
      <ws:file template="templates/webapp_webxml_template.xml.jet" path="web.xml"/>
     </ws:folder>

@@ -101,7 +101,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jboss-maven-plugin</artifactId>
 				<configuration>
-					<jbossHome>${'${JBOSS_HOME}'}w</jbossHome>
+					<jbossHome>${'${JBOSS_HOME}'}</jbossHome>
 					<port>8080</port>
 					<server>default</server>
 				</configuration>
