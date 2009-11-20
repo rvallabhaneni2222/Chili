@@ -152,11 +152,10 @@
 	<ws:file path="pom.xml" template="templates/webapp_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-    		
 		</c:iterate>
     </ws:folder>
-    <ws:folder path="src/main/resources">
-    
+    <ws:folder path="src/main/webapp/WEB-INF">
+     <ws:file template="templates/webapp_webxml_template.xml.jet" path="web.xml"/>
     </ws:folder>
     <ws:folder path="src/test/java"/>
     <ws:folder path="src/test/resources"/>
