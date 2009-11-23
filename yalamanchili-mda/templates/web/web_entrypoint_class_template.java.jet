@@ -1,0 +1,22 @@
+<java:format>
+package ${$groupID}.client;
+
+import com.allen_sauer.gwt.log.client.DivLogger;
+import com.allen_sauer.gwt.log.client.Log;
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.Label;
+
+public class ${camelCase($projectName)}Welcome implements EntryPoint{
+
+public void onModuleLoad() {
+		RootPanel.get().add(new Label("testmda"));
+	}
+	
+}
+</java:format>

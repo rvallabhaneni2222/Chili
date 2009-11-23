@@ -1,0 +1,5 @@
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+public class Create${$class/@name}Panel{
+}
+</java:format>

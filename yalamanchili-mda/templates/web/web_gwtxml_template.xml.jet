@@ -1,0 +1,36 @@
+<module>
+	<inherits name="com.google.gwt.user.User" />
+
+	<!-- gwt log -->
+	<!-- Add gwt-log support, default level `OFF` -->
+	<inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />
+
+	<!-- Also compile at `INFO` level -->
+	<extend-property name="log_level" values="DEBUG" />
+	<!-- used to support internationalization -->
+
+	<inherits name='com.google.gwt.i18n.I18N' />
+	<extend-property name="locale" values="ES" />
+	<!-- Modules for GILEAD lib   -->
+	<inherits name='net.sf.gilead.Adapter4Gwt15' />
+	<inherits name='net.sf.gilead.emul.java5.ejb3.Ejb3' />
+
+	<!-- used to include the jpa entities in the gwt compiler path -->
+	<inherits name='{$groupID}.entity' />
+
+	<!-- used to include yalamanchili-gwt project in gwt compiler path -->
+	<inherits name='info.yalamanchili.yalamanchili-gwt' />
+
+	<entry-point class="${$groupID}.client.${camelCase($projectName)}Welcome" />
+	<stylesheet src="${$projectName}.css" />
+
+	<!--source code packages              -->
+
+	<source path='client' />
+
+<!--	<servlet path='/gwtservices' class='info.yalamanchili.anulist.server.GWTServiceImpl' />-->
+<!--	<servlet path='/welcomeservices' class='info.yalamanchili.anulist.server.ALServiceImpl' />-->
+<!--	<servlet path='/secureservices'-->
+<!--		class='info.yalamanchili.anulist.server.ALSecureServiceImpl' />-->
+
+</module>
