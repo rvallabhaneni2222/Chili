@@ -95,7 +95,10 @@
 <ws:project name="{$projectName}-jpa" location="C:/MDA/{$projectName}-jpa">
 	<ws:file path="pom.xml" template="templates/jpa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
-    <c:setVariable select="concat($groupID,'.entity.')" var="jpaPackage"/>		
+    <c:setVariable select="concat($groupID,'.entity.')" var="jpaPackage"/>
+    	<%--create gwt.xml file to include these  --%>		
+    	<java:resource name="entity.gwt.xml" package="{$jpaPackage}"  template="templates/jpa_gwtxml.template.xml.jet"/>
+    	<%--iterate through the packages and create jpa classes and enumerations --%>		
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     	 <c:setVariable select="concat($jpaPackage,$package/@name)" var="packageName"/>
     		<%-- create enumerations in the package--%>
