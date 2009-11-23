@@ -156,13 +156,13 @@
 
 <%--creates the webapp project--%>
 <ws:project name="{$projectName}-webapp" location="C:/MDA/{$projectName}-webapp">
-	<ws:file path="pom.xml" template="templates/webapp_pom_template.xml.jet"/>
+	<ws:file path="pom.xml" template="templates/web/webapp_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
-     	<ws:folder path="public">
-     	<ws:folder path="icons"/>
-     	<ws:file template="templates/web/web_css_template.css.jet" path="{$projectName}.css"/>
-     	<ws:file template="templates/web/web_html_template.html.jet" path="{$projectName}.html"/>
-    	</ws:folder>
+     	
+     	<java:resource name="{$projectName}.css" package="{$groupID}.public"  template="templates/web/web_css_template.css.jet"/>
+     	<java:resource name="{$projectName}.html" package="{$groupID}.public"  template="templates/web/web_html_template.html.jet"/>
+     	
+
     	<%--create gwt.xml file to include these  --%>		
     	<java:resource name="{$projectName}.gwt.xml" package="{$groupID}"  template="templates/web/web_gwtxml_template.xml.jet"/>
     	<c:setVariable select="concat($groupID,'.client.')" var="webPackage"/>
@@ -176,11 +176,13 @@
 		</c:iterate>
     </ws:folder>
     <ws:folder path="src/main/resources">
-     <ws:file template="templates/webapp_appxml_template.properties.jet" path="{$projectName}.properties"/>
+     <ws:file template="templates/web/webapp_appxml_template.properties.jet" path="{$projectName}.properties"/>
     </ws:folder>
-    
-    <ws:folder path="src/main/webapp/WEB-INF">
-     <ws:file template="templates/webapp_webxml_template.xml.jet" path="web.xml"/>
+    <ws:folder path="src/main/webapp">
+    	<ws:file template="templates/web/web_indexhtml_template.html.jet" path="index.html"/>
+    		<ws:folder path="WEB-INF">
+    	 	<ws:file template="templates/web/webapp_webxml_template.xml.jet" path="web.xml"/>
+    		</ws:folder>
     </ws:folder>
     <ws:folder path="src/test/java"/>
     <ws:folder path="src/test/resources"/>

@@ -43,7 +43,6 @@
 			<groupId>info.yalamanchili.gwt</groupId>
 			<artifactId>yalamanchili-gwt</artifactId>
 			<version>1.0</version>
-			<scope>test</scope>
 		</dependency>
 		<!-- WebAuthentication class -->
 		<dependency>
@@ -149,7 +148,43 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin
+				</artifactId>
+				<version>1.1</version>
+				<dependencies>
+				</dependencies>
+				<configuration>
+					<logLevel>INFO</logLevel>
+					<compileTargets>
+						<value> ${$groupID}.${$projectName}</value>
+					</compileTargets>
+					<runTarget>
+						${$groupID}.${$projectName}/${$projectName}.html
+					</runTarget>
+					<style>DETAILED</style>
+					<noServer>false</noServer>
+					<extraJvmArgs>-Xmx512m</extraJvmArgs>
+				<!--	<i18nConstantsWithLookupBundle>
+						info.yalamanchili.anulist.client.internalization.AlConstants
+					</i18nConstantsWithLookupBundle>
+					<i18nMessagesBundle>
+						info.yalamanchili.anulist.client.internalization.AlMessages
+					</i18nMessagesBundle> -->
+					<gwtVersion>${'${gwtVersion}'}</gwtVersion>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+						<!--<goal>mergewebxml</goal> 
+							<goal>i18n</goal>-->
+							<goal>compile</goal>
+					<!--		<goal>test</goal> -->
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<pluginRepositories>

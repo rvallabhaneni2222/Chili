@@ -16,7 +16,7 @@
 	<inherits name='net.sf.gilead.emul.java5.ejb3.Ejb3' />
 
 	<!-- used to include the jpa entities in the gwt compiler path -->
-	<inherits name='{$groupID}.entity' />
+	<inherits name='${$groupID}.entity.entity' />
 
 	<!-- used to include yalamanchili-gwt project in gwt compiler path -->
 	<inherits name='info.yalamanchili.yalamanchili-gwt' />
