@@ -6,7 +6,7 @@
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 <%--This is used to check for inhereritance --%>
 <c:setVariable select="$class/@name" var="parentClass"/>
-package ${$package/@name};
+package ${$packageName};
  
 <java:importsLocation package="{$package/@name}"/>
 import info.yalamanchili.gwt.ui.Position;

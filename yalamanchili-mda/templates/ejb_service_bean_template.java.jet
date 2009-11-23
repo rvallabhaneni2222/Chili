@@ -1,8 +1,8 @@
 <java:format>
-package ${$package/@name}.${lower-case($class/@name)};
-import ${$package/@name}.${$class/@name};
-import ${$package/@name}.${lower-case($class/@name)}.${$class/@name}ServiceLocal;
-import ${$package/@name}.${lower-case($class/@name)}.${$class/@name}ServiceRemote;
+package ${$packageName}.${lower-case($class/@name)};
+import ${$packageName}.${$class/@name};
+import ${$packageName}.${lower-case($class/@name)}.${$class/@name}ServiceLocal;
+import ${$packageName}.${lower-case($class/@name)}.${$class/@name}ServiceRemote;
 import javax.ejb.Stateful;
 import info.yalamanchili.gwt.beans.TableObj;
 import java.util.List;

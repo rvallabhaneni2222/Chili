@@ -1,6 +1,6 @@
 <java:format>
 <f:bundle basename="templates/resources/messages">
-package <c:get select="$package/@name" />;
+package ${$packageName};
  
 <java:importsLocation package="{$package/@name}"/>
 

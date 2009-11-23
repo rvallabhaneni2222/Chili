@@ -6,7 +6,7 @@
 <%--Set Global varibles like projectId,groupId,version...--%>
 
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
-<c:setVariable select="'info.yalamanchili.test'" var="groupID"/>
+<c:setVariable select="'info.yalamanchili.testmda'" var="groupID"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
 <c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
 
@@ -95,14 +95,16 @@
 <ws:project name="{$projectName}-jpa" location="C:/MDA/{$projectName}-jpa">
 	<ws:file path="pom.xml" template="templates/jpa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
+    <c:setVariable select="concat($groupID,'.entity.')" var="jpaPackage"/>		
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    	 <c:setVariable select="concat($jpaPackage,$package/@name)" var="packageName"/>
     		<%-- create enumerations in the package--%>
     		<c:iterate select="$package/Namespace.ownedElement/Enumeration" var="enumeration">
-			<java:class name="{$enumeration/@name}" package="{$package/@name}" template="templates/enumeration_template.java.jet"/>
+			<java:class name="{$enumeration/@name}" package="{$packageName}" template="templates/enumeration_template.java.jet"/>
 			</c:iterate>
 			<%-- create classes in the package--%>
 			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-			<java:class name="{$class/@name}" package="{$package/@name}" template="templates/jpa_class_template.java.jet"/>
+			<java:class name="{$class/@name}" package="{$packageName}" template="templates/jpa_class_template.java.jet"/>
 			</c:iterate>
 		</c:iterate>
     </ws:folder>
@@ -118,16 +120,18 @@
 <ws:project name="{$projectName}-ejb" location="C:/MDA/{$projectName}-ejb">
 	<ws:file path="pom.xml" template="templates/ejb_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
+     <c:setVariable select="concat($groupID,'.ejb.')" var="ejbPackage"/>	
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    	 <c:setVariable select="concat($ejbPackage,$package/@name)" var="packageName"/>	
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
     		<%-- CRUD EJB interface--%>
-			<java:class name="{$class/@name}Service" package="{$package/@name}.{lower-case($class/@name)}" template="templates/ejb_service_template.java.jet"/>
+			<java:class name="{$class/@name}Service" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb_service_template.java.jet"/>
 			<%-- CRUD EJB Local interface--%>
-			<java:class name="{$class/@name}ServiceLocal" package="{$package/@name}.{lower-case($class/@name)}" template="templates/ejb_service_local_template.java.jet"/>
+			<java:class name="{$class/@name}ServiceLocal" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb_service_local_template.java.jet"/>
 			<%-- CRUD EJB Remote interface--%>
-			<java:class name="{$class/@name}ServiceRemote" package="{$package/@name}.{lower-case($class/@name)}" template="templates/ejb_service_remote_template.java.jet"/>
+			<java:class name="{$class/@name}ServiceRemote" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb_service_remote_template.java.jet"/>
 			<%-- CRUD EJB Service Impl class--%>
-			<java:class name="{$class/@name}ServiceBean" package="{$package/@name}.{lower-case($class/@name)}" template="templates/ejb_service_bean_template.java.jet"/>
+			<java:class name="{$class/@name}ServiceBean" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb_service_bean_template.java.jet"/>
 			</c:iterate>
 		</c:iterate>
     </ws:folder>

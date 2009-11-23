@@ -1,5 +1,5 @@
 <java:format>
-package ${$package/@name}.${lower-case($class/@name)};
+package ${$packageName}.${lower-case($class/@name)};
 
 import javax.ejb.Local;
 
