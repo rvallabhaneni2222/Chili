@@ -158,15 +158,20 @@
 <ws:project name="{$projectName}-webapp" location="C:/MDA/{$projectName}-webapp">
 	<ws:file path="pom.xml" template="templates/web/webapp_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
-     	
      	<java:resource name="{$projectName}.css" package="{$groupID}.public"  template="templates/web/web_css_template.css.jet"/>
      	<java:resource name="{$projectName}.html" package="{$groupID}.public"  template="templates/web/web_html_template.html.jet"/>
-     	
-
     	<%--create gwt.xml file to include these  --%>		
     	<java:resource name="{$projectName}.gwt.xml" package="{$groupID}"  template="templates/web/web_gwtxml_template.xml.jet"/>
     	<c:setVariable select="concat($groupID,'.client.')" var="webPackage"/>
-    	 <java:class name="${camelCase($projectName)}Welcome" package="{$webPackage}" template="templates/web/web_entrypoint_class_template.java.jet"/>
+
+    	<%-- server Entry point class --%>
+    	<java:class name="${camelCase($projectName)}Welcome" package="{$webPackage}" template="templates/web/web_entrypoint_class_template.java.jet"/>
+    	<%-- server GWT CRUD service class --%>
+    	<java:class name="GenericCRUDServiceImpl" package="{$groupID}.server" template="templates/web/web_gwtCRUDservice_class_template.java.jet"/>
+    	<%-- GWT server class --%>
+    	<java:class name="GWTServiceImpl" package="{$groupID}.server" template="templates/web/web_gwtservice_class_template.java.jet"/>
+    	<%-- Abstract servlet  --%>
+    	<java:class name="Abstract${camelCase($projectName)}Services" package="{$groupID}.server" template="templates/web/web_abstractservices_class_template.java.jet"/>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">

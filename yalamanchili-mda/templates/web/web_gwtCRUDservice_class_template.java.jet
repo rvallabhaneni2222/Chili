@@ -1,0 +1,155 @@
+<java:format>
+package ${$groupID}.server;
+
+import info.yalamanchili.gwt.beans.TableObj;
+import info.yalamanchili.gwt.rpc.GenericCRUDService;
+
+import java.lang.reflect.Method;
+import java.util.List;
+
+import javax.ejb.EJB;
+
+import net.sf.gilead.pojo.java5.LightEntity;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+public class GenericCRUDServiceImpl extends Abstract${camelCase($projectName)}Services implements
+		GenericCRUDService {
+
+	private static final long serialVersionUID = 1L;
+	private static final Log log = LogFactory
+			.getLog(GenericCRUDServiceImpl.class);
+
+	@Override
+	public <T extends LightEntity> T create(T entity) {
+		Object ejb = ejbs.get(entity.getClass().getCanonicalName());
+		T res = null;
+		for (Method method : ejb.getClass().getMethods()) {
+			if (method.getName().compareToIgnoreCase("create") == 0) {
+				try {
+					res = (T) method.invoke(ejb, entity);
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException("Call failed");
+				}
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public <T extends LightEntity> void delete(T entity) {
+		Object ejb = ejbs.get(entity.getClass().getCanonicalName());
+		for (Method method : ejb.getClass().getMethods()) {
+			if (method.getName().compareToIgnoreCase("delete") == 0) {
+				try {
+					method.invoke(ejb, entity);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					throw new RuntimeException("Call failed");
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public <T extends LightEntity> List<T> getEntities(T entity) {
+		Object ejb = ejbs.get(entity.getClass().getCanonicalName());
+		List<T> res = null;
+		for (Method method : ejb.getClass().getMethods()) {
+			if (method.getName().compareToIgnoreCase("getEntities") == 0) {
+				try {
+					res = (List<T>) method.invoke(ejb, entity);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					throw new RuntimeException("Call failed");
+				}
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public <T extends LightEntity> List<String> getSuggestionsForName(
+			String name, T entity) {
+		return null;
+	}
+
+	@Override
+	public <T extends LightEntity> T read(T entity, Long id) {
+		Object ejb = ejbs.get(entity.getClass().getCanonicalName());
+		T res = null;
+		for (Method method : ejb.getClass().getMethods()) {
+			if (method.getName().compareToIgnoreCase("read") == 0) {
+				try {
+					res = (T) method.invoke(ejb, entity, id);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					throw new RuntimeException("Call failed");
+				}
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public <T extends LightEntity> T update(T entity) {
+		Object ejb = ejbs.get(entity.getClass().getCanonicalName());
+		T res = null;
+		for (Method method : ejb.getClass().getMethods()) {
+			if (method.getName().compareToIgnoreCase("update") == 0) {
+				try {
+					res = (T) method.invoke(ejb, entity);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					throw new RuntimeException("Call failed");
+				}
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public <T extends LightEntity> List<T> getAllEntities(T entity) {
+		Object ejb = ejbs.get(entity.getClass().getCanonicalName());
+		List<T> res = null;
+		for (Method method : ejb.getClass().getMethods()) {
+			if (method.getName().compareToIgnoreCase("getAllEntities") == 0) {
+				try {
+					res = (List<T>) method.invoke(ejb, entity);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					throw new RuntimeException("Call failed");
+				}
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public <T extends LightEntity> TableObj<T> getTableObj(T entity, int start) {
+		Object ejb = ejbs.get(entity.getClass().getCanonicalName());
+		TableObj<T> res = null;
+		for (Method method : ejb.getClass().getMethods()) {
+			if (method.getName().compareToIgnoreCase("getTableObj") == 0) {
+				try {
+					res = (TableObj<T>) method.invoke(ejb, entity, start);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					throw new RuntimeException("Call failed");
+				}
+			}
+		}
+		return res;
+	}
+
+}
+</java:format>
