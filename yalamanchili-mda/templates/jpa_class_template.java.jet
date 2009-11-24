@@ -69,6 +69,7 @@ private static final long serialVersionUID = 1L;
  <c:choose select="$parentClass" > 
  	<c:when test="$class/@name" > <f:message>generated.comment</f:message>
 	@Id
+	@GeneratedValue
 	protected Long id; 
 	</c:when>
 	 <c:otherwise> 
