@@ -5,28 +5,42 @@
 	
 	<servlet>
 		<servlet-name>GWTService</servlet-name>
-		<servlet-class> info.yalamanchili.anulist.server.GWTServiceImpl
+		<servlet-class> ${$groupID}.server.GWTServiceImpl
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>GWTService</servlet-name>
 		<url-pattern>
-			/info.yalamanchili.anulist.AnuListWelcome/gwtservices
+			/${$groupID}.${$projectName}/gwtservices
 		</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>GenericCRUDService</servlet-name>
 		<servlet-class>
-			info.yalamanchili.anulist.server.GenericCRUDServiceImpl
+			${$groupID}.server.GenericCRUDServiceImpl
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>GenericCRUDService</servlet-name>
 		<url-pattern>
-			/info.yalamanchili.anulist.AnuListWelcome/genericcrud
+			/${$groupID}.${$projectName}/genericcrud
 		</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>${camelCase($projectName)}Service</servlet-name>
+		<servlet-class>
+			${$groupID}.server.${camelCase($projectName)}ServiceImpl
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>${camelCase($projectName)}Service</servlet-name>
+		<url-pattern>
+			/${$groupID}.${$projectName}/welcomeservices
+		</url-pattern>
+	</servlet-mapping>
+
 
 	<welcome-file-list>
 		<welcome-file> index.html </welcome-file>

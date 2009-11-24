@@ -1,4 +1,5 @@
 <java:format>
+
 package ${$groupID}.client;
 
 import com.allen_sauer.gwt.log.client.DivLogger;

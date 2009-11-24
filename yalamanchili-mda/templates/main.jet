@@ -97,7 +97,7 @@
     <ws:folder path="src/main/java">
     <c:setVariable select="concat($groupID,'.entity.')" var="jpaPackage"/>
     	<%--create gwt.xml file to include these  --%>		
-    	<java:resource name="entity.gwt.xml" package="{$jpaPackage}"  template="templates/jpa_gwtxml.template.xml.jet"/>
+    	<java:resource name="entity.gwt.xml" package="{$groupID}"  template="templates/jpa_gwtxml.template.xml.jet"/>
     	<%--iterate through the packages and create jpa classes and enumerations --%>		
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     	 <c:setVariable select="concat($jpaPackage,$package/@name)" var="packageName"/>
@@ -172,6 +172,11 @@
     	<java:class name="GWTServiceImpl" package="{$groupID}.server" template="templates/web/web_gwtservice_class_template.java.jet"/>
     	<%-- Abstract servlet  --%>
     	<java:class name="Abstract${camelCase($projectName)}Services" package="{$groupID}.server" template="templates/web/web_abstractservices_class_template.java.jet"/>
+    	<%-- RPC  --%>
+    	<java:class name="${camelCase($projectName)}Service" package="{$webPackage}rpc" template="templates/web/app_rpc_service.java.jet"/>
+    	<java:class name="${camelCase($projectName)}ServiceAsync" package="{$webPackage}rpc" template="templates/web/app_rpc_service_async.java.jet"/>
+    	
+    	<java:class name="${camelCase($projectName)}ServiceImpl" package="{$groupID}.server" template="templates/web/web_rpc_service_impl.java.jet"/>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
@@ -187,6 +192,7 @@
     	<ws:file template="templates/web/web_indexhtml_template.html.jet" path="index.html"/>
     		<ws:folder path="WEB-INF">
     	 	<ws:file template="templates/web/webapp_webxml_template.xml.jet" path="web.xml"/>
+    	 	<ws:file template="templates/web/webapp_jboss-app_template.xml.jet" path="jboss-web.xml"/>
     		</ws:folder>
     </ws:folder>
     <ws:folder path="src/test/java"/>

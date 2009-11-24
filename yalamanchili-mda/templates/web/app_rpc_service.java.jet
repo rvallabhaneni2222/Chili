@@ -1,0 +1,28 @@
+<java:format>
+package ${$webPackage}rpc;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
+
+public interface ${camelCase($projectName)}Service extends RemoteService {
+
+	public String sayHello(String message);
+
+	/* Utility class to call Async secure service */
+	public static class ${camelCase($projectName)}ServiceAsync {
+		private static ${$webPackage}rpc.${camelCase($projectName)}ServiceAsync service;
+
+		public static synchronized ${$webPackage}rpc.${camelCase($projectName)}ServiceAsync instance() {
+			if (service == null) {
+				service = (${$webPackage}rpc.${camelCase($projectName)}ServiceAsync) GWT.create(${camelCase($projectName)}Service.class);
+				ServiceDefTarget endpoint = (ServiceDefTarget) service;
+				String moduleRelativeURL = GWT.getModuleBaseURL()
+						+ "welcomeservices";
+				endpoint.setServiceEntryPoint(moduleRelativeURL);
+			}
+			return service;
+		}
+	}
+}
+</java:format>

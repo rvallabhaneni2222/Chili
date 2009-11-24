@@ -100,10 +100,12 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jboss-maven-plugin</artifactId>
+				<version>1.4</version>
 				<configuration>
 					<jbossHome>${'${JBOSS_HOME}'}</jbossHome>
 					<port>8080</port>
 					<server>default</server>
+					<unpack>true</unpack>
 				</configuration>
 			</plugin>
 		</plugins>
