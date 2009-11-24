@@ -210,11 +210,19 @@ public ${$class/@name}() {
 super();   
 }
 
+public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 <%-- getters and setters --%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 	<%--getters for basic attributes --%>
 	<f:message>generated.comment</f:message>
-	protected  <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >  <c:when test="${'$StringID'}" >String</c:when> <c:when test="${'$IntegerID'}" >Integer</c:when><c:when test="${'$DateID'}" >Date</c:when><c:when test="${'$BooleanID'}" >Boolean</c:when><c:when test="${'$LongID'}" > Long </c:when><c:when test="${'$FloatID'}" >Float</c:when> <c:otherwise> 
+	public  <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >  <c:when test="${'$StringID'}" >String</c:when> <c:when test="${'$IntegerID'}" >Integer</c:when><c:when test="${'$DateID'}" >Date</c:when><c:when test="${'$BooleanID'}" >Boolean</c:when><c:when test="${'$LongID'}" > Long </c:when><c:when test="${'$FloatID'}" >Float</c:when> <c:otherwise> 
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
 	 			 ${$enumeration/@name} 
@@ -224,7 +232,7 @@ super();
 	return ${$attribute/@name};
 	}
 	<f:message>generated.comment</f:message>
-	protected void set${uppercaseFirst($attribute/@name)}(<c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" >String</c:when> <c:when test="${'$IntegerID'}" >Integer</c:when><c:when test="${'$DateID'}" >Date</c:when><c:when test="${'$BooleanID'}" >Boolean</c:when><c:when test="${'$LongID'}" > Long </c:when><c:when test="${'$FloatID'}" >Float</c:when><c:otherwise> 
+	public void set${uppercaseFirst($attribute/@name)}(<c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" >String</c:when> <c:when test="${'$IntegerID'}" >Integer</c:when><c:when test="${'$DateID'}" >Date</c:when><c:when test="${'$BooleanID'}" >Boolean</c:when><c:when test="${'$LongID'}" > Long </c:when><c:when test="${'$FloatID'}" >Float</c:when><c:otherwise> 
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
 	 			 ${$enumeration/@name} 
@@ -260,11 +268,11 @@ super();
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
 <f:message>generated.comment</f:message>
  													
- protected 	${$class2/@name} get${$class2/@name}() {
+ public 	${$class2/@name} get${$class2/@name}() {
  return  this.${$association_connection_end2/@name};
  }
 <f:message>generated.comment</f:message>
-  protected 	void set${$class2/@name}(${$class2/@name} ${$association_connection_end2/@name}) {
+  public 	void set${$class2/@name}(${$class2/@name} ${$association_connection_end2/@name}) {
    this.${$association_connection_end2/@name}=${$association_connection_end2/@name};
  }
   					  		 					</c:if>  
@@ -274,11 +282,11 @@ super();
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
    					    						
  <f:message>generated.comment</f:message>				    											    									    						
- protected 	List<${$class2/@name}>  get${$class2/@name}s(){
+ public 	List<${$class2/@name}>  get${$class2/@name}s(){
  return this.${$association_connection_end2/@name};
  }
 <f:message>generated.comment</f:message>
- protected 	  void set${$class2/@name}(List<${$class2/@name}> ${$association_connection_end2/@name}){
+ public 	  void set${$class2/@name}s(List<${$class2/@name}> ${$association_connection_end2/@name}){
  this.${$association_connection_end2/@name}=${$association_connection_end2/@name};
  }
   					  		 					</c:if>  
