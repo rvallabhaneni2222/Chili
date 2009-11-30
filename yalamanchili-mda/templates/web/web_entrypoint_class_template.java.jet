@@ -13,12 +13,28 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.Label;
+import ${$webPackage}internalization.${camelCase($projectName)}Constants;
+import ${$webPackage}internalization.${camelCase($projectName)}Messages;
 
 public class ${camelCase($projectName)}Welcome implements EntryPoint{
-
-public void onModuleLoad() {
-		RootPanel.get().add(new Label("testmda"));
+	private ${camelCase($projectName)}Welcome instance;
+	public ${camelCase($projectName)}Welcome instance(){
+	if (instance == null) {
+			return new ${camelCase($projectName)}Welcome();
+		}
+		return instance;
 	}
+
+	public static final ${camelCase($projectName)}Constants constants = (${camelCase($projectName)}Constants) GWT
+			.create(${camelCase($projectName)}Constants.class);
+
+	public static final ${camelCase($projectName)}Messages messages = (${camelCase($projectName)}Messages) GWT
+			.create(${camelCase($projectName)}Messages.class);
+			
+	public void onModuleLoad() {
+			Log.setUncaughtExceptionHandler();
+				RootPanel.get().add(new Label("testmda"));
+		}
 	
 }
 </java:format>

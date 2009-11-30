@@ -1,0 +1,5 @@
+imagesTargetDirectory=/anulist-images/
+sessionTimeout=300000
+tablePageSize=10
+#GENERAL
+Table_Action=Action

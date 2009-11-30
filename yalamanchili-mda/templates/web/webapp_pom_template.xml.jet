@@ -160,19 +160,21 @@
 					<style>DETAILED</style>
 					<noServer>false</noServer>
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
-				<!--	<i18nConstantsWithLookupBundle>
-						info.yalamanchili.anulist.client.internalization.AlConstants
+					<!-- target dir for generated interfaces-->
+					<generateDirectory>src/main/java</generateDirectory>
+					<i18nConstantsWithLookupBundle>
+						${$groupID}.client.internalization.${camelCase($projectName)}Constants
 					</i18nConstantsWithLookupBundle>
 					<i18nMessagesBundle>
-						info.yalamanchili.anulist.client.internalization.AlMessages
-					</i18nMessagesBundle> -->
+						${$groupID}.client.internalization.${camelCase($projectName)}Messages
+					</i18nMessagesBundle>
 					<gwtVersion>${'${gwtVersion}'}</gwtVersion>
 				</configuration>
 				<executions>
 					<execution>
 						<goals>
-						<!--<goal>mergewebxml</goal> 
-							<goal>i18n</goal>-->
+						<!--<goal>mergewebxml</goal> -->
+							<goal>i18n</goal>
 							<goal>compile</goal>
 					<!--		<goal>test</goal> -->
 						</goals>

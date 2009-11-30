@@ -163,7 +163,11 @@
     	<%--create gwt.xml file to include these  --%>		
     	<java:resource name="{$projectName}.gwt.xml" package="{$groupID}"  template="templates/web/web_gwtxml_template.xml.jet"/>
     	<c:setVariable select="concat($groupID,'.client.')" var="webPackage"/>
-
+    	
+		<%-- gwt messages and constants files--%>
+		<java:resource name="${camelCase($projectName)}Constants.properties" package="{$webPackage}internalization"  template="templates/web/web_gwt_constants.properties.jet"/>
+		<java:resource name="${camelCase($projectName)}Messages.properties" package="{$webPackage}internalization"  template="templates/web/web_gwt_messages.properties.jet"/>
+		
     	<%-- server Entry point class --%>
     	<java:class name="${camelCase($projectName)}Welcome" package="{$webPackage}" template="templates/web/web_entrypoint_class_template.java.jet"/>
     	<%-- server GWT CRUD server class --%>
