@@ -1,3 +1,4 @@
+<java:merge/>
 <java:format>
 
 package ${$groupID}.client;

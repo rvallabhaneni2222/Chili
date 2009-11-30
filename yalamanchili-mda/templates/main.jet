@@ -11,7 +11,7 @@
 <c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
 
 	<%-- load the yalamanchiliMDA prifile--%>
-<c:load url="templates/YalamanchiliMDAProfile.xml" var="myprofile"  />
+<c:load url="templates/profiles/YalamanchiliMDAProfile.xml" var="myprofile"  />
 	
 <%--Iterate through the yalamanchiliMDA model and get the datatypes,stereotypes and tagged values --%>
 <c:iterate select="$myprofile/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
@@ -87,32 +87,39 @@
 
 <%--creates the master project--%>
 <ws:project name="{$projectName}-master" location="C:/MDA/{$projectName}-master">
-	<ws:file path="pom.xml" template="templates/master_pom_template.xml.jet"/>
-    
+	<ws:file path="pom.xml" template="templates/master/master_pom_template.xml.jet"/>  
+</ws:project>
+
+<%--creates the APP project--%>
+<ws:project name="{$projectName}-app" location="C:/MDA/{$projectName}-app">
+	<ws:file path="pom.xml" template="templates/app/app_pom_template.xml.jet"/>
+    <ws:folder path="jboss/conf"/>
+    <ws:folder path="jboss/deploy"/>
+
 </ws:project>
 
 <%--creates the JPA project--%>
 <ws:project name="{$projectName}-jpa" location="C:/MDA/{$projectName}-jpa">
-	<ws:file path="pom.xml" template="templates/jpa_pom_template.xml.jet"/>
+	<ws:file path="pom.xml" template="templates/jpa/jpa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
     <c:setVariable select="concat($groupID,'.entity.')" var="jpaPackage"/>
     	<%--create gwt.xml file to include these  --%>		
-    	<java:resource name="entity.gwt.xml" package="{$groupID}"  template="templates/jpa_gwtxml.template.xml.jet"/>
+    	<java:resource name="entity.gwt.xml" package="{$groupID}"  template="templates/jpa/jpa_gwtxml.template.xml.jet"/>
     	<%--iterate through the packages and create jpa classes and enumerations --%>		
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     	 <c:setVariable select="concat($jpaPackage,$package/@name)" var="packageName"/>
     		<%-- create enumerations in the package--%>
     		<c:iterate select="$package/Namespace.ownedElement/Enumeration" var="enumeration">
-			<java:class name="{$enumeration/@name}" package="{$packageName}" template="templates/enumeration_template.java.jet"/>
+			<java:class name="{$enumeration/@name}" package="{$packageName}" template="templates/jpa/enumeration_template.java.jet"/>
 			</c:iterate>
 			<%-- create classes in the package--%>
 			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-			<java:class name="{$class/@name}" package="{$packageName}" template="templates/jpa_class_template.java.jet"/>
+			<java:class name="{$class/@name}" package="{$packageName}" template="templates/jpa/jpa_class_template.java.jet"/>
 			</c:iterate>
 		</c:iterate>
     </ws:folder>
     <ws:folder path="src/main/resources">
-    <ws:file template="templates/jpa_persistence_template.xml.jet" path="META-INF/persistence.xml"/>
+    <ws:file template="templates/jpa/jpa_persistence_template.xml.jet" path="META-INF/persistence.xml"/>
     </ws:folder>
     <ws:folder path="src/test/java"/>
     <ws:folder path="src/test/resources"/>
@@ -121,20 +128,20 @@
 
 <%--creates the EJB project--%>
 <ws:project name="{$projectName}-ejb" location="C:/MDA/{$projectName}-ejb">
-	<ws:file path="pom.xml" template="templates/ejb_pom_template.xml.jet"/>
+	<ws:file path="pom.xml" template="templates/ejb/ejb_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
      <c:setVariable select="concat($groupID,'.ejb.')" var="ejbPackage"/>	
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     	 <c:setVariable select="concat($ejbPackage,$package/@name)" var="packageName"/>	
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
     		<%-- CRUD EJB interface--%>
-			<java:class name="{$class/@name}Service" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb_service_template.java.jet"/>
+			<java:class name="{$class/@name}Service" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/ejb_service_template.java.jet"/>
 			<%-- CRUD EJB Local interface--%>
-			<java:class name="{$class/@name}ServiceLocal" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb_service_local_template.java.jet"/>
+			<java:class name="{$class/@name}ServiceLocal" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/ejb_service_local_template.java.jet"/>
 			<%-- CRUD EJB Remote interface--%>
-			<java:class name="{$class/@name}ServiceRemote" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb_service_remote_template.java.jet"/>
+			<java:class name="{$class/@name}ServiceRemote" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/ejb_service_remote_template.java.jet"/>
 			<%-- CRUD EJB Service Impl class--%>
-			<java:class name="{$class/@name}ServiceBean" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb_service_bean_template.java.jet"/>
+			<java:class name="{$class/@name}ServiceBean" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/ejb_service_bean_template.java.jet"/>
 			</c:iterate>
 		</c:iterate>
     </ws:folder>
@@ -146,18 +153,11 @@
 
 </ws:project>
 
-<%--creates the APP project--%>
-<ws:project name="{$projectName}-app" location="C:/MDA/{$projectName}-app">
-	<ws:file path="pom.xml" template="templates/app_pom_template.xml.jet"/>
-    <ws:folder path="jboss/conf"/>
-    <ws:folder path="jboss/deploy"/>
-
-</ws:project>
-
 <%--creates the webapp project--%>
 <ws:project name="{$projectName}-webapp" location="C:/MDA/{$projectName}-webapp">
 	<ws:file path="pom.xml" template="templates/web/webapp_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
+    	<%--css and html files for the web project  --%>	
      	<java:resource name="{$projectName}.css" package="{$groupID}.public"  template="templates/web/web_css_template.css.jet"/>
      	<java:resource name="{$projectName}.html" package="{$groupID}.public"  template="templates/web/web_html_template.html.jet"/>
     	<%--create gwt.xml file to include these  --%>		
@@ -166,7 +166,7 @@
 
     	<%-- server Entry point class --%>
     	<java:class name="${camelCase($projectName)}Welcome" package="{$webPackage}" template="templates/web/web_entrypoint_class_template.java.jet"/>
-    	<%-- server GWT CRUD service class --%>
+    	<%-- server GWT CRUD server class --%>
     	<java:class name="GenericCRUDServiceImpl" package="{$groupID}.server" template="templates/web/web_gwtCRUDservice_class_template.java.jet"/>
     	<%-- GWT server class --%>
     	<java:class name="GWTServiceImpl" package="{$groupID}.server" template="templates/web/web_gwtservice_class_template.java.jet"/>
