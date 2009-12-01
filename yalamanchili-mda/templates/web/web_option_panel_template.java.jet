@@ -1,0 +1,56 @@
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import ${$webPackage}${camelCase($projectName)}Welcome;
+import info.yalamanchili.gwt.composite.OptionsComposite;
+import info.yalamanchili.gwt.utils.Alignment;
+import com.google.gwt.user.client.ui.DockPanel;
+
+public class ${$class/@name}OptionsPanel extends OptionsComposite {
+
+	public ${$class/@name}OptionsPanel() {
+	}
+	public ${$class/@name}OptionsPanel(Alignment alignment) {
+		super(alignment);
+	}
+
+	@Override
+	public void deleteLinkClicked() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateLinkClicked() {
+		
+	}
+
+	@Override
+	protected void addListeners() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void addWidgets() {
+		panel.add(createLink);
+		panel.add(updateLink);
+		panel.add(deleteLink);
+
+	}
+
+	@Override
+	protected void configure() {
+		panel.setSpacing(5);
+
+	}
+
+	@Override
+	public void createLinkClicked() {
+		
+
+	}
+
+}
+</java:format>

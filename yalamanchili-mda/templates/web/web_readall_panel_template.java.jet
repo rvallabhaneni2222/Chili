@@ -1,0 +1,108 @@
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import ${$webPackage}${camelCase($projectName)}Welcome;
+
+
+import info.yalamanchili.gwt.beans.TableObj;
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
+import info.yalamanchili.gwt.composite.ReadAllCompositeTest;
+import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
+import info.yalamanchili.gwt.utils.Utils;
+
+import java.util.List;
+
+import com.google.gwt.user.client.ui.DockPanel;
+
+public class ReadAll${$class/@name}sPanel extends ReadAllCompositeTest<${$class/@name}> {
+
+	private final ${$class/@name}TableType tableType;
+
+	public enum ${$class/@name}TableType {
+		READALL, READALL_SEARCH
+	}
+
+	public ReadAll${$class/@name}sPanel(${$class/@name}TableType tableType) {
+		this.tableType = tableType;
+		initTable("${$groupID}.entity.${lower-case($package/@name)}.${$class/@name}",
+				${camelCase($projectName)}Welcome.constants);
+	}
+
+	@Override
+	public void createTableHeader() {
+		table.setText(0, 0, getKeyValue("Table_Action"));	
+		<%
+		int x = 1;
+		%>
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+<%-- processes yalamanchili gwt tags Tag--%>
+	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
+		<%-- If UIElement--%>
+		<c:if test="$stereotype/@href = ${'$UIElementID'}">
+			table.setText(0, <%= x++ %>, getClassValue("${$attribute/@name}"));
+		</c:if>
+	</c:iterate>
+</c:iterate>
+	}
+
+	@Override
+	public void fillData(List<${$class/@name}> entities) {
+		int i = 1;
+		for (${$class/@name} entity : entities) {
+			createViewIcon(i, entity.getId());
+			<%
+			int y = 1;
+			%>
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+<%-- processes yalamanchili gwt tags Tag--%>
+	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
+		<%-- If UIElement--%>
+		<c:if test="$stereotype/@href = ${'$UIElementID'}">
+				table.setText(i, <%= y++ %>, entity.get${uppercaseFirst($attribute/@name)}());
+		</c:if>
+	</c:iterate>
+</c:iterate>
+			i++;
+		}
+
+	}
+
+	@Override
+	public void preFetchTable(int start) {
+		if (${$class/@name}TableType.READALL.equals(tableType)) {
+			GenericCRUDServiceAsync.instance().getTableObj(new ${$class/@name}(),
+					start, new ALAsyncCallback<TableObj<${$class/@name}>>() {
+
+						@Override
+						public void onResponse(TableObj<${$class/@name}> tableObj) {
+							postFetchTable(tableObj);
+
+						}
+
+					});
+		}
+		if (${$class/@name}TableType.READALL_SEARCH.equals(tableType)) {
+			GenericCRUDServiceAsync.instance().getEntities(
+					${$class/@name}SearchPanelGeneric.instance().${lower-case($class/@name)},
+					new ALAsyncCallback<List<${$class/@name}>>() {
+
+						@Override
+						public void onResponse(List<${$class/@name}> arg0) {
+							postFetchTable(arg0);
+
+						}
+
+					});
+		}
+
+	}
+
+	@Override
+	public void viewClicked(int row, int col) {
+		
+
+	}
+
+}
+</java:format>

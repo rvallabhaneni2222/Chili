@@ -186,6 +186,14 @@
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
     		 <%-- Create Entity Panel--%>
 			 <java:class name="Create{$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_create_panel_template.java.jet"/>
+			 <%-- Read All Entities Panel--%>
+			 <java:class name="ReadAll{$class/@name}sPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_readall_panel_template.java.jet"/>
+			 <%-- Generic Search Panel--%>
+			 <java:class name="${$class/@name}SearchPanelGeneric" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_search_generic_panel_template.java.jet"/>
+			 <%-- Read Panel--%>
+			 <java:class name="Read${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_read_panel_template.java.jet"/>
+			  <%-- Options Panel--%>
+			 <java:class name="${$class/@name}OptionsPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_option_panel_template.java.jet"/>
 			 </c:iterate>
 		</c:iterate>
     </ws:folder>
