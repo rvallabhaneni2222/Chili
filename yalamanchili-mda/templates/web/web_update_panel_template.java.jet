@@ -1,0 +1,50 @@
+
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import ${$webPackage}${camelCase($projectName)}Welcome;
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
+import info.yalamanchili.gwt.composite.UpdateCompositeRef;
+import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
+import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
+
+public class Update${$class/@name}Panel extends UpdateCompositeRef<${$class/@name}> {
+
+	public Update${$class/@name}Panel() {
+		initUpdateComposite(new ${$class/@name}(), ${camelCase($projectName)}Welcome.constants,
+				${camelCase($projectName)}Welcome.messages);
+	}
+
+	@Override
+	public void populateFields() {
+		entity = Read${$class/@name}Panel.instance().getEntity();
+		populateFieldsWithData(entity);
+	}
+
+	@Override
+	public void updateButtonClicked() {
+		GenericCRUDServiceAsync.instance().update(entity,
+				new ALAsyncCallback<${$class/@name}>() {
+					public void onResponse(${$class/@name} arg0) {
+						new ResponseStatusWidget().show("updated");
+					}
+				});
+	}
+
+	@Override
+	protected void addListeners() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void addWidgets() {
+	}
+
+	@Override
+	protected void configure() {
+
+	}
+}
+</java:format>

@@ -194,6 +194,8 @@
 			 <java:class name="Read${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_read_panel_template.java.jet"/>
 			  <%-- Options Panel--%>
 			 <java:class name="${$class/@name}OptionsPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_option_panel_template.java.jet"/>
+			  <%-- Update Panel--%>
+			 <java:class name="Update${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_update_panel_template.java.jet"/>
 			 </c:iterate>
 		</c:iterate>
     </ws:folder>
