@@ -54,6 +54,32 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>info.yalamanchili.maven</groupId>
+				<artifactId>jpa-testdata</artifactId>
+				<version>1.0-SNAPSHOT</version>
+				<configuration>
+					<namingStrategy>org.hibernate.cfg.ImprovedNamingStrategy
+				</namingStrategy>
+				<c:if test="$dataBase = 'MYSQL'">
+	 			<dialectValue>MYSQL</dialectValue>
+	 			</c:if>
+	 			<c:if test="$dataBase = 'HSQL'">
+	 			<dialectValue>HSQL</dialectValue>
+	 			</c:if>
+	 			<c:if test="$dataBase = 'ORACLE'">
+	 			<dialectValue>ORACLE</dialectValue>
+	 			</c:if>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<executions>

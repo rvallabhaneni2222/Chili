@@ -12,10 +12,7 @@
       <!-- Datasources are not available outside the virtual machine -->
       <jndi-name>${camelCase($projectName)}DS</jndi-name>
 
-      <!-- For server mode db, allowing other processes to use hsqldb over tcp.
-      This requires the org.jboss.jdbc.HypersonicDatabase mbean.
-      <connection-url>jdbc:hsqldb:hsql://${jboss.bind.address}:1701</connection-url>
-      -->
+      
       <!-- For totally in-memory db, not saved when jboss stops. 
       The org.jboss.jdbc.HypersonicDatabase mbean is required for proper db shutdown
       <connection-url>jdbc:hsqldb:.</connection-url>
@@ -23,7 +20,7 @@
       <!-- For in-process persistent db, saved when jboss stops.
       The org.jboss.jdbc.HypersonicDatabase mbean is required for proper db shutdown
       -->
-      <connection-url>jdbc:hsqldb:${jboss.server.data.dir}${/}hypersonic${/}localDB</connection-url>
+      <connection-url>jdbc:hsqldb:${'${jboss.server.data.dir}${/}hypersonic${/}localDB'}</connection-url>
 
       <!-- The driver class -->
       <driver-class>org.hsqldb.jdbcDriver</driver-class>

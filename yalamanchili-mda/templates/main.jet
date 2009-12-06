@@ -8,6 +8,7 @@
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
 <c:setVariable select="'info.yalamanchili.testmda'" var="groupID"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
+<c:setVariable select="'HSQL'" var="dataBase"/>
 <c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
 
 	<%-- load the yalamanchiliMDA prifile--%>
@@ -93,7 +94,17 @@
 <%--creates the APP project--%>
 <ws:project name="{$projectName}-app" location="C:/MDA/{$projectName}-app">
 	<ws:file path="pom.xml" template="templates/app/app_pom_template.xml.jet"/>
-    <ws:folder path="jboss/conf"/>
+    <ws:folder path="jboss/conf">
+    	<c:if test="$dataBase = 'MYSQL'">
+	 		<ws:file path="{$projectName}-mysql-ds.xml" template="templates/app/app_mysql_ds_template.xml.jet"/>
+	 	</c:if>
+	 	<c:if test="$dataBase = 'HSQL'">
+	 		<ws:file path="{$projectName}-hsql-ds.xml" template="templates/app/app_hsqldb_ds_template.xml.jet"/>
+	 	</c:if>
+	 	<c:if test="$dataBase = 'ORACLE'">
+	 		<ws:file path="{$projectName}-oracle-ds.xml" template="templates/app/app_oracle_ds_template.xml.jet"/>
+	 	</c:if>
+    </ws:folder>
     <ws:folder path="jboss/deploy"/>
 
 </ws:project>
