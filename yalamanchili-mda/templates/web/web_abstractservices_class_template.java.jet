@@ -43,6 +43,14 @@ public abstract class Abstract${camelCase($projectName)}Services extends Persist
 	@PersistenceUnit(name = "${$projectName}")
 	protected EntityManagerFactory emf;
 	
+	public EntityManagerFactory getEmf() {
+		return emf;
+	}
+
+	public void setEmf(EntityManagerFactory emf) {
+		this.emf = emf;
+	}
+	
 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
 			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
 			@EJB(name = "${lower-case($class/@name)}")
@@ -54,18 +62,14 @@ public abstract class Abstract${camelCase($projectName)}Services extends Persist
 		super.init();
 		${$projectName}Properties = PropertyFileLoader
 				.loadProperties("${$projectName}.properties");
-		initEntityManagerFactory();
 		initGileadBeanManager();
 		initEJBMap();
 		}
 		
-		protected void initEntityManagerFactory(){
-		emf = getEntityManagerFactory();
-		}
 		
 		protected void initGileadBeanManager(){
 		HibernateJBossUtil persistenceUtil = new HibernateJBossUtil();
-		InjectedEntityManagerFactory iemf = (InjectedEntityManagerFactory) getEntityManagerFactory();
+		InjectedEntityManagerFactory iemf = (InjectedEntityManagerFactory) getEmf();
 		persistenceUtil.setEntityManagerFactory(iemf);
 		beanManager.setPersistenceUtil(persistenceUtil);
 		beanManager.setProxyStore(new StatelessProxyStore());
@@ -81,19 +85,7 @@ public abstract class Abstract${camelCase($projectName)}Services extends Persist
 		
 		
 		}
-		protected EntityManagerFactory getEntityManagerFactory(){
-		if(emf==null){
-		return (EntityManagerFactory) JNDIUtils.lookup(${$projectName}Properties
-				.getProperty("${$projectName}.persistence.unit"));
-				}
-				else{
-				return emf;
-				}
-		}
 		
-		protected void setEntitytManagerFactory(EntityManagerFactory emf){
-		this.emf=emf;
-		}
 		
 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
 			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
