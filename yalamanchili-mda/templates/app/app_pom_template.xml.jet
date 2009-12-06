@@ -20,11 +20,6 @@
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.seam</groupId>
-			<artifactId>jboss-seam</artifactId>
-			<version>2.1.0.GA</version>
-		</dependency>
-		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-webapp</artifactId>
 			<version>${$version}</version>
@@ -35,16 +30,6 @@
 			<artifactId>${$projectName}-ejb</artifactId>
 			<version>${$version}</version>
 			<type>ejb</type>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.seam</groupId>
-			<artifactId>jboss-seam</artifactId>
-			<version>2.1.0.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.seam</groupId>
-			<artifactId>jboss-seam-remoting</artifactId>
-			<version>2.1.0.GA</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.beanlib</groupId>
@@ -83,11 +68,6 @@
 					<unpackTypes>war,ejb</unpackTypes>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
 					<modules>
-						<jarModule>
-							<groupId>org.jboss.seam</groupId>
-							<artifactId>jboss-seam</artifactId>
-							<bundleDir>/</bundleDir>
-						</jarModule>
 						<webModule>
 							<groupId>${$groupID}
 							</groupId>
