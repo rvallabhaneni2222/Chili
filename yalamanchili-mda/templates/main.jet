@@ -169,44 +169,46 @@
 	<ws:file path="pom.xml" template="templates/web/webapp_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
     	<%--css and html files for the web project  --%>	
-     	<java:resource name="{$projectName}.css" package="{$groupID}.public"  template="templates/web/web_css_template.css.jet"/>
-     	<java:resource name="{$projectName}.html" package="{$groupID}.public"  template="templates/web/web_html_template.html.jet"/>
+     	<java:resource name="{$projectName}.css" package="{$groupID}.public"  template="templates/web/gwt/public/web_css_template.css.jet"/>
+     	<java:resource name="{$projectName}.html" package="{$groupID}.public"  template="templates/web/gwt/public/web_html_template.html.jet"/>
     	<%--create gwt.xml file to include these  --%>		
-    	<java:resource name="{$projectName}.gwt.xml" package="{$groupID}"  template="templates/web/web_gwtxml_template.xml.jet"/>
+    	<java:resource name="{$projectName}.gwt.xml" package="{$groupID}"  template="templates/web/gwt/web_gwtxml_template.xml.jet"/>
     	<c:setVariable select="concat($groupID,'.client.')" var="webPackage"/>
     	
 		<%-- gwt messages and constants files--%>
-		<java:resource name="${camelCase($projectName)}Constants.properties" package="{$webPackage}internalization"  template="templates/web/web_gwt_constants.properties.jet"/>
-		<java:resource name="${camelCase($projectName)}Messages.properties" package="{$webPackage}internalization"  template="templates/web/web_gwt_messages.properties.jet"/>
+		<java:resource name="${camelCase($projectName)}Constants.properties" package="{$webPackage}internalization"  template="templates/web/gwt/client/internalization/web_gwt_constants.properties.jet"/>
+		<java:resource name="${camelCase($projectName)}Messages.properties" package="{$webPackage}internalization"  template="templates/web/gwt/client/internalization/web_gwt_messages.properties.jet"/>
 		
     	<%-- server Entry point class --%>
-    	<java:class name="${camelCase($projectName)}Welcome" package="{$webPackage}" template="templates/web/web_entrypoint_class_template.java.jet"/>
+    	<java:class name="${camelCase($projectName)}Welcome" package="{$webPackage}" template="templates/web/gwt/client/web_entrypoint_class_template.java.jet"/>
     	<%-- server GWT CRUD server class --%>
-    	<java:class name="GenericCRUDServiceImpl" package="{$groupID}.server" template="templates/web/web_gwtCRUDservice_class_template.java.jet"/>
+    	<java:class name="GenericCRUDServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/web_gwtCRUDservice_class_template.java.jet"/>
     	<%-- GWT server class --%>
-    	<java:class name="GWTServiceImpl" package="{$groupID}.server" template="templates/web/web_gwtservice_class_template.java.jet"/>
+    	<java:class name="GWTServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/web_gwtservice_class_template.java.jet"/>
     	<%-- Abstract servlet  --%>
-    	<java:class name="Abstract${camelCase($projectName)}Services" package="{$groupID}.server" template="templates/web/web_abstractservices_class_template.java.jet"/>
+    	<java:class name="Abstract${camelCase($projectName)}Services" package="{$groupID}.server" template="templates/web/gwt/server/web_abstractservices_class_template.java.jet"/>
+    	<%-- Current project servlet  --%>
+    	<java:class name="${camelCase($projectName)}ServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/web_rpc_service_impl.java.jet"/>
     	<%-- RPC  --%>
-    	<java:class name="${camelCase($projectName)}Service" package="{$webPackage}rpc" template="templates/web/app_rpc_service.java.jet"/>
-    	<java:class name="${camelCase($projectName)}ServiceAsync" package="{$webPackage}rpc" template="templates/web/app_rpc_service_async.java.jet"/>
+    	<java:class name="${camelCase($projectName)}Service" package="{$webPackage}rpc" template="templates/web/gwt/client/rpc/app_rpc_service.java.jet"/>
+    	<java:class name="${camelCase($projectName)}ServiceAsync" package="{$webPackage}rpc" template="templates/web/gwt/client/rpc/app_rpc_service_async.java.jet"/>
     	
-    	<java:class name="${camelCase($projectName)}ServiceImpl" package="{$groupID}.server" template="templates/web/web_rpc_service_impl.java.jet"/>
+    	
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
     		 <%-- Create Entity Panel--%>
-			 <java:class name="Create{$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_create_panel_template.java.jet"/>
+			 <java:class name="Create{$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_create_panel_template.java.jet"/>
 			 <%-- Read All Entities Panel--%>
-			 <java:class name="ReadAll{$class/@name}sPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_readall_panel_template.java.jet"/>
+			 <java:class name="ReadAll{$class/@name}sPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_readall_panel_template.java.jet"/>
 			 <%-- Generic Search Panel--%>
-			 <java:class name="${$class/@name}SearchPanelGeneric" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_search_generic_panel_template.java.jet"/>
+			 <java:class name="${$class/@name}SearchPanelGeneric" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_search_generic_panel_template.java.jet"/>
 			 <%-- Read Panel--%>
-			 <java:class name="Read${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_read_panel_template.java.jet"/>
+			 <java:class name="Read${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_read_panel_template.java.jet"/>
 			  <%-- Options Panel--%>
-			 <java:class name="${$class/@name}OptionsPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_option_panel_template.java.jet"/>
+			 <java:class name="${$class/@name}OptionsPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_option_panel_template.java.jet"/>
 			  <%-- Update Panel--%>
-			 <java:class name="Update${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/web_update_panel_template.java.jet"/>
+			 <java:class name="Update${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_update_panel_template.java.jet"/>
 			 </c:iterate>
 		</c:iterate>
     </ws:folder>
@@ -214,10 +216,10 @@
      <ws:file template="templates/web/webapp_appxml_template.properties.jet" path="{$projectName}.properties"/>
     </ws:folder>
     <ws:folder path="src/main/webapp">
-    	<ws:file template="templates/web/web_indexhtml_template.html.jet" path="index.html"/>
+    	<ws:file template="templates/web/webapp/web_indexhtml_template.html.jet" path="index.html"/>
     		<ws:folder path="WEB-INF">
-    	 	<ws:file template="templates/web/webapp_webxml_template.xml.jet" path="web.xml"/>
-    	 	<ws:file template="templates/web/webapp_jboss-app_template.xml.jet" path="jboss-web.xml"/>
+    	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_webxml_template.xml.jet" path="web.xml"/>
+    	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_jboss-app_template.xml.jet" path="jboss-web.xml"/>
     		</ws:folder>
     </ws:folder>
     <ws:folder path="src/test/java"/>
