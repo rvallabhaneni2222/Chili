@@ -1,0 +1,77 @@
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+
+import ${$webPackage}${camelCase($projectName)}Welcome;
+import ${$webPackage}Roles;
+import ${$groupID}.client.${$package/@name}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel.${$class/@name}TableType;
+import info.yalamanchili.gwt.composite.SideBarComposite;
+import info.yalamanchili.gwt.widgets.ClickableLink;
+
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.OpenEvent;
+import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.DockPanel;
+
+public class ${$class/@name}SideBar extends SideBarComposite {
+	private static ${$class/@name}SideBar ${lower-case($class/@name)}SideBar;
+
+	public static ${$class/@name}SideBar instance() {
+		return ${lower-case($class/@name)}SideBar;
+	}
+
+	ClickableLink createLink = new ClickableLink("Create ${$class/@name}");
+	${$class/@name}SearchPanelGeneric ${lower-case($class/@name)}SearchPanelGeneric = new ${$class/@name}SearchPanelGeneric();
+
+
+	public ${$class/@name}SideBar() {
+		${lower-case($class/@name)}SideBar = this;
+		initSideBarComposite();
+	}
+
+	@Override
+	protected void addListeners() {
+		createLink.addClickHandler(this);
+	}
+
+	@Override
+	protected void configure() {
+		panel.addStyleName("${$class/@name}SidePanel");
+	}
+
+	@Override
+	protected void addWidgets() {
+		
+			panel.add(createLink);
+		
+	}
+
+	@Override
+	public void onClick(ClickEvent event) {
+		if (event.getSource() == createLink) {
+			createLinkClicked();
+		}
+	}
+
+
+	protected void createLinkClicked() {
+		${camelCase($projectName)}Welcome.instance().get${$class/@name}sPanel().clear();
+		${camelCase($projectName)}Welcome.instance().get${$class/@name}sPanel().add(
+				new Create${$class/@name}Panel(), DockPanel.CENTER);
+	}
+
+	protected void reload${$class/@name}() {
+		
+	}
+
+	@Override
+	public void onSearchClose(CloseEvent<DisclosurePanel> arg0) {
+		searchPanel.remove(${lower-case($class/@name)}SearchPanelGeneric);
+	}
+
+	@Override
+	public void onSearchOpen(OpenEvent<DisclosurePanel> arg0) {
+		searchPanel.add(${lower-case($class/@name)}SearchPanelGeneric);
+	}
+}
+</java:format>

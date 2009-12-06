@@ -1,0 +1,8 @@
+<java:format>
+
+package ${$groupID}.client;
+
+public enum Roles {
+	DEFAULT_USER
+}
+</java:format>

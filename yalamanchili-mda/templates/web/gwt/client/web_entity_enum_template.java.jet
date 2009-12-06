@@ -1,0 +1,13 @@
+<java:format>
+
+package ${$groupID}.client;
+
+public enum Entity {
+	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
+    		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    			${upper-case($class/@name)},
+			 </c:iterate>
+	</c:iterate>
+}
+</java:format>

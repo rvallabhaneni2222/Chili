@@ -179,8 +179,20 @@
 		<java:resource name="${camelCase($projectName)}Constants.properties" package="{$webPackage}internalization"  template="templates/web/gwt/client/internalization/web_gwt_constants.properties.jet"/>
 		<java:resource name="${camelCase($projectName)}Messages.properties" package="{$webPackage}internalization"  template="templates/web/gwt/client/internalization/web_gwt_messages.properties.jet"/>
 		
-    	<%-- server Entry point class --%>
+    	<%--  Entry point class --%>
     	<java:class name="${camelCase($projectName)}Welcome" package="{$webPackage}" template="templates/web/gwt/client/web_entrypoint_class_template.java.jet"/>
+    	<%-- Entities Enum class --%>
+    	<java:class name="Entity" package="{$webPackage}" template="templates/web/gwt/client/web_entity_enum_template.java.jet"/>
+    	<%--  RootPanels class --%>
+    	<java:class name="RootPanels" package="{$webPackage}" template="templates/web/gwt/client/web_root_panels_template.java.jet"/>
+    	<%--  ROLES class --%>
+    	<java:class name="Roles" package="{$webPackage}" template="templates/web/gwt/client/web_roles_enum_template.java.jet"/>
+    	<%--  Login panel class --%>
+    	<java:class name="LoginPanel" package="{$webPackage}" template="templates/web/gwt/client/web_login_panel_template.java.jet"/>
+    	<%--  Status panel class --%>
+    	<java:class name="StatusPanel" package="{$webPackage}" template="templates/web/gwt/client/web_status_panel_template.java.jet"/>
+    	
+    	
     	<%-- server GWT CRUD server class --%>
     	<java:class name="GenericCRUDServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/web_gwtCRUDservice_class_template.java.jet"/>
     	<%-- GWT server class --%>
@@ -209,6 +221,8 @@
 			 <java:class name="${$class/@name}OptionsPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_option_panel_template.java.jet"/>
 			  <%-- Update Panel--%>
 			 <java:class name="Update${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_update_panel_template.java.jet"/>
+			  <%-- Side  Panel--%>
+			 <java:class name="${$class/@name}SideBar" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_side_panel_template.java.jet"/>
 			 </c:iterate>
 		</c:iterate>
     </ws:folder>

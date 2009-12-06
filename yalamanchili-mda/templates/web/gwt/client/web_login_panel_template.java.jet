@@ -1,0 +1,24 @@
+<java:format>
+
+package ${$groupID}.client;
+
+import info.yalamanchili.gwt.widgets.LoginPanelAbstract;
+
+
+public class LoginPanel extends LoginPanelAbstract {
+
+	@Override
+	protected void loginClicked() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void setAutoLogout() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
+
+</java:format>
