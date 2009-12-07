@@ -171,6 +171,8 @@
     	<%--css and html files for the web project  --%>	
      	<java:resource name="{$projectName}.css" package="{$groupID}.public"  template="templates/web/gwt/public/web_css_template.css.jet"/>
      	<java:resource name="{$projectName}.html" package="{$groupID}.public"  template="templates/web/gwt/public/web_html_template.html.jet"/>
+     	<%--create folder for icons  --%>
+     	
     	<%--create gwt.xml file to include these  --%>		
     	<java:resource name="{$projectName}.gwt.xml" package="{$groupID}"  template="templates/web/gwt/web_gwtxml_template.xml.jet"/>
     	<c:setVariable select="concat($groupID,'.client.')" var="webPackage"/>

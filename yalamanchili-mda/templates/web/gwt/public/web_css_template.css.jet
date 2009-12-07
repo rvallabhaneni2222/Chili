@@ -1,0 +1,61 @@
+.displayTabPanel{
+width: 800px;
+height: 480px;
+}
+.sidePanel{
+width: 180px;
+}
+.sidePanelTop{
+
+}
+.sidePanelBottom{
+
+}
+.ListingSidePanel{
+ 
+}
+.LocationSidePanel{
+ 
+}
+.CategorySidePanel{
+ 
+}
+.statusPanel{
+width: 980px;
+}
+.displayTabPanel .gwt-TabBarItem{
+background: url("images/tab_100.png");
+width: 100px;
+text-align: center;
+margin-left: 3px;
+margin-right: 3px;
+ font-size: 12pt;
+}
+.displayTabPanel .gwt-TabBarItem-selected{
+margin-left: 3px;
+margin-right: 3px;
+ font-size: 14pt;
+font-weight: bold;
+}
+.tabBar{
+border-bottom: 3px solid #88ACE0;
+}
+
+.LoginPanel{
+background-color: #88ACE0;
+}
+.StackPanelWidget .gwt-StackPanelItem { 
+font-weight: bold;
+font-size: 12pt;
+width: 180px;
+ border                      :    1px solid #666;
+background-color             :    #CCCCFF;
+}
+.StackPanelWidget .gwt-StackPanelItem-selected { 
+width: 180px;
+background-color             :    #AAAAFF;
+}
+.StackPanelWidget .gwt-StackPanelContent { 
+background-color             :    #E5E5E5;
+}
+
