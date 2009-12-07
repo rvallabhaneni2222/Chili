@@ -11,28 +11,35 @@ import com.google.gwt.event.dom.client.ClickEvent;
 public class StatusPanel extends AbstractStatusPanel {
 
 	@Override
-	protected void createUserLinkClicked() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	protected void loginClicked() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void logoutClicked() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onClick(ClickEvent arg0) {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void createUserClicked() {
+		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	protected void setUser() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
 

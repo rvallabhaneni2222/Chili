@@ -16,17 +16,14 @@ import com.allen_sauer.gwt.log.client.DivLogger;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.Command;
 import ${$webPackage}internalization.${camelCase($projectName)}Constants;
 import ${$webPackage}internalization.${camelCase($projectName)}Messages;
 
-public class ${camelCase($projectName)}Welcome extends RootPanels implements EntryPoint,
-		SelectionHandler {
+public class ${camelCase($projectName)}Welcome extends RootPanels implements EntryPoint {
 
 	private static ${camelCase($projectName)}Welcome instance;
 	
@@ -54,35 +51,47 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 		}
 		
 		protected void addListeners() {
-		displayTabPanel.addSelectionHandler(this);
 		}
 
 	protected void configure() {
-		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-    		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
-    		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-    			configure${$class/@name}sPanel();
-			 </c:iterate>
-		</c:iterate>
+		configureEntityPanel();
 		configureStatusPanel();
 		configureSideBarTop();
 		configureSideBarBottom();
 		configureSideBar();
-		configureDisplayTabPanel();
 		configureMainPanel();
+		configureMenuBar();
 	}
 	
 	protected void configureMainPanel() {
 		mainPanel.setBorderWidth(5);
 		mainPanel.add(statusPanel, DockPanel.NORTH);
+		mainPanel.add(menuBar, DockPanel.NORTH);
 		mainPanel.add(sidePanel, DockPanel.WEST);
-		mainPanel.add(displayTabPanel, DockPanel.CENTER);
+		mainPanel.add(entityPanel, DockPanel.CENTER);
 		mainPanel.addStyleName("mainPanel");
 	}
+	
+	protected void configureEntityPanel() {
+		entityPanel.addStyleName("entityPanel");
+	}
 
-	protected void configureDisplayTabPanel() {
-		displayTabPanel.addStyleName("displayTabPanel");
-		displayTabPanel.getTabBar().addStyleName("tabBar");
+	protected void configureMenuBar() {
+	menuBar.addStyleName("entityMenuBar");
+	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    MenuBar ${lower-case($package/@name)}Bar = new MenuBar(true);
+    		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    			${lower-case($package/@name)}Bar.addItem("${$class/@name}", ${lower-case($class/@name)}Cmd);
+			 </c:iterate>
+	</c:iterate>
+
+		MenuBar menu = new MenuBar();
+		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+		menu.addItem("${upper-case($package/@name)}", ${lower-case($package/@name)}Bar);
+		</c:iterate>
+
+		menuBar.add(menu);
+
 	}
 	
 	protected void configureStatusPanel() {
@@ -105,43 +114,26 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 		
 
 	}
+	
+	
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-    		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-    			protected void configure${$class/@name}sPanel() {
-    			${lower-case($class/@name)}sPanel.setWidth("100%");
-				${lower-case($class/@name)}sPanel.addStyleName("${$class/@name}sPanel");
-				${lower-case($class/@name)}sPanel.setTitle(Entity.${upper-case($class/@name)}.toString());
-				get${$class/@name}sEastPanel().setSpacing(5);
-				displayTabPanel.add(${lower-case($class/@name)}sPanel, "${$class/@name}");
-    			}
+    			Command ${lower-case($class/@name)}Cmd= new Command() {
+
+				@Override
+				public void execute() {
+					getEntityPanel().clear();
+					getEntityPanel().add(new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL),
+					DockPanel.CENTER);
+					getSidePanelTop().clear();
+					getSidePanelTop().add(new ${$class/@name}SideBar());
+				}
+
+			};
 			 </c:iterate>
 	</c:iterate>
 	
-	@Override
-	public void onSelection(SelectionEvent event) {
-		Integer tab = (Integer) event.getSelectedItem();
-		Entity tabSelected = Entity.valueOf(displayTabPanel.getWidget(tab)
-				.getTitle());
-		switch (tabSelected) {
-		
-			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-    		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
-    		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-    			case ${upper-case($class/@name)}:
-					${lower-case($class/@name)}sPanel.clear();
-					get${$class/@name}sPanel().add(
-					new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL),
-					DockPanel.CENTER);
-					sidePanelTop.clear();
-					sidePanelTop.add(new ${$class/@name}SideBar());
-					break;
-			 </c:iterate>
-	</c:iterate>
-		default:
-		}
-
-	}
+	
 	
 	
 	

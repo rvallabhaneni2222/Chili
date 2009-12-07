@@ -1,7 +1,7 @@
 .mainPanel{
 width : 100%;
 }
-.displayTabPanel{
+.entityPanel{
 width: 800px;
 height: 480px;
 }
@@ -20,24 +20,6 @@ width: 180px;
 }
 .displayTabPanel{
 width : 100%;
-}
-
-.displayTabPanel .gwt-TabBarItem{
-background: url("images/tab_100.png");
-width: 100px;
-text-align: center;
-margin-left: 3px;
-margin-right: 3px;
- font-size: 12pt;
-}
-.displayTabPanel .gwt-TabBarItem-selected{
-margin-left: 3px;
-margin-right: 3px;
- font-size: 14pt;
-font-weight: bold;
-}
-.tabBar{
-border-bottom: 3px solid #88ACE0;
 }
 
 .LoginPanel{

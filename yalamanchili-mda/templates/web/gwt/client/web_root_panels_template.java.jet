@@ -8,26 +8,17 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class RootPanels {
-	protected Roles role=Roles.DEFAULT_USER;
+protected Roles role = Roles.DEFAULT_USER;
 	protected VerticalPanel sidePanel = new VerticalPanel();
 	protected VerticalPanel sidePanelTop = new VerticalPanel();
 	protected VerticalPanel sidePanelBottom = new VerticalPanel();
-	protected DecoratedTabPanel displayTabPanel = new DecoratedTabPanel();
 	protected VerticalPanel statusPanel = new VerticalPanel();
-	
-	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-    		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
-    		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-    			protected DockPanel ${lower-case($class/@name)}sPanel = new DockPanel();
-				protected VerticalPanel ${lower-case($class/@name)}sEastPanel = new VerticalPanel();
-			 </c:iterate>
-	</c:iterate>
-	
-	
-	
+	protected VerticalPanel menuBar = new VerticalPanel();
+	protected DockPanel entityPanel = new DockPanel();
+
 	public RootPanels() {
 	}
-	
+
 	public Roles getRole() {
 		return role;
 	}
@@ -60,34 +51,29 @@ public class RootPanels {
 		this.sidePanelBottom = sidePanelBottom;
 	}
 
-	public DecoratedTabPanel getDisplayTabPanel() {
-		return displayTabPanel;
+	public VerticalPanel getStatusPanel() {
+		return statusPanel;
 	}
 
-	public void setDisplayTabPanel(DecoratedTabPanel displayTabPanel) {
-		this.displayTabPanel = displayTabPanel;
+	public void setStatusPanel(VerticalPanel statusPanel) {
+		this.statusPanel = statusPanel;
 	}
-	
-	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-    		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
-    		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-	    		public DockPanel get${$class/@name}sPanel(){
-	    		return this.${lower-case($class/@name)}sPanel;
-	    		}
-	    		
-	    		public VerticalPanel get${$class/@name}sEastPanel(){
-	    		return this.${lower-case($class/@name)}sEastPanel;
-	    		}
-	    		
-	    		public void set${$class/@name}sPanel(DockPanel ${lower-case($class/@name)}sPanel){
-	    		 this.${lower-case($class/@name)}sPanel =${lower-case($class/@name)}sPanel;
-	    		}
-	    		
-	    		public void set${$class/@name}sEastPanelPanel(VerticalPanel ${lower-case($class/@name)}sEastPanel){
-	    		this.${lower-case($class/@name)}sEastPanel =${lower-case($class/@name)}sEastPanel;
-	    		}
-			 </c:iterate>
-	</c:iterate>
+
+	public VerticalPanel getMenuBar() {
+		return menuBar;
+	}
+
+	public void setMenuBar(VerticalPanel menuBar) {
+		this.menuBar = menuBar;
+	}
+
+	public DockPanel getEntityPanel() {
+		return entityPanel;
+	}
+
+	public void setEntityPanel(DockPanel entityPanel) {
+		this.entityPanel = entityPanel;
+	}
 	
 	}
 </java:format>
