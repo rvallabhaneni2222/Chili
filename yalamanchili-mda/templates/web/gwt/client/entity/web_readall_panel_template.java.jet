@@ -59,7 +59,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllCompositeTest<${$class/
 	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
 		<%-- If UIElement--%>
 		<c:if test="$stereotype/@href = ${'$UIElementID'}">
-				table.setText(i, <%= y++ %>, entity.get${uppercaseFirst($attribute/@name)}());
+				table.setText(i, <%= y++ %>, entity.get${uppercaseFirst($attribute/@name)}().toString());
 		</c:if>
 	</c:iterate>
 </c:iterate>
