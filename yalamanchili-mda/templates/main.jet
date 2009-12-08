@@ -45,6 +45,9 @@
 	<c:if test="$stereotype/@name = 'Range'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="RangeID"/>		
 	</c:if>
+	<c:if test="$stereotype/@name = 'Email'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="EmailID"/>		
+	</c:if>
 </c:iterate>
 <%-- check all packages for tagged Values --%>	
 <c:iterate select="$package/Namespace.ownedElement/TagDefinition" var="tagdefinition">
@@ -59,6 +62,9 @@
 	</c:if>
 	<c:if test="$tagdefinition/@name = 'min'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="minID"/>		
+	</c:if>
+	<c:if test="$tagdefinition/@name = 'value'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="valueID"/>		
 	</c:if>
 </c:iterate>
 <%-- check all packages for DataTypes  --%>	

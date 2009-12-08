@@ -39,6 +39,11 @@ import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Past;
 import org.hibernate.validator.Range;
+import org.hibernate.validator.Length;
+import org.hibernate.validator.Email;
+import org.hibernate.validator.Future;
+import org.hibernate.validator.Max;
+import org.hibernate.validator.Min;
 <%-- Check inheritance support--%>
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
  <%-- if parent class--%>
@@ -79,7 +84,7 @@ private static final long serialVersionUID = 1L;
  
 
 
-<%-- primitive DataTypes--%>
+<%-- Process annotations on the primitive datatypes--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 <f:message>generated.comment</f:message>
 <%-- processes yalamanchili gwt tags Tag--%>
@@ -95,9 +100,52 @@ private static final long serialVersionUID = 1L;
 				</c:iterate>
 			</c:iterate>
 		</c:if>
+		<c:if test="$stereotype/@href = ${'$LengthID'}">
+			<c:iterate select="$attribute/ModelElement.taggedValue" var="taggedvalue">
+				<c:iterate select="$taggedvalue/TaggedValue" var="subtag1">
+				<%-- If MIN length TAG--%>
+					<c:if test="$subtag1/TaggedValue.type/TagDefinition/@href = ${'$minID'}">
+						<c:iterate select="$taggedvalue/TaggedValue" var="subtag2">
+							<%-- If MAX length TAG--%>
+							<c:if test="$subtag2/TaggedValue.type/TagDefinition/@href = ${'$maxID'}">
+@Length(min=${$subtag1/TaggedValue.dataValue},max=${$subtag2/TaggedValue.dataValue})	
+							</c:if>
+						</c:iterate>
+		
+					</c:if>
+				</c:iterate>
+			</c:iterate>
+		</c:if>
+		<c:if test="$stereotype/@href = ${'$RangeID'}">
+			<c:iterate select="$attribute/ModelElement.taggedValue" var="taggedvalue">
+				<c:iterate select="$taggedvalue/TaggedValue" var="subtag1">
+				<%-- If MIN length TAG--%>
+					<c:if test="$subtag1/TaggedValue.type/TagDefinition/@href = ${'$minID'}">
+						<c:iterate select="$taggedvalue/TaggedValue" var="subtag2">
+							<%-- If MAX length TAG--%>
+							<c:if test="$subtag2/TaggedValue.type/TagDefinition/@href = ${'$maxID'}">
+@Range(min=${$subtag1/TaggedValue.dataValue},max=${$subtag2/TaggedValue.dataValue})	
+							</c:if>
+						</c:iterate>
+		
+					</c:if>
+				</c:iterate>
+			</c:iterate>
+		</c:if>	
+							
+		<c:if test="$stereotype/@href = ${'$NotNullID'}">
+@NotNull
+		</c:if>
+		<c:if test="$stereotype/@href = ${'$PastID'}">
+@Past
+		</c:if>
+		<c:if test="$stereotype/@href = ${'$FutureID'}">
+@Future
+		</c:if>
+						
 	</c:iterate>
 	
-<%-- processes the premitive datatypes and enums--%>
+<%-- processes the premitive Datatypes and enums--%>
 	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > protected String </c:when> <c:when test="${'$IntegerID'}" > protected Integer </c:when><c:when test="${'$DateID'}" > protected Date </c:when><c:when test="${'$BooleanID'}" >protected  Boolean </c:when><c:when test="${'$LongID'}" > protected Long </c:when><c:when test="${'$FloatID'}" > protected Float </c:when>
 	 <c:otherwise> 
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
