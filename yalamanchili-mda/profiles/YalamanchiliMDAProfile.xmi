@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Dec 08 10:46:06 EST 2009'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Dec 08 23:31:57 EST 2009'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.28.1(6) revised on $Date: 2007-05-12 08:08:08 +0200 (Sat, 12 May 2007) $ </XMI.exporterVersion>
@@ -177,6 +177,11 @@
             </UML:TagDefinition>
             <UML:Stereotype xmi.id = '-91--119--6-96-371af25b:1256ee9bf74:-8000:0000000000001748'
               name = 'Email' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+            </UML:Stereotype>
+            <UML:Stereotype xmi.id = '-64--88-2-15--4c568e94:12571a540e3:-8000:000000000000291E'
+              name = 'NotEmpty' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
               isAbstract = 'false'>
               <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
             </UML:Stereotype>
