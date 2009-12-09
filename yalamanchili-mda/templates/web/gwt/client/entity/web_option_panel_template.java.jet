@@ -6,6 +6,7 @@ import ${$webPackage}${camelCase($projectName)}Welcome;
 import info.yalamanchili.gwt.composite.OptionsComposite;
 import info.yalamanchili.gwt.utils.Alignment;
 import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.Window;
 
 public class ${$class/@name}OptionsPanel extends OptionsComposite {
 
@@ -17,13 +18,15 @@ public class ${$class/@name}OptionsPanel extends OptionsComposite {
 
 	@Override
 	public void deleteLinkClicked() {
-		// TODO Auto-generated method stub
+		Window.alert("delete clicked");
 
 	}
 
 	@Override
 	public void updateLinkClicked() {
-		
+		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
+		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+				new Update${$class/@name}Panel(), DockPanel.CENTER);
 	}
 
 	@Override
@@ -48,7 +51,9 @@ public class ${$class/@name}OptionsPanel extends OptionsComposite {
 
 	@Override
 	public void createLinkClicked() {
-		
+		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
+		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+				new Create${$class/@name}Panel(), DockPanel.CENTER);
 
 	}
 

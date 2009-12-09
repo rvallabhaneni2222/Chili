@@ -21,9 +21,6 @@ public class Read${$class/@name}Panel extends ReadCompositeRef<${$class/@name}> 
 		return read${$class/@name}Panel;
 	}
 
-	public Read${$class/@name}Panel() {
-	}
-
 	public Read${$class/@name}Panel(Long id) {
 		read${$class/@name}Panel = this;
 		initReadComposite(new ${$class/@name}(), id, ${camelCase($projectName)}Welcome.constants,
