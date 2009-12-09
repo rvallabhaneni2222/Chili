@@ -39,6 +39,9 @@
 	<c:if test="$stereotype/@name = 'NotNull'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="NotNullID"/>		
 	</c:if>
+	<c:if test="$stereotype/@name = 'NotEmpty'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="NotEmptyID"/>		
+	</c:if>
 	<c:if test="$stereotype/@name = 'Past'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="PastID"/>		
 	</c:if>

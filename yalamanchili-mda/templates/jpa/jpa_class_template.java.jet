@@ -44,6 +44,7 @@ import org.hibernate.validator.Email;
 import org.hibernate.validator.Future;
 import org.hibernate.validator.Max;
 import org.hibernate.validator.Min;
+import org.hibernate.validator.NotEmpty;
 <%-- Check inheritance support--%>
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
  <%-- if parent class--%>
@@ -135,6 +136,9 @@ private static final long serialVersionUID = 1L;
 							
 		<c:if test="$stereotype/@href = ${'$NotNullID'}">
 @NotNull
+		</c:if>
+		<c:if test="$stereotype/@href = ${'$NotEmptyID'}">
+@NotEmpty
 		</c:if>
 		<c:if test="$stereotype/@href = ${'$PastID'}">
 @Past

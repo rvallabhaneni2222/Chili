@@ -1,5 +1,5 @@
 <java:format>
-package ${$groupID}.server;
+package info.yalamanchili.testmda.server;
 
 import info.yalamanchili.commons.ValidatorUtils;
 import info.yalamanchili.gwt.fields.DataType;
@@ -27,6 +27,7 @@ import org.hibernate.validator.Future;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.Max;
 import org.hibernate.validator.Min;
+import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Past;
 import org.hibernate.validator.Range;
@@ -126,6 +127,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					ValidatorUtils.validateEmail((Email) annotation, value,
 							errorMessages);
 				}
+				if (annotation instanceof org.hibernate.validator.NotEmpty) {
+					ValidatorUtils.validateNotEmpty((NotEmpty) annotation,
+							value, errorMessages);
+				}
+
 			}
 		return errorMessages;
 	}
@@ -455,4 +461,5 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 }
+
 </java:format>
