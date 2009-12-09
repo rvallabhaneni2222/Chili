@@ -17,6 +17,7 @@ import org.hibernate.validator.Max;
 import org.hibernate.validator.MaxValidator;
 import org.hibernate.validator.Min;
 import org.hibernate.validator.MinValidator;
+import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Past;
 import org.hibernate.validator.PastValidator;
@@ -103,6 +104,13 @@ public class ValidatorUtils {
 	public static void validateNotNull(NotNull annotation, Object value,
 			List<String> errorMessages) {
 		if (value == null) {
+			errorMessages.add(getValue(annotation.message()));
+		}
+	}
+
+	public static void validateNotEmpty(NotEmpty annotation, Object value,
+			List<String> errorMessages) {
+		if (value == null || value.toString().trim().equals("")) {
 			errorMessages.add(getValue(annotation.message()));
 		}
 	}

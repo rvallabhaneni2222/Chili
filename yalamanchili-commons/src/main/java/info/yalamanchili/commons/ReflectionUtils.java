@@ -4,7 +4,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,6 +25,55 @@ public class ReflectionUtils {
 		}
 
 		return dataFields;
+	}
+
+	public static Map<String, Object> getFieldsDataFromEntity(Object t, Class cls) {
+		Map<String, Object> attributeValues = new HashMap<String, Object>();
+		LinkedHashMap<String, DataType> fields = getEntityFieldsInfo(cls);
+		try {
+			for (String fieldName : getEntityFieldsInfo(cls).keySet()) {
+				for (Method method : t.getClass().getMethods()) {
+					if (method.getName().compareToIgnoreCase("get" + fieldName) == 0) {
+						if (fields.get(fieldName).equals(DataType.STRING)) {
+							String result = (String) method.invoke(t, null);
+							attributeValues.put(fieldName, result);
+						}
+						if (fields.get(fieldName).equals(DataType.INTEGER)) {
+							Integer result = (Integer) method.invoke(t, null);
+							attributeValues.put(fieldName, result);
+						}
+						if (fields.get(fieldName).equals(DataType.LONG)) {
+							Long result = (Long) method.invoke(t, null);
+							attributeValues.put(fieldName, result);
+						}
+						if (fields.get(fieldName).equals(DataType.FLOAT)) {
+							Float result = (Float) method.invoke(t, null);
+							attributeValues.put(fieldName, result);
+						}
+						if (fields.get(fieldName).equals(DataType.DATE)) {
+							Date result = (Date) method.invoke(t, null);
+							attributeValues.put(fieldName, result);
+						}
+						if (fields.get(fieldName).equals(DataType.BOOLEAN)) {
+							Boolean result = (Boolean) method.invoke(t, null);
+							attributeValues.put(fieldName, result);
+						}
+						if (fields.get(fieldName).equals(DataType.ENUM)) {
+							Object value = method.invoke(t, null);
+							if (value != null) {
+								String result = method.invoke(t, null)
+										.toString();
+								attributeValues.put(fieldName, result);
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return attributeValues;
 	}
 
 	public static DataType getDataType(Field field) {
