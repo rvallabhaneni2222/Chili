@@ -137,6 +137,7 @@
     </ws:folder>
     <ws:folder path="src/main/resources">
     <ws:file template="templates/jpa/jpa_persistence_template.xml.jet" path="META-INF/persistence.xml"/>
+    <ws:file template="templates/jpa/jpa_ormxml_template.xml.jet" path="META-INF/orm.xml"/>
     </ws:folder>
     <ws:folder path="src/test/java"/>
     <ws:folder path="src/test/resources"/>
@@ -177,6 +178,7 @@
     	<%--css and html files for the web project  --%>	
      	<java:resource name="{$projectName}.css" package="{$groupID}.public"  template="templates/web/gwt/public/web_css_template.css.jet"/>
      	<java:resource name="{$projectName}.html" package="{$groupID}.public"  template="templates/web/gwt/public/web_html_template.html.jet"/>
+     	<java:resource name="icon.gif" package="{$groupID}.public.images"  template="templates/web/gwt/public/images/logo.gif.jet"/>
      	<%--create folder for icons  --%>
      	
     	<%--create gwt.xml file to include these  --%>		
