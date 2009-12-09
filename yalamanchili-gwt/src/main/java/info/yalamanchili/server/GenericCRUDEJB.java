@@ -17,7 +17,6 @@ public interface GenericCRUDEJB<T> {
 
 	public List<T> getAllEntities(T entity);
 
-	public List<String> getSuggestionsForName(String name, T entity);
 
 	public List<T> getEntities(T entity);
 }
