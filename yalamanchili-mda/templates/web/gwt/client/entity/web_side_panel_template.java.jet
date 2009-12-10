@@ -57,7 +57,7 @@ public class ${$class/@name}SideBar extends SideBarComposite {
 	protected void createLinkClicked() {
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-				new Create${$class/@name}Panel(), DockPanel.CENTER);
+				new Create${$class/@name}Panel());
 	}
 
 	protected void reload${$class/@name}() {

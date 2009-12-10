@@ -1,0 +1,10 @@
+<java:format>
+package ${$genericPackage};
+import net.sf.gilead.pojo.java5.LightEntity;
+import java.util.List;
+
+public interface GenericService {
+public <T extends LightEntity> List<String> getSuggestionsForName(
+			String name, T entity);
+}
+</java:format>

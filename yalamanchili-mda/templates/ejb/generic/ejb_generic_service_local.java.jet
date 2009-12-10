@@ -1,0 +1,10 @@
+<java:format>
+package ${$genericPackage};
+
+import javax.ejb.Local;
+
+@Local
+public interface GenericServiceLocal extends  GenericService {
+
+}
+</java:format>

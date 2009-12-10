@@ -1,0 +1,10 @@
+<java:format>
+package ${$genericPackage};
+
+import javax.ejb.Remote;
+
+@Remote
+public interface GenericServiceRemote extends  GenericService {
+
+}
+</java:format>

@@ -47,7 +47,7 @@ public class ${$class/@name}SearchPanelGeneric extends
 	protected void postInit() {
 	
 	<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-		<c:if test="$attribute/@name != 'id'">
+		<c:if test="$attribute/StructuralFeature.type/DataType/@href = ${'$StringID'}">
 		GenericCRUDServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
 				new ${$class/@name}(), new ALAsyncCallback<List<String>>() {
 
@@ -74,8 +74,7 @@ public class ${$class/@name}SearchPanelGeneric extends
 		${lower-case($class/@name)} = entity;
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-				(new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL_SEARCH)),
-				DockPanel.CENTER);
+				(new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL_SEARCH)));
 
 	}
 

@@ -3,7 +3,7 @@ package ${$packageName}.${lower-case($class/@name)};
 
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
-
+import com.google.gwt.user.client.ui.DockPanel;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.ReadCompositeRef;
 import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
@@ -15,7 +15,7 @@ public class Read${$class/@name}Panel extends ReadCompositeRef<${$class/@name}> 
 
 	private static Read${$class/@name}Panel read${$class/@name}Panel;
 
-	${$class/@name}OptionsPanel options = new ${$class/@name}OptionsPanel(Alignment.VERTICAL);
+	${$class/@name}OptionsPanel options = new ${$class/@name}OptionsPanel();
 
 	public static Read${$class/@name}Panel instance() {
 		return read${$class/@name}Panel;
@@ -47,12 +47,12 @@ public class Read${$class/@name}Panel extends ReadCompositeRef<${$class/@name}> 
 
 	@Override
 	protected void addWidgets() {
-		
+		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(options);
 	}
 
 	@Override
 	protected void configure() {
-		// TODO Auto-generated method stub
+		
 
 	}
 

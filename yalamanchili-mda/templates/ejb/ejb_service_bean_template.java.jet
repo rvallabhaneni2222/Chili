@@ -76,13 +76,6 @@ private static final Log log = LogFactory
 	}
 
 	@Override
-	public List<String> getSuggestionsForName(String name, ${$class/@name} entity) {
-		Query query = entityManager.createQuery(GWTServletUtils
-				.getSuggestionsQueryForName(name, entity));
-		return query.getResultList();
-	}
-
-	@Override
 	public TableObj getTableObj(${$class/@name} entity, int start) {
 		TableObj<${$class/@name}> tableObj = new TableObj<${$class/@name}>();
 		tableObj.setNumberOfRecords(getEntitySizeT(entity));

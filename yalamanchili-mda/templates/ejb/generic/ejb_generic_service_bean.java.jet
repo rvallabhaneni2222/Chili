@@ -1,0 +1,58 @@
+<java:format>
+package ${$genericPackage};
+
+import javax.ejb.Stateful;
+import info.yalamanchili.gwt.beans.TableObj;
+import java.util.List;
+import java.util.ArrayList;
+import info.yalamanchili.server.GWTServletUtils;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.annotation.PostConstruct;
+import javax.persistence.Query;
+import javax.persistence.PersistenceUnit;
+
+
+import net.sf.gilead.core.PersistentBeanManager;
+import net.sf.gilead.core.hibernate.jboss.HibernateJBossUtil;
+import net.sf.gilead.core.store.stateless.StatelessProxyStore;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import net.sf.gilead.pojo.java5.LightEntity;
+import javax.ejb.Stateless;
+
+@Stateless(name="generic")
+public class GenericServiceBean implements  GenericServiceLocal, GenericServiceRemote{
+
+private static final Log log = LogFactory
+			.getLog(GenericServiceBean.class);
+			
+@PersistenceUnit
+	protected EntityManagerFactory factory;
+	
+@PersistenceContext(unitName = "${$projectName}")
+	EntityManager entityManager;
+	
+	protected PersistentBeanManager bm;
+	
+	
+	public <T extends LightEntity> List<String> getSuggestionsForName(
+			String name, T entity) {
+		Query query = entityManager.createQuery(GWTServletUtils
+				.getSuggestionsQueryForName(name, entity));
+		return query.getResultList();
+	}
+
+	
+	@PostConstruct
+	public void initGileadManager() {
+		bm = new PersistentBeanManager();
+		HibernateJBossUtil persistenceUtil = new HibernateJBossUtil();
+		persistenceUtil.setEntityManagerFactory(factory);
+		bm.setPersistenceUtil(persistenceUtil);
+		bm.setProxyStore(new StatelessProxyStore());
+	}
+
+}
+</java:format>

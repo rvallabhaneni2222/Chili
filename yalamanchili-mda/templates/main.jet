@@ -151,7 +151,16 @@
 <ws:project name="{$projectName}-ejb" location="C:/MDA/{$projectName}-ejb">
 	<ws:file path="pom.xml" template="templates/ejb/ejb_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
-     <c:setVariable select="concat($groupID,'.ejb.')" var="ejbPackage"/>	
+     <c:setVariable select="concat($groupID,'.ejb.')" var="ejbPackage"/>
+     <c:setVariable select="concat($groupID,'.ejb')" var="genericPackage"/>		
+     		<%-- Generic EJB interface--%>
+			<java:class name="GenericService" package="{$genericPackage}" template="templates/ejb/generic/ejb_generic_service_interface.java.jet"/>
+			<%-- Generic EJB Local interface--%>
+			<java:class name="GenericServiceLocal" package="{$genericPackage}" template="templates/ejb/generic/ejb_generic_service_local.java.jet"/>
+			<%-- Generic EJB Remote interface--%>
+			<java:class name="GenericServiceRemote" package="{$genericPackage}" template="templates/ejb/generic/ejb_generic_service_remote.java.jet"/>
+			<%-- Generic EJB Service Impl class--%>
+			<java:class name="GenericServiceBean" package="{$genericPackage}" template="templates/ejb/generic/ejb_generic_service_bean.java.jet"/>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     	 <c:setVariable select="concat($ejbPackage,$package/@name)" var="packageName"/>	
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
@@ -181,7 +190,7 @@
     	<%--css and html files for the web project  --%>	
      	<java:resource name="{$projectName}.css" package="{$groupID}.public"  template="templates/web/gwt/public/web_css_template.css.jet"/>
      	<java:resource name="{$projectName}.html" package="{$groupID}.public"  template="templates/web/gwt/public/web_html_template.html.jet"/>
-     	<java:resource name="icon.gif" package="{$groupID}.public.images"  template="templates/web/gwt/public/images/logo.gif.jet"/>
+     	<java:resource name="logo.gif" package="{$groupID}.public.images"  template="templates/web/gwt/public/images/logo.gif.jet"/>
      	<%--create folder for icons  --%>
      	
     	<%--create gwt.xml file to include these  --%>		

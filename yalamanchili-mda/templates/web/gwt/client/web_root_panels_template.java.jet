@@ -14,11 +14,13 @@ protected Roles role = Roles.DEFAULT_USER;
 	protected VerticalPanel sidePanelBottom = new VerticalPanel();
 	protected VerticalPanel statusPanel = new VerticalPanel();
 	protected VerticalPanel menuBar = new VerticalPanel();
-	protected DockPanel entityPanel = new DockPanel();
+	protected VerticalPanel entityPanel = new VerticalPanel();
+
 
 	public RootPanels() {
 	}
 
+	
 	public Roles getRole() {
 		return role;
 	}
@@ -67,11 +69,11 @@ protected Roles role = Roles.DEFAULT_USER;
 		this.menuBar = menuBar;
 	}
 
-	public DockPanel getEntityPanel() {
+	public VerticalPanel getEntityPanel() {
 		return entityPanel;
 	}
 
-	public void setEntityPanel(DockPanel entityPanel) {
+	public void setEntityPanel(VerticalPanel entityPanel) {
 		this.entityPanel = entityPanel;
 	}
 	

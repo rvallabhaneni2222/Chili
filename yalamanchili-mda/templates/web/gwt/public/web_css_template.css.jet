@@ -2,7 +2,7 @@
 width : 100%;
 }
 .entityPanel{
-width: 800px;
+width: 1070px;
 height: 480px;
 }
 .statusPanel{
@@ -24,4 +24,7 @@ width : 100%;
 
 .LoginPanel{
 background-color: #88ACE0;
+}
+.entityPanel{
+width: 1060px;
 }

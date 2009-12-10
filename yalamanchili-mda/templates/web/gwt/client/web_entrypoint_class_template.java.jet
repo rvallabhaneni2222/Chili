@@ -123,8 +123,7 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 				@Override
 				public void execute() {
 					getEntityPanel().clear();
-					getEntityPanel().add(new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL),
-					DockPanel.CENTER);
+					getEntityPanel().add(new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL));
 					getSidePanelTop().clear();
 					getSidePanelTop().add(new ${$class/@name}SideBar());
 				}

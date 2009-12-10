@@ -76,7 +76,7 @@ public class GenericCRUDServiceImpl extends Abstract${camelCase($projectName)}Se
 	@Override
 	public <T extends LightEntity> List<String> getSuggestionsForName(
 			String name, T entity) {
-		return null;
+		return genericServiceBean.getSuggestionsForName(name, entity);
 	}
 
 	@Override
