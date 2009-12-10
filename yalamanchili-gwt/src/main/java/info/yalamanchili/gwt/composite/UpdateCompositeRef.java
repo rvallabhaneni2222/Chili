@@ -85,7 +85,7 @@ public abstract class UpdateCompositeRef<T extends LightEntity> extends
 	@Override
 	protected void postInit() {
 		update.addClickHandler(this);
-		panel.add(update);
+		entityDataWidget.add(update);
 		removeField("ID");
 		populateFields();
 	}

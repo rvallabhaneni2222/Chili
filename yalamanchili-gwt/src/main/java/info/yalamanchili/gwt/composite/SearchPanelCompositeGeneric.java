@@ -32,9 +32,9 @@ public abstract class SearchPanelCompositeGeneric<T extends LightEntity>
 	public void initSearchPanelCompositeGeneric(T entity,
 			final ConstantsWithLookup constants) {
 		init(entity, false, constants);
-		panel.addStyleName("SearchPanelCompositeGeneric");
+		entityDataWidget.addStyleName("SearchPanelCompositeGeneric");
 		searchB.addClickHandler(this);
-		panel.add(searchB);
+		entityDataWidget.add(searchB);
 		addListeners();
 		addWidgets();
 		configure();
@@ -65,49 +65,49 @@ public abstract class SearchPanelCompositeGeneric<T extends LightEntity>
 		if (DataType.LONG_FIELD.equals(type)) {
 			LongField longField = new LongField(text, readOnly);
 			fields.put(id, longField);
-			panel.add(longField);
+			entityDataWidget.add(longField);
 		}
 		if (DataType.INTEGER_FIELD.equals(type)) {
 			IntegerField integerField = new IntegerField(text, readOnly);
 			fields.put(id, integerField);
-			panel.add(integerField);
+			entityDataWidget.add(integerField);
 		}
 		if (DataType.STRING_FIELD.equals(type)) {
 			StringField stringField = new StringField(text, readOnly);
 			fields.put(id, stringField);
-			panel.add(stringField);
+			entityDataWidget.add(stringField);
 		}
 		if (DataType.TEXT_AREA_FIELD.equals(type)) {
 			StringField stringField = new StringField(text, readOnly);
 			fields.put(id, stringField);
-			panel.add(stringField);
+			entityDataWidget.add(stringField);
 		}
 		if (DataType.DATE_FIELD.equals(type)) {
 			DateField dateField = new DateField(text, readOnly);
 			fields.put(id, dateField);
-			panel.add(dateField);
+			entityDataWidget.add(dateField);
 		}
 		if (DataType.BOOLEAN_FIELD.equals(type)) {
 			BooleanField booleanField = new BooleanField(text, readOnly);
 			fields.put(id, booleanField);
-			panel.add(booleanField);
+			entityDataWidget.add(booleanField);
 		}
 		if (DataType.ENUM_FIELD.equals(type)) {
 			EnumField enumField = new EnumField(text, readOnly);
 			fields.put(id, enumField);
 			if (!readOnly)
 				populateEnumFields(enumField, id);
-			panel.add(enumField);
+			entityDataWidget.add(enumField);
 		}
 		if (DataType.PASSWORD_FIELD.equals(type)) {
 			PasswordField passwordField = new PasswordField(text);
 			fields.put(id, passwordField);
-			panel.add(passwordField);
+			entityDataWidget.add(passwordField);
 		}
 		if (DataType.FLOAT_FEILD.equals(type)) {
 			FloatField floatField = new FloatField(text, readOnly);
 			fields.put(id, floatField);
-			panel.add(floatField);
+			entityDataWidget.add(floatField);
 		}
 
 	}
@@ -123,11 +123,11 @@ public abstract class SearchPanelCompositeGeneric<T extends LightEntity>
 	protected void addSuggestBox(String name, List<String> values) {
 		ALSuggestBox suggestBox = new ALSuggestBox(name);
 		suggestBox.loadData(values);
-		int index = panel.getWidgetIndex((Widget) fields.get(name));
-		panel.remove((Widget) fields.get(name));
+		int index = entityDataWidget.getWidgetIndex((Widget) fields.get(name));
+		entityDataWidget.remove((Widget) fields.get(name));
 		fields.remove(name);
 		fields.put(name, suggestBox);
-		panel.insert(suggestBox, index);
+		entityDataWidget.insert(suggestBox, index);
 	}
 
 	protected void populateEntity() {
