@@ -25,7 +25,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllCompositeTest<${$class/
 
 	public ReadAll${$class/@name}sPanel(${$class/@name}TableType tableType) {
 		this.tableType = tableType;
-		initTable("${$groupID}.entity.${lower-case($package/@name)}.${$class/@name}",
+		initTable(new ${$class/@name}(),
 				${camelCase($projectName)}Welcome.constants);
 	}
 
