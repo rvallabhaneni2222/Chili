@@ -27,6 +27,7 @@ import net.sf.gilead.pojo.java5.LightEntity;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -37,6 +38,8 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		extends Composite {
+
+	protected CaptionPanel parentPanel = new CaptionPanel();
 
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
@@ -118,7 +121,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	 * Instantiates a new read update create composite ref.
 	 */
 	public ReadUpdateCreateCompositeRef() {
-		initWidget(panel);
+		initWidget(parentPanel);
+		parentPanel.setContentWidget(panel);
+		parentPanel.setStyleName("ReadUpdateCreateCompositeRefCaptionPanel");
+		panel.setStyleName("ReadUpdateCreateCompositeRefPanel");
 	}
 
 	/**
@@ -140,6 +146,7 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				new ALAsyncCallback<String>() {
 					@Override
 					public void onResponse(String name) {
+						parentPanel.setCaptionHTML("Entity");
 						classCanonicalName = name;
 						getAttributes();
 					}
