@@ -47,7 +47,7 @@ public class Read${$class/@name}Panel extends ReadCompositeRef<${$class/@name}> 
 
 	@Override
 	protected void addWidgets() {
-		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(options);
+		basePanel.add(options);
 	}
 
 	@Override
