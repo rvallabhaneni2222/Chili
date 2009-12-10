@@ -19,16 +19,6 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 public interface GWTService extends RemoteService {
 
 	/**
-	 * Gets the class canonical name.
-	 * 
-	 * @param t
-	 *            the t
-	 * 
-	 * @return the class canonical name
-	 */
-	<T extends LightEntity> String getClassCanonicalName(T t);
-
-	/**
 	 * Gets the attributes.
 	 * 
 	 * @param className

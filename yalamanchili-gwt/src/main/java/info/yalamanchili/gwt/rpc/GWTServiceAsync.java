@@ -17,19 +17,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface GWTServiceAsync {
 
 	/**
-	 * Gets the class canonical name.
-	 * 
-	 * @param t
-	 *            the t
-	 * @param canonicalName
-	 *            the canonical name
-	 * 
-	 * @return the class canonical name
-	 */
-	<T extends LightEntity> void getClassCanonicalName(T t,
-			AsyncCallback<String> canonicalName);
-
-	/**
 	 * Gets the attributes.
 	 * 
 	 * @param className

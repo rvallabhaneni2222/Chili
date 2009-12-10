@@ -142,15 +142,11 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	 */
 	public void init(T t, final Boolean readOnly) {
 		this.readOnly = readOnly;
-		GwtServiceAsync.instance().getClassCanonicalName(t,
-				new ALAsyncCallback<String>() {
-					@Override
-					public void onResponse(String name) {
-						parentPanel.setCaptionHTML("Entity");
-						classCanonicalName = name;
-						getAttributes();
-					}
-				});
+		classCanonicalName = t.getClass().getName();
+		getAttributes();
+		parentPanel.setContentWidget(panel);
+		parentPanel.setStyleName("ReadUpdateCreateCompositeRefCaptionPanel");
+		panel.setStyleName("ReadUpdateCreateCompositeRefPanel");
 	}
 
 	/**
@@ -187,15 +183,11 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	public void init(T t, final Boolean readOnly,
 			final ConstantsWithLookup constants) {
 		this.readOnly = readOnly;
-		GwtServiceAsync.instance().getClassCanonicalName(t,
-				new ALAsyncCallback<String>() {
-					@Override
-					public void onResponse(String name) {
-						classCanonicalName = name;
-						getAttributesWithConstants(constants);
-					}
-				});
-
+		classCanonicalName = t.getClass().getName();
+		getAttributesWithConstants(constants);
+		parentPanel.setContentWidget(panel);
+		parentPanel.setStyleName("ReadUpdateCreateCompositeRefCaptionPanel");
+		panel.setStyleName("ReadUpdateCreateCompositeRefPanel");
 	}
 
 	/**

@@ -64,9 +64,8 @@ public abstract class ReadAllCompositeTest<T> extends ALComposite implements
 	 * @param constants
 	 *            the constants
 	 */
-	protected void initTable(String classCanonicalName,
-			ConstantsWithLookup constants) {
-		this.classCanonicalName = classCanonicalName;
+	protected void initTable(T t, ConstantsWithLookup constants) {
+		this.classCanonicalName = t.getClass().getName();
 		this.constants = constants;
 		init(panel);
 		preFetchTable(0);
