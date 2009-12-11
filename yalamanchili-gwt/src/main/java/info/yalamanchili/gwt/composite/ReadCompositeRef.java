@@ -59,7 +59,7 @@ public abstract class ReadCompositeRef<T extends LightEntity> extends
 		if (entity != null) {
 			readData(entity);
 		}
-		entityDataWidget.setSpacing(5);
+		entityDisplayWidget.setSpacing(5);
 	}
 
 	/**

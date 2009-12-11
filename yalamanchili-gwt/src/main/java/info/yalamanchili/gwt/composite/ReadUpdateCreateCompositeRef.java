@@ -40,10 +40,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		extends Composite {
 	protected VerticalPanel basePanel = new VerticalPanel();
 
-	protected CaptionPanel entityDataPanel = new CaptionPanel();
+	protected CaptionPanel entityCaptionPanel = new CaptionPanel();
 
 	/** The panel. */
-	protected VerticalPanel entityDataWidget = new VerticalPanel();
+	protected VerticalPanel entityDisplayWidget = new VerticalPanel();
 
 	/** The fields. */
 	protected Map<String, Object> fields = new HashMap<String, Object>();
@@ -57,34 +57,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	/** The entity. */
 	protected T entity;
 
-	/** The entity id. */
-	protected Long entityId;
-
-	/**
-	 * Gets the entity.
-	 * 
-	 * @return the entity
-	 */
 	public T getEntity() {
 		return entity;
 	}
 
-	/**
-	 * Gets the id.
-	 * 
-	 * @return the id
-	 */
-	public Long getEntityId() {
-		return entityId;
-	}
-
-	public VerticalPanel getEntityDataWidget() {
-		return entityDataWidget;
-	}
-
-	public void setEntityDataWidget(VerticalPanel entityDataWidget) {
-		this.entityDataWidget = entityDataWidget;
-	}
+	/** The entity id. */
+	protected Long entityId;
 
 	public Map<String, Object> getFields() {
 		return fields;
@@ -94,40 +72,11 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		this.fields = fields;
 	}
 
-	public String getClassCanonicalName() {
-		return classCanonicalName;
-	}
-
-	public void setClassCanonicalName(String classCanonicalName) {
-		this.classCanonicalName = classCanonicalName;
-	}
-
-	public Boolean getReadOnly() {
-		return readOnly;
-	}
-
-	public void setReadOnly(Boolean readOnly) {
-		this.readOnly = readOnly;
-	}
-
-	public void setEntity(T entity) {
-		this.entity = entity;
-	}
-
-	public void setEntityId(Long entityId) {
-		this.entityId = entityId;
-	}
-
 	/**
 	 * Instantiates a new read update create composite ref.
 	 */
 	public ReadUpdateCreateCompositeRef() {
 		initWidget(basePanel);
-		entityDataPanel.setContentWidget(entityDataWidget);
-		basePanel.add(entityDataPanel);
-		entityDataPanel
-				.setStyleName("ReadUpdateCreateCompositeRefCaptionPanel");
-		entityDataWidget.setStyleName("ReadUpdateCreateCompositeRefPanel");
 	}
 
 	/**
@@ -146,11 +95,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	public void init(T t, final Boolean readOnly) {
 		this.readOnly = readOnly;
 		classCanonicalName = t.getClass().getName();
+		addWidgetsBeforeCaptionPanel();
+		entityCaptionPanel.setContentWidget(entityDisplayWidget);
+		basePanel.add(entityCaptionPanel);
 		getAttributes();
-		entityDataPanel.setCaptionHTML(getClassSimpleName(classCanonicalName));
-		entityDataPanel
-				.setStyleName("ReadUpdateCreateCompositeRefCaptionPanel");
-		entityDataWidget.setStyleName("ReadUpdateCreateCompositeRefPanel");
+		entityCaptionPanel
+				.setCaptionHTML(getClassSimpleName(classCanonicalName));
 	}
 
 	/**
@@ -188,11 +138,12 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 			final ConstantsWithLookup constants) {
 		this.readOnly = readOnly;
 		classCanonicalName = t.getClass().getName();
+		addWidgetsBeforeCaptionPanel();
+		entityCaptionPanel.setContentWidget(entityDisplayWidget);
+		basePanel.add(entityCaptionPanel);
+		entityCaptionPanel
+				.setCaptionHTML(getClassSimpleName(classCanonicalName));
 		getAttributesWithConstants(constants);
-		entityDataPanel.setContentWidget(entityDataWidget);
-		entityDataPanel
-				.setStyleName("ReadUpdateCreateCompositeRefCaptionPanel");
-		entityDataWidget.setStyleName("ReadUpdateCreateCompositeRefPanel");
 	}
 
 	/**
@@ -229,6 +180,8 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	 * Configure.
 	 */
 	protected abstract void configure();
+
+	protected abstract void addWidgetsBeforeCaptionPanel();
 
 	/**
 	 * Adds the widgets.
@@ -287,49 +240,49 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 		if (DataType.LONG_FIELD.equals(type)) {
 			LongField longField = new LongField(text, readOnly);
 			fields.put(id, longField);
-			entityDataWidget.add(longField);
+			entityDisplayWidget.add(longField);
 		}
 		if (DataType.INTEGER_FIELD.equals(type)) {
 			IntegerField integerField = new IntegerField(text, readOnly);
 			fields.put(id, integerField);
-			entityDataWidget.add(integerField);
+			entityDisplayWidget.add(integerField);
 		}
 		if (DataType.STRING_FIELD.equals(type)) {
 			StringField stringField = new StringField(text, readOnly);
 			fields.put(id, stringField);
-			entityDataWidget.add(stringField);
+			entityDisplayWidget.add(stringField);
 		}
 		if (DataType.TEXT_AREA_FIELD.equals(type)) {
 			TextAreaField textAreaField = new TextAreaField(text, readOnly);
 			fields.put(id, textAreaField);
-			entityDataWidget.add(textAreaField);
+			entityDisplayWidget.add(textAreaField);
 		}
 		if (DataType.DATE_FIELD.equals(type)) {
 			DateField dateField = new DateField(text, readOnly);
 			fields.put(id, dateField);
-			entityDataWidget.add(dateField);
+			entityDisplayWidget.add(dateField);
 		}
 		if (DataType.BOOLEAN_FIELD.equals(type)) {
 			BooleanField booleanField = new BooleanField(text, readOnly);
 			fields.put(id, booleanField);
-			entityDataWidget.add(booleanField);
+			entityDisplayWidget.add(booleanField);
 		}
 		if (DataType.ENUM_FIELD.equals(type)) {
 			EnumField enumField = new EnumField(text, readOnly);
 			fields.put(id, enumField);
 			if (!readOnly)
 				populateEnumFields(enumField, id);
-			entityDataWidget.add(enumField);
+			entityDisplayWidget.add(enumField);
 		}
 		if (DataType.PASSWORD_FIELD.equals(type)) {
 			PasswordField passwordField = new PasswordField(text);
 			fields.put(id, passwordField);
-			entityDataWidget.add(passwordField);
+			entityDisplayWidget.add(passwordField);
 		}
 		if (DataType.FLOAT_FEILD.equals(type)) {
 			FloatField floatField = new FloatField(text, readOnly);
 			fields.put(id, floatField);
-			entityDataWidget.add(floatField);
+			entityDisplayWidget.add(floatField);
 		}
 
 	}
@@ -566,7 +519,7 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	 */
 	protected void removeField(String id) {
 		if (fields.get(id) != null)
-			entityDataWidget.remove((Widget) fields.get(id));
+			entityDisplayWidget.remove((Widget) fields.get(id));
 	}
 
 	/**
@@ -1079,6 +1032,6 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	}
 
 	protected String getClassSimpleName(String name) {
-		return name.substring(name.lastIndexOf(".")+1);
+		return name.substring(name.lastIndexOf(".") + 1);
 	}
 }

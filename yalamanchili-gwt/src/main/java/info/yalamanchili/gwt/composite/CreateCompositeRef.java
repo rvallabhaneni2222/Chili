@@ -42,8 +42,8 @@ public abstract class CreateCompositeRef<T extends LightEntity> extends
 	 * info.yalamanchili.gwt.composite.ReadUpdateCreateCompositeRef#postInit()
 	 */
 	protected void postInit() {
-		entityDataWidget.setSpacing(5);
-		entityDataWidget.add(create);
+		entityDisplayWidget.setSpacing(5);
+		entityDisplayWidget.add(create);
 		removeField("ID");
 		create.addClickHandler(this);
 	}

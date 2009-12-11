@@ -33,7 +33,6 @@ public abstract class UpdateCompositeRef<T extends LightEntity> extends
 	public void initUpdateComposite(T t, ConstantsWithLookup constants,
 			Messages messages) {
 		init(t, false, constants);
-
 	}
 
 	/**
@@ -85,7 +84,7 @@ public abstract class UpdateCompositeRef<T extends LightEntity> extends
 	@Override
 	protected void postInit() {
 		update.addClickHandler(this);
-		entityDataWidget.add(update);
+		entityDisplayWidget.add(update);
 		removeField("ID");
 		populateFields();
 	}
