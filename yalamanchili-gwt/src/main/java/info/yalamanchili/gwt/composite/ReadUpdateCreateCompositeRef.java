@@ -220,7 +220,7 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 				addField(fieldName.toUpperCase(), value, attributes
 						.get(fieldName));
 			} catch (MissingResourceException e) {
-				addField(fieldName.toUpperCase(), fieldName.toUpperCase(),
+				addField(fieldName.toUpperCase(), getCamelCase(fieldName),
 						attributes.get(fieldName));
 			}
 		}
@@ -1033,5 +1033,10 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 
 	protected String getClassSimpleName(String name) {
 		return name.substring(name.lastIndexOf(".") + 1);
+	}
+
+	protected String getCamelCase(String text) {
+		return text.substring(0, 1).toUpperCase()
+				+ text.substring(1).toLowerCase();
 	}
 }

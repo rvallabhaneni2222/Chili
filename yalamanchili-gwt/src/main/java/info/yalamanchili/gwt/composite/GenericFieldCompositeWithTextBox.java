@@ -98,8 +98,9 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite
 	 */
 	protected void configure() {
 		panel.setSpacing(5);
-		label.addStyleName("FieldHeader");
-		message.addStyleName("ErrorMessage");
+		label.addStyleName("tfFieldHeader");
+		message.addStyleName("tfErrorMessage");
+		textbox.addStyleName("tfTextBox");
 	}
 
 	/**

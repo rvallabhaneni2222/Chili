@@ -18,7 +18,7 @@ public abstract class CreateCompositeRef<T extends LightEntity> extends
 		ReadUpdateCreateCompositeRef<T> implements ClickHandler {
 
 	/** The create. */
-	public Button create = new Button("CREATE");
+	public Button create = new Button("Create");
 
 	/**
 	 * Inits the create composite.
@@ -33,6 +33,9 @@ public abstract class CreateCompositeRef<T extends LightEntity> extends
 	public void initCreateComposite(T t, ConstantsWithLookup constants,
 			Messages messages) {
 		init(t, false, constants);
+		entityCaptionPanel.addStyleName("createEntityCaptionPanel");
+		entityDisplayWidget.addStyleName("createEntityDisplayWidget");
+		basePanel.addStyleName("createBasePanel");
 	}
 
 	/*

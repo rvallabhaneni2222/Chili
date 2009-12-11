@@ -18,7 +18,7 @@ public abstract class UpdateCompositeRef<T extends LightEntity> extends
 		ReadUpdateCreateCompositeRef<T> implements ClickHandler {
 
 	/** The update. */
-	protected Button update = new Button("UPDATE");
+	protected Button update = new Button("Update");
 
 	/**
 	 * Inits the update composite.
@@ -33,6 +33,9 @@ public abstract class UpdateCompositeRef<T extends LightEntity> extends
 	public void initUpdateComposite(T t, ConstantsWithLookup constants,
 			Messages messages) {
 		init(t, false, constants);
+		entityCaptionPanel.addStyleName("updateEntityCaptionPanel");
+		entityDisplayWidget.addStyleName("updateEntityDisplayWidget");
+		basePanel.addStyleName("updateBasePanel");
 	}
 
 	/**
