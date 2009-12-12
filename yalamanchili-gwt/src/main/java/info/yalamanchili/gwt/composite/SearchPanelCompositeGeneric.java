@@ -57,62 +57,10 @@ public abstract class SearchPanelCompositeGeneric<T extends LightEntity>
 					addField(fieldName.toUpperCase(), value, attributes
 							.get(fieldName));
 				} catch (MissingResourceException e) {
-					addField(fieldName.toUpperCase(), fieldName.toUpperCase(),
+					addField(fieldName.toUpperCase(), getCamelCase(fieldName),
 							attributes.get(fieldName));
 				}
 		}
-	}
-
-	@Override
-	protected void addField(String id, String text, DataType type) {
-		if (DataType.LONG_FIELD.equals(type)) {
-			LongField longField = new LongField(text, readOnly);
-			fields.put(id, longField);
-			entityDisplayWidget.add(longField);
-		}
-		if (DataType.INTEGER_FIELD.equals(type)) {
-			IntegerField integerField = new IntegerField(text, readOnly);
-			fields.put(id, integerField);
-			entityDisplayWidget.add(integerField);
-		}
-		if (DataType.STRING_FIELD.equals(type)) {
-			StringField stringField = new StringField(text, readOnly);
-			fields.put(id, stringField);
-			entityDisplayWidget.add(stringField);
-		}
-		if (DataType.TEXT_AREA_FIELD.equals(type)) {
-			StringField stringField = new StringField(text, readOnly);
-			fields.put(id, stringField);
-			entityDisplayWidget.add(stringField);
-		}
-		if (DataType.DATE_FIELD.equals(type)) {
-			DateField dateField = new DateField(text, readOnly);
-			fields.put(id, dateField);
-			entityDisplayWidget.add(dateField);
-		}
-		if (DataType.BOOLEAN_FIELD.equals(type)) {
-			BooleanField booleanField = new BooleanField(text, readOnly);
-			fields.put(id, booleanField);
-			entityDisplayWidget.add(booleanField);
-		}
-		if (DataType.ENUM_FIELD.equals(type)) {
-			EnumField enumField = new EnumField(text, readOnly);
-			fields.put(id, enumField);
-			if (!readOnly)
-				populateEnumFields(enumField, id);
-			entityDisplayWidget.add(enumField);
-		}
-		if (DataType.PASSWORD_FIELD.equals(type)) {
-			PasswordField passwordField = new PasswordField(text);
-			fields.put(id, passwordField);
-			entityDisplayWidget.add(passwordField);
-		}
-		if (DataType.FLOAT_FEILD.equals(type)) {
-			FloatField floatField = new FloatField(text, readOnly);
-			fields.put(id, floatField);
-			entityDisplayWidget.add(floatField);
-		}
-
 	}
 
 	protected abstract void addListeners();
