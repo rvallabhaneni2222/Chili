@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
 
-public abstract class ReadAllCompositeTest<T> extends ALComposite implements
+public abstract class ReadAllComposite<T> extends ALComposite implements
 		ClickHandler, ChangeHandler {
 
 	/** The panel. */
@@ -201,7 +201,7 @@ public abstract class ReadAllCompositeTest<T> extends ALComposite implements
 	public void onClick(ClickEvent event) {
 		if (event.getSource() == table) {
 			Cell clickedCell = table.getCellForEvent(event);
-			if (clickedCell.getRowIndex() != 0)
+			if (clickedCell !=null && clickedCell.getRowIndex() != 0)
 				viewClicked(clickedCell.getRowIndex(), clickedCell
 						.getCellIndex());
 		}
