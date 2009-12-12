@@ -19,6 +19,7 @@ import java.util.MissingResourceException;
 
 import net.sf.gilead.pojo.java5.LightEntity;
 
+import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
@@ -32,7 +33,9 @@ public abstract class SearchPanelCompositeGeneric<T extends LightEntity>
 	public void initSearchPanelCompositeGeneric(T entity,
 			final ConstantsWithLookup constants) {
 		init(entity, false, constants);
-		entityDisplayWidget.addStyleName("SearchPanelCompositeGeneric");
+		entityCaptionPanel.addStyleName("searchEntityCaptionPanel");
+		entityDisplayWidget.addStyleName("searchEntityDisplayWidget");
+		basePanel.addStyleName("searchBasePanel");
 		searchB.addClickHandler(this);
 		entityDisplayWidget.add(searchB);
 		addListeners();
@@ -121,13 +124,20 @@ public abstract class SearchPanelCompositeGeneric<T extends LightEntity>
 	protected abstract void searchButtonClicked(T entity);
 
 	protected void addSuggestBox(String name, List<String> values) {
-		ALSuggestBox suggestBox = new ALSuggestBox(name);
+		ALSuggestBox suggestBox = new ALSuggestBox(getCamelCase(name));
 		suggestBox.loadData(values);
-		int index = entityDisplayWidget.getWidgetIndex((Widget) fields.get(name));
-		entityDisplayWidget.remove((Widget) fields.get(name));
-		fields.remove(name);
-		fields.put(name, suggestBox);
-		entityDisplayWidget.insert(suggestBox, index);
+		if (fields.containsKey(name.toUpperCase())) {
+			int index = entityDisplayWidget.getWidgetIndex((Widget) fields
+					.get(name.toUpperCase()));
+			entityDisplayWidget.remove((Widget) fields.get(name.toUpperCase()));
+			fields.remove(name.toUpperCase());
+			fields.put(name.toUpperCase(), suggestBox);
+			entityDisplayWidget.insert(suggestBox, index);
+		} else {
+			Log.error("Errror no field with name present:" + name.toUpperCase());
+			Log.debug("Fields Map conttsins:" + fields.keySet().toString());
+		}
+
 	}
 
 	protected void populateEntity() {
