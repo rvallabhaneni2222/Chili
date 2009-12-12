@@ -196,7 +196,7 @@ public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
 	 */
 	protected void addFields(LinkedHashMap<String, DataType> attributes) {
 		for (String fieldName : attributes.keySet()) {
-			addField(fieldName.toUpperCase(), fieldName.toUpperCase(),
+			addField(fieldName.toUpperCase(), getCamelCase(fieldName),
 					attributes.get(fieldName));
 		}
 	}
