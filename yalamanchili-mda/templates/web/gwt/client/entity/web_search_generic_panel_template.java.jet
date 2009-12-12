@@ -30,6 +30,12 @@ public class ${$class/@name}SearchPanelGeneric extends
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	protected void addWidgetsBeforeCaptionPanel() {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
 	protected void addWidgets() {
@@ -39,7 +45,7 @@ public class ${$class/@name}SearchPanelGeneric extends
 
 	@Override
 	protected void configure() {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -53,7 +59,7 @@ public class ${$class/@name}SearchPanelGeneric extends
 
 					@Override
 					public void onResponse(List<String> values) {
-						addSuggestBox("${upper-case($attribute/@name)}", values);
+						addSuggestBox("${lower-case($attribute/@name)}", values);
 
 					}
 

@@ -2,14 +2,14 @@
 width : 100%;
 }
 .entityPanel{
-width: 1070px;
+width: 1040px;
 height: 480px;
 }
 .statusPanel{
 width : 100%;
 }
 .sidePanel{
-width: 180px;
+width: 200px;
 }
 
 .sidePanelTop{
@@ -25,6 +25,45 @@ width : 100%;
 .LoginPanel{
 background-color: #88ACE0;
 }
-.entityPanel{
-width: 1060px;
+.readEntityCaptionPanel{
+width: 1010px;
+}
+.updateEntityCaptionPanel{
+width: 1010px;
+}
+.createEntityCaptionPanel{
+width: 1010px;
+}
+.readEntityCaptionPanel .gwt-TextBox-readonly{	
+background-color: #F5F5F5;
+}
+.readEntityCaptionPanel .tfFieldHeader{
+font-weight: bold;
+font-size: 10pt;
+}
+.createEntityCaptionPanel .tfFieldHeader{
+font-weight: bold;
+font-size: 10pt;
+}
+.createEntityCaptionPanel .tfErrorMessage{
+font-size: 8pt;
+}
+.updateEntityCaptionPanel .tfFieldHeader{
+font-weight: bold;
+font-size: 10pt;
+}
+.updateEntityCaptionPanel .tfErrorMessage{
+font-size: 8pt;
+}
+.searchEntityCaptionPanel {
+
+}
+.searchEntityCaptionPanel .tfFieldHeader{
+font-size: 10pt;
+}
+.searchEntityCaptionPanel .tfErrorMessage{
+
+}
+.searchEntityCaptionPanel .tfTextBox{
+
 }

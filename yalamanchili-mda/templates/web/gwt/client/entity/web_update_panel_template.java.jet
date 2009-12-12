@@ -38,13 +38,19 @@ public class Update${$class/@name}Panel extends UpdateCompositeRef<${$class/@nam
 
 	}
 
+    @Override
+	protected void addWidgetsBeforeCaptionPanel() {
+		// TODO Auto-generated method stub
+
+	}
+	
 	@Override
 	protected void addWidgets() {
 	}
 
 	@Override
 	protected void configure() {
-
+		
 	}
 }
 </java:format>

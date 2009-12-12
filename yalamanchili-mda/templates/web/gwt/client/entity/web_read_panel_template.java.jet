@@ -44,10 +44,16 @@ public class Read${$class/@name}Panel extends ReadCompositeRef<${$class/@name}> 
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	protected void addWidgetsBeforeCaptionPanel() {
+		basePanel.add(options);
+
+	}
 
 	@Override
 	protected void addWidgets() {
-		basePanel.add(options);
+		
 	}
 
 	@Override

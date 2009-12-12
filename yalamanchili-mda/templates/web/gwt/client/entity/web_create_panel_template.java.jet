@@ -30,6 +30,12 @@ public class Create${$class/@name}Panel extends CreateCompositeRef<${$class/@nam
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	protected void addWidgetsBeforeCaptionPanel() {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
 	protected void addWidgets() {
@@ -39,7 +45,7 @@ public class Create${$class/@name}Panel extends CreateCompositeRef<${$class/@nam
 
 	@Override
 	protected void configure() {
-
+		
 	}
 
 }
