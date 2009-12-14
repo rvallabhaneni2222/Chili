@@ -33,9 +33,9 @@ public abstract class UpdateCompositeRef<T extends LightEntity> extends
 	public void initUpdateComposite(T t, ConstantsWithLookup constants,
 			Messages messages) {
 		init(t, false, constants);
-		entityCaptionPanel.addStyleName("updateEntityCaptionPanel");
-		entityDisplayWidget.addStyleName("updateEntityDisplayWidget");
-		basePanel.addStyleName("updateBasePanel");
+		entityCaptionPanel.addStyleName("y-gwt-UpdateEntityCaptionPanel");
+		entityDisplayWidget.addStyleName("y-gwt-UpdateEntityDisplayWidget");
+		basePanel.addStyleName("y-gwt-UpdateBasePanel");
 	}
 
 	/**

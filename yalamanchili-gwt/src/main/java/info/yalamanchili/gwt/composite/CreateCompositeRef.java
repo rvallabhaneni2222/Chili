@@ -33,9 +33,9 @@ public abstract class CreateCompositeRef<T extends LightEntity> extends
 	public void initCreateComposite(T t, ConstantsWithLookup constants,
 			Messages messages) {
 		init(t, false, constants);
-		entityCaptionPanel.addStyleName("createEntityCaptionPanel");
-		entityDisplayWidget.addStyleName("createEntityDisplayWidget");
-		basePanel.addStyleName("createBasePanel");
+		entityCaptionPanel.addStyleName("y-gwt-CreateEntityCaptionPanel");
+		entityDisplayWidget.addStyleName("y-gwt-CreateEntityDisplayWidget");
+		basePanel.addStyleName("y-gwt-CreateBasePanel");
 	}
 
 	/*

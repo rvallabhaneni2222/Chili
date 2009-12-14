@@ -47,9 +47,9 @@ public abstract class ReadCompositeRef<T extends LightEntity> extends
 			ConstantsWithLookup constants, Messages messages) {
 		this.entityId = id;
 		init(t, true, constants);
-		entityCaptionPanel.addStyleName("readEntityCaptionPanel");
-		entityDisplayWidget.addStyleName("readEntityDisplayWidget");
-		basePanel.addStyleName("readBasePanel");
+		entityCaptionPanel.addStyleName("y-gwt-ReadEntityCaptionPanel");
+		entityDisplayWidget.addStyleName("y-gwt-ReadEntityDisplayWidget");
+		basePanel.addStyleName("y-gwt-ReadBasePanel");
 	}
 
 	/*

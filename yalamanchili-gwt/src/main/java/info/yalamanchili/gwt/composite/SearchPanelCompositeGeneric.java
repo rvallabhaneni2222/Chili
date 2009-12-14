@@ -33,9 +33,9 @@ public abstract class SearchPanelCompositeGeneric<T extends LightEntity>
 	public void initSearchPanelCompositeGeneric(T entity,
 			final ConstantsWithLookup constants) {
 		init(entity, false, constants);
-		entityCaptionPanel.addStyleName("searchEntityCaptionPanel");
-		entityDisplayWidget.addStyleName("searchEntityDisplayWidget");
-		basePanel.addStyleName("searchBasePanel");
+		entityCaptionPanel.addStyleName("y-gwt-SearchEntityCaptionPanel");
+		entityDisplayWidget.addStyleName("y-gwt-SearchEntityDisplayWidget");
+		basePanel.addStyleName("y-gwt-SearchBasePanel");
 		searchB.addClickHandler(this);
 		entityDisplayWidget.add(searchB);
 		addListeners();

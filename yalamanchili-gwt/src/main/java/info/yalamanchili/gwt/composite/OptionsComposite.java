@@ -70,7 +70,7 @@ public abstract class OptionsComposite extends ALComposite implements
 	}
 
 	public void setup() {
-		this.addStyleName("OptionsComposite");
+		this.addStyleName("y-gwt-OptionsComposite");
 		updateLink.addClickHandler(this);
 		deleteLink.addClickHandler(this);
 		createLink.addClickHandler(this);

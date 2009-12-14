@@ -78,11 +78,13 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	 */
 	@Override
 	protected void configure() {
-		table.addStyleName("Table");
-		table.getRowFormatter().addStyleName(0, "tableHeader");
+		table.addStyleName("y-gwt-Table");
+		table.getRowFormatter().addStyleName(0, "y-gwt-TableHeader");
 		table.setBorderWidth(1);
 		pagingPanel.setSpacing(5);
-		pagingPanel.addStyleName("PagingBar");
+		pagingPanel.addStyleName("y-gwt-PagingBar");
+		panel.addStyleName("y-gwt-ReadAllPanel");
+		tablePanel.addStyleName("y-gwt-TablePanel");
 	}
 
 	/*
@@ -201,7 +203,7 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	public void onClick(ClickEvent event) {
 		if (event.getSource() == table) {
 			Cell clickedCell = table.getCellForEvent(event);
-			if (clickedCell !=null && clickedCell.getRowIndex() != 0)
+			if (clickedCell != null && clickedCell.getRowIndex() != 0)
 				viewClicked(clickedCell.getRowIndex(), clickedCell
 						.getCellIndex());
 		}
