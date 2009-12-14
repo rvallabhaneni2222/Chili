@@ -18,52 +18,89 @@ width: 200px;
 .sidePanelBottom{
 
 }
-.displayTabPanel{
-width : 100%;
-}
 
 .LoginPanel{
 background-color: #88ACE0;
 }
-.readEntityCaptionPanel{
+.y-gwt-OptionsComposite{
+
+}
+.y-gwt-PagingBar{
+font-weight: bold;
+font-size: 10pt;
+background-color             :    #E5E5E5;
+}
+.y-gwt-TableHeader
+{
+    background-color             :    #D9D9D9;
+    font-weight: bold;
+	font-size: 11pt;
+}
+.y-gwt-Table
+{
+font-size: 10pt;
+	font-family:	helvetica, arial sans-serif ;
+    background-color             :    #CCCCFF;
+}
+.y-gwt-ReadAllPanel{
+
+}
+.y-gwt-TablePanel{
+
+}
+.y-gwt-SideBarComposite{
+ border   :    2px solid #88ACE0;
+
+}
+.y-gwt-OptionsComposite{
+ border   :    2px solid #88ACE0;
+}
+
+.SearchDisclosurePanel{
+border   :    1px solid #88ACE0;
+background-color             :    #E5E5E5;
+width: 190px;
+}
+.y-gwt-ReadEntityCaptionPanel{
 width: 1010px;
 }
-.updateEntityCaptionPanel{
+.y-gwt-UpdateEntityCaptionPanel{
 width: 1010px;
 }
-.createEntityCaptionPanel{
+.y-gwt-CreateEntityCaptionPanel{
 width: 1010px;
 }
-.readEntityCaptionPanel .gwt-TextBox-readonly{	
+.y-gwt-ReadEntityCaptionPanel .gwt-TextBox-readonly{	
 background-color: #F5F5F5;
 }
-.readEntityCaptionPanel .tfFieldHeader{
+.y-gwt-ReadEntityCaptionPanel .tfFieldHeader{
 font-weight: bold;
 font-size: 10pt;
 }
-.createEntityCaptionPanel .tfFieldHeader{
+.y-gwt-CreateEntityCaptionPanel .tfFieldHeader{
 font-weight: bold;
 font-size: 10pt;
 }
-.createEntityCaptionPanel .tfErrorMessage{
+.y-gwt-CreateEntityCaptionPanel .tfErrorMessage{
 font-size: 8pt;
 }
-.updateEntityCaptionPanel .tfFieldHeader{
+.y-gwt-UpdateEntityCaptionPanel .tfFieldHeader{
 font-weight: bold;
 font-size: 10pt;
 }
-.updateEntityCaptionPanel .tfErrorMessage{
+.y-gwt-UpdateEntityCaptionPanel .tfErrorMessage{
 font-size: 8pt;
 }
-.searchEntityCaptionPanel {
+.y-gwt-SearchEntityCaptionPanel {
 
 }
-.searchEntityCaptionPanel .tfFieldHeader{
+.y-gwt-SearchEntityCaptionPanel .tfFieldHeader{
 font-size: 10pt;
 }
-.searchEntityCaptionPanel .tfErrorMessage{
+.y-gwt-SearchEntityCaptionPanel .tfErrorMessage{
 
 }
-.searchEntityCaptionPanel .tfTextBox{
+.y-gwt-SearchEntityCaptionPanel .tfTextBox{
 
 }
+
