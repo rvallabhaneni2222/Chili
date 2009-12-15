@@ -1,5 +1,5 @@
 <java:format>
-package info.yalamanchili.testmda.server;
+package ${$groupID}.server;
 
 import info.yalamanchili.commons.ValidatorUtils;
 import info.yalamanchili.gwt.fields.DataType;

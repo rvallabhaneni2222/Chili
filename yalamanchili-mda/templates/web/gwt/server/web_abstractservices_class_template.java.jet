@@ -18,7 +18,7 @@ import net.sf.gilead.core.PersistentBeanManager;
 import net.sf.gilead.core.hibernate.jboss.HibernateJBossUtil;
 import net.sf.gilead.core.store.stateless.StatelessProxyStore;
 import net.sf.gilead.gwt.PersistentRemoteService;
-import info.yalamanchili.testmda.ejb.GenericServiceLocal;
+import ${$groupID}.ejb.GenericServiceLocal;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jboss.jpa.injection.InjectedEntityManagerFactory;
