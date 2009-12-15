@@ -6,7 +6,7 @@
 <%--Set Global varibles like projectId,groupId,version...--%>
 
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
-<c:setVariable select="'info.yalamanchili.testmda'" var="groupID"/>
+<c:setVariable select="'info.yalamanchili.project'" var="groupID"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
 <c:setVariable select="'HSQL'" var="dataBase"/>
 <c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
@@ -141,6 +141,7 @@
     <ws:folder path="src/main/resources">
     <ws:file template="templates/jpa/jpa_persistence_template.xml.jet" path="META-INF/persistence.xml"/>
     <ws:file template="templates/jpa/jpa_ormxml_template.xml.jet" path="META-INF/orm.xml"/>
+    <ws:file template="templates/jpa/abbrevation.properties.jet" path="abbrevations.properties"/>
     </ws:folder>
     <ws:folder path="src/test/java"/>
     <ws:folder path="src/test/resources"/>
@@ -231,6 +232,8 @@
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		 <%-- check to see if this is not a abstract class--%>
+    		 <c:if test="$class/@isAbstract = 'false'">
     		 <%-- Create Entity Panel--%>
 			 <java:class name="Create{$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_create_panel_template.java.jet"/>
 			 <%-- Read All Entities Panel--%>
@@ -245,6 +248,7 @@
 			 <java:class name="Update${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_update_panel_template.java.jet"/>
 			  <%-- Side  Panel--%>
 			 <java:class name="${$class/@name}SideBar" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_side_panel_template.java.jet"/>
+			 </c:if>
 			 </c:iterate>
 		</c:iterate>
     </ws:folder>
