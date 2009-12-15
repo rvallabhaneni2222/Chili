@@ -77,7 +77,7 @@ import org.hibernate.validator.NotEmpty;
 </c:if> 
 
 @Entity
-public class ${$class/@name}  <c:choose select="$parentClass" > <c:when test="$class/@name" > extends  LightEntity </c:when> <c:otherwise> extends ${$parentClass}</c:otherwise>  </c:choose> implements Serializable{
+public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name}  <c:choose select="$parentClass" > <c:when test="$class/@name" > extends  LightEntity </c:when> <c:otherwise> extends ${$parentClass}</c:otherwise>  </c:choose> <c:if test="$class/@isAbstract = 'false'">implements Serializable</c:if>{
 /** @generated */
 private static final long serialVersionUID = 1L;
 
@@ -212,13 +212,13 @@ ${$attribute/@name};
  													<%-- Association OneToOne or OneToMany--%>
    					    							<c:if test="$association_connection_end2/@aggregation = 'none'">
   					    								<%-- check for one or many realations--%>
-  					    								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
-  					    									<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+  					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+  					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
  @OneToOne 					    				
 				    										</c:if>
 				    									</c:if>
-  					    								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
-  					    									<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+  					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
  @ManyToOne 					    				
 				    										</c:if>
 				    									</c:if>		    							
@@ -268,11 +268,12 @@ ${$attribute/@name};
 </c:iterate>
 
 <%-- constructor --%>
+<c:if test="$class/@isAbstract = 'false'">
 <f:message>generated.comment</f:message>
 public ${$class/@name}() {
 super();   
 }
-
+</c:if> 
  <c:choose select="$parentClass" > 
  	<c:when test="$class/@name" > <f:message>generated.comment</f:message>
 	public Long getId() {
