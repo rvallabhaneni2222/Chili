@@ -6,9 +6,11 @@ package ${$groupID}.client;
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		 <c:if test="$class/@isAbstract = 'false'">
     			import ${$groupID}.client.${$package/@name}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel;
     			import ${$groupID}.client.${$package/@name}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel.${$class/@name}TableType;
     			import ${$groupID}.client.${$package/@name}.${lower-case($class/@name)}.${$class/@name}SideBar;
+    		 </c:if>	
 			 </c:iterate>
 	</c:iterate>
 
@@ -81,7 +83,9 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     MenuBar ${lower-case($package/@name)}Bar = new MenuBar(true);
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-    			${lower-case($package/@name)}Bar.addItem("${$class/@name}", ${lower-case($class/@name)}Cmd);
+    		 	<c:if test="$class/@isAbstract = 'false'">
+    				${lower-case($package/@name)}Bar.addItem("${$class/@name}", ${lower-case($class/@name)}Cmd);
+    			</c:if>
 			 </c:iterate>
 	</c:iterate>
 
@@ -118,6 +122,7 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 	
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		 <c:if test="$class/@isAbstract = 'false'">
     			Command ${lower-case($class/@name)}Cmd= new Command() {
 
 				@Override
@@ -129,6 +134,7 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 				}
 
 			};
+			</c:if>
 			 </c:iterate>
 	</c:iterate>
 	
