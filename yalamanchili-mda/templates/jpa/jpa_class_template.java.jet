@@ -6,6 +6,9 @@
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 <%--This is used to check for inhereritance --%>
 <c:setVariable select="$class/@name" var="parentClass"/>
+<c:setVariable select="$class/@name" var="isParentClass"/>
+
+
 package ${$packageName};
  
 <java:importsLocation package="{$package/@name}"/>
@@ -49,7 +52,14 @@ import org.hibernate.validator.NotEmpty;
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
  <%-- if parent class--%>
 	<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $classID">
-		<c:setVariable select="$generalization/Generalization.parent/Class/@xmi.idref" var="isParentClass"/>
+	<c:setVariable select="$generalization/Generalization.parent/Class/@xmi.idref" var="isParentClass"/>
+	<%-- check to see no other class uses this as a child--%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization2">
+				<c:if test="$generalization2/Generalization.child/Class/@xmi.idref = $classID">
+					<c:setVariable select="$generalization/Generalization.child/Class/@xmi.idref" var="isParentClass"/>
+				</c:if>
+			</c:iterate>
+		
 	</c:if>
  <%-- if child class--%>
 	<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
@@ -263,13 +273,20 @@ public ${$class/@name}() {
 super();   
 }
 
-public Long getId() {
+ <c:choose select="$parentClass" > 
+ 	<c:when test="$class/@name" > <f:message>generated.comment</f:message>
+	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
+	</c:when>
+	 <c:otherwise> 
+	 </c:otherwise> 
+ </c:choose>
+
 	
 <%-- getters and setters --%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
