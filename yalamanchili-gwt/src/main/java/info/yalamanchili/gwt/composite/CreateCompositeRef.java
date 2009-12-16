@@ -97,13 +97,4 @@ public abstract class CreateCompositeRef<T extends LightEntity> extends
 		if (postValidateImpl())
 			preCreateButtonClicked();
 	}
-
-	/**
-	 * Creates the entity from fields.
-	 * 
-	 * @return the t
-	 */
-	protected T createEntityFromFields() {
-		return null;
-	}
 }

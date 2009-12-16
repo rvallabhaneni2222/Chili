@@ -1,39 +1,19 @@
 package info.yalamanchili.gwt.composite;
 
+import com.google.gwt.i18n.client.ConstantsWithLookup;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReadComposite.
  */
 public abstract class ReadComposite<T> extends ReadUpdateCreateComposite<T> {
 
-	/** The entity. */
-	protected T entity;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * info.yalamanchili.gwt.composite.ReadUpdateCreateComposite#getEntity()
-	 */
-	public T getEntity() {
-		return entity;
-	}
-
-	/**
-	 * Inits the read composite.
-	 */
-	protected void initReadComposite() {
-		init();
-	}
-
-	/**
-	 * Inits the read composite.
-	 * 
-	 * @param entity
-	 *            the entity
-	 */
-	protected void initReadComposite(T entity) {
-		init();
+	protected void initReadComposite(T entity, String className,
+			final ConstantsWithLookup constants) {
+		init(className, true, constants);
+		entityCaptionPanel.addStyleName("y-gwt-ReadEntityCaptionPanel");
+		entityDisplayWidget.addStyleName("y-gwt-ReadEntityDisplayWidget");
+		basePanel.addStyleName("y-gwt-ReadBasePanel");
 		readData(entity);
 	}
 
@@ -43,8 +23,12 @@ public abstract class ReadComposite<T> extends ReadUpdateCreateComposite<T> {
 	 * @param id
 	 *            the id
 	 */
-	protected void initReadComposite(Long id) {
-		init();
+	protected void initReadComposite(Long id, String className,
+			final ConstantsWithLookup constants) {
+		init(className, true, constants);
+		entityCaptionPanel.addStyleName("y-gwt-ReadEntityCaptionPanel");
+		entityDisplayWidget.addStyleName("y-gwt-ReadEntityDisplayWidget");
+		basePanel.addStyleName("y-gwt-ReadBasePanel");
 		readData(id);
 	}
 

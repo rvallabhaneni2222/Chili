@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gwt.i18n.client.ConstantsWithLookup;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -24,19 +26,34 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 
 	/** The entity. */
 	protected T entity;
-	
+
 	/** The entity id. */
 	protected Long entityId;
+	
+
+	public T getEntity() {
+		return entity;
+	}
+
+	public Long getEntityId() {
+		return entityId;
+	}
+
+	protected Boolean readOnly;
 
 	/**
 	 * Instantiates a new read update create composite.
 	 */
 	public ReadUpdateCreateComposite() {
-		initWidget(panel);
+		initWidget(basePanel);
 	}
 
+	protected VerticalPanel basePanel = new VerticalPanel();
+
+	protected CaptionPanel entityCaptionPanel = new CaptionPanel();
+
 	/** The panel. */
-	protected VerticalPanel panel = new VerticalPanel();
+	protected VerticalPanel entityDisplayWidget = new VerticalPanel();
 
 	/** The fields. */
 	protected Map<String, Object> fields = new HashMap<String, Object>();
@@ -59,7 +76,14 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Inits the.
 	 */
-	protected void init() {
+	protected void init(String className, final Boolean readOnly,
+			final ConstantsWithLookup constants) {
+		this.readOnly = readOnly;
+		addWidgetsBeforeCaptionPanel();
+		entityCaptionPanel.setContentWidget(entityDisplayWidget);
+		basePanel.add(entityCaptionPanel);
+		entityCaptionPanel
+				.setCaptionHTML(className);
 		addListeners();
 		configure();
 		addWidgets();
@@ -68,48 +92,53 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Adds the field.
 	 * 
-	 * @param name the name
-	 * @param readOnly the read only
-	 * @param type the type
+	 * @param name
+	 *            the name
+	 * @param readOnly
+	 *            the read only
+	 * @param type
+	 *            the type
 	 */
 	protected void addField(String name, Boolean readOnly, DataType type) {
 		if (DataType.LONG_FIELD.equals(type)) {
 			LongField longField = new LongField(name, readOnly);
 			fields.put(name, longField);
-			panel.add(longField);
+			entityDisplayWidget.add(longField);
 		}
 		if (DataType.INTEGER_FIELD.equals(type)) {
 			IntegerField integerField = new IntegerField(name, readOnly);
 			fields.put(name, integerField);
-			panel.add(integerField);
+			entityDisplayWidget.add(integerField);
 		}
 		if (DataType.STRING_FIELD.equals(type)) {
 			StringField stringField = new StringField(name, readOnly);
 			fields.put(name, stringField);
-			panel.add(stringField);
+			entityDisplayWidget.add(stringField);
 		}
 		if (DataType.DATE_FIELD.equals(type)) {
 			DateField dateField = new DateField(name, readOnly);
 			fields.put(name, dateField);
-			panel.add(dateField);
+			entityDisplayWidget.add(dateField);
 		}
 		if (DataType.BOOLEAN_FIELD.equals(type)) {
 			BooleanField booleanField = new BooleanField(name, readOnly);
 			fields.put(name, booleanField);
-			panel.add(booleanField);
+			entityDisplayWidget.add(booleanField);
 		}
 		if (DataType.PASSWORD_FIELD.equals(type)) {
 			PasswordField passwordField = new PasswordField(name);
 			fields.put(name, passwordField);
-			panel.add(passwordField);
+			entityDisplayWidget.add(passwordField);
 		}
 	}
 
 	/**
 	 * Sets the enum feild.
 	 * 
-	 * @param fieldName the field name
-	 * @param value the value
+	 * @param fieldName
+	 *            the field name
+	 * @param value
+	 *            the value
 	 */
 	protected void setEnumFeild(String fieldName, String value) {
 		EnumField enumField = (EnumField) fields.get(fieldName);
@@ -119,8 +148,10 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Sets the field.
 	 * 
-	 * @param fieldName the field name
-	 * @param number the number
+	 * @param fieldName
+	 *            the field name
+	 * @param number
+	 *            the number
 	 */
 	protected void setField(String fieldName, Long number) {
 		LongField longField = (LongField) fields.get(fieldName);
@@ -130,8 +161,10 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Sets the field.
 	 * 
-	 * @param fieldName the field name
-	 * @param number the number
+	 * @param fieldName
+	 *            the field name
+	 * @param number
+	 *            the number
 	 */
 	protected void setField(String fieldName, Integer number) {
 		IntegerField integerField = (IntegerField) fields.get(fieldName);
@@ -141,8 +174,10 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Sets the field.
 	 * 
-	 * @param fieldName the field name
-	 * @param text the text
+	 * @param fieldName
+	 *            the field name
+	 * @param text
+	 *            the text
 	 */
 	protected void setField(String fieldName, String text) {
 		StringField stringField = (StringField) fields.get(fieldName);
@@ -152,8 +187,10 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Sets the field.
 	 * 
-	 * @param fieldName the field name
-	 * @param value the value
+	 * @param fieldName
+	 *            the field name
+	 * @param value
+	 *            the value
 	 */
 	protected void setField(String fieldName, Boolean value) {
 		BooleanField booleanField = (BooleanField) fields.get(fieldName);
@@ -163,8 +200,10 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Sets the field.
 	 * 
-	 * @param fieldName the field name
-	 * @param date the date
+	 * @param fieldName
+	 *            the field name
+	 * @param date
+	 *            the date
 	 */
 	protected void setField(String fieldName, Date date) {
 		DateField dateField = (DateField) fields.get(fieldName);
@@ -174,7 +213,8 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Gets the enum field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the enum field
 	 */
@@ -186,7 +226,8 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Gets the integer field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the integer field
 	 */
@@ -198,7 +239,8 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Gets the long field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the long field
 	 */
@@ -210,7 +252,8 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Gets the string field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the string field
 	 */
@@ -222,7 +265,8 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Gets the date field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the date field
 	 */
@@ -234,7 +278,8 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Gets the boolean field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the boolean field
 	 */
@@ -246,7 +291,8 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	/**
 	 * Gets the password field.
 	 * 
-	 * @param fieldName the field name
+	 * @param fieldName
+	 *            the field name
 	 * 
 	 * @return the password field
 	 */
@@ -255,40 +301,6 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 		return passwordField.getPassword();
 	}
 
-	/**
-	 * Gets the entity.
-	 * 
-	 * @return the entity
-	 */
-	public T getEntity() {
-		return entity;
-	}
-
-	/**
-	 * Sets the entity.
-	 * 
-	 * @param entity the new entity
-	 */
-	public void setEntity(T entity) {
-		this.entity = entity;
-	}
-
-	/**
-	 * Gets the entity id.
-	 * 
-	 * @return the entity id
-	 */
-	public Long getEntityId() {
-		return entityId;
-	}
-
-	/**
-	 * Sets the entity id.
-	 * 
-	 * @param entityId the new entity id
-	 */
-	public void setEntityId(Long entityId) {
-		this.entityId = entityId;
-	}
+	protected abstract void addWidgetsBeforeCaptionPanel();
 
 }

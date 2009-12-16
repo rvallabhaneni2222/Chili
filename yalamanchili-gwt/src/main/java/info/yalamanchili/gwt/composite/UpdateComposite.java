@@ -2,37 +2,28 @@ package info.yalamanchili.gwt.composite;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.Button;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class UpdateComposite.
  */
-public abstract class UpdateComposite<T> extends ReadUpdateCreateComposite
+public abstract class UpdateComposite<T> extends ReadUpdateCreateComposite<T>
 		implements ClickHandler {
 
-	/** The entity. */
-	protected T entity;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * info.yalamanchili.gwt.composite.ReadUpdateCreateComposite#getEntity()
-	 */
-	public T getEntity() {
-		return entity;
-	}
-
-	/** The update. */
-	protected Button update = new Button("UPDATE");
+	protected Button update = new Button("update");
 
 	/**
 	 * Inits the update composite.
 	 */
-	public void initUpdateComposite() {
-		init();
-		panel.add(update);
+	public void initUpdateComposite(String className,
+			final ConstantsWithLookup constants) {
+		init(className, false, constants);
+		entityCaptionPanel.addStyleName("y-gwt-UpdateEntityCaptionPanel");
+		entityDisplayWidget.addStyleName("y-gwt-UpdateEntityDisplayWidget");
+		basePanel.addStyleName("y-gwt-UpdateBasePanel");
+		entityDisplayWidget.add(update);
 		update.addClickHandler(this);
 		populateFields();
 	}

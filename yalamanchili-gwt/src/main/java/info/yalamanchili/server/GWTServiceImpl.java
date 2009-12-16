@@ -1,0 +1,458 @@
+package info.yalamanchili.server;
+
+import info.yalamanchili.commons.ValidatorUtils;
+import info.yalamanchili.gwt.fields.DataType;
+import info.yalamanchili.gwt.rpc.GWTService;
+import info.yalamanchili.gwt.ui.DisplayType;
+import info.yalamanchili.gwt.ui.UIElement;
+import info.yalamanchili.server.GWTServletUtils;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+
+import net.sf.gilead.pojo.java5.LightEntity;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.validator.Email;
+import org.hibernate.validator.Future;
+import org.hibernate.validator.Length;
+import org.hibernate.validator.Max;
+import org.hibernate.validator.Min;
+import org.hibernate.validator.NotEmpty;
+import org.hibernate.validator.NotNull;
+import org.hibernate.validator.Past;
+import org.hibernate.validator.Range;
+
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
+
+	private static final long serialVersionUID = 1L;
+	private static final Log log = LogFactory.getLog(GWTServiceImpl.class);
+	private static HashMap<String, LinkedHashMap<String, DataType>> entity_AttributeData = new HashMap<String, LinkedHashMap<String, DataType>>();
+	private static HashMap<String, LinkedHashMap<String, DataType>> entity_AttributeData_CAPS = new HashMap<String, LinkedHashMap<String, DataType>>();
+
+	protected Class<?> getEntityClass(String className) {
+		try {
+			Class<?> entity = (Class<?>) Class.forName(className);
+			return entity;
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("class specified is not found", e);
+		}
+	}
+
+	protected DisplayType getDisplayType(Field field) {
+		for (Annotation annotation : field.getAnnotations()) {
+			if (annotation instanceof UIElement) {
+				UIElement element = ((UIElement) annotation);
+				if (element.displayType() != null) {
+					log
+							.debug("display type"
+									+ element.displayType().toString());
+					return element.displayType();
+				}
+			}
+		}
+		return DisplayType.DEFAULT;
+	}
+
+	public LinkedHashMap<String, DataType> getAttributes(String className) {
+
+		if (entity_AttributeData.containsKey(className)) {
+			log.debug("class:" + className
+					+ " already exits in map... returning....");
+			return entity_AttributeData.get(className);
+		} else {
+			log.debug("class:" + className
+					+ " is a new class info adding info to map");
+			LinkedHashMap<String, DataType> dataFields = new LinkedHashMap<String, DataType>();
+			Class<?> entity = getEntityClass(className);
+			for (Field field : GWTServletUtils.getEntityFieldsInOrder(entity)) {
+				dataFields.put(field.getName(), GWTServletUtils
+						.getDataType(field));
+			}
+			entity_AttributeData.put(className, dataFields);
+			return dataFields;
+		}
+	}
+
+	public LinkedHashMap<String, DataType> getAttributesCaps(String className) {
+		LinkedHashMap<String, DataType> dataFields = new LinkedHashMap<String, DataType>();
+		if (entity_AttributeData_CAPS.containsKey(className)) {
+			log.debug("class:" + className
+					+ " already exits in map_CAPS... returning....");
+			return entity_AttributeData_CAPS.get(className);
+		} else {
+			Class<?> entity = getEntityClass(className);
+			for (Field field : GWTServletUtils.getEntityFieldsInOrder(entity)) {
+				dataFields.put(field.getName().toUpperCase(), GWTServletUtils
+						.getDataType(field));
+			}
+			log.debug("class:" + className
+					+ " is a new class info adding info to map_CAPS");
+			entity_AttributeData_CAPS.put(className, dataFields);
+			return dataFields;
+		}
+	}
+
+	public List<String> validateStringField(String className,
+			String attributeName, String value) {
+		List<String> errorMessages = new ArrayList<String>();
+		Class<?> entity = getEntityClass(className);
+		Field field = GWTServletUtils.getField(entity, attributeName);
+		if (field != null)
+			for (Annotation annotation : field.getDeclaredAnnotations()) {
+				if (annotation instanceof NotNull) {
+					ValidatorUtils.validateNotNull((NotNull) annotation, value,
+							errorMessages);
+				}
+				if (annotation instanceof org.hibernate.validator.Length) {
+					ValidatorUtils.validateLength((Length) annotation, value,
+							errorMessages);
+				}
+				if (annotation instanceof org.hibernate.validator.Email) {
+					ValidatorUtils.validateEmail((Email) annotation, value,
+							errorMessages);
+				}
+				if (annotation instanceof org.hibernate.validator.NotEmpty) {
+					ValidatorUtils.validateNotEmpty((NotEmpty) annotation,
+							value, errorMessages);
+				}
+
+			}
+		return errorMessages;
+	}
+
+	public List<String> validateBooleanField(String className,
+			String attributeName, Boolean value) {
+		List<String> errorMessages = new ArrayList<String>();
+		return errorMessages;
+	}
+
+	public List<String> validateDateField(String className,
+			String attributeName, Date value) {
+		List<String> errorMessages = new ArrayList<String>();
+		Class<?> entity = getEntityClass(className);
+		Field field = GWTServletUtils.getField(entity, attributeName);
+		if (field != null)
+			for (Annotation annotation : field.getDeclaredAnnotations()) {
+				if (annotation instanceof NotNull) {
+					ValidatorUtils.validateNotNull((NotNull) annotation, value,
+							errorMessages);
+				}
+				if (annotation instanceof Past) {
+					ValidatorUtils.validatePast((Past) annotation, value,
+							errorMessages);
+				}
+				if (annotation instanceof Future) {
+					ValidatorUtils.validateFuture((Future) annotation, value,
+							errorMessages);
+				}
+			}
+		return errorMessages;
+	}
+
+	public List<String> validateIntegerField(String className,
+			String attributeName, Integer value) {
+		List<String> errorMessages = new ArrayList<String>();
+		Class<?> entity = getEntityClass(className);
+		Field field = GWTServletUtils.getField(entity, attributeName);
+		if (field != null)
+			for (Annotation annotation : field.getDeclaredAnnotations()) {
+				if (annotation instanceof NotNull) {
+					ValidatorUtils.validateNotNull((NotNull) annotation, value,
+							errorMessages);
+				}
+				if (annotation instanceof Max) {
+					ValidatorUtils.validateMax((Max) annotation, value,
+							errorMessages);
+				}
+				if (annotation instanceof Min) {
+					ValidatorUtils.validateMin((Min) annotation, value,
+							errorMessages);
+				}
+				if (annotation instanceof Range) {
+					ValidatorUtils.validateRange((Range) annotation, value,
+							errorMessages);
+				}
+			}
+		return errorMessages;
+	}
+
+	@Override
+	public List<String> validateFloatField(String className,
+			String attributeName, Float value) {
+		List<String> errorMessages = new ArrayList<String>();
+		Class<?> entity = getEntityClass(className);
+		Field field = GWTServletUtils.getField(entity, attributeName);
+		if (field != null)
+			for (Annotation annotation : field.getDeclaredAnnotations()) {
+				if (annotation instanceof NotNull) {
+					ValidatorUtils.validateNotNull((NotNull) annotation, value,
+							errorMessages);
+				}
+			}
+		return errorMessages;
+	}
+
+	public List<String> validateLongField(String className,
+			String attributeName, Long value) {
+		List<String> errorMessages = new ArrayList<String>();
+		Class<?> entity = getEntityClass(className);
+		Field field = GWTServletUtils.getField(entity, attributeName);
+		if (field != null)
+			for (Annotation annotation : field.getDeclaredAnnotations()) {
+				if (annotation instanceof NotNull) {
+					ValidatorUtils.validateNotNull((NotNull) annotation, value,
+							errorMessages);
+				}
+				if (annotation instanceof Max) {
+					ValidatorUtils.validateMax((Max) annotation, value,
+							errorMessages);
+				}
+				if (annotation instanceof Min) {
+					ValidatorUtils.validateMin((Min) annotation, value,
+							errorMessages);
+				}
+				if (annotation instanceof Range) {
+					ValidatorUtils.validateRange((Range) annotation, value,
+							errorMessages);
+				}
+			}
+		return errorMessages;
+	}
+
+	public List<String> validateEnumField(String className,
+			String attributeName, String value) {
+		List<String> errorMessages = new ArrayList<String>();
+		Class<?> entity = getEntityClass(className);
+		Field field = GWTServletUtils.getField(entity, attributeName);
+		if (field != null)
+			for (Annotation annotation : field.getDeclaredAnnotations()) {
+				if (annotation instanceof NotNull) {
+					ValidatorUtils.validateNotNull((NotNull) annotation, value,
+							errorMessages);
+				}
+			}
+		return errorMessages;
+	}
+
+	public <T extends LightEntity> T createEntityFromFields(String className,
+			LinkedHashMap<String, Object> fields) {
+		LinkedHashMap<String, DataType> attributes = getAttributesCaps(className);
+		Class<?> entity = getEntityClass(className);
+		Object newObject = null;
+		try {
+			newObject = entity.newInstance();
+			for (String fieldName : fields.keySet()) {
+				if (fieldName.compareToIgnoreCase("Id") != 0)
+					for (Method method : entity.getMethods()) {
+						if (method.getName().compareToIgnoreCase(
+								"set" + fieldName) == 0) {
+							log.debug("calling method:" + method.getName()
+									+ ":with:" + fields.get(fieldName));
+							if (DataType.ENUM_FIELD.equals(attributes
+									.get(fieldName))) {
+								Object e = getEnumValue(className, fieldName,
+										(String) fields.get(fieldName));
+								method.invoke(newObject, e);
+							} else {
+								method.invoke(newObject, fields.get(fieldName));
+							}
+						}
+					}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return (T) newObject;
+	}
+
+	public <T extends LightEntity> LinkedHashMap<String, Object> getFieldsDataFromEntity(
+			T t) {
+		LinkedHashMap<String, Object> flds = new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, DataType> fields = getAttributes(t.getClass()
+				.getCanonicalName());
+		try {
+			for (String fieldName : getAttributes(
+					t.getClass().getCanonicalName()).keySet()) {
+				for (Method method : t.getClass().getMethods()) {
+					if (method.getName().compareToIgnoreCase("get" + fieldName) == 0) {
+						if (fields.get(fieldName).equals(DataType.STRING_FIELD)) {
+							String result = (String) method.invoke(t, null);
+							flds.put(fieldName, result);
+						}
+						if (fields.get(fieldName).equals(
+								DataType.TEXT_AREA_FIELD)) {
+							String result = (String) method.invoke(t, null);
+							flds.put(fieldName, result);
+						}
+						if (fields.get(fieldName)
+								.equals(DataType.INTEGER_FIELD)) {
+							Integer result = (Integer) method.invoke(t, null);
+							flds.put(fieldName, result);
+						}
+						if (fields.get(fieldName).equals(DataType.LONG_FIELD)) {
+							Long result = (Long) method.invoke(t, null);
+							flds.put(fieldName, result);
+						}
+						if (fields.get(fieldName).equals(DataType.FLOAT_FEILD)) {
+							Float result = (Float) method.invoke(t, null);
+							flds.put(fieldName, result);
+						}
+						if (fields.get(fieldName).equals(DataType.DATE_FIELD)) {
+							Date result = (Date) method.invoke(t, null);
+							flds.put(fieldName, result);
+						}
+						if (fields.get(fieldName)
+								.equals(DataType.BOOLEAN_FIELD)) {
+							Boolean result = (Boolean) method.invoke(t, null);
+							flds.put(fieldName, result);
+						}
+						if (fields.get(fieldName).equals(DataType.ENUM_FIELD)) {
+							Object value = method.invoke(t, null);
+							if (value != null) {
+								String result = method.invoke(t, null)
+										.toString();
+								flds.put(fieldName, result);
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return flds;
+	}
+
+	@Override
+	public <T extends LightEntity> T updateEntityFromFields(T entity,
+			LinkedHashMap<String, Object> fields) {
+		String className = entity.getClass().getCanonicalName();
+		LinkedHashMap<String, DataType> attributes = getAttributesCaps(className);
+		try {
+			for (String fieldName : fields.keySet()) {
+				if (fieldName.compareToIgnoreCase("Id") != 0)
+					for (Method method : entity.getClass().getMethods()) {
+						if (method.getName().compareToIgnoreCase(
+								"set" + fieldName) == 0) {
+							log.debug("calling method:" + method.getName()
+									+ ":with:" + fields.get(fieldName));
+							if (DataType.ENUM_FIELD.equals(attributes
+									.get(fieldName))) {
+								Object e = getEnumValue(className, fieldName,
+										(String) fields.get(fieldName));
+								method.invoke(entity, e);
+							} else {
+								method.invoke(entity, fields.get(fieldName));
+							}
+						}
+					}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
+	public Enum<?>[] getEnumValues(String className, String attributeName) {
+		Enum<?>[] var = null;
+		Field field = GWTServletUtils.getField(getEntityClass(className),
+				attributeName);
+		Class<?> entity = getEntityClass(className);
+		for (Method m : field.getType().getDeclaredMethods()) {
+			if (m.getName().equals("values")) {
+				try {
+					var = (Enum<?>[]) m.invoke(entity, new Object[] {});
+				} catch (IllegalArgumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (InvocationTargetException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				for (Enum<?> e : var) {
+					log.debug(e.toString());
+				}
+			}
+		}
+
+		return var;
+	}
+
+	public Object getEnumValue(String className, String attributeName,
+			String value) {
+		Object var = null;
+		Field field = GWTServletUtils.getField(getEntityClass(className),
+				attributeName);
+		Class<?> entity = getEntityClass(className);
+		for (Method m : field.getType().getDeclaredMethods()) {
+			log.debug(m.getName());
+			if (m.getName().equals("valueOf")) {
+				try {
+					var = (Enum<?>) m.invoke(entity, value);
+				} catch (IllegalArgumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (InvocationTargetException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+		log.debug(var.toString());
+		return var;
+	}
+
+	@Override
+	public <T extends LightEntity> T createEntityFromFieldsWithID(
+			String className, LinkedHashMap<String, Object> fields) {
+
+		LinkedHashMap<String, DataType> attributes = getAttributesCaps(className);
+		Class<?> entity = getEntityClass(className);
+		Object newObject = null;
+		try {
+			newObject = entity.newInstance();
+			for (String fieldName : fields.keySet()) {
+				for (Method method : entity.getMethods()) {
+					if (method.getName().compareToIgnoreCase("set" + fieldName) == 0) {
+						log.debug("calling method:" + method.getName()
+								+ ":with:" + fields.get(fieldName));
+						if (DataType.ENUM_FIELD.equals(attributes
+								.get(fieldName))) {
+							Object e = getEnumValue(className, fieldName,
+									(String) fields.get(fieldName));
+							method.invoke(newObject, e);
+						} else {
+							method.invoke(newObject, fields.get(fieldName));
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return (T) newObject;
+
+	}
+
+}
