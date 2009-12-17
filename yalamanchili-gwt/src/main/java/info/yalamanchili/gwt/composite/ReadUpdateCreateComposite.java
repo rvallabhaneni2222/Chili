@@ -1,16 +1,22 @@
 package info.yalamanchili.gwt.composite;
 
+import info.yalamanchili.gwt.callback.ALSyncCallback;
 import info.yalamanchili.gwt.fields.BooleanField;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.fields.DateField;
 import info.yalamanchili.gwt.fields.EnumField;
+import info.yalamanchili.gwt.fields.FloatField;
 import info.yalamanchili.gwt.fields.IntegerField;
 import info.yalamanchili.gwt.fields.LongField;
 import info.yalamanchili.gwt.fields.PasswordField;
 import info.yalamanchili.gwt.fields.StringField;
+import info.yalamanchili.gwt.fields.TextAreaField;
+import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
@@ -29,7 +35,6 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 
 	/** The entity id. */
 	protected Long entityId;
-	
 
 	public T getEntity() {
 		return entity;
@@ -40,6 +45,8 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	}
 
 	protected Boolean readOnly;
+
+	protected String classCanonicalName;
 
 	/**
 	 * Instantiates a new read update create composite.
@@ -79,11 +86,11 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	protected void init(String className, final Boolean readOnly,
 			final ConstantsWithLookup constants) {
 		this.readOnly = readOnly;
+		this.classCanonicalName = className;
 		addWidgetsBeforeCaptionPanel();
 		entityCaptionPanel.setContentWidget(entityDisplayWidget);
 		basePanel.add(entityCaptionPanel);
-		entityCaptionPanel
-				.setCaptionHTML(className);
+		entityCaptionPanel.setCaptionHTML(className);
 		addListeners();
 		configure();
 		addWidgets();
@@ -302,7 +309,372 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	}
 
 	protected abstract void addWidgetsBeforeCaptionPanel();
-	
-	
+
+	protected abstract void postValidate();
+
+	protected void preValidate() {
+		validateAllFields(fields.keySet().iterator());
+	}
+
+	protected Boolean postValidateImpl() {
+		Boolean valid = true;
+		for (String fieldId : fields.keySet()) {
+			if (fields.get(fieldId) instanceof StringField) {
+				StringField field = (StringField) fields.get(fieldId);
+				if (!field.getValid()) {
+					valid = false;
+				}
+			}
+			if (fields.get(fieldId) instanceof TextAreaField) {
+				TextAreaField field = (TextAreaField) fields.get(fieldId);
+				if (!field.getValid()) {
+					valid = false;
+				}
+			}
+			if (fields.get(fieldId) instanceof PasswordField) {
+				PasswordField field = (PasswordField) fields.get(fieldId);
+				if (!field.getValid()) {
+					valid = false;
+				}
+			}
+			if (fields.get(fieldId) instanceof IntegerField) {
+				IntegerField field = (IntegerField) fields.get(fieldId);
+				if (!field.getValid()) {
+					valid = false;
+				}
+			}
+			if (fields.get(fieldId) instanceof LongField) {
+				LongField field = (LongField) fields.get(fieldId);
+				if (!field.getValid()) {
+					valid = false;
+				}
+			}
+			if (fields.get(fieldId) instanceof DateField) {
+				DateField field = (DateField) fields.get(fieldId);
+				if (!field.getValid()) {
+					valid = false;
+				}
+			}
+			if (fields.get(fieldId) instanceof BooleanField) {
+				BooleanField field = (BooleanField) fields.get(fieldId);
+				if (!field.getValid()) {
+					valid = false;
+				}
+			}
+			if (fields.get(fieldId) instanceof FloatField) {
+				FloatField field = (FloatField) fields.get(fieldId);
+				if (!field.getValid()) {
+					valid = false;
+				}
+			}
+			if (fields.get(fieldId) instanceof EnumField) {
+				EnumField field = (EnumField) fields.get(fieldId);
+				if (!field.getIsValid()) {
+					valid = false;
+				}
+			}
+		}
+		return valid;
+	}
+
+	protected void validateEnumField(String fieldId, final Iterator<String> itr) {
+		final EnumField enumf = (EnumField) fields.get(fieldId);
+		GwtServiceAsync.instance().validateEnumField(classCanonicalName,
+				fieldId, enumf.getValue(), new ALSyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> response) {
+						if (response.size() < 1) {
+							enumf.setIsValid(true);
+						} else {
+							enumf.setIsValid(true);
+							enumf.setMessage(getErrorMessages(response));
+						}
+
+					}
+
+					@Override
+					public void postResponse(List<String> response) {
+						validateAllFields(itr);
+
+					}
+
+				});
+	}
+
+	/**
+	 * Validate boolean field.
+	 * 
+	 * @param fieldId
+	 *            the field id
+	 * @param itr
+	 *            the itr
+	 */
+	protected void validateBooleanField(String fieldId,
+			final Iterator<String> itr) {
+		final BooleanField booleanf = (BooleanField) fields.get(fieldId);
+		GwtServiceAsync.instance().validateBooleanField(classCanonicalName,
+				fieldId, booleanf.getValue(),
+				new ALSyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> response) {
+						if (response.size() < 1) {
+							booleanf.setValid(true);
+						} else {
+							booleanf.setValid(false);
+							booleanf.setMessage(getErrorMessages(response));
+						}
+
+					}
+
+					@Override
+					public void postResponse(List<String> response) {
+						validateAllFields(itr);
+
+					}
+
+				});
+	}
+
+	/**
+	 * Validate date field.
+	 * 
+	 * @param fieldId
+	 *            the field id
+	 * @param itr
+	 *            the itr
+	 */
+	protected void validateDateField(String fieldId, final Iterator<String> itr) {
+		final DateField datef = (DateField) fields.get(fieldId);
+		GwtServiceAsync.instance().validateDateField(classCanonicalName,
+				fieldId, datef.getDate(), new ALSyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> response) {
+						if (response.size() < 1) {
+							datef.setValid(true);
+						} else {
+							datef.setValid(false);
+							datef.setMessage(getErrorMessages(response));
+						}
+
+					}
+
+					@Override
+					public void postResponse(List<String> response) {
+						validateAllFields(itr);
+
+					}
+
+				});
+	}
+
+	/**
+	 * Validate integer field.
+	 * 
+	 * @param fieldId
+	 *            the field id
+	 * @param itr
+	 *            the itr
+	 */
+	protected void validateIntegerField(String fieldId,
+			final Iterator<String> itr) {
+		final IntegerField intf = (IntegerField) fields.get(fieldId);
+		GwtServiceAsync.instance().validateIntegerField(classCanonicalName,
+				fieldId, intf.getInteger(), new ALSyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> response) {
+						if (response.size() < 1) {
+							intf.setValid(true);
+						} else {
+							intf.setValid(false);
+							intf.setMessage(getErrorMessages(response));
+						}
+
+					}
+
+					@Override
+					public void postResponse(List<String> response) {
+						validateAllFields(itr);
+
+					}
+
+				});
+	}
+
+	/**
+	 * Validate long field.
+	 * 
+	 * @param fieldId
+	 *            the field id
+	 * @param itr
+	 *            the itr
+	 */
+	protected void validateLongField(String fieldId, final Iterator<String> itr) {
+		final LongField longf = (LongField) fields.get(fieldId);
+		GwtServiceAsync.instance().validateLongField(classCanonicalName,
+				fieldId, longf.getLong(), new ALSyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> response) {
+						if (response.size() < 1) {
+							longf.setValid(true);
+						} else {
+							longf.setValid(false);
+							longf.setMessage(getErrorMessages(response));
+						}
+
+					}
+
+					@Override
+					public void postResponse(List<String> response) {
+						validateAllFields(itr);
+
+					}
+
+				});
+	}
+
+	/**
+	 * Validate string field.
+	 * 
+	 * @param fieldId
+	 *            the field id
+	 * @param itr
+	 *            the itr
+	 */
+	protected void validateStringField(String fieldId,
+			final Iterator<String> itr) {
+		final StringField sf = (StringField) fields.get(fieldId);
+		GwtServiceAsync.instance().validateStringField(classCanonicalName,
+				fieldId, sf.getText(), new ALSyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> response) {
+						if (response.size() < 1) {
+							sf.setValid(true);
+						} else {
+							sf.setValid(false);
+							sf.setMessage(getErrorMessages(response));
+						}
+					}
+
+					@Override
+					public void postResponse(List<String> response) {
+						validateAllFields(itr);
+					}
+				});
+	}
+
+	protected void validateTextAreaField(String fieldId,
+			final Iterator<String> itr) {
+		final TextAreaField sf = (TextAreaField) fields.get(fieldId);
+		GwtServiceAsync.instance().validateStringField(classCanonicalName,
+				fieldId, sf.getText(), new ALSyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> response) {
+						if (response.size() < 1) {
+							sf.setValid(true);
+						} else {
+							sf.setValid(false);
+							sf.setMessage(getErrorMessages(response));
+						}
+					}
+
+					@Override
+					public void postResponse(List<String> response) {
+						validateAllFields(itr);
+					}
+				});
+	}
+
+	protected void validateFloatField(String fieldId, final Iterator<String> itr) {
+		final FloatField floatf = (FloatField) fields.get(fieldId);
+		GwtServiceAsync.instance().validateFloatField(classCanonicalName,
+				fieldId, floatf.getFloat(), new ALSyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> response) {
+						if (response.size() < 1) {
+							floatf.setValid(true);
+						} else {
+							floatf.setValid(false);
+							floatf.setMessage(getErrorMessages(response));
+						}
+
+					}
+
+					@Override
+					public void postResponse(List<String> response) {
+						validateAllFields(itr);
+
+					}
+
+				});
+	}
+
+	/**
+	 * Gets the error messages.
+	 * 
+	 * @param messages
+	 *            the messages
+	 * 
+	 * @return the error messages
+	 */
+	protected String getErrorMessages(List<String> messages) {
+		String message = new String();
+		for (String str : messages) {
+			message = message.concat(str);
+			message = message.concat(", ");
+		}
+		return message;
+	}
+
+	protected void validateAllFields(final Iterator<String> itr) {
+		while (itr.hasNext()) {
+			String fieldId = itr.next();
+			if (fields.get(fieldId) instanceof StringField) {
+				validateStringField(fieldId, itr);
+				return;
+			}
+			if (fields.get(fieldId) instanceof TextAreaField) {
+				validateTextAreaField(fieldId, itr);
+				return;
+			}
+			if (fields.get(fieldId) instanceof PasswordField) {
+				validateStringField(fieldId, itr);
+				return;
+			}
+			if (fields.get(fieldId) instanceof IntegerField) {
+				validateIntegerField(fieldId, itr);
+				return;
+			}
+			if (fields.get(fieldId) instanceof LongField) {
+				validateLongField(fieldId, itr);
+				return;
+			}
+			if (fields.get(fieldId) instanceof DateField) {
+				validateDateField(fieldId, itr);
+				return;
+			}
+			if (fields.get(fieldId) instanceof FloatField) {
+				validateFloatField(fieldId, itr);
+				return;
+			}
+			if (fields.get(fieldId) instanceof BooleanField) {
+				validateBooleanField(fieldId, itr);
+				return;
+			}
+
+			if (fields.get(fieldId) instanceof EnumField) {
+				validateEnumField(fieldId, itr);
+				return;
+			}
+		}
+		postValidate();
+	}
 
 }

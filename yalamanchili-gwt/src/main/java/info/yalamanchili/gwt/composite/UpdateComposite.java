@@ -25,13 +25,13 @@ public abstract class UpdateComposite<T> extends ReadUpdateCreateComposite<T>
 		basePanel.addStyleName("y-gwt-UpdateBasePanel");
 		entityDisplayWidget.add(update);
 		update.addClickHandler(this);
-		populateFields();
+		populateEntityFromFields();
 	}
 
 	/**
 	 * Populate fields.
 	 */
-	public abstract void populateFields();
+	public abstract T populateEntityFromFields();
 
 	/**
 	 * Update button clicked.
@@ -47,7 +47,17 @@ public abstract class UpdateComposite<T> extends ReadUpdateCreateComposite<T>
 	 */
 	public void onClick(ClickEvent event) {
 		if (event.getSource() == update) {
-			updateButtonClicked();
+			preValidate();
 		}
+	}
+
+	protected void preUpdateButtonClicked() {
+		updateButtonClicked();
+
+	}
+
+	protected void postValidate() {
+		if (postValidateImpl())
+			preUpdateButtonClicked();
 	}
 }

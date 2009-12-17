@@ -28,6 +28,8 @@ public abstract class CreateComposite<T> extends ReadUpdateCreateComposite<T>
 		basePanel.addStyleName("y-gwt-CreateBasePanel");
 	}
 
+	protected abstract T populateEntityFromFields();
+
 	/**
 	 * Creates the button clicked.
 	 */
@@ -42,7 +44,16 @@ public abstract class CreateComposite<T> extends ReadUpdateCreateComposite<T>
 	 */
 	public void onClick(ClickEvent event) {
 		if (event.getSource() == create)
-			createButtonClicked();
+			preValidate();
 	}
-	
+
+	protected void preCreateButtonClicked() {
+		entity = populateEntityFromFields();
+		createButtonClicked();
+	}
+
+	protected void postValidate() {
+		if (postValidateImpl())
+			preCreateButtonClicked();
+	}
 }
