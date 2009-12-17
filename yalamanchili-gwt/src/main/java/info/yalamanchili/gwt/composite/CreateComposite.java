@@ -44,4 +44,5 @@ public abstract class CreateComposite<T> extends ReadUpdateCreateComposite<T>
 		if (event.getSource() == create)
 			createButtonClicked();
 	}
+	
 }

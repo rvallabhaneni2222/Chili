@@ -36,18 +36,18 @@ public abstract class SearchPanelCompositeGeneric<T> extends
 	protected void addSuggestBox(String name, List<String> values) {
 		ALSuggestBox suggestBox = new ALSuggestBox(name);
 		suggestBox.loadData(values);
-		if (fields.containsKey(name.toUpperCase())) {
+		if (fields.containsKey(name)) {
 			int index = entityDisplayWidget.getWidgetIndex((Widget) fields
-					.get(name.toUpperCase()));
-			entityDisplayWidget.remove((Widget) fields.get(name.toUpperCase()));
-			fields.remove(name.toUpperCase());
-			fields.put(name.toUpperCase(), suggestBox);
+					.get(name));
+			entityDisplayWidget.remove((Widget) fields.get(name));
+			fields.remove(name);
+			fields.put(name, suggestBox);
 			entityDisplayWidget.insert(suggestBox, index);
 		} else {
 			Log
 					.error("Errror no field with name present:"
 							+ name.toUpperCase());
-			Log.debug("Fields Map conttsins:" + fields.keySet().toString());
+			Log.debug("Fields Map contains:" + fields.keySet().toString());
 		}
 
 	}

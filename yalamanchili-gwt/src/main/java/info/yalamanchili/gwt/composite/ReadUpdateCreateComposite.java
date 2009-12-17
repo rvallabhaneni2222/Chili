@@ -302,5 +302,7 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	}
 
 	protected abstract void addWidgetsBeforeCaptionPanel();
+	
+	
 
 }
