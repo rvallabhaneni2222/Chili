@@ -37,7 +37,12 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 		%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 <%-- processes yalamanchili gwt tags Tag--%>
+	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
+		<%-- If UIElement--%>
+		<c:if test="$stereotype/@href = ${'$UIElementID'}">
 			table.setText(0, <%= x++ %>, getClassValue("${$attribute/@name}"));
+		</c:if>
+	</c:iterate>
 </c:iterate>
 	}
 
@@ -50,6 +55,10 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 			int y = 1;
 			%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+<%-- processes yalamanchili gwt tags Tag--%>
+	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
+		<%-- If UIElement--%>
+		<c:if test="$stereotype/@href = ${'$UIElementID'}">
 			 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > 
 			 	<c:when test="${'$DateID'}" >
 			  		table.setText(i, <%= y++ %>, Utils.getShortDate(entity.get${uppercaseFirst($attribute/@name)}())); 
@@ -58,6 +67,9 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 					table.setText(i, <%= y++ %>, entity.get${uppercaseFirst($attribute/@name)}().toString());
 	 			</c:otherwise>
 			</c:choose> 
+				
+		</c:if>
+	</c:iterate>
 </c:iterate>
 			i++;
 		}
@@ -80,7 +92,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 		}
 		if (${$class/@name}TableType.READALL_SEARCH.equals(tableType)) {
 			GenericCRUDServiceAsync.instance().getEntities(
-					${$class/@name}SearchPanelGeneric.instance().getEntity(),
+					${$class/@name}SearchPanelGeneric.instance().${lower-case($class/@name)},
 					new ALAsyncCallback<List<${$class/@name}>>() {
 
 						@Override

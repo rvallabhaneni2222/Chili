@@ -1,23 +1,42 @@
-
 <java:format>
 package ${$packageName}.${lower-case($class/@name)};
 
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
-import info.yalamanchili.gwt.composite.CreateCompositeRef;
+import info.yalamanchili.gwt.composite.CreateComposite;
 import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
+import info.yalamanchili.gwt.fields.DataType;
 
-public class Create${$class/@name}Panel extends CreateCompositeRef<${$class/@name}> {
+public class Create${$class/@name}Panel extends CreateComposite<${$class/@name}> {
 
-	public Create${$class/@name}Panel() {
-		initCreateComposite(new ${$class/@name}(),${camelCase($projectName)}Welcome.constants,${camelCase($projectName)}Welcome.messages);
+public Create${$class/@name}Panel() {
+		initCreateComposite("${$class/@name}", ${camelCase($projectName)}Welcome.constants);
 	}
 
 	@Override
 	protected void createButtonClicked() {
-		GenericCRUDServiceAsync.instance().create(entity,
+		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
+		<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+			 <c:when test="${'$StringID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getStringField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$IntegerID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getIntegerField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$DateID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getDateField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$BooleanID'}" >${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getBooleanField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$LongID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getLongField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$FloatID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
+			 </c:when>
+				 <c:otherwise>
+	 			</c:otherwise>
+	 		</c:choose>
+		</c:iterate>
+		GenericCRUDServiceAsync.instance().create(${lower-case($class/@name)},
 				new ALAsyncCallback<${$class/@name}>() {
 					public void onResponse(${$class/@name} arg0) {
 						new ResponseStatusWidget().show("created");
@@ -30,7 +49,7 @@ public class Create${$class/@name}Panel extends CreateCompositeRef<${$class/@nam
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	protected void addWidgetsBeforeCaptionPanel() {
 		// TODO Auto-generated method stub
@@ -39,15 +58,31 @@ public class Create${$class/@name}Panel extends CreateCompositeRef<${$class/@nam
 
 	@Override
 	protected void addWidgets() {
-		// TODO Auto-generated method stub
-
+		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, DataType.STRING_FIELD); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, DataType.INTEGER_FIELD); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, DataType.DATE_FIELD);  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, DataType.BOOLEAN_FIELD); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, DataType.LONG_FIELD); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
 	}
 
 	@Override
 	protected void configure() {
-		
+
 	}
 
 }
-
 </java:format>

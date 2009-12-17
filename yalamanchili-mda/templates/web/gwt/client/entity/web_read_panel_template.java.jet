@@ -5,15 +5,15 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
 import com.google.gwt.user.client.ui.DockPanel;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
-import info.yalamanchili.gwt.composite.ReadCompositeRef;
+import info.yalamanchili.gwt.composite.ReadComposite;
 import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.utils.Alignment;
+import info.yalamanchili.gwt.fields.DataType;
 
 import com.google.gwt.user.client.ui.DockPanel;
 
-public class Read${$class/@name}Panel extends ReadCompositeRef<${$class/@name}> {
-
-	private static Read${$class/@name}Panel read${$class/@name}Panel;
+public class Read${$class/@name}Panel extends ReadComposite<${$class/@name}> {
+private static Read${$class/@name}Panel read${$class/@name}Panel;
 
 	${$class/@name}OptionsPanel options = new ${$class/@name}OptionsPanel();
 
@@ -23,8 +23,7 @@ public class Read${$class/@name}Panel extends ReadCompositeRef<${$class/@name}> 
 
 	public Read${$class/@name}Panel(Long id) {
 		read${$class/@name}Panel = this;
-		initReadComposite(new ${$class/@name}(), id, ${camelCase($projectName)}Welcome.constants,
-				${camelCase($projectName)}Welcome.messages);
+		initReadComposite(id, "${$class/@name}", ${camelCase($projectName)}Welcome.constants);
 	}
 
 	@Override
@@ -34,7 +33,24 @@ public class Read${$class/@name}Panel extends ReadCompositeRef<${$class/@name}> 
 					@Override
 					public void onResponse(${$class/@name} ${lower-case($class/@name)}) {
 						entity = ${lower-case($class/@name)};
-						populateFieldsWithData(${lower-case($class/@name)});
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
 					}
 				});
 	}
@@ -44,7 +60,7 @@ public class Read${$class/@name}Panel extends ReadCompositeRef<${$class/@name}> 
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	protected void addWidgetsBeforeCaptionPanel() {
 		basePanel.add(options);
@@ -53,12 +69,28 @@ public class Read${$class/@name}Panel extends ReadCompositeRef<${$class/@name}> 
 
 	@Override
 	protected void addWidgets() {
-		
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, DataType.STRING_FIELD); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, DataType.INTEGER_FIELD); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, DataType.DATE_FIELD);  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, DataType.BOOLEAN_FIELD); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, DataType.LONG_FIELD); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
 	}
 
 	@Override
 	protected void configure() {
-		
 
 	}
 
@@ -67,6 +99,5 @@ public class Read${$class/@name}Panel extends ReadCompositeRef<${$class/@name}> 
 		// TODO Auto-generated method stub
 
 	}
-
 }
 </java:format>

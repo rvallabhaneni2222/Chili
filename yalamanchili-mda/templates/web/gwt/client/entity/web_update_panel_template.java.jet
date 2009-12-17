@@ -1,29 +1,64 @@
-
 <java:format>
 package ${$packageName}.${lower-case($class/@name)};
 
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
-import info.yalamanchili.gwt.composite.UpdateCompositeRef;
+import info.yalamanchili.gwt.composite.UpdateComposite;
 import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
+import info.yalamanchili.gwt.fields.DataType;
 
-public class Update${$class/@name}Panel extends UpdateCompositeRef<${$class/@name}> {
+public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}> {
 
 	public Update${$class/@name}Panel() {
-		initUpdateComposite(new ${$class/@name}(), ${camelCase($projectName)}Welcome.constants,
-				${camelCase($projectName)}Welcome.messages);
+		initUpdateComposite("${$class/@name}", ${camelCase($projectName)}Welcome.constants);
 	}
 
 	@Override
 	public void populateFields() {
 		entity = Read${$class/@name}Panel.instance().getEntity();
-		populateFieldsWithData(entity);
-	}
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+		}
 
 	@Override
 	public void updateButtonClicked() {
+		<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+			 <c:when test="${'$StringID'}" > entity.set${ uppercaseFirst($attribute/@name)}(getStringField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$IntegerID'}" > entity.set${ uppercaseFirst($attribute/@name)}(getIntegerField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$DateID'}" > entity.set${ uppercaseFirst($attribute/@name)}(getDateField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$BooleanID'}" >entity.set${ uppercaseFirst($attribute/@name)}(getBooleanField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$LongID'}" > entity}.set${ uppercaseFirst($attribute/@name)}(getLongField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$FloatID'}" > entity.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
+			 </c:when>
+				 <c:otherwise>
+	 			</c:otherwise>
+	 		</c:choose>
+		</c:iterate>
+
 		GenericCRUDServiceAsync.instance().update(entity,
 				new ALAsyncCallback<${$class/@name}>() {
 					public void onResponse(${$class/@name} arg0) {
@@ -38,19 +73,37 @@ public class Update${$class/@name}Panel extends UpdateCompositeRef<${$class/@nam
 
 	}
 
-    @Override
+	@Override
 	protected void addWidgetsBeforeCaptionPanel() {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	protected void addWidgets() {
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, DataType.STRING_FIELD); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, DataType.INTEGER_FIELD); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, DataType.DATE_FIELD);  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, DataType.BOOLEAN_FIELD); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, DataType.LONG_FIELD); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
 	}
 
 	@Override
 	protected void configure() {
-		
+
 	}
 }
 </java:format>

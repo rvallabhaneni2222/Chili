@@ -1,0 +1,72 @@
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import ${$webPackage}${camelCase($projectName)}Welcome;
+import com.google.gwt.user.client.ui.DockPanel;
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
+import info.yalamanchili.gwt.composite.ReadCompositeRef;
+import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
+import info.yalamanchili.gwt.utils.Alignment;
+
+import com.google.gwt.user.client.ui.DockPanel;
+
+public class Read${$class/@name}Panel extends ReadCompositeRef<${$class/@name}> {
+
+	private static Read${$class/@name}Panel read${$class/@name}Panel;
+
+	${$class/@name}OptionsPanel options = new ${$class/@name}OptionsPanel();
+
+	public static Read${$class/@name}Panel instance() {
+		return read${$class/@name}Panel;
+	}
+
+	public Read${$class/@name}Panel(Long id) {
+		read${$class/@name}Panel = this;
+		initReadComposite(new ${$class/@name}(), id, ${camelCase($projectName)}Welcome.constants,
+				${camelCase($projectName)}Welcome.messages);
+	}
+
+	@Override
+	protected void readData(Long id) {
+		GenericCRUDServiceAsync.instance().read(new ${$class/@name}(), id,
+				new ALAsyncCallback<${$class/@name}>() {
+					@Override
+					public void onResponse(${$class/@name} ${lower-case($class/@name)}) {
+						entity = ${lower-case($class/@name)};
+						populateFieldsWithData(${lower-case($class/@name)});
+					}
+				});
+	}
+
+	@Override
+	protected void addListeners() {
+		// TODO Auto-generated method stub
+
+	}
+	
+	@Override
+	protected void addWidgetsBeforeCaptionPanel() {
+		basePanel.add(options);
+
+	}
+
+	@Override
+	protected void addWidgets() {
+		
+	}
+
+	@Override
+	protected void configure() {
+		
+
+	}
+
+	@Override
+	protected void readData(${$class/@name} entity) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
+</java:format>

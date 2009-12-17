@@ -10,6 +10,7 @@
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
 <c:setVariable select="'HSQL'" var="dataBase"/>
 <c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
+<c:setVariable select="'false'" var="useReflection"/>
 
 	<%-- load the yalamanchiliMDA prifile--%>
 <c:load url="templates/profiles/YalamanchiliMDAProfile.xml" var="myprofile"  />
@@ -228,26 +229,42 @@
     	<java:class name="${camelCase($projectName)}Service" package="{$webPackage}rpc" template="templates/web/gwt/client/rpc/app_rpc_service.java.jet"/>
     	<java:class name="${camelCase($projectName)}ServiceAsync" package="{$webPackage}rpc" template="templates/web/gwt/client/rpc/app_rpc_service_async.java.jet"/>
     	
-    	
+    	<%-- CRUD widget classes --%>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
     		 <%-- check to see if this is not a abstract class--%>
     		 <c:if test="$class/@isAbstract = 'false'">
-    		 <%-- Create Entity Panel--%>
-			 <java:class name="Create{$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_create_panel_template.java.jet"/>
-			 <%-- Read All Entities Panel--%>
-			 <java:class name="ReadAll{$class/@name}sPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_readall_panel_template.java.jet"/>
-			 <%-- Generic Search Panel--%>
-			 <java:class name="${$class/@name}SearchPanelGeneric" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_search_generic_panel_template.java.jet"/>
-			 <%-- Read Panel--%>
-			 <java:class name="Read${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_read_panel_template.java.jet"/>
-			  <%-- Options Panel--%>
-			 <java:class name="${$class/@name}OptionsPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_option_panel_template.java.jet"/>
-			  <%-- Update Panel--%>
-			 <java:class name="Update${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_update_panel_template.java.jet"/>
-			  <%-- Side  Panel--%>
-			 <java:class name="${$class/@name}SideBar" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_side_panel_template.java.jet"/>
+    			 <c:if test="$useReflection = 'true'">
+		    		 <%-- Create Entity Panel--%>
+					 <java:class name="Create{$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/ref/web_create_panel_ref_template.java.jet"/>
+					 <%-- Generic Search Panel--%>
+					 <java:class name="${$class/@name}SearchPanelGeneric" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/ref/web_search_generic_panel_ref_template.java.jet"/>
+					 <%-- Read Panel--%>
+					 <java:class name="Read${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/ref/web_read_panel_ref_template.java.jet"/>
+					  <%-- Update Panel--%>
+					 <java:class name="Update${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/ref/web_update_panel_ref_template.java.jet"/>
+					 <%-- Read All Entities Panel--%>
+				<java:class name="ReadAll{$class/@name}sPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/ref/web_readall_panel_ref_template.java.jet"/>
+				</c:if>
+				<c:if test="$useReflection = 'false'">
+		    		 <%-- Create Entity Panel--%>
+					 <java:class name="Create{$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_create_panel_template.java.jet"/>
+					 <%-- Generic Search Panel--%>
+					 <java:class name="${$class/@name}SearchPanelGeneric" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_search_generic_panel_template.java.jet"/>
+					 <%-- Read Panel--%>
+					 <java:class name="Read${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_read_panel_template.java.jet"/>
+					  <%-- Update Panel--%>
+					 <java:class name="Update${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_update_panel_template.java.jet"/>
+					 <%-- Read All Entities Panel--%>
+					<java:class name="ReadAll{$class/@name}sPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_readall_panel_template.java.jet"/>
+				</c:if>
+				<%-- Options Panel--%>
+				<java:class name="${$class/@name}OptionsPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_option_panel_template.java.jet"/>
+				<%-- Read All Entities Panel--%>
+				<java:class name="ReadAll{$class/@name}sPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_readall_panel_template.java.jet"/>
+				<%-- Side  Panel--%>
+				<java:class name="${$class/@name}SideBar" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_side_panel_template.java.jet"/>	
 			 </c:if>
 			 </c:iterate>
 		</c:iterate>
