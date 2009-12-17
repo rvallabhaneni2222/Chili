@@ -12,11 +12,11 @@ import info.yalamanchili.gwt.fields.DataType;
 public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}> {
 
 	public Update${$class/@name}Panel() {
-		initUpdateComposite("${$class/@name}", ${camelCase($projectName)}Welcome.constants);
+		initUpdateComposite(${$class/@name}.class.getName(), ${camelCase($projectName)}Welcome.constants);
 	}
 
 	@Override
-	public void populateFields() {
+	public ${$class/@name} populateEntityFromFields() {
 		entity = Read${$class/@name}Panel.instance().getEntity();
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
@@ -36,11 +36,12 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 		 			</c:otherwise>
 		 		</c:choose>
 			</c:iterate>
+			return entity;
 		}
 
 	@Override
 	public void updateButtonClicked() {
-		<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 			 <c:when test="${'$StringID'}" > entity.set${ uppercaseFirst($attribute/@name)}(getStringField("${$attribute/@name}")); 
 			 </c:when>
@@ -50,7 +51,7 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 			 </c:when>
 			 <c:when test="${'$BooleanID'}" >entity.set${ uppercaseFirst($attribute/@name)}(getBooleanField("${$attribute/@name}")); 
 			 </c:when>
-			 <c:when test="${'$LongID'}" > entity}.set${ uppercaseFirst($attribute/@name)}(getLongField("${$attribute/@name}")); 
+			 <c:when test="${'$LongID'}" > entity.set${ uppercaseFirst($attribute/@name)}(getLongField("${$attribute/@name}")); 
 			 </c:when>
 			 <c:when test="${'$FloatID'}" > entity.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
 			 </c:when>
@@ -58,7 +59,6 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 	 			</c:otherwise>
 	 		</c:choose>
 		</c:iterate>
-
 		GenericCRUDServiceAsync.instance().update(entity,
 				new ALAsyncCallback<${$class/@name}>() {
 					public void onResponse(${$class/@name} arg0) {

@@ -12,31 +12,12 @@ import info.yalamanchili.gwt.fields.DataType;
 public class Create${$class/@name}Panel extends CreateComposite<${$class/@name}> {
 
 public Create${$class/@name}Panel() {
-		initCreateComposite("${$class/@name}", ${camelCase($projectName)}Welcome.constants);
+		initCreateComposite(${$class/@name}.class.getName(), ${camelCase($projectName)}Welcome.constants);
 	}
 
 	@Override
 	protected void createButtonClicked() {
-		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
-		<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-			 <c:when test="${'$StringID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getStringField("${$attribute/@name}")); 
-			 </c:when>
-			 <c:when test="${'$IntegerID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getIntegerField("${$attribute/@name}")); 
-			 </c:when>
-			 <c:when test="${'$DateID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getDateField("${$attribute/@name}")); 
-			 </c:when>
-			 <c:when test="${'$BooleanID'}" >${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getBooleanField("${$attribute/@name}")); 
-			 </c:when>
-			 <c:when test="${'$LongID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getLongField("${$attribute/@name}")); 
-			 </c:when>
-			 <c:when test="${'$FloatID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
-			 </c:when>
-				 <c:otherwise>
-	 			</c:otherwise>
-	 		</c:choose>
-		</c:iterate>
-		GenericCRUDServiceAsync.instance().create(${lower-case($class/@name)},
+		GenericCRUDServiceAsync.instance().create(entity,
 				new ALAsyncCallback<${$class/@name}>() {
 					public void onResponse(${$class/@name} arg0) {
 						new ResponseStatusWidget().show("created");
@@ -58,7 +39,6 @@ public Create${$class/@name}Panel() {
 
 	@Override
 	protected void addWidgets() {
-		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, DataType.STRING_FIELD); 
@@ -79,6 +59,30 @@ public Create${$class/@name}Panel() {
 			</c:iterate>
 	}
 
+	@Override
+	protected ${$class/@name} populateEntityFromFields() {
+		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
+		<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+			 <c:when test="${'$StringID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getStringField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$IntegerID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getIntegerField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$DateID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getDateField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$BooleanID'}" >${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getBooleanField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$LongID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getLongField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$FloatID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
+			 </c:when>
+				 <c:otherwise>
+	 			</c:otherwise>
+	 		</c:choose>
+		</c:iterate>
+		return ${lower-case($class/@name)};
+	}
+	
 	@Override
 	protected void configure() {
 

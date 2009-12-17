@@ -113,5 +113,9 @@ public class ${$class/@name}SearchPanelGeneric extends
 		</c:iterate>
 		return ${lower-case($class/@name)};
 	}
+	
+	protected void postValidate() {
+
+	}
 }
 </java:format>
