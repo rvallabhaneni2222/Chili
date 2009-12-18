@@ -7,7 +7,8 @@ import info.yalamanchili.gwt.rpc.GWTService;
 import info.yalamanchili.gwt.ui.DisplayType;
 import info.yalamanchili.gwt.ui.UIElement;
 import info.yalamanchili.server.GWTServletUtils;
-
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -455,6 +456,27 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 		return (T) newObject;
 
+	}
+	
+	@Override
+	public List<String> getClassRelations(String className) {
+		Class clazz=getEntityClass(className);
+		List<String> classRelations = new ArrayList<String>();
+		do {
+			for (Field field : clazz.getDeclaredFields()) {
+				if (field.getType().equals(java.util.List.class)) {
+					ParameterizedType type = (ParameterizedType) field
+							.getGenericType();
+					Type[] typeArguments = type.getActualTypeArguments();
+					for (Type typeArgument : typeArguments) {
+						classRelations.add(typeArgument.toString());
+					}
+
+				}
+			}
+			clazz = clazz.getSuperclass();
+		} while (!clazz.equals(LightEntity.class));
+		return classRelations;
 	}
 
 }

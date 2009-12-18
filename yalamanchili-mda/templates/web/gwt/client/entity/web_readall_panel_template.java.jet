@@ -99,6 +99,9 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
 				new Read${$class/@name}Panel(getEntityId(row)));
+		${camelCase($projectName)}Welcome.instance().getSidePanelTop().clear();
+		${camelCase($projectName)}Welcome.instance().getSidePanelTop()
+				.add(new Tree${$class/@name}Panel());
 
 	}
 
