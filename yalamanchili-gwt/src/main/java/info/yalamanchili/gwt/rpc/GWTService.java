@@ -40,6 +40,8 @@ public interface GWTService extends RemoteService {
 	 */
 	Enum<?>[] getEnumValues(String className, String attributeName);
 
+	List<String> getClassRelations(String className);
+
 	/**
 	 * Validate string field.
 	 * 

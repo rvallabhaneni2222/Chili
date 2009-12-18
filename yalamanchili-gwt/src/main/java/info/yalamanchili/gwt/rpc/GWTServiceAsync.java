@@ -44,6 +44,8 @@ public interface GWTServiceAsync {
 	void getEnumValues(String className, String attributeName,
 			AsyncCallback<Enum<?>[]> values);
 
+	void getClassRelations(String className, AsyncCallback<List<String>> errorMessages);
+
 	/**
 	 * Validate string field.
 	 * 
@@ -178,4 +180,5 @@ public interface GWTServiceAsync {
 	 */
 	<T extends LightEntity> void getFieldsDataFromEntity(T t,
 			AsyncCallback<LinkedHashMap<String, Object>> data);
+
 }
