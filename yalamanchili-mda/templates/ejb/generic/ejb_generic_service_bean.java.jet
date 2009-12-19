@@ -21,6 +21,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import net.sf.gilead.pojo.java5.LightEntity;
 import javax.ejb.Stateless;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 
 @Stateless(name="generic")
 public class GenericServiceBean implements  GenericServiceLocal, GenericServiceRemote{
@@ -44,6 +46,35 @@ private static final Log log = LogFactory
 		return query.getResultList();
 	}
 
+	@Override
+	public <T extends LightEntity> List<T> getRelatedEntities(Long entityID,
+			Class sourceClass, T target) {
+		Object sourceEntity = entityManager.find(sourceClass, entityID);
+		List<T> res = new ArrayList<T>();
+		List<T> result = new ArrayList<T>();
+		for (Method method : sourceClass.getMethods()) {
+			if (method.getReturnType().equals(java.util.List.class)
+					|| method.getReturnType().equals(java.util.Set.class)) {
+				ParameterizedType type = (ParameterizedType) method
+						.getGenericReturnType();
+
+				if (type.toString().contains(
+						target.getClass().getCanonicalName())) {
+					try {
+						res = (List<T>) method.invoke(sourceEntity);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						throw new RuntimeException("Call failed");
+					}
+				}
+			}
+		}
+		for (T entity : res) {
+			result.add((T) bm.clone(entity));
+		}
+		return result;
+	}
 	
 	@PostConstruct
 	public void initGileadManager() {

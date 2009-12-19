@@ -6,5 +6,7 @@ import java.util.List;
 public interface GenericService {
 public <T extends LightEntity> List<String> getSuggestionsForName(
 			String name, T entity);
+public <T extends LightEntity> List<T> getRelatedEntities(Long entityID,
+			Class sourceClass, T target);
 }
 </java:format>

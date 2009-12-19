@@ -150,6 +150,23 @@ public class GenericCRUDServiceImpl extends Abstract${camelCase($projectName)}Se
 		}
 		return res;
 	}
+	
+	@Override
+	public <T extends LightEntity> List<T> getRelatedEntities(Long entityID,
+			String sourceClass, T target) {
+		// TODO Auto-generated method stub
+		return genericServiceBean.getRelatedEntities(entityID,
+				getEntityClass(sourceClass), target);
+	}
+
+	protected Class<?> getEntityClass(String className) {
+		try {
+			Class<?> entity = (Class<?>) Class.forName(className);
+			return entity;
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("class specified is not found", e);
+		}
+	}
 
 }
 </java:format>

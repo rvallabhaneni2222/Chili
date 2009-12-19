@@ -17,12 +17,16 @@ import com.google.gwt.user.client.ui.DockPanel;
 
 public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@name}> {
 
-	private final ${$class/@name}TableType tableType;
+	private  ${$class/@name}TableType tableType;
 
 	public enum ${$class/@name}TableType {
 		READALL, READALL_SEARCH
 	}
 
+	public ReadAll${$class/@name}sPanel(List<${$class/@name}> entities) {
+		initTable(new ${$class/@name}(), entities, ${camelCase($projectName)}Welcome.constants);
+	}
+	
 	public ReadAll${$class/@name}sPanel(${$class/@name}TableType tableType) {
 		this.tableType = tableType;
 		initTable(new ${$class/@name}(),
