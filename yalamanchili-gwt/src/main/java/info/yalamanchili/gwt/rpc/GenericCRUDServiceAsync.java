@@ -32,4 +32,7 @@ public interface GenericCRUDServiceAsync {
 
 	public <T extends LightEntity> void getEntities(T entity,
 			AsyncCallback<List<T>> response);
+
+	public <T extends LightEntity> void getRelatedEntities(Long entityID,
+			String sourceClass, T target, AsyncCallback<List<T>> response);
 }

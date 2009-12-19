@@ -11,7 +11,6 @@ import java.util.Map;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -101,15 +100,16 @@ public abstract class TreePanelComposite<T> extends Composite implements
 
 	public void onClick(ClickEvent event) {
 		entity = loadEntity();
+
 		for (String link : links.keySet()) {
-			if (event.getSource() == links.get(link)) {
-				Window.alert(link + "clicked");
+			if (event.getSource().equals(links.get(link))) {
+				linkClicked(link);
 			}
 		}
 
 	}
 
-	public abstract void linkClicked(String name);
+	public abstract void linkClicked(String entiyName);
 
 	/**
 	 * Load entity.

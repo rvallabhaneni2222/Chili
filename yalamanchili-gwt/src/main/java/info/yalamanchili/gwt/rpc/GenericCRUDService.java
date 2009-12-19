@@ -22,8 +22,9 @@ public interface GenericCRUDService extends RemoteService {
 	public <T extends LightEntity> TableObj<T> getTableObj(T entity, int start);
 
 	public <T extends LightEntity> List<T> getAllEntities(T entity);
-	
-	public <T extends LightEntity> List<T> getRelatedEntities(T source, String targetClass);
+
+	public <T extends LightEntity> List<T> getRelatedEntities(Long entityID,
+			String sourceClass, T target);
 
 	public <T extends LightEntity> List<String> getSuggestionsForName(
 			String name, T entity);
