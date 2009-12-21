@@ -16,6 +16,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public abstract class OptionsComposite extends ALComposite implements
 		ClickHandler {
 
+	public enum OptionsCompositeType {
+		CRUD, ADD
+	}
+
+	OptionsCompositeType type;
 	/** The panel. */
 	protected CellPanel panel;
 
@@ -28,10 +33,13 @@ public abstract class OptionsComposite extends ALComposite implements
 	/** The create link. */
 	protected ClickableLink createLink = new ClickableLink("Create");
 
+	protected ClickableLink addLink = new ClickableLink("Add");
+
 	/**
 	 * Instantiates a new options composite.
 	 */
-	public OptionsComposite(Alignment alignment) {
+	public OptionsComposite(Alignment alignment, OptionsCompositeType type) {
+		this.type = type;
 		switch (alignment) {
 		case HORIZONTAL:
 			panel = new HorizontalPanel();
@@ -44,7 +52,8 @@ public abstract class OptionsComposite extends ALComposite implements
 		setup();
 	}
 
-	public OptionsComposite() {
+	public OptionsComposite(OptionsCompositeType type) {
+		this.type = type;
 		panel = new HorizontalPanel();
 		init(panel);
 		setup();
@@ -67,13 +76,27 @@ public abstract class OptionsComposite extends ALComposite implements
 		if (event.getSource() == createLink) {
 			createLinkClicked();
 		}
+		if (event.getSource() == addLink) {
+			addLinkClicked();
+		}
 	}
 
 	public void setup() {
 		this.addStyleName("y-gwt-OptionsComposite");
-		updateLink.addClickHandler(this);
-		deleteLink.addClickHandler(this);
-		createLink.addClickHandler(this);
+		if (OptionsCompositeType.CRUD.equals(type)) {
+			panel.add(createLink);
+			panel.add(updateLink);
+			panel.add(deleteLink);
+			updateLink.addClickHandler(this);
+			deleteLink.addClickHandler(this);
+			createLink.addClickHandler(this);
+		}
+		if (OptionsCompositeType.ADD.equals(type)) {
+			panel.add(addLink);
+			addLink.addClickHandler(this);
+
+		}
+
 	}
 
 	/**
@@ -90,5 +113,7 @@ public abstract class OptionsComposite extends ALComposite implements
 	 * Delete link clicked.
 	 */
 	public abstract void deleteLinkClicked();
+
+	public abstract void addLinkClicked();
 
 }

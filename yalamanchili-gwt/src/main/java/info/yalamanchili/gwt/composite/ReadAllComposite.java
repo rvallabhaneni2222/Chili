@@ -75,6 +75,7 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 			ConstantsWithLookup constants) {
 		this.classCanonicalName = t.getClass().getName();
 		this.constants = constants;
+
 		init(panel);
 		TableObj table = new TableObj();
 		table.setNumberOfRecords(new Long(entities.size()));

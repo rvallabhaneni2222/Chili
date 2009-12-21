@@ -12,6 +12,9 @@ public interface GenericCRUDServiceAsync {
 	public <T extends LightEntity> void create(T entity,
 			AsyncCallback<T> response);
 
+	public <T extends LightEntity> void merge(T entity, T parent,
+			AsyncCallback<java.lang.Void> response);
+
 	public <T extends LightEntity> void read(T entity, Long id,
 			AsyncCallback<T> response);
 

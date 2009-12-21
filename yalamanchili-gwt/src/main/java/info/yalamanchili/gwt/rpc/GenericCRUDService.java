@@ -13,6 +13,8 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 public interface GenericCRUDService extends RemoteService {
 	public <T extends LightEntity> T create(T entity);
 
+	public <T extends LightEntity> void merge(T entity, T parent);
+
 	public <T extends LightEntity> T read(T entity, Long id);
 
 	public <T extends LightEntity> T update(T entity);
