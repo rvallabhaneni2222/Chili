@@ -234,6 +234,9 @@
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		 <c:if test="$class/@isAbstract = 'true'">
+				<java:class name="TreeAbstract${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_tree_abstract_panel_template.java.jet"/>
+			 </c:if>	
     		 <%-- check to see if this is not a abstract class--%>
     		 <c:if test="$class/@isAbstract = 'false'">
     			 <c:if test="$useReflection = 'true'">
@@ -265,9 +268,9 @@
 				<%-- Read All Entities Panel--%>
 				<java:class name="ReadAll{$class/@name}sPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_readall_panel_template.java.jet"/>
 				<%-- Side  Panel--%>
-				<java:class name="${$class/@name}SideBar" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_side_panel_template.java.jet"/>	
-				<%-- Tree  Panel--%>
-				<java:class name="Tree${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_tree_panel_template.java.jet"/>	
+				<java:class name="${$class/@name}SideBar" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_side_panel_template.java.jet"/>
+				<%-- Tree  Panel --%>
+				<java:class name="Tree${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_tree_panel_template.java.jet"/>		
 			 </c:if>
 			 </c:iterate>
 		</c:iterate>

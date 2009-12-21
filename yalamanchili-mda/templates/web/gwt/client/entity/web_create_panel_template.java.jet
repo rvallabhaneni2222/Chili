@@ -11,9 +11,12 @@ import info.yalamanchili.gwt.fields.DataType;
 
 public class Create${$class/@name}Panel extends CreateComposite<${$class/@name}> {
 
-public Create${$class/@name}Panel() {
+public Create${$class/@name}Panel(CreateCompositeType type) {
+	super(type);
 		initCreateComposite(${$class/@name}.class.getName(), ${camelCase($projectName)}Welcome.constants);
 	}
+	
+
 
 	@Override
 	protected void createButtonClicked() {
@@ -85,6 +88,22 @@ public Create${$class/@name}Panel() {
 	
 	@Override
 	protected void configure() {
+
+	}
+	
+	@Override
+	protected void addButtonClicked() {
+		GenericCRUDServiceAsync.instance().merge(entity,
+				Tree${$class/@name}Panel.instance().getEntity(),
+				new ALAsyncCallback<java.lang.Void>() {
+
+					@Override
+					public void onResponse(Void arg0) {
+						new ResponseStatusWidget().show("added");
+
+					}
+
+				});
 
 	}
 

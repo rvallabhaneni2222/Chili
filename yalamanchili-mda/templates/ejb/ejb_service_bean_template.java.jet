@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.annotation.PostConstruct;
 import javax.persistence.Query;
 import javax.persistence.PersistenceUnit;
+import java.lang.reflect.Method;
 
 
 import net.sf.gilead.core.PersistentBeanManager;
@@ -113,6 +114,30 @@ private static final Log log = LogFactory
 		log.debug(query);
 		Query getEntitiesSize = entityManager.createQuery(query);
 		return (Long) getEntitiesSize.getSingleResult();
+	}
+	
+	@Override
+	public <T extends LightEntity> void merge(T entity, T parent) {
+		${$class/@name} res = null;
+		for (Method method : entity.getClass().getMethods()) {
+			for (Class clazz : method.getParameterTypes()) {
+				Class parentClass = parent.getClass();
+				do {
+					if (clazz.toString().contains(parentClass.getName())) {
+						try {
+							res = (${$class/@name}) method.invoke(entity, parent);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							throw new RuntimeException("Call failed");
+						}
+					}
+					parentClass = parentClass.getSuperclass();
+				} while (!parentClass.equals(LightEntity.class));
+
+			}
+		}
+		entityManager.merge(entity);
 	}
 	
 	@PostConstruct

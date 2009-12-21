@@ -12,6 +12,7 @@ import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.DockPanel;
+import info.yalamanchili.gwt.composite.CreateComposite.CreateCompositeType;
 
 public class ${$class/@name}SideBar extends SideBarComposite {
 	private static ${$class/@name}SideBar ${lower-case($class/@name)}SideBar;
@@ -57,7 +58,7 @@ public class ${$class/@name}SideBar extends SideBarComposite {
 	protected void createLinkClicked() {
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-				new Create${$class/@name}Panel());
+				new Create${$class/@name}Panel(CreateCompositeType.CREATE));
 	}
 
 	protected void reload${$class/@name}() {

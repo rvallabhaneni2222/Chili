@@ -167,6 +167,22 @@ public class GenericCRUDServiceImpl extends Abstract${camelCase($projectName)}Se
 			throw new RuntimeException("class specified is not found", e);
 		}
 	}
+	
+	@Override
+	public <T extends LightEntity> void merge(T entity, T parent) {
+		Object ejb = ejbs.get(entity.getClass().getCanonicalName());
+		for (Method method : ejb.getClass().getMethods()) {
+			if (method.getName().compareToIgnoreCase("merge") == 0) {
+				try {
+					method.invoke(ejb,entity, parent);
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException("Call failed");
+				}
+			}
+		}
+
+	}
 
 }
 </java:format>

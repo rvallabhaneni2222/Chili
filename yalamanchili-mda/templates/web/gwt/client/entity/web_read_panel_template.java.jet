@@ -9,13 +9,14 @@ import info.yalamanchili.gwt.composite.ReadComposite;
 import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.utils.Alignment;
 import info.yalamanchili.gwt.fields.DataType;
+import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
 
 import com.google.gwt.user.client.ui.DockPanel;
 
 public class Read${$class/@name}Panel extends ReadComposite<${$class/@name}> {
 private static Read${$class/@name}Panel read${$class/@name}Panel;
 
-	${$class/@name}OptionsPanel options = new ${$class/@name}OptionsPanel();
+	${$class/@name}OptionsPanel options = new ${$class/@name}OptionsPanel(OptionsCompositeType.CRUD);
 
 	public static Read${$class/@name}Panel instance() {
 		return read${$class/@name}Panel;

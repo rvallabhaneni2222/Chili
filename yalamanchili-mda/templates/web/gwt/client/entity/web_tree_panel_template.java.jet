@@ -126,9 +126,14 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.TreeItem;
 
 public class Tree${$class/@name}Panel extends TreePanelComposite<${$class/@name}> {
+	private static Tree${$class/@name}Panel instance;
 
+	public static Tree${$class/@name}Panel instance() {
+		return instance;
+	}
 
 	public Tree${$class/@name}Panel() {
+		instance=this;
 		initTreePanelComposite(${$class/@name}.class.getName());
 	}
 

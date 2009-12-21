@@ -2,8 +2,10 @@
 package ${$packageName}.${lower-case($class/@name)};
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import info.yalamanchili.server.GenericCRUDEJB;
+import net.sf.gilead.pojo.java5.LightEntity;
 
 public interface ${$class/@name}Service extends GenericCRUDEJB<${$class/@name}>{
 
+public <T extends LightEntity> void merge(T entity, T parent);
 }
 </java:format>
