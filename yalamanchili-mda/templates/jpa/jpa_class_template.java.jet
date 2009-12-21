@@ -346,6 +346,7 @@ super();
   public 	void set${$class2/@name}(${$class2/@name} ${$association_connection_end2/@name}) {
    this.${$association_connection_end2/@name}=${$association_connection_end2/@name};
  }
+ 
   					  		 					</c:if>  
   					  		 			</c:if>
   										 <%-- check if the multiplicityis one to many--%>
@@ -360,7 +361,34 @@ super();
  public 	  void set${$class2/@name}s(List<${$class2/@name}> ${$association_connection_end2/@name}){
  this.${$association_connection_end2/@name}=${$association_connection_end2/@name};
  }
-  					  		 					</c:if>  
+ 										<%-- check if this is a many to many--%>
+ 										<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+  					    						 public 	  void add${$class2/@name}(${$class2/@name} entity){
+													  if(${$association_connection_end2/@name}== null){
+													  ${$association_connection_end2/@name}= new ArrayList<${$class2/@name}>();
+													  }
+													 get${$class2/@name}s().add(entity);
+													 entity.add${$class/@name}(this);
+													 }
+  					    						</c:if>  
+  					  		 			</c:if>
+  					  		 			<%-- check if this is a one to many--%>
+  					  		 			<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+  					    						 <%-- addEntity methods--%>
+													  public 	  void add${$class2/@name}(${$class2/@name} entity){
+													  if(${$association_connection_end2/@name}== null){
+													  ${$association_connection_end2/@name}= new ArrayList<${$class2/@name}>();
+													  }
+													 get${$class2/@name}s().add(entity);
+													 entity.set${$class/@name}(this);
+													 }
+  					    						</c:if>  
+  					  		 			</c:if>
+  					  		 			
+  					  		 			
+				  		 					</c:if>  
   					  		 			</c:if>
   					  		 			</c:if> 
   					  		 		</c:iterate>
