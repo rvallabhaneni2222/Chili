@@ -194,7 +194,9 @@ ${$attribute/@name};
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
   					  		 			
-  <f:message>generated.comment</f:message>					  		 			
+  <f:message>generated.comment</f:message>		
+  										<%-- check to see the association is navigable in the first case--%>
+  										<c:if test="$association_connection_end2/@isNavigable = 'true'">			  		 			
   					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
   					  		 			<%-- check if the multiplicityis one to one--%>
   					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
@@ -227,6 +229,8 @@ ${$attribute/@name};
  protected 	${$class2/@name}  ${$association_connection_end2/@name};
   					  		 					</c:if>  
   					  		 			</c:if>
+  					  		 		
+  					  		 			
   										 <%-- check if the multiplicityis one to many--%>
    					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
@@ -258,6 +262,9 @@ ${$attribute/@name};
  protected 	List<${$class2/@name}>  ${$association_connection_end2/@name};
   					  		 					</c:if>  
   					  		 			</c:if>
+  					  		 			
+  					  		 			
+  					  		 			</c:if>	
   					  		 			</c:if> 
   					  		 		</c:iterate>
   							  	</c:if> 
@@ -332,7 +339,8 @@ super();
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
   					  		 			
-  					  		 			
+  					  		 			<%-- check to see the association is navigable in the first case--%>
+  										<c:if test="$association_connection_end2/@isNavigable = 'true'">		
   					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
   					  		 			<%-- check if the multiplicityis one to one--%>
   					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
@@ -390,7 +398,9 @@ super();
   					  		 			
 				  		 					</c:if>  
   					  		 			</c:if>
+  					  		 			
   					  		 			</c:if> 
+  					  		 			</c:if>
   					  		 		</c:iterate>
   							  	</c:if> 
   					 	  </c:iterate> 					 	 				 	  
