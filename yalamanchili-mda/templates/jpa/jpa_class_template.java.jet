@@ -226,7 +226,7 @@ ${$attribute/@name};
 				    									</c:if>		    							
   					    							</c:if> 
  										
- protected 	${$class2/@name}  ${lower-case($class2/@name)};
+ protected 	${$class2/@name}  ${lowercaseFirst($class2/@name)};
   					  		 					</c:if>  
   					  		 			</c:if>
   					  		 		
@@ -238,18 +238,18 @@ ${$attribute/@name};
   					    							<%-- Composite @ManyToOne--%>
   					    							
   					    							<c:if test="$association_connection_end/@aggregation = 'composite'">
- @OneToMany(mappedBy="${lower-case($class/@name)}", cascade = CascadeType.ALL)					    							
+ @OneToMany(mappedBy="${lowercaseFirst($class/@name)}", cascade = CascadeType.ALL)					    							
   					    							</c:if>  
   					    							<%-- Aggregate @ManyToOne--%>
   					    							<c:if test="$association_connection_end/@aggregation = 'aggregate'">
- @OneToMany(mappedBy="${lower-case($class/@name)}")			    							
+ @OneToMany(mappedBy="${lowercaseFirst($class/@name)}")			    							
   					    							</c:if> 
   					    							<%-- Association OneToOne or OneToMany--%>
    					    							<c:if test="$association_connection_end/@aggregation = 'none'">
   					    								<%-- check for one or many realations--%>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
- @OneToMany (mappedBy="${lower-case($class/@name)}")				    				
+ @OneToMany (mappedBy="${lowercaseFirst($class/@name)}")				    				
 				    										</c:if>
 				    									</c:if>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
@@ -259,7 +259,7 @@ ${$attribute/@name};
 				    									</c:if>		    							
   					    							</c:if> 
 				    											    									    						
- protected 	List<${$class2/@name}>  ${lower-case($class2/@name)}s;
+ protected 	List<${$class2/@name}>  ${lowercaseFirst($class2/@name)}s;
   					  		 					</c:if>  
   					  		 			</c:if>
   					  		 			
@@ -348,11 +348,11 @@ super();
 <f:message>generated.comment</f:message>
  													
  public 	${$class2/@name} get${$class2/@name}() {
- return  this.${lower-case($class2/@name)};
+ return  this.${lowercaseFirst($class2/@name)};
  }
 <f:message>generated.comment</f:message>
-  public 	void set${$class2/@name}(${$class2/@name} ${lower-case($class2/@name)}) {
-   this.${lower-case($class2/@name)}=${lower-case($class2/@name)};
+  public 	void set${$class2/@name}(${$class2/@name} ${lowercaseFirst($class2/@name)}) {
+   this.${lowercaseFirst($class2/@name)}=${lowercaseFirst($class2/@name)};
  }
  
   					  		 					</c:if>  
@@ -363,18 +363,18 @@ super();
    					    						
  <f:message>generated.comment</f:message>				    											    									    						
  public 	List<${$class2/@name}>  get${$class2/@name}s(){
- return this.${lower-case($class2/@name)}s;
+ return this.${lowercaseFirst($class2/@name)}s;
  }
 <f:message>generated.comment</f:message>
- public 	  void set${$class2/@name}s(List<${$class2/@name}> ${lower-case($class2/@name)}s){
- this.${lower-case($class2/@name)}s=${lower-case($class2/@name)}s;
+ public 	  void set${$class2/@name}s(List<${$class2/@name}> ${lowercaseFirst($class2/@name)}s){
+ this.${lowercaseFirst($class2/@name)}s=${lowercaseFirst($class2/@name)}s;
  }
  										<%-- check if this is a many to many--%>
  										<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
   					    						 public 	  void add${$class2/@name}(${$class2/@name} entity){
-													  if(${lower-case($class2/@name)}s== null){
-													  ${lower-case($class2/@name)}s= new ArrayList<${$class2/@name}>();
+													  if(${lowercaseFirst($class2/@name)}s== null){
+													  ${lowercaseFirst($class2/@name)}s= new ArrayList<${$class2/@name}>();
 													  }
 													 get${$class2/@name}s().add(entity);
 													 entity.add${$class/@name}(this);
@@ -386,8 +386,8 @@ super();
   					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
   					    						 <%-- addEntity methods--%>
 													  public 	  void add${$class2/@name}(${$class2/@name} entity){
-													  if(${lower-case($class2/@name)}s== null){
-													  ${lower-case($class2/@name)}s= new ArrayList<${$class2/@name}>();
+													  if(${lowercaseFirst($class2/@name)}s== null){
+													  ${lowercaseFirst($class2/@name)}s= new ArrayList<${$class2/@name}>();
 													  }
 													 get${$class2/@name}s().add(entity);
 													 entity.set${$class/@name}(this);
