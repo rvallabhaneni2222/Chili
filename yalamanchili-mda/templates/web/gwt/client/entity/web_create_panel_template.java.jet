@@ -21,15 +21,22 @@ package ${$packageName}.${lower-case($class/@name)};
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
   					  		 			
-  					  		 			<%-- check if it is abstract--%>
-  					  		 			<c:if test="$class2/@isAbstract = 'true'">
-  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.TreeAbstract${$class2/@name}Panel;
-										</c:if> 
-										<c:if test="$class2/@isAbstract = 'false'">
-										import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Tree${$class2/@name}Panel;
-										</c:if> 
-										
-	
+  					  		 				<%-- check if this is a parent--%>
+					  					  	<c:setVariable select="$class2/@xmi.id" var="isParent"/>
+											<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+												<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $class2/@xmi.id">
+												<%-- update flag variable--%>
+												<c:setVariable select="$class2/@name" var="isParent"/>
+												</c:if>															
+											</c:iterate>
+											<%-- if class is a Parent class--%>
+							    		 	<c:if test="$isParent = $class2/@name">  
+								    		 	import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.TreeAbstract${$class2/@name}Panel;
+											</c:if>
+											<%-- if class is a regular  class--%>
+											<c:if test="$isParent = $class2/@xmi.id">  
+											import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Tree${$class2/@name}Panel;
+											</c:if>	  					  		 			
   					  		 			</c:if> 
   					  		 		</c:iterate>
   					  		 	 </c:if> 	
@@ -149,35 +156,42 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-  					  		 			
-  					  		 			<%-- check if it is abstract--%>
-  					  		 			<c:if test="$class2/@isAbstract = 'true'">
-  					  		 			GenericCRUDServiceAsync.instance().merge(entity,
-										TreeAbstract${$class2/@name}Panel.instance().getEntity(),
-										new ALAsyncCallback<java.lang.Void>() {
+  					  		 				<%-- check if this is a parent--%>
+					  					  	<c:setVariable select="$class2/@xmi.id" var="isParent"/>
+											<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+												<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $class2/@xmi.id">
+												<%-- update flag variable--%>
+												<c:setVariable select="$class2/@name" var="isParent"/>
+												</c:if>															
+											</c:iterate>
+											<%-- if class is a Parent class--%>
+							    		 	<c:if test="$isParent = $class2/@name">  
+								    		 	GenericCRUDServiceAsync.instance().merge(entity,
+												TreeAbstract${$class2/@name}Panel.instance().getEntity(),
+												new ALAsyncCallback<java.lang.Void>() {
 
-										@Override
-										public void onResponse(Void arg0) {
-										new ResponseStatusWidget().show("added");
+												@Override
+												public void onResponse(Void arg0) {
+												new ResponseStatusWidget().show("added");
+			
+												}
+
+												});
+											</c:if>
+											<%-- if class is a regular  class--%>
+											<c:if test="$isParent = $class2/@xmi.id">  
+											GenericCRUDServiceAsync.instance().merge(entity,
+											Tree${$class2/@name}Panel.instance().getEntity(),
+											new ALAsyncCallback<java.lang.Void>() {
+
+											@Override
+											public void onResponse(Void arg0) {
+											new ResponseStatusWidget().show("added");
 		
-										}
+											}
 
-										});
-										</c:if> 
-										<c:if test="$class2/@isAbstract = 'false'">
-										GenericCRUDServiceAsync.instance().merge(entity,
-										Tree${$class2/@name}Panel.instance().getEntity(),
-										new ALAsyncCallback<java.lang.Void>() {
-
-										@Override
-										public void onResponse(Void arg0) {
-										new ResponseStatusWidget().show("added");
-		
-										}
-
-										});
-										</c:if> 
-										
+											});	
+											</c:if>			
 	
   					  		 			</c:if> 
   					  		 		</c:iterate>
