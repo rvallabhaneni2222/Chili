@@ -276,6 +276,8 @@
 					<java:class name="${$class/@name}SideBar" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_side_panel_template.java.jet"/>
 					<%-- Options Panel--%>
 					<java:class name="${$class/@name}OptionsPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_option_panel_template.java.jet"/>
+					<%-- Select Panel--%>
+					<java:class name="Select${$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_select_panel_template.java.jet"/>
 					
 						<%-- check for parent(abstract) classes--%>
 						<c:setVariable select="$class/@xmi.id" var="isParent"/>
@@ -313,7 +315,10 @@
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_jboss-app_template.xml.jet" path="jboss-web.xml"/>
     		</ws:folder>
     </ws:folder>
-    <ws:folder path="src/test/java"/>
+    <ws:folder path="src/test/java">
+    <%--server test class--%>
+    <java:class name="ServerTest" package="{$groupID}.server" template="templates/web/test/gwt/server/web_server_impl_test.java.jet"/>
+    </ws:folder>
     <ws:folder path="src/test/resources"/>
 
 </ws:project>

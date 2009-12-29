@@ -194,7 +194,7 @@ public class GenericCRUDServiceImpl extends Abstract${camelCase($projectName)}Se
 		for (Method method : ejb.getClass().getMethods()) {
 			if (method.getName().compareToIgnoreCase("getListBoxValues") == 0) {
 				try {
-					values = (Map<Long, String>) method.invoke(ejb, columns);
+					values = (Map<Long, String>) method.invoke(ejb, (Object)columns);
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw new RuntimeException("Call failed");

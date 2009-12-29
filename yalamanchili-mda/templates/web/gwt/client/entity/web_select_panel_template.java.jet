@@ -1,0 +1,75 @@
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import ${$webPackage}${camelCase($projectName)}Welcome;
+import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
+
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
+import info.yalamanchili.gwt.composite.SelectComposite;
+
+
+import java.util.List;
+import java.util.Map;
+
+import com.allen_sauer.gwt.log.client.Log;
+
+public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}> {
+
+	public Select${$class/@name}Panel(SelectCompositeType type) {
+		super(type);
+	}
+
+	@Override
+	protected void initListBox() {
+		String[] columns = { "name" };
+		GenericCRUDServiceAsync.instance().getListBoxValues(new ${$class/@name}(),
+				columns, new ALAsyncCallback<Map<Long, String>>() {
+
+					@Override
+					public void onResponse(Map<Long, String> arg0) {
+						populateListBox(arg0);
+
+					}
+
+				});
+
+	}
+
+	@Override
+	public void itemSelected() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onAdd() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onAddAll(List<Long> ids) {
+		Log.debug(ids.toString());
+
+	}
+
+	@Override
+	protected void addListeners() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void addWidgets() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void configure() {
+		// TODO Auto-generated method stub
+
+	}
+
+}
+</java:format>

@@ -143,7 +143,7 @@ private static final Log log = LogFactory
 	}
 	
 	@Override
-	public Map<Long, String> getListBoxValues(String... columns) {
+	public Map<Long, String> getListBoxValues(String[] columns) {
 		String query = GWTServletUtils.getListBoxResultsQueryString(
 				${$class/@name}.class.getCanonicalName(), columns);
 		log.debug("ListBox Values query:" + query);
