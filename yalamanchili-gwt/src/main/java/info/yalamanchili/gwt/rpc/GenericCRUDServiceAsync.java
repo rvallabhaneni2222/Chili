@@ -3,6 +3,7 @@ package info.yalamanchili.gwt.rpc;
 import info.yalamanchili.gwt.beans.TableObj;
 
 import java.util.List;
+import java.util.Map;
 
 import net.sf.gilead.pojo.java5.LightEntity;
 
@@ -38,4 +39,7 @@ public interface GenericCRUDServiceAsync {
 
 	public <T extends LightEntity> void getRelatedEntities(Long entityID,
 			String sourceClass, T target, AsyncCallback<List<T>> response);
+
+	public <T extends LightEntity> void getListBoxValues(T entity,
+			String[] columns, AsyncCallback<Map<Long, String>> response);
 }

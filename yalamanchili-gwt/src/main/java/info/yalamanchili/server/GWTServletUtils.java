@@ -80,7 +80,7 @@ public class GWTServletUtils {
 		return DisplayType.DEFAULT;
 	}
 
-	public static <T extends LightEntity> String getQueryString(T entity) {
+	public static <T extends LightEntity> String getSearchQueryString(T entity) {
 		String query = "FROM " + entity.getClass().getCanonicalName()
 				+ " WHERE ";
 		List<String> filters = new ArrayList<String>();
@@ -133,6 +133,17 @@ public class GWTServletUtils {
 		String query = "SELECT " + name + " FROM "
 				+ entity.getClass().getCanonicalName();
 		log.debug(query);
+		return query;
+	}
+
+	public static String getListBoxResultsQueryString(String className,
+			String... columns) {
+		String query = "SELECT id,";
+		for (String column : columns) {
+			query = query.concat(column + ",");
+		}
+		query = query.substring(0, query.length() - 1);
+		query = query.concat(" FROM " + className);
 		return query;
 	}
 

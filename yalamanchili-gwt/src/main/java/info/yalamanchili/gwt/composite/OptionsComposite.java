@@ -34,6 +34,8 @@ public abstract class OptionsComposite extends ALComposite implements
 	protected ClickableLink createLink = new ClickableLink("Create");
 
 	protected ClickableLink addLink = new ClickableLink("Add");
+	
+	protected ClickableLink addAllLink = new ClickableLink("AddAll");
 
 	/**
 	 * Instantiates a new options composite.
@@ -79,6 +81,9 @@ public abstract class OptionsComposite extends ALComposite implements
 		if (event.getSource() == addLink) {
 			addLinkClicked();
 		}
+		if (event.getSource() == addAllLink) {
+			addAllLinkClicked();
+		}
 	}
 
 	public void setup() {
@@ -94,6 +99,8 @@ public abstract class OptionsComposite extends ALComposite implements
 		if (OptionsCompositeType.ADD.equals(type)) {
 			panel.add(addLink);
 			addLink.addClickHandler(this);
+			panel.add(addAllLink);
+			addAllLink.addClickHandler(this);
 
 		}
 
@@ -115,5 +122,7 @@ public abstract class OptionsComposite extends ALComposite implements
 	public abstract void deleteLinkClicked();
 
 	public abstract void addLinkClicked();
+	
+	public abstract void addAllLinkClicked();
 
 }
