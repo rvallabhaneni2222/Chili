@@ -44,6 +44,7 @@ public abstract class SelectComposite<T> extends ALComposite implements
 	 */
 	public SelectComposite(SelectCompositeType type) {
 		this.type = type;
+		init(panel);
 		label.setText("select all");
 		panel.add(label);
 		panel.add(listBox);

@@ -137,7 +137,7 @@ public class GWTServletUtils {
 	}
 
 	public static String getListBoxResultsQueryString(String className,
-			String... columns) {
+			String[] columns) {
 		String query = "SELECT id,";
 		for (String column : columns) {
 			query = query.concat(column + ",");

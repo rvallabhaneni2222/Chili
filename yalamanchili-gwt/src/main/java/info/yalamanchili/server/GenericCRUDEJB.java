@@ -24,5 +24,5 @@ public interface GenericCRUDEJB<T> {
 
 	public List<T> getEntities(T entity);
 
-	public Map<Long, String> getListBoxValues(String... columns);
+	public Map<Long, String> getListBoxValues(String[] columns);
 }
