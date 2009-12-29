@@ -6,6 +6,6 @@ import net.sf.gilead.pojo.java5.LightEntity;
 
 public interface ${$class/@name}Service extends GenericCRUDEJB<${$class/@name}>{
 
-public <T extends LightEntity> void merge(T entity, T parent);
+
 }
 </java:format>

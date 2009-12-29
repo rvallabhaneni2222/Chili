@@ -31,12 +31,12 @@ import java.util.List;
 								<c:iterate select="$association/Association.connection" var="association_connection">
 									<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
 										<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
-											<%-- check is the association is corresponding to the class  --%>
-												<c:if test="$association_connection_end_classID = $classID"> 
 												<%-- process only compositions or aggegations--%>
 													<c:if test="not($association_connection_end/@aggregation = 'none')">
 							  					   	<%-- iterate over the iterations ends  --%>
 							  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+							  					  	 <%-- process only non composits or non aggregations and --%>
+  					  								<c:if test="$association_connection_end2/@aggregation = 'none'">
 							  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 							  					  	 	<%-- get the end secondary end with other class  --%>
 							  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
@@ -47,10 +47,11 @@ import java.util.List;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanel;
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
+							  							  	</c:if>
 							  							  	</c:if> 
 							  					 	  </c:iterate> 
 							  					 	 </c:if> 					 	 				 	  
-												</c:if> 											
+												 											
 									</c:iterate>
 								</c:iterate>
 							</c:iterate> 
@@ -68,10 +69,10 @@ import java.util.List;
 													<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
 														<%-- check is the association is corresponding to the class  --%>
 															<c:if test="$association_connection_end_classID = $classID"> 
-															<%-- process only compositions or aggegations--%>
-															<c:if test="not($association_connection_end/@aggregation = 'none')">
 										  					   	<%-- iterate over the iterations ends  --%>
 										  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+										  					  	 <%-- process only non composits or non aggregations and --%>
+  					  											<c:if test="$association_connection_end2/@aggregation = 'none'">
 										  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 										  					  	 	<%-- get the end secondary end with other class  --%>
 										  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
@@ -83,9 +84,10 @@ import java.util.List;
 										  					  		 			</c:if> 
 										  					  		 		</c:iterate>
 										  							  	</c:if> 
+										  							  	</c:if>		
 										  					 	  </c:iterate> 					 	 				 	  
 															</c:if> 
-														</c:if>												
+																								
 												</c:iterate>
 											</c:iterate>
 										</c:iterate> 					  			
@@ -106,11 +108,11 @@ import java.util.List;
 		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
 			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
 		<%-- check is the association is corresponding to the class  --%>
-					<c:if test="$association_connection_end_classID = $classID"> 
-					<%-- process only compositions or aggegations--%>
-					<c:if test="not($association_connection_end/@aggregation = 'none')">
+					<c:if test="$association_connection_end_classID = $classID">
   					   	<%-- iterate over the iterations ends  --%>
   					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <%-- process only non composits or non aggregations and --%>
+  					  	<c:if test="$association_connection_end2/@aggregation = 'none'">
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
   					  	 	<%-- get the end secondary end with other class  --%>
   					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
@@ -122,9 +124,9 @@ import java.util.List;
   					  		 			</c:if> 
   					  		 		</c:iterate>
   							  	</c:if> 
+  							  	</c:if>	
   					 	  </c:iterate> 					 	 				 	  
-					</c:if> 
-				</c:if>												
+					</c:if> 											
 		</c:iterate>
 	</c:iterate>
 </c:iterate>
@@ -209,11 +211,11 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
 									<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
 										<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
 											<%-- check is the association is corresponding to the class  --%>
-												<c:if test="$association_connection_end_classID = $classID"> 
-												<%-- process only compositions or aggegations--%>
-													<c:if test="not($association_connection_end/@aggregation = 'none')">
+												<c:if test="$association_connection_end_classID = $classID">
 							  					   	<%-- iterate over the iterations ends  --%>
 							  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+							  					  	 <%-- process only non composits or non aggregations and --%>
+  					  								<c:if test="$association_connection_end2/@aggregation = 'none'">
 							  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 							  					  	 	<%-- get the end secondary end with other class  --%>
 							  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
@@ -240,8 +242,9 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
 							  							  	</c:if> 
+							  							  	 </c:if> 
 							  					 	  </c:iterate> 
-							  					 	 </c:if> 					 	 				 	  
+							  					 						 	 				 	  
 												</c:if> 											
 									</c:iterate>
 								</c:iterate>
@@ -260,10 +263,10 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
 													<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
 														<%-- check is the association is corresponding to the class  --%>
 															<c:if test="$association_connection_end_classID = $classID"> 
-															<%-- process only compositions or aggegations--%>
-															<c:if test="not($association_connection_end/@aggregation = 'none')">
-										  					   	<%-- iterate over the iterations ends  --%>
+															 	<%-- iterate over the iterations ends  --%>
 										  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+										  					  	 <%-- process only non composits or non aggregations and --%>
+  					  											 <c:if test="$association_connection_end2/@aggregation = 'none'">
 										  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 										  					  	 	<%-- get the end secondary end with other class  --%>
 										  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
@@ -290,9 +293,10 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
 										  					  		 			</c:if> 
 										  					  		 		</c:iterate>
 										  							  	</c:if> 
+										  							  	</c:if>	
 										  					 	  </c:iterate> 					 	 				 	  
 															</c:if> 
-														</c:if>												
+																									
 												</c:iterate>
 											</c:iterate>
 										</c:iterate> 					  			
@@ -313,11 +317,11 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
 		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
 			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
 		<%-- check is the association is corresponding to the class  --%>
-					<c:if test="$association_connection_end_classID = $classID"> 
-					<%-- process only compositions or aggegations--%>
-					<c:if test="not($association_connection_end/@aggregation = 'none')">
+					<c:if test="$association_connection_end_classID = $classID">
   					   	<%-- iterate over the iterations ends  --%>
   					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <%-- process only non composits or non aggregations and --%>
+  					  	 <c:if test="$association_connection_end2/@aggregation = 'none'">
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
   					  	 	<%-- get the end secondary end with other class  --%>
   					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
@@ -345,9 +349,9 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
   					  		 			</c:if> 
   					  		 		</c:iterate>
   							  	</c:if> 
+  							  	</c:if>	
   					 	  </c:iterate> 					 	 				 	  
-					</c:if> 
-				</c:if>												
+					</c:if> 										
 		</c:iterate>
 	</c:iterate>
 </c:iterate>

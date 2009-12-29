@@ -1,0 +1,64 @@
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import ${$packageName}.${lower-case($class/@name)}.${$class/@name}ServiceBean;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
+import javax.persistence.Persistence;
+import java.util.Date;
+
+import static org.junit.Assert.*;
+
+public class ${$class/@name}DAOTest{
+
+protected static ${$class/@name}ServiceBean bean = new ${$class/@name}ServiceBean();
+	protected static EntityManagerFactory emf;
+	protected static EntityManager em;
+
+	@BeforeClass
+	public static void init() {
+		emf = Persistence.createEntityManagerFactory("automanage");
+		em = emf.createEntityManager();
+		em.getTransaction().begin();
+		bean.setEntityManager(em);
+		createTestData();
+	}
+
+@Test
+public void testInsert(){
+bean.create(new ${$class/@name}());
+}
+
+@AfterClass
+public static void destroy(){
+	em.getTransaction().commit();
+		emf.close();
+}
+protected static void createTestData() {
+${$class/@name} entity= new ${$class/@name}();
+<%-- attributes setters and getters--%>
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+<%-- processes the premitive Datatypes and enums--%>
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > entity.set${uppercaseFirst($attribute/@name)}("testString");</c:when> <c:when test="${'$IntegerID'}" > entity.set${uppercaseFirst($attribute/@name)}(10);</c:when><c:when test="${'$DateID'}" > entity.set${uppercaseFirst($attribute/@name)}(new Date());</c:when><c:when test="${'$BooleanID'}" >entity.set${uppercaseFirst($attribute/@name)}(false);</c:when><c:when test="${'$LongID'}" > entity.set${uppercaseFirst($attribute/@name)}(new Long(10000));</c:when><c:when test="${'$FloatID'}" >entity.set${uppercaseFirst($attribute/@name)}(new Float("11.2"));</c:when>
+	 <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise>
+</c:choose> 
+</c:iterate>
+em.persist(entity);
+	}
+}
+</java:format>

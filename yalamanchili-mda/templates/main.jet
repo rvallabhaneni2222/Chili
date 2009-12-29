@@ -146,7 +146,9 @@
     <ws:file template="templates/jpa/abbrevation.properties.jet" path="abbrevations.properties"/>
     </ws:folder>
     <ws:folder path="src/test/java"/>
-    <ws:folder path="src/test/resources"/>
+    <ws:folder path="src/test/resources">
+    
+    </ws:folder>
 
 </ws:project>
 
@@ -181,8 +183,19 @@
     <ws:folder path="src/main/resources">
    
     </ws:folder>
-    <ws:folder path="src/test/java"/>
-    <ws:folder path="src/test/resources"/>
+    <ws:folder path="src/test/java">
+    <c:setVariable select="concat($groupID,'.ejb.')" var="ejbPackage"/>
+    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    	 <c:setVariable select="concat($ejbPackage,$package/@name)" var="packageName"/>	
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		<%--TestDao--%>
+			<java:class name="{$class/@name}DAOTest" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/test/ejb_test_dao_template.java.jet"/>
+			</c:iterate>
+		</c:iterate>
+    </ws:folder>
+	<ws:folder path="src/test/resources">
+     <ws:file template="templates/ejb/test/jpa_test_persistence_template.xml.jet" path="META-INF/persistence.xml"/>
+   	</ws:folder>
 
 </ws:project>
 

@@ -64,6 +64,11 @@ public class ${$class/@name}OptionsPanel extends OptionsComposite {
 				new Create${$class/@name}Panel(CreateCompositeType.ADD));
 	}
 	
+	@Override
+	public  void addAllLinkClicked(){
+	
+	}
+	
 	
 }
 </java:format>

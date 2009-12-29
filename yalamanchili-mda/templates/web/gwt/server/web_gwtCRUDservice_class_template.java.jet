@@ -10,7 +10,9 @@ import java.util.List;
 import javax.ejb.EJB;
 
 import net.sf.gilead.pojo.java5.LightEntity;
+import java.util.HashMap;
 
+import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -183,6 +185,25 @@ public class GenericCRUDServiceImpl extends Abstract${camelCase($projectName)}Se
 		}
 
 	}
+	
+		@Override
+	public <T extends LightEntity> Map<Long, String> getListBoxValues(T entity,
+			String[] columns) {
+		Object ejb = ejbs.get(entity.getClass().getCanonicalName());
+		Map<Long, String> values = new HashMap<Long, String>();
+		for (Method method : ejb.getClass().getMethods()) {
+			if (method.getName().compareToIgnoreCase("getListBoxValues") == 0) {
+				try {
+					values = (Map<Long, String>) method.invoke(ejb, columns);
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException("Call failed");
+				}
+			}
+		}
+		return values;
+	}
+	
 
 }
 </java:format>

@@ -15,6 +15,8 @@ import javax.annotation.PostConstruct;
 import javax.persistence.Query;
 import javax.persistence.PersistenceUnit;
 import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.HashMap;
 
 
 import net.sf.gilead.core.PersistentBeanManager;
@@ -35,7 +37,7 @@ private static final Log log = LogFactory
 	protected EntityManagerFactory factory;
 	
 @PersistenceContext(unitName = "${$projectName}")
-	EntityManager entityManager;
+	protected EntityManager entityManager;
 	
 	protected PersistentBeanManager bm;
 	
@@ -69,7 +71,7 @@ private static final Log log = LogFactory
 	public List<${$class/@name}> getEntities(${$class/@name} entity) {
 	List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
 		Query getEntities = entityManager.createQuery(GWTServletUtils
-				.getQueryString(entity));
+				.getSearchQueryString(entity));
 		for (Object obj : getEntities.getResultList()) {
 			entities.add((${$class/@name}) bm.clone(obj));
 		}
@@ -140,6 +142,20 @@ private static final Log log = LogFactory
 		entityManager.merge(entity);
 	}
 	
+	@Override
+	public Map<Long, String> getListBoxValues(String... columns) {
+		String query = GWTServletUtils.getListBoxResultsQueryString(
+				${$class/@name}.class.getCanonicalName(), columns);
+		log.debug("ListBox Values query:" + query);
+		Map<Long, String> values = new HashMap<Long, String>();
+		Query getListBoxValues = entityManager.createQuery(query);
+		for (Object obj : getListBoxValues.getResultList()) {
+			Object[] obs = (Object[]) obj;
+			values.put((Long) obs[0], (String) obs[1]);
+		}
+		return values;
+	}
+	
 	@PostConstruct
 	public void initGileadManager() {
 		bm = new PersistentBeanManager();
@@ -147,6 +163,14 @@ private static final Log log = LogFactory
 		persistenceUtil.setEntityManagerFactory(factory);
 		bm.setPersistenceUtil(persistenceUtil);
 		bm.setProxyStore(new StatelessProxyStore());
+	}
+	
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
 	}
 
 }
