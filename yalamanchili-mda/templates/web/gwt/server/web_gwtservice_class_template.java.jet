@@ -460,11 +460,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	
 	@Override
 	public List<String> getClassRelations(String className) {
-		Class clazz=getEntityClass(className);
+		Class clazz = getEntityClass(className);
 		List<String> classRelations = new ArrayList<String>();
 		do {
 			for (Field field : clazz.getDeclaredFields()) {
-				if (field.getType().equals(java.util.List.class)) {
+				if (field.getType().equals(java.util.List.class)
+						|| field.getType().equals(java.util.Set.class)) {
 					ParameterizedType type = (ParameterizedType) field
 							.getGenericType();
 					Type[] typeArguments = type.getActualTypeArguments();

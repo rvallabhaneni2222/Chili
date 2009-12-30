@@ -4,6 +4,9 @@ package ${$genericPackage};
 import javax.ejb.Stateful;
 import info.yalamanchili.gwt.beans.TableObj;
 import java.util.List;
+import java.util.Collection;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.ArrayList;
 import info.yalamanchili.server.GWTServletUtils;
 import javax.persistence.EntityManager;
@@ -50,7 +53,7 @@ private static final Log log = LogFactory
 	public <T extends LightEntity> List<T> getRelatedEntities(Long entityID,
 			Class sourceClass, T target) {
 		Object sourceEntity = entityManager.find(sourceClass, entityID);
-		List<T> res = new ArrayList<T>();
+		Collection<T> res = null;
 		List<T> result = new ArrayList<T>();
 		for (Method method : sourceClass.getMethods()) {
 			if (method.getReturnType().equals(java.util.List.class)
@@ -61,7 +64,7 @@ private static final Log log = LogFactory
 				if (type.toString().contains(
 						target.getClass().getCanonicalName())) {
 					try {
-						res = (List<T>) method.invoke(sourceEntity);
+						res = (Collection<T>) method.invoke(sourceEntity);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -70,9 +73,10 @@ private static final Log log = LogFactory
 				}
 			}
 		}
-		for (T entity : res) {
-			result.add((T) bm.clone(entity));
-		}
+		if (res != null)
+			for (T entity : res) {
+				result.add((T) bm.clone(entity));
+			}
 		return result;
 	}
 	
