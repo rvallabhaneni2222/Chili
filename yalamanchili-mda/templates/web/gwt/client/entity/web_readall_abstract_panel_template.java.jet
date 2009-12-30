@@ -10,7 +10,6 @@ import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.ReadAllComposite;
 import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.utils.Utils;
-import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
 
 import java.util.List;
 
@@ -18,8 +17,6 @@ import com.google.gwt.user.client.ui.DockPanel;
 
 public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@name}> {
 
-	${$class/@name}OptionsPanel options = new ${$class/@name}OptionsPanel(
-			OptionsCompositeType.ADD);
 
 	private  ${$class/@name}TableType tableType;
 
@@ -29,7 +26,6 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 
 	public ReadAll${$class/@name}sPanel(List<${$class/@name}> entities) {
 		initTable(new ${$class/@name}(), entities, ${camelCase($projectName)}Welcome.constants);
-		panel.add(options);
 	}
 	
 	public ReadAll${$class/@name}sPanel(${$class/@name}TableType tableType) {

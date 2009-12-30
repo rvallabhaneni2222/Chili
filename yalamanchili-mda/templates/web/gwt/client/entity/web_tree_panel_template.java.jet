@@ -14,7 +14,7 @@ import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.widgets.ClickableLink;
 import com.google.gwt.user.client.Window;
 import java.util.List;
-
+import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
 
 <%--process generizations --%>
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
@@ -45,6 +45,7 @@ import java.util.List;
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 							  					  		 			import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanel;
+							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}OptionsPanel;
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
 							  							  	</c:if>
@@ -80,7 +81,8 @@ import java.util.List;
 										  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 										  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 										  					  		 			import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
-										  					  		 				import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanel;					
+										  					  		 				import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanel;
+										  					  		 				import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}OptionsPanel;					
 										  					  		 			</c:if> 
 										  					  		 		</c:iterate>
 										  							  	</c:if> 
@@ -121,6 +123,7 @@ import java.util.List;
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
   					  		 			import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
   					  		 				import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanel;
+  					  		 				import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}OptionsPanel;
   					  		 			</c:if> 
   					  		 		</c:iterate>
   							  	</c:if> 
@@ -219,6 +222,8 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
 							  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 							  					  	 	<%-- get the end secondary end with other class  --%>
 							  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+										  					 <%-- check to see if this is a navigable relation--%>
+										  					 <c:if test="$association_connection_end2/@isNavigable = 'true'">										  					  		 	 
 							  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
 							  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
@@ -234,7 +239,17 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
 																						.clear();
 																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
 																						new ReadAll${$class2/@name}sPanel(arg0));
-														
+																						<%-- check to see if its ADD or ADD_ALL--%>
+																						<c:if test="not($association_connection_end/@aggregation = 'composite')">
+																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+																													new ${$class2/@name}OptionsPanel(
+																													OptionsCompositeType.ADD_ALL));
+																						</c:if>
+																						<c:if test="$association_connection_end/@aggregation = 'composite'">
+																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+																													new ${$class2/@name}OptionsPanel(
+																													OptionsCompositeType.ADD));
+																						</c:if>
 																					}
 														
 																				});
@@ -242,7 +257,8 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
 							  							  	</c:if> 
-							  							  	 </c:if> 
+							  							  	</c:if>
+							  							  	</c:if>  
 							  					 	  </c:iterate> 
 							  					 						 	 				 	  
 												</c:if> 											
@@ -269,7 +285,9 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
   					  											 <c:if test="$association_connection_end2/@aggregation = 'none'">
 										  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 										  					  	 	<%-- get the end secondary end with other class  --%>
-										  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+										  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)">
+										  					  		 	<%-- check to see if this is a navigable relation--%>
+										  					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">										  					  		 	 
 										  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
 										  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 										  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
@@ -285,7 +303,17 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
 																						.clear();
 																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
 																						new ReadAll${$class2/@name}sPanel(arg0));
-							
+																						<%-- check to see if its ADD or ADD_ALL--%>
+																						<c:if test="not($association_connection_end/@aggregation = 'composite')">
+																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+																													new ${$class2/@name}OptionsPanel(
+																													OptionsCompositeType.ADD_ALL));
+																						</c:if>
+																						<c:if test="$association_connection_end/@aggregation = 'composite'">
+																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+																													new ${$class2/@name}OptionsPanel(
+																													OptionsCompositeType.ADD));
+																						</c:if>
 																					}
 							
 																				});
@@ -293,6 +321,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
 										  					  		 			</c:if> 
 										  					  		 		</c:iterate>
 										  							  	</c:if> 
+										  							  	</c:if>
 										  							  	</c:if>	
 										  					 	  </c:iterate> 					 	 				 	  
 															</c:if> 
@@ -325,6 +354,8 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
   					  	 	<%-- get the end secondary end with other class  --%>
   					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<%-- check to see if this is a navigable relation--%>
+  					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
@@ -340,7 +371,18 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
 																						.clear();
 																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
 																						new ReadAll${$class2/@name}sPanel(arg0));
-							
+																						<%-- check to see if its ADD or ADD_ALL--%>
+																						<c:if test="not($association_connection_end/@aggregation = 'composite')">
+																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+																													new ${$class2/@name}OptionsPanel(
+																													OptionsCompositeType.ADD_ALL));
+																						</c:if>
+																						<c:if test="$association_connection_end/@aggregation = 'composite'">
+																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+																													new ${$class2/@name}OptionsPanel(
+																													OptionsCompositeType.ADD));
+																						</c:if>
+																						
 														}
 							
 													});
@@ -348,6 +390,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > 
   					  		 			
   					  		 			</c:if> 
   					  		 		</c:iterate>
+  					  		 	</c:if>	
   							  	</c:if> 
   							  	</c:if>	
   					 	  </c:iterate> 					 	 				 	  

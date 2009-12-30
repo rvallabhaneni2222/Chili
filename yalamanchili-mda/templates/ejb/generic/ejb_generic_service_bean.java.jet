@@ -64,7 +64,7 @@ private static final Log log = LogFactory
 				if (type.toString().contains(
 						target.getClass().getCanonicalName())) {
 					try {
-						res = (Collection<T>) method.invoke(sourceEntity);
+						res = (Collection<T>)	 method.invoke(sourceEntity);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
