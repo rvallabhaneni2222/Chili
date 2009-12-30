@@ -17,7 +17,7 @@ public abstract class OptionsComposite extends ALComposite implements
 		ClickHandler {
 
 	public enum OptionsCompositeType {
-		CRUD, ADD
+		CRUD, ADD, ADD_ALL
 	}
 
 	OptionsCompositeType type;
@@ -34,7 +34,7 @@ public abstract class OptionsComposite extends ALComposite implements
 	protected ClickableLink createLink = new ClickableLink("Create");
 
 	protected ClickableLink addLink = new ClickableLink("Add");
-	
+
 	protected ClickableLink addAllLink = new ClickableLink("AddAll");
 
 	/**
@@ -99,9 +99,10 @@ public abstract class OptionsComposite extends ALComposite implements
 		if (OptionsCompositeType.ADD.equals(type)) {
 			panel.add(addLink);
 			addLink.addClickHandler(this);
+		}
+		if (OptionsCompositeType.ADD_ALL.equals(type)) {
 			panel.add(addAllLink);
 			addAllLink.addClickHandler(this);
-
 		}
 
 	}
@@ -122,7 +123,7 @@ public abstract class OptionsComposite extends ALComposite implements
 	public abstract void deleteLinkClicked();
 
 	public abstract void addLinkClicked();
-	
+
 	public abstract void addAllLinkClicked();
 
 }
