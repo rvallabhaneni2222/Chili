@@ -37,6 +37,9 @@ public interface GenericCRUDService extends RemoteService {
 	public <T extends LightEntity> Map<Long, String> getListBoxValues(T entity,
 			String[] columns);
 
+	public <T extends LightEntity> void addAll(T parent, T child,
+			List<Long> children);
+
 	public static class GenericCRUDServiceAsync {
 
 		private static info.yalamanchili.gwt.rpc.GenericCRUDServiceAsync genericcrud;

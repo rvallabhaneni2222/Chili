@@ -42,4 +42,7 @@ public interface GenericCRUDServiceAsync {
 
 	public <T extends LightEntity> void getListBoxValues(T entity,
 			String[] columns, AsyncCallback<Map<Long, String>> response);
+
+	public <T extends LightEntity> void addAll(T parent, T child,
+			List<Long> children, AsyncCallback<java.lang.Void> response);
 }

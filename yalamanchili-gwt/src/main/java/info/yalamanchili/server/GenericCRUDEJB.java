@@ -25,4 +25,7 @@ public interface GenericCRUDEJB<T> {
 	public List<T> getEntities(T entity);
 
 	public Map<Long, String> getListBoxValues(String[] columns);
+
+	public <T extends LightEntity> void addAll(T parent, T children,
+			List<Long> ids);
 }

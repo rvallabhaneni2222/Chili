@@ -24,7 +24,7 @@ public abstract class SelectComposite<T> extends ALComposite implements
 	protected Label label = new Label();
 
 	/** The list box. */
-	protected ListBox listBox = new ListBox();
+	protected ListBox listBox;
 
 	public Button addButton = new Button("add");
 
@@ -45,18 +45,19 @@ public abstract class SelectComposite<T> extends ALComposite implements
 	public SelectComposite(SelectCompositeType type) {
 		this.type = type;
 		init(panel);
-		label.setText("select all");
-		panel.add(label);
-		panel.add(listBox);
-
 		if (SelectCompositeType.ALL.equals(type)) {
+			listBox = new ListBox(true);
 			panel.add(addButton);
 			addButton.addClickHandler(this);
 			listBox.setVisibleItemCount(10);
 		}
 		if (SelectCompositeType.ONE.equals(type)) {
+			listBox = new ListBox();
 			listBox.addChangeHandler(this);
 		}
+		label.setText("select all");
+		panel.add(label);
+		panel.add(listBox);
 		panel.setSpacing(5);
 		initListBox();
 	}
