@@ -204,6 +204,22 @@ public class GenericCRUDServiceImpl extends Abstract${camelCase($projectName)}Se
 		return values;
 	}
 	
+	@Override
+	public <T extends LightEntity> void addAll(T parent, T child,
+			List<Long> children) {
+		Object ejb = ejbs.get(parent.getClass().getCanonicalName());
+		for (Method method : ejb.getClass().getMethods()) {
+			if (method.getName().compareToIgnoreCase("addAll") == 0) {
+				try {
+					method.invoke(ejb, parent, child, children);
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException("Call failed");
+				}
+			}
+		}
+	}
+	
 
 }
 </java:format>

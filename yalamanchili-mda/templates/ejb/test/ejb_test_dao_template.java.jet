@@ -23,7 +23,7 @@ public class ${$class/@name}DAOTest{
 protected static ${$class/@name}ServiceBean bean = new ${$class/@name}ServiceBean();
 	protected static EntityManagerFactory emf;
 	protected static EntityManager em;
-
+	protected static ${$class/@name} entity= new ${$class/@name}();
 	@BeforeClass
 	public static void init() {
 		emf = Persistence.createEntityManagerFactory("automanage");
@@ -44,7 +44,6 @@ public static void destroy(){
 		emf.close();
 }
 protected static void createTestData() {
-${$class/@name} entity= new ${$class/@name}();
 <%-- attributes setters and getters--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 <%-- processes the premitive Datatypes and enums--%>

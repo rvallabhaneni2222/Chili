@@ -156,6 +156,34 @@ private static final Log log = LogFactory
 		return values;
 	}
 	
+	@Override
+	public <T extends LightEntity> void addAll(T parent, T children,
+			List<Long> ids) {
+		// find getter
+		Method addMethod = null;
+		for (Method method : parent.getClass().getMethods()) {
+			if (method.getName().equalsIgnoreCase(
+					"add" + children.getClass().getSimpleName())) {
+				addMethod = method;
+			}
+		}
+		parent = entityManager.merge(parent);
+		for (Long id : ids) {
+			T child = (T) entityManager.find(children.getClass(), id);
+			if (child == null) {
+				throw new RuntimeException("error find entity with id:" + id
+						+ ":on:" + child.getClass().getName());
+			}
+			try {
+				addMethod.invoke(parent, child);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException("error calling method:"
+						+ addMethod.getName() + ":on:" + parent.getClass().getSimpleName());
+			}
+		}
+	}
+	
 	@PostConstruct
 	public void initGileadManager() {
 		bm = new PersistentBeanManager();
