@@ -3,9 +3,31 @@ package ${$packageName}.${lower-case($class/@name)};
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import info.yalamanchili.server.GenericCRUDEJB;
 import net.sf.gilead.pojo.java5.LightEntity;
+import java.util.List;
+import java.util.Map;
+import info.yalamanchili.gwt.beans.TableObj;
 
-public interface ${$class/@name}Service extends GenericCRUDEJB<${$class/@name}>{
+public interface ${$class/@name}Service {
 
+    public ${$class/@name} create(${$class/@name} entity);
 
+	public ${$class/@name} read(${$class/@name} entity, Long id);
+
+	public ${$class/@name} update(${$class/@name} entity);
+
+	public void delete(${$class/@name} entity);
+
+	public TableObj getTableObj(${$class/@name} entity, int start);
+
+	public List<${$class/@name}> getAllEntities(${$class/@name} entity);
+
+	public <T extends LightEntity> void merge(${$class/@name} entity, T parent);
+
+	public List<${$class/@name}> getEntities(${$class/@name} entity);
+
+	public Map<Long, String> getListBoxValues(String[] columns);
+
+	public <T extends LightEntity> void addAll(${$class/@name} parent, T children,
+			List<Long> ids);
 }
 </java:format>

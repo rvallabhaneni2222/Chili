@@ -110,7 +110,7 @@ private static final Log log = LogFactory
 		return entities;
 	}
 
-	public <T extends LightEntity> Long getEntitySizeT(T entity) {
+	public <T extends LightEntity> Long getEntitySizeT(${$class/@name} entity) {
 		String query = "select count(entity) from "
 				+ entity.getClass().getCanonicalName() + " entity";
 		log.debug(query);
@@ -119,7 +119,7 @@ private static final Log log = LogFactory
 	}
 	
 	@Override
-	public <T extends LightEntity> void merge(T entity, T parent) {
+	public <T extends LightEntity> void merge(${$class/@name} entity, T parent) {
 		${$class/@name} res = null;
 		for (Method method : entity.getClass().getMethods()) {
 			for (Class clazz : method.getParameterTypes()) {
@@ -157,7 +157,7 @@ private static final Log log = LogFactory
 	}
 	
 	@Override
-	public <T extends LightEntity> void addAll(T parent, T children,
+	public <T extends LightEntity> void addAll(${$class/@name} parent, T children,
 			List<Long> ids) {
 		// find getter
 		Method addMethod = null;

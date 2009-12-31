@@ -1,10 +1,26 @@
 <java:format>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
+<c:setVariable select="$class/@xmi.id" var="isChild"/>
 package ${$packageName}.${lower-case($class/@name)};
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import info.yalamanchili.gwt.composite.TreePanelComposite;
 
-public abstract class TreeAbstract${$class/@name}Panel extends TreePanelComposite<${$class/@name}> {
+<%-- Check inheritance support--%>
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+ <%-- if child class--%>
+	<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
+		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+  			<c:setVariable select="$otherClass/@name" var="parentClass"/>
+  			<c:setVariable select="$class/@name" var="isChild"/>
+  			</c:if>
+		</c:iterate>  					  		 			 
+	</c:if>
+</c:iterate>
+
+<c:choose select="$isChild" > <c:when test="$class/@name" > import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($parentClass)}.TreeAbstract${$parentClass}Panel; </c:when>   </c:choose>
+
+public abstract class TreeAbstract${$class/@name}Panel extends <c:choose select="$isChild" > <c:when test="$class/@xmi.id" > TreePanelComposite<${$class/@name}> </c:when> <c:otherwise> TreeAbstract${$parentClass}Panel</c:otherwise>  </c:choose> {
 
 private static TreeAbstract${$class/@name}Panel instance;
 
