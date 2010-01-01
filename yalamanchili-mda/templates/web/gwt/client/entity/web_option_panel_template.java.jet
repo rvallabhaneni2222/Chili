@@ -69,7 +69,7 @@ public class ${$class/@name}OptionsPanel extends OptionsComposite {
 	public  void addAllLinkClicked(){
 	${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-				new Select${$class/@name}Panel(SelectCompositeType.ALL));
+				new Select${$class/@name}Panel("${$class/@name}",SelectCompositeType.ALL));
 	}
 	
 	

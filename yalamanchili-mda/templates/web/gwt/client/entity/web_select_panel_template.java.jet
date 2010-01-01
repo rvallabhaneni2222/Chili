@@ -63,13 +63,19 @@ import com.allen_sauer.gwt.log.client.Log;
 
 public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}> {
 
-	public Select${$class/@name}Panel(SelectCompositeType type) {
-		super(type);
+	public Select${$class/@name}Panel(String name,SelectCompositeType type) {
+		super(name,type);
 	}
 
 	@Override
 	protected void initListBox() {
-		String[] columns = { "name" };
+	String[] columns = { 
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+<%-- processes the premitive Datatypes --%>
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > "${$attribute/@name}", </c:when> 
+</c:choose> 
+</c:iterate>	
+	 };
 		GenericCRUDServiceAsync.instance().getListBoxValues(new ${$class/@name}(),
 				columns, new ALAsyncCallback<Map<Long, String>>() {
 
@@ -84,8 +90,17 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 	}
 
 	@Override
-	public void itemSelected() {
-		// TODO Auto-generated method stub
+	public void getSelectedEntity(Long id) {
+		GenericCRUDServiceAsync.instance().read(new ${$class/@name}(), id,
+				new ALAsyncCallback<${$class/@name}>() {
+
+					@Override
+					public void onResponse(${$class/@name} res) {
+						entity = res;
+
+					}
+
+				});
 
 	}
 
