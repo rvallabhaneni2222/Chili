@@ -16,6 +16,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public abstract class SelectComposite<T> extends ALComposite implements
 		ClickHandler, ChangeHandler {
+	protected T entity;
+
+	public T getEntity() {
+		return entity;
+	}
 
 	/** The panel. */
 	protected VerticalPanel panel = new VerticalPanel();
@@ -34,7 +39,7 @@ public abstract class SelectComposite<T> extends ALComposite implements
 
 	Map<Long, String> values = new HashMap<Long, String>();
 
-	SelectCompositeType type;
+	protected SelectCompositeType type;
 
 	/**
 	 * Instantiates a new select composite.
@@ -42,7 +47,7 @@ public abstract class SelectComposite<T> extends ALComposite implements
 	 * @param text
 	 *            the text
 	 */
-	public SelectComposite(SelectCompositeType type) {
+	public SelectComposite(String name, SelectCompositeType type) {
 		this.type = type;
 		init(panel);
 		if (SelectCompositeType.ALL.equals(type)) {
@@ -55,7 +60,8 @@ public abstract class SelectComposite<T> extends ALComposite implements
 			listBox = new ListBox();
 			listBox.addChangeHandler(this);
 		}
-		label.setText("select all");
+		listBox.addItem("          ", "0");
+		label.setText(name);
 		panel.add(label);
 		panel.add(listBox);
 		panel.setSpacing(5);
@@ -63,8 +69,11 @@ public abstract class SelectComposite<T> extends ALComposite implements
 	}
 
 	@Override
-	public void onChange(ChangeEvent arg0) {
-		itemSelected();
+	public void onChange(ChangeEvent event) {
+		if (new Long(listBox.getValue(listBox.getSelectedIndex())) != new Long(
+				0))
+			getSelectedEntity(new Long(listBox.getValue(listBox
+					.getSelectedIndex())));
 	}
 
 	protected abstract void initListBox();
@@ -85,7 +94,7 @@ public abstract class SelectComposite<T> extends ALComposite implements
 
 	public List<Long> getSelectedIds() {
 		List<Long> ids = new ArrayList<Long>();
-		for (int i = 0; i < listBox.getItemCount(); i++) {
+		for (int i = 1; i < listBox.getItemCount(); i++) {
 			if (listBox.isItemSelected(i)) {
 				ids.add(new Long(listBox.getValue(i)));
 			}
@@ -93,7 +102,7 @@ public abstract class SelectComposite<T> extends ALComposite implements
 		return ids;
 	}
 
-	public abstract void itemSelected();
+	public abstract void getSelectedEntity(Long id);
 
 	public abstract void onAdd();
 

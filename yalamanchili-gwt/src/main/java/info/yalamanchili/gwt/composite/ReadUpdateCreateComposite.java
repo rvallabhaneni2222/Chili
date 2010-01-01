@@ -139,6 +139,10 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 		}
 	}
 
+	protected void addDropDown(SelectComposite<?> widget) {
+		entityDisplayWidget.add(widget);
+	}
+
 	/**
 	 * Sets the enum feild.
 	 * 
