@@ -137,6 +137,11 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 			fields.put(name, passwordField);
 			entityDisplayWidget.add(passwordField);
 		}
+		if (DataType.DROPDOWN_FIELD.equals(type)) {
+			StringField dropDownField = new StringField(name, readOnly);
+			fields.put(name, dropDownField);
+			entityDisplayWidget.add(dropDownField);
+		}
 	}
 
 	protected void addDropDown(SelectComposite<?> widget) {
@@ -154,6 +159,13 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	protected void setEnumFeild(String fieldName, String value) {
 		EnumField enumField = (EnumField) fields.get(fieldName);
 		enumField.setValue(value);
+	}
+
+	protected void setDropDownField(String fieldName, Object value) {
+		if (value != null) {
+			StringField stringField = (StringField) fields.get(fieldName);
+			stringField.setText(value.toString());
+		}
 	}
 
 	/**
