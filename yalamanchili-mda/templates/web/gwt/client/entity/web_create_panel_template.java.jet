@@ -190,7 +190,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 		 		</c:choose>
 			</c:iterate>
 			
-			<%-- process dropdowns one tone and many to one unidirectional--%>
+			<%-- process dropdowns one to one and many to one unidirectional--%>
 			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 				<c:iterate select="$association/Association.connection" var="association_connection">
 					<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
