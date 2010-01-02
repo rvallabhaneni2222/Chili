@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.ArrayList;
-
+import info.yalamanchili.commons.ReflectionUtils;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -428,6 +428,11 @@ super();
 	</c:iterate>
 
 </c:iterate>
+
+	@Override
+	public String toString() {
+		return ReflectionUtils.toStringRef(this);
+	}
 
 
 }
