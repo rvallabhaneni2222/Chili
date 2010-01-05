@@ -9,11 +9,12 @@ import com.google.gwt.i18n.client.DateTimeFormat;
  * The Class Utils.
  */
 public class Utils {
-	
+
 	/**
 	 * Gets the short date.
 	 * 
-	 * @param date the date
+	 * @param date
+	 *            the date
 	 * 
 	 * @return the short date
 	 */
@@ -22,5 +23,13 @@ public class Utils {
 			return "";
 		}
 		return DateTimeFormat.getShortDateFormat().format(date);
+	}
+
+	public static String entityToString(Object entity) {
+		if (entity == null) {
+			return "";
+		} else {
+			return entity.toString();
+		}
 	}
 }
