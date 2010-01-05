@@ -8,8 +8,91 @@ import info.yalamanchili.gwt.composite.UpdateComposite;
 import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import info.yalamanchili.gwt.fields.DataType;
+import info.yalamanchili.gwt.composite.SelectComposite.SelectCompositeType;
+
+<%-- process dropdowns one tone and many to one unidirectional--%>
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID"> 
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 			  		 			
+  					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
+  					  		 			<%-- check target is one side--%>
+  					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+  					    						<%--check for Many to one unidirectional--%>
+  					    						<c:if test="$association_connection_end/@isNavigable = 'false'">
+  					    							import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panel;
+  					    						</c:if>	
+  					    						<%--check for one to one --%>	
+  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+  					    							import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panel;
+  					  		 					</c:if>	
+  					  		 					</c:if>	
+  					  		 			</c:if>	
+  					  		 			</c:if>	
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  							  	</c:if> 
+  					 	  </c:iterate> 					 	 				 	  
+					</c:if> 											
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
 
 public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}> {
+
+<%-- process dropdowns one tone and many to one unidirectional--%>
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID"> 
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 			  		 			
+  					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
+  					  		 			<%-- check target is one side--%>
+  					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+  					    						<%--check for Many to one unidirectional--%>
+  					    						<c:if test="$association_connection_end/@isNavigable = 'false'">
+  					    							Select${$class2/@name}Panel select${$class2/@name}Panel = new Select${$class2/@name}Panel("${$class2/@name}",
+													Read${$class/@name}Panel.instance().getEntity().get${$class2/@name}());
+  					    						</c:if>	
+  					    						<%--check for one to one --%>	
+  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+  					    							Select${$class2/@name}Panel select${$class2/@name}Panel = new Select${$class2/@name}Panel("${$class2/@name}",
+													Read${$class/@name}Panel.instance().getEntity().get${$class2/@name}());
+  					  		 					</c:if>	
+  					  		 					</c:if>	
+  					  		 			</c:if>	
+  					  		 			</c:if>	
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  							  	</c:if> 
+  					 	  </c:iterate> 					 	 				 	  
+					</c:if> 											
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
 
 	public Update${$class/@name}Panel() {
 		initUpdateComposite(${$class/@name}.class.getName(), ${camelCase($projectName)}Welcome.constants);
@@ -36,6 +119,7 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 		 			</c:otherwise>
 		 		</c:choose>
 			</c:iterate>
+			
 			return entity;
 		}
 
@@ -59,6 +143,46 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 	 			</c:otherwise>
 	 		</c:choose>
 		</c:iterate>
+		
+		<%-- process dropdowns one tone and many to one unidirectional--%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+				<c:iterate select="$association/Association.connection" var="association_connection">
+					<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+						<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+					<%-- check is the association is corresponding to the class  --%>
+								<c:if test="$association_connection_end_classID = $classID"> 
+			  					   	<%-- iterate over the iterations ends  --%>
+			  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+			  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+			  					  	 	<%-- get the end secondary end with other class  --%>
+			  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+			  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+			  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+			  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 			  		 			
+			  					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
+			  					  		 			<%-- check target is one side--%>
+			  					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+			  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+			  					    						<%--check for Many to one unidirectional--%>
+			  					    						<c:if test="$association_connection_end/@isNavigable = 'false'">
+			  					    							entity.set${uppercaseFirst($class2/@name)}(select${$class2/@name}Panel.getEntity());
+			  					    						</c:if>	
+			  					    						<%--check for one to one --%>	
+			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+			  					    							entity.set${uppercaseFirst($class2/@name)}(select${$class2/@name}Panel.getEntity());
+			  					  		 					</c:if>	
+			  					  		 					</c:if>	
+			  					  		 			</c:if>	
+			  					  		 			</c:if>	
+			  					  		 			</c:if> 
+			  					  		 		</c:iterate>
+			  							  	</c:if> 
+			  					 	  </c:iterate> 					 	 				 	  
+								</c:if> 											
+					</c:iterate>
+				</c:iterate>
+			</c:iterate>
 		GenericCRUDServiceAsync.instance().update(entity,
 				new ALAsyncCallback<${$class/@name}>() {
 					public void onResponse(${$class/@name} arg0) {
@@ -99,6 +223,46 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 		 			</c:otherwise>
 		 		</c:choose>
 			</c:iterate>
+			
+			<%-- process dropdowns one to one and many to one unidirectional--%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+				<c:iterate select="$association/Association.connection" var="association_connection">
+					<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+						<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+					<%-- check is the association is corresponding to the class  --%>
+								<c:if test="$association_connection_end_classID = $classID"> 
+			  					   	<%-- iterate over the iterations ends  --%>
+			  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+			  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+			  					  	 	<%-- get the end secondary end with other class  --%>
+			  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+			  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+			  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+			  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 			  		 			
+			  					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
+			  					  		 			<%-- check target is one side--%>
+			  					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+			  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+			  					    						<%--check for Many to one unidirectional--%>
+			  					    						<c:if test="$association_connection_end/@isNavigable = 'false'">
+			  					    							addDropDown(select${$class2/@name}Panel);
+			  					    						</c:if>	
+			  					    						<%--check for one to one --%>	
+			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+			  					    							addDropDown(select${$class2/@name}Panel);
+			  					  		 					</c:if>	
+			  					  		 					</c:if>	
+			  					  		 			</c:if>	
+			  					  		 			</c:if>	
+			  					  		 			</c:if> 
+			  					  		 		</c:iterate>
+			  							  	</c:if> 
+			  					 	  </c:iterate> 					 	 				 	  
+								</c:if> 											
+					</c:iterate>
+				</c:iterate>
+			</c:iterate>	
 	}
 
 	@Override

@@ -66,6 +66,10 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 	public Select${$class/@name}Panel(String name,SelectCompositeType type) {
 		super(name,type);
 	}
+	
+	public Select${$class/@name}Panel(String name,${$class/@name} entity) {
+		super(name,entity);
+	}
 
 	@Override
 	protected void initListBox() {
@@ -103,6 +107,12 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 				});
 
 	}
+	
+	public void setSelectedEntity(${$class/@name} entity) {
+		if (entity.getId() != null)
+			listBox.setItemSelected(valueIndex.get(entity.getId()), true);
+	}
+	
 
 	@Override
 	public void onAdd() {

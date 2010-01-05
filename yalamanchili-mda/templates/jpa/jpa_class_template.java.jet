@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.ArrayList;
-import info.yalamanchili.commons.ReflectionUtils;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -429,11 +429,14 @@ super();
 
 </c:iterate>
 
-	@Override
-	public String toString() {
-		return ReflectionUtils.toStringRef(this);
+	public String toString(){
+	StringBuilder sb= new StringBuilder();
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > sb.append(get${uppercaseFirst($attribute/@name)}());  sb.append(":");</c:when> 
+</c:choose> 
+</c:iterate>
+	return sb.toString();
 	}
-
 
 }
 </f:bundle>
