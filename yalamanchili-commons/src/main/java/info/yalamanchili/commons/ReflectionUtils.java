@@ -77,47 +77,6 @@ public class ReflectionUtils {
 		return attributeValues;
 	}
 
-	public static Map<String, Object> getStringFieldsDataFromEntity(Object t,
-			Class cls) {
-		Map<String, Object> attributeValues = new HashMap<String, Object>();
-		LinkedHashMap<String, DataType> fields = getEntityFieldsInfo(cls);
-		try {
-			for (String fieldName : getEntityFieldsInfo(cls).keySet()) {
-				for (Method method : t.getClass().getMethods()) {
-					if (method.getName().compareToIgnoreCase("get" + fieldName) == 0) {
-						if (fields.get(fieldName).equals(DataType.STRING)) {
-							String result = (String) method.invoke(t, null);
-							attributeValues.put(fieldName, result);
-						}
-						if (fields.get(fieldName).equals(DataType.INTEGER)) {
-							Integer result = (Integer) method.invoke(t, null);
-							attributeValues.put(fieldName, result);
-						}
-						if (fields.get(fieldName).equals(DataType.LONG)) {
-							Long result = (Long) method.invoke(t, null);
-							attributeValues.put(fieldName, result);
-						}
-						if (fields.get(fieldName).equals(DataType.FLOAT)) {
-							Float result = (Float) method.invoke(t, null);
-							attributeValues.put(fieldName, result);
-						}
-						if (fields.get(fieldName).equals(DataType.ENUM)) {
-							Object value = method.invoke(t, null);
-							if (value != null) {
-								String result = method.invoke(t, null)
-										.toString();
-								attributeValues.put(fieldName, result);
-							}
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-		return attributeValues;
-	}
 
 	public static DataType getDataType(Field field) {
 		Class<?> clazz = field.getType();
@@ -204,16 +163,5 @@ public class ReflectionUtils {
 		return null;
 	}
 
-	public static String toStringRef(Object entity) {
-		StringBuilder sb = new StringBuilder();
-		Map<String, Object> f = ReflectionUtils.getStringFieldsDataFromEntity(
-				entity, entity.getClass());
-		for (String str : f.keySet()) {
-			if (f.get(str) != null) {
-				sb.append(f.get(str));
-				sb.append(":");
-			}
-		}
-		return sb.toString();
-	}
+	
 }

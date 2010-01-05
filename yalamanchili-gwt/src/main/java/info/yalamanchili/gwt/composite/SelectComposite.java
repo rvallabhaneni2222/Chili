@@ -37,7 +37,9 @@ public abstract class SelectComposite<T> extends ALComposite implements
 		ONE, ALL
 	}
 
-	Map<Long, String> values = new HashMap<Long, String>();
+	protected Map<Long, String> values = new HashMap<Long, String>();
+	protected Map<Long, Integer> valueIndex = new HashMap<Long, Integer>();
+	protected Long entityID;
 
 	protected SelectCompositeType type;
 
@@ -68,6 +70,20 @@ public abstract class SelectComposite<T> extends ALComposite implements
 		initListBox();
 	}
 
+	public SelectComposite(String name, T entity) {
+		this.entity = entity;
+		this.type = type;
+		init(panel);
+		listBox = new ListBox();
+		listBox.addChangeHandler(this);
+		listBox.addItem("          ", "0");
+		label.setText(name);
+		panel.add(label);
+		panel.add(listBox);
+		panel.setSpacing(5);
+		initListBox();
+	}
+
 	@Override
 	public void onChange(ChangeEvent event) {
 		if (new Long(listBox.getValue(listBox.getSelectedIndex())) != new Long(
@@ -80,10 +96,17 @@ public abstract class SelectComposite<T> extends ALComposite implements
 
 	protected void populateListBox(Map<Long, String> values) {
 		this.values = values;
+		int i = 1;
 		for (Long id : values.keySet()) {
-			listBox.addItem(values.get(id), id.toString());
+			listBox.insertItem(values.get(id), id.toString(), i);
+			valueIndex.put(id, i);
+			i++;
 		}
+		if (entity != null)
+			setSelectedEntity(entity);
 	}
+
+	public abstract void setSelectedEntity(T entity);
 
 	@Override
 	public void onClick(ClickEvent event) {
