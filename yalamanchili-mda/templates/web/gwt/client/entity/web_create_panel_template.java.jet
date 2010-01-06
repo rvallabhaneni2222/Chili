@@ -1,6 +1,8 @@
 <java:format>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 package ${$packageName}.${lower-case($class/@name)};
+//${$parentClass1/@name}
+//${$parentClass2/@name}
 	<%-- process compsition associations--%>
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 	<c:iterate select="$association/Association.connection" var="association_connection">
