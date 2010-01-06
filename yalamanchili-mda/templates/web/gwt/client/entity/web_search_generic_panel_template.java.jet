@@ -42,6 +42,49 @@ public class ${$class/@name}SearchPanelGeneric extends
 
 	@Override
 	protected void addWidgets() {
+	<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, DataType.STRING_FIELD); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, DataType.INTEGER_FIELD); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, DataType.DATE_FIELD);  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, DataType.BOOLEAN_FIELD); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, DataType.LONG_FIELD); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+			<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, DataType.STRING_FIELD); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, DataType.INTEGER_FIELD); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, DataType.DATE_FIELD);  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, DataType.BOOLEAN_FIELD); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, DataType.LONG_FIELD); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+	</c:if>
+	<%-- process base class attributes--%>
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, DataType.STRING_FIELD); 
@@ -61,6 +104,40 @@ public class ${$class/@name}SearchPanelGeneric extends
 		 		</c:choose>
 			</c:iterate>
 			
+			<%-- process parent class level 2 attributes--%>
+			<c:if test="not($class/@name = $parentClass2/@name)">
+			<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:if test="$attribute/StructuralFeature.type/DataType/@href = $StringID">
+				GenericCRUDServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
+					new ${$class/@name}(), new ALAsyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> values) {
+						addSuggestBox("${$attribute/@name}", values);
+
+					}
+
+					});
+				</c:if>
+			</c:iterate>
+			</c:if>
+			<%-- process parent class level 1 attributes--%>
+			<c:if test="not($class/@name = $parentClass1/@name)">
+			<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:if test="$attribute/StructuralFeature.type/DataType/@href = $StringID">
+				GenericCRUDServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
+					new ${$class/@name}(), new ALAsyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> values) {
+						addSuggestBox("${$attribute/@name}", values);
+
+					}
+
+					});
+				</c:if>
+			</c:iterate>
+			</c:if>
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:if test="$attribute/StructuralFeature.type/DataType/@href = $StringID">
 				GenericCRUDServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
@@ -93,6 +170,48 @@ public class ${$class/@name}SearchPanelGeneric extends
 	@Override
 	protected ${$class/@name} populateEntity() {
 		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
+			<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+		<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+			 <c:when test="${'$StringID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(((ALSuggestBox) fields.get("${$attribute/@name}")).getText()); 
+			 </c:when>
+			 <c:when test="${'$IntegerID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getIntegerField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$DateID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getDateField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$BooleanID'}" >${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getBooleanField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$LongID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getLongField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$FloatID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
+			 </c:when>
+				 <c:otherwise>
+	 			</c:otherwise>
+	 		</c:choose>
+		</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+		<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+			 <c:when test="${'$StringID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(((ALSuggestBox) fields.get("${$attribute/@name}")).getText()); 
+			 </c:when>
+			 <c:when test="${'$IntegerID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getIntegerField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$DateID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getDateField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$BooleanID'}" >${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getBooleanField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$LongID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getLongField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$FloatID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
+			 </c:when>
+				 <c:otherwise>
+	 			</c:otherwise>
+	 		</c:choose>
+		</c:iterate>
+	</c:if>
 		<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 			 <c:when test="${'$StringID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(((ALSuggestBox) fields.get("${$attribute/@name}")).getText()); 
