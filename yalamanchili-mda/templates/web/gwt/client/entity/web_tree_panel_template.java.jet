@@ -1,9 +1,6 @@
 <java:format>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 
-<%--This is used to check for inhereritance --%>
-<c:setVariable select="$class/@name" var="parentClass"/>
-<c:setVariable select="$class/@name" var="isParentClass"/>
 
 package ${$packageName}.${lower-case($class/@name)};
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
@@ -121,30 +118,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.TreeItem;
 
-<%-- Check inheritance support--%>
-<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
- <%-- if parent class--%>
-	<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $classID">
-	<c:setVariable select="$generalization/Generalization.parent/Class/@xmi.idref" var="isParentClass"/>
-	<%-- check to see no other class uses this as a child--%>
-			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization2">
-				<c:if test="$generalization2/Generalization.child/Class/@xmi.idref = $classID">
-					<c:setVariable select="$generalization/Generalization.child/Class/@xmi.idref" var="isParentClass"/>
-				</c:if>
-			</c:iterate>
-		
-	</c:if>
- <%-- if child class--%>
-	<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
-		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
-  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
-  			<c:setVariable select="$otherClass/@name" var="parentClass"/>
-  			</c:if>
-		</c:iterate>  					  		 			 
-	</c:if>
-</c:iterate>
-
-public class Tree${$class/@name}Panel extends <c:choose select="$parentClass" > <c:when test="$class/@name" > TreePanelComposite<${$class/@name}> </c:when> <c:otherwise> TreeAbstract${$parentClass}Panel</c:otherwise>  </c:choose> {
+public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@name" > <c:when test="$class/@name" > TreePanelComposite<${$class/@name}> </c:when> <c:otherwise> TreeAbstract${$parentClass1/@name}Panel</c:otherwise>  </c:choose> {
 	private static Tree${$class/@name}Panel instance;
 
 	public static Tree${$class/@name}Panel instance() {
