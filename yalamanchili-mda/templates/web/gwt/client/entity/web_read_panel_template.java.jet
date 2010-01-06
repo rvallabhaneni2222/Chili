@@ -1,6 +1,6 @@
 <java:format>
 package ${$packageName}.${lower-case($class/@name)};
-
+<c:setVariable select="$class/@xmi.id" var="classID"/>
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -34,6 +34,49 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 					@Override
 					public void onResponse(${$class/@name} ${lower-case($class/@name)}) {
 						entity = ${lower-case($class/@name)};
+				<%-- process parent class level 2 attributes--%>
+			<c:if test="not($class/@name = $parentClass2/@name)">
+			<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+			</c:if>
+			<%-- process parent class level 1 attributes--%>
+			<c:if test="not($class/@name = $parentClass1/@name)">
+			<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+			</c:if>						
+			<%-- process base class--%>			
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$StringID'}" > setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
@@ -110,6 +153,49 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 
 	@Override
 	protected void addWidgets() {
+		<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", true, DataType.STRING_FIELD); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", true, DataType.INTEGER_FIELD); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", true, DataType.DATE_FIELD);  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", true, DataType.BOOLEAN_FIELD); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", true, DataType.LONG_FIELD); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", true, DataType.FLOAT_FIELD); 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", true, DataType.STRING_FIELD); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", true, DataType.INTEGER_FIELD); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", true, DataType.DATE_FIELD);  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", true, DataType.BOOLEAN_FIELD); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", true, DataType.LONG_FIELD); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", true, DataType.FLOAT_FIELD); 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+	</c:if>
+	<%-- process baseClass--%>
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", true, DataType.STRING_FIELD); 

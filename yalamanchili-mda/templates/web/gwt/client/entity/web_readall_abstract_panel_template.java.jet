@@ -99,7 +99,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 			  		table.setText(i, <%= y++ %>, Utils.getShortDate(entity.get${uppercaseFirst($attribute/@name)}())); 
 			  	</c:when>
 			 	<c:otherwise> 
-					table.setText(i, <%= y++ %>, entity.get${uppercaseFirst($attribute/@name)}().toString());
+					table.setText(i, <%= y++ %>, Utils.entityToString(entity.get${uppercaseFirst($attribute/@name)}()));
 	 			</c:otherwise>
 			</c:choose> 
 </c:iterate>

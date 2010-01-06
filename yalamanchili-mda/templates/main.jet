@@ -243,10 +243,40 @@
     	<java:class name="${camelCase($projectName)}Service" package="{$webPackage}rpc" template="templates/web/gwt/client/rpc/app_rpc_service.java.jet"/>
     	<java:class name="${camelCase($projectName)}ServiceAsync" package="{$webPackage}rpc" template="templates/web/gwt/client/rpc/app_rpc_service_async.java.jet"/>
     	
-    	<%-- CRUD widget classes --%>
+    	<%-- Iterate through packages and classes --%>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">	
+    		<%-- process generizations upto 2 levels and get teh parent classes if any--%>
+    		<c:setVariable select="$class/@xmi.id" var="classID"/>
+			<c:setVariable select="$class" var="parentClass1"/>
+			<c:setVariable select="$class" var="parentClass2"/>
+			<%--process generizations --%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+			 <%-- if child class--%>
+				<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+			  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+			  			<%-- get level 1 parent--%>
+			  			<c:setVariable select="$otherClass" var="parentClass1"/>
+								<%-- second round to get level 2 --%>
+								<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+								 <%-- if child class--%>
+									<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $parentClass1/@xmi.idref">
+										<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+								  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+								  			<%-- get level 2 parent--%>
+								  			<c:setVariable select="$otherClass" var="parentClass2"/>	  			
+								  			</c:if>
+										</c:iterate>  					  		 			 
+									</c:if>
+							</c:iterate>
+								  									 				
+			  			</c:if>
+					</c:iterate>  					  		 			 
+				</c:if>
+			</c:iterate>
+			<%-- CRUD and search panels--%>
     		 <%-- check to see if this is not a abstract class--%>
     		 <c:if test="$class/@isAbstract = 'false'">
     			 <c:if test="$useReflection = 'true'">
