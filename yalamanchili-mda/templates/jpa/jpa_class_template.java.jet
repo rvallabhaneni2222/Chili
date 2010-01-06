@@ -12,9 +12,11 @@
 package ${$packageName};
  
 <java:importsLocation package="{$package/@name}"/>
+<c:if test="$isGWTJPA = 'true'">
 import info.yalamanchili.gwt.ui.Position;
 import info.yalamanchili.gwt.ui.UIElement;
-
+import net.sf.gilead.pojo.java5.LightEntity;
+</c:if>
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +40,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
-import net.sf.gilead.pojo.java5.LightEntity;
+
 
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
@@ -79,7 +81,7 @@ import org.hibernate.validator.NotEmpty;
 </c:if> 
 
 @Entity
-public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name}  <c:choose select="$parentClass" > <c:when test="$class/@name" > extends  LightEntity </c:when> <c:otherwise> extends ${$parentClass}</c:otherwise>  </c:choose> <c:if test="$class/@isAbstract = 'false'">implements Serializable</c:if>{
+public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name}  <c:choose select="$parentClass" > <c:when test="$class/@name" > <c:if test="$isGWTJPA = 'true'">extends  LightEntity</c:if> </c:when> <c:otherwise> extends ${$parentClass}</c:otherwise>  </c:choose> <c:if test="$class/@isAbstract = 'false'">implements Serializable</c:if>{
 /** @generated */
 private static final long serialVersionUID = 1L;
 

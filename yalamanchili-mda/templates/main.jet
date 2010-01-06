@@ -12,6 +12,7 @@
 <c:setVariable select="'HSQL'" var="dataBase"/>
 <c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
 <c:setVariable select="'false'" var="useReflection"/>
+<c:setVariable select="'true'" var="isGWTJPA"/>
 
 	<%-- load the yalamanchiliMDA prifile--%>
 <c:load url="templates/profiles/YalamanchiliMDAProfile.xml" var="myprofile"  />
@@ -125,8 +126,10 @@
 	<ws:file path="pom.xml" template="templates/jpa/jpa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
     <c:setVariable select="concat($groupID,'.entity.')" var="jpaPackage"/>
+    	<c:if test="$isGWTJPA = 'true'">
     	<%--create gwt.xml file to include these  --%>		
     	<java:resource name="entity.gwt.xml" package="{$groupID}"  template="templates/jpa/jpa_gwtxml.template.xml.jet"/>
+    	</c:if>
     	<%--iterate through the packages and create jpa classes and enumerations --%>		
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     	 <c:setVariable select="concat($jpaPackage,$package/@name)" var="packageName"/>
