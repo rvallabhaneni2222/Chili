@@ -11,6 +11,6 @@ import org.junit.Test;
 import com.thoughtworks.selenium.DefaultSelenium;
 
 public class ${$class/@name}Test {
-	
+	//${$class/@test}
 }
 </java:format>
