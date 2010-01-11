@@ -1,0 +1,16 @@
+<java:format>
+package ${$packageName}.test;
+
+import static org.junit.Assert.assertTrue;
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.thoughtworks.selenium.DefaultSelenium;
+
+public class ${$class/@name}Test {
+	
+}
+</java:format>

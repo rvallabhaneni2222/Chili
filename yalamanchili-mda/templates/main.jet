@@ -355,4 +355,35 @@
     <ws:folder path="src/test/resources"/>
 
 </ws:project>
+<%-- creates the test project--%>
+<ws:project name="{$projectName}-test" location="C:/MDA/{$projectName}-test">
+	<ws:file path="pom.xml" template="templates/test/test_pom.xml.jet"/>
+    <ws:folder path="src/main/java">
+    </ws:folder>
+    <ws:folder path="src/main/resources">
+    </ws:folder>
+    <ws:folder path="src/test/java">
+    <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    	 <c:setVariable select="concat($jpaPackage,$package/@name)" var="packageName"/>
+			<%-- create classes in the package--%>
+			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+				<%-- process all generizations to eliminate all parent classes--%>	
+				<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+					<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $classID">
+					<%-- update flag variable--%>
+					<c:setVariable select="$class/@name" var="isParent"/>
+					</c:if>															
+				</c:iterate>	
+				<%-- check for flag varibles and add menu item class--%>	    		
+    		 	<c:if test="$isParent = $class/@xmi.id">  
+    		 	<java:class name="{$class/@name}Test" package="{$packageName}.test" template="templates/test/test_entity_class.java.jet"/>
+				</c:if>
+			</c:iterate>
+		</c:iterate>
+    </ws:folder>
+    <ws:folder path="src/test/resources">
+    
+    </ws:folder>
+
+</ws:project>
 
