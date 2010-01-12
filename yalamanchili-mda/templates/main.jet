@@ -96,8 +96,6 @@
 </c:iterate>	
 </c:iterate>
 
-
-
 <%--creates the master project--%>
 <ws:project name="{$projectName}-master" location="C:/MDA/{$projectName}-master">
 	<ws:file path="pom.xml" template="templates/master/master_pom_template.xml.jet"/>  
