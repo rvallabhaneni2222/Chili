@@ -26,20 +26,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>${$groupID}</groupId>
-			<artifactId>${$projectName}-jpa</artifactId>
-			<version>${$version}</version>
-			<classifier>sources</classifier>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>info.yalamanchili.gwt</groupId>
-			<artifactId>yalamanchili-gwt</artifactId>
-			<version>1.0</version>
-			<classifier>sources</classifier>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>info.yalamanchili.gwt</groupId>
 			<artifactId>yalamanchili-gwt</artifactId>
 			<version>1.0</version>
