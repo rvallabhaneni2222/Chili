@@ -69,6 +69,7 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite
 	 */
 	public GenericFieldCompositeWithTextBox(String labelName) {
 		label.setText(labelName);
+		textbox.setTitle(labelName);
 		configure();
 		addListeners();
 		addWidgets();
@@ -85,6 +86,7 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite
 	 */
 	public GenericFieldCompositeWithTextBox(String labelName, Boolean readOnly) {
 		label.setText(labelName);
+		textbox.setTitle(labelName);
 		if (readOnly)
 			setReadOnly(readOnly);
 		configure();
@@ -101,6 +103,7 @@ public abstract class GenericFieldCompositeWithTextBox extends Composite
 		label.addStyleName("tfFieldHeader");
 		message.addStyleName("tfErrorMessage");
 		textbox.addStyleName("tfTextBox");
+
 	}
 
 	/**

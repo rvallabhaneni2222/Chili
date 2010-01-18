@@ -22,14 +22,16 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>1.1</version>
+				<configuration>
+					<module>info.yalamanchili.yalamanchili-gwt</module>
+				</configuration>
 				<executions>
 					<execution>
-						<id>attach-sources</id>
-						<phase>verify</phase>
 						<goals>
-							<goal>jar</goal>
+							<goal>resources</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -94,14 +96,16 @@
 		<platform>windows</platform>
 	</properties>
 	<repositories>
-			<repository>
-				<id>yalamanchili</id>
-				<url> http://yalamanchili.googlecode.com/svn/maven2  </url>
-			</repository>
-			<repository>
-				<id>jboss</id>
-				<url>
+		<repository>
+			<id>yalamanchili</id>
+			<url> http://yalamanchili.googlecode.com/svn/maven2  </url>
+		</repository>
+		<repository>
+			<id>jboss</id>
+			<url>
 					http://repository.jboss.com/maven2/ </url>
-			</repository>
+		</repository>
 	</repositories>
+	
+
 </project>
