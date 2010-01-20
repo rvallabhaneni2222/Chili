@@ -1,12 +1,12 @@
 <java:format>
 package ${$genericPackage};
-import net.sf.gilead.pojo.java5.LightEntity;
+import java.io.Serializable;
 import java.util.List;
 
 public interface GenericService {
-public <T extends LightEntity> List<String> getSuggestionsForName(
+public <T extends Serializable> List<String> getSuggestionsForName(
 			String name, T entity);
-public <T extends LightEntity> List<T> getRelatedEntities(Long entityID,
+public <T extends Serializable> List<T> getRelatedEntities(Long entityID,
 			Class sourceClass, T target);
 }
 </java:format>

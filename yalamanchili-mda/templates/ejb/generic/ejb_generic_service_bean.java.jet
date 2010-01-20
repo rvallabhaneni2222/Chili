@@ -22,7 +22,7 @@ import net.sf.gilead.core.hibernate.jboss.HibernateJBossUtil;
 import net.sf.gilead.core.store.stateless.StatelessProxyStore;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import net.sf.gilead.pojo.java5.LightEntity;
+import java.io.Serializable;
 import javax.ejb.Stateless;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -42,7 +42,7 @@ private static final Log log = LogFactory
 	protected PersistentBeanManager bm;
 	
 	
-	public <T extends LightEntity> List<String> getSuggestionsForName(
+	public <T extends Serializable> List<String> getSuggestionsForName(
 			String name, T entity) {
 		Query query = entityManager.createQuery(GWTServletUtils
 				.getSuggestionsQueryForName(name, entity));
@@ -50,7 +50,7 @@ private static final Log log = LogFactory
 	}
 
 	@Override
-	public <T extends LightEntity> List<T> getRelatedEntities(Long entityID,
+	public <T extends Serializable> List<T> getRelatedEntities(Long entityID,
 			Class sourceClass, T target) {
 		Object sourceEntity = entityManager.find(sourceClass, entityID);
 		Collection<T> res = null;
