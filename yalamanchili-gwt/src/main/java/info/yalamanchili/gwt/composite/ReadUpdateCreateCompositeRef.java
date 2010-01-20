@@ -15,6 +15,7 @@ import info.yalamanchili.gwt.fields.TextAreaField;
 import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
 import info.yalamanchili.gwt.widgets.ALSuggestBox;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,8 +23,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
-
-import net.sf.gilead.pojo.java5.LightEntity;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
@@ -36,7 +35,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * The Class ReadUpdateCreateCompositeRef.
  */
-public abstract class ReadUpdateCreateCompositeRef<T extends LightEntity>
+public abstract class ReadUpdateCreateCompositeRef<T extends Serializable>
 		extends Composite {
 	protected VerticalPanel basePanel = new VerticalPanel();
 

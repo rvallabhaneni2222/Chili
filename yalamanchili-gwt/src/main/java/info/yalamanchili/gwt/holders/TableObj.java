@@ -1,12 +1,11 @@
 package info.yalamanchili.gwt.holders;
 
+import java.io.Serializable;
 import java.util.List;
-
-import net.sf.gilead.pojo.java5.LightEntity;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class TableObj<T extends LightEntity> implements IsSerializable {
+public class TableObj<T extends Serializable> implements IsSerializable {
 	Integer noOfRecords;
 	List<T> records;
 }

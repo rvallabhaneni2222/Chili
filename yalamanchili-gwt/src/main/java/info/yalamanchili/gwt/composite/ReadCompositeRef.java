@@ -1,6 +1,8 @@
 package info.yalamanchili.gwt.composite;
 
-import net.sf.gilead.pojo.java5.LightEntity;
+
+
+import java.io.Serializable;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.i18n.client.Messages;
@@ -9,7 +11,7 @@ import com.google.gwt.i18n.client.Messages;
 /**
  * The Class ReadCompositeRef.
  */
-public abstract class ReadCompositeRef<T extends LightEntity> extends
+public abstract class ReadCompositeRef<T extends Serializable> extends
 		ReadUpdateCreateCompositeRef<T> {
 
 	/**

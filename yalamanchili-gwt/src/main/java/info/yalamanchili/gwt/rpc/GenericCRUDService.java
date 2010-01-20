@@ -2,42 +2,41 @@ package info.yalamanchili.gwt.rpc;
 
 import info.yalamanchili.gwt.beans.TableObj;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-
-import net.sf.gilead.pojo.java5.LightEntity;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 public interface GenericCRUDService extends RemoteService {
-	public <T extends LightEntity> T create(T entity);
+	public <T extends Serializable> T create(T entity);
 
-	public <T extends LightEntity> void merge(T entity, T parent);
+	public <T extends Serializable> void merge(T entity, T parent);
 
-	public <T extends LightEntity> T read(T entity, Long id);
+	public <T extends Serializable> T read(T entity, Long id);
 
-	public <T extends LightEntity> T update(T entity);
+	public <T extends Serializable> T update(T entity);
 
-	public <T extends LightEntity> void delete(T entity);
+	public <T extends Serializable> void delete(T entity);
 
-	public <T extends LightEntity> TableObj<T> getTableObj(T entity, int start);
+	public <T extends Serializable> TableObj<T> getTableObj(T entity, int start);
 
-	public <T extends LightEntity> List<T> getAllEntities(T entity);
+	public <T extends Serializable> List<T> getAllEntities(T entity);
 
-	public <T extends LightEntity> List<T> getRelatedEntities(Long entityID,
+	public <T extends Serializable> List<T> getRelatedEntities(Long entityID,
 			String sourceClass, T target);
 
-	public <T extends LightEntity> List<String> getSuggestionsForName(
+	public <T extends Serializable> List<String> getSuggestionsForName(
 			String name, T entity);
 
-	public <T extends LightEntity> List<T> getEntities(T entity);
+	public <T extends Serializable> List<T> getEntities(T entity);
 
-	public <T extends LightEntity> Map<Long, String> getListBoxValues(T entity,
+	public <T extends Serializable> Map<Long, String> getListBoxValues(T entity,
 			String[] columns);
 
-	public <T extends LightEntity> void addAll(T parent, T child,
+	public <T extends Serializable> void addAll(T parent, T child,
 			List<Long> children);
 
 	public static class GenericCRUDServiceAsync {

@@ -1,23 +1,14 @@
 package info.yalamanchili.gwt.composite;
 
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
-import info.yalamanchili.gwt.fields.BooleanField;
 import info.yalamanchili.gwt.fields.DataType;
-import info.yalamanchili.gwt.fields.DateField;
-import info.yalamanchili.gwt.fields.EnumField;
-import info.yalamanchili.gwt.fields.FloatField;
-import info.yalamanchili.gwt.fields.IntegerField;
-import info.yalamanchili.gwt.fields.LongField;
-import info.yalamanchili.gwt.fields.PasswordField;
-import info.yalamanchili.gwt.fields.StringField;
 import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
 import info.yalamanchili.gwt.widgets.ALSuggestBox;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.MissingResourceException;
-
-import net.sf.gilead.pojo.java5.LightEntity;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -26,7 +17,7 @@ import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class SearchPanelCompositeGenericRef<T extends LightEntity>
+public abstract class SearchPanelCompositeGenericRef<T extends Serializable>
 		extends ReadUpdateCreateCompositeRef<T> implements ClickHandler {
 	protected Button searchB = new Button("search");
 

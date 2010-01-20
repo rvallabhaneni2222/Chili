@@ -63,18 +63,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.gilead</groupId>
-			<artifactId>adapter-core</artifactId>
-			<version>${gileadVersion}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.gilead</groupId>
-			<artifactId>adapter4gwt</artifactId>
-			<version>${gileadVersion}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.google.code.gwt-log</groupId>
 			<artifactId>gwt-log</artifactId>
 			<version>2.6.2</version>

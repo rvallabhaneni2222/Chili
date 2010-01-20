@@ -2,11 +2,10 @@ package info.yalamanchili.gwt.rpc;
 
 import info.yalamanchili.gwt.fields.DataType;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import net.sf.gilead.pojo.java5.LightEntity;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -44,7 +43,8 @@ public interface GWTServiceAsync {
 	void getEnumValues(String className, String attributeName,
 			AsyncCallback<Enum<?>[]> values);
 
-	void getClassRelations(String className, AsyncCallback<List<String>> errorMessages);
+	void getClassRelations(String className,
+			AsyncCallback<List<String>> errorMessages);
 
 	/**
 	 * Validate string field.
@@ -149,11 +149,12 @@ public interface GWTServiceAsync {
 	 * @param entity
 	 *            the entity
 	 */
-	<T extends LightEntity> void createEntityFromFields(String className,
+	<T extends Serializable> void createEntityFromFields(String className,
 			LinkedHashMap<String, Object> fields, AsyncCallback<T> entity);
 
-	<T extends LightEntity> void createEntityFromFieldsWithID(String className,
-			LinkedHashMap<String, Object> fields, AsyncCallback<T> entity);
+	<T extends Serializable> void createEntityFromFieldsWithID(
+			String className, LinkedHashMap<String, Object> fields,
+			AsyncCallback<T> entity);
 
 	/**
 	 * Update entity from fields.
@@ -165,7 +166,7 @@ public interface GWTServiceAsync {
 	 * @param entity
 	 *            the entity
 	 */
-	<T extends LightEntity> void updateEntityFromFields(T t,
+	<T extends Serializable> void updateEntityFromFields(T t,
 			LinkedHashMap<String, Object> fields, AsyncCallback<T> entity);
 
 	/**
@@ -178,7 +179,7 @@ public interface GWTServiceAsync {
 	 * 
 	 * @return the fields data from entity
 	 */
-	<T extends LightEntity> void getFieldsDataFromEntity(T t,
+	<T extends Serializable> void getFieldsDataFromEntity(T t,
 			AsyncCallback<LinkedHashMap<String, Object>> data);
 
 }

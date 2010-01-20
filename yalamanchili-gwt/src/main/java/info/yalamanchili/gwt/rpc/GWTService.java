@@ -2,11 +2,10 @@ package info.yalamanchili.gwt.rpc;
 
 import info.yalamanchili.gwt.fields.DataType;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import net.sf.gilead.pojo.java5.LightEntity;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -145,10 +144,10 @@ public interface GWTService extends RemoteService {
 	 * 
 	 * @return the t
 	 */
-	<T extends LightEntity> T createEntityFromFields(String className,
+	<T extends Serializable> T createEntityFromFields(String className,
 			LinkedHashMap<String, Object> fields);
 
-	<T extends LightEntity> T createEntityFromFieldsWithID(String className,
+	<T extends Serializable> T createEntityFromFieldsWithID(String className,
 			LinkedHashMap<String, Object> fields);
 
 	/**
@@ -161,7 +160,7 @@ public interface GWTService extends RemoteService {
 	 * 
 	 * @return the t
 	 */
-	<T extends LightEntity> T updateEntityFromFields(T t,
+	<T extends Serializable> T updateEntityFromFields(T t,
 			LinkedHashMap<String, Object> fields);
 
 	/**
@@ -172,7 +171,7 @@ public interface GWTService extends RemoteService {
 	 * 
 	 * @return the fields data from entity
 	 */
-	<T extends LightEntity> LinkedHashMap<String, Object> getFieldsDataFromEntity(
+	<T extends Serializable> LinkedHashMap<String, Object> getFieldsDataFromEntity(
 			T t);
 
 	/* Utility class to call Async secure service */

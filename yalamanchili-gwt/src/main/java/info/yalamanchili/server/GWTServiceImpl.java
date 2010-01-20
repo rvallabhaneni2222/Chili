@@ -5,8 +5,8 @@ import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.rpc.GWTService;
 import info.yalamanchili.gwt.ui.DisplayType;
 import info.yalamanchili.gwt.ui.UIElement;
-import info.yalamanchili.server.GWTServletUtils;
 
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -18,8 +18,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import net.sf.gilead.pojo.java5.LightEntity;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -247,7 +245,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return errorMessages;
 	}
 
-	public <T extends LightEntity> T createEntityFromFields(String className,
+	public <T extends Serializable> T createEntityFromFields(String className,
 			LinkedHashMap<String, Object> fields) {
 		LinkedHashMap<String, DataType> attributes = getAttributesCaps(className);
 		Class<?> entity = getEntityClass(className);
@@ -279,7 +277,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return (T) newObject;
 	}
 
-	public <T extends LightEntity> LinkedHashMap<String, Object> getFieldsDataFromEntity(
+	public <T extends Serializable> LinkedHashMap<String, Object> getFieldsDataFromEntity(
 			T t) {
 		LinkedHashMap<String, Object> flds = new LinkedHashMap<String, Object>();
 		LinkedHashMap<String, DataType> fields = getAttributes(t.getClass()
@@ -339,7 +337,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public <T extends LightEntity> T updateEntityFromFields(T entity,
+	public <T extends Serializable> T updateEntityFromFields(T entity,
 			LinkedHashMap<String, Object> fields) {
 		String className = entity.getClass().getCanonicalName();
 		LinkedHashMap<String, DataType> attributes = getAttributesCaps(className);
@@ -425,7 +423,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public <T extends LightEntity> T createEntityFromFieldsWithID(
+	public <T extends Serializable> T createEntityFromFieldsWithID(
 			String className, LinkedHashMap<String, Object> fields) {
 
 		LinkedHashMap<String, DataType> attributes = getAttributesCaps(className);
@@ -474,7 +472,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				}
 			}
 			clazz = clazz.getSuperclass();
-		} while (!clazz.equals(LightEntity.class));
+		} while (!clazz.equals(Serializable.class));
 		return classRelations;
 	}
 }

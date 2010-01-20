@@ -5,6 +5,7 @@ import info.yalamanchili.gwt.ui.DisplayType;
 import info.yalamanchili.gwt.ui.Position;
 import info.yalamanchili.gwt.ui.UIElement;
 
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -13,8 +14,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import net.sf.gilead.pojo.java5.LightEntity;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -80,7 +79,7 @@ public class GWTServletUtils {
 		return DisplayType.DEFAULT;
 	}
 
-	public static <T extends LightEntity> String getSearchQueryString(T entity) {
+	public static <T extends Serializable> String getSearchQueryString(T entity) {
 		String query = "FROM " + entity.getClass().getCanonicalName()
 				+ " WHERE ";
 		List<String> filters = new ArrayList<String>();
@@ -128,7 +127,7 @@ public class GWTServletUtils {
 		return query;
 	}
 
-	public static <T extends LightEntity> String getSuggestionsQueryForName(
+	public static <T extends Serializable> String getSuggestionsQueryForName(
 			String name, T entity) {
 		String query = "SELECT " + name + " FROM "
 				+ entity.getClass().getCanonicalName();

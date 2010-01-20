@@ -2,7 +2,8 @@ package info.yalamanchili.gwt.composite;
 
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
-import net.sf.gilead.pojo.java5.LightEntity;
+
+import java.io.Serializable;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -14,7 +15,7 @@ import com.google.gwt.user.client.ui.Button;
 /**
  * The Class UpdateCompositeRef.
  */
-public abstract class UpdateCompositeRef<T extends LightEntity> extends
+public abstract class UpdateCompositeRef<T extends Serializable> extends
 		ReadUpdateCreateCompositeRef<T> implements ClickHandler {
 
 	/** The update. */
