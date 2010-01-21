@@ -12,7 +12,7 @@
 <c:setVariable select="'HSQL'" var="dataBase"/>
 <c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
 <c:setVariable select="'false'" var="useReflection"/>
-<c:setVariable select="'true'" var="isGWTJPA"/>
+<c:setVariable select="'false'" var="isGWTJPA"/>
 
 	<%-- load the yalamanchiliMDA prifile--%>
 <c:load url="templates/profiles/YalamanchiliMDAProfile.xml" var="myprofile"  />
@@ -233,8 +233,6 @@
     	<java:class name="StatusPanel" package="{$webPackage}" template="templates/web/gwt/client/web_status_panel_template.java.jet"/>
     	
     	
-    	<%-- server GWT CRUD server class --%>
-    	<java:class name="GenericCRUDServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/web_gwtCRUDservice_class_template.java.jet"/>
     	<%-- GWT server class --%>
     	<java:class name="GWTServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/web_gwtservice_class_template.java.jet"/>
     	<%-- Abstract servlet  --%>

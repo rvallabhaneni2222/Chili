@@ -16,30 +16,31 @@ import javax.annotation.PostConstruct;
 import javax.persistence.Query;
 import javax.persistence.PersistenceUnit;
 
-
-import net.sf.gilead.core.PersistentBeanManager;
-import net.sf.gilead.core.hibernate.jboss.HibernateJBossUtil;
-import net.sf.gilead.core.store.stateless.StatelessProxyStore;
+import org.jboss.seam.annotations.Name;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import java.io.Serializable;
 import javax.ejb.Stateless;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import org.dozer.Mapper;
+import org.jboss.seam.annotations.In;
 
+@Name("genericServiceBean")
 @Stateless(name="generic")
 public class GenericServiceBean implements  GenericServiceLocal, GenericServiceRemote{
 
 private static final Log log = LogFactory
 			.getLog(GenericServiceBean.class);
 			
+				@In
+	Mapper dozerMapper;
+	
 @PersistenceUnit
 	protected EntityManagerFactory factory;
 	
 @PersistenceContext(unitName = "${$projectName}")
 	EntityManager entityManager;
-	
-	protected PersistentBeanManager bm;
 	
 	
 	public <T extends Serializable> List<String> getSuggestionsForName(
@@ -75,19 +76,11 @@ private static final Log log = LogFactory
 		}
 		if (res != null)
 			for (T entity : res) {
-				result.add((T) bm.clone(entity));
+			result.add((T) dozerMapper.map( entity, sourceClass));;
 			}
 		return result;
 	}
 	
-	@PostConstruct
-	public void initGileadManager() {
-		bm = new PersistentBeanManager();
-		HibernateJBossUtil persistenceUtil = new HibernateJBossUtil();
-		persistenceUtil.setEntityManagerFactory(factory);
-		bm.setPersistenceUtil(persistenceUtil);
-		bm.setProxyStore(new StatelessProxyStore());
-	}
 
 }
 </java:format>

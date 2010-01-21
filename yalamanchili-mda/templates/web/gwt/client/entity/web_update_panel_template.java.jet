@@ -5,10 +5,10 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.UpdateComposite;
-import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.composite.SelectComposite.SelectCompositeType;
+import info.yalamanchili.gwt.rpc.MyService.MyServiceAsync;
 
 <%-- process dropdowns one tone and many to one unidirectional--%>
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
@@ -268,7 +268,7 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 					</c:iterate>
 				</c:iterate>
 			</c:iterate>
-		GenericCRUDServiceAsync.instance().update(entity,
+		MyServiceAsync.instance().update(entity,
 				new ALAsyncCallback<${$class/@name}>() {
 					public void onResponse(${$class/@name} arg0) {
 						new ResponseStatusWidget().show("updated");

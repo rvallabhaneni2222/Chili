@@ -8,9 +8,8 @@ import ${$webPackage}${camelCase($projectName)}Welcome;
 import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.ReadAllComposite;
-import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.utils.Utils;
-
+import info.yalamanchili.gwt.rpc.MyService.MyServiceAsync;
 
 import java.util.List;
 
@@ -151,7 +150,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 	@Override
 	public void preFetchTable(int start) {
 		if (${$class/@name}TableType.READALL.equals(tableType)) {
-			GenericCRUDServiceAsync.instance().getTableObj(new ${$class/@name}(),
+			MyServiceAsync.instance().getTableObj(new ${$class/@name}(),
 					start, new ALAsyncCallback<TableObj<${$class/@name}>>() {
 
 						@Override
@@ -163,7 +162,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 					});
 		}
 		if (${$class/@name}TableType.READALL_SEARCH.equals(tableType)) {
-			GenericCRUDServiceAsync.instance().getEntities(
+			MyServiceAsync.instance().getEntities(
 					${$class/@name}SearchPanelGeneric.instance().getEntity(),
 					new ALAsyncCallback<List<${$class/@name}>>() {
 

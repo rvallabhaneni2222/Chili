@@ -2,9 +2,9 @@
 package ${$packageName}.${lower-case($class/@name)};
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
-import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
+import info.yalamanchili.gwt.rpc.MyService.MyServiceAsync;
 import info.yalamanchili.gwt.composite.SelectComposite;
 	<%-- process all many on source and non composites on target--%>
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
@@ -80,7 +80,7 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 </c:choose> 
 </c:iterate>	
 	 };
-		GenericCRUDServiceAsync.instance().getListBoxValues(new ${$class/@name}(),
+		MyServiceAsync.instance().getListBoxValues(new ${$class/@name}(),
 				columns, new ALAsyncCallback<Map<Long, String>>() {
 
 					@Override
@@ -95,7 +95,7 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 
 	@Override
 	public void getSelectedEntity(Long id) {
-		GenericCRUDServiceAsync.instance().read(new ${$class/@name}(), id,
+		MyServiceAsync.instance().read(new ${$class/@name}(), id,
 				new ALAsyncCallback<${$class/@name}>() {
 
 					@Override
@@ -155,7 +155,7 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 											</c:iterate>
 											<%-- if class is a Parent class--%>
 							    		 	<c:if test="$isParent = $class2/@name">  
-								    		 	GenericCRUDServiceAsync.instance().addAll(
+								    		 	MyServiceAsync.instance().addAll(
 												TreeAbstract${$class2/@name}Panel.instance().getEntity(), new ${$class/@name}()(), ids,
 												new ALAsyncCallback<Void>() {
 
@@ -168,7 +168,7 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 											</c:if>
 											<%-- if class is a regular  class--%>
 											<c:if test="$isParent = $class2/@xmi.id">  
-								    		 	GenericCRUDServiceAsync.instance().addAll(
+								    		 	MyServiceAsync.instance().addAll(
 												Tree${$class2/@name}Panel.instance().getEntity(), new ${$class/@name}(), ids,
 												new ALAsyncCallback<Void>() {
 

@@ -6,11 +6,10 @@ import ${$webPackage}${camelCase($projectName)}Welcome;
 import com.google.gwt.user.client.ui.DockPanel;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.ReadComposite;
-import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.utils.Alignment;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
-
+import info.yalamanchili.gwt.rpc.MyService.MyServiceAsync;
 import com.google.gwt.user.client.ui.DockPanel;
 
 public class Read${$class/@name}Panel extends ReadComposite<${$class/@name}> {
@@ -29,7 +28,7 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 
 	@Override
 	protected void readData(Long id) {
-		GenericCRUDServiceAsync.instance().read(new ${$class/@name}(), id,
+		MyServiceAsync.instance().read(new ${$class/@name}(), id,
 				new ALAsyncCallback<${$class/@name}>() {
 					@Override
 					public void onResponse(${$class/@name} ${lower-case($class/@name)}) {

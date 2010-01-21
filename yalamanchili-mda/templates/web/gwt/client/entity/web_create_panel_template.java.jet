@@ -89,11 +89,11 @@ package ${$packageName}.${lower-case($class/@name)};
 import info.yalamanchili.gwt.composite.SelectComposite.SelectCompositeType;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.CreateComposite;
-import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
 import info.yalamanchili.gwt.fields.DataType;
+import info.yalamanchili.gwt.rpc.MyService.MyServiceAsync;
 
 public class Create${$class/@name}Panel extends CreateComposite<${$class/@name}> {
 <%-- process dropdowns one tone and many to one unidirectional--%>
@@ -147,7 +147,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 
 	@Override
 	protected void createButtonClicked() {
-		GenericCRUDServiceAsync.instance().create(entity,
+		MyServiceAsync.instance().create(entity,
 				new ALAsyncCallback<${$class/@name}>() {
 					public void onResponse(${$class/@name} arg0) {
 						new ResponseStatusWidget().show("created");
@@ -415,7 +415,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 											</c:iterate>
 											<%-- if class is a Parent class--%>
 							    		 	<c:if test="$isParent = $class2/@name">  
-								    		 	GenericCRUDServiceAsync.instance().merge(entity,
+								    		 	MyServiceAsync.instance().merge(entity,
 												TreeAbstract${$class2/@name}Panel.instance().getEntity(),
 												new ALAsyncCallback<java.lang.Void>() {
 
@@ -429,7 +429,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 											</c:if>
 											<%-- if class is a regular  class--%>
 											<c:if test="$isParent = $class2/@xmi.id">  
-											GenericCRUDServiceAsync.instance().merge(entity,
+											MyServiceAsync.instance().merge(entity,
 											Tree${$class2/@name}Panel.instance().getEntity(),
 											new ALAsyncCallback<java.lang.Void>() {
 

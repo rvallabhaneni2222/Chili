@@ -3,7 +3,6 @@ package ${$packageName}.${lower-case($class/@name)};
 
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
-import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import ${$groupID}.client.${$package/@name}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel.${$class/@name}TableType;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.SearchPanelCompositeGeneric;
@@ -11,6 +10,7 @@ import com.google.gwt.user.client.ui.DockPanel;
 import java.util.List;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.widgets.ALSuggestBox;
+import info.yalamanchili.gwt.rpc.MyService.MyServiceAsync;
 
 
 public class ${$class/@name}SearchPanelGeneric extends
@@ -108,7 +108,7 @@ public class ${$class/@name}SearchPanelGeneric extends
 			<c:if test="not($class/@name = $parentClass2/@name)">
 			<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 				<c:if test="$attribute/StructuralFeature.type/DataType/@href = $StringID">
-				GenericCRUDServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
+				MyServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
 					new ${$class/@name}(), new ALAsyncCallback<List<String>>() {
 
 					@Override
@@ -125,7 +125,7 @@ public class ${$class/@name}SearchPanelGeneric extends
 			<c:if test="not($class/@name = $parentClass1/@name)">
 			<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
 				<c:if test="$attribute/StructuralFeature.type/DataType/@href = $StringID">
-				GenericCRUDServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
+				MyServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
 					new ${$class/@name}(), new ALAsyncCallback<List<String>>() {
 
 					@Override
@@ -140,7 +140,7 @@ public class ${$class/@name}SearchPanelGeneric extends
 			</c:if>
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:if test="$attribute/StructuralFeature.type/DataType/@href = $StringID">
-				GenericCRUDServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
+				MyServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
 					new ${$class/@name}(), new ALAsyncCallback<List<String>>() {
 
 					@Override

@@ -26,10 +26,9 @@
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.gilead</groupId>
-			<artifactId>adapter-core</artifactId>
-			<version>1.2.4</version>
-			<scope>provided</scope>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+			<version>5.1</version>
 		</dependency>
 	</dependencies>
 	<build>

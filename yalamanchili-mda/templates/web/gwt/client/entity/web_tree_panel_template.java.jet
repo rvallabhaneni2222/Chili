@@ -7,12 +7,11 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.TreePanelComposite;
-import info.yalamanchili.gwt.rpc.GenericCRUDService.GenericCRUDServiceAsync;
 import info.yalamanchili.gwt.widgets.ClickableLink;
 import com.google.gwt.user.client.Window;
 import java.util.List;
 import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
-				
+import info.yalamanchili.gwt.rpc.MyService.MyServiceAsync;				
 
 
 <%--process level 1 generizations --%>
@@ -180,7 +179,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 							  					  		 			if (link.contains(${$class2/@name}.class.getName())) {
-																		GenericCRUDServiceAsync.instance().getRelatedEntities(
+																		MyServiceAsync.instance().getRelatedEntities(
 																				entity.getId(), ${$class/@name}.class.getName(), new ${$class2/@name}(),
 																				new ALAsyncCallback<List<${$class2/@name}>>() {
 														
@@ -241,7 +240,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 							  					  		 			if (link.contains(${$class2/@name}.class.getName())) {
-																		GenericCRUDServiceAsync.instance().getRelatedEntities(
+																		MyServiceAsync.instance().getRelatedEntities(
 																				entity.getId(), ${$class/@name}.class.getName(), new ${$class2/@name}(),
 																				new ALAsyncCallback<List<${$class2/@name}>>() {
 														
@@ -301,7 +300,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
   					  		 			if (link.contains(${$class2/@name}.class.getName())) {
-											GenericCRUDServiceAsync.instance().getRelatedEntities(
+											MyServiceAsync.instance().getRelatedEntities(
 													entity.getId(), ${$class/@name}.class.getName(), new ${$class2/@name}(),
 													new ALAsyncCallback<List<${$class2/@name}>>() {
 							

@@ -2,11 +2,10 @@
 package ${$packageName}.${lower-case($class/@name)};
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 
-import net.sf.gilead.pojo.java5.LightEntity;
 import java.util.List;
 import java.util.Map;
 import info.yalamanchili.gwt.beans.TableObj;
-
+import java.io.Serializable;
 public interface ${$class/@name}Service {
 
     public ${$class/@name} create(${$class/@name} entity);
@@ -21,13 +20,15 @@ public interface ${$class/@name}Service {
 
 	public List<${$class/@name}> getAllEntities(${$class/@name} entity);
 
-	public <T extends LightEntity> void merge(${$class/@name} entity, T parent);
+	public <T extends Serializable> void merge(${$class/@name} entity, T parent);
 
 	public List<${$class/@name}> getEntities(${$class/@name} entity);
 
 	public Map<Long, String> getListBoxValues(String[] columns);
 
-	public <T extends LightEntity> void addAll(${$class/@name} parent, T children,
+	public <T extends Serializable> void addAll(${$class/@name} parent, T children,
 			List<Long> ids);
+			
+	public void destroy();
 }
 </java:format>

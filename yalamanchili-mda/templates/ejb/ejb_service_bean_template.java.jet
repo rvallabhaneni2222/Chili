@@ -17,35 +17,36 @@ import javax.persistence.PersistenceUnit;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.HashMap;
-
-
-import net.sf.gilead.core.PersistentBeanManager;
-import net.sf.gilead.core.hibernate.jboss.HibernateJBossUtil;
-import net.sf.gilead.core.store.stateless.StatelessProxyStore;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Destroy;
+import javax.ejb.Remove;
+import org.dozer.Mapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import net.sf.gilead.pojo.java5.LightEntity;
-
-
+import org.jboss.seam.annotations.In;
+import java.io.Serializable;
 @Stateful(name = "${lower-case($class/@name)}")
+@Name("${lower-case($class/@name)}ServiceBean")
 public class ${$class/@name}ServiceBean implements  ${$class/@name}ServiceLocal, ${$class/@name}ServiceRemote{
 
 private static final Log log = LogFactory
 			.getLog(${$class/@name}ServiceBean.class);
 			
+				@In
+	Mapper dozerMapper;
+	
 @PersistenceUnit
 	protected EntityManagerFactory factory;
 	
 @PersistenceContext(unitName = "${$projectName}")
 	protected EntityManager entityManager;
 	
-	protected PersistentBeanManager bm;
 	
 	
 
 	@Override
 	public ${$class/@name} create(${$class/@name} entity) {
-		return entityManager.merge(entity);
+		return dozerMapper.map(entityManager.merge(entity), ${$class/@name}.class);
 	}
 
 	@Override
@@ -61,7 +62,7 @@ private static final Log log = LogFactory
 		log.debug(query);
 		Query getEntitites = entityManager.createQuery(query);
 		for (Object obj : getEntitites.getResultList()) {
-			${$class/@name} clone = (${$class/@name}) bm.clone((${$class/@name}) obj);
+		${$class/@name} clone = (${$class/@name}) dozerMapper.map((${$class/@name}) obj, ${$class/@name}.class);
 			entities.add(clone);
 		}
 		return entities;
@@ -73,7 +74,7 @@ private static final Log log = LogFactory
 		Query getEntities = entityManager.createQuery(GWTServletUtils
 				.getSearchQueryString(entity));
 		for (Object obj : getEntities.getResultList()) {
-			entities.add((${$class/@name}) bm.clone(obj));
+			entities.add((${$class/@name}) dozerMapper.map((${$class/@name}) obj, ${$class/@name}.class));
 		}
 		return entities;
 	}
@@ -88,15 +89,15 @@ private static final Log log = LogFactory
 
 	@Override
 	public ${$class/@name} read(${$class/@name} entity, Long id) {
-		return entityManager.find(${$class/@name}.class, new Long(id));
+	return dozerMapper.map(entityManager.merge(entity), ${$class/@name}.class);
 	}
 
 	@Override
 	public ${$class/@name} update(${$class/@name} entity) {
-		return entityManager.merge(entity);
+		return dozerMapper.map(entityManager.merge(entity), ${$class/@name}.class);
 	}
 	
-	public <T extends LightEntity> List<${$class/@name}> getEntitiesT(${$class/@name} entity, int start) {
+	public <T extends Serializable> List<${$class/@name}> getEntitiesT(${$class/@name} entity, int start) {
 		List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
 		String query = "from " + entity.getClass().getCanonicalName();
 		log.debug(query);
@@ -104,13 +105,13 @@ private static final Log log = LogFactory
 		getEntitites.setFirstResult(start);
 		getEntitites.setMaxResults(10);
 		for (Object obj : getEntitites.getResultList()) {
-			${$class/@name} clone = (${$class/@name}) bm.clone((T) obj);
+			${$class/@name} clone = (${$class/@name}) dozerMapper.map((${$class/@name}) obj, ${$class/@name}.class);
 			entities.add(clone);
 		}
 		return entities;
 	}
 
-	public <T extends LightEntity> Long getEntitySizeT(${$class/@name} entity) {
+	public <T extends Serializable> Long getEntitySizeT(${$class/@name} entity) {
 		String query = "select count(entity) from "
 				+ entity.getClass().getCanonicalName() + " entity";
 		log.debug(query);
@@ -119,7 +120,7 @@ private static final Log log = LogFactory
 	}
 	
 	@Override
-	public <T extends LightEntity> void merge(${$class/@name} entity, T parent) {
+	public <T extends Serializable> void merge(${$class/@name} entity, T parent) {
 		${$class/@name} res = null;
 		for (Method method : entity.getClass().getMethods()) {
 			for (Class clazz : method.getParameterTypes()) {
@@ -135,7 +136,8 @@ private static final Log log = LogFactory
 						}
 					}
 					parentClass = parentClass.getSuperclass();
-				} while (!parentClass.equals(LightEntity.class));
+					//TODO fix it
+				} while (!parentClass.equals(Serializable.class));
 
 			}
 		}
@@ -157,7 +159,7 @@ private static final Log log = LogFactory
 	}
 	
 	@Override
-	public <T extends LightEntity> void addAll(${$class/@name} parent, T children,
+	public <T extends Serializable> void addAll(${$class/@name} parent, T children,
 			List<Long> ids) {
 		// find getter
 		Method addMethod = null;
@@ -184,14 +186,6 @@ private static final Log log = LogFactory
 		}
 	}
 	
-	@PostConstruct
-	public void initGileadManager() {
-		bm = new PersistentBeanManager();
-		HibernateJBossUtil persistenceUtil = new HibernateJBossUtil();
-		persistenceUtil.setEntityManagerFactory(factory);
-		bm.setPersistenceUtil(persistenceUtil);
-		bm.setProxyStore(new StatelessProxyStore());
-	}
 	
 	public EntityManager getEntityManager() {
 		return entityManager;
@@ -199,6 +193,11 @@ private static final Log log = LogFactory
 
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
+	}
+	
+	@Destroy
+	@Remove
+	public void destroy() {
 	}
 
 }

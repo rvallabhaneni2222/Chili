@@ -81,35 +81,28 @@
 			<type>zip</type>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>net.sf.gilead</groupId>
-			<artifactId>hibernate-util</artifactId>
-			<version>${'${gileadVersion}'}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.gilead</groupId>
-			<artifactId>adapter4gwt</artifactId>
-			<version>${'${gileadVersion}'}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.beanlib</groupId>
-			<artifactId>beanlib</artifactId>
-			<version>5.0.2beta</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.beanlib</groupId>
-			<artifactId>beanlib-hibernate</artifactId>
-			<version>5.0.2beta</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.gilead</groupId>
-			<artifactId>adapter-core</artifactId>
-			<version>${'${gileadVersion}'}</version>
-			<scope>provided</scope>
+				<dependency>
+			<groupId>org.jboss.seam</groupId>
+			<artifactId>jboss-seam-remoting</artifactId>
+			<version>2.2.0.GA</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>el-api</artifactId>
+					<groupId>javax.el</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>javassist</artifactId>
+					<groupId>jboss</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jboss-seam</artifactId>
+					<groupId>org.jboss.seam</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jsf-api</artifactId>
+					<groupId>javax.faces</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 	<build>
