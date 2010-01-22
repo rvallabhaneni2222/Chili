@@ -124,10 +124,8 @@
 	<ws:file path="pom.xml" template="templates/jpa/jpa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
     <c:setVariable select="concat($groupID,'.entity.')" var="jpaPackage"/>
-    	<c:if test="$isGWTJPA = 'true'">
     	<%--create gwt.xml file to include these  --%>		
     	<java:resource name="entity.gwt.xml" package="{$groupID}"  template="templates/jpa/jpa_gwtxml.template.xml.jet"/>
-    	</c:if>
     	<%--iterate through the packages and create jpa classes and enumerations --%>		
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     	 <c:setVariable select="concat($jpaPackage,$package/@name)" var="packageName"/>
@@ -161,29 +159,30 @@
      <c:setVariable select="concat($groupID,'.ejb.')" var="ejbPackage"/>
      <c:setVariable select="concat($groupID,'.ejb')" var="genericPackage"/>		
      		<%-- Generic EJB interface--%>
-			<java:class name="GenericService" package="{$genericPackage}" template="templates/ejb/generic/ejb_generic_service_interface.java.jet"/>
+			<java:class name="GenericService" package="{$genericPackage}" template="templates/ejb/main/ejb_generic_service_interface.java.jet"/>
 			<%-- Generic EJB Local interface--%>
-			<java:class name="GenericServiceLocal" package="{$genericPackage}" template="templates/ejb/generic/ejb_generic_service_local.java.jet"/>
+			<java:class name="GenericServiceLocal" package="{$genericPackage}" template="templates/ejb/main/ejb_generic_service_local.java.jet"/>
 			<%-- Generic EJB Remote interface--%>
-			<java:class name="GenericServiceRemote" package="{$genericPackage}" template="templates/ejb/generic/ejb_generic_service_remote.java.jet"/>
+			<java:class name="GenericServiceRemote" package="{$genericPackage}" template="templates/ejb/main/ejb_generic_service_remote.java.jet"/>
 			<%-- Generic EJB Service Impl class--%>
-			<java:class name="GenericServiceBean" package="{$genericPackage}" template="templates/ejb/generic/ejb_generic_service_bean.java.jet"/>
+			<java:class name="GenericServiceBean" package="{$genericPackage}" template="templates/ejb/main/ejb_generic_service_bean.java.jet"/>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     	 <c:setVariable select="concat($ejbPackage,$package/@name)" var="packageName"/>	
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
     		<%-- CRUD EJB interface--%>
-			<java:class name="{$class/@name}Service" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/ejb_service_template.java.jet"/>
+			<java:class name="{$class/@name}Service" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/main/ejb_service_template.java.jet"/>
 			<%-- CRUD EJB Local interface--%>
-			<java:class name="{$class/@name}ServiceLocal" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/ejb_service_local_template.java.jet"/>
+			<java:class name="{$class/@name}ServiceLocal" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/main/ejb_service_local_template.java.jet"/>
 			<%-- CRUD EJB Remote interface--%>
-			<java:class name="{$class/@name}ServiceRemote" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/ejb_service_remote_template.java.jet"/>
+			<java:class name="{$class/@name}ServiceRemote" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/main/ejb_service_remote_template.java.jet"/>
 			<%-- CRUD EJB Service Impl class--%>
-			<java:class name="{$class/@name}ServiceBean" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/ejb_service_bean_template.java.jet"/>
+			<java:class name="{$class/@name}ServiceBean" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/main/ejb_service_bean_template.java.jet"/>
 			</c:iterate>
 		</c:iterate>
     </ws:folder>
     <ws:folder path="src/main/resources">
-   
+   <ws:file template="templates/ejb/main/resources/META-INF/ejb_components.xml.jet" path="META-INF/components.xml"/>
+   <ws:file template="templates/ejb/main/resources/META-INF/ejb_jar.xml.jet" path="META-INF/ejb-jar.xml"/>
     </ws:folder>
     <ws:folder path="src/test/java">
     <c:setVariable select="concat($groupID,'.ejb.')" var="ejbPackage"/>
@@ -232,11 +231,10 @@
     	<%--  Status panel class --%>
     	<java:class name="StatusPanel" package="{$webPackage}" template="templates/web/gwt/client/web_status_panel_template.java.jet"/>
     	
-    	
+    	<%--seam crud server impl --%>
+    	<java:class name="ServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/seam_crud_service.java.jet"/>
     	<%-- GWT server class --%>
     	<java:class name="GWTServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/web_gwtservice_class_template.java.jet"/>
-    	<%-- Abstract servlet  --%>
-    	<java:class name="Abstract${camelCase($projectName)}Services" package="{$groupID}.server" template="templates/web/gwt/server/web_abstractservices_class_template.java.jet"/>
     	<%-- Current project servlet  --%>
     	<java:class name="${camelCase($projectName)}ServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/web_rpc_service_impl.java.jet"/>
     	<%-- RPC  --%>
@@ -337,6 +335,7 @@
     </ws:folder>
     <ws:folder path="src/main/resources">
      <ws:file template="templates/web/webapp_appxml_template.properties.jet" path="{$projectName}.properties"/>
+     <ws:file template="templates/web/seam.properties.jet" path="seam.properties"/>
     </ws:folder>
     <ws:folder path="src/main/webapp">
     	<ws:file template="templates/web/webapp/web_indexhtml_template.html.jet" path="index.html"/>

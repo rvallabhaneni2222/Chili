@@ -30,34 +30,6 @@
 			<artifactId>yalamanchili-gwt</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
-		<!-- WebAuthentication class -->
-		<dependency>
-			<groupId>jboss</groupId>
-			<artifactId>jbossweb-service</artifactId>
-			<version>4.2.3</version>
-			<scope>provided</scope>
-		</dependency>
-		<!--
-			for org.jboss.jpa.injection.InjectedEntityManagerFactory to inject
-			gilead
-		-->
-		<dependency>
-			<groupId>jboss</groupId>
-			<artifactId>jboss-jpa-deployers</artifactId>
-			<version>5.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<!-- Apache fileupload -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>1.4</version>
-		</dependency>
 		<dependency>
 			<groupId>com.google.code.gwt-log</groupId>
 			<artifactId>gwt-log</artifactId>
@@ -85,24 +57,6 @@
 			<groupId>org.jboss.seam</groupId>
 			<artifactId>jboss-seam-remoting</artifactId>
 			<version>2.2.0.GA</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>el-api</artifactId>
-					<groupId>javax.el</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>javassist</artifactId>
-					<groupId>jboss</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-seam</artifactId>
-					<groupId>org.jboss.seam</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jsf-api</artifactId>
-					<groupId>javax.faces</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 	<build>
@@ -170,10 +124,6 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<repositories>
-		<repository>
-			<id>gwt-maven</id>
-			<url> http://gwt-maven.googlecode.com/svn/trunk/mavenrepo </url>
-		</repository>
 	</repositories>
 	<properties>
 		<gwtVersion>1.7.0</gwtVersion>
