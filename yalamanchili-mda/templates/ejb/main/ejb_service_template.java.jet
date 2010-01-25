@@ -10,15 +10,13 @@ public interface ${$class/@name}Service {
 
     public ${$class/@name} create(${$class/@name} entity);
 
-	public ${$class/@name} read(${$class/@name} entity, Long id);
+	public ${$class/@name} read(Long id);
 
 	public ${$class/@name} update(${$class/@name} entity);
 
 	public void delete(${$class/@name} entity);
 
-	public TableObj getTableObj(${$class/@name} entity, int start);
-
-	public List<${$class/@name}> getAllEntities(${$class/@name} entity);
+	public TableObj<${$class/@name}> getTableObj(int start);
 
 	public <T extends Serializable> void merge(${$class/@name} entity, T parent);
 
@@ -26,7 +24,7 @@ public interface ${$class/@name}Service {
 
 	public Map<Long, String> getListBoxValues(String[] columns);
 
-	public <T extends Serializable> void addAll(${$class/@name} parent, T children,
+	public <T extends Serializable> void addAll(T parent, T children,
 			List<Long> ids);
 			
 	public void destroy();

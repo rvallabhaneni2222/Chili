@@ -10,7 +10,6 @@ import com.google.gwt.user.client.ui.DockPanel;
 import java.util.List;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.widgets.ALSuggestBox;
-import info.yalamanchili.gwt.rpc.MyService.MyServiceAsync;
 
 
 public class ${$class/@name}SearchPanelGeneric extends
@@ -108,7 +107,7 @@ public class ${$class/@name}SearchPanelGeneric extends
 			<c:if test="not($class/@name = $parentClass2/@name)">
 			<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 				<c:if test="$attribute/StructuralFeature.type/DataType/@href = $StringID">
-				MyServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
+				${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
 					new ${$class/@name}(), new ALAsyncCallback<List<String>>() {
 
 					@Override
@@ -125,7 +124,7 @@ public class ${$class/@name}SearchPanelGeneric extends
 			<c:if test="not($class/@name = $parentClass1/@name)">
 			<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
 				<c:if test="$attribute/StructuralFeature.type/DataType/@href = $StringID">
-				MyServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
+				${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
 					new ${$class/@name}(), new ALAsyncCallback<List<String>>() {
 
 					@Override
@@ -140,7 +139,7 @@ public class ${$class/@name}SearchPanelGeneric extends
 			</c:if>
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:if test="$attribute/StructuralFeature.type/DataType/@href = $StringID">
-				MyServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
+				${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getSuggestionsForName("${$attribute/@name}",
 					new ${$class/@name}(), new ALAsyncCallback<List<String>>() {
 
 					@Override

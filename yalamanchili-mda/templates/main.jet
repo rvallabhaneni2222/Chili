@@ -231,15 +231,8 @@
     	<%--  Status panel class --%>
     	<java:class name="StatusPanel" package="{$webPackage}" template="templates/web/gwt/client/web_status_panel_template.java.jet"/>
     	
-    	<%--seam crud server impl --%>
-    	<java:class name="ServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/seam_crud_service.java.jet"/>
     	<%-- GWT server class --%>
     	<java:class name="GWTServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/web_gwtservice_class_template.java.jet"/>
-    	<%-- Current project servlet  --%>
-    	<java:class name="${camelCase($projectName)}ServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/web_rpc_service_impl.java.jet"/>
-    	<%-- RPC  --%>
-    	<java:class name="${camelCase($projectName)}Service" package="{$webPackage}rpc" template="templates/web/gwt/client/rpc/app_rpc_service.java.jet"/>
-    	<java:class name="${camelCase($projectName)}ServiceAsync" package="{$webPackage}rpc" template="templates/web/gwt/client/rpc/app_rpc_service_async.java.jet"/>
     	
     	<%-- Iterate through packages and classes --%>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
@@ -290,6 +283,12 @@
 				<java:class name="ReadAll{$class/@name}sPanel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/ref/web_readall_panel_ref_template.java.jet"/>
 				</c:if>
 				<c:if test="$useReflection = 'false'">
+					<%--rpc sync class --%>
+					<java:class name="{$class/@name}Service" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/rpc/entity_service_sync.java.jet"/>
+					<%--rpc async class --%>
+					<java:class name="{$class/@name}ServiceAsync" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/rpc/entity_service_async.java.jet"/>
+					<%--service class impl --%>
+					<java:class name="${$class/@name}ServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/entity_service_impl.java.jet"/>
 		    		 <%-- Create Entity Panel--%>
 					 <java:class name="Create{$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_create_panel_template.java.jet"/>
 					 <%-- Generic Search Panel--%>

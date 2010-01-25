@@ -1,9 +1,0 @@
-<java:format>
-package ${$webPackage}rpc;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
-public interface ${camelCase($projectName)}ServiceAsync  {
-	public void sayHello(String message,AsyncCallback<String> callback);
-}
-</java:format>

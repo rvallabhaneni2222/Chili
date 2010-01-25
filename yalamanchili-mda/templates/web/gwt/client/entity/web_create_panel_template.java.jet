@@ -93,7 +93,7 @@ import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
 import info.yalamanchili.gwt.fields.DataType;
-import info.yalamanchili.gwt.rpc.MyService.MyServiceAsync;
+
 
 public class Create${$class/@name}Panel extends CreateComposite<${$class/@name}> {
 <%-- process dropdowns one tone and many to one unidirectional--%>
@@ -147,7 +147,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 
 	@Override
 	protected void createButtonClicked() {
-		MyServiceAsync.instance().create(entity,
+		${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().create(entity,
 				new ALAsyncCallback<${$class/@name}>() {
 					public void onResponse(${$class/@name} arg0) {
 						new ResponseStatusWidget().show("created");
@@ -415,7 +415,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 											</c:iterate>
 											<%-- if class is a Parent class--%>
 							    		 	<c:if test="$isParent = $class2/@name">  
-								    		 	MyServiceAsync.instance().merge(entity,
+								    		 	${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().merge(entity,
 												TreeAbstract${$class2/@name}Panel.instance().getEntity(),
 												new ALAsyncCallback<java.lang.Void>() {
 
@@ -429,7 +429,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 											</c:if>
 											<%-- if class is a regular  class--%>
 											<c:if test="$isParent = $class2/@xmi.id">  
-											MyServiceAsync.instance().merge(entity,
+											${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().merge(entity,
 											Tree${$class2/@name}Panel.instance().getEntity(),
 											new ALAsyncCallback<java.lang.Void>() {
 

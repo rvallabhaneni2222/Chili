@@ -55,18 +55,6 @@ private static final Log log = LogFactory
 
 	}
 
-	@Override
-	public List<${$class/@name}> getAllEntities(${$class/@name} entity) {
-		List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
-		String query = "from " + entity.getClass().getCanonicalName();
-		log.debug(query);
-		Query getEntitites = entityManager.createQuery(query);
-		for (Object obj : getEntitites.getResultList()) {
-		${$class/@name} clone = (${$class/@name}) dozerMapper.map((${$class/@name}) obj, ${$class/@name}.class);
-			entities.add(clone);
-		}
-		return entities;
-	}
 
 	@Override
 	public List<${$class/@name}> getEntities(${$class/@name} entity) {
@@ -80,16 +68,16 @@ private static final Log log = LogFactory
 	}
 
 	@Override
-	public TableObj getTableObj(${$class/@name} entity, int start) {
+	public TableObj getTableObj(int start) {
 		TableObj<${$class/@name}> tableObj = new TableObj<${$class/@name}>();
-		tableObj.setNumberOfRecords(getEntitySizeT(entity));
-		tableObj.setRecords(getEntitiesT(entity, start));
+		tableObj.setNumberOfRecords(getEntitySizeT(new ${$class/@name}()));
+		tableObj.setRecords(getEntitiesT(new ${$class/@name}(), start));
 		return tableObj;
 	}
 
 	@Override
-	public ${$class/@name} read(${$class/@name} entity, Long id) {
-	return dozerMapper.map(entityManager.merge(entity), ${$class/@name}.class);
+	public ${$class/@name} read( Long id) {
+	return dozerMapper.map(entityManager.find(${$class/@name}.class,id), ${$class/@name}.class);
 	}
 
 	@Override
@@ -136,8 +124,7 @@ private static final Log log = LogFactory
 						}
 					}
 					parentClass = parentClass.getSuperclass();
-					//TODO fix it
-				} while (!parentClass.equals(Serializable.class));
+				} while (parentClass!=null);
 
 			}
 		}
@@ -159,7 +146,7 @@ private static final Log log = LogFactory
 	}
 	
 	@Override
-	public <T extends Serializable> void addAll(${$class/@name} parent, T children,
+	public <T extends Serializable> void addAll(T parent, T children,
 			List<Long> ids) {
 		// find getter
 		Method addMethod = null;

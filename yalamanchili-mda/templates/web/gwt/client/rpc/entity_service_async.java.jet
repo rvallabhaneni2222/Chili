@@ -1,0 +1,56 @@
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+
+import info.yalamanchili.gwt.beans.TableObj;
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.RemoteService;
+
+/**
+ * This is the interface the client code uses. You NEVER implement this
+ * directly, GWT does this for you, and calls are marshalled through to the Sync
+ * equivalent method in MyService on the server (which is a Seam component).
+ */
+public interface ${$class/@name}ServiceAsync extends RemoteService {
+
+	public void create(${$class/@name} entity,
+			AsyncCallback<${$class/@name}> response);
+
+
+	public  void read( Long id,
+			AsyncCallback<${$class/@name}> response);
+
+	public void update(${$class/@name} entity,
+			AsyncCallback<${$class/@name}> response);
+
+	public void delete(${$class/@name} entity,
+			AsyncCallback<java.lang.Void> response);
+
+	public  void getTableObj(int start,
+			AsyncCallback<TableObj<${$class/@name}>> response);
+			
+	public <T extends Serializable> void merge(${$class/@name} entity, T child,AsyncCallback<java.lang.Void> response);
+			
+	public  void getSuggestionsForName(String name,
+			${$class/@name} entity, AsyncCallback<List<String>> response);
+
+	public  void getEntities(${$class/@name} entity,
+			AsyncCallback<List<${$class/@name}>> response);
+
+	public <T extends Serializable> void getRelatedEntities(Long entityID,
+			String sourceClass, T target, AsyncCallback<List<T>> response);
+
+	public <T extends Serializable> void getListBoxValues(T entity,
+			String[] columns, AsyncCallback<Map<Long, String>> response);
+
+	public <T extends Serializable> void addAll(T parent, T child,
+			List<Long> children, AsyncCallback<java.lang.Void> response);		
+			
+
+
+}
+</java:format>

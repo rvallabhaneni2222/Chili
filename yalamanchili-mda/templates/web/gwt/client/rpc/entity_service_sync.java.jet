@@ -1,0 +1,63 @@
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+
+import info.yalamanchili.gwt.beans.TableObj;
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
+
+/**
+ * This is a GWT service, which will be implemented as a Seam component on the
+ * server (see the server package). GWT uses strongly typed RPC interfaces.
+ */
+public interface ${$class/@name}Service extends RemoteService {
+	public ${$class/@name} create(${$class/@name} entity);
+	
+	public  ${$class/@name} read( Long id);
+
+	public  ${$class/@name} update(${$class/@name} entity);
+
+	public  void delete(${$class/@name} entity);
+	
+	public TableObj<${$class/@name}> getTableObj(int start);
+	
+	public <T extends Serializable> void merge(${$class/@name} entity, T child);
+	
+	public <T extends Serializable> List<T> getRelatedEntities(Long entityID,
+			String sourceClass, T target);
+
+	public  List<String> getSuggestionsForName(
+			String name, ${$class/@name} entity);
+
+	public <T extends Serializable> List<${$class/@name}> getEntities(${$class/@name} entity);
+
+	public <T extends Serializable> Map<Long, String> getListBoxValues(
+			T entity, String[] columns);
+
+	public <T extends Serializable> void addAll(T parent, T child,
+			List<Long> children);
+
+	public static class ${$class/@name}ServiceAsync {
+		private static ${$packageName}.${lower-case($class/@name)}.${$class/@name}ServiceAsync service;
+
+		public static synchronized ${$packageName}.${lower-case($class/@name)}.${$class/@name}ServiceAsync instance() {
+			if (service == null) {
+				service = (${$packageName}.${lower-case($class/@name)}.${$class/@name}ServiceAsync) GWT
+						.create(${$class/@name}Service.class);
+				ServiceDefTarget endpoint = (ServiceDefTarget) service;
+				String moduleRelativeURL = GWT.getModuleBaseURL()
+						+ "seam/resource/gwt";
+				endpoint.setServiceEntryPoint(moduleRelativeURL);
+			}
+			return service;
+		}
+	}
+
+}
+</java:format>

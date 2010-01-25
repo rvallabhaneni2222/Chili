@@ -9,7 +9,6 @@ import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.ReadAllComposite;
 import info.yalamanchili.gwt.utils.Utils;
-import info.yalamanchili.gwt.rpc.MyService.MyServiceAsync;
 
 import java.util.List;
 
@@ -150,8 +149,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 	@Override
 	public void preFetchTable(int start) {
 		if (${$class/@name}TableType.READALL.equals(tableType)) {
-			MyServiceAsync.instance().getTableObj(new ${$class/@name}(),
-					start, new ALAsyncCallback<TableObj<${$class/@name}>>() {
+			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getTableObj(start, new ALAsyncCallback<TableObj<${$class/@name}>>() {
 
 						@Override
 						public void onResponse(TableObj<${$class/@name}> tableObj) {
@@ -162,7 +160,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 					});
 		}
 		if (${$class/@name}TableType.READALL_SEARCH.equals(tableType)) {
-			MyServiceAsync.instance().getEntities(
+			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getEntities(
 					${$class/@name}SearchPanelGeneric.instance().getEntity(),
 					new ALAsyncCallback<List<${$class/@name}>>() {
 
