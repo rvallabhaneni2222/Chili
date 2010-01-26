@@ -1,0 +1,29 @@
+<java:format>
+
+package ${$groupID}.client;
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
+import info.yalamanchili.gwt.widgets.CreateUserAbstract;
+import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
+import info.yalamanchili.project.client.rpc.AutomanageService.AutomanageServiceAsync;
+
+public class CreateUserPanel extends CreateUserAbstract {
+
+	@Override
+	public void createUserClicked() {
+		${camelCase($projectName)}ServiceAsync.instance().createUser(usernameTF.getText(),
+				passwordTF.getPassword(), new ALAsyncCallback<Boolean>() {
+
+					@Override
+					public void onResponse(Boolean arg0) {
+						if (arg0) {
+							new ResponseStatusWidget().show("new User created");
+						}
+
+					}
+
+				});
+
+	}
+
+}
+</java:format>

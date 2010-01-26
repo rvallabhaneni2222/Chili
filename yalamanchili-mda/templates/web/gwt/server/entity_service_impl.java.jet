@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.EntityManager;
 
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
@@ -38,6 +39,9 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 
 	@In(create = true)
 	protected ${$class/@name}ServiceLocal ${lower-case($class/@name)}ServiceBean;
+	
+	@In(create = true)
+	protected EntityManager em;
 	
 	@Override
 	@WebRemote

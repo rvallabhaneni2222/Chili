@@ -1,15 +1,24 @@
 <java:format>
 
 package ${$groupID}.client;
-
+import com.google.gwt.user.client.Window;
 import info.yalamanchili.gwt.widgets.LoginPanelAbstract;
-
-
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
+import ${$webPackage}rpc.${camelCase($projectName)}Service.${camelCase($projectName)}ServiceAsync;
 public class LoginPanel extends LoginPanelAbstract {
 
 	@Override
 	protected void loginClicked() {
-		// TODO Auto-generated method stub
+		${camelCase($projectName)}ServiceAsync.instance().login(usernameTb.getText(),
+				passwordTb.getText(), new ALAsyncCallback<Boolean>() {
+
+					@Override
+					public void onResponse(Boolean arg0) {
+						Window.alert("login success");
+
+					}
+
+				});
 		
 	}
 

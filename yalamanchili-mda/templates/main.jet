@@ -214,6 +214,12 @@
     	<java:resource name="{$projectName}.gwt.xml" package="{$groupID}"  template="templates/web/gwt/web_gwtxml_template.xml.jet"/>
     	<c:setVariable select="concat($groupID,'.client.')" var="webPackage"/>
     	
+    	<%-- RPC  --%>
+    	<java:class name="${camelCase($projectName)}Service" package="{$webPackage}rpc" template="templates/web/gwt/client/rpc/app_service_sync.java.jet"/>
+    	<java:class name="${camelCase($projectName)}ServiceAsync" package="{$webPackage}rpc" template="templates/web/gwt/client/rpc/app_service_async.java.jet"/>
+    	<%-- Current project servlet  --%>
+    	<java:class name="${camelCase($projectName)}ServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/app_service_impl.java.jet"/>
+    	
 		<%-- gwt messages and constants files--%>
 		<java:resource name="${camelCase($projectName)}Constants.properties" package="{$webPackage}internalization"  template="templates/web/gwt/client/internalization/web_gwt_constants.properties.jet"/>
 		<java:resource name="${camelCase($projectName)}Messages.properties" package="{$webPackage}internalization"  template="templates/web/gwt/client/internalization/web_gwt_messages.properties.jet"/>
@@ -228,6 +234,8 @@
     	<java:class name="Roles" package="{$webPackage}" template="templates/web/gwt/client/web_roles_enum_template.java.jet"/>
     	<%--  Login panel class --%>
     	<java:class name="LoginPanel" package="{$webPackage}" template="templates/web/gwt/client/web_login_panel_template.java.jet"/>
+    	<%--  create user class --%>
+    	<java:class name="CreateUserPanel" package="{$webPackage}" template="templates/web/gwt/client/web_create_user.java.jet"/>
     	<%--  Status panel class --%>
     	<java:class name="StatusPanel" package="{$webPackage}" template="templates/web/gwt/client/web_status_panel_template.java.jet"/>
     	
@@ -341,6 +349,7 @@
     		<ws:folder path="WEB-INF">
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_webxml_template.xml.jet" path="web.xml"/>
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_jboss-app_template.xml.jet" path="jboss-web.xml"/>
+    	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_components.xml.jet" path="components.xml"/>
     		</ws:folder>
     </ws:folder>
     <ws:folder path="src/test/java">

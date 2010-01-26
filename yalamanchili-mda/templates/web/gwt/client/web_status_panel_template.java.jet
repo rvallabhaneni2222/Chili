@@ -5,14 +5,18 @@ package ${$groupID}.client;
 
 
 import info.yalamanchili.gwt.widgets.AbstractStatusPanel;
-
+import com.google.gwt.user.client.Window;
 import com.google.gwt.event.dom.client.ClickEvent;
 
 public class StatusPanel extends AbstractStatusPanel {
 
 	@Override
 	protected void loginClicked() {
-		// TODO Auto-generated method stub
+		LoginPanel loginPanel = new LoginPanel();
+		int left = Window.getClientWidth() / 3;
+		int top = Window.getClientHeight() / 3;
+		loginPanel.setPopupPosition(left, top);
+		loginPanel.show();
 
 	}
 
@@ -23,14 +27,12 @@ public class StatusPanel extends AbstractStatusPanel {
 	}
 
 	@Override
-	public void onClick(ClickEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	protected void createUserClicked() {
-		// TODO Auto-generated method stub
+		CreateUserPanel createUserPanel = new CreateUserPanel();
+		int left = Window.getClientWidth() / 3;
+		int top = Window.getClientHeight() / 3;
+		createUserPanel.setPopupPosition(left, top);
+		createUserPanel.show();
 		
 	}
 
