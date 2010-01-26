@@ -2,12 +2,12 @@ package info.yalamanchili.gwt.widgets;
 
 import info.yalamanchili.gwt.composite.ALComposite;
 
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
 
 public abstract class AbstractStatusPanel extends ALComposite implements
 		ClickHandler {
@@ -54,7 +54,7 @@ public abstract class AbstractStatusPanel extends ALComposite implements
 				HasHorizontalAlignment.ALIGN_RIGHT);
 		statusBar.getCellFormatter().setHorizontalAlignment(1, 1,
 				HasHorizontalAlignment.ALIGN_CENTER);
-		
+
 	}
 
 	@Override
@@ -65,22 +65,23 @@ public abstract class AbstractStatusPanel extends ALComposite implements
 		statusBar.setWidget(1, 2, loginLink);
 	}
 
-	public void onClick(Widget widget) {
-		if (widget == loginLink) {
-			loginClicked();
-		}
-		if (widget == logoutLink) {
-			logoutClicked();
-		}
-		if (widget == createUserLink) {
-			createUserClicked();
-		}
-
-	}
-
 	protected abstract void loginClicked();
 
 	protected abstract void logoutClicked();
 
 	protected abstract void createUserClicked();
+
+	@Override
+	public void onClick(ClickEvent event) {
+		if (event.getSource().equals(loginLink)) {
+			loginClicked();
+		}
+		if (event.getSource().equals(logoutLink)) {
+			logoutClicked();
+		}
+		if (event.getSource().equals(createUserLink)) {
+			createUserClicked();
+		}
+
+	}
 }

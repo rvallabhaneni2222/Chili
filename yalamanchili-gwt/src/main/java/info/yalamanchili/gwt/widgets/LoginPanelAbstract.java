@@ -15,10 +15,10 @@ public abstract class LoginPanelAbstract extends PopupPanel {
 	Grid loginGrid = new Grid(3, 2);
 
 	Label usernameL = new Label("Username");
-	TextBox usernameTb = new TextBox();
+	protected TextBox usernameTb = new TextBox();
 
 	Label passwordL = new Label("Password");
-	PasswordTextBox passwordTb = new PasswordTextBox();
+	protected PasswordTextBox passwordTb = new PasswordTextBox();
 
 	Button loginB = new Button("Login");
 
