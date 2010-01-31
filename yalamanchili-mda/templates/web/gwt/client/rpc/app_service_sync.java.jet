@@ -1,4 +1,5 @@
 <java:format>
+
 package ${$webPackage}rpc;
 
 
@@ -12,10 +13,12 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
  * server (see the server package). GWT uses strongly typed RPC interfaces.
  */
 public interface ${camelCase($projectName)}Service extends RemoteService {
-	public Boolean login(String userName,String password);
+	public String login(String userName,String password);
 	
 	public Boolean createUser(String username, String password);
 
+	public void logout();
+	
 	public static class ${camelCase($projectName)}ServiceAsync {
 		private static ${$webPackage}rpc.${camelCase($projectName)}ServiceAsync service;
 

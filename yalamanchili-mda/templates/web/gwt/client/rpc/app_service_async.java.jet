@@ -13,10 +13,12 @@ import com.google.gwt.user.client.rpc.RemoteService;
 public interface ${camelCase($projectName)}ServiceAsync extends RemoteService {
 
 	public void login(String username,String password,
-			AsyncCallback<Boolean> response);
+			AsyncCallback<String> response);
 
 	public void createUser(String username, String password,
 			AsyncCallback<Boolean> response);
+			
+	public void logout(AsyncCallback<java.lang.Void> response);
 
 }
 </java:format>
