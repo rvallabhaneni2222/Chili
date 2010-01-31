@@ -3,10 +3,12 @@
 package ${$groupID}.client;
 
 
-
+import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import info.yalamanchili.gwt.widgets.AbstractStatusPanel;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.event.dom.client.ClickEvent;
+import ${$webPackage}rpc.${camelCase($projectName)}Service.${camelCase($projectName)}ServiceAsync;
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
 
 public class StatusPanel extends AbstractStatusPanel {
 
@@ -19,11 +21,23 @@ public class StatusPanel extends AbstractStatusPanel {
 		loginPanel.show();
 
 	}
+	
+	public void loginSuccessfull() {
+		statusBar.remove(loginLink);
+		statusBar.setWidget(1, 2, logoutLink);
+	}
 
 	@Override
 	protected void logoutClicked() {
-		// TODO Auto-generated method stub
+		${camelCase($projectName)}ServiceAsync.instance().logout(new ALAsyncCallback<Void>() {
 
+			@Override
+			public void onResponse(Void arg0) {
+				new ResponseStatusWidget().show("logged out successfully");
+
+			}
+
+		});
 	}
 
 	@Override
