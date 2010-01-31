@@ -81,8 +81,7 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 </c:choose> 
 </c:iterate>	
 	 };
-		${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getListBoxValues(new ${$class/@name}(),
-				columns, new ALAsyncCallback<Map<Long, String>>() {
+		${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getListBoxValues(columns, new ALAsyncCallback<Map<Long, String>>() {
 
 					@Override
 					public void onResponse(Map<Long, String> arg0) {
