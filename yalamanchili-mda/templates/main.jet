@@ -297,6 +297,7 @@
 					<java:class name="{$class/@name}ServiceAsync" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/rpc/entity_service_async.java.jet"/>
 					<%--service class impl --%>
 					<java:class name="${$class/@name}ServiceImpl" package="{$groupID}.server" template="templates/web/gwt/server/entity_service_impl.java.jet"/>
+					
 		    		 <%-- Create Entity Panel--%>
 					 <java:class name="Create{$class/@name}Panel" package="{$packageName}.{lower-case($class/@name)}" template="templates/web/gwt/client/entity/web_create_panel_template.java.jet"/>
 					 <%-- Generic Search Panel--%>
