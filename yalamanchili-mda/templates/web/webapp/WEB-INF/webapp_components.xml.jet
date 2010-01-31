@@ -12,7 +12,6 @@
                  http://jboss.com/products/seam/web http://jboss.com/products/seam/web-2.2.xsd
                  http://jboss.com/products/seam/components http://jboss.com/products/seam/components-2.2.xsd">
 
-
 	<security:jpa-identity-store user-class="info.yalamanchili.project.entity.security.User"
 		role-class="info.yalamanchili.project.entity.security.Role" entity-manager="#{em}" />
 		
