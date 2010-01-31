@@ -83,14 +83,13 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 
 	@Override
 	@WebRemote
-	public <T extends Serializable> List<${$class/@name}> getEntities(${$class/@name} entity) {
+	public List<${$class/@name}> getEntities(${$class/@name} entity) {
 		return ${lower-case($class/@name)}ServiceBean.getEntities(entity);
 	}
 
 	@Override
 	@WebRemote
-	public <T extends Serializable> Map<Long, String> getListBoxValues(
-			T entity, String[] columns) {
+	public  Map<Long, String> getListBoxValues(String[] columns) {
 		return ${lower-case($class/@name)}ServiceBean.getListBoxValues(columns);
 	}
 
