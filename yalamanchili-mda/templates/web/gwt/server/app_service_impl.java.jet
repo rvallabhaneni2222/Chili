@@ -9,6 +9,12 @@ import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.remoting.WebRemote;
+import org.jboss.seam.security.Identity;
+import ${$groupID}.entity.security.Role;
+import ${$groupID}.entity.security.User;
+
+
+import javax.persistence.Query;
 
 @Name("${$webPackage}rpc.${camelCase($projectName)}Service")
 public class ${camelCase($projectName)}ServiceImpl implements ${$webPackage}rpc.${camelCase($projectName)}Service {
@@ -19,16 +25,46 @@ public class ${camelCase($projectName)}ServiceImpl implements ${$webPackage}rpc.
 	 @In(create = true)
 	 protected IdentityManager identityManager;
 	 
+	 @In(create = true)
+	Identity identity;
+	
 	@Override
 	@WebRemote
-	public Boolean login(String username, String password) {
-		return identityManager.authenticate(username, password);
+	public String login(String username, String password) {
+		if (identityManager.authenticate(username, password)) {
+			Query getUser = em
+					.createQuery("from User where username=:username");
+			getUser.setParameter("username", username);
+			User user = (User) getUser.getSingleResult();
+			identity.getCredentials().setUsername(user.getUsername());
+			identity.getCredentials().setPassword(user.getPasswordHash());
+			for (Role role : user.getRoles()) {
+				identity.addRole(role.getRolename());
+			}
+			identity.login();
+			return "success";
+		} else {
+			return "failed";
+		}
 	}
 	
 	@Override
 	@WebRemote
 	public Boolean createUser(String username, String password) {
-		return identityManager.createUser(username, password);
+		User user = new User();
+		user.setUsername(username);
+		Role role = new Role();
+		role.setRolename("user");
+		user.addRole(role);
+		user.setPasswordHash(password);
+		em.persist(user);
+		return true;
+	}
+	
+	@Override
+	@WebRemote
+	public void logout() {
+		identity.logout();
 	}
 }
 </java:format>
