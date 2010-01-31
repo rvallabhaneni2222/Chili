@@ -35,10 +35,9 @@ public interface ${$class/@name}Service extends RemoteService {
 	public  List<String> getSuggestionsForName(
 			String name, ${$class/@name} entity);
 
-	public <T extends Serializable> List<${$class/@name}> getEntities(${$class/@name} entity);
+	public List<${$class/@name}> getEntities(${$class/@name} entity);
 
-	public <T extends Serializable> Map<Long, String> getListBoxValues(
-			T entity, String[] columns);
+	public Map<Long, String> getListBoxValues(String[] columns);
 
 	public <T extends Serializable> void addAll(T parent, T child,
 			List<Long> children);

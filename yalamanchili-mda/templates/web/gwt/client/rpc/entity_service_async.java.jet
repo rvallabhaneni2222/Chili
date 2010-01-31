@@ -44,8 +44,7 @@ public interface ${$class/@name}ServiceAsync extends RemoteService {
 	public <T extends Serializable> void getRelatedEntities(Long entityID,
 			String sourceClass, T target, AsyncCallback<List<T>> response);
 
-	public <T extends Serializable> void getListBoxValues(T entity,
-			String[] columns, AsyncCallback<Map<Long, String>> response);
+	public void getListBoxValues(String[] columns, AsyncCallback<Map<Long, String>> response);
 
 	public <T extends Serializable> void addAll(T parent, T child,
 			List<Long> children, AsyncCallback<java.lang.Void> response);		
