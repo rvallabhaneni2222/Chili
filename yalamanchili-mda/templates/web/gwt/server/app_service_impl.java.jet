@@ -5,62 +5,80 @@ import org.apache.commons.logging.LogFactory;
 
 import javax.persistence.EntityManager;
 import org.jboss.seam.security.management.IdentityManager;
+import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.remoting.WebRemote;
 import org.jboss.seam.security.Identity;
-import ${$groupID}.entity.security.Role;
-import ${$groupID}.entity.security.User;
-
-
+import javax.security.auth.login.LoginException;
+import org.jboss.seam.annotations.Transactional;
 import javax.persistence.Query;
+import ${$groupID}.entity.security.YUser;
+import ${$groupID}.entity.security.YRole;
+import org.dozer.Mapper;
 
+@Transactional
 @Name("${$webPackage}rpc.${camelCase($projectName)}Service")
 public class ${camelCase($projectName)}ServiceImpl implements ${$webPackage}rpc.${camelCase($projectName)}Service {
-
+	private static final Log log = LogFactory
+			.getLog(${camelCase($projectName)}ServiceImpl.class);
+	
 	@In(create = true)
 	protected EntityManager em;
+
+	@In(create = true)
+	protected Identity identity;
 	
-	 @In(create = true)
-	 protected IdentityManager identityManager;
-	 
-	 @In(create = true)
-	Identity identity;
-	
+	@In
+	protected Mapper dozerMapper;
+
 	@Override
 	@WebRemote
-	public String login(String username, String password) {
-		if (identityManager.authenticate(username, password)) {
-			Query getUser = em
-					.createQuery("from User where username=:username");
-			getUser.setParameter("username", username);
-			User user = (User) getUser.getSingleResult();
-			identity.getCredentials().setUsername(user.getUsername());
-			identity.getCredentials().setPassword(user.getPasswordHash());
-			for (Role role : user.getRoles()) {
-				identity.addRole(role.getRolename());
-			}
-			identity.login();
-			return "success";
+	public YUser login(String username, String password) {
+		if (log.isDebugEnabled()) {
+			log.debug("in login for user:" + username);
+		}
+		identity.getCredentials().setUsername(username);
+		identity.getCredentials().setPassword(password);
+		if (("loggedIn").equals(identity.login())) {
+			Query getUserQuery = em.createQuery("from YUser where username='"
+					+ username + "'");
+			YUser user = (YUser) getUserQuery.getSingleResult();
+		return dozerMapper.map(user, YUser.class);
 		} else {
-			return "failed";
+			return null;
 		}
 	}
-	
+
+	@Observer("org.jboss.seam.security.loginSuccessful")
+	public void loginSuccessFull() {
+		log.debug("org.jboss.seam.security.loginSuccessful");
+	}
+
+	@Observer("org.jboss.seam.security.loginFailed")
+	public void loginFailed() {
+		log.debug("rg.jboss.seam.security.loginFailed");
+	}
+
+	@Observer("org.jboss.seam.security.alreadyLoggedIn")
+	public void alreadyLoggedIn() {
+		log.debug("rg.jboss.seam.security.loginFailed");
+	}
+
 	@Override
 	@WebRemote
-	public Boolean createUser(String username, String password) {
-		User user = new User();
+	public void createUser(String username, String password) {
+		log.debug("in create user:" + username);
+		YUser user = new YUser();
 		user.setUsername(username);
-		Role role = new Role();
-		role.setRolename("user");
-		user.addRole(role);
 		user.setPasswordHash(password);
+		Query getUserRole = em.createQuery("from YRole where rolename='user'");
+		YRole role = (YRole) getUserRole.getSingleResult();
+		user.getRoles().add(role);
 		em.persist(user);
-		return true;
 	}
-	
+
 	@Override
 	@WebRemote
 	public void logout() {

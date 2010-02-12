@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class RootPanels {
-protected Roles role = Roles.DEFAULT_USER;
 	protected VerticalPanel sidePanel = new VerticalPanel();
 	protected VerticalPanel sidePanelTop = new VerticalPanel();
 	protected VerticalPanel sidePanelBottom = new VerticalPanel();
@@ -19,16 +18,7 @@ protected Roles role = Roles.DEFAULT_USER;
 
 	public RootPanels() {
 	}
-
 	
-	public Roles getRole() {
-		return role;
-	}
-
-	public void setRole(Roles role) {
-		this.role = role;
-	}
-
 	public VerticalPanel getSidePanel() {
 		return sidePanel;
 	}

@@ -24,12 +24,19 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.Command;
 import ${$webPackage}internalization.${camelCase($projectName)}Constants;
 import ${$webPackage}internalization.${camelCase($projectName)}Messages;
+import ${$groupID}.entity.security.YUser;
+import ${$groupID}.entity.security.YRole;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class ${camelCase($projectName)}Welcome extends RootPanels implements EntryPoint {
 
 	private static ${camelCase($projectName)}Welcome instance;
 	
 	public DockPanel mainPanel = new DockPanel();
+	public String user;
+	public Set<Roles> roles = new HashSet<Roles>();
 	
 	public static ${camelCase($projectName)}Welcome instance(){
 	if (instance == null) {

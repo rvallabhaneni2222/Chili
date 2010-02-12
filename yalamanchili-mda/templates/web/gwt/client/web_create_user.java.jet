@@ -10,15 +10,12 @@ public class CreateUserPanel extends CreateUserAbstract {
 
 	@Override
 	public void createUserClicked() {
-		${camelCase($projectName)}ServiceAsync.instance().createUser(usernameTF.getText(),
-				passwordTF.getPassword(), new ALAsyncCallback<Boolean>() {
+				${camelCase($projectName)}ServiceAsync.instance().createUser(usernameTF.getText(),
+				passwordTF.getPassword(), new ALAsyncCallback<Void>() {
 
 					@Override
-					public void onResponse(Boolean arg0) {
-						if (arg0) {
-							new ResponseStatusWidget().show("new User created");
-						}
-
+					public void onResponse(Void arg0) {
+						new ResponseStatusWidget().show("new User created");
 					}
 
 				});

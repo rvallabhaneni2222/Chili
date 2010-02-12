@@ -3,6 +3,6 @@
 package ${$groupID}.client;
 
 public enum Roles {
-	DEFAULT_USER
+	USER,ADMIN
 }
 </java:format>

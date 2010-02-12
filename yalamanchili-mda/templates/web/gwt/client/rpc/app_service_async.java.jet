@@ -4,7 +4,8 @@ package ${$webPackage}rpc;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
-
+import ${$groupID}.entity.security.YUser;
+import ${$groupID}.entity.security.YRole;
 /**
  * This is the interface the client code uses. You NEVER implement this
  * directly, GWT does this for you, and calls are marshalled through to the Sync
@@ -13,10 +14,10 @@ import com.google.gwt.user.client.rpc.RemoteService;
 public interface ${camelCase($projectName)}ServiceAsync extends RemoteService {
 
 	public void login(String username,String password,
-			AsyncCallback<String> response);
+			AsyncCallback<YUser> response);
 
 	public void createUser(String username, String password,
-			AsyncCallback<Boolean> response);
+			AsyncCallback<java.lang.Void> response);
 			
 	public void logout(AsyncCallback<java.lang.Void> response);
 

@@ -11,30 +11,41 @@ import ${$webPackage}rpc.${camelCase($projectName)}Service.${camelCase($projectN
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 
 public class StatusPanel extends AbstractStatusPanel {
+	LoginPanel loginPanel = new LoginPanel();
 
 	@Override
 	protected void loginClicked() {
-		LoginPanel loginPanel = new LoginPanel();
+
 		int left = Window.getClientWidth() / 3;
 		int top = Window.getClientHeight() / 3;
 		loginPanel.setPopupPosition(left, top);
 		loginPanel.show();
 
 	}
-	
-	public void loginSuccessfull() {
+
+	@Override
+	public void loginSuccessfull(String username) {
+		userLink.setText(username);
 		statusBar.remove(loginLink);
 		statusBar.setWidget(1, 2, logoutLink);
+		loginPanel.hide();
+	}
+
+	@Override
+	public void logoutSuccessfull() {
+		statusBar.remove(logoutLink);
+		statusBar.setWidget(1, 2, loginLink);
+
 	}
 
 	@Override
 	protected void logoutClicked() {
-		${camelCase($projectName)}ServiceAsync.instance().logout(new ALAsyncCallback<Void>() {
+		AutomanageServiceAsync.instance().logout(new ALAsyncCallback<Void>() {
 
 			@Override
 			public void onResponse(Void arg0) {
 				new ResponseStatusWidget().show("logged out successfully");
-
+				StatusPanel.instance().logoutSuccessfull();
 			}
 
 		});
@@ -47,13 +58,13 @@ public class StatusPanel extends AbstractStatusPanel {
 		int top = Window.getClientHeight() / 3;
 		createUserPanel.setPopupPosition(left, top);
 		createUserPanel.show();
-		
+
 	}
 
 	@Override
 	protected void setUser() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 

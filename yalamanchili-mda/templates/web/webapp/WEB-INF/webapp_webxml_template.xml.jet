@@ -49,19 +49,6 @@
 			/${$groupID}.${$projectName}/gwtservices
 		</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>${camelCase($projectName)}Service</servlet-name>
-		<servlet-class>
-			${$groupID}.server.${camelCase($projectName)}ServiceImpl
-		</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>${camelCase($projectName)}Service</servlet-name>
-		<url-pattern>
-			/${$groupID}.${$projectName}/welcomeservices
-		</url-pattern>
-	</servlet-mapping>
 
 
 	<welcome-file-list>

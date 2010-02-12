@@ -1,0 +1,19 @@
+rule ManageUsers
+  no-loop
+  activation-group "permissions"
+when
+  check: PermissionCheck(name == "seam.user", granted == false)
+  Role(name == "admin")
+then
+  check.grant();
+end
+
+rule ManageRoles
+  no-loop
+  activation-group "permissions"
+when
+  check: PermissionCheck(name == "seam.role", granted == false)
+  Role(name == "admin")
+then
+  check.grant();
+end

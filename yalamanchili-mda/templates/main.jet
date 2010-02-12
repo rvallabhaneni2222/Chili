@@ -352,6 +352,7 @@
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_jboss-app_template.xml.jet" path="jboss-web.xml"/>
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_components.xml.jet" path="components.xml"/>
     		</ws:folder>
+    		
     </ws:folder>
     <ws:folder path="src/test/java">
     <%--server test class--%>

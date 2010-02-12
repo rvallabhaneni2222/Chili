@@ -1,23 +1,31 @@
 <java:format>
 
 package ${$groupID}.client;
+
+import ${$groupID}.entity.security.YUser;
+import ${$groupID}.entity.security.YRole;
 import com.google.gwt.user.client.Window;
 import info.yalamanchili.gwt.widgets.LoginPanelAbstract;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
+import java.util.HashSet;
+import java.util.Set;
+import ${$groupID}.entity.security.YUser;
+import ${$groupID}.entity.security.YRole;
 import ${$webPackage}rpc.${camelCase($projectName)}Service.${camelCase($projectName)}ServiceAsync;
 public class LoginPanel extends LoginPanelAbstract {
 
 	@Override
 	protected void loginClicked() {
-		${camelCase($projectName)}ServiceAsync.instance().login(usernameTb.getText(),
-				passwordTb.getText(), new ALAsyncCallback<String>() {
+				${camelCase($projectName)}ServiceAsync.instance().login(usernameTb.getText(),
+				passwordTb.getText(), new ALAsyncCallback<YUser>() {
 
 					@Override
-					public void onResponse(String arg0) {
-						if (arg0.equals("success")) {
+					public void onResponse(YUser arg0) {
+						if (arg0 != null) {
+						loginSuccessfull(arg0);
 							new ResponseStatusWidget().show("login success");
-							StatusPanel.instance().loginSuccessfull();
+							StatusPanel.instance().loginSuccessfull(arg0.getUsername());
 						} else {
 							new ResponseStatusWidget().show("login failed");
 						}
@@ -26,6 +34,15 @@ public class LoginPanel extends LoginPanelAbstract {
 
 				});
 
+	}
+	
+		protected void loginSuccessfull(YUser user) {
+		AutomanageWelcome.instance().user = user.getUsername();
+		Set<Roles> roles = new HashSet<Roles>();
+		for (YRole role : user.getRoles()) {
+			roles.add(Roles.valueOf(role.getRolename().toUpperCase()));
+		}
+		AutomanageWelcome.instance().roles = roles;
 	}
 	
 
