@@ -1,0 +1,50 @@
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import ${$packageName}.${lower-case($class/@name)}.${$class/@name}ServiceLocal;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import info.yalamanchili.embeddedjboss.JBossUtil;
+
+
+public class ${$class/@name}ServiceTest {
+	protected static ${$class/@name}ServiceLocal bean;
+	protected static EntityManagerFactory emf;
+	protected static EntityManager em;
+
+	@BeforeClass
+	public static void initClass() {
+		JBossUtil.startDeployer();
+		bean = JBossUtil.lookup(${$class/@name}ServiceLocal.class, "${lower-case($class/@name)}/local");
+		emf = JBossUtil.lookup(EntityManagerFactory.class, "java:/${$projectName}");
+		em = emf.createEntityManager();
+	}
+
+	@Before
+	public void init() {
+		initData();
+	}
+
+	public void initData() {
+
+	}
+
+	@Test
+	public void simpleTest() {
+		
+	}
+	
+	@AfterClass
+	public static void destroy() {
+		em.close();
+		emf.close();
+		JBossUtil.shutdownDeployer();
+	}
+}
+</java:format>

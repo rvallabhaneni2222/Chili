@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.ArrayList;
 import info.yalamanchili.server.GWTServletUtils;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.annotation.PostConstruct;
 import javax.persistence.Query;
@@ -32,13 +31,11 @@ public class ${$class/@name}ServiceBean implements  ${$class/@name}ServiceLocal,
 private static final Log log = LogFactory
 			.getLog(${$class/@name}ServiceBean.class);
 			
-				@In
+	@In
 	Mapper dozerMapper;
 	
-@PersistenceUnit
-	protected EntityManagerFactory factory;
 	
-@PersistenceContext(unitName = "${$projectName}")
+	@PersistenceContext(unitName = "${$projectName}")
 	protected EntityManager entityManager;
 	
 	

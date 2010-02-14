@@ -189,13 +189,21 @@
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     	 <c:setVariable select="concat($ejbPackage,$package/@name)" var="packageName"/>	
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-    		<%--TestDao--%>
-			<java:class name="{$class/@name}DAOTest" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/test/ejb_test_dao_template.java.jet"/>
+			<%--Embedded Test--%>
+			<java:class name="${$class/@name}ServiceTest" package="{$packageName}.{lower-case($class/@name)}" template="templates/ejb/test/ejb_embedded_test.java.jet"/>
 			</c:iterate>
 		</c:iterate>
     </ws:folder>
 	<ws:folder path="src/test/resources">
-     <ws:file template="templates/ejb/test/jpa_test_persistence_template.xml.jet" path="META-INF/persistence.xml"/>
+	<ws:file template="templates/ejb/test/resources/WEB-INF/components.xml.jet" path="WEB-INF/components.xml"/>
+	<ws:file template="templates/ejb/test/resources/default.persistence.properties.jet" path="default.persistence.properties"/>
+	<ws:file template="templates/ejb/test/resources/ejb3-interceptors-aop.xml.jet" path="ejb3-interceptors-aop.xml"/>
+	<ws:file template="templates/ejb/test/resources/embedded-jboss-beans.xml.jet" path="embedded-jboss-beans.xml"/>
+	<ws:file template="templates/ejb/test/resources/jboss-jms-beans.xml.jet" path="jboss-jms-beans.xml"/>
+	<ws:file template="templates/ejb/test/resources/jndi.properties.jet" path="jndi.properties"/>
+	<ws:file template="templates/ejb/test/resources/log4j.xml.jet" path="log4j.xml"/>
+	<ws:file template="templates/ejb/test/resources/login-config.xml.jet" path="login-config.xml"/>
+	<ws:file template="templates/ejb/test/resources/security-beans.xml.jet" path="security-beans.xml"/>
    	</ws:folder>
 
 </ws:project>
