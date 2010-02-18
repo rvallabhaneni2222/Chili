@@ -23,9 +23,8 @@ public class LoginPanel extends LoginPanelAbstract {
 					@Override
 					public void onResponse(YUser arg0) {
 						if (arg0 != null) {
-						loginSuccessfull(arg0);
+						new ${camelCase($projectName)}Welcome().reLoad(arg0);
 							new ResponseStatusWidget().show("login success");
-							StatusPanel.instance().loginSuccessfull(arg0.getUsername());
 						} else {
 							new ResponseStatusWidget().show("login failed");
 						}
@@ -36,14 +35,6 @@ public class LoginPanel extends LoginPanelAbstract {
 
 	}
 	
-		protected void loginSuccessfull(YUser user) {
-		AutomanageWelcome.instance().user = user.getUsername();
-		Set<Roles> roles = new HashSet<Roles>();
-		for (YRole role : user.getRoles()) {
-			roles.add(Roles.valueOf(role.getRolename().toUpperCase()));
-		}
-		AutomanageWelcome.instance().roles = roles;
-	}
 	
 
 	@Override

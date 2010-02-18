@@ -34,8 +34,11 @@ import info.yalamanchili.gwt.beans.TableObj;
 import org.jboss.seam.annotations.remoting.WebRemote;
 import org.jboss.seam.annotations.security.Restrict;
 import org.dozer.Mapper;
+import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.ScopeType;
 
 @Transactional
+@Scope(ScopeType.SESSION)
 @Name("${$packageName}.${lower-case($class/@name)}.${$class/@name}Service")
 public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case($class/@name)}.${$class/@name}Service {
 

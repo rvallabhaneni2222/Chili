@@ -17,8 +17,11 @@ import javax.persistence.Query;
 import ${$groupID}.entity.security.YUser;
 import ${$groupID}.entity.security.YRole;
 import org.dozer.Mapper;
+import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.ScopeType;
 
 @Transactional
+@Scope(ScopeType.SESSION)
 @Name("${$webPackage}rpc.${camelCase($projectName)}Service")
 public class ${camelCase($projectName)}ServiceImpl implements ${$webPackage}rpc.${camelCase($projectName)}Service {
 	private static final Log log = LogFactory
@@ -29,6 +32,9 @@ public class ${camelCase($projectName)}ServiceImpl implements ${$webPackage}rpc.
 
 	@In(create = true)
 	protected Identity identity;
+	
+	@In(create = true)
+	protected IdentityManager identityManager;
 	
 	@In
 	protected Mapper dozerMapper;
@@ -65,18 +71,15 @@ public class ${camelCase($projectName)}ServiceImpl implements ${$webPackage}rpc.
 	public void alreadyLoggedIn() {
 		log.debug("rg.jboss.seam.security.loginFailed");
 	}
-
+	
 	@Override
 	@WebRemote
 	public void createUser(String username, String password) {
 		log.debug("in create user:" + username);
-		YUser user = new YUser();
-		user.setUsername(username);
-		user.setPasswordHash(password);
-		Query getUserRole = em.createQuery("from YRole where rolename='user'");
-		YRole role = (YRole) getUserRole.getSingleResult();
-		user.getRoles().add(role);
-		em.persist(user);
+		Identity.setSecurityEnabled(false);
+		identityManager.createUser(username, password);
+		identityManager.grantRole(username, "user");
+		Identity.setSecurityEnabled(true);
 	}
 
 	@Override

@@ -15,7 +15,7 @@
 
 	
 		<core:init jndi-pattern="#{ejbName}/local" debug="true"/>
-		
+		<core:ejb installed="true" />
 </components>
 
 

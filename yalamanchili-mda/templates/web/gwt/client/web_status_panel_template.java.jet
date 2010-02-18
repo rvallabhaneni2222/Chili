@@ -23,13 +23,6 @@ public class StatusPanel extends AbstractStatusPanel {
 
 	}
 
-	@Override
-	public void loginSuccessfull(String username) {
-		userLink.setText(username);
-		statusBar.remove(loginLink);
-		statusBar.setWidget(1, 2, logoutLink);
-		loginPanel.hide();
-	}
 
 	@Override
 	public void logoutSuccessfull() {
@@ -40,7 +33,7 @@ public class StatusPanel extends AbstractStatusPanel {
 
 	@Override
 	protected void logoutClicked() {
-		AutomanageServiceAsync.instance().logout(new ALAsyncCallback<Void>() {
+		${camelCase($projectName)}ServiceAsync.instance().logout(new ALAsyncCallback<Void>() {
 
 			@Override
 			public void onResponse(Void arg0) {
@@ -63,7 +56,11 @@ public class StatusPanel extends AbstractStatusPanel {
 
 	@Override
 	protected void setUser() {
-		// TODO Auto-generated method stub
+				if (${camelCase($projectName)}Welcome.instance().user != null) {
+			userLink.setText("welcome " + ${camelCase($projectName)}Welcome.instance().user);
+			statusBar.remove(loginLink);
+			statusBar.setWidget(1, 2, logoutLink);
+		}
 
 	}
 

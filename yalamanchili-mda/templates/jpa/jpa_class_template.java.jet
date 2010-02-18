@@ -1,6 +1,4 @@
-
 <java:format>
-
 <f:bundle basename="templates/resources/messages">
 
 <c:setVariable select="$class/@xmi.id" var="classID"/>

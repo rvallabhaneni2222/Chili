@@ -26,6 +26,8 @@ import ${$webPackage}internalization.${camelCase($projectName)}Constants;
 import ${$webPackage}internalization.${camelCase($projectName)}Messages;
 import ${$groupID}.entity.security.YUser;
 import ${$groupID}.entity.security.YRole;
+import com.google.gwt.user.client.ui.Widget;
+import com.allen_sauer.gwt.log.client.DivLogger;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -58,6 +60,22 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 			configure();
 			RootPanel.get().add(mainPanel);
 		}
+		
+		public void reLoad(YUser user) {
+		RootPanel.get().clear();
+		instance = null;
+		this.user = user.getUsername();
+		Set<Roles> roles = new HashSet<Roles>();
+		for (YRole role : user.getRoles()) {
+			roles.add(Roles.valueOf(role.getRolename().toUpperCase()));
+		}
+		this.roles = roles;
+		Widget logger = ((DivLogger) Log.getLogger(DivLogger.class))
+				.getWidget();
+
+		RootPanel.get().add(logger);
+		onModuleLoad();
+	}
 		
 		protected void addListeners() {
 		}
