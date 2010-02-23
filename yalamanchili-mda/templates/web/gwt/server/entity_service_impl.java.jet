@@ -7,11 +7,180 @@ import java.util.Properties;
 
 import javax.ejb.EJB;
 
-
+import org.jboss.seam.annotations.Transactional;
 import ${$groupID}.ejb.GenericServiceLocal;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import info.yalamanchili.trace.Trace;
+
+<%-- process all getRelated entities relations--%>
+<%--process level2 generizations --%>
+<c:if test="not($class/@name = $parentClass2/@name)">
+  			<c:setVariable select="$parentClass2/@xmi.id" var="classID"/>
+  			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID">
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  	 	<c:if test="not($association_connection_end_classID2 = $classID)">
+  					  		 	<%-- process many on target--%>
+								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+  					  		 	<%-- check to see if this is a navigable relation--%>
+  					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  							  	</c:if> 
+								</c:if>	
+  							  	</c:if>
+  							  	</c:if>
+  					 	  </c:iterate>	  					 	 				 	  
+					</c:if> 										
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
+</c:if>
+<c:setVariable select="$class/@xmi.id" var="classID"/>
+<%--process level 1 generizations --%>
+<c:if test="not($class/@name = $parentClass1/@name)">
+  			<c:setVariable select="$parentClass1/@xmi.id" var="classID"/>
+  			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID">
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  	 	<c:if test="not($association_connection_end_classID2 = $classID)">
+  					  		 	<%-- process many on target--%>
+								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+  					  		 	<%-- check to see if this is a navigable relation--%>
+  					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  							  	</c:if> 
+								</c:if>	
+  							  	</c:if>
+  							  	</c:if>
+  					 	  </c:iterate>	  					 	 				 	  
+					</c:if> 										
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
+</c:if>
+<c:setVariable select="$class/@xmi.id" var="classID"/>
+<%--level 0 --%>				
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID">
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  	 	<c:if test="not($association_connection_end_classID2 = $classID)">
+  					  		 	<%-- process many on target--%>
+								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+  					  		 	<%-- check to see if this is a navigable relation--%>
+  					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  							  	</c:if> 
+								</c:if>	
+  							  	</c:if>
+  							  	</c:if>
+  					 	  </c:iterate>	  					 	 				 	  
+					</c:if> 										
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
+
+<%-- process all addAll relations--%>
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID">
+					<%-- process only classes with many on source side--%>
+					<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  					<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <%-- process only non composites --%>
+  					  	 <c:if test="not($association_connection_end2/@aggregation = 'composite')">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<%-- check to see if this is a navigable relation--%>
+  					  		 	<c:if test="$association_connection_end/@isNavigable = 'true'">
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+  					  		 			import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  					  		 	</c:if>	
+  							  	</c:if> 
+  							  	</c:if>	
+  					 	  </c:iterate>
+  					</c:if> 	   
+  					</c:if> 	  					 	 				 	  
+					</c:if> 										
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
+
+<%-- process all merge relations--%>	
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID">
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <%-- process only  composites on target--%>
+  					  	 <c:if test="$association_connection_end2/@aggregation = 'composite'">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+ 										import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  							  	</c:if> 
+  							  	</c:if>	
+  					 	  </c:iterate> 	  					 	 				 	  
+					</c:if> 										
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
 
 import ${$groupID}.ejb.${$package/@name}.${lower-case($class/@name)}.${$class/@name}ServiceLocal;
 import ${$groupID}.entity.${$package/@name}.${$class/@name};
@@ -22,20 +191,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
-import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.remoting.WebRemote;
 import info.yalamanchili.gwt.beans.TableObj;
 import org.jboss.seam.annotations.remoting.WebRemote;
-import org.jboss.seam.annotations.security.Restrict;
-import org.dozer.Mapper;
+
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.ScopeType;
+import info.yalamanchili.trace.Trace;
 
 @Trace
 @Transactional
@@ -43,8 +209,6 @@ import org.jboss.seam.ScopeType;
 @Name("${$packageName}.${lower-case($class/@name)}.${$class/@name}Service")
 public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case($class/@name)}.${$class/@name}Service {
 
-	private static final Log log = LogFactory
-			.getLog(${$class/@name}ServiceImpl.class);
 
 	@In(create = true)
 	protected GenericServiceLocal genericServiceBean;
@@ -55,12 +219,8 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	@In(create = true)
 	protected EntityManager em;
 	
-	@In
-	protected Mapper dozerMapper;
-	
 	@Override
 	@WebRemote
-	 @Restrict("#{s:hasRole('admin')}")
 	public ${$class/@name} create(${$class/@name} entity) {
 		return ${lower-case($class/@name)}ServiceBean.create(entity);
 	}
@@ -89,13 +249,174 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	public ${$class/@name} update(${$class/@name} entity) {
 		return ${lower-case($class/@name)}ServiceBean.update(entity);
 	}
-	
+
+<%-- process all getRelated entities relations--%>
+<%--process level2 generizations --%>
+<c:if test="not($class/@name = $parentClass2/@name)">
+  			<c:setVariable select="$parentClass2/@xmi.id" var="classID"/>
+  			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID">
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  	 	<c:if test="not($association_connection_end_classID2 = $classID)">
+  					  		 	<%-- process many on target--%>
+								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+  					  		 	<%-- check to see if this is a navigable relation--%>
+  					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 	@Override
 	@WebRemote
-	public <T extends Serializable> void addAll(T parent, T child,
-			List<Long> children) {
-		${lower-case($class/@name)}ServiceBean.addAll(parent, child, children);
+	public  List<${$class2/@name}> getRelatedEntities(Long entityID,
+			String sourceClass, ${$class2/@name} target) {
+		return genericServiceBean.getRelatedEntities(entityID, ${$class/@name}.class,
+				target);
 	}
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  							  	</c:if> 
+								</c:if>	
+  							  	</c:if>
+  							  	</c:if>
+  					 	  </c:iterate>	  					 	 				 	  
+					</c:if> 										
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
+</c:if>
+<c:setVariable select="$class/@xmi.id" var="classID"/>
+<%--process level 1 generizations --%>
+<c:if test="not($class/@name = $parentClass1/@name)">
+  			<c:setVariable select="$parentClass1/@xmi.id" var="classID"/>
+  			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID">
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  	 	<c:if test="not($association_connection_end_classID2 = $classID)">
+  					  		 	<%-- process many on target--%>
+								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+  					  		 	<%-- check to see if this is a navigable relation--%>
+  					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+	@Override
+	@WebRemote
+	public  List<${$class2/@name}> getRelatedEntities(Long entityID,
+			String sourceClass, ${$class2/@name} target) {
+		return genericServiceBean.getRelatedEntities(entityID, ${$class/@name}.class,
+				target);
+	}
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  							  	</c:if> 
+								</c:if>	
+  							  	</c:if>
+  							  	</c:if>
+  					 	  </c:iterate>	  					 	 				 	  
+					</c:if> 										
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
+</c:if>
+<c:setVariable select="$class/@xmi.id" var="classID"/>
+<%--level 0 --%>				
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID">
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  	 	<c:if test="not($association_connection_end_classID2 = $classID)">
+  					  		 	<%-- process many on target--%>
+								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+  					  		 	<%-- check to see if this is a navigable relation--%>
+  					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+	@Override
+	@WebRemote
+	public  List<${$class2/@name}> getRelatedEntities(Long entityID,
+			String sourceClass, ${$class2/@name} target) {
+		return genericServiceBean.getRelatedEntities(entityID, ${$class/@name}.class,
+				target);
+	}
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  							  	</c:if> 
+								</c:if>	
+  							  	</c:if>
+  							  	</c:if>
+  					 	  </c:iterate>	  					 	 				 	  
+					</c:if> 										
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
+
+	
+<%-- process all addAll relations--%>	
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID">
+					<%-- process only classes with many on source side--%>
+					<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  					<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <%-- process only non composites --%>
+  					  	 <c:if test="not($association_connection_end2/@aggregation = 'composite')">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<%-- check to see if this is a navigable relation--%>
+  					  		 	<c:if test="$association_connection_end/@isNavigable = 'true'">
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2">
+  					  		 			@Override
+										@WebRemote
+										public void addAll(${$class2/@name} ${lower-case($class2/@name)}, ${$class/@name} ${lower-case($class/@name)},
+												List<Long> children) {
+											${lower-case($class/@name)}ServiceBean.addAll(${lower-case($class2/@name)}, ${lower-case($class/@name)}, children);
+										} 
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  					  		 	</c:if>	
+  							  	</c:if> 
+  							  	</c:if>	
+  					 	  </c:iterate>
+  					</c:if> 	   
+  					</c:if> 	  					 	 				 	  
+					</c:if> 										
+		</c:iterate>
+	</c:iterate>
+</c:iterate>	
+	
+	
 
 	@Override
 	@WebRemote
@@ -109,25 +430,47 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 		return ${lower-case($class/@name)}ServiceBean.getListBoxValues(columns);
 	}
 
-	@Override
-	@WebRemote
-	public <T extends Serializable> List<T> getRelatedEntities(Long entityID,
-			String sourceClass, T target) {
-		return genericServiceBean.getRelatedEntities(entityID, ${$class/@name}.class,
-				target);
-	}
+	
 
 	@Override
 	@WebRemote
 	public List<String> getSuggestionsForName(String name, ${$class/@name} entity) {
 		return genericServiceBean.getSuggestionsForName(name, entity);
 	}
+
 	
+	<%-- process all merge relations--%>	
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID">
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <%-- process only  composites on target--%>
+  					  	 <c:if test="$association_connection_end2/@aggregation = 'composite'">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+ 											
 	@Override
 	@WebRemote
-	public <T extends Serializable> void merge(${$class/@name} entity, T child) {
+	public  void merge(${$class/@name} entity, ${$class2/@name} child) {
 		 ${lower-case($class/@name)}ServiceBean.merge(entity, child);
 	}
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  							  	</c:if> 
+  							  	</c:if>	
+  					 	  </c:iterate> 	  					 	 				 	  
+					</c:if> 										
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
 	
 	
 }

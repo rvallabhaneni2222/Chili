@@ -169,11 +169,12 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
 							  					  	 <%-- process only non composits or non aggregations and --%>
   					  								<c:if test="$association_connection_end2/@aggregation = 'none'">
+  					  								<c:if test="not($association_connection_end/@aggregation = 'none')">
 							  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 							  					  	 	<%-- get the end secondary end with other class  --%>
 							  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
 										  					 <%-- check to see if this is a navigable relation--%>
-										  					 <c:if test="$association_connection_end2/@isNavigable = 'true'">										  					  		 	 
+										  					 <c:if test="$association_connection_end/@isNavigable = 'true'">										  					  		 	 
 							  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
 							  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
@@ -209,6 +210,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  							  	</c:if> 
 							  							  	</c:if>
 							  							  	</c:if>  
+							  							  	</c:if>
 							  					 	  </c:iterate> 
 							  					 						 	 				 	  
 												</c:if> 											
@@ -230,11 +232,12 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
 							  					  	 <%-- process only non composits or non aggregations and --%>
   					  								<c:if test="$association_connection_end2/@aggregation = 'none'">
+  					  								<c:if test="not($association_connection_end/@aggregation = 'none')">
 							  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 							  					  	 	<%-- get the end secondary end with other class  --%>
 							  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
 										  					 <%-- check to see if this is a navigable relation--%>
-										  					 <c:if test="$association_connection_end2/@isNavigable = 'true'">										  					  		 	 
+										  					 <c:if test="$association_connection_end/@isNavigable = 'true'">										  					  		 	 
 							  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
 							  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
@@ -269,7 +272,8 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  		 		</c:iterate>
 							  							  	</c:if> 
 							  							  	</c:if>
-							  							  	</c:if>  
+							  							  	</c:if> 
+							  							  	</c:if>   
 							  					 	  </c:iterate> 
 							  					 						 	 				 	  
 												</c:if> 											
@@ -295,6 +299,9 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
   					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
   					  		 	<%-- check to see if this is a navigable relation--%>
   					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
+  					  		 	<%-- process many on target--%>
+								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
@@ -330,6 +337,8 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
   					  		 			</c:if> 
   					  		 		</c:iterate>
   					  		 	</c:if>	
+  							  	</c:if> 
+  							  	</c:if>
   							  	</c:if> 
   							  	</c:if>	
   					 	  </c:iterate> 					 	 				 	  

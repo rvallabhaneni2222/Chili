@@ -29,10 +29,12 @@ package ${$packageName}.${lower-case($class/@name)};
 												</c:if>															
 											</c:iterate>
 											<%-- if class is a Parent class--%>
+											import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
 							    		 	<c:if test="$isParent = $class2/@name">  
 								    		 	import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.TreeAbstract${$class2/@name}Panel;
 											</c:if>
 											<%-- if class is a regular  class--%>
+											import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
 											<c:if test="$isParent = $class2/@xmi.id">  
 											import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Tree${$class2/@name}Panel;
 											</c:if>	  					  		 			
@@ -416,7 +418,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 											<%-- if class is a Parent class--%>
 							    		 	<c:if test="$isParent = $class2/@name">  
 								    		 	${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().merge(entity,
-												TreeAbstract${$class2/@name}Panel.instance().getEntity(),
+												(${$class2/@name}) TreeAbstract${$class2/@name}Panel.instance().getEntity(),
 												new ALAsyncCallback<java.lang.Void>() {
 
 												@Override
@@ -430,7 +432,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 											<%-- if class is a regular  class--%>
 											<c:if test="$isParent = $class2/@xmi.id">  
 											${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().merge(entity,
-											Tree${$class2/@name}Panel.instance().getEntity(),
+											(${$class2/@name}) Tree${$class2/@name}Panel.instance().getEntity(),
 											new ALAsyncCallback<java.lang.Void>() {
 
 											@Override
