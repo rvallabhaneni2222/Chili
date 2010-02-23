@@ -2,6 +2,7 @@
 package ${$groupID}.server;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import info.yalamanchili.trace.Trace;
 
 import javax.persistence.EntityManager;
 import org.jboss.seam.security.management.IdentityManager;
@@ -20,6 +21,7 @@ import org.dozer.Mapper;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.ScopeType;
 
+@Trace
 @Transactional
 @Scope(ScopeType.SESSION)
 @Name("${$webPackage}rpc.${camelCase($projectName)}Service")

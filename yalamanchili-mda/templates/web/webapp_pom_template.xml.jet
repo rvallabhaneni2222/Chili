@@ -35,18 +35,11 @@
 			<artifactId>gwt-log</artifactId>
 			<version>2.6.2</version>
 		</dependency>
-		<dependency>
+				<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-dev</artifactId>
 			<version>${'${gwtVersion}'}</version>
-			<classifier>${'${platform}'}-libs</classifier>
-			<type>zip</type>
 			<scope>provided</scope>
-		</dependency>
-				<dependency>
-			<groupId>org.jboss.seam</groupId>
-			<artifactId>jboss-seam-remoting</artifactId>
-			<version>2.2.0.GA</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -70,7 +63,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin
 				</artifactId>
-				<version>1.1</version>
+				<version>1.2</version>
 				<dependencies>
 				</dependencies>
 				<configuration>
@@ -83,6 +76,7 @@
 					</runTarget>
 					<style>DETAILED</style>
 					<noServer>false</noServer>
+					<draftCompile>true</draftCompile>
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
 					<!-- target dir for generated interfaces-->
 					<generateDirectory>src/main/java</generateDirectory>
@@ -117,9 +111,7 @@
 	<repositories>
 	</repositories>
 	<properties>
-		<gwtVersion>1.7.0</gwtVersion>
-		<google.webtoolkit.home>C:\gwt-windows-1.7.0
-		</google.webtoolkit.home>
-		<platform>windows</platform>
+		<gwtVersion>2.0.0</gwtVersion>
+		<gwtHome>c:/gwt-2.0.0</gwtHome>
 	</properties>
 </project>

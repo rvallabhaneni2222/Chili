@@ -51,7 +51,7 @@ public interface ${$class/@name}Service extends RemoteService {
 						.create(${$class/@name}Service.class);
 				ServiceDefTarget endpoint = (ServiceDefTarget) service;
 				String moduleRelativeURL = GWT.getModuleBaseURL()
-						+ "seam/resource/gwt";
+						+ "seam/resource/gwt2";
 				endpoint.setServiceEntryPoint(moduleRelativeURL);
 			}
 			return service;
