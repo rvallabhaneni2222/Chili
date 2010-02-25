@@ -172,6 +172,12 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
  										import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
+ 										<c:if test="not($class2/@parent1 = $class2/@name)">
+ 										import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@parent1};
+ 										</c:if>
+ 										<c:if test="not($class2/@parent2 = $class2/@name)"> 
+ 										import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@parent2};
+ 										</c:if>
   					  		 			</c:if> 
   					  		 		</c:iterate>
   							  	</c:if> 
@@ -462,6 +468,20 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	public  void merge(${$class/@name} entity, ${$class2/@name} child) {
 		 ${lower-case($class/@name)}ServiceBean.merge(entity, child);
 	}
+										<c:if test="not($class2/@parent1 = $class2/@name)">
+ 										@Override
+	@WebRemote
+	public  void merge(${$class/@name} entity, ${$class2/@parent1} child) {
+		 ${lower-case($class/@name)}ServiceBean.merge(entity, child);
+	}
+ 										</c:if>
+ 										<c:if test="not($class2/@parent2 = $class2/@name)"> 
+ 										@Override
+	@WebRemote
+	public  void merge(${$class/@name} entity, ${$class2/@parent2} child) {
+		 ${lower-case($class/@name)}ServiceBean.merge(entity, child);
+	}
+ 										</c:if>
   					  		 			</c:if> 
   					  		 		</c:iterate>
   							  	</c:if> 
