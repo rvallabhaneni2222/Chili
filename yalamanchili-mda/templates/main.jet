@@ -9,15 +9,29 @@
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
 <c:setVariable select="'info.yalamanchili.project'" var="groupID"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
+<%--versions --%>
+<c:setVariable select="'2.0.0'" var="gwt-version"/>
+<c:setVariable select="'2.6.2'" var="gwt-log-version"/>
+<c:setVariable select="'2.2.0.GA'" var="seam-version"/>
+<c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-embedded-jboss-version"/>
+<c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-commons-version"/>
+<c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-gwt-version"/>
+<c:setVariable select="'2.2'" var="hibernate3-maven-plugin-version"/>
+<c:setVariable select="'1.0-SNAPSHOT'" var="jpa-testdata-plugin-version"/>
+<c:setVariable select="'1.2'" var="gwt-maven-plugin-version"/>
+<c:setVariable select="'5.1'" var="dozer-version"/>
+<c:setVariable select="'2.3.2'" var="ear-plugin-version"/>
+<c:setVariable select="'1.4'" var="jboss-maven-plugin-version"/>
+
 <c:setVariable select="'HSQL'" var="dataBase"/>
 <c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
 <c:setVariable select="'false'" var="useReflection"/>
 <c:setVariable select="'false'" var="isGWTJPA"/>
 <c:setVariable select="'true'" var="isMergeEnabled"/>
 
-    	<%-- Iterate through packages and classes and set variables --%>
-    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-    		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">	
+<%-- Iterate through packages and classes and set class relations --%>
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+	<c:iterate select="$package/Namespace.ownedElement/Class" var="class">	
     		<%-- process generizations upto 2 levels and get the parent classes if any--%>
     		<c:set select="$class" name="parent1">${$class/@name}</c:set>
     		<c:set select="$class" name="parent2">${$class/@name}</c:set>
@@ -56,8 +70,8 @@
 					</c:iterate>  					  		 			 
 				</c:if>
 			</c:iterate>
-			</c:iterate>
-			</c:iterate>
+	</c:iterate>
+</c:iterate>
 			
 
 <%-- load the yalamanchiliMDA prifile--%>
