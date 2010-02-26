@@ -144,11 +144,11 @@ public interface GWTService extends RemoteService {
 	 * 
 	 * @return the t
 	 */
-	<T extends Serializable> T createEntityFromFields(String className,
-			LinkedHashMap<String, Object> fields);
-
-	<T extends Serializable> T createEntityFromFieldsWithID(String className,
-			LinkedHashMap<String, Object> fields);
+//	<T extends Serializable> T createEntityFromFields(String className,
+//			LinkedHashMap<String, Object> fields);
+//
+//	<T extends Serializable> T createEntityFromFieldsWithID(String className,
+//			LinkedHashMap<String, Object> fields);
 
 	/**
 	 * Update entity from fields.
@@ -160,8 +160,8 @@ public interface GWTService extends RemoteService {
 	 * 
 	 * @return the t
 	 */
-	<T extends Serializable> T updateEntityFromFields(T t,
-			LinkedHashMap<String, Object> fields);
+//	<T extends Serializable> T updateEntityFromFields(T t,
+//			LinkedHashMap<String, Object> fields);
 
 	/**
 	 * Gets the fields data from entity.
@@ -171,8 +171,8 @@ public interface GWTService extends RemoteService {
 	 * 
 	 * @return the fields data from entity
 	 */
-	<T extends Serializable> LinkedHashMap<String, Object> getFieldsDataFromEntity(
-			T t);
+//	<T extends Serializable> LinkedHashMap<String, Object> getFieldsDataFromEntity(
+//			T t);
 
 	/* Utility class to call Async secure service */
 	/**

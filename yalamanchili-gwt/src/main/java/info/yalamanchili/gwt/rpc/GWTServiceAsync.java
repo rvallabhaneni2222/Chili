@@ -2,7 +2,6 @@ package info.yalamanchili.gwt.rpc;
 
 import info.yalamanchili.gwt.fields.DataType;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -149,12 +148,12 @@ public interface GWTServiceAsync {
 	 * @param entity
 	 *            the entity
 	 */
-	<T extends Serializable> void createEntityFromFields(String className,
-			LinkedHashMap<String, Object> fields, AsyncCallback<T> entity);
-
-	<T extends Serializable> void createEntityFromFieldsWithID(
-			String className, LinkedHashMap<String, Object> fields,
-			AsyncCallback<T> entity);
+	// <T extends Serializable> void createEntityFromFields(String className,
+	// LinkedHashMap<String, Object> fields, AsyncCallback<T> entity);
+	//
+	// <T extends Serializable> void createEntityFromFieldsWithID(
+	// String className, LinkedHashMap<String, Object> fields,
+	// AsyncCallback<T> entity);
 
 	/**
 	 * Update entity from fields.
@@ -166,8 +165,8 @@ public interface GWTServiceAsync {
 	 * @param entity
 	 *            the entity
 	 */
-	<T extends Serializable> void updateEntityFromFields(T t,
-			LinkedHashMap<String, Object> fields, AsyncCallback<T> entity);
+	// <T extends Serializable> void updateEntityFromFields(T t,
+	// LinkedHashMap<String, Object> fields, AsyncCallback<T> entity);
 
 	/**
 	 * Gets the fields data from entity.
@@ -179,7 +178,7 @@ public interface GWTServiceAsync {
 	 * 
 	 * @return the fields data from entity
 	 */
-	<T extends Serializable> void getFieldsDataFromEntity(T t,
-			AsyncCallback<LinkedHashMap<String, Object>> data);
+	// <T extends Serializable> void getFieldsDataFromEntity(T t,
+	// AsyncCallback<LinkedHashMap<String, Object>> data);
 
 }

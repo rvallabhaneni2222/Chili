@@ -17,14 +17,14 @@ public abstract class AbstractStatusPanel extends ALComposite implements
 		return statusPanel;
 	}
 
-	FlexTable statusBar = new FlexTable();
-	Label userLink = new Label("Welcome Guest");
+	protected FlexTable statusBar = new FlexTable();
+	protected Label userLink = new Label("Welcome Guest");
 	Image logo = new Image("images/logo.gif");
 
-	ClickableLink loginLink = new ClickableLink("login");
-	ClickableLink logoutLink = new ClickableLink("logout");
+	protected ClickableLink loginLink = new ClickableLink("login");
+	protected ClickableLink logoutLink = new ClickableLink("logout");
 
-	ClickableLink createUserLink = new ClickableLink("create user");
+	protected ClickableLink createUserLink = new ClickableLink("create user");
 
 	public AbstractStatusPanel() {
 		statusPanel = this;
@@ -34,9 +34,14 @@ public abstract class AbstractStatusPanel extends ALComposite implements
 
 	protected abstract void setUser();
 
+	
+	public abstract void logoutSuccessfull();
+
 	@Override
 	protected void addListeners() {
 		loginLink.addClickHandler(this);
+		createUserLink.addClickHandler(this);
+		logoutLink.addClickHandler(this);
 	}
 
 	@Override

@@ -336,7 +336,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return flds;
 	}
 
-	@Override
+	
 	public <T extends Serializable> T updateEntityFromFields(T entity,
 			LinkedHashMap<String, Object> fields) {
 		String className = entity.getClass().getCanonicalName();
@@ -422,7 +422,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return var;
 	}
 
-	@Override
 	public <T extends Serializable> T createEntityFromFieldsWithID(
 			String className, LinkedHashMap<String, Object> fields) {
 

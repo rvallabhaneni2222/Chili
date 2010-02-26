@@ -56,6 +56,13 @@
 			<version>1.0-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- needed for seamgwt2 patch classes -->
+		<dependency>
+			<groupId>org.jboss.seam</groupId>
+			<artifactId>jboss-seam-remoting</artifactId>
+			<version>2.2.0.GA</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
@@ -77,11 +84,8 @@
 		</dependency>
 	</dependencies>
 	<properties>
-		<gwtVersion>1.7.0</gwtVersion>
-		<gileadVersion>1.2.4</gileadVersion>
-		<google.webtoolkit.home>C:\gwt-windows-1.7.0
-		</google.webtoolkit.home>
-		<platform>windows</platform>
+			<gwtVersion>2.0.0</gwtVersion>
+		<gwtHome>c:/gwt-2.0.0</gwtHome>
 	</properties>
 	<repositories>
 		<repository>
