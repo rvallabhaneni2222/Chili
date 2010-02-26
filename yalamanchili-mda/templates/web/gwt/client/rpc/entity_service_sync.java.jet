@@ -238,8 +238,7 @@ public interface ${$class/@name}Service extends RemoteService {
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-public  List<${$class2/@name}> getRelatedEntities(Long entityID,
-			String sourceClass, ${$class2/@name} target);
+public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
   					  		 			</c:if> 
   					  		 		</c:iterate>
   							  	</c:if> 
@@ -275,8 +274,7 @@ public  List<${$class2/@name}> getRelatedEntities(Long entityID,
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-public  List<${$class2/@name}> getRelatedEntities(Long entityID,
-			String sourceClass, ${$class2/@name} target);
+public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
   					  		 			</c:if> 
   					  		 		</c:iterate>
   							  	</c:if> 
@@ -310,8 +308,7 @@ public  List<${$class2/@name}> getRelatedEntities(Long entityID,
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-public  List<${$class2/@name}> getRelatedEntities(Long entityID,
-			String sourceClass, ${$class2/@name} target);
+public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
   					  		 			</c:if> 
   					  		 		</c:iterate>
   							  	</c:if> 

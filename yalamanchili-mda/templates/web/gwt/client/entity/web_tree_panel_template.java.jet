@@ -179,10 +179,8 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 							  					  		 			if (link.contains(${$class2/@name}.class.getName())) {
-																		${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getRelatedEntities(
-																				entity.getId(), ${$class/@name}.class.getName(), new ${$class2/@name}(),
-																				new ALAsyncCallback<List<${$class2/@name}>>() {
-														
+													${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
+													entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
 																					@Override
 																					public void onResponse(List<${$class2/@name}> arg0) {
 																						
@@ -242,10 +240,8 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 							  					  		 			if (link.contains(${$class2/@name}.class.getName())) {
-																		${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getRelatedEntities(
-																				entity.getId(), ${$class/@name}.class.getName(), new ${$class2/@name}(),
-																				new ALAsyncCallback<List<${$class2/@name}>>() {
-														
+																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
+																			entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
 																					@Override
 																					public void onResponse(List<${$class2/@name}> arg0) {
 																						
@@ -306,9 +302,8 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
   					  		 			if (link.contains(${$class2/@name}.class.getName())) {
-											${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getRelatedEntities(
-													entity.getId(), ${$class/@name}.class.getName(), new ${$class2/@name}(),
-													new ALAsyncCallback<List<${$class2/@name}>>() {
+											${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
+													entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
 							
 														@Override
 														public void onResponse(List<${$class2/@name}> arg0) {
@@ -345,9 +340,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 					</c:if> 										
 		</c:iterate>
 	</c:iterate>
-</c:iterate>
-
-		
+</c:iterate>	
 	}
 
 }
