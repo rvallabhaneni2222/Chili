@@ -11,7 +11,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.user.client.ui.DisclosurePanel;
-import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.LazyPanel;
+import com.google.gwt.user.client.ui.Widget;
 import info.yalamanchili.gwt.composite.CreateComposite.CreateCompositeType;
 
 public class ${$class/@name}SideBar extends SideBarComposite {
@@ -22,9 +23,16 @@ public class ${$class/@name}SideBar extends SideBarComposite {
 	}
 
 	ClickableLink createLink = new ClickableLink("Create ${$class/@name}");
-	${$class/@name}SearchPanelGeneric ${lower-case($class/@name)}SearchPanelGeneric = new ${$class/@name}SearchPanelGeneric();
 
-
+	private static class ${$class/@name}LazySearchPanel extends LazyPanel {
+		@Override
+		protected Widget createWidget() {
+			return new ${$class/@name}SearchPanelGeneric();
+		}
+	}
+	
+	${$class/@name}LazySearchPanel ${lower-case($class/@name)}LazySearchPanel = new ${$class/@name}LazySearchPanel();
+	
 	public ${$class/@name}SideBar() {
 		${lower-case($class/@name)}SideBar = this;
 		initSideBarComposite();
@@ -67,12 +75,13 @@ public class ${$class/@name}SideBar extends SideBarComposite {
 
 	@Override
 	public void onSearchClose(CloseEvent<DisclosurePanel> arg0) {
-		searchPanel.remove(${lower-case($class/@name)}SearchPanelGeneric);
+		searchPanel.remove(${lower-case($class/@name)}LazySearchPanel);
 	}
 
 	@Override
 	public void onSearchOpen(OpenEvent<DisclosurePanel> arg0) {
-		searchPanel.add(${lower-case($class/@name)}SearchPanelGeneric);
+		searchPanel.add(${lower-case($class/@name)}LazySearchPanel);
+		${lower-case($class/@name)}LazySearchPanel.setVisible(true);
 	}
 }
 </java:format>
