@@ -1,5 +1,6 @@
 <java:format>
 package ${$packageName}.${lower-case($class/@name)};
+<c:setVariable select="$class/@xmi.id" var="classID"/>
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$packageName}.${lower-case($class/@name)}.${$class/@name}ServiceLocal;
 import ${$packageName}.${lower-case($class/@name)}.${$class/@name}ServiceRemote;
@@ -103,30 +104,7 @@ private static final Log log = LogFactory
 		Query getEntitiesSize = entityManager.createQuery(query);
 		return (Long) getEntitiesSize.getSingleResult();
 	}
-	
-	@Override
-	public <T extends Serializable> void merge(${$class/@name} entity, T parent) {
-		${$class/@name} res = null;
-		for (Method method : entity.getClass().getMethods()) {
-			for (Class clazz : method.getParameterTypes()) {
-				Class parentClass = parent.getClass();
-				do {
-					if (clazz.toString().contains(parentClass.getName())) {
-						try {
-							res = (${$class/@name}) method.invoke(entity, parent);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							throw new RuntimeException("Call failed");
-						}
-					}
-					parentClass = parentClass.getSuperclass();
-				} while (parentClass!=null);
 
-			}
-		}
-		entityManager.merge(entity);
-	}
 	
 	@Override
 	public Map<Long, String> getListBoxValues(String[] columns) {

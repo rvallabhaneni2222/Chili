@@ -21,11 +21,16 @@
     		<%-- process generizations upto 2 levels and get the parent classes if any--%>
     		<c:set select="$class" name="parent1">${$class/@name}</c:set>
     		<c:set select="$class" name="parent2">${$class/@name}</c:set>
+    		<c:set select="$class" name="hasChildren">${$class/@name}</c:set>
     		<c:setVariable select="$class/@xmi.id" var="classID"/>
 			<c:setVariable select="$class" var="parentClass1"/>
 			<c:setVariable select="$class" var="parentClass2"/>
 			<%--process generizations --%>
 			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+			<%-- check is this has children then check haschildren to @xmiidref--%>
+			<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $classID">
+			<c:set select="$class" name="hasChildren">${$class/@xmi.id}</c:set>
+			</c:if>
 			 <%-- if child class--%>
 				<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
 					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">

@@ -407,32 +407,11 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-  					  		 				<%-- check if this is a parent--%>
-					  					  	<c:setVariable select="$class2/@xmi.id" var="isParent"/>
-											<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
-												<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $class2/@xmi.id">
-												<%-- update flag variable--%>
-												<c:setVariable select="$class2/@name" var="isParent"/>
-												</c:if>															
-											</c:iterate>
-											<%-- if class is a Parent class--%>
-							    		 	<c:if test="$isParent = $class2/@name">  
-								    		 	${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().merge(entity,
-												 TreeAbstract${$class2/@name}Panel.instance().getEntity(),
-												new ALAsyncCallback<java.lang.Void>() {
-
-												@Override
-												public void onResponse(Void arg0) {
-												new ResponseStatusWidget().show("added");
-			
-												}
-
-												});
-											</c:if>
-											<%-- if class is a regular  class--%>
-											<c:if test="$isParent = $class2/@xmi.id">  
+										<%-- check to see if class2 is parent and child--%>
+										<c:if test="not($class2/@parent1 = $class2/@name)">
+										<c:if test="not($class2/@hasChildren = $class2/@name)">
 											${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().merge(entity,
-											 Tree${$class2/@name}Panel.instance().getEntity(),
+											(${$class2/@name}) TreeAbstract${$class2/@name}Panel.instance().getEntity(),
 											new ALAsyncCallback<java.lang.Void>() {
 
 											@Override
@@ -441,9 +420,39 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 		
 											}
 
-											});	
-											</c:if>			
-	
+											});
+										</c:if>
+										<%-- has parent and no children--%>
+										<c:if test="$class2/@hasChildren = $class2/@name">
+											${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().merge(entity,
+											(${$class2/@name}) Tree${$class2/@name}Panel.instance().getEntity(),
+											new ALAsyncCallback<java.lang.Void>() {
+
+											@Override
+											public void onResponse(Void arg0) {
+											new ResponseStatusWidget().show("added");
+		
+											}
+
+											});
+										</c:if>
+										</c:if>
+										<%-- no parent and has children--%>
+										 <c:if test="$class2/@parent1 = $class2/@name">
+										 <c:if test="not($class2/@hasChildren = $class2/@name)">
+										 	${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().merge(entity,
+											 TreeAbstract${$class2/@name}Panel.instance().getEntity(),
+											new ALAsyncCallback<java.lang.Void>() {
+
+											@Override
+											public void onResponse(Void arg0) {
+											new ResponseStatusWidget().show("added");
+		
+											}
+
+											});
+										 </c:if>
+										 </c:if>
   					  		 			</c:if> 
   					  		 		</c:iterate>
   					  		 	 </c:if> 	

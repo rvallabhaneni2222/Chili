@@ -195,6 +195,7 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import javax.persistence.EntityManager;
 
@@ -208,6 +209,8 @@ import org.jboss.seam.annotations.remoting.WebRemote;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.ScopeType;
 import info.yalamanchili.trace.Trace;
+import org.dozer.Mapper;
+
 
 @Trace
 @Transactional
@@ -224,6 +227,9 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	
 	@In(create = true)
 	protected EntityManager em;
+	
+	@In
+	protected Mapper dozerMapper;
 	
 	@Override
 	@WebRemote
@@ -283,8 +289,11 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	@WebRemote
 	public  List<${$class2/@name}> getRelatedEntities(Long entityID,
 			String sourceClass, ${$class2/@name} target) {
-		return genericServiceBean.getRelatedEntities(entityID, ${$class/@name}.class,
-				target);
+		List<${$class2/@name}> res = new ArrayList<${$class2/@name}>();
+		for (${$class2/@name} obj : em.find(${$class/@name}.class, entityID).get${$class2/@name}s()) {
+			res.add(dozerMapper.map(obj, ${$class2/@name}.class));
+		}
+		return res;	
 	}
   					  		 			</c:if> 
   					  		 		</c:iterate>
@@ -325,8 +334,11 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	@WebRemote
 	public  List<${$class2/@name}> getRelatedEntities(Long entityID,
 			String sourceClass, ${$class2/@name} target) {
-		return genericServiceBean.getRelatedEntities(entityID, ${$class/@name}.class,
-				target);
+		List<${$class2/@name}> res = new ArrayList<${$class2/@name}>();
+		for (${$class2/@name} obj : em.find(${$class/@name}.class, entityID).get${$class2/@name}s()) {
+			res.add(dozerMapper.map(obj, ${$class2/@name}.class));
+		}
+		return res;	
 	}
   					  		 			</c:if> 
   					  		 		</c:iterate>
@@ -365,8 +377,11 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	@WebRemote
 	public  List<${$class2/@name}> getRelatedEntities(Long entityID,
 			String sourceClass, ${$class2/@name} target) {
-		return genericServiceBean.getRelatedEntities(entityID, ${$class/@name}.class,
-				target);
+		List<${$class2/@name}> res = new ArrayList<${$class2/@name}>();
+		for (${$class2/@name} obj : em.find(${$class/@name}.class, entityID).get${$class2/@name}s()) {
+			res.add(dozerMapper.map(obj, ${$class2/@name}.class));
+		}
+		return res;		
 	}
   					  		 			</c:if> 
   					  		 		</c:iterate>
@@ -466,22 +481,9 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	@Override
 	@WebRemote
 	public  void merge(${$class/@name} entity, ${$class2/@name} child) {
-		 ${lower-case($class/@name)}ServiceBean.merge(entity, child);
+		entity.set${$class2/@name}(child);
+		em.merge(entity);
 	}
-										<c:if test="not($class2/@parent1 = $class2/@name)">
- 										@Override
-	@WebRemote
-	public  void merge(${$class/@name} entity, ${$class2/@parent1} child) {
-		 ${lower-case($class/@name)}ServiceBean.merge(entity, child);
-	}
- 										</c:if>
- 										<c:if test="not($class2/@parent2 = $class2/@name)"> 
- 										@Override
-	@WebRemote
-	public  void merge(${$class/@name} entity, ${$class2/@parent2} child) {
-		 ${lower-case($class/@name)}ServiceBean.merge(entity, child);
-	}
- 										</c:if>
   					  		 			</c:if> 
   					  		 		</c:iterate>
   							  	</c:if> 

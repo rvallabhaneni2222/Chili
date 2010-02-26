@@ -1,7 +1,7 @@
 <java:format>
 package ${$packageName}.${lower-case($class/@name)};
+<c:setVariable select="$class/@xmi.id" var="classID"/>
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
-
 import java.util.List;
 import java.util.Map;
 import info.yalamanchili.gwt.beans.TableObj;
@@ -17,8 +17,6 @@ public interface ${$class/@name}Service {
 	public void delete(${$class/@name} entity);
 
 	public TableObj<${$class/@name}> getTableObj(int start);
-
-	public <T extends Serializable> void merge(${$class/@name} entity, T parent);
 
 	public List<${$class/@name}> getEntities(${$class/@name} entity);
 
