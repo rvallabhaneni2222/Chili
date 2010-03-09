@@ -27,6 +27,7 @@
 <c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
 <c:setVariable select="'false'" var="useReflection"/>
 <c:setVariable select="'false'" var="isGWTJPA"/>
+<c:setVariable select="'false'" var="addJAXB"/>
 <c:setVariable select="'true'" var="isMergeEnabled"/>
 
 <%-- Iterate through packages and classes and set class relations --%>
@@ -198,7 +199,6 @@
 			</c:iterate>
 			<%-- create classes in the package--%>
 			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-			 <c:set select="$class" name="test">testvalue</c:set> 
 			<java:class name="{$class/@name}" package="{$packageName}" template="templates/jpa/jpa_class_template.java.jet"/>
 			</c:iterate>
 		</c:iterate>
@@ -208,10 +208,26 @@
     <ws:file template="templates/jpa/jpa_ormxml_template.xml.jet" path="META-INF/orm.xml"/>
     <ws:file template="templates/jpa/abbrevation.properties.jet" path="abbrevations.properties"/>
     </ws:folder>
-    <ws:folder path="src/test/java"/>
-    <ws:folder path="src/test/resources">
-    
+    <ws:folder path="src/test/java">
+    <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    	 <c:setVariable select="concat($jpaPackage,$package/@name)" var="packageName"/>
+			<%-- create classes in the package--%>
+			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+			<java:class name="{$class/@name}Test" package="{$packageName}" template="templates/jpa/test/jpa_enitity_test.java.jet"/>
+			</c:iterate>
+		</c:iterate>
     </ws:folder>
+    
+    <ws:folder path="src/test/resources">
+	<ws:file template="templates/ejb/test/resources/default.persistence.properties.jet" path="default.persistence.properties"/>
+	<ws:file template="templates/ejb/test/resources/ejb3-interceptors-aop.xml.jet" path="ejb3-interceptors-aop.xml"/>
+	<ws:file template="templates/ejb/test/resources/embedded-jboss-beans.xml.jet" path="embedded-jboss-beans.xml"/>
+	<ws:file template="templates/ejb/test/resources/jboss-jms-beans.xml.jet" path="jboss-jms-beans.xml"/>
+	<ws:file template="templates/ejb/test/resources/jndi.properties.jet" path="jndi.properties"/>
+	<ws:file template="templates/ejb/test/resources/log4j.xml.jet" path="log4j.xml"/>
+	<ws:file template="templates/ejb/test/resources/login-config.xml.jet" path="login-config.xml"/>
+	<ws:file template="templates/ejb/test/resources/security-beans.xml.jet" path="security-beans.xml"/>
+   	</ws:folder>
 
 </ws:project>
 

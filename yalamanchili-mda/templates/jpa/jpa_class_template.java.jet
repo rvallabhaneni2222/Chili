@@ -1,10 +1,6 @@
 <java:format>
 <f:bundle basename="templates/resources/messages">
-
 <c:setVariable select="$class/@xmi.id" var="classID"/>
-<%--This is used to check for inhereritance --%>
-<c:setVariable select="$class/@name" var="parentClass"/>
-<c:setVariable select="$class/@name" var="isParentClass"/>
 
 
 package ${$packageName};
@@ -50,50 +46,23 @@ import org.hibernate.validator.Future;
 import org.hibernate.validator.Max;
 import org.hibernate.validator.Min;
 import org.hibernate.validator.NotEmpty;
-<%-- Check inheritance support--%>
-<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
- <%-- if parent class--%>
-	<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $classID">
-	<c:setVariable select="$generalization/Generalization.parent/Class/@xmi.idref" var="isParentClass"/>
-	<%-- check to see no other class uses this as a child--%>
-			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization2">
-				<c:if test="$generalization2/Generalization.child/Class/@xmi.idref = $classID">
-					<c:setVariable select="$generalization/Generalization.child/Class/@xmi.idref" var="isParentClass"/>
-				</c:if>
-			</c:iterate>
-		
-	</c:if>
- <%-- if child class--%>
-	<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
-		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
-  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
-  			<c:setVariable select="$otherClass/@name" var="parentClass"/>
-  			</c:if>
-		</c:iterate>  					  		 			 
-	</c:if>
-</c:iterate>
 
 <f:message>generated.comment</f:message>
-<c:if test="$isParentClass = $classID">
+<c:if test="$class/@parent1 = $class/@name">
+<c:if test="not($class/@hasChildren = $class/@name)">
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 </c:if> 
-
+</c:if>
 @Entity
-public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name}  <c:choose select="$parentClass" > <c:when test="$class/@name" > <c:if test="$isGWTJPA = 'true'">extends  LightEntity</c:if> </c:when> <c:otherwise> extends ${$parentClass}</c:otherwise>  </c:choose> <c:if test="$class/@isAbstract = 'false'">implements Serializable</c:if>{
+public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name} <c:if test="not($class/@parent1 = $class/@name)"> extends ${$class/@parent1} </c:if>  implements Serializable{
 /** @generated */
 private static final long serialVersionUID = 1L;
 
-<%-- if this is not a child class--%> 
- <c:choose select="$parentClass" > 
- 	<c:when test="$class/@name" > <f:message>generated.comment</f:message>
+<c:if test="$class/@parent1 = $class/@name">
 	@Id
 	@GeneratedValue
 	protected Long id; 
-	</c:when>
-	 <c:otherwise> 
-	 </c:otherwise> 
- </c:choose>
-
+</c:if>
  
 
 
@@ -285,8 +254,9 @@ public ${$class/@name}() {
 super();   
 }
 </c:if> 
- <c:choose select="$parentClass" > 
- 	<c:when test="$class/@name" > <f:message>generated.comment</f:message>
+
+<%-- if class has a parent--%>
+<c:if test="$class/@parent1 = $class/@name">
 	public Long getId() {
 		return id;
 	}
@@ -294,10 +264,7 @@ super();
 	public void setId(Long id) {
 		this.id = id;
 	}
-	</c:when>
-	 <c:otherwise> 
-	 </c:otherwise> 
- </c:choose>
+</c:if>
 
 	
 <%-- getters and setters --%>

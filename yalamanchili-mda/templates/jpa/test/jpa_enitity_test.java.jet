@@ -1,0 +1,61 @@
+<java:format>
+package ${$packageName};
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import info.yalamanchili.embeddedjboss.JBossUtil;
+
+
+public class ${$class/@name}Test {
+	protected static EntityManagerFactory emf;
+	protected static EntityManager em;
+
+	@BeforeClass
+	public static void initClass() {
+		JBossUtil.startDeployer();
+		emf = JBossUtil.lookup(EntityManagerFactory.class, "java:/${$projectName}");
+		em = emf.createEntityManager();
+	}
+
+	@Before
+	public void initTest() {
+		initData();
+	}
+
+	public void initData() {
+
+	}
+
+	@Test
+	public void read() {
+
+	}
+
+	@Test
+	public void create() {
+
+	}
+
+	@Test
+	public void update() {
+
+	}
+	
+	@After
+	public void destroyTest() {
+
+	}
+	
+	@AfterClass
+	public static void destroy() {
+		em.close();
+		JBossUtil.shutdownDeployer();
+	}
+}
+</java:format>
