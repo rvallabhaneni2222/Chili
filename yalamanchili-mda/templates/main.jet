@@ -22,6 +22,7 @@
 <c:setVariable select="'5.1'" var="dozer-version"/>
 <c:setVariable select="'2.3.2'" var="ear-plugin-version"/>
 <c:setVariable select="'1.4'" var="jboss-maven-plugin-version"/>
+<c:setVariable select="'2.1'" var="android-version"/>
 
 <c:setVariable select="'HSQL'" var="dataBase"/>
 <c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
@@ -446,8 +447,50 @@
     <java:class name="ServerTest" package="{$groupID}.server" template="templates/web/test/gwt/server/web_server_impl_test.java.jet"/>
     </ws:folder>
     <ws:folder path="src/test/resources"/>
-
 </ws:project>
+
+<%--creates the Rest project--%>
+<ws:project name="{$projectName}-soa" location="C:/MDA/{$projectName}-soa">
+	<ws:file path="pom.xml" template="templates/soa/soa_pom_template.xml.jet"/>
+    <ws:folder path="src/main/java">
+    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    	 <c:setVariable select="concat($ejbPackage,$package/@name)" var="packageName"/>	
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+			<%-- rest service class--%>
+			<java:class name="{$class/@name}Service" package="{$packageName}.{lower-case($class/@name)}" template="templates/soa/main/entity_rest_service.java.jet"/>
+			</c:iterate>
+		</c:iterate>
+    </ws:folder>
+    <ws:folder path="src/main/webapp">
+	<ws:file template="templates/soa/main/webapp/WEB-INF/components.xml.jet" path="WEB-INF/components.xml"/>
+	<ws:file template="templates/soa/main/webapp/WEB-INF/web.xml.jet" path="WEB-INF/web.xml"/>
+    </ws:folder>
+    <ws:folder path="src/main/resources">
+     <ws:file template="templates/web/seam.properties.jet" path="seam.properties"/>
+    </ws:folder>
+</ws:project>
+
+<%--creates the Android project--%>
+<ws:project name="{$projectName}-android" location="C:/MDA/{$projectName}-android">
+	<ws:file path="pom.xml" template="templates/android/android_pom_template.xml.jet"/>
+	<ws:file path="AndroidManifest.xml" template="templates/android/android_manifest_template.xml.jet"/>
+    <ws:folder path="src/main/java">
+   <java:class name="${camelCase($projectName)}Main" package="${$groupID}.android" template="templates/android/main/Main.java.jet"/>
+    </ws:folder>
+	<ws:folder path="res/layout">
+	<ws:file template="templates/android/res/layout/main_template.xml.jet" path="main.xml"/>
+    </ws:folder>
+    <ws:folder path="res/values">
+    <ws:file template="templates/android/res/values/strings_template.xml.jet" path="strings.xml"/>
+    </ws:folder>
+     <ws:folder path="res/drawable-hdpi">
+    </ws:folder>
+     <ws:folder path="res/drawable-ldpi">
+    </ws:folder>
+     <ws:folder path="res/drawable-mdpi">
+    </ws:folder>
+</ws:project>
+
 <%-- creates the test project--%>
 <ws:project name="{$projectName}-test" location="C:/MDA/{$projectName}-test">
 	<ws:file path="pom.xml" template="templates/test/test_pom.xml.jet"/>

@@ -1,0 +1,19 @@
+package ${$groupID}.android;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+/**
+ * HelloFlashlight is a sample application for the usage of the Maven Android Plugin.
+ * The code is trivial and not the focus of this example and therefore not really documented.
+ */
+public class ${camelCase($projectName)}Main extends Activity {
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+
+        }
+}

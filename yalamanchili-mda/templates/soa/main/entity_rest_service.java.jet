@@ -1,0 +1,101 @@
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import org.dozer.Mapper;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.annotations.Create;
+import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
+
+import com.thoughtworks.xstream.XStream;
+
+@Name("${$class/@name}Resource")
+@Path("/${lower-case($class/@name)}")
+@Scope(ScopeType.STATELESS)
+@Transactional
+public class ${$class/@name}Service {
+
+protected XStream xstream = new XStream();
+
+	@In(create = true)
+	protected EntityManager em;
+	
+	@In
+	protected Mapper dozerMapper;
+
+	@GET
+	@Path("/read/{id}")
+	@Produces("application/xml")
+	public String read(@PathParam("id") Long id) {
+		${$class/@name} ${lower-case($class/@name)} = em.find(${$class/@name}.class, id);
+		return xstream.toXML(dozerMapper.map(${lower-case($class/@name)}, ${$class/@name}.class));
+	}
+
+	@Produces("application/xml")
+	@Consumes("application/xml")
+	@PUT
+	@Path("/create")
+	public String create(String entity) {
+		${$class/@name} ${lower-case($class/@name)} = (${$class/@name}) xstream.fromXML(entity);
+		return xstream.toXML(em.merge(${lower-case($class/@name)}));
+	}
+
+	@Produces("application/xml")
+	@Consumes("application/xml")
+	@PUT
+	@Path("/update")
+	public String update(String entity) {
+		${$class/@name} ${lower-case($class/@name)} = (${$class/@name}) xstream.fromXML(entity);
+		return xstream.toXML(em.merge(${lower-case($class/@name)}));
+	}
+
+	@DELETE
+	@Path("/delete/{id}")
+	public void delete(@PathParam("id") String id) {
+		em.remove(em.find(${$class/@name}.class, id));
+	}
+
+	@GET
+	@Produces("application/xml")
+	@Path("/readall/{offset}/{limit}")
+	public String readAll(@PathParam("offset") int offset,
+			@PathParam("limit") int limit) {
+		List<${$class/@name}> results = new ArrayList<${$class/@name}>();
+		String query = "from " + ${$class/@name}.class.getCanonicalName();
+		Query getEntitites = em.createQuery(query);
+		getEntitites.setFirstResult(offset);
+		getEntitites.setMaxResults(limit);
+		for (Object ${lower-case($class/@name)} : getEntitites.getResultList()) {
+			results.add(dozerMapper.map(${lower-case($class/@name)}, ${$class/@name}.class));
+		}
+		return xstream.toXML(results);
+	}
+
+	@GET
+	@Produces("application/xml")
+	@Path("/count")
+	public String count() {
+		String query = "select count(entity) from "
+				+ ${$class/@name}.class.getCanonicalName() + " entity";
+		Query getEntitiesSize = em.createQuery(query);
+		Long count = (Long) getEntitiesSize.getSingleResult();
+		return count.toString();
+
+	}
+}
+</java:format>
