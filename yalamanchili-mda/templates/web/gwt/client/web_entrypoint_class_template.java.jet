@@ -1,6 +1,4 @@
-
 <java:format>
-
 package ${$groupID}.client;
 
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">

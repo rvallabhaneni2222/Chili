@@ -1,0 +1,73 @@
+<java:format>
+package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
+
+import info.yalamanchili.project.android.HttpHelper;
+import info.yalamanchili.project.android.R;
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import android.app.ListActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+public class ReadAll${$class/@name}s extends ListActivity {
+	private SimpleAdapter notes;
+	ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+	HttpClient httpclient = new DefaultHttpClient();
+	HttpGet httpget = new HttpGet(
+			"http://divwl-h331nk1.cable.comcast.com/automanage-soa-1.0-SNAPSHOT/seam/resource/restv1/${lower-case($class/@name)}/readall/0/10");
+	HttpResponse response;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		notes = new SimpleAdapter(this, loadTable(), R.layout.list_item,
+				new String[] { "text" }, new int[] { R.id.list_item });
+		setListAdapter(notes);
+	}
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		Map map = (Map) l.getItemAtPosition(position);
+		Intent intent = (Intent) map.get("intent");
+		startActivity(intent);
+	}
+
+	protected ArrayList<HashMap<String, Object>> loadTable() {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+
+		for (${$class/@name} entity : getData()) {
+			HashMap<String, Object> item = new HashMap<String, Object>();
+			item.put("text", entity.toString());
+		//	item.put("intent", new Intent(this, Read${$class/@name}.class));
+			list.add(item);
+		}
+
+		return list;
+	}
+
+	protected List<${$class/@name}> getData() {
+		List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
+		try {
+			response = httpclient.execute(httpget);
+			entities = (List<${$class/@name}>) HttpHelper.xstream.fromXML(HttpHelper
+					.request(response));
+		} catch (Exception e) {
+			throw new RuntimeException("error getting data:", e);
+		}
+		return entities;
+	}
+}
+</java:format>

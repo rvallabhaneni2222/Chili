@@ -23,6 +23,7 @@
 <c:setVariable select="'2.3.2'" var="ear-plugin-version"/>
 <c:setVariable select="'1.4'" var="jboss-maven-plugin-version"/>
 <c:setVariable select="'2.1'" var="android-version"/>
+<c:setVariable select="'1.3.1'" var="xstream-version"/>
 
 <c:setVariable select="'HSQL'" var="dataBase"/>
 <c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
@@ -474,11 +475,20 @@
 <ws:project name="{$projectName}-android" location="C:/MDA/{$projectName}-android">
 	<ws:file path="pom.xml" template="templates/android/android_pom_template.xml.jet"/>
 	<ws:file path="AndroidManifest.xml" template="templates/android/android_manifest_template.xml.jet"/>
-    <ws:folder path="src/main/java">
+	<ws:file path="default.properties" template="templates/android/android_default.properties.jet"/>
+    <ws:folder path="src">
    <java:class name="${camelCase($projectName)}Main" package="${$groupID}.android" template="templates/android/main/Main.java.jet"/>
+   <java:class name="HttpHelper" package="${$groupID}.android" template="templates/android/main/http_helper.java.jet"/>
+       	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+			
+			<java:class name="ReadAll{$class/@name}s" package="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}" template="templates/android/main/read_all.java.jet"/>
+			</c:iterate>
+		</c:iterate>
     </ws:folder>
 	<ws:folder path="res/layout">
 	<ws:file template="templates/android/res/layout/main_template.xml.jet" path="main.xml"/>
+	<ws:file template="templates/android/res/layout/list_item.xml.jet" path="list_item.xml"/>
     </ws:folder>
     <ws:folder path="res/values">
     <ws:file template="templates/android/res/values/strings_template.xml.jet" path="strings.xml"/>
@@ -552,7 +562,6 @@
 			</c:iterate>
     </ws:folder>
     <ws:folder path="src/test/resources">
-    
     </ws:folder>
 
 </ws:project>
