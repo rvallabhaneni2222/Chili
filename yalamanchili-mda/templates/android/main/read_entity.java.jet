@@ -1,0 +1,52 @@
+<java:format>
+package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import info.yalamanchili.project.android.HttpHelper;
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.TextView;
+import ${$groupID}.android.R;
+
+public class Read${$class/@name} extends Activity {
+	HttpClient httpclient = new DefaultHttpClient();
+	
+	HttpResponse response;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.${lower-case($class/@name)}_read);
+		load();
+
+	}
+	
+	public void load() {
+		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
+		try {
+			response = httpclient.execute(new HttpGet(getReadURL()));
+			${lower-case($class/@name)} = (${$class/@name}) HttpHelper.xstream.fromXML(HttpHelper
+					.request(response));
+		} catch (Exception e) {
+			throw new RuntimeException("error getting data:", e);
+		}
+		<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+		TextView ${lower-case($attribute/@name)}_textview = (TextView) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
+		if (${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}() != null)
+		${lower-case($attribute/@name)}_textview.setText(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+		</c:iterate>
+		
+
+	}
+	
+	public String getReadURL() {
+	Long id = getIntent().getLongExtra("id", new Long(1));
+	return HttpHelper.baseURL + "${lower-case($class/@name)}/read/" + id;
+	}
+	
+
+}
+</java:format>

@@ -11,7 +11,9 @@ import com.thoughtworks.xstream.XStream;
 
 public class HttpHelper {
 	public static XStream xstream = new XStream();
-
+	
+	public static String baseURL = "http://165.137.250.96/automanage-soa-1.0-SNAPSHOT/seam/resource/restv1/";
+	
 	public static String request(HttpResponse response) {
 		String result = "";
 		try {
