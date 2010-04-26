@@ -14,22 +14,27 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-
+import android.widget.Button;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.view.View.OnClickListener;
 
-public class ReadAll${$class/@name}s extends ListActivity {
+public class ReadAll${$class/@name}s extends ListActivity implements
+		OnClickListener {
 	private SimpleAdapter notes;
-	ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 	HttpClient httpclient = new DefaultHttpClient();
 	HttpResponse response;
-
+	Button create;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		setContentView(R.layout.entity_readall);
+		create = (Button) findViewById(R.id.create);
+		create.setOnClickListener(this);
 		super.onCreate(savedInstanceState);
 		notes = new SimpleAdapter(this, loadTable(), R.layout.list_item,
 				new String[] { "text" }, new int[] { R.id.list_item });
@@ -73,6 +78,11 @@ public class ReadAll${$class/@name}s extends ListActivity {
 	public String getReadALLURL() {
 		Long id = getIntent().getLongExtra("id", new Long(1));
 		return HttpHelper.baseURL + "${lower-case($class/@name)}/readall/0/10";
+	}
+	
+	public void onClick(View arg0) {
+		Intent createIntent = new Intent(this, Create${$class/@name}.class);
+		startActivity(createIntent);
 	}
 }
 </java:format>

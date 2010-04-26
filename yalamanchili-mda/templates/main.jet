@@ -484,15 +484,18 @@
 			
 			<java:class name="ReadAll{$class/@name}s" package="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}" template="templates/android/main/read_all.java.jet"/>
 			<java:class name="Read{$class/@name}" package="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}" template="templates/android/main/read_entity.java.jet"/>
+			<java:class name="Create{$class/@name}" package="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}" template="templates/android/main/create_entity.java.jet"/>
 			</c:iterate>
 		</c:iterate>
     </ws:folder>
 	<ws:folder path="res/layout">
 	<ws:file template="templates/android/res/layout/main_template.xml.jet" path="main.xml"/>
 	<ws:file template="templates/android/res/layout/list_item.xml.jet" path="list_item.xml"/>
+	<ws:file template="templates/android/res/layout/entity_readall_template.xml.jet" path="entity_readall.xml"/>
 	    <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
 			<ws:file path="${lower-case($class/@name)}_read.xml" template="templates/android/res/layout/entity_read_template.xml.jet"/>
+			<ws:file path="${lower-case($class/@name)}_create.xml" template="templates/android/res/layout/entity_create_template.xml.jet"/>
 			</c:iterate>
 		</c:iterate>
     </ws:folder>

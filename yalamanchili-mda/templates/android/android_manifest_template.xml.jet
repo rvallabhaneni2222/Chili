@@ -19,6 +19,9 @@
       		 <activity android:name="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}.Read${$class/@name}"
                   android:label="@string/app_name">
       		 </activity>
+      		 <activity android:name="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}.Create${$class/@name}"
+                  android:label="@string/app_name">
+      		 </activity>
 			</c:iterate>
 		</c:iterate>
 

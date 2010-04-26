@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent"
+	android:layout_width="fill_parent" 
+	android:orientation="vertical">
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
+					android:layout_height="wrap_content">
+				</TextView>
+				<EditText
+		        android:id="@+id/${upper-case($attribute/@name)}_name"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        />			
+			</c:iterate>
+</LinearLayout>

@@ -33,6 +33,7 @@ public class Read${$class/@name} extends Activity {
 		} catch (Exception e) {
 			throw new RuntimeException("error getting data:", e);
 		}
+		
 		<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 		TextView ${lower-case($attribute/@name)}_textview = (TextView) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
 		if (${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}() != null)
