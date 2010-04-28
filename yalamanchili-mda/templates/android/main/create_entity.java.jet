@@ -1,15 +1,149 @@
 <java:format>
 package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import android.widget.EditText;
+import ${$groupID}.android.HttpHelper;
 import android.app.Activity;
 import android.os.Bundle;
 import info.yalamanchili.project.android.R;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
-public class Create${$class/@name} extends Activity {
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+
+public class Create${$class/@name} extends Activity implements OnClickListener {
+
+	HttpClient httpclient = new DefaultHttpClient();
+	HttpResponse response;
+	Button create;
+	
+	<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				EditText ${$attribute/@name}ET;
+				</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				EditText ${$attribute/@name}ET;
+				</c:iterate>
+	</c:if>		
+	<%-- process parent class level 0 attributes--%>	
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+			EditText ${$attribute/@name}ET;
+			</c:iterate>	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.${lower-case($class/@name)}_create);
+		create = (Button) findViewById(R.id.${lower-case($class/@name)}_create);
+		create.setOnClickListener(this);
+		assignFields();
+	}
+	
+	public void assignFields() {
+	<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				</c:iterate>
+	</c:if>		
+	<%-- process parent class level 0 attributes--%>	
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+			${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+			</c:iterate>	
+	}
+	
+	public void onClick(View arg0) {
+		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
+	<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > ${lower-case($class/@name)}.set${uppercaseFirst($attribute/@name)}(${$attribute/@name}ET.getText().toString());
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > 
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+				</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > ${lower-case($class/@name)}.set${uppercaseFirst($attribute/@name)}(${$attribute/@name}ET.getText().toString());
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  
+				 </c:when>
+				 <c:when test="${'$DateID'}" >   
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+				</c:iterate>
+	</c:if>		
+	<%-- process parent class level 0 attributes--%>	
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > ${lower-case($class/@name)}.set${uppercaseFirst($attribute/@name)}(${$attribute/@name}ET.getText().toString());
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >
+				 </c:when>
+				 <c:when test="${'$DateID'}" >
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" >
+				 </c:when>
+				 <c:when test="${'$LongID'}" >
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > 
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>	
+		try {
+			HttpPut put = new HttpPut(getCreateURL());
+			put.setEntity(new StringEntity(HttpHelper.xstream.toXML(${lower-case($class/@name)})));
+			put.setHeader("Content-Type", "application/xml");
+			httpclient.execute(put);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String getCreateURL() {
+		return HttpHelper.baseURL + "${lower-case($class/@name)}/create";
 	}
 
 }

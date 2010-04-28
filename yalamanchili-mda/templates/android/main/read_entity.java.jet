@@ -5,7 +5,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
-import info.yalamanchili.project.android.HttpHelper;
+import ${$groupID}.android.HttpHelper;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
