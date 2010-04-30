@@ -1,11 +1,8 @@
 <java:format>
 package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
-
-import org.apache.http.HttpEntity;
+import ${$groupID}.android.AsyncHttpPut;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import android.widget.EditText;
 import ${$groupID}.android.HttpHelper;
@@ -18,6 +15,8 @@ import android.widget.Button;
 import android.app.DatePickerDialog;
 import android.app.Dialog;import android.widget.DatePicker;
 import java.util.Date;
+import android.widget.Toast;
+import android.content.Intent;
 
 import java.util.Calendar;
 
@@ -193,7 +192,9 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 	}
 	
 	public void onClick(View arg0) {
+	
 	if (arg0 == create) {
+		create.setEnabled(false);
 		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
@@ -256,14 +257,18 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 		 			</c:otherwise>
 		 		</c:choose>
 			</c:iterate>	
-		try {
-			HttpPut put = new HttpPut(getCreateURL());
-			put.setEntity(new StringEntity(HttpHelper.xstream.toXML(${lower-case($class/@name)})));
-			put.setHeader("Content-Type", "application/xml");
-			httpclient.execute(put);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			new AsyncHttpPut(this) {
+				@Override
+				protected void onResponse(String result) {
+					Toast
+							.makeText(Create${$class/@name}.this, "created",
+									Toast.LENGTH_LONG);
+					Intent realAllIntent = new Intent(Create${$class/@name}.this,
+							ReadAll${$class/@name}s.class);
+				//	startActivity(realAllIntent);
+
+				}
+			}.execute(getCreateURL(), HttpHelper.xstream.toXML(${lower-case($class/@name)}));
 	}
 		<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">

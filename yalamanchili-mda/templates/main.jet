@@ -479,6 +479,8 @@
     <ws:folder path="src">
    <java:class name="${camelCase($projectName)}Main" package="${$groupID}.android" template="templates/android/main/Main.java.jet"/>
    <java:class name="HttpHelper" package="${$groupID}.android" template="templates/android/main/http_helper.java.jet"/>
+   <java:class name="AsyncHttp" package="${$groupID}.android" template="templates/android/main/AsyncHttp_template.java.jet"/>
+   <java:class name="AsyncHttpPut" package="${$groupID}.android" template="templates/android/main/AsyncHttpPut_template.java.jet"/>
    <%--Iterate through the packages and classes--%>
        	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">

@@ -9,11 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import ${$groupID}.android.AsyncHttp;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import android.widget.Button;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -26,8 +23,6 @@ import android.view.View.OnClickListener;
 public class ReadAll${$class/@name}s extends ListActivity implements
 		OnClickListener {
 	private SimpleAdapter notes;
-	HttpClient httpclient = new DefaultHttpClient();
-	HttpResponse response;
 	Button create;
 	
 	@Override
@@ -36,9 +31,14 @@ public class ReadAll${$class/@name}s extends ListActivity implements
 		create = (Button) findViewById(R.id.create);
 		create.setOnClickListener(this);
 		super.onCreate(savedInstanceState);
-		notes = new SimpleAdapter(this, loadTable(), R.layout.list_item,
+		new AsyncHttp(this) {
+			@Override
+			protected void onResponse(String result) {
+		notes = new SimpleAdapter(ReadAll${$class/@name}s.this, loadTable(result), R.layout.list_item,
 				new String[] { "text" }, new int[] { R.id.list_item });
 		setListAdapter(notes);
+			}
+		}.execute(getReadALLURL());
 	}
 
 	@Override
@@ -48,10 +48,10 @@ public class ReadAll${$class/@name}s extends ListActivity implements
 		startActivity(intent);
 	}
 
-	protected ArrayList<HashMap<String, Object>> loadTable() {
+	protected ArrayList<HashMap<String, Object>> loadTable(String xml) {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 
-		for (${$class/@name} entity : getData()) {
+		for (${$class/@name} entity : (List<${$class/@name}>) HttpHelper.xstream.fromXML(xml)) {
 			HashMap<String, Object> item = new HashMap<String, Object>();
 			item.put("text", entity.toString());
 			Intent readIntent = new Intent(this, Read${$class/@name}.class);
@@ -63,17 +63,6 @@ public class ReadAll${$class/@name}s extends ListActivity implements
 		return list;
 	}
 
-	protected List<${$class/@name}> getData() {
-		List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
-		try {
-			response = httpclient.execute(new HttpGet(getReadALLURL()));
-			entities = (List<${$class/@name}>) HttpHelper.xstream.fromXML(HttpHelper
-					.request(response));
-		} catch (Exception e) {
-			throw new RuntimeException("error getting data:", e);
-		}
-		return entities;
-	}
 	
 	public String getReadALLURL() {
 		Long id = getIntent().getLongExtra("id", new Long(1));
