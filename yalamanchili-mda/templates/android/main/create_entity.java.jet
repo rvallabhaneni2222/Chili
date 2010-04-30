@@ -15,6 +15,11 @@ import info.yalamanchili.project.android.R;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.app.DatePickerDialog;
+import android.app.Dialog;import android.widget.DatePicker;
+import java.util.Date;
+
+import java.util.Calendar;
 
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 
@@ -26,19 +31,95 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 	
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
-				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
-				EditText ${$attribute/@name}ET;
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">			
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > EditText ${$attribute/@name}ET;
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > EditText ${$attribute/@name}ET;
+				 </c:when>
+				 <c:when test="${'$DateID'}" > 
+					Date ${$attribute/@name}= new Date();
+				 	Button ${$attribute/@name}B;
+												static final int ${upper-case($attribute/@name)}_ID = <f:unique/>;
+												private DatePickerDialog.OnDateSetListener ${$attribute/@name}DateSetListener = new DatePickerDialog.OnDateSetListener() {
+												
+													public void onDateSet(DatePicker view, int year, int monthOfYear,
+															int dayOfMonth) {
+													${$attribute/@name}.setDate(dayOfMonth);
+													${$attribute/@name}.setMonth(monthOfYear + 1);
+													${$attribute/@name}.setYear(year);
+													}
+													};
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > EditText ${$attribute/@name}ET;
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > EditText ${$attribute/@name}ET;
+				 </c:when>
+		 		</c:choose>
 				</c:iterate>
 	</c:if>
 	<%-- process parent class level 1 attributes--%>
 	<c:if test="not($class/@name = $parentClass1/@name)">
 				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
-				EditText ${$attribute/@name}ET;
+								<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > EditText ${$attribute/@name}ET;
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > EditText ${$attribute/@name}ET;
+				 </c:when>
+				 <c:when test="${'$DateID'}" >
+					Date ${$attribute/@name}= new Date();				 
+				  	Button ${$attribute/@name}B;
+												static final int ${upper-case($attribute/@name)}_ID =  <f:unique/>;
+												private DatePickerDialog.OnDateSetListener ${$attribute/@name}DateSetListener = new DatePickerDialog.OnDateSetListener() {
+												
+													public void onDateSet(DatePicker view, int year, int monthOfYear,
+															int dayOfMonth) {
+													${$attribute/@name}.setDate(dayOfMonth);
+													${$attribute/@name}.setMonth(monthOfYear + 1);
+													${$attribute/@name}.setYear(year);
+													}
+													};
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > EditText ${$attribute/@name}ET;
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > EditText ${$attribute/@name}ET;
+				 </c:when>
+		 		</c:choose>
 				</c:iterate>
 	</c:if>		
 	<%-- process parent class level 0 attributes--%>	
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-			EditText ${$attribute/@name}ET;
+							<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > EditText ${$attribute/@name}ET;
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > EditText ${$attribute/@name}ET;
+				 </c:when>
+				 <c:when test="${'$DateID'}" >
+				 Date ${$attribute/@name}= new Date(); 	
+				 Button ${$attribute/@name}B;
+												static final int ${upper-case($attribute/@name)}_ID =  <f:unique/>;
+												private DatePickerDialog.OnDateSetListener ${$attribute/@name}DateSetListener = new DatePickerDialog.OnDateSetListener() {
+												
+													public void onDateSet(DatePicker view, int year, int monthOfYear,
+															int dayOfMonth) {
+													${$attribute/@name}.setDate(dayOfMonth);
+													${$attribute/@name}.setMonth(monthOfYear + 1);
+													${$attribute/@name}.setYear(year);
+													}
+													};
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > EditText ${$attribute/@name}ET;
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > EditText ${$attribute/@name}ET;
+				 </c:when>
+		 		</c:choose>
+
 			</c:iterate>	
 	
 	@Override
@@ -54,22 +135,65 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
-				${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" >  ${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  ${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 </c:when>
+				 <c:when test="${'$DateID'}" >  ${$attribute/@name}B= (Button) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 ${$attribute/@name}B.setOnClickListener(this);
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > ${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  ${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 </c:when>
+		 		</c:choose>
 				</c:iterate>
 	</c:if>
 	<%-- process parent class level 1 attributes--%>
 	<c:if test="not($class/@name = $parentClass1/@name)">
 				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
-				${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" >  ${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  ${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 </c:when>
+				 <c:when test="${'$DateID'}" >  ${$attribute/@name}B= (Button) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 ${$attribute/@name}B.setOnClickListener(this);
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > ${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  ${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 </c:when>
+		 		</c:choose>
 				</c:iterate>
 	</c:if>		
 	<%-- process parent class level 0 attributes--%>	
-			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-			${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
-			</c:iterate>	
+				<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" >  ${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  ${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 </c:when>
+				 <c:when test="${'$DateID'}" >  ${$attribute/@name}B= (Button) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 ${$attribute/@name}B.setOnClickListener(this);
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > ${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  ${$attribute/@name}ET = (EditText) findViewById(R.id.${lower-case($class/@name)}_${lower-case($attribute/@name)});
+				 </c:when>
+		 		</c:choose>
+				</c:iterate>	
 	}
 	
 	public void onClick(View arg0) {
+	if (arg0 == create) {
 		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
@@ -79,7 +203,7 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 				 </c:when>
 				 <c:when test="${'$IntegerID'}" > 
 				 </c:when>
-				 <c:when test="${'$DateID'}" > 
+				 <c:when test="${'$DateID'}" > ${lower-case($class/@name)}.set${uppercaseFirst($attribute/@name)}(${$attribute/@name});
 				 </c:when>
 				 <c:when test="${'$BooleanID'}" > 
 				 </c:when>
@@ -100,7 +224,7 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 				 </c:when>
 				 <c:when test="${'$IntegerID'}" >  
 				 </c:when>
-				 <c:when test="${'$DateID'}" >   
+				 <c:when test="${'$DateID'}" >    ${lower-case($class/@name)}.set${uppercaseFirst($attribute/@name)}(${$attribute/@name});
 				 </c:when>
 				 <c:when test="${'$BooleanID'}" > 
 				 </c:when>
@@ -120,7 +244,7 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 				 </c:when>
 				 <c:when test="${'$IntegerID'}" >
 				 </c:when>
-				 <c:when test="${'$DateID'}" >
+				 <c:when test="${'$DateID'}" >  ${lower-case($class/@name)}.set${uppercaseFirst($attribute/@name)}(${$attribute/@name});
 				 </c:when>
 				 <c:when test="${'$BooleanID'}" >
 				 </c:when>
@@ -140,6 +264,86 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+		<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$DateID'}" > 
+				 if (arg0 == ${$attribute/@name}B) {
+				showDialog(${upper-case($attribute/@name)}_ID);
+		}
+				 </c:when>
+		 		</c:choose>
+				</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$DateID'}" >  
+				 if (arg0 == ${$attribute/@name}B) {
+				showDialog(${upper-case($attribute/@name)}_ID);
+		} 
+				 </c:when>
+		 		</c:choose>
+				</c:iterate>
+	</c:if>		
+	<%-- process parent class level 0 attributes--%>	
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$DateID'}" >
+				 if (arg0 == ${$attribute/@name}B) {
+				showDialog(${upper-case($attribute/@name)}_ID);
+		}
+				 </c:when>
+		 		</c:choose>
+			</c:iterate>	
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Calendar c = Calendar.getInstance();
+		int cyear = c.get(Calendar.YEAR);
+		int cmonth = c.get(Calendar.MONTH);
+		int cday = c.get(Calendar.DAY_OF_MONTH);
+		switch (id) {
+		<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$DateID'}" > 
+			case ${upper-case($attribute/@name)}_ID:
+			return new DatePickerDialog(this, ${$attribute/@name}DateSetListener, cyear, cmonth,
+					cday);
+				 </c:when>
+		 		</c:choose>
+				</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$DateID'}" >  
+			case ${upper-case($attribute/@name)}_ID:
+			return new DatePickerDialog(this, ${$attribute/@name}DateSetListener, cyear, cmonth,
+					cday);
+				 </c:when>
+		 		</c:choose>
+				</c:iterate>
+	</c:if>		
+	<%-- process parent class level 0 attributes--%>	
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$DateID'}" >
+			case ${upper-case($attribute/@name)}_ID:
+			return new DatePickerDialog(this, ${$attribute/@name}DateSetListener, cyear, cmonth,
+					cday);
+				 </c:when>
+		 		</c:choose>
+			</c:iterate>	
+		}
+		return null;
 	}
 	
 	public String getCreateURL() {
