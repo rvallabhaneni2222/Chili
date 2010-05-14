@@ -12,7 +12,7 @@ import com.thoughtworks.xstream.XStream;
 public class HttpHelper {
 	public static XStream xstream = new XStream();
 	
-	public static String baseURL = "http://divwl-h331nk1.cable.comcast.com/automanage-soa-1.0-SNAPSHOT/seam/resource/restv1/";
+	public static String baseURL = "http://10.0.2.2/automanage-soa-1.0-SNAPSHOT/seam/resource/restv1/";
 	
 	public static String request(HttpResponse response) {
 		String result = "";

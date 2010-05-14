@@ -27,13 +27,28 @@ public class Read${$class/@name} extends Activity {
 	public void load(String xml) {
 		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
 			${lower-case($class/@name)} = (${$class/@name}) HttpHelper.xstream.fromXML(xml);
-		
-		<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-		TextView ${lower-case($attribute/@name)}_textview = (TextView) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
-		if (${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}() != null)
-		${lower-case($attribute/@name)}_textview.setText(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
-		</c:iterate>
-		
+	<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+						TextView ${lower-case($attribute/@name)}_textview = (TextView) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
+						if (${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}() != null)
+						${lower-case($attribute/@name)}_textview.setText(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+				</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+						TextView ${lower-case($attribute/@name)}_textview = (TextView) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
+						if (${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}() != null)
+						${lower-case($attribute/@name)}_textview.setText(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+				</c:iterate>
+	</c:if>		
+	<%-- process parent class level 0 attributes--%>	
+				<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+						TextView ${lower-case($attribute/@name)}_textview = (TextView) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
+						if (${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}() != null)
+						${lower-case($attribute/@name)}_textview.setText(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+				</c:iterate>	
 
 	}
 	
