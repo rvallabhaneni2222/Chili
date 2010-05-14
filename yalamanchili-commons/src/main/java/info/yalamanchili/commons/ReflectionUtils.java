@@ -77,7 +77,6 @@ public class ReflectionUtils {
 		return attributeValues;
 	}
 
-
 	public static DataType getDataType(Field field) {
 		Class<?> clazz = field.getType();
 		if (clazz.equals(Integer.class)) {
@@ -134,22 +133,23 @@ public class ReflectionUtils {
 			String value) {
 		Object var = null;
 		Field field = getField(entity, attributeName);
-		for (Method m : field.getType().getDeclaredMethods()) {
-			if (m.getName().equals("valueOf")) {
-				try {
-					var = (Enum<?>) m.invoke(entity, value);
-				} catch (IllegalArgumentException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IllegalAccessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (InvocationTargetException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+		if (field != null)
+			for (Method m : field.getType().getDeclaredMethods()) {
+				if (m.getName().equals("valueOf")) {
+					try {
+						var = (Enum<?>) m.invoke(entity, value);
+					} catch (IllegalArgumentException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IllegalAccessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (InvocationTargetException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
-		}
 		log.debug(var.toString());
 		return var;
 	}
@@ -163,5 +163,45 @@ public class ReflectionUtils {
 		return null;
 	}
 
-	
+	public static Method getGetterMethod(Field field, Class<?> clazz) {
+		for (Method getterMethod : clazz.getDeclaredMethods()) {
+			if (getterMethod.getName()
+					.equalsIgnoreCase("get" + field.getName())) {
+				return getterMethod;
+			}
+		}
+		throw new RuntimeException("No getter method found" + field.getName());
+	}
+
+	public static Object callGetterMethod(Object source, Field field) {
+		Method getterMethod = getGetterMethod(field, source.getClass());
+		Object result = null;
+		try {
+			result = getterMethod.invoke(source);
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to invoke getter method on field:"
+					+ field.getName(), e);
+		}
+		return result;
+	}
+
+	public static Method getSetterMethod(Field field, Class<?> clazz) {
+		for (Method getterMethod : clazz.getDeclaredMethods()) {
+			if (getterMethod.getName()
+					.equalsIgnoreCase("set" + field.getName())) {
+				return getterMethod;
+			}
+		}
+		throw new RuntimeException("No setter method found" + field.getName());
+	}
+
+	public static void callSetterMethod(Object source, Field field, Object value) {
+		Method setterMethod = getSetterMethod(field, source.getClass());
+		try {
+			setterMethod.invoke(source, value);
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to invoke setter method on"
+					+ field.getName(), e);
+		}
+	}
 }

@@ -5,7 +5,6 @@ import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -54,21 +53,21 @@ public class JNDIUtils {
 	 * @throws NamingException
 	 *             the naming exception
 	 */
-	protected static Context getSecureInitialContext(HttpSession session)
-			throws NamingException {
-		Properties props = new Properties();
-		props.put(Context.INITIAL_CONTEXT_FACTORY, jndiProperties.get(
-				JNDIConstants.SECURE_INITIAL_CONTEXT_FACTORY).toString());
-		props.put(Context.URL_PKG_PREFIXES, jndiProperties.get(
-				JNDIConstants.SECURE_URL_PKG_PREFIXES).toString());
-		props.put(Context.PROVIDER_URL, jndiProperties.get(
-				JNDIConstants.SECURE_PROVIDER_URL).toString());
-		props.setProperty(Context.SECURITY_PRINCIPAL, session.getAttribute(
-				"username").toString());
-		props.setProperty(Context.SECURITY_CREDENTIALS, session.getAttribute(
-				"password").toString());
-		return new InitialContext(props);
-	}
+//	protected static Context getSecureInitialContext(HttpSession session)
+//			throws NamingException {
+//		Properties props = new Properties();
+//		props.put(Context.INITIAL_CONTEXT_FACTORY, jndiProperties.get(
+//				JNDIConstants.SECURE_INITIAL_CONTEXT_FACTORY).toString());
+//		props.put(Context.URL_PKG_PREFIXES, jndiProperties.get(
+//				JNDIConstants.SECURE_URL_PKG_PREFIXES).toString());
+//		props.put(Context.PROVIDER_URL, jndiProperties.get(
+//				JNDIConstants.SECURE_PROVIDER_URL).toString());
+//		props.setProperty(Context.SECURITY_PRINCIPAL, session.getAttribute(
+//				"username").toString());
+//		props.setProperty(Context.SECURITY_CREDENTIALS, session.getAttribute(
+//				"password").toString());
+//		return new InitialContext(props);
+//	}
 
 	/**
 	 * Gets the secure initial context.
