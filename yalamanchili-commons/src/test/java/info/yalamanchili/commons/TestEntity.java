@@ -3,59 +3,59 @@ package info.yalamanchili.commons;
 import java.util.Date;
 
 public class TestEntity {
-	protected Long id;
-	protected String name;
-	protected Date date;
-	protected Integer age;
-	protected Float amount;
-	protected Boolean isReal;
+	public Long longField;
+	public String stringField;
+	public Date dateField;
+	public Integer integerField;
+	public Float floatField;
+	public Boolean booleanField;
 
-	public Long getId() {
-		return id;
+	public Long getLongField() {
+		return longField;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setLongField(Long longField) {
+		this.longField = longField;
 	}
 
-	public String getName() {
-		return name;
+	public String getStringField() {
+		return stringField;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setStringField(String stringField) {
+		this.stringField = stringField;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getDateField() {
+		return dateField;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDateField(Date dateField) {
+		this.dateField = dateField;
 	}
 
-	public Integer getAge() {
-		return age;
+	public Integer getIntegerField() {
+		return integerField;
 	}
 
-	public void setAge(Integer age) {
-		this.age = age;
+	public void setIntegerField(Integer integerField) {
+		this.integerField = integerField;
 	}
 
-	public Float getAmount() {
-		return amount;
+	public Float getFloatField() {
+		return floatField;
 	}
 
-	public void setAmount(Float amount) {
-		this.amount = amount;
+	public void setFloatField(Float floatField) {
+		this.floatField = floatField;
 	}
 
-	public Boolean getIsReal() {
-		return isReal;
+	public Boolean getBooleanField() {
+		return booleanField;
 	}
 
-	public void setIsReal(Boolean isReal) {
-		this.isReal = isReal;
+	public void setBooleanField(Boolean booleanField) {
+		this.booleanField = booleanField;
 	}
 
 }
