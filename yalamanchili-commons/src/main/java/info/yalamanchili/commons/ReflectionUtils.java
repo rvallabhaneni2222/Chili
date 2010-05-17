@@ -170,17 +170,35 @@ public class ReflectionUtils {
 				return getterMethod;
 			}
 		}
-		throw new RuntimeException("No getter method found" + field.getName());
+		return null;
+	}
+
+	public static Object callGetterMethod(Method getterMethod, Object source) {
+		Object result = null;
+		if (getterMethod != null) {
+			try {
+				result = getterMethod.invoke(source);
+			} catch (Exception e) {
+				throw new RuntimeException(
+						"Failed to invoke getter method on field:"
+								+ getterMethod.getName() + "on:"
+								+ source.getClass().toString(), e);
+			}
+		}
+		return result;
 	}
 
 	public static Object callGetterMethod(Object source, Field field) {
 		Method getterMethod = getGetterMethod(field, source.getClass());
 		Object result = null;
-		try {
-			result = getterMethod.invoke(source);
-		} catch (Exception e) {
-			throw new RuntimeException("Failed to invoke getter method on field:"
-					+ field.getName(), e);
+		if (getterMethod != null) {
+			try {
+				result = getterMethod.invoke(source);
+			} catch (Exception e) {
+				throw new RuntimeException(
+						"Failed to invoke getter method on field:"
+								+ field.getName(), e);
+			}
 		}
 		return result;
 	}
@@ -192,7 +210,18 @@ public class ReflectionUtils {
 				return getterMethod;
 			}
 		}
-		throw new RuntimeException("No setter method found" + field.getName());
+		return null;
+	}
+
+	public static void callSetterMethod(Method setterMethod, Object source,
+			Object value) {
+		try {
+			setterMethod.invoke(source, value);
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to invoke setter method"
+					+ setterMethod.getName() + "on:"
+					+ source.getClass().getName(), e);
+		}
 	}
 
 	public static void callSetterMethod(Object source, Field field, Object value) {

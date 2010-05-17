@@ -4,28 +4,40 @@ import info.yalamanchili.commons.DataType;
 import info.yalamanchili.commons.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class BeanMapper {
 
-	public Object mapPrimitiveDataTypes(Object source, Class<?> clazz) {
+	public Object clonePrimitiveDataTypes(Object source, Class<?> clazz) {
 		Object target;
 		try {
 			target = clazz.newInstance();
 		} catch (Exception e) {
 			throw new RuntimeException("Could not create new Instance", e);
 		}
+		if (source == null)
+			return null;
 		for (Field field : source.getClass().getDeclaredFields()) {
 			if (!DataType.DEFAULT.equals(ReflectionUtils.getDataType(field))
 					|| !DataType.ENUM
 							.equals(ReflectionUtils.getDataType(field))) {
-				mapField(source, target, field);
+				cloneField(source, target, field);
 			}
 		}
 		return target;
 	}
 
-	public void mapField(Object source, Object target, Field field) {
-		Object value = ReflectionUtils.callGetterMethod(source, field);
-		ReflectionUtils.callSetterMethod(target, field, value);
+	public void cloneField(Object source, Object target, Field field) {
+		Object value = null;
+		Method getterMethod = ReflectionUtils.getGetterMethod(field, source
+				.getClass());
+		if (getterMethod != null) {
+			value = ReflectionUtils.callGetterMethod(getterMethod, source);
+		}
+		Method setterMethod = ReflectionUtils.getSetterMethod(field, source
+				.getClass());
+		if (setterMethod != null) {
+			ReflectionUtils.callSetterMethod(setterMethod, target, value);
+		}
 	}
 }

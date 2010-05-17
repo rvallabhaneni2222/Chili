@@ -3,12 +3,12 @@ package info.yalamanchili.commons;
 import java.util.Date;
 
 public class TestEntity {
-	public Long longField;
-	public String stringField;
-	public Date dateField;
-	public Integer integerField;
-	public Float floatField;
-	public Boolean booleanField;
+	protected Long longField;
+	protected String stringField;
+	protected Date dateField;
+	protected Integer integerField;
+	protected Float floatField;
+	protected Boolean booleanField;
 
 	public Long getLongField() {
 		return longField;
