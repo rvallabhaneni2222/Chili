@@ -18,6 +18,7 @@ public class BeanMapperTest {
 		entity.setLongField(new Long(10));
 		entity.setIntegerField(10);
 		entity.setFloatField(new Float(10.99));
+		entity.setSuperint(new Integer(10));
 		Calendar cal = Calendar.getInstance();
 		Date date = cal.getTime();
 		entity.setDateField(date);
@@ -25,6 +26,7 @@ public class BeanMapperTest {
 				TestEntity.class);
 		assertTrue(result != null);
 		assertTrue(result.getIntegerField().equals(new Integer(10)));
+		assertTrue(result.getSuperint().equals(new Integer(10)));
 		assertTrue(result.getLongField().equals(new Long(10)));
 		assertTrue(result.getStringField().equals("test"));
 		assertTrue(result.getFloatField().equals(new Float(10.99)));

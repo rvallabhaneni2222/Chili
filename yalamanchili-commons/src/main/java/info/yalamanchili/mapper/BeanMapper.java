@@ -17,9 +17,10 @@ public class BeanMapper {
 		}
 		if (source == null)
 			return null;
-		for (Field field : source.getClass().getDeclaredFields()) {
+		for (Field field : ReflectionUtils.getAllDeclaredFelds(source
+				.getClass())) {
 			if (!DataType.DEFAULT.equals(ReflectionUtils.getDataType(field))
-					|| !DataType.ENUM
+					&& !DataType.ENUM
 							.equals(ReflectionUtils.getDataType(field))) {
 				cloneField(source, target, field);
 			}

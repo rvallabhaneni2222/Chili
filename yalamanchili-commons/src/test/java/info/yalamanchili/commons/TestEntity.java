@@ -2,7 +2,7 @@ package info.yalamanchili.commons;
 
 import java.util.Date;
 
-public class TestEntity {
+public class TestEntity extends TestEntitySuper {
 	protected Long longField;
 	protected String stringField;
 	protected Date dateField;

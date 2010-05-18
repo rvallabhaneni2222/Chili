@@ -138,6 +138,11 @@ public class ReflectionUtilsTest {
 				new Date().toString()));
 	}
 
+	@Test
+	public void testGetAllDeclaredFields() {
+		ReflectionUtils.getAllDeclaredFelds(TestEntity.class);
+	}
+
 	@After
 	public void destroy() {
 

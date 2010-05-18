@@ -3,9 +3,12 @@ package info.yalamanchili.commons;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -154,6 +157,26 @@ public class ReflectionUtils {
 		return var;
 	}
 
+	public static List<Field> getAllDeclaredFelds(Class<?> entity) {
+		List<Field> fields = new ArrayList<Field>();
+		do {
+			fields.addAll(Arrays.asList(entity.getDeclaredFields()));
+			entity = entity.getSuperclass();
+
+		} while (!entity.equals(java.lang.Object.class));
+		return fields;
+	}
+
+	public static List<Method> getAllDeclaredMethods(Class<?> entity) {
+		List<Method> methods = new ArrayList<Method>();
+		do {
+			methods.addAll(Arrays.asList(entity.getDeclaredMethods()));
+			entity = entity.getSuperclass();
+
+		} while (!entity.equals(java.lang.Object.class));
+		return methods;
+	}
+
 	public static Field getField(Class<?> clazz, String attributeName) {
 		for (Field field : clazz.getDeclaredFields()) {
 			if (field.getName().compareToIgnoreCase(attributeName) == 0) {
@@ -164,7 +187,7 @@ public class ReflectionUtils {
 	}
 
 	public static Method getGetterMethod(Field field, Class<?> clazz) {
-		for (Method getterMethod : clazz.getDeclaredMethods()) {
+		for (Method getterMethod : getAllDeclaredMethods(clazz)) {
 			if (getterMethod.getName()
 					.equalsIgnoreCase("get" + field.getName())) {
 				return getterMethod;
@@ -204,7 +227,7 @@ public class ReflectionUtils {
 	}
 
 	public static Method getSetterMethod(Field field, Class<?> clazz) {
-		for (Method getterMethod : clazz.getDeclaredMethods()) {
+		for (Method getterMethod : getAllDeclaredMethods(clazz)) {
 			if (getterMethod.getName()
 					.equalsIgnoreCase("set" + field.getName())) {
 				return getterMethod;
