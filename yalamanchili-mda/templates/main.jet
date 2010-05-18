@@ -9,6 +9,7 @@
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
 <c:setVariable select="'info.yalamanchili.project'" var="groupID"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
+<c:setVariable select="'/Users/yphanikumar/codebase/generated'" var="location"/>
 <%--versions --%>
 <c:setVariable select="'2.0.0'" var="gwt-version"/>
 <c:setVariable select="'2.6.2'" var="gwt-log-version"/>
@@ -160,12 +161,12 @@
 </c:iterate>
 
 <%--creates the master project--%>
-<ws:project name="{$projectName}-master" location="C:/MDA/{$projectName}-master">
+<ws:project name="{$projectName}-master" location="{$location}/{$projectName}-master">
 	<ws:file path="pom.xml" template="templates/master/master_pom_template.xml.jet"/>  
 </ws:project>
 
 <%--creates the APP project--%>
-<ws:project name="{$projectName}-app" location="C:/MDA/{$projectName}-app">
+<ws:project name="{$projectName}-app" location="{$location}/{$projectName}-app">
 	<ws:file path="pom.xml" template="templates/app/app_pom_template.xml.jet"/>
     <ws:folder path="jboss/conf">
     	<c:if test="$dataBase = 'MYSQL'">
@@ -183,7 +184,7 @@
 </ws:project>
 
 <%--creates the JPA project--%>
-<ws:project name="{$projectName}-jpa" location="C:/MDA/{$projectName}-jpa">
+<ws:project name="{$projectName}-jpa" location="{$location}/{$projectName}-jpa">
 	<ws:file path="pom.xml" template="templates/jpa/jpa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
     <c:setVariable select="concat($groupID,'.entity.')" var="jpaPackage"/>
@@ -234,7 +235,7 @@
 </ws:project>
 
 <%--creates the EJB project--%>
-<ws:project name="{$projectName}-ejb" location="C:/MDA/{$projectName}-ejb">
+<ws:project name="{$projectName}-ejb" location="{$location}/{$projectName}-ejb">
 	<ws:file path="pom.xml" template="templates/ejb/ejb_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
      <c:setVariable select="concat($groupID,'.ejb.')" var="ejbPackage"/>
@@ -290,7 +291,7 @@
 </ws:project>
 
 <%--creates the webapp project--%>
-<ws:project name="{$projectName}-webapp" location="C:/MDA/{$projectName}-webapp">
+<ws:project name="{$projectName}-webapp" location="{$location}/{$projectName}-webapp">
 	<ws:file path="pom.xml" template="templates/web/webapp_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
     	<%--css and html files for the web project  --%>	
@@ -451,7 +452,7 @@
 </ws:project>
 
 <%--creates the SOA project--%>
-<ws:project name="{$projectName}-soa" location="C:/MDA/{$projectName}-soa">
+<ws:project name="{$projectName}-soa" location="{$location}/{$projectName}-soa">
 	<ws:file path="pom.xml" template="templates/soa/soa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
@@ -472,7 +473,7 @@
 </ws:project>
 
 <%--creates the Android project--%>
-<ws:project name="{$projectName}-android" location="C:/MDA/{$projectName}-android">
+<ws:project name="{$projectName}-android" location="{$location}/{$projectName}-android">
 	<ws:file path="pom.xml" template="templates/android/android_pom_template.xml.jet"/>
 	<ws:file path="AndroidManifest.xml" template="templates/android/android_manifest_template.xml.jet"/>
 	<ws:file path="default.properties" template="templates/android/android_default.properties.jet"/>
@@ -571,7 +572,7 @@
 </ws:project>
 
 <%-- creates the test project--%>
-<ws:project name="{$projectName}-test" location="C:/MDA/{$projectName}-test">
+<ws:project name="{$projectName}-test" location="{$location}/{$projectName}-test">
 	<ws:file path="pom.xml" template="templates/test/test_pom.xml.jet"/>
     <ws:folder path="src/main/java">
     </ws:folder>

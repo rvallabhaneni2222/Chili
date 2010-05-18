@@ -113,6 +113,5 @@
 	</repositories>
 	<properties>
 		<gwtVersion>${$gwt-version}</gwtVersion>
-		<gwtHome>c:/gwt-2.0.0</gwtHome>
 	</properties>
 </project>

@@ -1,6 +1,7 @@
 <java:format>
 package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
 
+import info.yalamanchili.commons.ReflectionUtils;
 import info.yalamanchili.project.android.HttpHelper;
 import info.yalamanchili.project.android.R;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
@@ -53,7 +54,7 @@ public class ReadAll${$class/@name}s extends ListActivity implements
 
 		for (${$class/@name} entity : (List<${$class/@name}>) HttpHelper.xstream.fromXML(xml)) {
 			HashMap<String, Object> item = new HashMap<String, Object>();
-			item.put("text", entity.toString());
+			item.put("text",  ReflectionUtils.toString(entity));
 			Intent readIntent = new Intent(this, Read${$class/@name}.class);
 			readIntent.putExtra("id", entity.getId());
 			item.put("intent", readIntent);
@@ -65,7 +66,6 @@ public class ReadAll${$class/@name}s extends ListActivity implements
 
 	
 	public String getReadALLURL() {
-		Long id = getIntent().getLongExtra("id", new Long(1));
 		return HttpHelper.baseURL + "${lower-case($class/@name)}/readall/0/10";
 	}
 	
