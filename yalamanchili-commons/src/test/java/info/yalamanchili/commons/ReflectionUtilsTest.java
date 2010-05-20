@@ -16,11 +16,23 @@ import org.junit.Test;
 
 public class ReflectionUtilsTest {
 	private static final Log log = LogFactory.getLog(ReflectionUtilsTest.class);
-	protected ReflectionUtils reflectionUtils = new ReflectionUtils();
 
 	@Before
 	public void init() {
 
+	}
+
+	@Test
+	public void testToString() {
+		TestEntity entity = new TestEntity();
+		entity.setIntegerField(new Integer(10));
+		entity.setStringField("test");
+		entity.setLongField(new Long(10));
+		entity.setFloatField(new Float(10.99));
+		Calendar cal = Calendar.getInstance();
+		Date date = cal.getTime();
+		entity.setDateField(date);
+		System.out.println(ReflectionUtils.toString(entity));
 	}
 
 	@Test
@@ -139,8 +151,8 @@ public class ReflectionUtilsTest {
 	}
 
 	@Test
-	public void testGetAllDeclaredFields() {
-		ReflectionUtils.getAllDeclaredFelds(TestEntity.class);
+	public void testGetAllFields() {
+		ReflectionUtils.getAllFields(TestEntity.class);
 	}
 
 	@After

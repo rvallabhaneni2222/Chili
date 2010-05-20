@@ -17,7 +17,7 @@ public class BeanMapper {
 		}
 		if (source == null)
 			return null;
-		for (Field field : ReflectionUtils.getAllDeclaredFelds(source
+		for (Field field : ReflectionUtils.getAllFields(source
 				.getClass())) {
 			if (!DataType.DEFAULT.equals(ReflectionUtils.getDataType(field))
 					&& !DataType.ENUM

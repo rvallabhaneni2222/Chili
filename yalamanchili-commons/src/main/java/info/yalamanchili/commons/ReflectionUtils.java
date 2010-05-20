@@ -1,7 +1,6 @@
 package info.yalamanchili.commons;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,42 +30,41 @@ public class ReflectionUtils {
 	}
 
 	public static Map<String, Object> getFieldsDataFromEntity(Object t,
-			Class cls) {
+			Class<?> clazz) {
 		Map<String, Object> attributeValues = new HashMap<String, Object>();
-		LinkedHashMap<String, DataType> fields = getEntityFieldsInfo(cls);
+		LinkedHashMap<String, DataType> fields = getEntityFieldsInfo(clazz);
 		try {
-			for (String fieldName : getEntityFieldsInfo(cls).keySet()) {
+			for (String fieldName : getEntityFieldsInfo(clazz).keySet()) {
 				for (Method method : t.getClass().getMethods()) {
 					if (method.getName().compareToIgnoreCase("get" + fieldName) == 0) {
 						if (fields.get(fieldName).equals(DataType.STRING)) {
-							String result = (String) method.invoke(t, null);
+							String result = (String) method.invoke(t);
 							attributeValues.put(fieldName, result);
 						}
 						if (fields.get(fieldName).equals(DataType.INTEGER)) {
-							Integer result = (Integer) method.invoke(t, null);
+							Integer result = (Integer) method.invoke(t);
 							attributeValues.put(fieldName, result);
 						}
 						if (fields.get(fieldName).equals(DataType.LONG)) {
-							Long result = (Long) method.invoke(t, null);
+							Long result = (Long) method.invoke(t);
 							attributeValues.put(fieldName, result);
 						}
 						if (fields.get(fieldName).equals(DataType.FLOAT)) {
-							Float result = (Float) method.invoke(t, null);
+							Float result = (Float) method.invoke(t);
 							attributeValues.put(fieldName, result);
 						}
 						if (fields.get(fieldName).equals(DataType.DATE)) {
-							Date result = (Date) method.invoke(t, null);
+							Date result = (Date) method.invoke(t);
 							attributeValues.put(fieldName, result);
 						}
 						if (fields.get(fieldName).equals(DataType.BOOLEAN)) {
-							Boolean result = (Boolean) method.invoke(t, null);
+							Boolean result = (Boolean) method.invoke(t);
 							attributeValues.put(fieldName, result);
 						}
 						if (fields.get(fieldName).equals(DataType.ENUM)) {
-							Object value = method.invoke(t, null);
+							Object value = method.invoke(t);
 							if (value != null) {
-								String result = method.invoke(t, null)
-										.toString();
+								String result = method.invoke(t).toString();
 								attributeValues.put(fieldName, result);
 							}
 						}
@@ -113,18 +111,11 @@ public class ReflectionUtils {
 			if (m.getName().equals("values")) {
 				try {
 					var = (Enum<?>[]) m.invoke(entity, new Object[] {});
-				} catch (IllegalArgumentException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IllegalAccessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (InvocationTargetException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				for (Enum<?> e : var) {
-					log.debug(e.toString());
+				} catch (Exception e1) {
+					throw new RuntimeException(
+							"error gettng enum values on class:"
+									+ entity.getCanonicalName()
+									+ ":field name:" + attributeName);
 				}
 			}
 		}
@@ -141,23 +132,31 @@ public class ReflectionUtils {
 				if (m.getName().equals("valueOf")) {
 					try {
 						var = (Enum<?>) m.invoke(entity, value);
-					} catch (IllegalArgumentException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IllegalAccessException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (InvocationTargetException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					} catch (Exception e1) {
+						throw new RuntimeException(
+								"error gettng enum values on class:"
+										+ entity.getCanonicalName()
+										+ ":field name:" + attributeName);
 					}
 				}
 			}
-		log.debug(var.toString());
 		return var;
 	}
 
-	public static List<Field> getAllDeclaredFelds(Class<?> entity) {
+	public static String toString(Object entity) {
+		StringBuilder sb = new StringBuilder();
+		Map<String, Object> attributeValues = getFieldsDataFromEntity(entity,
+				entity.getClass());
+		for (String attribute : attributeValues.keySet()) {
+			if (attributeValues.get(attribute) != null) {
+				sb.append(attributeValues.get(attribute).toString());
+				sb.append(":");
+			}
+		}
+		return sb.toString();
+	}
+
+	public static List<Field> getAllFields(Class<?> entity) {
 		List<Field> fields = new ArrayList<Field>();
 		do {
 			fields.addAll(Arrays.asList(entity.getDeclaredFields()));
@@ -167,7 +166,7 @@ public class ReflectionUtils {
 		return fields;
 	}
 
-	public static List<Method> getAllDeclaredMethods(Class<?> entity) {
+	public static List<Method> getAllMethods(Class<?> entity) {
 		List<Method> methods = new ArrayList<Method>();
 		do {
 			methods.addAll(Arrays.asList(entity.getDeclaredMethods()));
@@ -187,7 +186,7 @@ public class ReflectionUtils {
 	}
 
 	public static Method getGetterMethod(Field field, Class<?> clazz) {
-		for (Method getterMethod : getAllDeclaredMethods(clazz)) {
+		for (Method getterMethod : getAllMethods(clazz)) {
 			if (getterMethod.getName()
 					.equalsIgnoreCase("get" + field.getName())) {
 				return getterMethod;
@@ -227,7 +226,7 @@ public class ReflectionUtils {
 	}
 
 	public static Method getSetterMethod(Field field, Class<?> clazz) {
-		for (Method getterMethod : getAllDeclaredMethods(clazz)) {
+		for (Method getterMethod : getAllMethods(clazz)) {
 			if (getterMethod.getName()
 					.equalsIgnoreCase("set" + field.getName())) {
 				return getterMethod;
