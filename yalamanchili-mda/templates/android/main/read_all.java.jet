@@ -32,14 +32,27 @@ public class ReadAll${$class/@name}s extends ListActivity implements
 		create = (Button) findViewById(R.id.create);
 		create.setOnClickListener(this);
 		super.onCreate(savedInstanceState);
-		new AsyncHttp(this) {
-			@Override
-			protected void onResponse(String result) {
-		notes = new SimpleAdapter(ReadAll${$class/@name}s.this, loadTable(result), R.layout.list_item,
-				new String[] { "text" }, new int[] { R.id.list_item });
-		setListAdapter(notes);
-			}
-		}.execute(getReadALLURL());
+				String resourceURL = getIntent().getStringExtra("resource");
+		if (resourceURL != null) {
+				new AsyncHttp(this) {
+					@Override
+					protected void onResponse(String result) {
+				notes = new SimpleAdapter(ReadAll${$class/@name}s.this, loadTable(result), R.layout.list_item,
+						new String[] { "text" }, new int[] { R.id.list_item });
+				setListAdapter(notes);
+					}
+				}.execute(resourceURL);
+		} else {
+				new AsyncHttp(this) {
+					@Override
+					protected void onResponse(String result) {
+				notes = new SimpleAdapter(ReadAll${$class/@name}s.this, loadTable(result), R.layout.list_item,
+						new String[] { "text" }, new int[] { R.id.list_item });
+				setListAdapter(notes);
+					}
+				}.execute(getReadALLURL());
+		}
+
 	}
 
 	@Override

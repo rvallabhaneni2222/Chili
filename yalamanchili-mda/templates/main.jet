@@ -507,11 +507,12 @@
 	<ws:file path="pom.xml" template="templates/android/android_pom_template.xml.jet"/>
 	<ws:file path="AndroidManifest.xml" template="templates/android/android_manifest_template.xml.jet"/>
 	<ws:file path="default.properties" template="templates/android/android_default.properties.jet"/>
-    <ws:folder path="src">
+	<ws:folder path="src">
    <java:class name="${camelCase($projectName)}Main" package="${$groupID}.android" template="templates/android/main/Main.java.jet"/>
    <java:class name="HttpHelper" package="${$groupID}.android" template="templates/android/main/http_helper.java.jet"/>
    <java:class name="AsyncHttp" package="${$groupID}.android" template="templates/android/main/AsyncHttp_template.java.jet"/>
    <java:class name="AsyncHttpPut" package="${$groupID}.android" template="templates/android/main/AsyncHttpPut_template.java.jet"/>
+   </ws:folder>
    <%--Iterate through the packages and classes--%>
        	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
@@ -543,52 +544,27 @@
 					</c:iterate>  					  		 			 
 				</c:if>
 			</c:iterate>
-    					
+			<%-- Create Entity CRUD java Activitoes--%>	  
+			<ws:folder path="src">  					
 			<java:class name="ReadAll{$class/@name}s" package="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}" template="templates/android/main/read_all.java.jet"/>
 			<java:class name="Read{$class/@name}" package="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}" template="templates/android/main/read_entity.java.jet"/>
 			<java:class name="Create{$class/@name}" package="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}" template="templates/android/main/create_entity.java.jet"/>
+			 </ws:folder>
+			 <%-- Create Entity CRUD layout xml's--%>
+			<ws:folder path="res/layout">
+			<ws:file path="${lower-case($class/@name)}_read.xml" template="templates/android/res/layout/entity_read_template.xml.jet"/>
+			<ws:file path="${lower-case($class/@name)}_create.xml" template="templates/android/res/layout/entity_create_template.xml.jet"/>
+			</ws:folder>
+			<%-- Create Entity Menu layout.xml--%>	
+			<ws:folder path="res/menu">
+			<ws:file path="${lower-case($class/@name)}_menu.xml" template="templates/android/res/menu/entity_menu_template.xml.jet"/>
+			</ws:folder>
 			</c:iterate>
 		</c:iterate>
-    </ws:folder>
 	<ws:folder path="res/layout">
 	<ws:file template="templates/android/res/layout/main_template.xml.jet" path="main.xml"/>
 	<ws:file template="templates/android/res/layout/list_item.xml.jet" path="list_item.xml"/>
 	<ws:file template="templates/android/res/layout/entity_readall_template.xml.jet" path="entity_readall.xml"/>
-	    <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-    		    		<c:setVariable select="$class/@xmi.id" var="classID"/>
-			<c:setVariable select="$class" var="parentClass1"/>
-			<c:setVariable select="$class" var="parentClass2"/>
-			<%--process generizations --%>
-			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
-			 <%-- if child class--%>
-				<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
-					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
-			  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
-			  			<%-- get level 1 parent--%>
-			  			<c:setVariable select="$otherClass" var="parentClass1"/>
-								<%-- second round to get level 2 --%>
-								<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
-								 <%-- if child class--%>
-									<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $parentClass1/@xmi.id">
-										<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
-								  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
-								  			<%-- get level 2 parent--%>
-								  			<c:setVariable select="$otherClass" var="parentClass2"/>	  			
-								  			</c:if>
-										</c:iterate>  					  		 			 
-									</c:if>
-							</c:iterate>
-								  									 				
-			  			</c:if>
-					</c:iterate>  					  		 			 
-				</c:if>
-			</c:iterate>
-    		
-			<ws:file path="${lower-case($class/@name)}_read.xml" template="templates/android/res/layout/entity_read_template.xml.jet"/>
-			<ws:file path="${lower-case($class/@name)}_create.xml" template="templates/android/res/layout/entity_create_template.xml.jet"/>
-			</c:iterate>
-		</c:iterate>
     </ws:folder>
     <ws:folder path="res/values">
     <ws:file template="templates/android/res/values/strings_template.xml.jet" path="strings.xml"/>
