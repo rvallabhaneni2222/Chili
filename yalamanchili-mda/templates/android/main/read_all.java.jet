@@ -5,6 +5,49 @@ import info.yalamanchili.commons.ReflectionUtils;
 import info.yalamanchili.project.android.HttpHelper;
 import info.yalamanchili.project.android.R;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+		<%-- process compsition associations--%>
+	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID"> 
+					<%-- process only compositions--%>
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<%-- check if this is a comp--%>
+  					  		 	<c:if test="$association_connection_end2/@aggregation = 'composite'">
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+										<%-- check to see if class2 is parent and child--%>
+										<c:if test="not($class2/@parent1 = $class2/@name)">
+										<c:if test="not($class2/@hasChildren = $class2/@name)">
+									import	${$groupID}.entity.${$package/@name}.${$class2/@name};
+										</c:if>
+										<%-- has parent and no children--%>
+										<c:if test="$class2/@hasChildren = $class2/@name">
+										import	${$groupID}.entity.${$package/@name}.${$class2/@name};
+										</c:if>
+										</c:if>
+										<%-- no parent and has children--%>
+										 <c:if test="$class2/@parent1 = $class2/@name">
+										 <c:if test="not($class2/@hasChildren = $class2/@name)">
+										import	${$groupID}.entity.${$package/@name}.${$class2/@name};
+										 </c:if>
+										 </c:if>
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  					  		 	 </c:if> 	
+  							  	</c:if> 
+  					 	  </c:iterate> 					 	 				 	  
+				</c:if>												
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,8 +107,11 @@ public class ReadAll${$class/@name}s extends ListActivity implements
 
 	protected ArrayList<HashMap<String, Object>> loadTable(String xml) {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-
-		for (${$class/@name} entity : (List<${$class/@name}>) HttpHelper.xstream.fromXML(xml)) {
+		Object result=HttpHelper.xstream.fromXML(xml);
+		if(result instanceof String){
+		return list;
+		}
+		for (${$class/@name} entity : (List<${$class/@name}>) result) {
 			HashMap<String, Object> item = new HashMap<String, Object>();
 			item.put("text",  ReflectionUtils.toString(entity));
 			Intent readIntent = new Intent(this, Read${$class/@name}.class);
@@ -83,6 +129,73 @@ public class ReadAll${$class/@name}s extends ListActivity implements
 	}
 	
 	public void onClick(View arg0) {
+		<%-- process compsition associations--%>
+	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID"> 
+					<%-- process only compositions--%>
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<%-- check if this is a comp--%>
+  					  		 	<c:if test="$association_connection_end2/@aggregation = 'composite'">
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+										<%-- check to see if class2 is parent and child--%>
+										<c:if test="not($class2/@parent1 = $class2/@name)">
+										<c:if test="not($class2/@hasChildren = $class2/@name)">
+										Object result = getIntent().getSerializableExtra("parent");
+											if (result != null) {
+												Intent addIntent = new Intent(this, Create${$class/@name}.class);
+												${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
+												${lower-case($class/@name)}.set${$class2/@name}((${$class2/@name}) result);
+												addIntent.putExtra("entity", ${lower-case($class/@name)});
+												startActivity(addIntent);
+												return;
+											}
+										</c:if>
+										<%-- has parent and no children--%>
+										<c:if test="$class2/@hasChildren = $class2/@name">
+										Object result = getIntent().getSerializableExtra("parent");
+											if (result != null) {
+												Intent addIntent = new Intent(this, Create${$class/@name}.class);
+												${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
+												${lower-case($class/@name)}.set${$class2/@name}((${$class2/@name}) result);
+												addIntent.putExtra("entity", ${lower-case($class/@name)});
+												startActivity(addIntent);
+												return;
+											}
+										</c:if>
+										</c:if>
+										<%-- no parent and has children--%>
+										 <c:if test="$class2/@parent1 = $class2/@name">
+										 <c:if test="not($class2/@hasChildren = $class2/@name)">
+										Object result = getIntent().getSerializableExtra("parent");
+											if (result != null) {
+												Intent addIntent = new Intent(this, Create${$class/@name}.class);
+												${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
+												${lower-case($class/@name)}.set${$class2/@name}((${$class2/@name}) result);
+												addIntent.putExtra("entity", ${lower-case($class/@name)});
+												startActivity(addIntent);
+												return;
+											}
+										 </c:if>
+										 </c:if>
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  					  		 	 </c:if> 	
+  							  	</c:if> 
+  					 	  </c:iterate> 					 	 				 	  
+				</c:if>												
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
 		Intent createIntent = new Intent(this, Create${$class/@name}.class);
 		startActivity(createIntent);
 	}

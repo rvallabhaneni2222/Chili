@@ -207,7 +207,12 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 	
 	if (arg0 == create) {
 		create.setEnabled(false);
-		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
+		${$class/@name} ${lower-case($class/@name)};
+			if (getIntent().getSerializableExtra("entity") != null) {
+				${lower-case($class/@name)} = (${$class/@name}) getIntent().getSerializableExtra("entity");
+			} else {
+				${lower-case($class/@name)} = new ${$class/@name}();
+			}
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">

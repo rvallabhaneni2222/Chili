@@ -127,6 +127,8 @@ import ${$groupID}.android.${lower-case($package/@name)}.${lower-case($class2/@n
 </c:iterate>
 
 public class Read${$class/@name} extends Activity {
+
+	protected ${$class/@name} ${lower-case($class/@name)};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -142,12 +144,16 @@ public class Read${$class/@name} extends Activity {
 	}
 	
 	public void load(String xml) {
-		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
-			${lower-case($class/@name)} = (${$class/@name}) HttpHelper.xstream.fromXML(xml);
+		Object result = HttpHelper.xstream.fromXML(xml);
+		if (result instanceof String) {
+			return;
+		}
+			${lower-case($class/@name)} = (${$class/@name}) result;
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 						EditTextField ${lower-case($attribute/@name)}_textview = (EditTextField) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
+						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if (${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}() != null)
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
 				</c:iterate>
@@ -156,6 +162,7 @@ public class Read${$class/@name} extends Activity {
 	<c:if test="not($class/@name = $parentClass1/@name)">
 				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
 						EditTextField ${lower-case($attribute/@name)}_textview = (EditTextField) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
+						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if (${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}() != null)
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
 				</c:iterate>
@@ -163,6 +170,7 @@ public class Read${$class/@name} extends Activity {
 	<%-- process parent class level 0 attributes--%>	
 				<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 						EditTextField ${lower-case($attribute/@name)}_textview = (EditTextField) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
+						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if (${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}() != null)
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
 				</c:iterate>	
@@ -205,6 +213,7 @@ public class Read${$class/@name} extends Activity {
 																	case R.id.${lower-case($class/@name)}_${lower-case($class2/@name)}s_menu:
 																				Intent ${lower-case($class2/@name)}sIntent = new Intent(this, ReadAll${$class2/@name}s.class);
 																				${lower-case($class2/@name)}sIntent.putExtra("resource", getReadURL() + "/${lower-case($class2/@name)}s");
+																				${lower-case($class2/@name)}sIntent.putExtra("parent",${lower-case($class/@name)});
 																				startActivity(${lower-case($class2/@name)}sIntent);
 																				break;
 							  					  		 			</c:if> 
@@ -246,6 +255,7 @@ public class Read${$class/@name} extends Activity {
 																	case R.id.${lower-case($class/@name)}_${lower-case($class2/@name)}s_menu:
 																				Intent ${lower-case($class2/@name)}sIntent = new Intent(this, ReadAll${$class2/@name}s.class);
 																				${lower-case($class2/@name)}sIntent.putExtra("resource", getReadURL() + "/${lower-case($class2/@name)}s");
+																				${lower-case($class2/@name)}sIntent.putExtra("parent",${lower-case($class/@name)});
 																				startActivity(${lower-case($class2/@name)}sIntent);
 																				break;
 							  					  		 			</c:if> 
@@ -288,6 +298,7 @@ public class Read${$class/@name} extends Activity {
 																	case R.id.${lower-case($class/@name)}_${lower-case($class2/@name)}s_menu:
 																				Intent ${lower-case($class2/@name)}sIntent = new Intent(this, ReadAll${$class2/@name}s.class);
 																				${lower-case($class2/@name)}sIntent.putExtra("resource", getReadURL() + "/${lower-case($class2/@name)}s");
+																				${lower-case($class2/@name)}sIntent.putExtra("parent",${lower-case($class/@name)});
 																				startActivity(${lower-case($class2/@name)}sIntent);
 																				break;
   					  		 			</c:if> 

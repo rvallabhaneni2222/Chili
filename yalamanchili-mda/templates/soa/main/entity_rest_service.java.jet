@@ -154,7 +154,12 @@ protected  BeanMapper mapper = new BeanMapper();
 	@Produces("application/xml")
 	public String read(@PathParam("id") Long id) {
 		${$class/@name} ${lower-case($class/@name)} = em.find(${$class/@name}.class, id);
+		if(${lower-case($class/@name)} ==null){
+		return xstream.toXML("null");
+		}
+		else{
 		return xstream.toXML(mapper.clonePrimitiveDataTypes(${lower-case($class/@name)}, ${$class/@name}.class));
+		}
 	}
 
 	@Produces("application/xml")
@@ -194,7 +199,12 @@ protected  BeanMapper mapper = new BeanMapper();
 		for (Object ${lower-case($class/@name)} : getEntitites.getResultList()) {
 			results.add((${$class/@name}) mapper.clonePrimitiveDataTypes(${lower-case($class/@name)}, ${$class/@name}.class));
 		}
+		if(results.size() ==0){
+		return xstream.toXML("null");
+		}
+		else{
 		return xstream.toXML(results);
+		}
 	}
 	
 <%--process level 1 generizations --%>
@@ -230,7 +240,12 @@ protected  BeanMapper mapper = new BeanMapper();
 																			${lower-case($class2/@name)}s.add((${$class2/@name}) mapper.clonePrimitiveDataTypes(entity,
 																					${$class2/@name}.class));
 																		}
-																		return xstream.toXML(${lower-case($class2/@name)}s);
+																		if(${lower-case($class2/@name)}s.size() ==0){
+																			return xstream.toXML("null");
+																			}
+																			else{
+																			return xstream.toXML(${lower-case($class2/@name)}s);
+																			}
 																	}
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
@@ -278,7 +293,12 @@ protected  BeanMapper mapper = new BeanMapper();
 																			${lower-case($class2/@name)}s.add((${$class2/@name}) mapper.clonePrimitiveDataTypes(entity,
 																					${$class2/@name}.class));
 																		}
-																		return xstream.toXML(${lower-case($class2/@name)}s);
+																		if(${lower-case($class2/@name)}s.size() ==0){
+																			return xstream.toXML("null");
+																			}
+																			else{
+																			return xstream.toXML(${lower-case($class2/@name)}s);
+																			}
 																	}
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
@@ -327,7 +347,12 @@ protected  BeanMapper mapper = new BeanMapper();
 																			${lower-case($class2/@name)}s.add((${$class2/@name}) mapper.clonePrimitiveDataTypes(entity,
 																					${$class2/@name}.class));
 																		}
-																		return xstream.toXML(${lower-case($class2/@name)}s);
+																		if(${lower-case($class2/@name)}s.size() ==0){
+																			return xstream.toXML("null");
+																			}
+																			else{
+																			return xstream.toXML(${lower-case($class2/@name)}s);
+																			}
 																	}
   					  		 			
   					  		 			</c:if> 
