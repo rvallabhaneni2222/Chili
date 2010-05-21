@@ -22,15 +22,12 @@
 				 android:layout_width="wrap_content"
 				 android:layout_height="wrap_content"/>
 				 </c:when>
-					 <c:otherwise>
-				<TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
-					android:layout_height="wrap_content">
-				</TextView>
-				<EditText
+					 <c:otherwise> 
+		        <info.yalamanchili.android.views.EditTextField
 		        android:id="@+id/${lower-case($class/@name)}_${lower-case($attribute/@name)}"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        />	 
+		        />	
 		 			</c:otherwise>
 		 		</c:choose>
 				</c:iterate>
@@ -49,14 +46,11 @@
 				 android:layout_height="wrap_content"/>
 				 </c:when>
 					 <c:otherwise>
-				<TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
-					android:layout_height="wrap_content">
-				</TextView>
-				<EditText
+		        <info.yalamanchili.android.views.EditTextField
 		        android:id="@+id/${lower-case($class/@name)}_${lower-case($attribute/@name)}"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        />	 
+		        />		 
 		 			</c:otherwise>
 		 		</c:choose>
 
@@ -75,14 +69,11 @@
 				 android:layout_height="wrap_content"/>
 				 </c:when>
 					 <c:otherwise>
-				<TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
-					android:layout_height="wrap_content">
-				</TextView>
-				<EditText
+		        <info.yalamanchili.android.views.EditTextField
 		        android:id="@+id/${lower-case($class/@name)}_${lower-case($attribute/@name)}"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        />	 
+		        />	
 		 			</c:otherwise>
 		 		</c:choose>
 		

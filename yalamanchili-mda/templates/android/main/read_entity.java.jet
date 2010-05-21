@@ -5,7 +5,7 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$groupID}.android.HttpHelper;
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
+import info.yalamanchili.android.views.EditTextField;
 import ${$groupID}.android.R;
 import ${$groupID}.android.AsyncHttp;
 
@@ -30,24 +30,24 @@ public class Read${$class/@name} extends Activity {
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
-						TextView ${lower-case($attribute/@name)}_textview = (TextView) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
+						EditTextField ${lower-case($attribute/@name)}_textview = (EditTextField) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
 						if (${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}() != null)
-						${lower-case($attribute/@name)}_textview.setText(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
 				</c:iterate>
 	</c:if>
 	<%-- process parent class level 1 attributes--%>
 	<c:if test="not($class/@name = $parentClass1/@name)">
 				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
-						TextView ${lower-case($attribute/@name)}_textview = (TextView) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
+						EditTextField ${lower-case($attribute/@name)}_textview = (EditTextField) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
 						if (${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}() != null)
-						${lower-case($attribute/@name)}_textview.setText(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
 				</c:iterate>
 	</c:if>		
 	<%-- process parent class level 0 attributes--%>	
 				<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-						TextView ${lower-case($attribute/@name)}_textview = (TextView) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
+						EditTextField ${lower-case($attribute/@name)}_textview = (EditTextField) this.findViewById(R.id.${$class/@name}_${$attribute/@name});
 						if (${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}() != null)
-						${lower-case($attribute/@name)}_textview.setText(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
 				</c:iterate>	
 
 	}

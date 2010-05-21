@@ -47,7 +47,7 @@ import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
 								</c:iterate>
 							</c:iterate> 
 </c:if>
-<%--process level 2 vgenerizations --%>
+<%--process level 2 generizations --%>
 <c:if test="not($class/@name = $parentClass2/@name)">
   			<c:setVariable select="$parentClass2/@xmi.id" var="classID"/>
   			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($parentClass2/@name)}.TreeAbstract${$parentClass2/@name}Panel;

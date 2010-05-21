@@ -66,7 +66,6 @@ public class ReadAll${$class/@name}s extends ListActivity implements
 
 	
 	public String getReadALLURL() {
-	//
 		return HttpHelper.baseURL + "${lower-case($class/@name)}/readall/0/10";
 	}
 	

@@ -455,13 +455,43 @@
 <ws:project name="{$projectName}-soa" location="{$location}/{$projectName}-soa">
 	<ws:file path="pom.xml" template="templates/soa/soa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
+        	<%-- Iterate through packages and classes --%>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-    	 <c:setVariable select="concat($ejbPackage,$package/@name)" var="packageName"/>	
-    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		 <c:setVariable select="concat($ejbPackage,$package/@name)" var="packageName"/>	
+    		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">	
+    		<%-- process generizations upto 2 levels and get teh parent classes if any--%>
+    		<c:setVariable select="$class/@xmi.id" var="classID"/>
+			<c:setVariable select="$class" var="parentClass1"/>
+			<c:setVariable select="$class" var="parentClass2"/>
+			<%--process generizations --%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+			 <%-- if child class--%>
+				<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+			  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+			  			<%-- get level 1 parent--%>
+			  			<c:setVariable select="$otherClass" var="parentClass1"/>
+								<%-- second round to get level 2 --%>
+								<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+								 <%-- if child class--%>
+									<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $parentClass1/@xmi.id">
+										<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+								  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+								  			<%-- get level 2 parent--%>
+								  			<c:setVariable select="$otherClass" var="parentClass2"/>	  			
+								  			</c:if>
+										</c:iterate>  					  		 			 
+									</c:if>
+							</c:iterate>
+								  									 				
+			  			</c:if>
+					</c:iterate>  					  		 			 
+				</c:if>
+			</c:iterate>
 			<%-- rest service class--%>
 			<java:class name="{$class/@name}Service" package="{$packageName}.{lower-case($class/@name)}" template="templates/soa/main/entity_rest_service.java.jet"/>
-			</c:iterate>
-		</c:iterate>
+	</c:iterate>
+	</c:iterate>			
     </ws:folder>
     <ws:folder path="src/main/webapp">
 	<ws:file template="templates/soa/main/webapp/WEB-INF/components.xml.jet" path="WEB-INF/components.xml"/>
