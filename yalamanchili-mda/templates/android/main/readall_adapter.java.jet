@@ -1,0 +1,44 @@
+<java:format>
+package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
+
+
+import info.yalamanchili.project.android.R;
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import java.util.List;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+public class ${$class/@name}Adapter extends ArrayAdapter<${$class/@name}> {
+	int listItemTextView;
+
+	public ${$class/@name}Adapter(Context context, int textViewResourceId, List<${$class/@name}> objects) {
+		super(context, textViewResourceId, objects);
+		listItemTextView = textViewResourceId;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		LinearLayout todoView;
+		${$class/@name} ${lower-case($class/@name)} = getItem(position);
+		if (convertView == null) {
+			todoView = new LinearLayout(getContext());
+			String inflater = Context.LAYOUT_INFLATER_SERVICE;
+			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(
+					inflater);
+			vi.inflate(listItemTextView, todoView, true);
+		} else {
+			todoView = (LinearLayout) convertView;
+		}
+		TextView textViewOne = (TextView) todoView.findViewById(R.id.readall_item_one);
+		TextView textViewTwo = (TextView) todoView.findViewById(R.id.readall_item_two);
+		textViewOne.setText(${lower-case($class/@name)}.toString());
+		return todoView;
+	}
+
+}
+</java:format>
