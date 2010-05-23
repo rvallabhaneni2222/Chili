@@ -566,6 +566,7 @@
 	<ws:file template="templates/android/res/layout/main_template.xml.jet" path="main.xml"/>
 	<ws:file template="templates/android/res/layout/list_item.xml.jet" path="list_item.xml"/>
 	<ws:file template="templates/android/res/layout/entity_readall_template.xml.jet" path="entity_readall.xml"/>
+	<ws:file template="templates/android/res/layout/readall_list.xml.jet" path="readall_list.xml"/>
     </ws:folder>
     <ws:folder path="res/values">
     <ws:file template="templates/android/res/values/strings_template.xml.jet" path="strings.xml"/>
