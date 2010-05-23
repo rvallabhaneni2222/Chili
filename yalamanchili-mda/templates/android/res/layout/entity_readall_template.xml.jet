@@ -6,7 +6,11 @@
    <Button android:id="@+id/readall_create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello, I am a Button" />
+            android:text="Create" />
+   <Button android:id="@+id/readall_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="more" />
   <ListView  
     android:id="@+id/readall_listview"
     android:layout_width="fill_parent" 
