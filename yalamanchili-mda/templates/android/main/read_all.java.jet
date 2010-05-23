@@ -1,7 +1,7 @@
 <java:format>
 package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
 
-import info.yalamanchili.commons.ReflectionUtils;
+
 import info.yalamanchili.project.android.HttpHelper;
 import info.yalamanchili.project.android.R;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
@@ -50,77 +50,52 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 </c:iterate>
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import ${$groupID}.android.AsyncHttp;
 
 import android.widget.Button;
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.view.View.OnClickListener;
 
-public class ReadAll${$class/@name}s extends ListActivity implements
-		OnClickListener {
-	private SimpleAdapter notes;
-	Button create;
+public class ReadAll${$class/@name}s extends Activity implements OnItemClickListener,OnClickListener{
+	private ArrayList<${$class/@name}> ${lower-case($class/@name)}s = new ArrayList<${$class/@name}>();
+	private ListView ${lower-case($class/@name)}ListView;
+	private Button create;
+	private ${$class/@name}Adapter ${lower-case($class/@name)}Adapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setContentView(R.layout.entity_readall);
-		create = (Button) findViewById(R.id.create);
-		create.setOnClickListener(this);
 		super.onCreate(savedInstanceState);
-				String resourceURL = getIntent().getStringExtra("resource");
-		if (resourceURL != null) {
-				new AsyncHttp(this) {
-					@Override
-					protected void onResponse(String result) {
-				notes = new SimpleAdapter(ReadAll${$class/@name}s.this, loadTable(result), R.layout.list_item,
-						new String[] { "text" }, new int[] { R.id.list_item });
-				setListAdapter(notes);
-					}
-				}.execute(resourceURL);
-		} else {
-				new AsyncHttp(this) {
-					@Override
-					protected void onResponse(String result) {
-				notes = new SimpleAdapter(ReadAll${$class/@name}s.this, loadTable(result), R.layout.list_item,
-						new String[] { "text" }, new int[] { R.id.list_item });
-				setListAdapter(notes);
-					}
-				}.execute(getReadALLURL());
-		}
-
+		setContentView(R.layout.entity_readall);
+		create = (Button) findViewById(R.id.readall_create);
+		${lower-case($class/@name)}ListView = (ListView) findViewById(R.id.readall_listview);
+		${lower-case($class/@name)}ListView.setOnItemClickListener(this);
+			new AsyncHttp(this) {
+			@Override
+			protected void onResponse(String result) {
+				for (${$class/@name} entity : (List<${$class/@name}>) HttpHelper.xstream
+						.fromXML(result)) {
+					${lower-case($class/@name)}s.add(entity);
+				}
+				int resID = R.layout.readall_item;
+				${lower-case($class/@name)}Adapter = new ${$class/@name}Adapter(ReadAll${$class/@name}s.this, resID, ${lower-case($class/@name)}s);
+				${lower-case($class/@name)}ListView.setAdapter(${lower-case($class/@name)}Adapter);
+			}
+		}.execute(getReadALLURL());
 	}
 
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		Map map = (Map) l.getItemAtPosition(position);
-		Intent intent = (Intent) map.get("intent");
+	public void onItemClick(AdapterView<?> parent, View arg1, int position,
+			long id) {
+		${$class/@name} ${lower-case($class/@name)} = (${$class/@name}) parent.getItemAtPosition(position);
+		Intent intent = new Intent(this, Read${$class/@name}.class);
+		intent.putExtra("id", ${lower-case($class/@name)}.getId());
 		startActivity(intent);
-	}
-
-	protected ArrayList<HashMap<String, Object>> loadTable(String xml) {
-		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		Object result=HttpHelper.xstream.fromXML(xml);
-		if(result instanceof String){
-		return list;
-		}
-		for (${$class/@name} entity : (List<${$class/@name}>) result) {
-			HashMap<String, Object> item = new HashMap<String, Object>();
-			item.put("text",  ReflectionUtils.toString(entity));
-			Intent readIntent = new Intent(this, Read${$class/@name}.class);
-			readIntent.putExtra("id", entity.getId());
-			item.put("intent", readIntent);
-			list.add(item);
-		}
-
-		return list;
 	}
 
 	

@@ -17,14 +17,14 @@
 				 <TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
 					android:layout_height="wrap_content">
 				</TextView>
-		        <Button android:id ="@+id/${lower-case($class/@name)}_${lower-case($attribute/@name)}"
+		        <Button android:id ="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
 				 android:text="date"
 				 android:layout_width="wrap_content"
 				 android:layout_height="wrap_content"/>
 				 </c:when>
 					 <c:otherwise> 
 		        <info.yalamanchili.android.views.EditTextField
-		        android:id="@+id/${lower-case($class/@name)}_${lower-case($attribute/@name)}"
+		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        />	
@@ -40,14 +40,14 @@
 				 <TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
 					android:layout_height="wrap_content">
 				</TextView>
-		        <Button android:id ="@+id/${lower-case($class/@name)}_${lower-case($attribute/@name)}"
+		        <Button android:id ="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
 				 android:text="date"
 				 android:layout_width="wrap_content"
 				 android:layout_height="wrap_content"/>
 				 </c:when>
 					 <c:otherwise>
 		        <info.yalamanchili.android.views.EditTextField
-		        android:id="@+id/${lower-case($class/@name)}_${lower-case($attribute/@name)}"
+		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        />		 
@@ -63,14 +63,14 @@
 				 <TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
 					android:layout_height="wrap_content">
 				</TextView>
-		        <Button android:id ="@+id/${lower-case($class/@name)}_${lower-case($attribute/@name)}"
+		        <Button android:id ="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
 				 android:text="date"
 				 android:layout_width="wrap_content"
 				 android:layout_height="wrap_content"/>
 				 </c:when>
 					 <c:otherwise>
 		        <info.yalamanchili.android.views.EditTextField
-		        android:id="@+id/${lower-case($class/@name)}_${lower-case($attribute/@name)}"
+		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        />	

@@ -78,7 +78,7 @@ public class ${camelCase($projectName)}Main extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
       	notes = new SimpleAdapter(this, getData(), R.layout.list_item,
-				new String[] { "text" }, new int[] { R.id.list_item });
+				new String[] { "text" }, new int[] { R.id.list_item_view });
 		setListAdapter(notes);
 
 	}
