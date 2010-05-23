@@ -33,5 +33,8 @@ public class HttpHelper {
 		}
 		return result;
 	}
+	public static Boolean serverStateCheck() {
+		return true;
+	}
 }
 </java:format>
