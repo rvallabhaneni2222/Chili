@@ -34,8 +34,8 @@ public class ${$class/@name}Adapter extends ArrayAdapter<${$class/@name}> {
 		} else {
 			todoView = (LinearLayout) convertView;
 		}
-		TextView textViewOne = (TextView) todoView.findViewById(R.id.readall_item_one);
-		TextView textViewTwo = (TextView) todoView.findViewById(R.id.readall_item_two);
+		TextView textViewOne = (TextView) todoView.findViewById(R.id.readall_list_item_one);
+		TextView textViewTwo = (TextView) todoView.findViewById(R.id.readall_list_item_two);
 		textViewOne.setText(${lower-case($class/@name)}.toString());
 		return todoView;
 	}
