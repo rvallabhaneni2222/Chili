@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+>
+  <TextView
+    android:id="@+id/readall_list_item_one"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:padding="10dp"
+    android:scrollbars="vertical"
+    android:fadingEdge="vertical"
+  
+    android:layout_alignParentRight="true"
+  />
+  <TextView
+    android:id="@+id/readall_list_item_two"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"  
+    android:padding="10dp"
+    android:scrollbars="vertical"
+    android:fadingEdge="vertical"
+  
+    android:layout_alignParentLeft="@+id/readall_item_one"
+  />
+</RelativeLayout>
