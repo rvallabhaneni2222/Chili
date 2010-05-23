@@ -64,9 +64,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.view.View.OnClickListener;
 
 public class ReadAll${$class/@name}s extends Activity implements OnItemClickListener,OnClickListener{
+	private Integer pageOffSet = 0;
 	private ArrayList<${$class/@name}> ${lower-case($class/@name)}s = new ArrayList<${$class/@name}>();
 	private ListView ${lower-case($class/@name)}ListView;
 	private Button create;
+	private Button more;
 	private ${$class/@name}Adapter ${lower-case($class/@name)}Adapter;
 	
 	@Override
@@ -74,20 +76,15 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.entity_readall);
 		create = (Button) findViewById(R.id.readall_create);
+		more = (Button) findViewById(R.id.readall_more);
+		create.setOnClickListener(this);
+		more.setOnClickListener(this);
 		${lower-case($class/@name)}ListView = (ListView) findViewById(R.id.readall_listview);
 		${lower-case($class/@name)}ListView.setOnItemClickListener(this);
-			new AsyncHttp(this) {
-			@Override
-			protected void onResponse(String result) {
-				for (${$class/@name} entity : (List<${$class/@name}>) HttpHelper.xstream
-						.fromXML(result)) {
-					${lower-case($class/@name)}s.add(entity);
-				}
-				int resID = R.layout.readall_item;
-				${lower-case($class/@name)}Adapter = new ${$class/@name}Adapter(ReadAll${$class/@name}s.this, resID, ${lower-case($class/@name)}s);
-				${lower-case($class/@name)}ListView.setAdapter(${lower-case($class/@name)}Adapter);
-			}
-		}.execute(getReadALLURL());
+		int resID = R.layout.readall_list;
+		${lower-case($class/@name)}Adapter = new ${$class/@name}Adapter(ReadAll${$class/@name}s.this, resID, ${lower-case($class/@name)}s);
+		${lower-case($class/@name)}ListView.setAdapter(${lower-case($class/@name)}Adapter);
+		loadPage();
 	}
 
 	public void onItemClick(AdapterView<?> parent, View arg1, int position,
@@ -100,7 +97,8 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 
 	
 	public String getReadALLURL() {
-		return HttpHelper.baseURL + "${lower-case($class/@name)}/readall/0/10";
+	return HttpHelper.baseURL + "${lower-case($class/@name)}/readall/" + pageOffSet.toString()
+				+ "/" + getString(R.string.page_size);
 	}
 	
 	public void onClick(View arg0) {
@@ -125,6 +123,7 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 										<%-- check to see if class2 is parent and child--%>
 										<c:if test="not($class2/@parent1 = $class2/@name)">
 										<c:if test="not($class2/@hasChildren = $class2/@name)">
+										if (arg0.getId() == create.getId()) {
 										Object result = getIntent().getSerializableExtra("parent");
 											if (result != null) {
 												Intent addIntent = new Intent(this, Create${$class/@name}.class);
@@ -134,9 +133,11 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 												startActivity(addIntent);
 												return;
 											}
+											}
 										</c:if>
 										<%-- has parent and no children--%>
 										<c:if test="$class2/@hasChildren = $class2/@name">
+										if (arg0.getId() == create.getId()) {
 										Object result = getIntent().getSerializableExtra("parent");
 											if (result != null) {
 												Intent addIntent = new Intent(this, Create${$class/@name}.class);
@@ -145,12 +146,14 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 												addIntent.putExtra("entity", ${lower-case($class/@name)});
 												startActivity(addIntent);
 												return;
+											}
 											}
 										</c:if>
 										</c:if>
 										<%-- no parent and has children--%>
 										 <c:if test="$class2/@parent1 = $class2/@name">
 										 <c:if test="not($class2/@hasChildren = $class2/@name)">
+										 if (arg0.getId() == create.getId()) {
 										Object result = getIntent().getSerializableExtra("parent");
 											if (result != null) {
 												Intent addIntent = new Intent(this, Create${$class/@name}.class);
@@ -159,6 +162,7 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 												addIntent.putExtra("entity", ${lower-case($class/@name)});
 												startActivity(addIntent);
 												return;
+											}
 											}
 										 </c:if>
 										 </c:if>
@@ -171,8 +175,30 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 		</c:iterate>
 	</c:iterate>
 </c:iterate>
+		if (arg0.getId() == create.getId()) {
 		Intent createIntent = new Intent(this, Create${$class/@name}.class);
 		startActivity(createIntent);
+		}
+		if (arg0.getId() == more.getId()) {
+			loadPage();
+		}
+	}
+	
+	protected void loadPage() {
+		${lower-case($class/@name)}Adapter.clear();
+		new AsyncHttp(this) {
+			@Override
+			protected void onResponse(String result) {
+				Object obj = HttpHelper.xstream.fromXML(result);
+				if (obj instanceof List<?>) {
+					for (${$class/@name} entity : (List<${$class/@name}>) HttpHelper.xstream
+							.fromXML(result)) {
+						${lower-case($class/@name)}Adapter.add(entity);
+					}
+				}
+			}
+		}.execute(getReadALLURL());
+		pageOffSet = pageOffSet + new Integer(getString(R.string.page_size));
 	}
 }
 </java:format>
