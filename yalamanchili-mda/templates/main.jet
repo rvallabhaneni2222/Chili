@@ -579,6 +579,58 @@
     </ws:folder>
 </ws:project>
 
+<%--creates the ios project--%>
+<ws:project name="{$projectName}-ios" location="{$location}/{$projectName}-ios">
+   <%--Iterate through the packages and classes--%>
+       	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		    		<c:setVariable select="$class/@xmi.id" var="classID"/>
+			<c:setVariable select="$class" var="parentClass1"/>
+			<c:setVariable select="$class" var="parentClass2"/>
+			<%--process generizations --%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+			 <%-- if child class--%>
+				<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+			  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+			  			<%-- get level 1 parent--%>
+			  			<c:setVariable select="$otherClass" var="parentClass1"/>
+								<%-- second round to get level 2 --%>
+								<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+								 <%-- if child class--%>
+									<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $parentClass1/@xmi.id">
+										<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+								  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+								  			<%-- get level 2 parent--%>
+								  			<c:setVariable select="$otherClass" var="parentClass2"/>	  			
+								  			</c:if>
+										</c:iterate>  					  		 			 
+									</c:if>
+							</c:iterate>
+								  									 				
+			  			</c:if>
+					</c:iterate>  					  		 			 
+				</c:if>
+			</c:iterate>
+			<%-- Entity interface TO--%>	
+			<ws:folder path="transfer-objects">
+				<ws:file path="info_yalamanchili_project_entity_${lower-case($package/@name)}_${$class/@name}.h" template="templates/ios/transfer-objects/entity_interface.h.jet"/>
+				<ws:file path="info_yalamanchili_project_entity_${lower-case($package/@name)}_${$class/@name}.m" template="templates/ios/transfer-objects/entity_implementation.m.jet"/>
+			</ws:folder>
+			<%-- Entity CRUD Controllers--%>
+			<ws:folder path="${lower-case($package/@name)}-${lower-case($class/@name)}">
+				<ws:file path="ReadAll${$class/@name}sController.h" template="templates/ios/entity/readall_entity_controller.h.jet"/>
+				<ws:file path="ReadAll${$class/@name}sController.m" template="templates/ios/entity/readall_entity_controller.m.jet"/>
+				<ws:file path="Read${$class/@name}Controller.h" template="templates/ios/entity/read_entity_controller.h.jet"/>
+				<ws:file path="Read${$class/@name}Controller.m" template="templates/ios/entity/read_entity_controller.m.jet"/>
+				<ws:file path="Create${$class/@name}Controller.h" template="templates/ios/entity/create_entity_controller.h.jet"/>
+				<ws:file path="Create${$class/@name}Controller.m" template="templates/ios/entity/create_entity_controller.m.jet"/>
+			</ws:folder>			
+			</c:iterate>
+		</c:iterate>
+
+</ws:project>
+
 <%-- creates the test project--%>
 <ws:project name="{$projectName}-test" location="{$location}/{$projectName}-test">
 	<ws:file path="pom.xml" template="templates/test/test_pom.xml.jet"/>
