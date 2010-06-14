@@ -1,0 +1,14 @@
+#import <UIKit/UIKit.h>
+#import "<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name}.h";
+
+@interface Create${$class/@name}Controller : UIViewController {
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute"> 
+IBOutlet UITextField *${$attribute/@name}TF;
+</c:iterate>
+}
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute"> 
+@property (nonatomic,retain)  IBOutlet UITextField *${$attribute/@name}TF;
+</c:iterate>
+- (IBAction) createbuttonClicked:(id) sender;
+- (IBAction) textFieldDoneEditing:(id) sender;
+@end

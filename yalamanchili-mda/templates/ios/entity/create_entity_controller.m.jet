@@ -1,0 +1,93 @@
+#import "Create${$class/@name}Controller.h"
+#import	"HttpUtils.h";
+
+@implementation Create${$class/@name}Controller
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute"> 
+@synthesize ${$attribute/@name}TF;
+</c:iterate>
+/*
+ // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+        // Custom initialization
+    }
+    return self;
+}
+*/
+
+/*
+// Implement loadView to create a view hierarchy programmatically, without using a nib.
+- (void)loadView {
+}
+*/
+
+/*
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad {
+    [super viewDidLoad];
+}
+*/
+
+/*
+// Override to allow orientations other than the default portrait orientation.
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+*/
+
+- (void)didReceiveMemoryWarning {
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+- (IBAction) createbuttonClicked:(id) sender{	
+	<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name}	*${lower-case($class/@name)}= [[[<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} alloc]init] autorelease];
+	<%-- processes the premitive Datatypes and enums--%>
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+	  <c:when test="${'$StringID'}" > 
+	  ${lower-case($class/@name)}.${$attribute/@name}=${$attribute/@name}TF.text;
+	  </c:when> 
+	  <c:when test="${'$IntegerID'}" >
+	  </c:when>
+	  <c:when test="${'$DateID'}" >
+	  </c:when>
+	  <c:when test="${'$BooleanID'}" >
+	  </c:when>
+	  <c:when test="${'$LongID'}" >
+	  </c:when>
+	  <c:when test="${'$FloatID'}" >
+	  </c:when>
+	 <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			<%-- add  enums support--%>
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise>
+</c:choose> 
+</c:iterate>
+	NSString *xml=[HttpUtils parseToXML:${lower-case($class/@name)}];
+	NSString *url=[[[NSString alloc] initWithFormat:@"http://localhost:8080/automanage-soa-1.0-SNAPSHOT/seam/resource/restv1/car/create"] autorelease];
+	[HttpUtils httpPutData:xml withURL:url];
+}
+
+- (IBAction) textFieldDoneEditing:(id) sender{
+	[sender resignFirstResponder];
+}
+
+- (void)dealloc {
+    [super dealloc];
+}
+
+
+@end

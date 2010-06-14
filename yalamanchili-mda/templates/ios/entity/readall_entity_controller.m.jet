@@ -1,0 +1,115 @@
+#import "ReadAll${$class/@name}sController.h"
+#import "<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name}.h";
+#import "Read${$class/@name}Controller.h";
+#import	"Create${$class/@name}Controller.h";
+
+@implementation ReadAll${$class/@name}sController
+@synthesize ${lower-case($class/@name)}sList;
+@synthesize ${lower-case($class/@name)}s;
+@synthesize createButton;
+/*
+ // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+        // Custom initialization
+    }
+    return self;
+}
+*/
+
+/*
+// Implement loadView to create a view hierarchy programmatically, without using a nib.
+- (void)loadView {
+}
+*/
+
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad {
+	${lower-case($class/@name)}sList =[[NSMutableArray alloc] init];
+	${lower-case($class/@name)}s = [[NSMutableArray alloc] init];
+	[self loadData];
+	self.navigationItem.title=@"${$class/@name}s";
+    [super viewDidLoad];
+}
+
+- (void) loadData{
+		NSString *urlString=[[[NSString alloc] initWithFormat:@"http://localhost:8080/automanage-soa-1.0-SNAPSHOT/seam/resource/restv1/car/readall/0/10"] autorelease];
+	NSData *data=[HttpUtils httpGetDataFromURL:urlString];
+	NSArray *temp${lower-case($class/@name)}s=[HttpUtils parseFromXML:data];
+	for (<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)} in temp${lower-case($class/@name)}s) {
+		[${lower-case($class/@name)}s addObject:${lower-case($class/@name)}];
+		[${lower-case($class/@name)}sList addObject:[${lower-case($class/@name)} description]];
+	}
+}
+
+
+/*
+// Override to allow orientations other than the default portrait orientation.
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+*/
+
+- (void)didReceiveMemoryWarning {
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+// Customize the number of rows in the table view.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [${lower-case($class/@name)}sList count];
+}
+
+
+// Customize the appearance of table view cells.
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellIdentifier = @"ReadAll${$class/@name}sCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    }
+	// Configure the cell.
+	NSString *cellText=[${lower-case($class/@name)}sList objectAtIndex:indexPath.row];
+	cell.text=cellText;
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+	
+	Read${$class/@name}Controller *read${$class/@name}Controller = [[Read${$class/@name}Controller alloc] initWithNibName:@"Read${$class/@name}Controller" bundle:nil];
+	<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)}=[${lower-case($class/@name)}s objectAtIndex:indexPath.row];
+	read${$class/@name}Controller.${lower-case($class/@name)}=${lower-case($class/@name)};
+	[self.navigationController pushViewController:read${$class/@name}Controller animated:YES];
+	[read${$class/@name}Controller release];
+	read${$class/@name}Controller = nil;
+	
+}
+
+- (IBAction) create${$class/@name}Clicked{
+	Create${$class/@name}Controller *create${$class/@name}Controller = [[Create${$class/@name}Controller alloc] initWithNibName:@"Create${$class/@name}" bundle:nil];
+	[self.navigationController pushViewController:create${$class/@name}Controller animated:YES];
+	[create${$class/@name}Controller release];
+	create${$class/@name}Controller = nil;
+}
+
+- (void)dealloc {
+	[${lower-case($class/@name)}s release];
+	[${lower-case($class/@name)}sList release];
+    [super dealloc];
+}
+
+
+@end

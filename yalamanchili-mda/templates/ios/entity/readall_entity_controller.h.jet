@@ -1,0 +1,14 @@
+#import <UIKit/UIKit.h>
+#import "HttpUtils.h";
+
+@interface ReadAll${$class/@name}sController : UIViewController  <UITableViewDelegate,UITableViewDataSource> {
+	IBOutlet UIButton *createButton;
+	NSMutableArray *${lower-case($class/@name)}sList;
+	NSMutableArray *${lower-case($class/@name)}s;
+}
+@property (nonatomic,retain) IBOutlet UIButton *createButton;
+@property (nonatomic,retain) NSMutableArray *${lower-case($class/@name)}sList;
+@property (nonatomic,retain) NSMutableArray *${lower-case($class/@name)}s;
+- (IBAction) create${$class/@name}Clicked;
+@end
+

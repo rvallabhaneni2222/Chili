@@ -1,0 +1,85 @@
+#import "Read${$class/@name}Controller.h"
+
+
+@implementation Read${$class/@name}Controller
+@synthesize ${lower-case($class/@name)};
+
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute"> 
+@synthesize ${$attribute/@name}TF;
+</c:iterate>
+
+/*
+ // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+        // Custom initialization
+    }
+    return self;
+}
+*/
+
+/*
+// Implement loadView to create a view hierarchy programmatically, without using a nib.
+- (void)loadView {
+}
+*/
+
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad {
+	self.navigationItem.title=@"Read ${$class/@name}";
+<%-- processes the premitive Datatypes and enums--%>
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+	  <c:when test="${'$StringID'}" > 
+	  ${$attribute/@name}TF.text=[${lower-case($class/@name)} ${$attribute/@name}];
+	  </c:when> 
+	  <c:when test="${'$IntegerID'}" >
+	  </c:when>
+	  <c:when test="${'$DateID'}" >
+	  </c:when>
+	  <c:when test="${'$BooleanID'}" >
+	  </c:when>
+	  <c:when test="${'$LongID'}" >
+	  </c:when>
+	  <c:when test="${'$FloatID'}" >
+	  </c:when>
+	 <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			<%-- add  enums support--%>
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise>
+</c:choose> 
+</c:iterate>
+    [super viewDidLoad];
+}
+
+/*
+// Override to allow orientations other than the default portrait orientation.
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+*/
+
+- (void)didReceiveMemoryWarning {
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+- (void)dealloc {
+    [super dealloc];
+}
+
+
+@end

@@ -1,0 +1,65 @@
+#import <Foundation/Foundation.h>
+
+@interface <c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} : NSObject {
+	<%-- processes the premitive Datatypes and enums--%>
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+	  <c:when test="${'$StringID'}" > 
+	  NSString *${$attribute/@name};
+	  </c:when> 
+	  <c:when test="${'$IntegerID'}" >
+	   NSInteger *${$attribute/@name};
+	  </c:when>
+	  <c:when test="${'$DateID'}" >
+	   NSDate *${$attribute/@name};
+	  </c:when>
+	  <c:when test="${'$BooleanID'}" >
+	   Boolean ${$attribute/@name};
+	  </c:when>
+	  <c:when test="${'$LongID'}" >
+	   NSNumber *${$attribute/@name};
+	  </c:when>
+	  <c:when test="${'$FloatID'}" >
+	   NSDouble *${$attribute/@name};
+	  </c:when>
+	 <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			<%-- add  enums support--%>
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise>
+</c:choose> 
+</c:iterate>
+}
+	<%-- processes the premitive Datatypes and enums--%>
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+	  <c:when test="${'$StringID'}" > 
+	  @property (nonatomic,retain) NSString *${$attribute/@name};
+	  </c:when> 
+	  <c:when test="${'$IntegerID'}" >
+	  @property (nonatomic,retain) NSInteger *${$attribute/@name};
+	  </c:when>
+	  <c:when test="${'$DateID'}" >
+	  @property (nonatomic,retain)  NSDate *${$attribute/@name};
+	  </c:when>
+	  <c:when test="${'$BooleanID'}" >
+	  @property Boolean ${$attribute/@name};
+	  </c:when>
+	  <c:when test="${'$LongID'}" >
+	   @property (nonatomic,retain) NSNumber *${$attribute/@name};
+	  </c:when>
+	  <c:when test="${'$FloatID'}" >
+	  @property (nonatomic,retain) NSDouble *${$attribute/@name};
+	  </c:when>
+	 <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			<%-- add  enums support--%>
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise>
+</c:choose> 
+</c:iterate>
+@end
