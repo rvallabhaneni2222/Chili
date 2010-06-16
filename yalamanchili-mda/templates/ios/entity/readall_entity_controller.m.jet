@@ -1,12 +1,12 @@
-#import "ReadAll${$class/@name}sController.h"
+#import "ReadAll${$class/@name}sViewController.h"
+#import "HttpUtils.h";
 #import "<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name}.h";
-#import "Read${$class/@name}Controller.h";
-#import	"Create${$class/@name}Controller.h";
+#import "Read${$class/@name}ViewController.h";
+#import	"Create${$class/@name}ViewController.h";
 
-@implementation ReadAll${$class/@name}sController
+@implementation ReadAll${$class/@name}sViewController
 @synthesize ${lower-case($class/@name)}sList;
 @synthesize ${lower-case($class/@name)}s;
-@synthesize createButton;
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -17,20 +17,33 @@
 }
 */
 
-/*
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
+	CGRect cgRct = CGRectMake(0.0, 0.0, 480, 420);  
+	readAll${$class/@name}sView = [[[UIView alloc] initWithFrame:cgRct] autorelease];	
+	readAll${$class/@name}sView.autoresizesSubviews = YES;              
+	self.view = readAll${$class/@name}sView;
+	
+	createButton= [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
+	createButton.frame = CGRectMake(5,5, 100.0, 30.0);
+	[createButton setTitle:@"Create" forState:UIControlStateNormal];
+	[createButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal ];
+	[createButton addTarget:self action:@selector(createClicked:) forControlEvents:UIControlEventTouchUpInside];
+	
+	readAll${$class/@name}sTableView = [[[UITableView alloc] initWithFrame:cgRct] autorelease];	
+	readAll${$class/@name}sTableView.delegate = self;
+	readAll${$class/@name}sTableView.dataSource=self;
+	[readAll${$class/@name}sTableView addSubview:createButton];
+	[self.view addSubview:readAll${$class/@name}sTableView];
 }
-*/
-
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
+ 	[super viewDidLoad];
 	${lower-case($class/@name)}sList =[[NSMutableArray alloc] init];
 	${lower-case($class/@name)}s = [[NSMutableArray alloc] init];
 	[self loadData];
 	self.navigationItem.title=@"${$class/@name}s";
-    [super viewDidLoad];
 }
 
 - (void) loadData{
@@ -87,9 +100,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-	
-	Read${$class/@name}Controller *read${$class/@name}Controller = [[Read${$class/@name}Controller alloc] initWithNibName:@"Read${$class/@name}Controller" bundle:nil];
+	Read${$class/@name}ViewController *read${$class/@name}Controller = [[Read${$class/@name}ViewController alloc] initWithNibName:@"Read${$class/@name}Controller" bundle:nil];
 	<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)}=[${lower-case($class/@name)}s objectAtIndex:indexPath.row];
 	read${$class/@name}Controller.${lower-case($class/@name)}=${lower-case($class/@name)};
 	[self.navigationController pushViewController:read${$class/@name}Controller animated:YES];
@@ -98,8 +109,8 @@
 	
 }
 
-- (IBAction) create${$class/@name}Clicked{
-	Create${$class/@name}Controller *create${$class/@name}Controller = [[Create${$class/@name}Controller alloc] initWithNibName:@"Create${$class/@name}" bundle:nil];
+- (void) createClicked:(id) sender{
+	Create${$class/@name}ViewController *create${$class/@name}Controller = [[Create${$class/@name}ViewController alloc] initWithNibName:@"Create${$class/@name}" bundle:nil];
 	[self.navigationController pushViewController:create${$class/@name}Controller animated:YES];
 	[create${$class/@name}Controller release];
 	create${$class/@name}Controller = nil;

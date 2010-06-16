@@ -1,14 +1,12 @@
 #import <UIKit/UIKit.h>
 #import "<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name}.h";
 
-@interface Read${$class/@name}Controller : UIViewController {
+@interface Read${$class/@name}ViewController : UIViewController {
 	<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)};<%-- processes the premitive Datatypes and enums--%>
+	UIView *read${$class/@name}View;
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute"> 
-IBOutlet UITextField *${$attribute/@name}TF;
+ UITextField *${$attribute/@name}TF;
 </c:iterate>
 }
 @property (nonatomic,retain)	<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)};
-<c:iterate select="$class/Classifier.feature/Attribute" var="attribute"> 
-@property (nonatomic,retain)  IBOutlet UITextField *${$attribute/@name}TF;
-</c:iterate>
 @end
