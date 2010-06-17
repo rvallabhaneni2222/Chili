@@ -4,6 +4,7 @@ package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
 
 import info.yalamanchili.project.android.HttpHelper;
 import info.yalamanchili.project.android.R;
+
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 		<%-- process compsition associations--%>
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
@@ -59,6 +60,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.view.View.OnClickListener;
@@ -74,7 +77,9 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.entity_readall);
+		customizeTitle();
 		create = (Button) findViewById(R.id.readall_create);
 		more = (Button) findViewById(R.id.readall_more);
 		create.setOnClickListener(this);
@@ -85,6 +90,12 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 		${lower-case($class/@name)}Adapter = new ${$class/@name}Adapter(ReadAll${$class/@name}s.this, resID, ${lower-case($class/@name)}s);
 		${lower-case($class/@name)}ListView.setAdapter(${lower-case($class/@name)}Adapter);
 		loadPage();
+	}
+	
+	public void customizeTitle(){
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.${lower-case($projectName)}_title_bar);
+	     TextView mytitletext = (TextView) findViewById(R.id.${lower-case($projectName)}_title_text);
+	     mytitletext.setText("Read All ${$class/@name}s Panel");	
 	}
 
 	public void onItemClick(AdapterView<?> parent, View arg1, int position,

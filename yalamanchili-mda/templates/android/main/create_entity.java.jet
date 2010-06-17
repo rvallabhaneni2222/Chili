@@ -17,7 +17,8 @@ import android.app.Dialog;import android.widget.DatePicker;
 import java.util.Date;
 import android.content.Intent;
 import android.widget.Toast;
-
+import android.view.Window;
+import android.widget.TextView;
 import java.util.Calendar;
 
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
@@ -124,10 +125,18 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.${lower-case($class/@name)}_create);
+		customizeTitle();
 		create = (Button) findViewById(R.id.${lower-case($class/@name)}_create);
 		create.setOnClickListener(this);
 		assignFields();
+	}
+	
+	public void customizeTitle(){
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.${lower-case($projectName)}_title_bar);
+	     TextView mytitletext = (TextView) findViewById(R.id.${lower-case($projectName)}_title_text);
+	     mytitletext.setText("Read ${$class/@name} Activity");	
 	}
 	
 	public void assignFields() {
