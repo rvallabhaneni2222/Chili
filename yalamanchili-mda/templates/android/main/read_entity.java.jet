@@ -17,6 +17,9 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.view.View;
+import android.view.Window;
+import android.widget.TextView;
+
 <%--process level 1 generizations --%>
 <c:if test="not($class/@name = $parentClass1/@name)">
   			<c:setVariable select="$parentClass1/@xmi.id" var="classID"/>		
@@ -137,7 +140,9 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.${lower-case($class/@name)}_read);
+		customizeTitle();
 		done = (Button) findViewById(R.id.read_done);
 		done.setOnClickListener(this);
 			new AsyncHttp(this) {
@@ -147,6 +152,12 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 			}
 		}.execute(getReadURL());
 
+	}
+	
+	public void customizeTitle(){
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.${lower-case($projectName)}_title_bar);
+	     TextView mytitletext = (TextView) findViewById(R.id.${lower-case($projectName)}_title_text);
+	     mytitletext.setText("Read ${$class/@name} Panel");	
 	}
 	
 	public void load(String xml) {
