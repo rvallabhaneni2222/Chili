@@ -25,7 +25,7 @@ public class ViewTextField extends LinearLayout {
 	public void init() {
 		setOrientation(LinearLayout.VERTICAL);
 		label = new TextView(getContext());
-		label.setTextSize(new Float(12));
+//		label.setTextSize(new Float(12));
 		label.setTextColor(ColorStateList.valueOf(56));
 		text = new TextView(getContext());
 		errorMsg = new TextView(getContext());
