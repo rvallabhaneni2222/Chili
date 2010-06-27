@@ -17,7 +17,7 @@
 
 	<resteasy:application resource-path-prefix="/restv1">
 	</resteasy:application>
-	<component name="dozerMapper" class="org.dozer.DozerBeanMapper"
+	<component name="dozerSOAMapper" class="org.dozer.DozerBeanMapper"
 		scope="application" startup="true">
 	</component>
 	
