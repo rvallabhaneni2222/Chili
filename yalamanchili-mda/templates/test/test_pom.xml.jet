@@ -18,20 +18,17 @@
 			<groupId>info.yalamanchili.project</groupId>
 			<artifactId>automanage-jpa</artifactId>
 			<version>1.0-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.gilead</groupId>
-			<artifactId>adapter-core</artifactId>
-			<version>1.2.4</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>info.yalamanchili</groupId>
 			<artifactId>yalamanchili-embedded-jboss
 			</artifactId>
 			<version>1.0-SNAPSHOT</version>
-			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.yalamanchili.commons</groupId>
+			<artifactId>yalamanchili-commons</artifactId>
+			<version>${$yalamanchili-commons-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium.client-drivers</groupId>
@@ -63,7 +60,7 @@
 						</goals>
 						<configuration>
 							<background>true</background>
-							<port>5555</port>
+							<port>4444</port>
 						</configuration>
 					</execution>
 				</executions>
@@ -93,4 +90,10 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>yalamanchili</id>
+			<url> http://yalamanchili.googlecode.com/svn/maven2  </url>
+		</repository>
+	</repositories>
 </project>
