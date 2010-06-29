@@ -8,11 +8,12 @@
 	<name>${$projectName}-soa</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+	<!--use type jpa dependency as ejb to avoid class loader issues -->
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-jpa</artifactId>
 			<version>1.0-SNAPSHOT</version>
-			<scope>provided</scope>
+			<type>ejb</type>
 			<exclusions>
 				<exclusion>
 					<groupId>com.google.gwt</groupId>
