@@ -1,6 +1,6 @@
 <java:format>
 <f:bundle basename="templates/resources/messages">
-package ${$packageName};
+package ${$groupID}.entity.${$package/@name};
  
 <java:importsLocation package="{$package/@name}"/>
 

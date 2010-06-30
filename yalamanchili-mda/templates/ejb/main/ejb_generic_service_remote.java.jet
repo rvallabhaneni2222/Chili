@@ -1,5 +1,5 @@
 <java:format>
-package ${$genericPackage};
+package ${$groupID}.ejb;
 
 import javax.ejb.Remote;
 

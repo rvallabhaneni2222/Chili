@@ -1,5 +1,5 @@
 <java:format>
-package ${$packageName};
+package ${$groupID}.entity.${$package/@name};
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

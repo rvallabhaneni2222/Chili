@@ -1,6 +1,6 @@
 <java:format>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
-package ${$packageName}.${lower-case($class/@name)};
+package ${$groupID}.ejb.${$package/@name}.${lower-case($class/@name)};
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import java.util.ArrayList;
 import java.util.Collection;

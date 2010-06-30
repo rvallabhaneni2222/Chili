@@ -3,14 +3,9 @@
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 
 
-package ${$packageName};
+package ${$groupID}.entity.${$package/@name};
  
 <java:importsLocation package="{$package/@name}"/>
-<c:if test="$isGWTJPA = 'true'">
-import info.yalamanchili.gwt.ui.Position;
-import info.yalamanchili.gwt.ui.UIElement;
-import net.sf.gilead.pojo.java5.LightEntity;
-</c:if>
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;

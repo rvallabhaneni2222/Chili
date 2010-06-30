@@ -1,7 +1,7 @@
 <java:format>
-package ${$packageName}.${lower-case($class/@name)};
+package ${$groupID}.ejb.${$package/@name}.${lower-case($class/@name)};
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
-import ${$packageName}.${lower-case($class/@name)}.${$class/@name}ServiceLocal;
+import ${$groupID}.ejb.${$package/@name}.${lower-case($class/@name)}.${$class/@name}ServiceLocal;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
