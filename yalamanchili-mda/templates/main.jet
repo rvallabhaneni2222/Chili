@@ -462,7 +462,13 @@
     </ws:folder>
     </ws:folder>
     <ws:folder path="src/test/resources"/>
-   
+    <%--copy seamgwt2 fix classes--%>
+    <ws:copyFile src="templates/web/gwt/seamgwt2/GWT2Service.java" target="src/main/java/seamgwt2/GWT2Service.java" />
+    <ws:copyFile src="templates/web/gwt/seamgwt2/GWTService.java" target="src/main/java/seamgwt2/GWTService.java" />
+    <ws:copyFile src="templates/web/gwt/seamgwt2/GWTToSeamAdapter.java" target="src/main/java/seamgwt2/GWTToSeamAdapter.java" />
+    <ws:copyFile src="templates/web/gwt/seamgwt2/SeamRPC.java" target="src/main/java/seamgwt2/SeamRPC.java" />
+    <ws:copyFile src="templates/web/gwt/seamgwt2/SeamRPCRequest.java" target="src/main/java/seamgwt2/SeamRPCRequest.java" />
+  
 </ws:project>
 
 <%--creates the SOA project--%>
