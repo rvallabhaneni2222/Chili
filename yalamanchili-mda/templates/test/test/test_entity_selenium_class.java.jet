@@ -1,0 +1,195 @@
+<java:format>
+package ${$groupID}.test.${$package/@name};
+
+import static org.junit.Assert.assertTrue;
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import java.util.Properties;
+
+import info.yalamanchili.commons.PropertyFileLoader;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.Ignore;
+
+import com.thoughtworks.selenium.DefaultSelenium;
+
+public class ${$class/@name}Test {
+	protected static DefaultSelenium selenium;
+	protected static String SELINIUM_HOST;
+	protected static Integer SELINIUM_PORT;
+	protected static String BROWSER;
+	protected static String APP_BASE_URL;
+	protected static String APP_ROOT_PAGE;
+
+	protected static ${$class/@name} ${lower-case($class/@name)};
+
+		/*
+		 * connects to local selinium server with the specified port *make sure
+		 * u start the server*
+		 */
+	@BeforeClass
+	public static void init() {
+		loadProperties();
+		initSelinium();
+		${lower-case($class/@name)} = new ${$class/@name}();
+	}
+	// selenium.captureEntirePageScreenshot("C:/Documents and Settings/ayalama001c/Desktop/selenium.png",
+	// "");
+	@Test
+	public void testCreateWidget() {
+		selenium.click("//td[contains(text(), '${upper-case($package/@name)}')]");
+		selenium.click("//td[contains(text(), '${$class/@name}')]");
+		waitforAjaxResponce();
+		selenium.click("//div[contains(text(), 'Create ${$class/@name}')]");
+		waitforAjaxResponce();
+	<%-- type in test data in the fields --%>	
+	<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > 
+				 selenium.type("//input[@title='${$attribute/@name}']", "test ${$attribute/@name}");
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >
+				
+				 </c:when>
+				 <c:when test="${'$DateID'}" >  
+				
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+				
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >
+				
+				 </c:when>
+		 		</c:choose>
+				</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > 
+				 selenium.type("//input[@title='${$attribute/@name}']", "test ${$attribute/@name}");
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >
+				 
+				 </c:when>
+				 <c:when test="${'$DateID'}" >
+				 
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" >
+			
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >
+			
+				 </c:when>
+		 		</c:choose>
+				</c:iterate>
+	</c:if>		
+	<%-- process parent class level 0 attributes--%>	
+				<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > 
+				 selenium.type("//input[@title='${$attribute/@name}']", "test ${$attribute/@name}");
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > 
+				
+				 </c:when>
+				 <c:when test="${'$DateID'}" > 
+				
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+				 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > 
+				
+				 </c:when>
+		 		</c:choose>
+				</c:iterate>	
+		selenium.click("//button[contains(text(), 'create')]");
+		waitforAjaxResponce();
+		assertTrue(selenium.isTextPresent("created"));
+	}
+
+	@Test
+	@Ignore
+	public void testReadAllWidget() {
+		selenium.click("//td[contains(text(), '${upper-case($packageName)}')]");
+		selenium.click("//td[contains(text(), '${$class/@name}')]");
+		waitforAjaxResponce();
+		Number pages = selenium.getXpathCount("//option");
+		for (Integer i = 1; i <= pages.intValue(); i++) {
+			if (selenium.isElementPresent("//option[contains(text(),"
+					+ i.toString() + ")]")) {
+				selenium.select("//select", "label=" + i.toString() + "");
+				waitforAjaxResponce();
+
+			}
+		}
+	}
+
+
+	public void waitFor(int seconds) {
+
+		try {
+			Thread.sleep(seconds * 1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void waitforAjaxResponce() {
+		for (int second = 0;; second++) {
+			if (second >= 60)
+				break;
+			try {
+				if (!selenium.isTextPresent("Loading..."))
+					return;
+			} catch (Exception e) {
+			}
+
+			// Pause for 1 second.
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	@AfterClass
+	public static void destroy() {
+		selenium.stop();
+	}
+	
+	protected static void loadProperties() {
+		Properties properties = PropertyFileLoader
+				.loadProperties("env.properties");
+		SELINIUM_HOST = properties.getProperty("selinium-host");
+		SELINIUM_PORT = new Integer(properties.getProperty("selinium-port"));
+		BROWSER = properties.getProperty("browser");
+		APP_BASE_URL = properties.getProperty("app-base-url");
+		APP_ROOT_PAGE = properties.getProperty("app-root-page");
+	}
+
+	protected static void initSelinium() {
+		selenium = new DefaultSelenium(SELINIUM_HOST, SELINIUM_PORT, BROWSER,
+				APP_BASE_URL);
+		selenium.start();
+		selenium.open(APP_ROOT_PAGE);
+		selenium.waitForPageToLoad("50000");
+	}
+}
+</java:format>

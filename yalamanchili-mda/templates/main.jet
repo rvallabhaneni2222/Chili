@@ -666,6 +666,9 @@
     		    		<c:setVariable select="$class/@xmi.id" var="classID"/>
 			<c:setVariable select="$class" var="parentClass1"/>
 			<c:setVariable select="$class" var="parentClass2"/>
+			<c:setVariable select="$class/@xmi.id" var="isComposite"/>
+    		<c:setVariable select="$class/@xmi.id" var="classID"/>
+    		<c:setVariable select="$class/@xmi.id" var="isParent"/>
 			<%--process generizations --%>
 			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
 			 <%-- if child class--%>
@@ -691,10 +694,48 @@
 					</c:iterate>  					  		 			 
 				</c:if>
 			</c:iterate>
+    		 <%-- process all associations to eliminate composite children--%>
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+						<c:iterate select="$association/Association.connection" var="association_connection">
+							<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+								<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+							<%-- check is the association is corresponding to the class  --%>
+										<c:if test="$association_connection_end_classID = $classID"> 
+										
+										
+					  					   	<%-- iterate over the iterations ends  --%>
+					  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+					  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+					  					  	 <c:if test="not($association_connection_end_classID2 = $classID)"> 
+					  					  	 <%-- process only non compositions--%>
+					  					  	 <c:if test="$association_connection_end2/@aggregation = 'composite'">
+					  					  	 <%-- update flag variable--%>
+					  					  	 <c:setVariable select="$class/@name" var="isComposite"/>
+					  					  	 </c:if>
+					  					 	  </c:if>	
+					  					 	  </c:iterate>					 	 				 	  
+										</c:if> 
+																			
+							</c:iterate>
+						</c:iterate>
+					</c:iterate>
+			<%-- process all generizations to eliminate all parent classes--%>	
+				<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+					<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $classID">
+					<%-- update flag variable--%>
+					<c:setVariable select="$class/@name" var="isParent"/>
+					</c:if>															
+				</c:iterate>				
+			<%--  looping complete --%>	
 			<%-- Entity interface TO--%>	
 			<ws:folder path="src/test/java">
 				<ws:folder path="${$groupIDNEW}/test/${$package/@name}">
-					<ws:file path="{$class/@name}Test.java" template="templates/test/test/test_entity_class.java.jet"/>
+    				 <c:if test="$isComposite = $class/@xmi.id">
+    				 <c:if test="$isParent = $class/@xmi.id"> 					
+				<%--	<ws:file path="{$class/@name}Test.java" template="templates/test/test/test_entity_selenium_class.java.jet"/> --%>
+					<ws:file path="{$class/@name}Test.java" template="templates/test/test/test_entity_webdriver_class.java.jet"/>
+					</c:if>
+					</c:if>
 				</ws:folder>
 			</ws:folder>
 			    <ws:folder path="src/test/resources">
