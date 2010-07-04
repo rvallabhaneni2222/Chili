@@ -1,0 +1,706 @@
+<%@taglib prefix="ws" id="org.eclipse.jet.workspaceTags" %>
+
+
+<c:if test="isVariableDefined('org.eclipse.jet.resource.project.name')">
+    <ws:file template="templates/dump.jet" path="{$org.eclipse.jet.resource.project.name}/dump.xml"/>
+</c:if>
+<%--Set Global varibles like projectId,groupId,version...--%>
+
+<c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
+<c:setVariable select="'info.yalamanchili.project'" var="groupID"/>
+<c:setVariable select="'info/yalamanchili/project'" var="groupIDNEW"/>
+<c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
+<c:setVariable select="'/Users/yphanikumar/codebase/generated'" var="location"/>
+<%--versions --%>
+<c:setVariable select="'2.0.0'" var="gwt-version"/>
+<c:setVariable select="'2.6.2'" var="gwt-log-version"/>
+<c:setVariable select="'2.2.0.GA'" var="seam-version"/>
+<c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-embedded-jboss-version"/>
+<c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-commons-version"/>
+<c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-gwt-version"/>
+<c:setVariable select="'2.2'" var="hibernate3-maven-plugin-version"/>
+<c:setVariable select="'1.0-SNAPSHOT'" var="jpa-testdata-plugin-version"/>
+<c:setVariable select="'1.2'" var="gwt-maven-plugin-version"/>
+<c:setVariable select="'5.1'" var="dozer-version"/>
+<c:setVariable select="'2.3.2'" var="ear-plugin-version"/>
+<c:setVariable select="'1.4'" var="jboss-maven-plugin-version"/>
+<c:setVariable select="'2.1'" var="android-version"/>
+<c:setVariable select="'1.3.1'" var="xstream-version"/>
+
+<c:setVariable select="'HSQL'" var="dataBase"/>
+<c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
+<c:setVariable select="'true'" var="isMergeEnabled"/>
+
+<%-- Iterate through packages and classes and set class relations --%>
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+	<c:iterate select="$package/Namespace.ownedElement/Class" var="class">	
+    		<%-- process generizations upto 2 levels and get the parent classes if any--%>
+    		<c:set select="$class" name="parent1">${$class/@name}</c:set>
+    		<c:set select="$class" name="parent2">${$class/@name}</c:set>
+    		<c:set select="$class" name="hasChildren">${$class/@name}</c:set>
+    		<c:setVariable select="$class/@xmi.id" var="classID"/>
+			<c:setVariable select="$class" var="parentClass1"/>
+			<c:setVariable select="$class" var="parentClass2"/>
+			<%--process generizations --%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+			<%-- check is this has children then check haschildren to @xmiidref--%>
+			<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $classID">
+			<c:set select="$class" name="hasChildren">${$class/@xmi.id}</c:set>
+			</c:if>
+			 <%-- if child class--%>
+				<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+			  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+			  			<%-- get level 1 parent--%>
+			  			<c:setVariable select="$otherClass" var="parentClass1"/>
+			  			<c:set select="$class" name="parent1">${$otherClass/@name}</c:set>
+								<%-- second round to get level 2 --%>
+								<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+								 <%-- if child class--%>
+									<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $parentClass1/@xmi.id">
+										<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+								  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+								  			<%-- get level 2 parent--%>
+								  			<c:setVariable select="$otherClass" var="parentClass2"/>
+								  			<c:set select="$class" name="parent2">${$otherClass/@name}</c:set>	  			
+								  			</c:if>
+										</c:iterate>  					  		 			 
+									</c:if>
+							</c:iterate>
+								  									 				
+			  			</c:if>
+					</c:iterate>  					  		 			 
+				</c:if>
+			</c:iterate>
+	</c:iterate>
+</c:iterate>
+			
+
+<%-- load the yalamanchiliMDA profile--%>
+<c:load url="templates/profiles/YalamanchiliMDAProfile.xml" var="myprofile"  />
+	
+<%--Iterate through the yalamanchiliMDA model and get the datatypes,stereotypes and tagged values --%>
+<c:iterate select="$myprofile/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+<%-- check all packages for stereotypes --%>
+<c:iterate select="$package/Namespace.ownedElement/Stereotype" var="stereotype">
+	<c:if test="$stereotype/@name = 'UIElement'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="UIElementID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Digits'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="DigitsID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Future'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="FutureID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Length'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="LengthID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Max'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="MaxID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Min'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="MinID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'NotNull'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="NotNullID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'NotEmpty'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="NotEmptyID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Past'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="PastID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Range'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="RangeID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'Email'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="EmailID"/>		
+	</c:if>
+</c:iterate>
+<%-- check all packages for tagged Values --%>	
+<c:iterate select="$package/Namespace.ownedElement/TagDefinition" var="tagdefinition">
+	<c:if test="$tagdefinition/@name = 'Position'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="PositionID"/>		
+	</c:if>
+	<c:if test="$tagdefinition/@name = 'DisplayType'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="DisplayTypeID"/>		
+	</c:if>
+	<c:if test="$tagdefinition/@name = 'max'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="maxID"/>		
+	</c:if>
+	<c:if test="$tagdefinition/@name = 'min'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="minID"/>		
+	</c:if>
+	<c:if test="$tagdefinition/@name = 'value'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="valueID"/>		
+	</c:if>
+</c:iterate>
+<%-- check all packages for DataTypes  --%>	
+<c:iterate select="$package/Namespace.ownedElement/DataType" var="datatype">
+	<c:if test="$datatype/@name = 'String'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="StringID"/>		
+	</c:if>
+	<c:if test="$datatype/@name = 'Integer'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="IntegerID"/>		
+	</c:if>
+	<c:if test="$datatype/@name = 'Long'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="LongID"/>		
+	</c:if>
+	<c:if test="$datatype/@name = 'Date'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="DateID"/>		
+	</c:if>
+	<c:if test="$datatype/@name = 'Boolean'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="BooleanID"/>		
+	</c:if>
+	<c:if test="$datatype/@name = 'Float'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="FloatID"/>		
+	</c:if>
+</c:iterate>	
+</c:iterate>
+
+<%--creates the master project--%>
+<ws:project name="{$projectName}-master" location="{$location}/{$projectName}-master">
+	<ws:file path="pom.xml" template="templates/master/master_pom_template.xml.jet"/>  
+</ws:project>
+
+<%--creates the APP project--%>
+<ws:project name="{$projectName}-app" location="{$location}/{$projectName}-app">
+	<ws:file path="pom.xml" template="templates/app/app_pom_template.xml.jet"/>
+    <ws:folder path="jboss/conf">
+    	<c:if test="$dataBase = 'MYSQL'">
+	 		<ws:file path="{$projectName}-mysql-ds.xml" template="templates/app/app_mysql_ds_template.xml.jet"/>
+	 	</c:if>
+	 	<c:if test="$dataBase = 'HSQL'">
+	 		<ws:file path="{$projectName}-hsql-ds.xml" template="templates/app/app_hsqldb_ds_template.xml.jet"/>
+	 	</c:if>
+	 	<c:if test="$dataBase = 'ORACLE'">
+	 		<ws:file path="{$projectName}-oracle-ds.xml" template="templates/app/app_oracle_ds_template.xml.jet"/>
+	 	</c:if>
+    </ws:folder>
+    <ws:folder path="jboss/deploy"/>
+
+</ws:project>
+
+<%--creates the JPA project--%>
+<ws:project name="{$projectName}-jpa" location="{$location}/{$projectName}-jpa">
+	<ws:file path="pom.xml" template="templates/jpa/jpa_pom_template.xml.jet"/>
+    <ws:folder path="src/main/java">
+    	<%--create gwt.xml file to include these  --%>	
+    	<ws:folder path="${$groupIDNEW}">
+    	<ws:file path="entity.gwt.xml" template="templates/jpa/jpa_gwtxml.template.xml.jet" />
+    	</ws:folder>
+    	<%--create default security entities  --%>
+    	<ws:folder path="${$groupIDNEW}/entity/security">
+    		<ws:file path="YUser.java" template="templates/jpa/main/security/user_security_jpa.java.jet" />
+    		<ws:file path="YRole.java" template="templates/jpa/main/security/role_security_jpa.java.jet" />		
+    	</ws:folder>
+    	<%--iterate through the packages and create jpa classes and enumerations --%>		
+    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		<ws:folder path="${$groupIDNEW}/entity/${$package/@name}">
+    		<%-- create enumerations in the package--%>
+    		<c:iterate select="$package/Namespace.ownedElement/Enumeration" var="enumeration">
+    		<ws:file path="{$enumeration/@name}.java" template="templates/jpa/enumeration_template.java.jet" />	
+			</c:iterate>
+			<%-- create JPA source classes in the package--%>
+			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+			<ws:file path="{$class/@name}.java" template="templates/jpa/jpa_class_template.java.jet" />
+			</c:iterate>
+			</ws:folder>
+		</c:iterate>
+    </ws:folder>
+    <ws:folder path="src/main/resources">
+    <ws:file template="templates/jpa/jpa_persistence_template.xml.jet" path="META-INF/persistence.xml"/>
+    <ws:file template="templates/jpa/jpa_ormxml_template.xml.jet" path="META-INF/orm.xml"/>
+    <ws:file template="templates/jpa/abbrevation.properties.jet" path="abbrevations.properties"/>
+    </ws:folder>
+    <ws:folder path="src/test/java">
+    <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    	 <ws:folder path="${$groupIDNEW}/entity/${$package/@name}">
+			<%-- create test classes in the package--%>
+			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+			<ws:file path="{$class/@name}Test.java" template="templates/jpa/test/jpa_enitity_test.java.jet" />
+			</c:iterate>
+		</ws:folder>	
+		</c:iterate>
+    </ws:folder>
+    
+    <ws:folder path="src/test/resources">
+	<ws:file template="templates/ejb/test/resources/default.persistence.properties.jet" path="default.persistence.properties"/>
+	<ws:file template="templates/ejb/test/resources/ejb3-interceptors-aop.xml.jet" path="ejb3-interceptors-aop.xml"/>
+	<ws:file template="templates/ejb/test/resources/embedded-jboss-beans.xml.jet" path="embedded-jboss-beans.xml"/>
+	<ws:file template="templates/ejb/test/resources/jboss-jms-beans.xml.jet" path="jboss-jms-beans.xml"/>
+	<ws:file template="templates/ejb/test/resources/jndi.properties.jet" path="jndi.properties"/>
+	<ws:file template="templates/ejb/test/resources/log4j.xml.jet" path="log4j.xml"/>
+	<ws:file template="templates/ejb/test/resources/login-config.xml.jet" path="login-config.xml"/>
+	<ws:file template="templates/ejb/test/resources/security-beans.xml.jet" path="security-beans.xml"/>
+   	</ws:folder>
+
+</ws:project>
+
+<%--creates the EJB project--%>
+<ws:project name="{$projectName}-ejb" location="{$location}/{$projectName}-ejb">
+	<ws:file path="pom.xml" template="templates/ejb/ejb_pom_template.xml.jet"/>
+    <ws:folder path="src/main/java">
+     <ws:folder path="${$groupIDNEW}/ejb">		
+     		<%-- Generic EJB interface--%>
+     		<ws:file path="GenericService.java" template="templates/ejb/main/ejb_generic_service_interface.java.jet" />
+			<%-- Generic EJB Local interface--%>
+			<ws:file path="GenericServiceLocal.java" template="templates/ejb/main/ejb_generic_service_local.java.jet" />
+			<%-- Generic EJB Remote interface--%>
+			<ws:file path="GenericServiceRemote.java" template="templates/ejb/main/ejb_generic_service_remote.java.jet" />
+			<%-- Generic EJB Service Impl class--%>
+			<ws:file path="GenericServiceBean.java" template="templates/ejb/main/ejb_generic_service_bean.java.jet" />
+	 </ws:folder>			
+
+    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">	
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		<ws:folder path="${$groupIDNEW}/ejb/${$package/@name}/${lower-case($class/@name)}">
+	    		<%-- CRUD EJB interface--%>
+	    		<ws:file path="{$class/@name}Service.java" template="templates/ejb/main/ejb_service_template.java.jet" />
+				<%-- CRUD EJB Local interface--%>
+				<ws:file path="{$class/@name}ServiceLocal.java" template="templates/ejb/main/ejb_service_local_template.java.jet" />
+				<%-- CRUD EJB Remote interface--%>
+				<ws:file path="{$class/@name}ServiceRemote.java" template="templates/ejb/main/ejb_service_remote_template.java.jet" />
+				<%-- CRUD EJB Service Impl class--%>
+				<ws:file path="{$class/@name}ServiceBean.java" template="templates/ejb/main/ejb_service_bean_template.java.jet" />
+			</ws:folder>
+			</c:iterate>
+		</c:iterate>
+    </ws:folder>
+    <ws:folder path="src/main/resources">
+   <ws:file template="templates/ejb/main/resources/META-INF/ejb_components.xml.jet" path="META-INF/components.xml"/>
+   <ws:file template="templates/ejb/main/resources/META-INF/ejb_jar.xml.jet" path="META-INF/ejb-jar.xml"/>
+    </ws:folder>
+    <ws:folder path="src/test/java">
+    <c:setVariable select="concat($groupID,'.ejb.')" var="ejbPackage"/>
+    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">	
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		<ws:folder path="${$groupIDNEW}/ejb/${$package/@name}/${lower-case($class/@name)}">
+			<%--Embedded Test--%>
+			<ws:file path="${$class/@name}ServiceTest.java" template="templates/ejb/test/ejb_embedded_test.java.jet" />
+			</ws:folder>
+			</c:iterate>
+		</c:iterate>
+    </ws:folder>
+	<ws:folder path="src/test/resources">
+	<ws:file template="templates/ejb/test/resources/WEB-INF/components.xml.jet" path="WEB-INF/components.xml"/>
+	<ws:file template="templates/ejb/test/resources/default.persistence.properties.jet" path="default.persistence.properties"/>
+	<ws:file template="templates/ejb/test/resources/ejb3-interceptors-aop.xml.jet" path="ejb3-interceptors-aop.xml"/>
+	<ws:file template="templates/ejb/test/resources/embedded-jboss-beans.xml.jet" path="embedded-jboss-beans.xml"/>
+	<ws:file template="templates/ejb/test/resources/jboss-jms-beans.xml.jet" path="jboss-jms-beans.xml"/>
+	<ws:file template="templates/ejb/test/resources/jndi.properties.jet" path="jndi.properties"/>
+	<ws:file template="templates/ejb/test/resources/log4j.xml.jet" path="log4j.xml"/>
+	<ws:file template="templates/ejb/test/resources/login-config.xml.jet" path="login-config.xml"/>
+	<ws:file template="templates/ejb/test/resources/security-beans.xml.jet" path="security-beans.xml"/>
+   	</ws:folder>
+
+</ws:project>
+
+<%--creates the webapp project--%>
+<ws:project name="{$projectName}-webapp" location="{$location}/{$projectName}-webapp">
+	<ws:file path="pom.xml" template="templates/web/webapp_pom_template.xml.jet"/>
+    <ws:folder path="src/main/java">
+    	<ws:folder path="${$groupIDNEW}/public">
+    	<%--css and html files for the web project  --%>
+    	<ws:file  path="{$projectName}.css" template="templates/web/gwt/public/web_css_template.css.jet"/>
+    	<ws:file  path="{$projectName}.html" template="templates/web/gwt/public/web_html_template.html.jet"/>
+    	<ws:file  path="logo.gif" template="templates/web/gwt/public/images/logo.gif.jet"/>
+    	</ws:folder>
+     	<%--create folder for icons  --%>
+     	
+     	<ws:folder path="${$groupIDNEW}">
+		<%--create gwt.xml file to include these  --%>		
+    	<ws:file  path="{$projectName}.gwt.xml" template="templates/web/gwt/web_gwtxml_template.xml.jet"/>
+    	</ws:folder>
+
+    	<c:setVariable select="concat($groupID,'.client.')" var="webPackage"/>
+    	
+    	<%-- RPC  --%>
+    	<ws:folder path="${$groupIDNEW}/client/rpc">
+    	<ws:file  path="${camelCase($projectName)}Service.java" template="templates/web/gwt/client/rpc/app_service_sync.java.jet"/>
+    	<ws:file  path="${camelCase($projectName)}ServiceAsync.java" template="templates/web/gwt/client/rpc/app_service_async.java.jet"/>
+    	</ws:folder>
+    	<%-- Current project servlet  --%>
+    	<ws:folder path="${$groupIDNEW}/server">
+    	<ws:file  path="${camelCase($projectName)}ServiceImpl.java" template="templates/web/gwt/server/app_service_impl.java.jet"/>
+    	</ws:folder>
+    	
+		<%-- gwt messages and constants files--%>
+		<ws:folder path="${$groupIDNEW}/client/internalization">
+		<ws:file  path="${camelCase($projectName)}Constants.properties" template="templates/web/gwt/client/internalization/web_gwt_constants.properties.jet"/>
+		<ws:file  path="${camelCase($projectName)}Messages.properties" template="templates/web/gwt/client/internalization/web_gwt_messages.properties.jet"/>
+		</ws:folder>
+		
+		<ws:folder path="${$groupIDNEW}/client">
+    	<%--  Entry point class --%>
+    	<ws:file  path="${camelCase($projectName)}Welcome.java" template="templates/web/gwt/client/web_entrypoint_class_template.java.jet"/>
+    	<%-- Entities Enum class --%>
+    	<ws:file  path="Entity.java" template="templates/web/gwt/client/web_entity_enum_template.java.jet"/>
+    	<%--  RootPanels class --%>
+    	<ws:file  path="RootPanels.java" template="templates/web/gwt/client/web_root_panels_template.java.jet"/>
+    	<%--  ROLES class --%>
+    	<ws:file  path="Roles.java" template="templates/web/gwt/client/web_roles_enum_template.java.jet"/>
+    	<%--  Login panel class --%>
+    	<ws:file  path="LoginPanel.java" template="templates/web/gwt/client/web_login_panel_template.java.jet"/>
+    	<%--  create user class --%>
+    	<ws:file  path="CreateUserPanel.java" template="templates/web/gwt/client/web_create_user.java.jet"/>
+    	<%--  Status panel class --%>
+    	<ws:file  path="StatusPanel.java" template="templates/web/gwt/client/web_status_panel_template.java.jet"/>
+    	</ws:folder>
+    	
+    	<%-- GWT server class --%>
+    	<ws:folder path="${$groupIDNEW}/server">
+    	<ws:file  path="GWTServiceImpl.java" template="templates/web/gwt/server/web_gwtservice_class_template.java.jet"/>
+    	</ws:folder>
+    	
+    	<%-- Iterate through packages and classes --%>
+    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
+    		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">	
+    		<%-- process generizations upto 2 levels and get teh parent classes if any--%>
+    		<c:setVariable select="$class/@xmi.id" var="classID"/>
+			<c:setVariable select="$class" var="parentClass1"/>
+			<c:setVariable select="$class" var="parentClass2"/>
+			<%--process generizations --%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+			 <%-- if child class--%>
+				<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+			  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+			  			<%-- get level 1 parent--%>
+			  			<c:setVariable select="$otherClass" var="parentClass1"/>
+								<%-- second round to get level 2 --%>
+								<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+								 <%-- if child class--%>
+									<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $parentClass1/@xmi.id">
+										<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+								  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+								  			<%-- get level 2 parent--%>
+								  			<c:setVariable select="$otherClass" var="parentClass2"/>	  			
+								  			</c:if>
+										</c:iterate>  					  		 			 
+									</c:if>
+							</c:iterate>
+								  									 				
+			  			</c:if>
+					</c:iterate>  					  		 			 
+				</c:if>
+			</c:iterate>
+			<%-- CRUD and search panels--%>
+    		 <%-- check to see if this is not a abstract class--%>
+    		 <c:if test="$class/@isAbstract = 'false'">
+    		 <ws:folder path="${$groupIDNEW}/client/${lower-case($package/@name)}/${lower-case($class/@name)}">
+					<%--rpc sync class --%>
+					<ws:file  path="{$class/@name}Service.java" template="templates/web/gwt/client/rpc/entity_service_sync.java.jet"/>
+					<%--rpc async class --%>
+					<ws:file  path="{$class/@name}ServiceAsync.java" template="templates/web/gwt/client/rpc/entity_service_async.java.jet"/>
+					<%-- Create Entity Panel--%>
+					<ws:file  path="Create{$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_create_panel_template.java.jet"/>
+					<%-- Generic Search Panel--%>
+					<ws:file  path="${$class/@name}SearchPanelGeneric.java" template="templates/web/gwt/client/entity/web_search_generic_panel_template.java.jet"/>
+					<%-- Read Panel--%>
+					<ws:file  path="Read${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_read_panel_template.java.jet"/>
+					<%-- Update Panel--%>
+					<ws:file  path="Update${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_update_panel_template.java.jet"/>
+					<%-- Side  Panel--%>
+					<ws:file  path="${$class/@name}SideBar.java" template="templates/web/gwt/client/entity/web_side_panel_template.java.jet"/>
+					<%-- Options Panel--%>
+					<ws:file  path="${$class/@name}OptionsPanel.java" template="templates/web/gwt/client/entity/web_option_panel_template.java.jet"/>
+					<%-- Select Panel--%>
+					<ws:file  path="Select${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_select_panel_template.java.jet"/>
+					
+						<%-- check for parent(abstract) classes--%>
+						<c:setVariable select="$class/@xmi.id" var="isParent"/>
+						<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+							<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $class/@xmi.id">
+							<%-- update flag variable--%>
+							<c:setVariable select="$class/@name" var="isParent"/>
+							</c:if>															
+						</c:iterate>
+						<%-- if class is a Parent class--%>
+		    		 	<c:if test="$isParent = $class/@name">  
+			    		 	<%-- Tree  Panel --%>
+			    		 	<ws:file  path="TreeAbstract${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_tree_abstract_panel_template.java.jet"/>
+							<%-- Read All Entities Panel--%>
+							<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_abstract_panel_template.java.jet"/>		
+						</c:if>
+						<%-- if class is a regular  class--%>
+						<c:if test="$isParent = $class/@xmi.id">  
+			    		 	<%-- Tree  Panel --%>
+			    		 	<ws:file  path="Tree${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_tree_panel_template.java.jet"/>
+							<%-- Read All Entities Panel--%>
+							<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_panel_template.java.jet"/>		
+						</c:if>
+						
+			</ws:folder>
+			<%--service class impl --%>
+	    	<ws:folder path="${$groupIDNEW}/server">
+	    		<ws:file  path="${$class/@name}ServiceImpl.java" template="templates/web/gwt/server/entity_service_impl.java.jet"/>
+	    	</ws:folder>		
+	    	
+			 </c:if>
+			 </c:iterate>
+		</c:iterate>
+    </ws:folder>
+    <ws:folder path="src/main/resources">
+     <ws:file template="templates/web/webapp_appxml_template.properties.jet" path="{$projectName}.properties"/>
+     <ws:file template="templates/web/seam.properties.jet" path="seam.properties"/>
+    </ws:folder>
+    <ws:folder path="src/main/webapp">
+    	<ws:file template="templates/web/webapp/web_indexhtml_template.html.jet" path="index.html"/>
+    		<ws:folder path="WEB-INF">
+    	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_webxml_template.xml.jet" path="web.xml"/>
+    	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_jboss-app_template.xml.jet" path="jboss-web.xml"/>
+    	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_components.xml.jet" path="components.xml"/>
+    		</ws:folder>
+    		
+    </ws:folder>
+    <ws:folder path="src/test/java">
+    <%--server test class--%>
+    <ws:folder path="{$groupIDNEW}/server">
+    <ws:file  path="ServerTest.java" template="templates/web/test/gwt/server/web_server_impl_test.java.jet"/>
+    </ws:folder>
+    </ws:folder>
+    <ws:folder path="src/test/resources"/>
+    <%--copy seamgwt2 fix classes--%>
+    <ws:copyFile src="templates/web/gwt/seamgwt2/GWT2Service.java" target="src/main/java/seamgwt2/GWT2Service.java" />
+    <ws:copyFile src="templates/web/gwt/seamgwt2/GWTService.java" target="src/main/java/seamgwt2/GWTService.java" />
+    <ws:copyFile src="templates/web/gwt/seamgwt2/GWTToSeamAdapter.java" target="src/main/java/seamgwt2/GWTToSeamAdapter.java" />
+    <ws:copyFile src="templates/web/gwt/seamgwt2/SeamRPC.java" target="src/main/java/seamgwt2/SeamRPC.java" />
+    <ws:copyFile src="templates/web/gwt/seamgwt2/SeamRPCRequest.java" target="src/main/java/seamgwt2/SeamRPCRequest.java" />
+  
+</ws:project>
+
+<%--creates the SOA project--%>
+<ws:project name="{$projectName}-soa" location="{$location}/{$projectName}-soa">
+	<ws:file path="pom.xml" template="templates/soa/soa_pom_template.xml.jet"/>
+    <ws:folder path="src/main/java">
+        	<%-- Iterate through packages and classes --%>
+    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">	
+    		<%-- process generizations upto 2 levels and get teh parent classes if any--%>
+    		<c:setVariable select="$class/@xmi.id" var="classID"/>
+			<c:setVariable select="$class" var="parentClass1"/>
+			<c:setVariable select="$class" var="parentClass2"/>
+			<%--process generizations --%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+			 <%-- if child class--%>
+				<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+			  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+			  			<%-- get level 1 parent--%>
+			  			<c:setVariable select="$otherClass" var="parentClass1"/>
+								<%-- second round to get level 2 --%>
+								<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+								 <%-- if child class--%>
+									<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $parentClass1/@xmi.id">
+										<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+								  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+								  			<%-- get level 2 parent--%>
+								  			<c:setVariable select="$otherClass" var="parentClass2"/>	  			
+								  			</c:if>
+										</c:iterate>  					  		 			 
+									</c:if>
+							</c:iterate>
+								  									 				
+			  			</c:if>
+					</c:iterate>  					  		 			 
+				</c:if>
+			</c:iterate>
+			<ws:folder path="${$groupIDNEW}/ejb/${$package/@name}/${lower-case($class/@name)}">
+			<%-- rest service class--%>
+			<ws:file  path="{$class/@name}Service.java" template="templates/soa/main/entity_rest_service.java.jet"/>
+			</ws:folder>
+	</c:iterate>
+	</c:iterate>			
+    </ws:folder>
+    <ws:folder path="src/main/webapp">
+	<ws:file template="templates/soa/main/webapp/WEB-INF/components.xml.jet" path="WEB-INF/components.xml"/>
+	<ws:file template="templates/soa/main/webapp/WEB-INF/web.xml.jet" path="WEB-INF/web.xml"/>
+    </ws:folder>
+    <ws:folder path="src/main/resources">
+     <ws:file template="templates/web/seam.properties.jet" path="seam.properties"/>
+    </ws:folder>
+</ws:project>
+
+<%--creates the Android project--%>
+<ws:project name="{$projectName}-android" location="{$location}/{$projectName}-android">
+	<ws:file path="pom.xml" template="templates/android/android_pom_template.xml.jet"/>
+	<ws:file path="AndroidManifest.xml" template="templates/android/android_manifest_template.xml.jet"/>
+	<ws:file path="default.properties" template="templates/android/android_default.properties.jet"/>
+	<ws:folder path="src">
+		<ws:folder path="${$groupIDNEW}/android">
+			<ws:file  path="${camelCase($projectName)}Main.java" template="templates/android/main/Main.java.jet"/>
+			<ws:file  path="HttpHelper.java" template="templates/android/main/http_helper.java.jet"/>
+			<ws:file  path="AsyncHttp.java" template="templates/android/main/AsyncHttp_template.java.jet"/>
+			<ws:file  path="AsyncHttpPut.java" template="templates/android/main/AsyncHttpPut_template.java.jet"/>
+		</ws:folder>
+   </ws:folder>
+   <%--Iterate through the packages and classes--%>
+       	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		    		<c:setVariable select="$class/@xmi.id" var="classID"/>
+			<c:setVariable select="$class" var="parentClass1"/>
+			<c:setVariable select="$class" var="parentClass2"/>
+			<%--process generizations --%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+			 <%-- if child class--%>
+				<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+			  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+			  			<%-- get level 1 parent--%>
+			  			<c:setVariable select="$otherClass" var="parentClass1"/>
+								<%-- second round to get level 2 --%>
+								<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+								 <%-- if child class--%>
+									<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $parentClass1/@xmi.id">
+										<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+								  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+								  			<%-- get level 2 parent--%>
+								  			<c:setVariable select="$otherClass" var="parentClass2"/>	  			
+								  			</c:if>
+										</c:iterate>  					  		 			 
+									</c:if>
+							</c:iterate>
+								  									 				
+			  			</c:if>
+					</c:iterate>  					  		 			 
+				</c:if>
+			</c:iterate>
+			<%-- Create Entity CRUD java Activitoes--%>	  
+			<ws:folder path="src"> 
+				<ws:folder path="${$groupIDNEW}/android/${$package/@name}/${lower-case($class/@name)}"> 
+					<ws:file  path="ReadAll{$class/@name}s.java" template="templates/android/main/read_all.java.jet"/>
+					<ws:file  path="${$class/@name}Adapter.java" template="templates/android/main/readall_adapter.java.jet"/>
+					<ws:file  path="Read{$class/@name}.java" template="templates/android/main/read_entity.java.jet"/>
+					<ws:file  path="Create{$class/@name}.java" template="templates/android/main/create_entity.java.jet"/>
+				</ws:folder>
+			</ws:folder>
+			 <%-- Create Entity CRUD layout xml's--%>
+			<ws:folder path="res/layout">
+			<ws:file path="${lower-case($class/@name)}_read.xml" template="templates/android/res/layout/entity_read_template.xml.jet"/>
+			<ws:file path="${lower-case($class/@name)}_create.xml" template="templates/android/res/layout/entity_create_template.xml.jet"/>
+			</ws:folder>
+			<%-- Create Entity Menu layout.xml--%>	
+			<ws:folder path="res/menu">
+			<ws:file path="${lower-case($class/@name)}_menu.xml" template="templates/android/res/menu/entity_menu_template.xml.jet"/>
+			</ws:folder>
+			</c:iterate>
+		</c:iterate>
+	<ws:folder path="res/layout">
+	<ws:file template="templates/android/res/layout/main_template.xml.jet" path="main.xml"/>
+	<ws:file template="templates/android/res/layout/app_title_bar.xml.jet" path="${lower-case($projectName)}_title_bar.xml"/>
+	<ws:file template="templates/android/res/layout/list_item.xml.jet" path="list_item.xml"/>
+	<ws:file template="templates/android/res/layout/entity_readall_template.xml.jet" path="entity_readall.xml"/>
+	<ws:file template="templates/android/res/layout/readall_list.xml.jet" path="readall_list.xml"/>
+    </ws:folder>
+    <ws:folder path="res/values">
+    <ws:file template="templates/android/res/values/strings_template.xml.jet" path="strings.xml"/>
+    </ws:folder>
+     <ws:folder path="res/drawable-hdpi">
+    </ws:folder>
+     <ws:folder path="res/drawable-ldpi">
+    </ws:folder>
+     <ws:folder path="res/drawable-mdpi">
+    </ws:folder>
+</ws:project>
+
+<%--creates the ios project--%>
+<ws:project name="{$projectName}-ios" location="{$location}/{$projectName}-ios">
+   <%--Iterate through the packages and classes--%>
+       	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		    		<c:setVariable select="$class/@xmi.id" var="classID"/>
+			<c:setVariable select="$class" var="parentClass1"/>
+			<c:setVariable select="$class" var="parentClass2"/>
+			<%--process generizations --%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+			 <%-- if child class--%>
+				<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+			  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+			  			<%-- get level 1 parent--%>
+			  			<c:setVariable select="$otherClass" var="parentClass1"/>
+								<%-- second round to get level 2 --%>
+								<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+								 <%-- if child class--%>
+									<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $parentClass1/@xmi.id">
+										<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+								  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+								  			<%-- get level 2 parent--%>
+								  			<c:setVariable select="$otherClass" var="parentClass2"/>	  			
+								  			</c:if>
+										</c:iterate>  					  		 			 
+									</c:if>
+							</c:iterate>
+								  									 				
+			  			</c:if>
+					</c:iterate>  					  		 			 
+				</c:if>
+			</c:iterate>
+			<%-- Entity interface TO--%>	
+			<ws:folder path="transfer-objects">
+				<ws:file path="info_yalamanchili_project_entity_${lower-case($package/@name)}_${$class/@name}.h" template="templates/ios/transfer-objects/entity_interface.h.jet"/>
+				<ws:file path="info_yalamanchili_project_entity_${lower-case($package/@name)}_${$class/@name}.m" template="templates/ios/transfer-objects/entity_implementation.m.jet"/>
+			</ws:folder>
+			<%-- Entity CRUD Controllers--%>
+			<ws:folder path="${lower-case($package/@name)}-${lower-case($class/@name)}">
+				<ws:file path="ReadAll${$class/@name}sViewController.h" template="templates/ios/entity/readall_entity_controller.h.jet"/>
+				<ws:file path="ReadAll${$class/@name}sViewController.m" template="templates/ios/entity/readall_entity_controller.m.jet"/>
+				<ws:file path="Read${$class/@name}ViewController.h" template="templates/ios/entity/read_entity_controller.h.jet"/>
+				<ws:file path="Read${$class/@name}ViewController.m" template="templates/ios/entity/read_entity_controller.m.jet"/>
+				<ws:file path="Create${$class/@name}ViewController.h" template="templates/ios/entity/create_entity_controller.h.jet"/>
+				<ws:file path="Create${$class/@name}ViewController.m" template="templates/ios/entity/create_entity_controller.m.jet"/>
+			</ws:folder>			
+			</c:iterate>
+		</c:iterate>
+
+</ws:project>
+
+<%-- creates the test project--%>
+<ws:project name="{$projectName}-test" location="{$location}/{$projectName}-test">
+	<ws:file path="pom.xml" template="templates/test/test_pom.xml.jet"/>
+	  <%--Iterate through the packages and classes--%>
+       	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		    		<c:setVariable select="$class/@xmi.id" var="classID"/>
+			<c:setVariable select="$class" var="parentClass1"/>
+			<c:setVariable select="$class" var="parentClass2"/>
+			<%--process generizations --%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+			 <%-- if child class--%>
+				<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+			  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+			  			<%-- get level 1 parent--%>
+			  			<c:setVariable select="$otherClass" var="parentClass1"/>
+								<%-- second round to get level 2 --%>
+								<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+								 <%-- if child class--%>
+									<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $parentClass1/@xmi.id">
+										<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+								  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+								  			<%-- get level 2 parent--%>
+								  			<c:setVariable select="$otherClass" var="parentClass2"/>	  			
+								  			</c:if>
+										</c:iterate>  					  		 			 
+									</c:if>
+							</c:iterate>
+								  									 				
+			  			</c:if>
+					</c:iterate>  					  		 			 
+				</c:if>
+			</c:iterate>
+			<%-- Entity interface TO--%>	
+			<ws:folder path="src/test/java">
+				<ws:folder path="${$groupIDNEW}/test/${$package/@name}">
+					<ws:file path="{$class/@name}Test.java" template="templates/test/test/test_entity_class.java.jet"/>
+				</ws:folder>
+			</ws:folder>
+			    <ws:folder path="src/test/resources">
+     			<ws:file template="templates/test/test/resources/env.properties.jet" path="env.properties"/>
+    			</ws:folder>			
+			</c:iterate>
+		</c:iterate>
+</ws:project>
+
