@@ -30,12 +30,20 @@
 			<artifactId>yalamanchili-commons</artifactId>
 			<version>${$yalamanchili-commons-version}</version>
 		</dependency>
+		<!--this is for selenium  -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium.client-drivers</groupId>
 			<artifactId>selenium-java-client-driver</artifactId>
 			<version>1.0.1</version>
 			<scope>test</scope>
 		</dependency>
+		<!--this is for selenium with webdriver -->
+		<dependency>
+    		<groupId>org.seleniumhq.selenium</groupId>
+    		<artifactId>selenium</artifactId>
+    		<version>2.0a4</version>
+    		<scope>test</scope>
+  		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -70,10 +78,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<!--
-						Skip the normal tests, we'll run them in the integration-test
-						phase
-					-->
 					<skip>true</skip>
 				</configuration>
 
@@ -88,7 +92,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin> --!>
+			</plugin> -->
 		</plugins>
 	</build>
 	<repositories>
