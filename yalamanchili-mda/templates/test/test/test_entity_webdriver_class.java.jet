@@ -4,7 +4,7 @@ package ${$groupID}.test.${$package/@name};
 import static org.junit.Assert.assertTrue;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import java.util.Properties;
-
+import java.util.List;
 import info.yalamanchili.commons.PropertyFileLoader;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -15,35 +15,33 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import com.thoughtworks.selenium.Selenium;
+import org.openqa.selenium.WebElement;
 
-public class ${$class/@name}Test {
-	public static WebDriver driver;
-	public static Selenium selenium;
-	public static String baseURL;
-
-	@BeforeClass
-	public static void init() {
-		loadProperties();
-		driver = new FirefoxDriver();
-		selenium = new WebDriverBackedSelenium(driver, baseURL);
-		driver.get(baseURL);
+public class ${$class/@name}Test extends WebDriverTest<${$class/@name}>{
+	protected static ${$class/@name} entity= new ${$class/@name}();
+	protected static Long numberOfRecords;
+	
+	@Test
+	public void testReadAllWidgetRender() {
+		driver.findElement(By.xpath("//td[contains(text(), '${upper-case($package/@name)}')]"))
+				.click();
+		driver.findElement(By.xpath("//td[contains(text(), '${$class/@name}')]")).click();
+		waitforAjaxResponce();
+		assertTrue(driver.getPageSource().contains("Total Results"));
+		assertTrue(driver.getPageSource().contains("Action"));
+		WebElement totalResultsE = driver.findElement(By
+				.xpath("//div[contains(text(), 'Total Results')]"));
+		String totalResultsString = totalResultsE.getText();
+		numberOfRecords = new Long(totalResultsString.substring(totalResultsE
+				.getText().indexOf(":") + 1));
 	}
 	
 	@Test
 	public void testCreateWidget() {
-		/*
-		 * <td aria-haspopup="true" role="menuitem" id="gwt-uid-13"
-		 * class="gwt-MenuItem gwt-MenuItem-selected">${upper-case($package/@name)}</td>
-		 */
 		driver.findElement(By.xpath("//td[contains(text(), '${upper-case($package/@name)}')]"))
 				.click();
-		/*
-		 * <td colspan="2" role="menuitem" id="gwt-uid-2"
-		 * class="gwt-MenuItem">${$class/@name}</td>
-		 */
 		driver.findElement(By.xpath("//td[contains(text(), '${$class/@name}')]")).click();
 		waitforAjaxResponce();
-		/* <div class="gwt-Label ClickableLink">Create Car</div> */
 		driver.findElement(By.xpath("//div[contains(text(), 'Create ${$class/@name}')]"))
 				.click();
 	<%-- type in test data in the fields --%>	
@@ -54,6 +52,7 @@ public class ${$class/@name}Test {
 				 <c:when test="${'$StringID'}" > 
 				 driver.findElement(By.xpath("//input[@title='${$attribute/@name}']")).sendKeys(
 				"test WD ${$attribute/@name}");
+				entity.set${uppercaseFirst($attribute/@name)}("test WD ${$attribute/@name}");
 				 </c:when>
 				 <c:when test="${'$IntegerID'}" >
 				
@@ -79,6 +78,7 @@ public class ${$class/@name}Test {
 				 <c:when test="${'$StringID'}" > 
 				driver.findElement(By.xpath("//input[@title='${$attribute/@name}']")).sendKeys(
 				"test WD ${$attribute/@name}");
+				entity.set${uppercaseFirst($attribute/@name)}("test WD ${$attribute/@name}");
 				 </c:when>
 				 <c:when test="${'$IntegerID'}" >
 				 
@@ -103,6 +103,7 @@ public class ${$class/@name}Test {
 				 <c:when test="${'$StringID'}" > 
 				 driver.findElement(By.xpath("//input[@title='${$attribute/@name}']")).sendKeys(
 				"test WD ${$attribute/@name}");
+				entity.set${uppercaseFirst($attribute/@name)}("test WD ${$attribute/@name}");
 				 </c:when>
 				 <c:when test="${'$IntegerID'}" > 
 				
@@ -126,27 +127,107 @@ public class ${$class/@name}Test {
 		assertTrue(driver.getPageSource().contains("created"));
 	}
 	
-	public void waitforAjaxResponce() {
-		/* <div class="gwt-Label">Loading...</div> */
-		long end = System.currentTimeMillis() + 5000;
-		while (System.currentTimeMillis() < end) {
-			if (!driver.getPageSource().contains("Loading...")) {
-				break;
-			}
+	@Test
+	public void testReadAllWidget() {
+		boolean flag = false;
+		driver.findElement(By.xpath("//td[contains(text(), '${upper-case($package/@name)}')]"))
+				.click();
+		driver.findElement(By.xpath("//td[contains(text(), '${$class/@name}')]")).click();
+		waitforAjaxResponce();
+		assertTrue(driver.getPageSource().contains("Total Results"));
+		assertTrue(driver.getPageSource().contains("Action"));
+		WebElement totalResultsE = driver.findElement(By
+				.xpath("//div[contains(text(), 'Total Results')]"));
+		String totalResultsString = totalResultsE.getText();
+		Long results = new Long(totalResultsString.substring(totalResultsE
+				.getText().indexOf(":") + 1));
+		assertTrue(results == numberOfRecords + 1);
+		List<WebElement> elements = driver.findElements(By.xpath("//option"));
+		for (WebElement page : elements) {
+			page.setSelected();
+			waitforAjaxResponce();
+				<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > 
+					if (driver.getPageSource().contains(entity.get${uppercaseFirst($attribute/@name)}())) {
+						flag = true;
+						break;
+					}
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >
+				
+				 </c:when>
+				 <c:when test="${'$DateID'}" >  
+				
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+				
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >
+				
+				 </c:when>
+		 		</c:choose>
+				</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > 
+					if (driver.getPageSource().contains(entity.get${uppercaseFirst($attribute/@name)}())) {
+						flag = true;
+						break;
+					}
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >
+				 
+				 </c:when>
+				 <c:when test="${'$DateID'}" >
+				 
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" >
+			
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >
+			
+				 </c:when>
+		 		</c:choose>
+				</c:iterate>
+	</c:if>		
+	<%-- process parent class level 0 attributes--%>	
+				<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > 
+					if (driver.getPageSource().contains(entity.get${uppercaseFirst($attribute/@name)}())) {
+						flag = true;
+						break;
+					}
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > 
+				
+				 </c:when>
+				 <c:when test="${'$DateID'}" > 
+				
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+				 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > 
+				
+				 </c:when>
+		 		</c:choose>
+				</c:iterate>	
 		}
-
+		assertTrue(flag);
 	}
-
-	@AfterClass
-	public static void destroy() {
-	driver.close();
-	}
-
-	protected static void loadProperties() {
-		Properties properties = PropertyFileLoader
-				.loadProperties("env.properties");
-		baseURL = properties.getProperty("app-base-url")
-				+ properties.getProperty("app-root-page");
-	}
+	
 }
 </java:format>
