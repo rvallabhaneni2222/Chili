@@ -4,12 +4,15 @@ width : 100%;
 .entityPanel{
 width: 1040px;
 height: 480px;
+ border   :    2px solid #D9D9D9;
 }
 .statusPanel{
 width : 100%;
+ border   :    2px solid #D9D9D9;
 }
 .sidePanel{
 width: 200px;
+ border   :    2px solid #D9D9D9;
 }
 
 .sidePanelTop{

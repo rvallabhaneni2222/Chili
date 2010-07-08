@@ -16,8 +16,7 @@ import com.allen_sauer.gwt.log.client.DivLogger;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.Command;
 import ${$webPackage}internalization.${camelCase($projectName)}Constants;
@@ -26,6 +25,8 @@ import ${$groupID}.entity.security.YUser;
 import ${$groupID}.entity.security.YRole;
 import com.google.gwt.user.client.ui.Widget;
 import com.allen_sauer.gwt.log.client.DivLogger;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.dom.client.Style.Unit;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 
 	private static ${camelCase($projectName)}Welcome instance;
 	
-	public DockPanel mainPanel = new DockPanel();
+	public DockLayoutPanel mainPanel = new DockLayoutPanel(Unit.EM);
 	public String user;
 	public Set<Roles> roles = new HashSet<Roles>();
 	
@@ -56,11 +57,11 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 			instance=this;
 			addListeners();
 			configure();
-			RootPanel.get().add(mainPanel);
+			RootLayoutPanel.get().add(mainPanel);
 		}
 		
 		public void reLoad(YUser user) {
-		RootPanel.get().clear();
+		RootLayoutPanel.get().clear();
 		instance = null;
 		this.user = user.getUsername();
 		Set<Roles> roles = new HashSet<Roles>();
@@ -71,7 +72,7 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 		Widget logger = ((DivLogger) Log.getLogger(DivLogger.class))
 				.getWidget();
 
-		RootPanel.get().add(logger);
+		RootLayoutPanel.get().add(logger);
 		onModuleLoad();
 	}
 		
@@ -89,11 +90,10 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 	}
 	
 	protected void configureMainPanel() {
-		mainPanel.setBorderWidth(5);
-		mainPanel.add(statusPanel, DockPanel.NORTH);
-		mainPanel.add(menuBar, DockPanel.NORTH);
-		mainPanel.add(sidePanel, DockPanel.WEST);
-		mainPanel.add(entityPanel, DockPanel.CENTER);
+		mainPanel.addNorth(statusPanel, 4);
+		mainPanel.addNorth(menuBar, 2);
+		mainPanel.addWest(sidePanel, 15);
+		mainPanel.add(entityPanel);
 		mainPanel.addStyleName("mainPanel");
 	}
 	
