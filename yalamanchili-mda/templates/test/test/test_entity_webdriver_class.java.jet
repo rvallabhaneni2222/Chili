@@ -16,6 +16,7 @@ import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.WebElement;
+import info.yalamanchili.qa.WebDriverTest;
 
 public class ${$class/@name}Test extends WebDriverTest<${$class/@name}>{
 	protected static ${$class/@name} entity= new ${$class/@name}();

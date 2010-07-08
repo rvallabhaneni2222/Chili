@@ -9,14 +9,8 @@
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>info.yalamanchili.project</groupId>
-			<artifactId>automanage-jpa</artifactId>
+			<artifactId>${$projectName}-jpa</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
@@ -26,24 +20,11 @@
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>info.yalamanchili.commons</groupId>
-			<artifactId>yalamanchili-commons</artifactId>
-			<version>${$yalamanchili-commons-version}</version>
-		</dependency>
-		<!--this is for selenium  -->
-		<dependency>
-			<groupId>org.seleniumhq.selenium.client-drivers</groupId>
-			<artifactId>selenium-java-client-driver</artifactId>
-			<version>1.0.1</version>
+			<groupId>info.yalamanchili.qa</groupId>
+			<artifactId>yalamanchili-qa</artifactId>
+			<version>1.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
-		<!--this is for selenium with webdriver -->
-		<dependency>
-    		<groupId>org.seleniumhq.selenium</groupId>
-    		<artifactId>selenium</artifactId>
-    		<version>2.0a4</version>
-    		<scope>test</scope>
-  		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
