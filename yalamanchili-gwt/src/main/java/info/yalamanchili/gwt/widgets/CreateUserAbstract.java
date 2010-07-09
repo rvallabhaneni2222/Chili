@@ -6,12 +6,12 @@ import info.yalamanchili.gwt.fields.StringField;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 public abstract class CreateUserAbstract extends PopupPanel implements
 		ClickHandler {
-	VerticalPanel panel = new VerticalPanel();
+	FlowPanel panel = new FlowPanel();
 	protected StringField firstnameTF = new StringField("first name");
 	protected StringField lastnameTF = new StringField("last name");
 	protected StringField usernameTF = new StringField("username");
@@ -20,7 +20,6 @@ public abstract class CreateUserAbstract extends PopupPanel implements
 
 	public CreateUserAbstract() {
 		setWidget(panel);
-		panel.setSpacing(5);
 		panel.add(firstnameTF);
 		panel.add(lastnameTF);
 		panel.add(usernameTF);
@@ -35,7 +34,7 @@ public abstract class CreateUserAbstract extends PopupPanel implements
 			createUserClicked();
 		}
 	}
-	
+
 	public void show() {
 		super.show();
 	}

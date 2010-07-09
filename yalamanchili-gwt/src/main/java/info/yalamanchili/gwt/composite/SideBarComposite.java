@@ -7,7 +7,7 @@ import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.user.client.ui.DisclosurePanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -17,7 +17,7 @@ public abstract class SideBarComposite extends ALComposite implements
 		ClickHandler {
 
 	/** The panel. */
-	protected VerticalPanel panel = new VerticalPanel();
+	protected FlowPanel panel = new FlowPanel();
 
 	protected DisclosurePanel searchPanel = new DisclosurePanel("search");
 
@@ -34,7 +34,6 @@ public abstract class SideBarComposite extends ALComposite implements
 
 	public void setup() {
 		panel.add(searchPanel);
-		panel.setSpacing(5);
 		panel.addStyleName("SideBarComposite");
 		searchPanel.addStyleName("SearchDisclosurePanel");
 		searchPanel.addOpenHandler(new OpenHandler<DisclosurePanel>() {

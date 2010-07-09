@@ -22,7 +22,7 @@ import java.util.Map;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -55,12 +55,12 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 		initWidget(basePanel);
 	}
 
-	protected VerticalPanel basePanel = new VerticalPanel();
+	protected FlowPanel basePanel = new FlowPanel();
 
 	protected CaptionPanel entityCaptionPanel = new CaptionPanel();
 
 	/** The panel. */
-	protected VerticalPanel entityDisplayWidget = new VerticalPanel();
+	protected FlowPanel entityDisplayWidget = new FlowPanel();
 
 	/** The fields. */
 	protected Map<String, Object> fields = new HashMap<String, Object>();

@@ -59,9 +59,9 @@ public class BooleanField extends GenericFieldComposite {
 	 */
 	public void setValue(Boolean value) {
 		if (value == null) {
-			box.setChecked(false);
+			box.setValue(false);
 		} else {
-			box.setChecked(value);
+			box.setValue(value);
 		}
 	}
 
@@ -71,7 +71,7 @@ public class BooleanField extends GenericFieldComposite {
 	 * @return the value
 	 */
 	public Boolean getValue() {
-		if (box.isChecked())
+		if (box.getValue())
 			return true;
 		else
 			return false;
@@ -80,25 +80,25 @@ public class BooleanField extends GenericFieldComposite {
 	@Override
 	public void setup() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onKeyPress(KeyPressEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onKeyUp(KeyUpEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onKeyDown(KeyDownEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

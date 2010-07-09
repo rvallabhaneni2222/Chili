@@ -10,9 +10,9 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 public abstract class SelectComposite<T> extends ALComposite implements
 		ClickHandler, ChangeHandler {
@@ -23,7 +23,7 @@ public abstract class SelectComposite<T> extends ALComposite implements
 	}
 
 	/** The panel. */
-	protected VerticalPanel panel = new VerticalPanel();
+	protected FlowPanel panel = new FlowPanel();
 
 	/** The label. */
 	protected Label label = new Label();
@@ -66,7 +66,6 @@ public abstract class SelectComposite<T> extends ALComposite implements
 		label.setText(name);
 		panel.add(label);
 		panel.add(listBox);
-		panel.setSpacing(5);
 		initListBox();
 	}
 
@@ -80,7 +79,6 @@ public abstract class SelectComposite<T> extends ALComposite implements
 		label.setText(name);
 		panel.add(label);
 		panel.add(listBox);
-		panel.setSpacing(5);
 		initListBox();
 	}
 

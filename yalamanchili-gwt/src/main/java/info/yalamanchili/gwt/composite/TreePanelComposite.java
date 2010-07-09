@@ -12,9 +12,9 @@ import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,7 +27,7 @@ public abstract class TreePanelComposite<T> extends Composite implements
 	protected T entity;
 
 	/** The panel. */
-	protected VerticalPanel panel = new VerticalPanel();
+	protected FlowPanel panel = new FlowPanel();
 
 	/** The tree. */
 	protected Tree tree = new Tree();

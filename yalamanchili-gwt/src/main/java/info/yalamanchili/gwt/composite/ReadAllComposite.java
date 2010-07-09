@@ -14,22 +14,22 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
 
 public abstract class ReadAllComposite<T> extends ALComposite implements
 		ClickHandler, ChangeHandler {
 
 	/** The panel. */
-	protected VerticalPanel panel = new VerticalPanel();
+	protected FlowPanel panel = new FlowPanel();
 
 	/** The paging panel. */
 	protected HorizontalPanel pagingPanel = new HorizontalPanel();
 
 	/** The table panel. */
-	protected VerticalPanel tablePanel = new VerticalPanel();
+	protected FlowPanel tablePanel = new FlowPanel();
 
 	/** The table. */
 	protected FlexTable table = new FlexTable();

@@ -2,47 +2,49 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.ALComposite;
 
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EnumField.
  */
 public class EnumField extends ALComposite {
-	
+
 	/** The panel. */
-	protected VerticalPanel panel = new VerticalPanel();
-	
+	protected FlowPanel panel = new FlowPanel();
+
 	/** The field panel. */
 	protected HorizontalPanel fieldPanel = new HorizontalPanel();
-	
+
 	/** The message. */
 	protected Label message = new Label();
-	
+
 	/** The label. */
 	protected Label label = new Label();
-	
+
 	/** The textbox. */
 	protected TextBox textbox = new TextBox();
-	
+
 	/** The list box. */
 	protected ListBox listBox = new ListBox();
-	
+
 	/** The read only. */
 	protected Boolean readOnly;
-	
+
 	/** The is valid. */
 	protected Boolean isValid = false;
 
 	/**
 	 * Instantiates a new enum field.
 	 * 
-	 * @param text the text
-	 * @param readOnly the read only
+	 * @param text
+	 *            the text
+	 * @param readOnly
+	 *            the read only
 	 */
 	public EnumField(String text, Boolean readOnly) {
 		this.readOnly = readOnly;
@@ -69,7 +71,8 @@ public class EnumField extends ALComposite {
 	/**
 	 * Sets the checks if is valid.
 	 * 
-	 * @param isValid the new checks if is valid
+	 * @param isValid
+	 *            the new checks if is valid
 	 */
 	public void setIsValid(Boolean isValid) {
 		this.isValid = isValid;
@@ -80,7 +83,7 @@ public class EnumField extends ALComposite {
 	 * 
 	 * @return the panel
 	 */
-	public VerticalPanel getPanel() {
+	public FlowPanel getPanel() {
 		return panel;
 	}
 
@@ -111,7 +114,9 @@ public class EnumField extends ALComposite {
 		return readOnly;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see info.yalamanchili.gwt.composite.ALComposite#addListeners()
 	 */
 	@Override
@@ -120,7 +125,9 @@ public class EnumField extends ALComposite {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see info.yalamanchili.gwt.composite.ALComposite#addWidgets()
 	 */
 	@Override
@@ -130,19 +137,21 @@ public class EnumField extends ALComposite {
 		panel.add(fieldPanel);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see info.yalamanchili.gwt.composite.ALComposite#configure()
 	 */
 	@Override
 	protected void configure() {
-		panel.setSpacing(5);
 
 	}
 
 	/**
 	 * Sets the value.
 	 * 
-	 * @param enums the new value
+	 * @param enums
+	 *            the new value
 	 */
 	public void setValue(Enum<?>[] enums) {
 		for (Enum<?> var : enums) {
@@ -153,7 +162,8 @@ public class EnumField extends ALComposite {
 	/**
 	 * Sets the value.
 	 * 
-	 * @param text the new value
+	 * @param text
+	 *            the new value
 	 */
 	public void setValue(String text) {
 		textbox.setText(text);
@@ -162,7 +172,8 @@ public class EnumField extends ALComposite {
 	/**
 	 * Sets the message.
 	 * 
-	 * @param text the new message
+	 * @param text
+	 *            the new message
 	 */
 	public void setMessage(String text) {
 		message.setText(text);
