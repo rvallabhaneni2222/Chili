@@ -11,12 +11,7 @@ font-size: 11pt;
 .ResponseMessage{
 background-color: #FFA54F;
 }
-.PagingBar{
-font-weight: bold;
-font-size: 10pt;
-/* grey 90 */
-background-color             :    #E5E5E5;
-}
+
 .ErrorMessage{
 font-size: 8pt;
 color: red;
@@ -62,7 +57,7 @@ font-size: 10pt;
 }
 .SideBarComposite{
  border   :    2px solid #88ACE0;
- width: 180px;
+ width: 240px;
 }
 .OptionsComposite{
  border   :    2px solid #88ACE0;
