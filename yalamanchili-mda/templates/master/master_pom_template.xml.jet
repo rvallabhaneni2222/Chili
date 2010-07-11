@@ -58,6 +58,7 @@
 		<module>../${$projectName}-jpa</module>
 		<module>../${$projectName}-ejb</module>
 		<module>../${$projectName}-webapp</module>
+		<module>../${$projectName}-soa</module>
 		<module>../${$projectName}-app</module>
 	</modules>
 	<build>
