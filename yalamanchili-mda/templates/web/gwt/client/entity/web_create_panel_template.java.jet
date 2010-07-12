@@ -150,6 +150,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 
 	@Override
 	protected void createButtonClicked() {
+		<c:if test="$class/@isDependent = 'false'">  
 		${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().create(entity,
 				new ALAsyncCallback<${$class/@name}>() {
 					public void onResponse(${$class/@name} arg0) {
@@ -159,6 +160,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
 				new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL));
+		</c:if>	
 	}
 
 	@Override
@@ -393,6 +395,8 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 	
 	@Override
 	protected void addButtonClicked() {
+	<%-- check to see is this class is a comp first--%>
+	<c:if test="$class/@isDependent = 'true'">
 	<%-- process compsition associations--%>
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 	<c:iterate select="$association/Association.connection" var="association_connection">
@@ -421,7 +425,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 											@Override
 											public void onResponse(Void arg0) {
 											new ResponseStatusWidget().show("added");
-		
+											ReadAll${$class/@name}sPanel.instance.refresh();
 											}
 
 											});
@@ -435,7 +439,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 											@Override
 											public void onResponse(Void arg0) {
 											new ResponseStatusWidget().show("added");
-		
+											ReadAll${$class/@name}sPanel.instance.refresh();
 											}
 
 											});
@@ -451,7 +455,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 											@Override
 											public void onResponse(Void arg0) {
 											new ResponseStatusWidget().show("added");
-		
+											ReadAll${$class/@name}sPanel.instance.refresh();
 											}
 
 											});
@@ -466,6 +470,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 		</c:iterate>
 	</c:iterate>
 </c:iterate>
+</c:if>	
 	}	
 
 }

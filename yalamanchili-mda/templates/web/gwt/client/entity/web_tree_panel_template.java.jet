@@ -153,7 +153,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 
 
 	@Override
-	public void linkClicked(String link) {
+	public void linkClicked(final String link) {
 
 <%--process level 1 generizations --%>
 <c:if test="not($class/@name = $parentClass1/@name)">
@@ -183,11 +183,15 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 													entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
 																					@Override
 																					public void onResponse(List<${$class2/@name}> arg0) {
-																						
+																						ReadAll${$class2/@name}sPanel readAll${$class2/@name}sPanel= new ReadAll${$class2/@name}sPanel(arg0);
+																						<%-- check to see if its composite child to add parent tree info--%>
+																						<c:if test="$association_connection_end/@aggregation = 'composite'">
+																						readAll${$class2/@name}sPanel.parentTree = Tree${$class/@name}Panel.this;
+																						readAll${$class2/@name}sPanel.parentTreeClass = link;
+																						</c:if>																						
 																						${camelCase($projectName)}Welcome.instance().getEntityPanel()
 																						.clear();
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-																						new ReadAll${$class2/@name}sPanel(arg0));
+																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(readAll${$class2/@name}sPanel);
 																						<%-- check to see if its ADD or ADD_ALL--%>
 																						<c:if test="not($association_connection_end/@aggregation = 'composite')">
 																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
@@ -239,16 +243,20 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
 							  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-							  					  		 			if (link.contains(${$class2/@name}.class.getName())) {
-																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
-																			entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
+								  					  		 			if (link.contains(${$class2/@name}.class.getName())) {
+													${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
+													entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
 																					@Override
 																					public void onResponse(List<${$class2/@name}> arg0) {
-																						
+																						ReadAll${$class2/@name}sPanel readAll${$class2/@name}sPanel= new ReadAll${$class2/@name}sPanel(arg0);
+																						<%-- check to see if its composite child to add parent tree info--%>
+																						<c:if test="$association_connection_end/@aggregation = 'composite'">
+																						readAll${$class2/@name}sPanel.parentTree = Tree${$class/@name}Panel.this;
+																						readAll${$class2/@name}sPanel.parentTreeClass = link;
+																						</c:if>																						
 																						${camelCase($projectName)}Welcome.instance().getEntityPanel()
 																						.clear();
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-																						new ReadAll${$class2/@name}sPanel(arg0));
+																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(readAll${$class2/@name}sPanel);
 																						<%-- check to see if its ADD or ADD_ALL--%>
 																						<c:if test="not($association_connection_end/@aggregation = 'composite')">
 																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
@@ -264,6 +272,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 														
 																				});
 																	}
+
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
 							  							  	</c:if> 
@@ -301,17 +310,20 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-  					  		 			if (link.contains(${$class2/@name}.class.getName())) {
-											${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
+							  					  		 			if (link.contains(${$class2/@name}.class.getName())) {
+													${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
 													entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
-							
-														@Override
-														public void onResponse(List<${$class2/@name}> arg0) {
-															
+																					@Override
+																					public void onResponse(List<${$class2/@name}> arg0) {
+																						ReadAll${$class2/@name}sPanel readAll${$class2/@name}sPanel= new ReadAll${$class2/@name}sPanel(arg0);
+																						<%-- check to see if its composite child to add parent tree info--%>
+																						<c:if test="$association_connection_end/@aggregation = 'composite'">
+																						readAll${$class2/@name}sPanel.parentTree = Tree${$class/@name}Panel.this;
+																						readAll${$class2/@name}sPanel.parentTreeClass = link;
+																						</c:if>																						
 																						${camelCase($projectName)}Welcome.instance().getEntityPanel()
 																						.clear();
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-																						new ReadAll${$class2/@name}sPanel(arg0));
+																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(readAll${$class2/@name}sPanel);
 																						<%-- check to see if its ADD or ADD_ALL--%>
 																						<c:if test="not($association_connection_end/@aggregation = 'composite')">
 																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
@@ -323,12 +335,11 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 																													new ${$class2/@name}OptionsPanel(
 																													OptionsCompositeType.ADD));
 																						</c:if>
-																						
-														}
-							
-													});
-										}
-  					  		 			
+																					}
+														
+																				});
+																	}
+
   					  		 			</c:if> 
   					  		 		</c:iterate>
   					  		 	</c:if>	

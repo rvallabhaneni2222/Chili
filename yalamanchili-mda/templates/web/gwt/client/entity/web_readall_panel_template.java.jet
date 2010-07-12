@@ -3,8 +3,10 @@ package ${$packageName}.${lower-case($class/@name)};
 
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
-
-
+<%-- add these only for composites--%>
+<c:if test="$class/@isDependent = 'true'">	
+import info.yalamanchili.gwt.composite.TreePanelComposite;
+</c:if>
 import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.ReadAllComposite;
@@ -15,6 +17,12 @@ import java.util.List;
 import com.google.gwt.user.client.ui.DockPanel;
 
 public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@name}> {
+	public static ReadAll${$class/@name}sPanel instance;
+<%-- add these only for composites--%>
+<c:if test="$class/@isDependent = 'true'">	
+	public TreePanelComposite parentTree;
+	public String parentTreeClass;
+</c:if>
 
 	private  ${$class/@name}TableType tableType;
 
@@ -23,11 +31,13 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 	}
 
 	public ReadAll${$class/@name}sPanel(List<${$class/@name}> entities) {
+		instance=this;
 		initTable(new ${$class/@name}(), entities, ${camelCase($projectName)}Welcome.constants);
 		
 	}
 	
 	public ReadAll${$class/@name}sPanel(${$class/@name}TableType tableType) {
+		instance=this;
 		this.tableType = tableType;
 		initTable(new ${$class/@name}(),
 				${camelCase($projectName)}Welcome.constants);
@@ -185,6 +195,10 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 				.add(new Tree${$class/@name}Panel());
 
 	}
-
+<c:if test="$class/@isDependent = 'true'">	
+    public void refresh() {
+		parentTree.linkClicked(parentTreeClass);
+	}	
+</c:if>
 }
 </java:format>
