@@ -1,6 +1,6 @@
 <java:format>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
-package ${$groupID}.ejb.${$package/@name}.${lower-case($class/@name)};
+package ${$groupID}.rest.${$package/@name};
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import java.util.ArrayList;
 import java.util.Collection;
@@ -132,12 +132,12 @@ import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-
+import org.jboss.seam.annotations.security.Restrict;
 import com.thoughtworks.xstream.XStream;
 import info.yalamanchili.mapper.BeanMapper;
 
 @Name("${$class/@name}Resource")
-@Path("/${lower-case($class/@name)}")
+@Path("/crud/${lower-case($class/@name)}")
 @Scope(ScopeType.STATELESS)
 @Transactional
 public class ${$class/@name}Service {
@@ -152,6 +152,7 @@ protected  BeanMapper mapper = new BeanMapper();
 	@GET
 	@Path("/read/{id}")
 	@Produces("application/xml")
+	@Restrict("#{s:hasRole('user')}")
 	public String read(@PathParam("id") Long id) {
 		${$class/@name} ${lower-case($class/@name)} = em.find(${$class/@name}.class, id);
 		if(${lower-case($class/@name)} ==null){
@@ -166,6 +167,7 @@ protected  BeanMapper mapper = new BeanMapper();
 	@Consumes("application/xml")
 	@PUT
 	@Path("/create")
+	@Restrict("#{s:hasRole('admin')}")
 	public String create(String entity) {
 		${$class/@name} ${lower-case($class/@name)} = (${$class/@name}) xstream.fromXML(entity);
 		return xstream.toXML(em.merge(${lower-case($class/@name)}));
@@ -175,6 +177,7 @@ protected  BeanMapper mapper = new BeanMapper();
 	@Consumes("application/xml")
 	@PUT
 	@Path("/update")
+	@Restrict("#{s:hasRole('admin')}")
 	public String update(String entity) {
 		${$class/@name} ${lower-case($class/@name)} = (${$class/@name}) xstream.fromXML(entity);
 		return xstream.toXML(em.merge(${lower-case($class/@name)}));
@@ -182,6 +185,7 @@ protected  BeanMapper mapper = new BeanMapper();
 
 	@DELETE
 	@Path("/delete/{id}")
+	@Restrict("#{s:hasRole('admin')}")
 	public void delete(@PathParam("id") String id) {
 		em.remove(em.find(${$class/@name}.class, id));
 	}
@@ -189,6 +193,7 @@ protected  BeanMapper mapper = new BeanMapper();
 	@GET
 	@Produces("application/xml")
 	@Path("/readall/{offset}/{limit}")
+	@Restrict("#{s:hasRole('user')}")
 	public String readAll(@PathParam("offset") int offset,
 			@PathParam("limit") int limit) {
 		List<${$class/@name}> results = new ArrayList<${$class/@name}>();

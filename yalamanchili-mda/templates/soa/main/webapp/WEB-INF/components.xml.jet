@@ -20,6 +20,9 @@
 	<component name="dozerSOAMapper" class="org.dozer.DozerBeanMapper"
 		scope="application" startup="true">
 	</component>
+	<web:authentication-filter url-pattern="/seam/resource/restv1/crud/*"
+		auth-type="basic" />
+	<!--<security:identity authenticate-method="#{AutomanageRestResource.login}" /> -->
 	
 	<security:jpa-identity-store
 		user-class="${$groupID}.entity.security.YUser"
