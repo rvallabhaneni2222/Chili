@@ -1,0 +1,48 @@
+package ${$groupID}.android;
+
+import info.yalamanchili.android.views.EditTextField;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+public class Login extends Activity implements OnClickListener {
+
+	EditTextField username;
+	EditTextField password;
+	Button login;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.login);
+		assignFields();
+
+	}
+
+	public void onClick(View arg0) {
+		Log.d("debug", username.getValue());
+		HttpHelper.setCredentials(username.getValue(), password.getValue());
+		new AsyncHttp(this) {
+			@Override
+			protected void onResponse(String result) {
+				Intent intent = new Intent(Login.this, AutomanageMain.class);
+				startActivity(intent);
+			}
+		}.execute(HttpHelper.manageURL + "login" + "/" + username.getValue()
+				+ "/" + password.getValue());
+	}
+
+	protected void assignFields() {
+		username = (EditTextField) findViewById(R.id.login_username);
+		username.setLabel("Username:");
+		password = (EditTextField) findViewById(R.id.login_password);
+		password.setLabel("Password:");
+		login = (Button) findViewById(R.id.login_login);
+		login.setOnClickListener(this);
+	}
+
+}
