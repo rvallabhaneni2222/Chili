@@ -528,6 +528,10 @@
 <ws:project name="{$projectName}-soa" location="{$location}/{$projectName}-soa">
 	<ws:file path="pom.xml" template="templates/soa/soa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
+			<ws:folder path="${$groupIDNEW}/rest">
+			<%-- rest service class--%>
+			<ws:file  path="${camelCase($projectName)}Service.java" template="templates/soa/main/rest_manage.java.jet"/>
+			</ws:folder>    
         	<%-- Iterate through packages and classes --%>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">	
@@ -560,7 +564,7 @@
 					</c:iterate>  					  		 			 
 				</c:if>
 			</c:iterate>
-			<ws:folder path="${$groupIDNEW}/ejb/${$package/@name}/${lower-case($class/@name)}">
+			<ws:folder path="${$groupIDNEW}/rest/${$package/@name}">
 			<%-- rest service class--%>
 			<ws:file  path="{$class/@name}Service.java" template="templates/soa/main/entity_rest_service.java.jet"/>
 			</ws:folder>
