@@ -1,10 +1,7 @@
 <java:format>
 package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
 import info.yalamanchili.android.views.EditTextField;
-import ${$groupID}.android.AsyncHttpPut;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
+import info.yalamanchili.project.android.AsyncHttpPut;
 import ${$groupID}.android.HttpHelper;
 import android.app.Activity;
 import android.os.Bundle;
@@ -25,8 +22,6 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 
 public class Create${$class/@name} extends Activity implements OnClickListener {
 
-	HttpClient httpclient = new DefaultHttpClient();
-	HttpResponse response;
 	Button create;
 	
 	<%-- process parent class level 2 attributes--%>

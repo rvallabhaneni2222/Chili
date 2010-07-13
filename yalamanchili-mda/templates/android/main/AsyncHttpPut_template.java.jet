@@ -5,18 +5,21 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.StatusLine;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
-	HttpClient httpclient = new DefaultHttpClient();
-	HttpResponse response;
-	public ProgressDialog dialog;
+	protected DefaultHttpClient httpclient;
+	protected HttpResponse response;
+	protected ProgressDialog dialog;
 
 	public AsyncHttpPut(Activity activity) {
 		dialog = new ProgressDialog(activity);
+		httpclient = HttpHelper.getHttpClient();
 	}
 
 	@Override
@@ -28,6 +31,7 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 	@Override
 	protected String doInBackground(String... arg0) {
 		String result = "";
+		Log.d("debug", "HttpPutURI" + arg0[0]);
 		try {
 			HttpPut put = new HttpPut(arg0[0]);
 			put.setEntity(new StringEntity(arg0[1]));
@@ -46,7 +50,17 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 
 	protected void onPostExecute(String result) {
 		dialog.dismiss();
-		onResponse(result);
+		StatusLine status = response.getStatusLine();
+		Log.d("debug", "HttpPut Response code" + status.getStatusCode());
+		/* http response success */
+		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 300) {
+			result = HttpHelper.request(response);
+			onResponse(result);
+		} /* http response failure */
+		else {
+			throw new RuntimeException("http call failed with status code:"
+					+ status.getStatusCode());
+		}
 	}
 
 	protected abstract void onResponse(String result);

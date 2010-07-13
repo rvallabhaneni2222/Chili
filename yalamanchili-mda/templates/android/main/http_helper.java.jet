@@ -6,14 +6,34 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.thoughtworks.xstream.XStream;
 
 public class HttpHelper {
+	protected static DefaultHttpClient httpclient;
 	public static XStream xstream = new XStream();
-	
-	public static String baseURL = "http://10.0.2.2/automanage-soa-1.0-SNAPSHOT/seam/resource/restv1/";
-	
+
+	public static String baseURL = "http://10.0.2.2/automanage-soa-1.0-SNAPSHOT/seam/resource/restv1/crud/";
+	public static String manageURL = "http://10.0.2.2/automanage-soa-1.0-SNAPSHOT/seam/resource/restv1/manage/";
+
+	public static DefaultHttpClient getHttpClient() {
+		if (httpclient == null) {
+			httpclient = new DefaultHttpClient();
+			return httpclient;
+		} else {
+			return httpclient;
+		}
+	}
+
+	public static void setCredentials(String username, String password) {
+		getHttpClient().getCredentialsProvider().setCredentials(
+				new AuthScope(null, -1),
+				new UsernamePasswordCredentials(username, password));
+	}
+
 	public static String request(HttpResponse response) {
 		String result = "";
 		try {
@@ -33,6 +53,7 @@ public class HttpHelper {
 		}
 		return result;
 	}
+
 	public static Boolean serverStateCheck() {
 		return true;
 	}

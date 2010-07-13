@@ -588,6 +588,7 @@
 	<ws:folder path="src">
 		<ws:folder path="${$groupIDNEW}/android">
 			<ws:file  path="${camelCase($projectName)}Main.java" template="templates/android/main/Main.java.jet"/>
+			<ws:file  path="Login.java" template="templates/android/main/login.java.jet"/>
 			<ws:file  path="HttpHelper.java" template="templates/android/main/http_helper.java.jet"/>
 			<ws:file  path="AsyncHttp.java" template="templates/android/main/AsyncHttp_template.java.jet"/>
 			<ws:file  path="AsyncHttpPut.java" template="templates/android/main/AsyncHttpPut_template.java.jet"/>
@@ -650,6 +651,7 @@
 	<ws:file template="templates/android/res/layout/list_item.xml.jet" path="list_item.xml"/>
 	<ws:file template="templates/android/res/layout/entity_readall_template.xml.jet" path="entity_readall.xml"/>
 	<ws:file template="templates/android/res/layout/readall_list.xml.jet" path="readall_list.xml"/>
+	<ws:file template="templates/android/res/layout/login.xml.jet" path="login.xml"/>
     </ws:folder>
     <ws:folder path="res/values">
     <ws:file template="templates/android/res/values/strings_template.xml.jet" path="strings.xml"/>

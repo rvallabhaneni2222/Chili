@@ -4,18 +4,23 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.StatusLine;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public abstract class AsyncHttp extends AsyncTask<String, Integer, String> {
-	HttpClient httpclient = new DefaultHttpClient();
-	HttpResponse response;
-	public ProgressDialog dialog;
+	protected DefaultHttpClient httpclient;
+	protected HttpResponse response;
+	protected ProgressDialog dialog;
 
 	public AsyncHttp(Activity activity) {
 		dialog = new ProgressDialog(activity);
+		httpclient = HttpHelper.getHttpClient();
 	}
 
 	@Override
@@ -26,11 +31,11 @@ public abstract class AsyncHttp extends AsyncTask<String, Integer, String> {
 
 	@Override
 	protected String doInBackground(String... arg0) {
+		Log.d("debug", "HttpGetURI" + arg0[0]);
 		String result = "";
 		this.publishProgress(0);
 		try {
 			response = httpclient.execute(new HttpGet(arg0[0]));
-			result = HttpHelper.request(response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -43,7 +48,17 @@ public abstract class AsyncHttp extends AsyncTask<String, Integer, String> {
 
 	protected void onPostExecute(String result) {
 		dialog.dismiss();
-		onResponse(result);
+		StatusLine status = response.getStatusLine();
+		Log.d("debug", "HttpGet Response code" + status.getStatusCode());
+		/* http response success */
+		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 300) {
+			result = HttpHelper.request(response);
+			onResponse(result);
+		} /* http response failure */
+		else {
+			throw new RuntimeException("http call failed with status code:"
+					+ status.getStatusCode());
+		}
 	}
 
 	protected abstract void onResponse(String result);

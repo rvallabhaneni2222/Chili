@@ -21,7 +21,7 @@ import org.jboss.seam.security.management.IdentityManager;
 import com.thoughtworks.xstream.XStream;
 
 @Name("${camelCase($projectName)}RestResource")
-@Path("/${lower-case($projectName)}service/manage")
+@Path("/manage")
 @Scope(ScopeType.STATELESS)
 @Transactional
 public class ${camelCase($projectName)}Service {
