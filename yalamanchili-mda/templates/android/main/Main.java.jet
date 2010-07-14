@@ -151,6 +151,44 @@ public class ${camelCase($projectName)}Main extends ListActivity {
 	</c:iterate>
 	
 		return list;
-	}        
+	} 
+	
+		@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_menu, menu);
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_main_logout:
+			logout();
+			return true;
+		case R.id.menu_main_exit:
+			exit();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	public void logout() {
+		new AsyncHttp(this) {
+			@Override
+			protected void onResponse(String result) {
+				finish();
+			}
+		}.execute(HttpHelper.manageURL + "logout");
+	}
+
+	public void exit() {
+		new AsyncHttp(this) {
+			@Override
+			protected void onResponse(String result) {
+				finish();
+			}
+		}.execute(HttpHelper.manageURL + "logout");
+	}       
 }
 </java:format>

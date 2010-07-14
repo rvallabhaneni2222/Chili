@@ -54,7 +54,8 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 		Log.d("debug", "HttpPut Response code" + status.getStatusCode());
 		/* http response success */
 		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 300) {
-			result = HttpHelper.request(response);
+		//TODO FIX this is needed for get(working) for put this is not necessary
+			//result = HttpHelper.request(response);
 			onResponse(result);
 		} /* http response failure */
 		else {

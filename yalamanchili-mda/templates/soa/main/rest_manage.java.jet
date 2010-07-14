@@ -17,6 +17,7 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.security.Identity;
 import org.jboss.seam.security.management.IdentityManager;
+import org.jboss.seam.security.Credentials;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -34,6 +35,9 @@ public class ${camelCase($projectName)}Service {
 
 	@In(create = true)
 	protected IdentityManager identityManager;
+	
+	@In
+	protected Credentials credentials;
 
 	@In(create = true)
 	protected EntityManager em;
@@ -53,6 +57,20 @@ public class ${camelCase($projectName)}Service {
 			return xstream.toXML(user.toString());
 		} else {
 			return xstream.toXML(null);
+		}
+	}
+	
+	public Boolean authenticate() {
+		System.out.println("in authenticate");
+		String username = credentials.getUsername();
+		String password = credentials.getPassword();
+		identity.getCredentials().setUsername(username);
+		identity.getCredentials().setPassword(password);
+		if (("loggedIn").equals(identity.login())) {
+			System.out.println("in authenticate success");
+			return true;
+		} else {
+			return false;
 		}
 	}
 
