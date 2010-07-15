@@ -10,4 +10,5 @@
 }
 - (void) createClicked:(id) sender;
 - (void) textFieldDoneEditing:(id) sender;
+- (NSString*) getCreate${$class/@name}URL;
 @end

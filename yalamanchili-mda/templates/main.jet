@@ -669,6 +669,11 @@
 
 <%--creates the ios project--%>
 <ws:project name="{$projectName}-ios" location="{$location}/{$projectName}-ios">
+<%--create root view controller files--%>
+<ws:folder path="main">
+	<ws:file path="RootViewController.h" template="templates/ios/main/root_view_controller.h.jet"/>
+	<ws:file path="RootViewController.m" template="templates/ios/main/root_view_controller.m.jet"/>
+</ws:folder>
    <%--Iterate through the packages and classes--%>
        	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">

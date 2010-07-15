@@ -1,6 +1,5 @@
 #import <UIKit/UIKit.h>
 #import "HttpUtils.h";
-
 @interface ReadAll${$class/@name}sViewController : UITableViewController {
 	UIView *readAll${$class/@name}sView;
 	UITableView *readAll${$class/@name}sTableView;
@@ -12,5 +11,6 @@
 @property (nonatomic,retain) NSMutableArray *${lower-case($class/@name)}s;
 - (void) loadData;
 - (void) createClicked:(id) sender;
+- (NSString*) getReadAll${$class/@name}sURL;
 @end
 

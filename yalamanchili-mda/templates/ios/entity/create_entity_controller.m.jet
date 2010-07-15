@@ -1,4 +1,5 @@
 #import "Create${$class/@name}ViewController.h"
+#import	"HttpHelper.h";
 #import	"HttpUtils.h";
 
 @implementation Create${$class/@name}ViewController
@@ -140,12 +141,16 @@
 </c:choose> 
 </c:iterate>
 	NSString *xml=[HttpUtils parseToXML:${lower-case($class/@name)}];
-	NSString *url=[[[NSString alloc] initWithFormat:@"http://localhost:8080/automanage-soa-1.0-SNAPSHOT/seam/resource/restv1/car/create"] autorelease];
-	[HttpUtils httpPutData:xml withURL:url];
+	NSString *url=[self getCreate${$class/@name}URL];
+	[HttpHelper httpPutData:xml withURL:url];
 }
 
 - (void) textFieldDoneEditing:(id) sender{
 	[sender resignFirstResponder];
+}
+
+- (NSString*) getCreate${$class/@name}URL{
+	return [[HttpHelper crudURL] stringByAppendingString:@"${lower-case($class/@name)}/create"];
 }
 
 - (void)dealloc {
