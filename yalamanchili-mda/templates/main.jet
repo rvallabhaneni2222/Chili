@@ -242,11 +242,6 @@
     	<ws:folder path="${$groupIDNEW}">
     	<ws:file path="entity.gwt.xml" template="templates/jpa/jpa_gwtxml.template.xml.jet" />
     	</ws:folder>
-    	<%--create default security entities  --%>
-    	<ws:folder path="${$groupIDNEW}/entity/security">
-    		<ws:file path="YUser.java" template="templates/jpa/main/security/user_security_jpa.java.jet" />
-    		<ws:file path="YRole.java" template="templates/jpa/main/security/role_security_jpa.java.jet" />		
-    	</ws:folder>
     	<%--iterate through the packages and create jpa classes and enumerations --%>		
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		<ws:folder path="${$groupIDNEW}/entity/${$package/@name}">

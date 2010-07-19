@@ -12,12 +12,15 @@
                  http://jboss.com/products/seam/web http://jboss.com/products/seam/web-2.2.xsd
                  http://jboss.com/products/seam/components http://jboss.com/products/seam/components-2.2.xsd
                  http://jboss.com/products/seam/drools http://jboss.com/products/seam/drools-2.2.xsd">
-
+                 
 	<security:jpa-identity-store
-		user-class="${$groupID}.entity.security.YUser"
-		role-class="${$groupID}.entity.security.YRole" 
-		entity-manager="#{em}" />
+		user-class="info.yalamanchili.security.jpa.YUser"
+		role-class="info.yalamanchili.security.jpa.YRole" 
+		entity-manager="#{yem}" />
 	
+			
+		<persistence:managed-persistence-context name="yem"
+		auto-create="true" persistence-unit-jndi-name="java:/yalamanchili"/>
 		
 		<persistence:managed-persistence-context name="em"
 		auto-create="true" persistence-unit-jndi-name="java:/${$projectName}"/>

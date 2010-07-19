@@ -193,7 +193,6 @@ protected  BeanMapper mapper = new BeanMapper();
 	@GET
 	@Produces("application/xml")
 	@Path("/readall/{offset}/{limit}")
-	@Restrict("#{s:hasRole('user')}")
 	public String readAll(@PathParam("offset") int offset,
 			@PathParam("limit") int limit) {
 		List<${$class/@name}> results = new ArrayList<${$class/@name}>();

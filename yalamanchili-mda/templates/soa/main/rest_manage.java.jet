@@ -1,7 +1,7 @@
 <java:format>
 package ${$groupID}.rest;
 import info.yalamanchili.mapper.BeanMapper;
-import info.yalamanchili.project.entity.security.YUser;
+import info.yalamanchili.security.jpa.YUser;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -40,7 +40,7 @@ public class ${camelCase($projectName)}Service {
 	protected Credentials credentials;
 
 	@In(create = true)
-	protected EntityManager em;
+	protected EntityManager yem;
 
 	@GET
 	@Path("/login/{username}/{password}")
@@ -51,7 +51,7 @@ public class ${camelCase($projectName)}Service {
 		identity.getCredentials().setPassword(password);
 		if (("loggedIn").equals(identity.login())) {
 			System.out.println("in login id");
-			Query getUserQuery = em.createQuery("from YUser where username='"
+			Query getUserQuery = yem.createQuery("from YUser where username='"
 					+ username + "'");
 			YUser user = (YUser) getUserQuery.getSingleResult();
 			return xstream.toXML(user.toString());

@@ -2,16 +2,14 @@
 
 package ${$groupID}.client;
 
-import ${$groupID}.entity.security.YUser;
-import ${$groupID}.entity.security.YRole;
+import info.yalamanchili.security.jpa.YUser;
+import info.yalamanchili.security.jpa.YRole;
 import com.google.gwt.user.client.Window;
 import info.yalamanchili.gwt.widgets.LoginPanelAbstract;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import java.util.HashSet;
 import java.util.Set;
-import ${$groupID}.entity.security.YUser;
-import ${$groupID}.entity.security.YRole;
 import ${$webPackage}rpc.${camelCase($projectName)}Service.${camelCase($projectName)}ServiceAsync;
 public class LoginPanel extends LoginPanelAbstract {
 

@@ -17,19 +17,19 @@
 
 	<resteasy:application resource-path-prefix="/restv1">
 	</resteasy:application>
-	<component name="dozerSOAMapper" class="org.dozer.DozerBeanMapper"
-		scope="application" startup="true">
-	</component>
+
 	<web:authentication-filter url-pattern="/seam/resource/restv1/crud/*"
 		auth-type="basic" />
 		<!-- currently erroring out with stack overflow with multiple calls  -->
 	<!-- <security:identity authenticate-method="#{AutomanageRestResource.authenticate}" /> -->
 	
 	<security:jpa-identity-store
-		user-class="${$groupID}.entity.security.YUser"
-		role-class="${$groupID}.entity.security.YRole" 
-		entity-manager="#{em}" />
+		user-class="info.yalamanchili.security.jpa.YUser"
+		role-class="info.yalamanchili.security.jpa.YRole" 
+		entity-manager="#{yem}" />
 	
+		<persistence:managed-persistence-context name="yem"
+		auto-create="true" persistence-unit-jndi-name="java:/yalamanchili"/>
 		
 		<persistence:managed-persistence-context name="em"
 		auto-create="true" persistence-unit-jndi-name="java:/${$projectName}"/>
