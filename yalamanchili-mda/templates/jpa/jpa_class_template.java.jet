@@ -51,7 +51,7 @@ import org.hibernate.validator.NotEmpty;
 @Entity
 public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name} <c:if test="not($class/@parent1 = $class/@name)"> extends ${$class/@parent1} </c:if>  implements Serializable{
 /** @generated */
-private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = <f:unique/>L;
 
 <c:if test="$class/@parent1 = $class/@name">
 	@Id
