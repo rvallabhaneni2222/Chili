@@ -7,6 +7,4 @@
      </loader-repository-config>
 		</loader-repository>
 	</class-loading>
-
-	
 </jboss-web>

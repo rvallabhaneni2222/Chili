@@ -37,7 +37,7 @@
 			<groupId>info.yalamanchili.commons</groupId>
 			<artifactId>yalamanchili-commons</artifactId>
 			<version>${$yalamanchili-commons-version}</version>
-		</dependency>
+		</dependency><!-- these 2 libs are copied manually to default lib to escape classcast exception between javax.servlet and seam servlet
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
@@ -47,7 +47,7 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>${'${gwtVersion}'}</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.jboss.seam</groupId>
 			<artifactId>jboss-seam-remoting</artifactId>
@@ -58,7 +58,6 @@
 		<module>../${$projectName}-jpa</module>
 		<module>../${$projectName}-ejb</module>
 		<module>../${$projectName}-webapp</module>
-		<module>../${$projectName}-soa</module>
 		<module>../${$projectName}-app</module>
 	</modules>
 	<build>

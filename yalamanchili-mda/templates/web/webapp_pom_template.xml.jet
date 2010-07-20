@@ -1,10 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<parent>
-		<groupId>${$groupID}</groupId>
-		<artifactId>${$projectName}-master</artifactId>
-		<version>${$version}</version>
-	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>${$groupID}</groupId>
 	<artifactId>${$projectName}-webapp</artifactId>
@@ -26,11 +21,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>info.yalamanchili.gwt</groupId>
-			<artifactId>yalamanchili-gwt</artifactId>
-			<version>${$yalamanchili-gwt-version}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.google.code.gwt-log</groupId>
 			<artifactId>gwt-log</artifactId>
 			<version>${$gwt-log-version}</version>
@@ -42,8 +32,21 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>info.yalamanchili.security</groupId>
-			<artifactId>yalamanchili-security</artifactId>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${'${gwtVersion}'}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>${'${gwtVersion}'}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.yalamanchili</groupId>
+			<artifactId>yalamanchili-embedded-jboss
+			</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
