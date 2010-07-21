@@ -3,9 +3,7 @@ package info.yalamanchili.gwt.beans;
 import java.io.Serializable;
 import java.util.List;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-
-public class TableObj<T extends Serializable> implements IsSerializable {
+public class TableObj<T extends Serializable> implements Serializable {
 	protected Long numberOfRecords;
 	protected List<T> records;
 
