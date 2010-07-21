@@ -498,7 +498,7 @@
     	<ws:file template="templates/web/webapp/web_indexhtml_template.html.jet" path="index.html"/>
     		<ws:folder path="WEB-INF">
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_webxml_template.xml.jet" path="web.xml"/>
-    	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_jboss-app_template.xml.jet" path="jboss-web.xml"/>
+    	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_jboss-web.xml.jet" path="jboss-web.xml"/>
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_components.xml.jet" path="components.xml"/>
     		</ws:folder>
     		
@@ -568,6 +568,7 @@
     </ws:folder>
     <ws:folder path="src/main/webapp">
 	<ws:file template="templates/soa/main/webapp/WEB-INF/components.xml.jet" path="WEB-INF/components.xml"/>
+	<ws:file template="templates/soa/main/webapp/WEB-INF/soa_jboss-web.xml.jet" path="WEB-INF/jboss-web.xml"/>
 	<ws:file template="templates/soa/main/webapp/WEB-INF/web.xml.jet" path="WEB-INF/web.xml"/>
     </ws:folder>
     <ws:folder path="src/main/resources">
