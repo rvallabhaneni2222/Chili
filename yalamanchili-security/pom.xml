@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>info.yalamanchili.security</groupId>
+	<artifactId>yalamanchili-security</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>yalamanchili-security</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.yalamanchili</groupId>
+			<artifactId>yalamanchili-embedded-jboss
+			</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>1.2</version>
+				<configuration>
+					<module>info.yalamanchili.security.security-jpa</module>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jboss-maven-plugin</artifactId>
+				<version>1.4</version>
+				<configuration>
+					<jbossHome>${JBOSS_HOME}</jbossHome>
+					<port>8080</port>
+					<server>default</server>
+					<unpack>true</unpack>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins
+						</groupId>
+				<artifactId>maven-compiler-plugin
+						</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
+		<repository>
+			<id>yalamanchili</id>
+			<url> http://yalamanchili.googlecode.com/svn/maven2  </url>
+		</repository>
+		<repository>
+			<id>jboss</id>
+			<url>
+				http://repository.jboss.com/maven2/ </url>
+		</repository>
+	</repositories>
+</project>
