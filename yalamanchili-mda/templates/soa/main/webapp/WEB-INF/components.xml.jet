@@ -21,7 +21,7 @@
 		<!-- currently erroring out with stack overflow with multiple calls  -->
  <!-- <security:identity authenticate-method="#{AutomanageRestResource.authenticate}" /> --> 
  
-<!--	<web:authentication-filter url-pattern="/seam/resource/restv1/crud/*"
+	<web:authentication-filter url-pattern="/seam/resource/restv1/crud/*"
 		auth-type="basic" />
 
 	
@@ -31,7 +31,7 @@
 		entity-manager="#{yem}" />
 	
 		<persistence:managed-persistence-context name="yem"
-		auto-create="true" persistence-unit-jndi-name="java:/yalamanchili"/> --> 
+		auto-create="true" persistence-unit-jndi-name="java:/yalamanchili"/> 
 		
 		<persistence:managed-persistence-context name="em"
 		auto-create="true" persistence-unit-jndi-name="java:/${$projectName}"/>

@@ -13,8 +13,6 @@
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-jpa</artifactId>
 			<version>1.0-SNAPSHOT</version>
-			<type>ejb</type>
-			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>com.google.gwt</groupId>
@@ -97,7 +95,6 @@
 			<groupId>info.yalamanchili.security</groupId>
 			<artifactId>yalamanchili-security</artifactId>
 			<version>1.0-SNAPSHOT</version>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
