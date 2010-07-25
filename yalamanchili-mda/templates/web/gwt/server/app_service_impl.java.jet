@@ -15,8 +15,8 @@ import org.jboss.seam.security.Identity;
 import javax.security.auth.login.LoginException;
 import org.jboss.seam.annotations.Transactional;
 import javax.persistence.Query;
-import info.yalamanchili.security.jpa.YUser;
-import info.yalamanchili.security.jpa.YRole;
+import ${$groupID}.entity.security.YUser;
+import ${$groupID}.entity.security.YRole;
 import org.dozer.Mapper;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.ScopeType;
@@ -30,7 +30,7 @@ public class ${camelCase($projectName)}ServiceImpl implements ${$webPackage}rpc.
 			.getLog(${camelCase($projectName)}ServiceImpl.class);
 	
 	@In(create = true)
-	protected EntityManager yem;
+	protected EntityManager em;
 
 	@In(create = true)
 	protected Identity identity;
@@ -50,7 +50,7 @@ public class ${camelCase($projectName)}ServiceImpl implements ${$webPackage}rpc.
 		identity.getCredentials().setUsername(username);
 		identity.getCredentials().setPassword(password);
 		if (("loggedIn").equals(identity.login())) {
-			Query getUserQuery = yem.createQuery("from YUser where username='"
+			Query getUserQuery = em.createQuery("from YUser where username='"
 					+ username + "'");
 			YUser user = (YUser) getUserQuery.getSingleResult();
 		return dozerMapper.map(user, YUser.class);

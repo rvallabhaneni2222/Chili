@@ -238,6 +238,11 @@
 <ws:project name="{$projectName}-jpa" location="{$location}/{$projectName}-jpa">
 	<ws:file path="pom.xml" template="templates/jpa/jpa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
+	    <%-- generate jps security entities--%>
+	     <ws:folder path="${$groupIDNEW}/entity/security">
+	     <ws:file path="YUser.java" template="templates/jpa/main/security/user_security_jpa.java.jet" />
+	     <ws:file path="YRole.java" template="templates/jpa/main/security/role_security_jpa.java.jet" />
+	     </ws:folder>    	
     	<%--create gwt.xml file to include these  --%>	
     	<ws:folder path="${$groupIDNEW}">
     	<ws:file path="entity.gwt.xml" template="templates/jpa/jpa_gwtxml.template.xml.jet" />

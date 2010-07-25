@@ -14,13 +14,9 @@
                  http://jboss.com/products/seam/drools http://jboss.com/products/seam/drools-2.2.xsd">
                  
 	<security:jpa-identity-store
-		user-class="info.yalamanchili.security.jpa.YUser"
-		role-class="info.yalamanchili.security.jpa.YRole" 
-		entity-manager="#{yem}" />
-	
-			
-		<persistence:managed-persistence-context name="yem"
-		auto-create="true" persistence-unit-jndi-name="java:/yalamanchili"/>
+		user-class="info.yalamanchili.project.entity.security.YUser"
+		role-class="info.yalamanchili.project.entity.security.YRole" 
+		entity-manager="#{em}" />
 		
 		<persistence:managed-persistence-context name="em"
 		auto-create="true" persistence-unit-jndi-name="java:/${$projectName}"/>

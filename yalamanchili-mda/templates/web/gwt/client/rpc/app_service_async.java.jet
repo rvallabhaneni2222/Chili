@@ -4,8 +4,8 @@ package ${$webPackage}rpc;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
-import info.yalamanchili.security.jpa.YUser;
-import info.yalamanchili.security.jpa.YRole;
+import ${$groupID}.entity.security.YUser;
+import ${$groupID}.entity.security.YRole;
 /**
  * This is the interface the client code uses. You NEVER implement this
  * directly, GWT does this for you, and calls are marshalled through to the Sync
