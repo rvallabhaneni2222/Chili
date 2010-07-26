@@ -20,45 +20,28 @@ import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 public abstract class SCReadAllComposite<T> extends ALComposite implements
 		RecordClickHandler, ChangeHandler {
 	protected String classCanonicalName;
-	/** The panel. */
+
 	protected FlowPanel panel = new FlowPanel();
 
-	/** The paging panel. */
 	protected HorizontalPanel pagingPanel = new HorizontalPanel();
 
-	/** The table panel. */
 	protected FlowPanel tablePanel = new FlowPanel();
 
-	/** The table. */
 	protected final ListGrid table = new ListGrid();
 
-	/** The number of records. */
-	protected Long numberOfRecords = new Long(0);
+	protected Long numberOfRecords = new Long(10);
 
-	/** The page size. */
 	protected Integer pageSize = 10;// default
 
-	/** The number of pages. */
 	protected Integer numberOfPages;
 
-	/** The constants. */
 	protected ConstantsWithLookup constants;
 
-	/** The go to page. */
 	protected ListBoxField goToPage = new ListBoxField("Page: ",
 			Alignment.HORIZONTAL);
 
-	/** The no of results l. */
 	protected Label noOfResultsL = new Label("Total Results:");
 
-	/**
-	 * Inits the table.
-	 * 
-	 * @param classCanonicalName
-	 *            the class canonical name
-	 * @param constants
-	 *            the constants
-	 */
 	protected void initTable(T t, ConstantsWithLookup constants) {
 		this.classCanonicalName = t.getClass().getName();
 		this.constants = constants;
@@ -101,7 +84,7 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 	}
 
 	public void initPaging(Long noOfRecords) {
-		numberOfRecords = noOfRecords;
+		this.numberOfRecords = noOfRecords;
 		noOfResultsL.setText("Total Results:" + noOfRecords.toString());
 		createPageLinks();
 	}
