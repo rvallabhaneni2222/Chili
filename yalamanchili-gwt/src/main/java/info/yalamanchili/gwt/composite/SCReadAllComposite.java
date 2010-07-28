@@ -1,27 +1,29 @@
 package info.yalamanchili.gwt.composite;
 
 import info.yalamanchili.gwt.beans.TableObj;
-import info.yalamanchili.gwt.fields.ListBoxField;
-import info.yalamanchili.gwt.utils.Alignment;
 
 import java.util.List;
 import java.util.MissingResourceException;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 
 public abstract class SCReadAllComposite<T> extends ALComposite implements
-		RecordClickHandler, ChangeHandler {
+		RecordClickHandler, ChangedHandler {
 	protected String classCanonicalName;
 
 	protected FlowPanel panel = new FlowPanel();
+
+	protected final DynamicForm form = new DynamicForm();
 
 	protected HorizontalPanel pagingPanel = new HorizontalPanel();
 
@@ -37,8 +39,7 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 
 	protected ConstantsWithLookup constants;
 
-	protected ListBoxField goToPage = new ListBoxField("Page: ",
-			Alignment.HORIZONTAL);
+	protected ComboBoxItem goToPage = new ComboBoxItem();
 
 	protected Label noOfResultsL = new Label("Total Results:");
 
@@ -59,6 +60,7 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 
 	@Override
 	protected void configure() {
+		goToPage.setTitle("Page Number:");
 		table.addStyleName("y-gwt-Table");
 		pagingPanel.setSpacing(5);
 		pagingPanel.addStyleName("y-gwt-PagingBar");
@@ -68,19 +70,20 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 
 	@Override
 	protected void addListeners() {
-		goToPage.addChangeHandler(this);
+		goToPage.addChangedHandler(this);
 		table.addRecordClickHandler(this);
 	}
 
 	@Override
 	protected void addWidgets() {
-		pagingPanel.add(goToPage);
+		form.setFields(goToPage);
 		pagingPanel.add(noOfResultsL);
 		configureTable();
 		configureFields();
 		tablePanel.add(table);
-		panel.add(pagingPanel);
+		// panel.add(pagingPanel);
 		panel.add(tablePanel);
+		panel.add(form);
 	}
 
 	public void initPaging(Long noOfRecords) {
@@ -93,7 +96,7 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 		if (numberOfPages == null || numberOfPages == 0) {
 			numberOfPages = (numberOfRecords.intValue() / pageSize) + 1;
 			for (int i = 1; i <= numberOfPages; i++) {
-				goToPage.addValue(new Long(i), new Integer(i).toString());
+				goToPage.setAttribute(new Long(i).toString(), i);
 			}
 		}
 	}
@@ -117,11 +120,11 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 
 	public abstract void viewClicked(int row, int col);
 
-	public void onChange(ChangeEvent event) {
-		if (event.getSource() == goToPage.getListBox()) {
-			preFetchTable((goToPage.getValue().intValue() * pageSize) - 10);
-		}
-	}
+	// public void onChange(ChangeEvent event) {
+	// if (event.getSource() == goToPage.getListBox()) {
+	// preFetchTable((goToPage.getValue().intValue() * pageSize) - 10);
+	// }
+	// }
 
 	protected String getClassValue(String id) {
 		String property = classCanonicalName.replace(".", "_") + "_" + id;
@@ -146,6 +149,12 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 
 	@Override
 	public void onRecordClick(RecordClickEvent event) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onChanged(ChangedEvent event) {
 		// TODO Auto-generated method stub
 
 	}
