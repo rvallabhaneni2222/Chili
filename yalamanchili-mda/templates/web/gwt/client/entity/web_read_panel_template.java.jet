@@ -32,7 +32,7 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 					@Override
 					public void onResponse(${$class/@name} ${lower-case($class/@name)}) {
 						entity = ${lower-case($class/@name)};
-				<%-- process parent class level 2 attributes--%>
+			<%-- process parent class level 2 attributes--%>
 			<c:if test="not($class/@name = $parentClass2/@name)">
 			<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
