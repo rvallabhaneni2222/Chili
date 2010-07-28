@@ -354,9 +354,6 @@
 	<ws:file path="pom.xml" template="templates/web/webapp_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
     	<ws:folder path="${$groupIDNEW}/public">
-    	<%--css and html files for the web project  --%>
-    	<ws:file  path="{$projectName}.css" template="templates/web/gwt/public/web_css_template.css.jet"/>
-    	<ws:file  path="{$projectName}.html" template="templates/web/gwt/public/web_html_template.html.jet"/>
     	<ws:file  path="logo.gif" template="templates/web/gwt/public/images/logo.gif.jet"/>
     	</ws:folder>
      	<%--create folder for icons  --%>
@@ -500,7 +497,9 @@
      <ws:file template="templates/web/seam.properties.jet" path="seam.properties"/>
     </ws:folder>
     <ws:folder path="src/main/webapp">
-    	<ws:file template="templates/web/webapp/web_indexhtml_template.html.jet" path="index.html"/>
+    <%-- main html and css files--%>
+    <ws:file template="templates/web/webapp/web_html_template.html.jet" path="{$projectName}.html"/>
+    <ws:file template="templates/web/webapp/web_css_template.css.jet" path="{$projectName}.css"/>
     		<ws:folder path="WEB-INF">
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_webxml_template.xml.jet" path="web.xml"/>
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_jboss-web.xml.jet" path="jboss-web.xml"/>
