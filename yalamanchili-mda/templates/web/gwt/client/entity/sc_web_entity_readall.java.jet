@@ -1,0 +1,286 @@
+<java:format>
+package ${$packageName}.${lower-case($class/@name)};
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.smartgwt.client.widgets.grid.ListGridField;
+import info.yalamanchili.gwt.composite.SCReadAllComposite;
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import ${$webPackage}${camelCase($projectName)}Welcome;
+<%-- add these only for composites--%>
+<c:if test="$class/@isDependent = 'true'">	
+import info.yalamanchili.gwt.composite.TreePanelComposite;
+</c:if>
+import info.yalamanchili.gwt.beans.TableObj;
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
+		
+public class ReadAll${$class/@name}sPanel extends SCReadAllComposite<${$class/@name}> {
+	public static ReadAll${$class/@name}sPanel instance;
+	<%-- add these only for composites childred--%>
+	<c:if test="$class/@isDependent = 'true'">	
+		public TreePanelComposite parentTree;
+		public String parentTreeClass;
+	</c:if>
+
+	private  ${$class/@name}TableType tableType;
+
+	public enum ${$class/@name}TableType {
+		READALL, READALL_SEARCH
+	}
+
+	public ReadAll${$class/@name}sPanel(List<${$class/@name}> entities) {
+		instance=this;
+		initTable(new ${$class/@name}(), entities, ${camelCase($projectName)}Welcome.constants);
+		
+	}
+	
+	public ReadAll${$class/@name}sPanel(${$class/@name}TableType tableType) {
+		instance=this;
+		this.tableType = tableType;
+		initTable(new ${$class/@name}(),
+				${camelCase($projectName)}Welcome.constants);
+	}
+	
+		@Override
+	public void preFetchTable(int start) {
+		if (${$class/@name}TableType.READALL.equals(tableType)) {
+			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getTableObj(start, new ALAsyncCallback<TableObj<${$class/@name}>>() {
+
+						@Override
+						public void onResponse(TableObj<${$class/@name}> tableObj) {
+							postFetchTable(tableObj);
+						}
+
+					});
+		}
+		if (${$class/@name}TableType.READALL_SEARCH.equals(tableType)) {
+			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getEntities(
+					${$class/@name}SearchPanelGeneric.instance().getEntity(),
+					new ALAsyncCallback<List<${$class/@name}>>() {
+
+						@Override
+						public void onResponse(List<${$class/@name}> arg0) {
+							postFetchTable(arg0);
+						}
+
+					});
+		}
+	}
+	
+	@Override
+	public void viewClicked(Long entityID) {
+		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
+		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+				new Read${$class/@name}Panel(entityID));
+		${camelCase($projectName)}Welcome.instance().getSidePanelTop().clear();
+		${camelCase($projectName)}Welcome.instance().getSidePanelTop()
+				.add(new Tree${$class/@name}Panel());
+	}
+	
+	@Override
+	public void fillData(List<${$class/@name}> entities) {
+		${$class/@name}Record[] records = new ${$class/@name}Record[entities.size()];
+		int i = 0;
+		for (${$class/@name} ${lower-case($class/@name)} : entities) {
+			${$class/@name}Record record = new ${$class/@name}Record();
+			<%-- process parent class level 2 attributes--%>
+			<c:if test="not($class/@name = $parentClass2/@name)">
+			<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" >
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}());
+				 </c:when>
+				 <c:when test="${'$DateID'}" > 
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}());
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" >
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}());   
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+			</c:if>
+			<%-- process parent class level 1 attributes--%>
+			<c:if test="not($class/@name = $parentClass1/@name)">
+			<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" >
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}());
+				 </c:when>
+				 <c:when test="${'$DateID'}" > 
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}());
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" >
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}());   
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>	
+			</c:iterate>
+			</c:if>						
+			<%-- process base class--%>			
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" >
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}());
+				 </c:when>
+				 <c:when test="${'$DateID'}" > 
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}());
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" >
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}());   
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  
+					record.set${uppercaseFirst($attribute/@name)}(${lower-case($class/@name)}.get${uppercaseFirst($attribute/@name)}().toString());
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+			records[i] =record;
+			i++;
+		}
+		table.setData(records);
+	}
+	
+	@Override
+	public void configureTable() {
+
+	}
+
+	@Override
+	public void configureFields() {
+	List<ListGridField> fields = new ArrayList<ListGridField>();
+			<%-- process parent class level 2 attributes--%>
+			<c:if test="not($class/@name = $parentClass2/@name)">
+			<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" >
+				  ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				  fields.add(${$attribute/@name}Field);
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  
+				  ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				  fields.add(${$attribute/@name}Field); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > 
+				 ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				 fields.add(${$attribute/@name}Field);
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" >
+				ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				fields.add(${$attribute/@name}Field);	   
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+				  ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				  fields.add(${$attribute/@name}Field);
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  
+				 ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				 fields.add(${$attribute/@name}Field);
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+			</c:if>
+			<%-- process parent class level 1 attributes--%>
+			<c:if test="not($class/@name = $parentClass1/@name)">
+			<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" >
+				  ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				  fields.add(${$attribute/@name}Field);
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  
+				  ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				  fields.add(${$attribute/@name}Field); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > 
+				 ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				 fields.add(${$attribute/@name}Field);
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" >
+				ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				fields.add(${$attribute/@name}Field);	   
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+				  ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				  fields.add(${$attribute/@name}Field);
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  
+				 ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				 fields.add(${$attribute/@name}Field);
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>		
+			</c:iterate>
+			</c:if>						
+			<%-- process base class--%>			
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" >
+				  ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				  fields.add(${$attribute/@name}Field);
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" >  
+				  ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				  fields.add(${$attribute/@name}Field); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > 
+				 ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				 fields.add(${$attribute/@name}Field);
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" >
+				ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				fields.add(${$attribute/@name}Field);	   
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+				  ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				  fields.add(${$attribute/@name}Field);
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  
+				 ListGridField ${$attribute/@name}Field = new ListGridField("${$attribute/@name}", "${uppercaseFirst($attribute/@name)}");
+				 fields.add(${$attribute/@name}Field);
+				 </c:when>
+					 <c:otherwise>
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+		table.setFields(fields.toArray(new ListGridField[] {}));
+	}	
+		
+	<c:if test="$class/@isDependent = 'true'">	
+	    public void refresh() {
+			parentTree.linkClicked(parentTreeClass);
+		}	
+	</c:if>	
+}
+</java:format>
