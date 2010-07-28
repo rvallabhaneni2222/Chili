@@ -2,13 +2,15 @@ package info.yalamanchili.gwt.composite;
 
 import info.yalamanchili.gwt.beans.TableObj;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.MissingResourceException;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
+import com.smartgwt.client.types.Autofit;
+import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
@@ -25,14 +27,13 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 
 	protected final DynamicForm form = new DynamicForm();
 
-	protected HorizontalPanel pagingPanel = new HorizontalPanel();
-
-	protected FlowPanel tablePanel = new FlowPanel();
-
 	protected final ListGrid table = new ListGrid();
-
+	/* total records for the table */
 	protected Long numberOfRecords = new Long(10);
-
+	/*
+	 * make sure to update the server side component attribute to the same value
+	 * for paging to work (getEntitites.setMaxResults(10);)
+	 */
 	protected Integer pageSize = 10;// default
 
 	protected Integer numberOfPages;
@@ -60,12 +61,13 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 
 	@Override
 	protected void configure() {
-		goToPage.setTitle("Page Number:");
-		table.addStyleName("y-gwt-Table");
-		pagingPanel.setSpacing(5);
-		pagingPanel.addStyleName("y-gwt-PagingBar");
-		panel.addStyleName("y-gwt-ReadAllPanel");
-		tablePanel.addStyleName("y-gwt-TablePanel");
+		goToPage.setTitle("PageNumber:");
+		goToPage.setWidth(40);
+		table.setWidth100();
+		table.setShowAllRecords(true);
+		table.setAlternateRecordStyles(true);
+		table.setAutoFitData(Autofit.HORIZONTAL);
+		table.setCanResizeFields(true);
 	}
 
 	@Override
@@ -77,27 +79,27 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 	@Override
 	protected void addWidgets() {
 		form.setFields(goToPage);
-		pagingPanel.add(noOfResultsL);
 		configureTable();
 		configureFields();
-		tablePanel.add(table);
-		// panel.add(pagingPanel);
-		panel.add(tablePanel);
 		panel.add(form);
+		panel.add(table);
+		panel.add(noOfResultsL);
 	}
 
 	public void initPaging(Long noOfRecords) {
 		this.numberOfRecords = noOfRecords;
-		noOfResultsL.setText("Total Results:" + noOfRecords.toString());
+		noOfResultsL.setContents("Total Results:" + noOfRecords.toString());
 		createPageLinks();
 	}
 
 	protected void createPageLinks() {
+		List<String> pageValues = new ArrayList<String>();
 		if (numberOfPages == null || numberOfPages == 0) {
 			numberOfPages = (numberOfRecords.intValue() / pageSize) + 1;
-			for (int i = 1; i <= numberOfPages; i++) {
-				goToPage.setAttribute(new Long(i).toString(), i);
+			for (Integer i = 1; i <= numberOfPages; i++) {
+				pageValues.add(i.toString());
 			}
+			goToPage.setValueMap(pageValues.toArray(new String[] {}));
 		}
 	}
 
@@ -118,13 +120,7 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 
 	public abstract void fillData(List<T> entities);
 
-	public abstract void viewClicked(int row, int col);
-
-	// public void onChange(ChangeEvent event) {
-	// if (event.getSource() == goToPage.getListBox()) {
-	// preFetchTable((goToPage.getValue().intValue() * pageSize) - 10);
-	// }
-	// }
+	public abstract void viewClicked(Long entityID);
 
 	protected String getClassValue(String id) {
 		String property = classCanonicalName.replace(".", "_") + "_" + id;
@@ -149,14 +145,20 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 
 	@Override
 	public void onRecordClick(RecordClickEvent event) {
-		// TODO Auto-generated method stub
-
+		viewClicked(new Long(table.getSelectedRecord().getAttribute("id")));
 	}
 
 	@Override
 	public void onChanged(ChangedEvent event) {
-		// TODO Auto-generated method stub
-
+		if (event.getSource().equals(goToPage)) {
+			int pageNumber = 1;
+			try {
+				pageNumber = new Integer(goToPage.getDisplayValue());
+			} catch (NumberFormatException e) {
+				SC.say("Invalid Value");
+			}
+			preFetchTable((pageNumber * pageSize) - pageSize);
+		}
 	}
 
 }
