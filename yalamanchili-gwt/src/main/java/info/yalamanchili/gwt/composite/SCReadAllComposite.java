@@ -8,7 +8,6 @@ import java.util.MissingResourceException;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.smartgwt.client.types.Autofit;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -64,9 +63,9 @@ public abstract class SCReadAllComposite<T> extends ALComposite implements
 		goToPage.setTitle("PageNumber:");
 		goToPage.setWidth(40);
 		table.setWidth100();
+		table.setHeight100();
 		table.setShowAllRecords(true);
 		table.setAlternateRecordStyles(true);
-		table.setAutoFitData(Autofit.HORIZONTAL);
 		table.setCanResizeFields(true);
 	}
 
