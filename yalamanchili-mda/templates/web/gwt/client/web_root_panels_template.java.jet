@@ -2,70 +2,68 @@
 
 package ${$groupID}.client;
 
-import com.google.gwt.user.client.ui.DecoratedTabPanel;
-import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class RootPanels {
-	protected VerticalPanel sidePanel = new VerticalPanel();
-	protected VerticalPanel sidePanelTop = new VerticalPanel();
-	protected VerticalPanel sidePanelBottom = new VerticalPanel();
-	protected VerticalPanel statusPanel = new VerticalPanel();
-	protected VerticalPanel menuBar = new VerticalPanel();
-	protected VerticalPanel entityPanel = new VerticalPanel();
-
+	protected FlowPanel sidePanel = new FlowPanel();
+	protected FlowPanel sidePanelTop = new FlowPanel();
+	protected FlowPanel sidePanelBottom = new FlowPanel();
+	protected FlowPanel statusPanel = new FlowPanel();
+	protected HorizontalPanel menuBar = new HorizontalPanel();
+	protected FlowPanel entityPanel = new FlowPanel();
 
 	public RootPanels() {
 	}
-	
-	public VerticalPanel getSidePanel() {
+
+	public FlowPanel getSidePanel() {
 		return sidePanel;
 	}
 
-	public void setSidePanel(VerticalPanel sidePanel) {
+	public void setSidePanel(FlowPanel sidePanel) {
 		this.sidePanel = sidePanel;
 	}
 
-	public VerticalPanel getSidePanelTop() {
+	public FlowPanel getSidePanelTop() {
 		return sidePanelTop;
 	}
 
-	public void setSidePanelTop(VerticalPanel sidePanelTop) {
+	public void setSidePanelTop(FlowPanel sidePanelTop) {
 		this.sidePanelTop = sidePanelTop;
 	}
 
-	public VerticalPanel getSidePanelBottom() {
+	public FlowPanel getSidePanelBottom() {
 		return sidePanelBottom;
 	}
 
-	public void setSidePanelBottom(VerticalPanel sidePanelBottom) {
+	public void setSidePanelBottom(FlowPanel sidePanelBottom) {
 		this.sidePanelBottom = sidePanelBottom;
 	}
 
-	public VerticalPanel getStatusPanel() {
+	public FlowPanel getStatusPanel() {
 		return statusPanel;
 	}
 
-	public void setStatusPanel(VerticalPanel statusPanel) {
+	public void setStatusPanel(FlowPanel statusPanel) {
 		this.statusPanel = statusPanel;
 	}
 
-	public VerticalPanel getMenuBar() {
+	public HorizontalPanel getMenuBar() {
 		return menuBar;
 	}
 
-	public void setMenuBar(VerticalPanel menuBar) {
+	public void setMenuBar(HorizontalPanel menuBar) {
 		this.menuBar = menuBar;
 	}
 
-	public VerticalPanel getEntityPanel() {
+	public FlowPanel getEntityPanel() {
 		return entityPanel;
 	}
 
-	public void setEntityPanel(VerticalPanel entityPanel) {
+	public void setEntityPanel(FlowPanel entityPanel) {
 		this.entityPanel = entityPanel;
 	}
-	
-	}
+
+}
+
 </java:format>
