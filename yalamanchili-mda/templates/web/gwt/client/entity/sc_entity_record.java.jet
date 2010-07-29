@@ -5,6 +5,13 @@ import java.util.Date;
 
 public class ${$class/@name}Record extends ListGridRecord {
 
+					public void setId(String id) {
+						setAttribute("id", id);
+					}
+				
+					public String getId() {
+						return getAttribute("id");
+					}	
 			<%-- process parent class level 2 attributes--%>
 			<c:if test="not($class/@name = $parentClass2/@name)">
 			<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">

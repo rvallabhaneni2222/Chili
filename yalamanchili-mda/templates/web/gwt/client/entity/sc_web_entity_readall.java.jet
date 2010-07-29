@@ -84,6 +84,8 @@ public class ReadAll${$class/@name}sPanel extends SCReadAllComposite<${$class/@n
 		int i = 0;
 		for (${$class/@name} ${lower-case($class/@name)} : entities) {
 			${$class/@name}Record record = new ${$class/@name}Record();
+			<%-- to set entity id--%>
+			record.setId(${lower-case($class/@name)}.getId().toString());
 			<%-- process parent class level 2 attributes--%>
 			<c:if test="not($class/@name = $parentClass2/@name)">
 			<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
