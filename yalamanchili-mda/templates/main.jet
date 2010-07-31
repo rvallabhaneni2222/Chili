@@ -10,7 +10,7 @@
 <c:setVariable select="'info.yalamanchili.project'" var="groupID"/>
 <c:setVariable select="'info/yalamanchili/project'" var="groupIDNEW"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
-<c:setVariable select="'C://codebase//generated'" var="location"/>
+<c:setVariable select="'/Users/yphanikumar/codebase/generated'" var="location"/>
 <%--versions --%>
 <c:setVariable select="'2.0.0'" var="gwt-version"/>
 <c:setVariable select="'2.6.2'" var="gwt-log-version"/>
@@ -354,7 +354,7 @@
 	<ws:file path="pom.xml" template="templates/web/webapp_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
     	<ws:folder path="${$groupIDNEW}/public">
-    	<ws:file  path="{$projectName}.css" template="templates/web/gwt/public/web_css_template.css.jet"/>
+    	<ws:file template="templates/web/gwt/public/web_css_template.css.jet" path="{$projectName}.css"/>
     	<ws:file  path="logo.gif" template="templates/web/gwt/public/images/logo.gif.jet"/>
     	</ws:folder>
      	<%--create folder for icons  --%>
@@ -480,8 +480,7 @@
 			    		 	<%-- Tree  Panel --%>
 			    		 	<ws:file  path="Tree${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_tree_panel_template.java.jet"/>
 							<%-- Read All Entities Panel--%>
-							<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/sc_web_entity_readall.java.jet"/>
-							<ws:file  path="{$class/@name}Record.java" template="templates/web/gwt/client/entity/sc_entity_record.java.jet"/>		
+							<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_panel_template.java.jet"/>		
 						</c:if>
 						
 			</ws:folder>
@@ -499,7 +498,7 @@
      <ws:file template="templates/web/seam.properties.jet" path="seam.properties"/>
     </ws:folder>
     <ws:folder path="src/main/webapp">
-    <%-- main html file--%>
+    <%-- main html and css files--%>
     <ws:file template="templates/web/webapp/web_html_template.html.jet" path="{$projectName}.html"/>
     		<ws:folder path="WEB-INF">
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_webxml_template.xml.jet" path="web.xml"/>
