@@ -28,16 +28,10 @@ import com.allen_sauer.gwt.log.client.DivLogger;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.dom.client.Style.Unit;
 
-import com.smartgwt.client.widgets.menu.IMenuButton;
-import com.smartgwt.client.widgets.menu.Menu;
-import com.smartgwt.client.widgets.menu.MenuItem;
-import com.smartgwt.client.widgets.menu.events.ItemClickEvent;
-import com.smartgwt.client.widgets.menu.events.ItemClickHandler;
-
 import java.util.HashSet;
 import java.util.Set;
 
-public class ${camelCase($projectName)}Welcome extends RootPanels implements EntryPoint,ItemClickHandler {
+public class ${camelCase($projectName)}Welcome extends RootPanels implements EntryPoint {
 
 	private static ${camelCase($projectName)}Welcome instance;
 	
@@ -109,19 +103,25 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 	}
 
 	protected void configureMenuBar() {
+	menuBar.addStyleName("entityMenuBar");
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-	Menu ${lower-case($package/@name)}Menu = new Menu();
+    MenuBar ${lower-case($package/@name)}Bar = new MenuBar(true);
 			 <%-- iterate through class and add only non composite children and non parent--%>
 			 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-			 	<c:if test="$class/@isDependent = 'false'"> 
-			 	MenuItem ${lower-case($class/@name)}MenuItem = new MenuItem("${$class/@name}");
-			 	${lower-case($package/@name)}Menu.addItem(${lower-case($class/@name)}MenuItem);
+			 	<c:if test="$class/@isDependent = 'false'">  
+    		 	${lower-case($package/@name)}Bar.addItem("${$class/@name}", ${lower-case($class/@name)}Cmd);
 				</c:if>
-			 </c:iterate>
-	${lower-case($package/@name)}Menu.addItemClickHandler(this);
-	IMenuButton ${lower-case($package/@name)}Button = new IMenuButton("${upper-case($package/@name)}", ${lower-case($package/@name)}Menu);
-	menuBar.add(${lower-case($package/@name)}Button);			  
+			 </c:iterate> 
 	</c:iterate>
+	
+
+		MenuBar menu = new MenuBar();
+		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+		menu.addItem("${upper-case($package/@name)}", ${lower-case($package/@name)}Bar);
+		</c:iterate>
+
+		menuBar.add(menu);
+
 	}
 	
 	protected void configureStatusPanel() {
@@ -141,23 +141,27 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 	protected void configureSideBarBottom() {
 		sidePanel.add(sidePanelBottom);
 		sidePanelBottom.addStyleName("sidePanelBottom");
+		
+
 	}
-	
-	@Override
-	public void onItemClick(ItemClickEvent event) {
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    MenuBar ${lower-case($package/@name)}Bar = new MenuBar(true);
 			 <%-- iterate through class and add only non composite children and non parent--%>
 			 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
 			 	<c:if test="$class/@isDependent = 'false'">  
-					if (event.getItem().getTitle().equals("${$class/@name}")) {
+    			Command ${lower-case($class/@name)}Cmd= new Command() {
+
+				@Override
+				public void execute() {
 					getEntityPanel().clear();
 					getEntityPanel().add(new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL));
 					getSidePanelTop().clear();
 					getSidePanelTop().add(new ${$class/@name}SideBar());
 				}
+
+			};
 				</c:if>
 			 </c:iterate> 
-	</c:iterate>
-		}	
+	</c:iterate>	
 }
 </java:format>
