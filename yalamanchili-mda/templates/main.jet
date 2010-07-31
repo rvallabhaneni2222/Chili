@@ -355,7 +355,6 @@
     <ws:folder path="src/main/java">
     	<ws:folder path="${$groupIDNEW}/public">
     	<ws:file template="templates/web/gwt/public/web_css_template.css.jet" path="{$projectName}.css"/>
-    	<ws:file  path="logo.gif" template="templates/web/gwt/public/images/logo.gif.jet"/>
     	</ws:folder>
      	<%--create folder for icons  --%>
      	
@@ -498,8 +497,9 @@
      <ws:file template="templates/web/seam.properties.jet" path="seam.properties"/>
     </ws:folder>
     <ws:folder path="src/main/webapp">
-    <%-- main html and css files--%>
+    <%-- main html file--%>
     <ws:file template="templates/web/webapp/web_html_template.html.jet" path="{$projectName}.html"/>
+    <ws:copyFile src="templates/web/gwt/public/images/logo.gif" target="images/logo.gif" />
     		<ws:folder path="WEB-INF">
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_webxml_template.xml.jet" path="web.xml"/>
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_jboss-web.xml.jet" path="jboss-web.xml"/>
