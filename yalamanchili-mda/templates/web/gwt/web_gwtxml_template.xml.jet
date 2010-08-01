@@ -18,8 +18,6 @@
 	<!-- used to include yalamanchili-gwt project in gwt compiler path -->
 	<inherits name='info.yalamanchili.yalamanchili-gwt' />
 	
-	<!-- used to include smartgwt lib in gwt compiler path -->
-	<inherits name="com.smartgwt.SmartGwt" />
 	<entry-point class="${$groupID}.client.${camelCase($projectName)}Welcome" />
 	<stylesheet src="${$projectName}.css" />
 
