@@ -101,12 +101,4 @@
 			</plugin>			
 		</plugins>
 	</build>
-	<repositories>
-		<repository>
-			<id>gilead</id>
-			<url>
-				https://gilead.svn.sourceforge.net/svnroot/gilead/gilead/maven-repo/
-			</url>
-		</repository>
-	</repositories>
 </project>
