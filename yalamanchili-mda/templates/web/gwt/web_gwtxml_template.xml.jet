@@ -18,6 +18,10 @@
 	<!-- used to include yalamanchili-gwt project in gwt compiler path -->
 	<inherits name='info.yalamanchili.yalamanchili-gwt' />
 	
+	<!-- gilead libs-->
+	<inherits name='net.sf.gilead.Gilead4Gwt' />
+	<inherits name='net.sf.gilead.emul.java5.ejb3.Ejb3' />
+	
 	<entry-point class="${$groupID}.client.${camelCase($projectName)}Welcome" />
 	<stylesheet src="${$projectName}.css" />
 
