@@ -34,7 +34,6 @@ public abstract class AbstractStatusPanel extends ALComposite implements
 
 	protected abstract void setUser();
 
-	
 	public abstract void logoutSuccessfull();
 
 	@Override
@@ -46,7 +45,8 @@ public abstract class AbstractStatusPanel extends ALComposite implements
 
 	@Override
 	protected void configure() {
-		statusBar.setStyleName("statusPanel");
+		statusBar.setStyleName("y-statusPanel");
+		logo.setStyleName("logo-Image");
 		statusBar.getFlexCellFormatter().setRowSpan(0, 0, 2);
 		statusBar.getCellFormatter().setStyleName(1, 3, "userLink");
 		statusBar.getCellFormatter().setStyleName(1, 2, "loginLink");
