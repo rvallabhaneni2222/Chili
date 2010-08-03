@@ -12,8 +12,8 @@
 
 /* Logo Image*/
 .logo-Image {
-	height: 40px;
-	width: 120px;
+	height:55px;
+	width:180px;
 }
 
 /* panel to display the create user, login/logout, welcome user links this is added north 1 widget to Docklayoutpanel*/
