@@ -12,9 +12,9 @@ import javax.persistence.ManyToMany;
 import org.jboss.seam.annotations.security.management.UserPassword;
 import org.jboss.seam.annotations.security.management.UserPrincipal;
 import org.jboss.seam.annotations.security.management.UserRoles;
-
+import net.sf.gilead.pojo.gwt.LightEntity;
 @Entity
-public class YUser implements Serializable{
+public class YUser extends LightEntity implements Serializable{
 
 	private Integer userId;
 

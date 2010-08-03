@@ -8,9 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import org.jboss.seam.annotations.security.management.RoleName;
-
+import net.sf.gilead.pojo.gwt.LightEntity;
 @Entity
-public class YRole implements Serializable {
+public class YRole extends LightEntity implements Serializable {
 	private Integer roleId;
 	private String rolename;
 
