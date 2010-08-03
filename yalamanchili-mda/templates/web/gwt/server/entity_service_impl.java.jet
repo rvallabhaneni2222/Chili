@@ -216,7 +216,8 @@ import info.yalamanchili.trace.Trace;
 @Scope(ScopeType.SESSION)
 @Name("${$packageName}.${lower-case($class/@name)}.${$class/@name}Service")
 public class ${$class/@name}ServiceImpl extends GileadService implements ${$packageName}.${lower-case($class/@name)}.${$class/@name}Service {
-
+	private static final Log log = LogFactory
+			.getLog(${$class/@name}ServiceImpl.class);
 
 	//@In(create = true)
 	//protected GenericServiceLocal genericServiceBean;
@@ -230,7 +231,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	@Override
 	@WebRemote
 	public ${$class/@name} create(${$class/@name} entity) {
-		return  em.merge(entity);
+		return  (${$class/@name}) getBeanManager().clone(em.merge(entity));
 	}
 
 	@Override
@@ -258,7 +259,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	@Override
 	@WebRemote
 	public ${$class/@name} update(${$class/@name} entity) {
-		return em.merge(entity);
+		return (${$class/@name}) getBeanManager().merge(entity);
 	}
 
 <%-- process all getRelated entities relations--%>
