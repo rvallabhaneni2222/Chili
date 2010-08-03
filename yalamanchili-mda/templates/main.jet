@@ -370,9 +370,11 @@
     	<ws:file  path="${camelCase($projectName)}Service.java" template="templates/web/gwt/client/rpc/app_service_sync.java.jet"/>
     	<ws:file  path="${camelCase($projectName)}ServiceAsync.java" template="templates/web/gwt/client/rpc/app_service_async.java.jet"/>
     	</ws:folder>
-    	<%-- Current project servlet  --%>
+    	<%-- Current project servlet,GWT servlet and GileadService  --%>
     	<ws:folder path="${$groupIDNEW}/server">
+    	<ws:file  path="GWTServiceImpl.java" template="templates/web/gwt/server/web_gwtservice_class_template.java.jet"/>
     	<ws:file  path="${camelCase($projectName)}ServiceImpl.java" template="templates/web/gwt/server/app_service_impl.java.jet"/>
+    	<ws:file  path="GileadService.java" template="templates/web/gwt/server/gilead_service.java.jet"/>
     	</ws:folder>
     	
 		<%-- gwt messages and constants files--%>
@@ -396,11 +398,6 @@
     	<ws:file  path="CreateUserPanel.java" template="templates/web/gwt/client/web_create_user.java.jet"/>
     	<%--  Status panel class --%>
     	<ws:file  path="StatusPanel.java" template="templates/web/gwt/client/web_status_panel_template.java.jet"/>
-    	</ws:folder>
-    	
-    	<%-- GWT server class --%>
-    	<ws:folder path="${$groupIDNEW}/server">
-    	<ws:file  path="GWTServiceImpl.java" template="templates/web/gwt/server/web_gwtservice_class_template.java.jet"/>
     	</ws:folder>
     	
     	<%-- Iterate through packages and classes --%>

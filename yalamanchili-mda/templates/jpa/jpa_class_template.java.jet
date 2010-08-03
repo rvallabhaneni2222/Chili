@@ -41,7 +41,7 @@ import org.hibernate.validator.Future;
 import org.hibernate.validator.Max;
 import org.hibernate.validator.Min;
 import org.hibernate.validator.NotEmpty;
-import net.sf.gilead.pojo.java5.LightEntity;
+import net.sf.gilead.pojo.gwt.LightEntity;
 
 <f:message>generated.comment</f:message>
 <c:if test="$class/@parent1 = $class/@name">

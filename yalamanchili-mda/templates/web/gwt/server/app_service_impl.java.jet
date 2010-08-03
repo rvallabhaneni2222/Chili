@@ -17,7 +17,6 @@ import org.jboss.seam.annotations.Transactional;
 import javax.persistence.Query;
 import ${$groupID}.entity.security.YUser;
 import ${$groupID}.entity.security.YRole;
-import org.dozer.Mapper;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.ScopeType;
 
@@ -25,7 +24,7 @@ import org.jboss.seam.ScopeType;
 @Transactional
 @Scope(ScopeType.SESSION)
 @Name("${$webPackage}rpc.${camelCase($projectName)}Service")
-public class ${camelCase($projectName)}ServiceImpl implements ${$webPackage}rpc.${camelCase($projectName)}Service {
+public class ${camelCase($projectName)}ServiceImpl extends GileadService implements ${$webPackage}rpc.${camelCase($projectName)}Service {
 	private static final Log log = LogFactory
 			.getLog(${camelCase($projectName)}ServiceImpl.class);
 	
@@ -37,9 +36,6 @@ public class ${camelCase($projectName)}ServiceImpl implements ${$webPackage}rpc.
 	
 	@In(create = true)
 	protected IdentityManager identityManager;
-	
-	@In
-	protected Mapper dozerMapper;
 
 	@Override
 	@WebRemote
@@ -53,7 +49,7 @@ public class ${camelCase($projectName)}ServiceImpl implements ${$webPackage}rpc.
 			Query getUserQuery = em.createQuery("from YUser where username='"
 					+ username + "'");
 			YUser user = (YUser) getUserQuery.getSingleResult();
-		return dozerMapper.map(user, YUser.class);
+		return (YUser) getBeanManager().clone(user);
 		} else {
 			return null;
 		}

@@ -11,7 +11,8 @@ import org.jboss.seam.annotations.Transactional;
 import ${$groupID}.ejb.GenericServiceLocal;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+import info.yalamanchili.server.GWTServletUtils;
+import javax.persistence.Query;
 <%-- process all getRelated entities relations--%>
 <%--process level2 generizations --%>
 <c:if test="not($class/@name = $parentClass2/@name)">
@@ -202,39 +203,34 @@ import javax.persistence.EntityManager;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.remoting.WebRemote;
 import info.yalamanchili.gwt.beans.TableObj;
 import org.jboss.seam.annotations.remoting.WebRemote;
 
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.ScopeType;
 import info.yalamanchili.trace.Trace;
-import org.dozer.Mapper;
 
 
 @Trace
 @Transactional
 @Scope(ScopeType.SESSION)
 @Name("${$packageName}.${lower-case($class/@name)}.${$class/@name}Service")
-public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case($class/@name)}.${$class/@name}Service {
+public class ${$class/@name}ServiceImpl extends GileadService implements ${$packageName}.${lower-case($class/@name)}.${$class/@name}Service {
 
 
-	@In(create = true)
-	protected GenericServiceLocal genericServiceBean;
+	//@In(create = true)
+	//protected GenericServiceLocal genericServiceBean;
 
-	@In(create = true)
-	protected ${$class/@name}ServiceLocal ${lower-case($class/@name)}ServiceBean;
+	//@In(create = true)
+	//protected ${$class/@name}ServiceLocal ${lower-case($class/@name)}ServiceBean;
 	
 	@In(create = true)
 	protected EntityManager em;
 	
-	@In
-	protected Mapper dozerMapper;
-	
 	@Override
 	@WebRemote
 	public ${$class/@name} create(${$class/@name} entity) {
-		return ${lower-case($class/@name)}ServiceBean.create(entity);
+		return  em.merge(entity);
 	}
 
 	@Override
@@ -247,19 +243,22 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	@Override
 	@WebRemote
 	public TableObj<${$class/@name}> getTableObj( int start) {
-		return ${lower-case($class/@name)}ServiceBean.getTableObj( start);
+		TableObj<${$class/@name}> tableObj = new TableObj<${$class/@name}>();
+		tableObj.setRecords(getEntities(start));
+		tableObj.setNumberOfRecords(getEntitySize());
+		return tableObj;
 	}
 
 	@Override
 	@WebRemote
 	public ${$class/@name} read( Long id) {
-		return ${lower-case($class/@name)}ServiceBean.read(id);
+		return (${$class/@name}) getBeanManager().clone(em.find(${$class/@name}.class, id));
 	}
 
 	@Override
 	@WebRemote
 	public ${$class/@name} update(${$class/@name} entity) {
-		return ${lower-case($class/@name)}ServiceBean.update(entity);
+		return em.merge(entity);
 	}
 
 <%-- process all getRelated entities relations--%>
@@ -290,7 +289,7 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	public  List<${$class2/@name}> get${$class2/@name}s(Long entityID) {
 		List<${$class2/@name}> res = new ArrayList<${$class2/@name}>();
 		for (${$class2/@name} obj : em.find(${$class/@name}.class, entityID).get${$class2/@name}s()) {
-			res.add(dozerMapper.map(obj, ${$class2/@name}.class));
+			res.add((${$class2/@name}) getBeanManager().clone(obj));
 		}
 		return res;	
 	}
@@ -334,7 +333,7 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	public  List<${$class2/@name}> get${$class2/@name}s(Long entityID) {
 		List<${$class2/@name}> res = new ArrayList<${$class2/@name}>();
 		for (${$class2/@name} obj : em.find(${$class/@name}.class, entityID).get${$class2/@name}s()) {
-			res.add(dozerMapper.map(obj, ${$class2/@name}.class));
+			res.add((${$class2/@name}) getBeanManager().clone(obj));
 		}
 		return res;	
 	}
@@ -376,9 +375,9 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	public  List<${$class2/@name}> get${$class2/@name}s(Long entityID) {
 		List<${$class2/@name}> res = new ArrayList<${$class2/@name}>();
 		for (${$class2/@name} obj : em.find(${$class/@name}.class, entityID).get${$class2/@name}s()) {
-			res.add(dozerMapper.map(obj, ${$class2/@name}.class));
+			res.add((${$class2/@name}) getBeanManager().clone(obj));
 		}
-		return res;		
+		return res;	
 	}
   					  		 			</c:if> 
   					  		 		</c:iterate>
@@ -415,11 +414,35 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2">
+  					  		 			//TODO fix this remove generics
   					  		 			@Override
 										@WebRemote
 										public void addAll(${$class2/@name} ${lower-case($class2/@name)}, ${$class/@name} ${lower-case($class/@name)},
-												List<Long> children) {
-											${lower-case($class/@name)}ServiceBean.addAll(${lower-case($class2/@name)}, ${lower-case($class/@name)}, children);
+												List<Long> ids) {							
+											// find getter
+											Method addMethod = null;
+											for (Method method : ${lower-case($class2/@name)}.getClass().getMethods()) {
+												if (method.getName().equalsIgnoreCase(
+														"add" + ${lower-case($class/@name)}.getClass().getSimpleName())) {
+													addMethod = method;
+												}
+											}
+											${lower-case($class2/@name)} = em.merge(${lower-case($class2/@name)});
+											for (Long id : ids) {
+												${$class/@name} child = (${$class/@name}) em.find(${lower-case($class/@name)}.getClass(), id);
+												if (child == null) {
+													throw new RuntimeException("error find entity with id:" + id
+															+ ":on:" + child.getClass().getName());
+												}
+												try {
+													addMethod.invoke(${lower-case($class2/@name)}, child);
+												} catch (Exception e) {
+													e.printStackTrace();
+													throw new RuntimeException("error calling method:"
+															+ addMethod.getName() + ":on:"
+															+ ${lower-case($class2/@name)}.getClass().getSimpleName());
+												}
+											}
 										} 
   					  		 			</c:if> 
   					  		 		</c:iterate>
@@ -439,13 +462,26 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	@Override
 	@WebRemote
 	public List<${$class/@name}> getEntities(${$class/@name} entity) {
-		return ${lower-case($class/@name)}ServiceBean.getEntities(entity);
+		List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
+		Query getEntities = em.createQuery(GWTServletUtils
+				.getSearchQueryString(entity));
+		for (Object obj : getEntities.getResultList()) {
+			entities.add((${$class/@name}) getBeanManager().clone(obj));
+		}
+		return entities;
 	}
 
 	@Override
 	@WebRemote
 	public  Map<Long, String> getListBoxValues(String[] columns) {
-		return ${lower-case($class/@name)}ServiceBean.getListBoxValues(columns);
+		String query = GWTServletUtils.getListBoxResultsQueryString(${$class/@name}.class.getCanonicalName(), columns);
+		Map<Long, String> values = new HashMap<Long, String>();
+		Query getListBoxValues = em.createQuery(query);
+		for (Object obj : getListBoxValues.getResultList()) {
+			Object[] obs = (Object[]) obj;
+			values.put((Long) obs[0], (String) obs[1]);
+		}
+		return values;
 	}
 
 	
@@ -453,7 +489,8 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 	@Override
 	@WebRemote
 	public List<String> getSuggestionsForName(String name, ${$class/@name} entity) {
-		return genericServiceBean.getSuggestionsForName(name, entity);
+		Query query = em.createQuery(GWTServletUtils.getSuggestionsQueryForName(name, entity));
+		return query.getResultList();
 	}
 
 	
@@ -490,7 +527,27 @@ public class ${$class/@name}ServiceImpl implements ${$packageName}.${lower-case(
 		</c:iterate>
 	</c:iterate>
 </c:iterate>
-	
+
+	public <T extends Serializable> List<${$class/@name}> getEntities(int start) {
+		List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
+		String query = "from " + ${$class/@name}.class.getCanonicalName();
+		Query getEntitites = em.createQuery(query);
+		getEntitites.setFirstResult(start);
+		// TODO externalize the max results value
+		getEntitites.setMaxResults(10);
+		for (Object obj : getEntitites.getResultList()) {
+			${$class/@name} clone = (${$class/@name}) getBeanManager().clone(obj);
+			entities.add(clone);
+		}
+		return entities;
+	}
+
+	public <T extends Serializable> Long getEntitySize() {
+		String query = "select count(entity) from "
+				+ ${$class/@name}.class.getCanonicalName() + " entity";
+		Query getEntitiesSize = em.createQuery(query);
+		return (Long) getEntitiesSize.getSingleResult();
+	}	
 	
 }
 </java:format>
