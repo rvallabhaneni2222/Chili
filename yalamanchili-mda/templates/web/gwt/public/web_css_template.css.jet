@@ -1,132 +1,164 @@
-.mainPanel{
-
+.mainPanel {
+	
 }
+
 /* panel to display the ReadAll, Read, Update entity panels this occupies the center of the DockLayoutPanel of the rool panel. see ProjectWelcome.java under the client package*/
-.entityPanel{
-width: 100%;
- border-top  :    2px solid #88ACE0;
- border-right  :    2px solid #88ACE0;
- border-left  :    2px solid #88ACE0;
+.entityPanel {
+	width: 100%;
+	border-top: 2px solid #88ACE0;
+	border-right: 2px solid #88ACE0;
+	border-left: 2px solid #88ACE0;
 }
+
+/* Logo Image*/
+.logo-Image {
+	height: 40px;
+	width: 120px;
+}
+
 /* panel to display the create user, login/logout, welcome user links this is added north 1 widget to Docklayoutpanel*/
-.statusPanel{
-width : 100%;
- border  :    2px solid #88ACE0;
+.statusPanel {
+	width: 100%;
+	border: 2px solid #88ACE0;
 }
+
 /* this panel holds the Menu tab items to hold the entity maintainence tasks*/
-.entityMenuBar{
-width : 100%;
- border  :    2px solid #88ACE0;
+.entityMenuBar {
+	width: 100%;
+	border: 2px solid #88ACE0;
 }
+
 /* this panel holds the search bar and is tied to west of the docklayoutpanel */
-.sidePanel{
-}
-.sidePanelTop{
-
-}
-.sidePanelBottom{
-
+.sidePanel {
+	
 }
 
-.LoginPanel{
-background-color: #88ACE0;
+.sidePanelTop {
+	
 }
-.y-gwt-OptionsComposite{
 
+.sidePanelBottom {
+	
 }
-.y-gwt-PagingBar{
-font-weight: bold;
-font-size: 10pt;
-background-color             :    #E5E5E5;
-width: 100%;
+
+.LoginPanel {
+	background-color: #88ACE0;
 }
-.y-gwt-TableHeader
-{
-    background-color             :    #D9D9D9;
-    font-weight: bold;
+
+.y-gwt-OptionsComposite {
+	
+}
+
+.y-gwt-PagingBar {
+	font-weight: bold;
+	font-size: 10pt;
+	background-color: #E5E5E5;
+	width: 100%;
+}
+
+.y-gwt-TableHeader {
+	background-color: #D9D9D9;
+	font-weight: bold;
 	font-size: 11pt
 }
-.y-gwt-Table
-{
-font-size: 10pt;
-	font-family:	helvetica, arial sans-serif ;
+
+.y-gwt-Table {
+	font-size: 10pt;
+	font-family: helvetica, arial sans-serif;
 	/* light blue http://www.colourlovers.com/web/blog/2007/06/30/ultimate-html-color-hex-code-list */
-    background-color             :    #D2E8FF;
-    width: 100%;
+	background-color: #D2E8FF;
+	width: 100%;
 }
-.y-gwt-ReadAllPanel{
-width: 100%;
-}
-.y-gwt-TablePanel{
-width: 100%;
-}
-.y-gwt-SideBarComposite{
- border   :    2px solid #88ACE0;
 
+.y-gwt-ReadAllPanel {
+	width: 100%;
 }
-.y-gwt-OptionsComposite{
- border   :    2px solid #88ACE0;
+
+.y-gwt-TablePanel {
+	width: 100%;
 }
-.SideBarComposite{
+
+.y-gwt-SideBarComposite {
+	border: 2px solid #88ACE0;
 }
-.SearchDisclosurePanel{
-border   :    1px solid #88ACE0;
-background-color             :    #E5E5E5;
-width: 220px;
+
+.y-gwt-OptionsComposite {
+	border: 2px solid #88ACE0;
 }
-.y-gwt-ReadEntityCaptionPanel{
-width: 1010px;
+
+.SideBarComposite {
+	
 }
-.y-gwt-UpdateEntityCaptionPanel{
-width: 1010px;
+
+.SearchDisclosurePanel {
+	border: 1px solid #88ACE0;
+	background-color: #E5E5E5;
+	width: 220px;
 }
-.y-gwt-CreateEntityCaptionPanel{
-width: 1010px;
+
+.y-gwt-ReadEntityCaptionPanel {
+	width: 1010px;
 }
-.y-gwt-ReadEntityCaptionPanel .gwt-TextBox-readonly{	
-background-color: #F5F5F5;
+
+.y-gwt-UpdateEntityCaptionPanel {
+	width: 1010px;
 }
-.y-gwt-ReadEntityCaptionPanel .tfFieldHeader{
-font-weight: bold;
-font-size: 10pt;
+
+.y-gwt-CreateEntityCaptionPanel {
+	width: 1010px;
 }
-.y-gwt-CreateEntityCaptionPanel .tfFieldHeader{
-font-weight: bold;
-font-size: 10pt;
+
+.y-gwt-ReadEntityCaptionPanel .gwt-TextBox-readonly {
+	background-color: #F5F5F5;
 }
-.y-gwt-CreateEntityCaptionPanel .tfErrorMessage{
-font-size: 8pt;
+
+.y-gwt-ReadEntityCaptionPanel .tfFieldHeader {
+	font-weight: bold;
+	font-size: 10pt;
 }
-.y-gwt-UpdateEntityCaptionPanel .tfFieldHeader{
-font-weight: bold;
-font-size: 10pt;
+
+.y-gwt-CreateEntityCaptionPanel .tfFieldHeader {
+	font-weight: bold;
+	font-size: 10pt;
 }
-.y-gwt-UpdateEntityCaptionPanel .tfErrorMessage{
-font-size: 8pt;
+
+.y-gwt-CreateEntityCaptionPanel .tfErrorMessage {
+	font-size: 8pt;
 }
+
+.y-gwt-UpdateEntityCaptionPanel .tfFieldHeader {
+	font-weight: bold;
+	font-size: 10pt;
+}
+
+.y-gwt-UpdateEntityCaptionPanel .tfErrorMessage {
+	font-size: 8pt;
+}
+
 .y-gwt-SearchEntityCaptionPanel {
-
+	
 }
-.y-gwt-SearchEntityCaptionPanel .tfFieldHeader{
-font-size: 10pt;
-}
-.y-gwt-SearchEntityCaptionPanel .tfErrorMessage{
 
+.y-gwt-SearchEntityCaptionPanel .tfFieldHeader {
+	font-size: 10pt;
 }
-.y-gwt-SearchEntityCaptionPanel .tfTextBox{
 
+.y-gwt-SearchEntityCaptionPanel .tfErrorMessage {
+	
 }
-.gwt-MenuItem
-{
 
-    cursor                      :   hand;
-    cursor                      :   pointer;
-
-    border                      :   1px solid #999;
-    background-color            :   #eee;
-    padding                     :   2px 10px;
+.y-gwt-SearchEntityCaptionPanel .tfTextBox {
+	
 }
-.gwt-MenuItem-selected
-{
-    background-color            :   #fff;
+
+.gwt-MenuItem {
+	cursor: hand;
+	cursor: pointer;
+	border: 1px solid #999;
+	background-color: #eee;
+	padding: 2px 10px;
+}
+
+.gwt-MenuItem-selected {
+	background-color: #fff;
 }

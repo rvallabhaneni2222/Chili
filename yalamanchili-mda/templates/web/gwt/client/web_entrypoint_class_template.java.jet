@@ -91,7 +91,7 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 	
 	protected void configureMainPanel() {
 	/* the units addNorth(statusPanel, 3) represents the spacing need to play with values to get the right layout*/
-		mainPanel.addNorth(statusPanel, 3);
+		mainPanel.addNorth(statusPanel, 4);
 		mainPanel.addNorth(menuBar, 2);
 		mainPanel.addWest(sidePanel, 15);
 		mainPanel.add(entityPanel);
