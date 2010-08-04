@@ -2,8 +2,8 @@
 
 package ${$groupID}.client;
 
-import ${$groupID}.entity.security.YUser;
-import ${$groupID}.entity.security.YRole;
+import info.yalamanchili.security.jpa.YUser;
+import info.yalamanchili.security.jpa.YRole;
 import com.google.gwt.user.client.Window;
 import info.yalamanchili.gwt.widgets.LoginPanelAbstract;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;

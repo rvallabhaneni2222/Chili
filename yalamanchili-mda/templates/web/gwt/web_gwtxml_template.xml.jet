@@ -14,7 +14,10 @@
 
 	<!-- used to include the jpa entities in the gwt compiler path -->
 	<inherits name='${$groupID}.entity' />
-
+	
+	<!-- used to include the y-security entities in the gwt compiler path -->
+	<inherits name='info.yalamanchili.security.security-jpa' />
+	
 	<!-- used to include yalamanchili-gwt project in gwt compiler path -->
 	<inherits name='info.yalamanchili.yalamanchili-gwt' />
 	
@@ -25,13 +28,6 @@
 	<entry-point class="${$groupID}.client.${camelCase($projectName)}Welcome" />
 	<stylesheet src="${$projectName}.css" />
 
-	<!--source code packages              -->
-
+	<!--source code packages -->
 	<source path='client' />
-
-<!--	<servlet path='/gwtservices' class='info.yalamanchili.anulist.server.GWTServiceImpl' />-->
-<!--	<servlet path='/welcomeservices' class='info.yalamanchili.anulist.server.ALServiceImpl' />-->
-<!--	<servlet path='/secureservices'-->
-<!--		class='info.yalamanchili.anulist.server.ALSecureServiceImpl' />-->
-
 </module>

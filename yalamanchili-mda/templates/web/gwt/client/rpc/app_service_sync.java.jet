@@ -7,8 +7,8 @@ package ${$webPackage}rpc;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import ${$groupID}.entity.security.YUser;
-import ${$groupID}.entity.security.YRole;
+import info.yalamanchili.security.jpa.YUser;
+import info.yalamanchili.security.jpa.YRole;
 /**
  * This is a GWT service, which will be implemented as a Seam component on the
  * server (see the server package). GWT uses strongly typed RPC interfaces.
