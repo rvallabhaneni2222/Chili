@@ -1,7 +1,8 @@
 <java:format>
 package ${$groupID}.rest;
 import info.yalamanchili.mapper.BeanMapper;
-import ${$groupID}.entity.security.YUser;
+import info.yalamanchili.security.jpa.YUser;
+import info.yalamanchili.security.jpa.YRole;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
