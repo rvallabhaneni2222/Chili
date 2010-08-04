@@ -7,7 +7,8 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>yalamanchili-embedded-jboss</name>
 	<description>serves as a parent (aggregate) project for jboss
-		embedded dependencies</description>
+		embedded
+		dependencies</description>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
@@ -41,7 +42,7 @@
 			<artifactId>jms-ra</artifactId>
 			<version>${version.jboss-embedded}</version>
 		</dependency>
-		<!--  the below are for seam testing support -->
+		<!-- the below are for seam testing support -->
 		<dependency>
 			<groupId>javax.el</groupId>
 			<artifactId>el-api</artifactId>
@@ -67,13 +68,11 @@
 			<artifactId>jboss-seam</artifactId>
 			<version>2.2.0.GA</version>
 		</dependency>
-		<!-- 
 		<dependency>
 			<groupId>info.yalamanchili.security</groupId>
 			<artifactId>yalamanchili-security</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
-		-->
 	</dependencies>
 	<organization>
 		<name>yalamanchili</name>
