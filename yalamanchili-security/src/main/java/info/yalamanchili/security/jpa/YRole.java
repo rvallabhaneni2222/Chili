@@ -1,15 +1,15 @@
 package info.yalamanchili.security.jpa;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import net.sf.gilead.pojo.gwt.LightEntity;
+
 import org.jboss.seam.annotations.security.management.RoleName;
 
 @Entity
-public class YRole implements Serializable {
+public class YRole extends LightEntity {
 
 	public static final long serialVersionUID = 5472657332417332843L;
 	public Integer roleId;

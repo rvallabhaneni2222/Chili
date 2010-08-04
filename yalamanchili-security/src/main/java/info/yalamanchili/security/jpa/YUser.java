@@ -1,6 +1,5 @@
 package info.yalamanchili.security.jpa;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,12 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import net.sf.gilead.pojo.gwt.LightEntity;
+
 import org.jboss.seam.annotations.security.management.UserPassword;
 import org.jboss.seam.annotations.security.management.UserPrincipal;
 import org.jboss.seam.annotations.security.management.UserRoles;
 
 @Entity
-public class YUser implements Serializable {
+public class YUser extends LightEntity {
 
 	public static final long serialVersionUID = 4093061330460788496L;
 
