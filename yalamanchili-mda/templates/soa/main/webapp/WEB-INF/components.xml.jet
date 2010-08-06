@@ -25,8 +25,8 @@
 			<property name="jndiPattern">#{ejbName}/local</property>
 		</component> 
  
-	<web:authentication-filter url-pattern="/seam/resource/restv1/crud/*"
-		auth-type="basic" />
+	<!-- <web:authentication-filter url-pattern="/seam/resource/restv1/crud/*"
+		auth-type="basic" /> -->
 		
 		<persistence:managed-persistence-context name="em"
 		auto-create="true" persistence-unit-jndi-name="java:/${$projectName}"/>

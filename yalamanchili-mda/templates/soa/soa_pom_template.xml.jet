@@ -19,10 +19,6 @@
 					<artifactId>gwt-servlet</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>info.yalamanchili.security</groupId>
-					<artifactId>yalamanchili-security</artifactId>
-				</exclusion>
-				<exclusion>
 					<groupId>com.google.gwt</groupId>
 					<artifactId>gwt-user</artifactId>
 				</exclusion>
