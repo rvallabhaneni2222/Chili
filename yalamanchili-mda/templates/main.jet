@@ -10,7 +10,7 @@
 <c:setVariable select="'info.yalamanchili.project'" var="groupID"/>
 <c:setVariable select="'info/yalamanchili/project'" var="groupIDNEW"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
-<c:setVariable select="'/Users/yphanikumar/codebase/generated'" var="location"/>
+<c:setVariable select="'C://codebase//generated'" var="location"/>
 <%--versions --%>
 <c:setVariable select="'2.0.0'" var="gwt-version"/>
 <c:setVariable select="'2.6.2'" var="gwt-log-version"/>
@@ -231,7 +231,6 @@
 	 	</c:if>
     </ws:folder>
     <ws:folder path="jboss/deploy"/>
-
 </ws:project>
 
 <%--creates the JPA project--%>
@@ -513,6 +512,11 @@
     <ws:copyFile src="templates/web/gwt/seamgwt2/SeamRPC.java" target="src/main/java/seamgwt2/SeamRPC.java" />
     <ws:copyFile src="templates/web/gwt/seamgwt2/SeamRPCRequest.java" target="src/main/java/seamgwt2/SeamRPCRequest.java" />
   
+</ws:project>
+
+<%--creates the SOA APP project--%>
+<ws:project name="{$projectName}-soa-app" location="{$location}/{$projectName}-soa-app">
+	<ws:file path="pom.xml" template="templates/soa-app/soa_app_pom_template.xml.jet"/>
 </ws:project>
 
 <%--creates the SOA project--%>
