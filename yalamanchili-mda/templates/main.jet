@@ -519,13 +519,13 @@
 	<ws:file path="pom.xml" template="templates/soa-app/soa_app_pom_template.xml.jet"/>
 </ws:project>
 
-<%--creates the REST WAR for SOA project--%>
-<ws:project name="{$projectName}-rest" location="{$location}/{$projectName}-rest">
-	<ws:file path="pom.xml" template="templates/rest/rest_pom_template.xml.jet"/>
+<%--creates the SOA project--%>
+<ws:project name="{$projectName}-soa" location="{$location}/{$projectName}-soa">
+	<ws:file path="pom.xml" template="templates/soa/soa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
 			<ws:folder path="${$groupIDNEW}/rest">
 			<%-- rest service class--%>
-			<ws:file  path="${camelCase($projectName)}Service.java" template="templates/rest/main/rest_manage.java.jet"/>
+			<ws:file  path="${camelCase($projectName)}Service.java" template="templates/soa/main/rest_manage.java.jet"/>
 			</ws:folder>    
         	<%-- Iterate through packages and classes --%>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
@@ -561,15 +561,15 @@
 			</c:iterate>
 			<ws:folder path="${$groupIDNEW}/rest/${$package/@name}">
 			<%-- rest service class--%>
-			<ws:file  path="{$class/@name}Service.java" template="templates/rest/main/entity_rest_service.java.jet"/>
+			<ws:file  path="{$class/@name}Service.java" template="templates/soa/main/entity_rest_service.java.jet"/>
 			</ws:folder>
 	</c:iterate>
 	</c:iterate>			
     </ws:folder>
     <ws:folder path="src/main/webapp">
-	<ws:file template="templates/rest/main/webapp/WEB-INF/components.xml.jet" path="WEB-INF/components.xml"/>
-	<ws:file template="templates/rest/main/webapp/WEB-INF/rest_jboss-web.xml.jet" path="WEB-INF/jboss-web.xml"/>
-	<ws:file template="templates/rest/main/webapp/WEB-INF/web.xml.jet" path="WEB-INF/web.xml"/>
+	<ws:file template="templates/soa/main/webapp/WEB-INF/components.xml.jet" path="WEB-INF/components.xml"/>
+	<ws:file template="templates/soa/main/webapp/WEB-INF/soa_jboss-web.xml.jet" path="WEB-INF/jboss-web.xml"/>
+	<ws:file template="templates/soa/main/webapp/WEB-INF/web.xml.jet" path="WEB-INF/web.xml"/>
     </ws:folder>
     <ws:folder path="src/main/resources">
      <ws:file template="templates/web/seam.properties.jet" path="seam.properties"/>
