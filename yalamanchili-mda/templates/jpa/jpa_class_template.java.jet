@@ -50,11 +50,11 @@ import net.sf.gilead.pojo.gwt.LightEntity;
 </c:if> 
 </c:if>
 @Entity
-public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name} extends <c:if test="$class/@parent1 = $class/@name">  LightEntity </c:if> <c:if test="not($class/@parent1 = $class/@name)">  ${$class/@parent1} </c:if>  implements Serializable{
+public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name} extends <c:if test="$class/@parentClass1Name = $class/@name">  LightEntity </c:if> <c:if test="not($class/@parentClass1Name = $class/@name)">  ${$class/@parentClass1Name} </c:if>  implements Serializable{
 /** @generated */
 private static final long serialVersionUID = <f:unique/>L;
 
-<c:if test="$class/@parent1 = $class/@name">
+<c:if test="$class/@parentClass1Name = $class/@name">
 	@Id
 	@GeneratedValue
 	protected Long id; 
@@ -252,7 +252,7 @@ super();
 </c:if> 
 
 <%-- if class has a parent--%>
-<c:if test="$class/@parent1 = $class/@name">
+<c:if test="$class/@parentClass1Name = $class/@name">
 	public Long getId() {
 		return id;
 	}

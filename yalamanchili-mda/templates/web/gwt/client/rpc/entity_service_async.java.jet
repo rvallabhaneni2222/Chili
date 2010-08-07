@@ -168,10 +168,10 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
  										import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
  										<c:if test="not($class2/@parent1 = $class2/@name)">
- 										import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@parent1};
+ 										import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@parentClass1Name};
  										</c:if>
  										<c:if test="not($class2/@parent2 = $class2/@name)"> 
- 										import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@parent2};
+ 										import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@parentClass2Name};
  										</c:if>
   					  		 			</c:if> 
   					  		 		</c:iterate>
