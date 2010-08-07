@@ -1,0 +1,54 @@
+<%-- Iterate through packages and classes and check if a class is a dependent or not --%>
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+			 <%-- iterate through class and add only non composite children and non parent--%>
+			 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		 <%-- Flag varibles--%>
+    		 <c:set select="$class" name="isDependent">null</c:set>
+    		 <c:setVariable select="$class/@xmi.id" var="isComposite"/>
+    		 <c:setVariable select="$class/@xmi.id" var="classID"/>
+    		 <c:setVariable select="$class/@xmi.id" var="isParent"/>
+    		 <c:if test="$class/@isAbstract = 'false'">
+    		 <%-- process all associations to eliminate composite children--%>
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+						<c:iterate select="$association/Association.connection" var="association_connection">
+							<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+								<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+							<%-- check is the association is corresponding to the class  --%>
+										<c:if test="$association_connection_end_classID = $classID"> 
+					  					   	<%-- iterate over the iterations ends  --%>
+					  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+					  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+					  					  	 <c:if test="not($association_connection_end_classID2 = $classID)"> 
+					  					  	 <%-- process only non compositions--%>
+					  					  	 <c:if test="$association_connection_end2/@aggregation = 'composite'">
+					  					  	 <%-- update flag variable--%>
+					  					  	 <c:setVariable select="$class/@name" var="isComposite"/>
+					  					  	 </c:if>
+					  					 	  </c:if>	
+					  					 	  </c:iterate>					 	 				 	  
+										</c:if> 
+																			
+							</c:iterate>
+						</c:iterate>
+					</c:iterate>
+			<%-- process all generizations to eliminate all parent classes--%>	
+				<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+					<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $classID">
+					<%-- update flag variable--%>
+					<c:setVariable select="$class/@name" var="isParent"/>
+					</c:if>															
+				</c:iterate>	
+			 <%-- check for flag varibles and add menu item class--%>	    		 
+    		 <c:if test="$isComposite = $class/@xmi.id">
+    		 <c:if test="$isParent = $class/@xmi.id">  
+    		 	<c:set select="$class" name="isDependent">false</c:set>
+			</c:if>
+			</c:if>
+    		 <c:if test="not($isComposite = $class/@xmi.id)">
+    		 <c:if test="$isParent = $class/@xmi.id">  
+    		 	<c:set select="$class" name="isDependent">true</c:set>
+			</c:if>
+			</c:if>			
+			</c:if>
+			 </c:iterate>			 
+</c:iterate>
