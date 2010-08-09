@@ -151,7 +151,7 @@ protected  BeanMapper mapper = new BeanMapper();
 	@GET
 	@Path("/read/{id}")
 	@Produces("application/xml")
-	@Restrict("#{s:hasRole('user')}")
+	//@Restrict("#{s:hasRole('user')}")
 	public String read(@PathParam("id") Long id) {
 		${$class/@name} ${lower-case($class/@name)} = em.find(${$class/@name}.class, id);
 		if(${lower-case($class/@name)} ==null){
@@ -166,7 +166,7 @@ protected  BeanMapper mapper = new BeanMapper();
 	@Consumes("application/xml")
 	@PUT
 	@Path("/create")
-	@Restrict("#{s:hasRole('admin')}")
+	//@Restrict("#{s:hasRole('admin')}")
 	public String create(String entity) {
 		${$class/@name} ${lower-case($class/@name)} = (${$class/@name}) xstream.fromXML(entity);
 		return xstream.toXML(em.merge(${lower-case($class/@name)}));
@@ -176,7 +176,7 @@ protected  BeanMapper mapper = new BeanMapper();
 	@Consumes("application/xml")
 	@PUT
 	@Path("/update")
-	@Restrict("#{s:hasRole('admin')}")
+	//@Restrict("#{s:hasRole('admin')}")
 	public String update(String entity) {
 		${$class/@name} ${lower-case($class/@name)} = (${$class/@name}) xstream.fromXML(entity);
 		return xstream.toXML(em.merge(${lower-case($class/@name)}));
@@ -184,7 +184,7 @@ protected  BeanMapper mapper = new BeanMapper();
 
 	@DELETE
 	@Path("/delete/{id}")
-	@Restrict("#{s:hasRole('admin')}")
+	//@Restrict("#{s:hasRole('admin')}")
 	public void delete(@PathParam("id") String id) {
 		em.remove(em.find(${$class/@name}.class, id));
 	}

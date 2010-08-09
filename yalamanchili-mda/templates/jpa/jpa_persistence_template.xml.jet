@@ -20,6 +20,12 @@
 			<property name="hibernate.show_sql" value="false" />
 			<property name="jboss.entity.manager.factory.jndi.name"
 				value="java:/${$projectName}" />
+		<c:if test="$enableHibernateSearch = 'true'">
+			<property name="hibernate.search.default.directory_provider"
+				value="org.hibernate.search.store.FSDirectoryProvider" />
+			<property name="hibernate.search.default.indexBase" 
+			value="$JBOSS_HOME/server/default/data/${$projectName}/lucene/indexes" />
+	 	</c:if>				
 		</properties>
 
 	</persistence-unit>

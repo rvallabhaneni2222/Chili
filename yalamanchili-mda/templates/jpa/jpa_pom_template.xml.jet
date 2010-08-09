@@ -12,6 +12,18 @@
 	<version>${$version}</version>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+		<c:if test="$enableHibernateSearch = 'true'">
+	 	<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search</artifactId>
+			<version>3.1.1.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+	 	</c:if>
 	</dependencies>
 	<build>
 		<plugins>

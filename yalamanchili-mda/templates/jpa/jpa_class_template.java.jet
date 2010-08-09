@@ -28,6 +28,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+<c:if test="$enableHibernateSearch = 'true'">
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+</c:if>	
 
 
 
@@ -44,7 +49,14 @@ import org.hibernate.validator.NotEmpty;
 import net.sf.gilead.pojo.gwt.LightEntity;
 
 <f:message>generated.comment</f:message>
-<c:if test="$class/@parent1 = $class/@name">
+<%-- check and add hibernate search annotation--%>
+<c:if test="$class/@parentClass1Name = $class/@name">
+<c:if test="$enableHibernateSearch = 'true'">
+@Indexed
+</c:if>
+</c:if>
+<%-- annotations for inheritance single_table--%>
+<c:if test="$class/@parentClass1Name = $class/@name">
 <c:if test="not($class/@hasChildren = $class/@name)">
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 </c:if> 
@@ -57,27 +69,20 @@ private static final long serialVersionUID = <f:unique/>L;
 <c:if test="$class/@parentClass1Name = $class/@name">
 	@Id
 	@GeneratedValue
+<c:if test="$enableHibernateSearch = 'true'">
+@DocumentId
+</c:if>
 	protected Long id; 
 </c:if>
- 
-
 
 <%-- Process annotations on the primitive datatypes--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 <f:message>generated.comment</f:message>
+<c:if test="$enableHibernateSearch = 'true'">
+@Field
+</c:if>
 <%-- processes yalamanchili gwt tags Tag--%>
 	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
-		<%-- If UIElement--%>
-		<c:if test="$stereotype/@href = ${'$UIElementID'}">
-			<c:iterate select="$attribute/ModelElement.taggedValue" var="taggedvalue">
-				<c:iterate select="$taggedvalue/TaggedValue" var="subtag">
-				<%-- If POSITION TAG--%>
-					<c:if test="$subtag/TaggedValue.type/TagDefinition/@href = ${'$PositionID'}">
-@UIElement(position = Position.${$subtag/TaggedValue.dataValue})			
-					</c:if>
-				</c:iterate>
-			</c:iterate>
-		</c:if>
 		<c:if test="$stereotype/@href = ${'$LengthID'}">
 			<c:iterate select="$attribute/ModelElement.taggedValue" var="taggedvalue">
 				<c:iterate select="$taggedvalue/TaggedValue" var="subtag1">
