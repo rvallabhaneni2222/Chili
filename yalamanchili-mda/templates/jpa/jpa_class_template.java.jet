@@ -69,9 +69,6 @@ private static final long serialVersionUID = <f:unique/>L;
 <c:if test="$class/@parentClass1Name = $class/@name">
 	@Id
 	@GeneratedValue
-<c:if test="$enableHibernateSearch = 'true'">
-@DocumentId
-</c:if>
 	protected Long id; 
 </c:if>
 
