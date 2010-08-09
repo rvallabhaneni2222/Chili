@@ -27,6 +27,18 @@
 			<artifactId>hibernate-all</artifactId>
 			<version>beta3.SP12</version>
 		</dependency>
+		<!-- hibernate search deps START -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search</artifactId>
+			<version>3.1.1.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+		<!-- hibernate search deps END -->
 		<dependency>
 			<groupId>org.jboss.embedded</groupId>
 			<artifactId>jboss-ejb3-all</artifactId>
