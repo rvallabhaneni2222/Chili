@@ -5,6 +5,15 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+<c:if test="$enableHibernateSearch = 'true'">
+import info.yalamanchili.commons.DataType;
+import info.yalamanchili.commons.ReflectionUtils;
+import info.yalamanchili.commons.SearchUtils;
+
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.Search;
+</c:if>
 <%--process level 1 generizations --%>
 <c:if test="not($class/@name = $parentClass1/@name)">
   			<c:setVariable select="$parentClass1/@xmi.id" var="classID"/>		
@@ -383,5 +392,25 @@ protected  BeanMapper mapper = new BeanMapper();
 		return count.toString();
 
 	}
+<c:if test="$enableHibernateSearch = 'true'">
+	@GET
+	@Produces("application/xml")
+	@Path("/search/{searchText}")
+	public String search(@PathParam("searchText") String searchText) {
+		List<${$class/@name}> results = new ArrayList<${$class/@name}>();
+		FullTextEntityManager ftem = Search.getFullTextEntityManager(em);
+		org.apache.lucene.search.Query luceneQuery = SearchUtils
+				.getLuceneQuery(searchText, "id", new StandardAnalyzer(),
+						ReflectionUtils.getBeanProperties(${$class/@name}.class,
+								DataType.STRING));
+		Query query = ftem.createFullTextQuery(luceneQuery, ${$class/@name}.class);
+		for (Object obj : query.getResultList()) {
+			results.add((${$class/@name}) mapper.clonePrimitiveDataTypes(obj,
+					${$class/@name}.class));
+		}
+		return xstream.toXML(results);
+	}
+</c:if>		
+
 }
 </java:format>

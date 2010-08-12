@@ -18,6 +18,12 @@
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-jpa</artifactId>
 			<version>1.0-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>info.yalamanchili.security</groupId>
+					<artifactId>yalamanchili-security</artifactId>
+				</exclusion>
+			</exclusions>
 			<type>ejb</type>
 		</dependency>
 		<dependency>

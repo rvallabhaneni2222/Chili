@@ -32,10 +32,8 @@ import javax.persistence.InheritanceType;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Index;
 </c:if>	
-
-
-
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Past;
@@ -49,11 +47,11 @@ import org.hibernate.validator.NotEmpty;
 import net.sf.gilead.pojo.gwt.LightEntity;
 
 <f:message>generated.comment</f:message>
-<%-- check and add hibernate search annotation--%>
-<c:if test="$class/@parentClass1Name = $class/@name">
+<%-- check and add hibernate search --%>
 <c:if test="$enableHibernateSearch = 'true'">
+<c:if test="$class/@hasChildren = $class/@name">
 @Indexed
-</c:if>
+</c:if>  
 </c:if>
 <%-- annotations for inheritance single_table--%>
 <c:if test="$class/@parentClass1Name = $class/@name">
@@ -75,9 +73,6 @@ private static final long serialVersionUID = <f:unique/>L;
 <%-- Process annotations on the primitive datatypes--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 <f:message>generated.comment</f:message>
-<c:if test="$enableHibernateSearch = 'true'">
-@Field
-</c:if>
 <%-- processes yalamanchili gwt tags Tag--%>
 	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
 		<c:if test="$stereotype/@href = ${'$LengthID'}">
@@ -127,20 +122,26 @@ private static final long serialVersionUID = <f:unique/>L;
 		</c:if>
 						
 	</c:iterate>
-	
+<%-- hibernate search field annatations --%>
+<c:if test="$enableHibernateSearch = 'true'">
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > @Field </c:when> <c:when test="${'$IntegerID'}" > @Field(index=Index.UN_TOKENIZED) 	</c:when><c:when test="${'$DateID'}" > @Field(index=Index.UN_TOKENIZED) </c:when><c:when test="${'$BooleanID'}" >@Field(index=Index.UN_TOKENIZED) </c:when><c:when test="${'$LongID'}" > @Field(index=Index.UN_TOKENIZED) </c:when><c:when test="${'$FloatID'}" > @Field(index=Index.UN_TOKENIZED) </c:when>
+</c:choose>
+</c:if>	
 <%-- processes the premitive Datatypes and enums--%>
 	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > protected String </c:when> <c:when test="${'$IntegerID'}" > protected Integer </c:when><c:when test="${'$DateID'}" > protected Date </c:when><c:when test="${'$BooleanID'}" >protected  Boolean </c:when><c:when test="${'$LongID'}" > protected Long </c:when><c:when test="${'$FloatID'}" > protected Float </c:when>
 	 <c:otherwise> 
 	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
 	 			@Enumerated(EnumType.STRING)
+				<c:if test="$enableHibernateSearch = 'true'">
+				@Field
+				</c:if>	 			
 	 			protected  ${$enumeration/@name} 
 	 			</c:if>
 	 	</c:iterate>	
 	 	  </c:otherwise>
 </c:choose> 
 ${$attribute/@name};
-
 </c:iterate>
 
 
