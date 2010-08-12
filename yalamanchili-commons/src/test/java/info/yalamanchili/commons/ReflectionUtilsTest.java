@@ -146,13 +146,21 @@ public class ReflectionUtilsTest {
 		assertTrue(entity.getStringField().equals("test"));
 		assertTrue(entity.getFloatField().equals(new Float(10.99)));
 		assertTrue(entity.getLongField().equals(new Long(10)));
-		assertTrue(entity.getDateField().toString().equals(
-				new Date().toString()));
+		assertTrue(entity.getDateField().toString()
+				.equals(new Date().toString()));
 	}
 
 	@Test
 	public void testGetAllFields() {
 		ReflectionUtils.getAllFields(TestEntity.class);
+	}
+
+	@Test
+	public void testGetBeanProperties() {
+		for (String a : ReflectionUtils.getBeanProperties(TestEntity.class,
+				DataType.STRING)) {
+			System.out.println(a);
+		}
 	}
 
 	@After

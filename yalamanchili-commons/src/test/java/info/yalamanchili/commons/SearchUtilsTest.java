@@ -2,6 +2,7 @@ package info.yalamanchili.commons;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,10 +16,9 @@ public class SearchUtilsTest {
 	}
 
 	@Test
-	public void testSplitSearchString() {
-		SearchUtils searchUtils = new SearchUtils();
-		System.out.println(searchUtils
-				.splitSearchString("desi ggh 7 guys", ' '));
+	public void testSearch() {
+		SearchUtils.getLuceneQuery("bob", "amtrim", new StandardAnalyzer(),
+				"amtrim");
 	}
 
 	@After

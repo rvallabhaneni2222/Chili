@@ -25,7 +25,6 @@ public class ReflectionUtils {
 				dataFields.put(field.getName(), getDataType(field));
 			}
 		}
-
 		return dataFields;
 	}
 
@@ -154,6 +153,26 @@ public class ReflectionUtils {
 			}
 		}
 		return sb.toString();
+	}
+
+	public static List<String> getBeanProperties(Class<?> bean) {
+		List<String> properties = new ArrayList<String>();
+		for (Field field : getAllFields(bean)) {
+			properties.add(field.getName());
+		}
+		return properties;
+	}
+
+	public static String[] getBeanProperties(Class<?> bean, DataType... types) {
+		List<String> properties = new ArrayList<String>();
+		for (Field field : getAllFields(bean)) {
+			for (DataType dataType : types) {
+				if (dataType.equals(getDataType(field))) {
+					properties.add(field.getName());
+				}
+			}
+		}
+		return properties.toArray(new String[0]);
 	}
 
 	public static List<Field> getAllFields(Class<?> entity) {
