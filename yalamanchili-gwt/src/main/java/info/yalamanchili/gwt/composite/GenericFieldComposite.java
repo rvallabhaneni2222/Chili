@@ -65,8 +65,8 @@ public abstract class GenericFieldComposite extends Composite implements
 	 * Configure.
 	 */
 	protected void configure() {
-		label.addStyleName("FieldHeader");
-		message.addStyleName("ErrorMessage");
+		label.addStyleName("y-gwtFieldHeader");
+		message.addStyleName("y-gwt-ErrorMessage");
 	}
 
 	/**
