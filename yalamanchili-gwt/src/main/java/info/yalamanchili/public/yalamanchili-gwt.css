@@ -54,32 +54,16 @@
 	background-color: #E8E8E8;
 }
 
-.tableHeader {
-	background-color: #D9D9D9;
-	font-weight: bold;
-	font-size: 11pt;
-}
-
-.Table {
-	font-size: 10pt;
-	font-family: helvetica, arial sans-serif;
-	background-color: #CCCCFF;
-}
-
-.SideBarComposite {
+.y-gwt-SideBarComposite {
 	border: 2px solid #88ACE0;
 	width: 240px;
 }
 
-.OptionsComposite {
+.y-gwt-OptionsComposite {
 	border: 2px solid #88ACE0;
 }
 
-.FieldHeader {
-	
-}
-
-.SearchDisclosurePanel {
+.y-gwt-SearchDisclosurePanel {
 	border: 1px solid #88ACE0;
 	background-color: #E5E5E5;
 	width: 100%;

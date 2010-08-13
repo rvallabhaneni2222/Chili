@@ -34,8 +34,8 @@ public abstract class SideBarComposite extends ALComposite implements
 
 	public void setup() {
 		panel.add(searchPanel);
-		panel.addStyleName("SideBarComposite");
-		searchPanel.addStyleName("SearchDisclosurePanel");
+		panel.addStyleName("y-gwt-SideBarComposite");
+		searchPanel.addStyleName("y-gwt-SearchDisclosurePanel");
 		searchPanel.addOpenHandler(new OpenHandler<DisclosurePanel>() {
 
 			@Override
