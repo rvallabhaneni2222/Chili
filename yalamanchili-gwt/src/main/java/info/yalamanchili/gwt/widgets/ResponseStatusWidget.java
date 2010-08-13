@@ -34,7 +34,7 @@ public class ResponseStatusWidget extends PopupPanel {
 		this.setPopupPosition(left, 0);
 		super.show();
 		responseStatus.setText(message);
-		addStyleName("ResponseMessage");
+		addStyleName("y-gwt-ResponseStatusBar");
 		Timer timer = new Timer() {
 			@Override
 			public void run() {

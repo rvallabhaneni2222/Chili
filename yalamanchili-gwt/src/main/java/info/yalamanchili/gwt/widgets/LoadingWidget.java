@@ -27,7 +27,7 @@ public class LoadingWidget extends PopupPanel {
 	public void show() {
 		int left = Window.getClientWidth() / 3;
 		this.setPopupPosition(left, 0);
-		addStyleName("ResponseMessage");
+		addStyleName("y-gwt-ResponseStatusBar");
 		super.show();
 	}
 
@@ -35,7 +35,7 @@ public class LoadingWidget extends PopupPanel {
 	 * @see com.google.gwt.user.client.ui.PopupPanel#hide()
 	 */
 	public void hide() {
-		removeStyleName("ResponseMessage");
+		removeStyleName("y-gwt-ResponseStatusBar");
 		super.hide();
 	}
 }

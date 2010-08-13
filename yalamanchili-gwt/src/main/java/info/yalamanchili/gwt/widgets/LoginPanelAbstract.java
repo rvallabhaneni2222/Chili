@@ -38,7 +38,7 @@ public abstract class LoginPanelAbstract extends PopupPanel {
 			}
 
 		});
-		loginGrid.addStyleName("LoginPanel");
+		loginGrid.addStyleName("y-gwt-LoginPanel");
 	}
 
 	public void show() {

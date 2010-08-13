@@ -14,7 +14,7 @@ public class ResponceStatusBar extends Label {
 	 */
 	public void setText(String text) {
 		setText(text);
-		addStyleName("ResponseMessage");
+		addStyleName("y-gwt-ResponseStatusBar");
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class ResponceStatusBar extends Label {
 	 */
 	public void setDelayedMessage(String message) {
 		setText(message);
-		addStyleName("ResponseMessage");
+		addStyleName("y-gwt-ResponseStatusBar");
 		Timer timer = new Timer() {
 			@Override
 			public void run() {
@@ -39,6 +39,6 @@ public class ResponceStatusBar extends Label {
 	 */
 	public void removeText() {
 		setText("");
-		removeStyleName("ResponseMessage");
+		removeStyleName("y-gwt-ResponseStatusBar");
 	}
 }

@@ -10,7 +10,7 @@ public class ClickableLink extends Label {
 
 	public ClickableLink(String name) {
 		this.setText(name);
-		this.addStyleName("y-ClickableLink");
+		this.addStyleName("y-gwt-ClickableLink");
 	}
 
 }

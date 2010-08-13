@@ -1,4 +1,4 @@
-.ClickableLink {
+.y-gwt-ClickableLink {
 	color: blue;
 	cursor: pointer;
 	cursor: hand;
@@ -6,12 +6,21 @@
 	font-size: 11pt;
 }
 
-.y-statusPanel {
+.y-gwt-AbstracttatusPanel {
 	width:100%;
 }
 
-.ResponseMessage {
+/* Logo Image*/
+.y-gwt-AbstractStatusPanel-LogoImage {
+	height:55px;
+	width:180px;
+}
+.y-gwt-ResponseStatusBar {
 	background-color: #FFA54F;
+}
+
+.y-gwt-LoginPanel {
+	background-color: #88ACE0;
 }
 
 .ErrorMessage {
