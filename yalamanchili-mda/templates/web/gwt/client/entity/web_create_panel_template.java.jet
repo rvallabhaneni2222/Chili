@@ -155,11 +155,12 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 				new ALAsyncCallback<${$class/@name}>() {
 					public void onResponse(${$class/@name} arg0) {
 						new ResponseStatusWidget().show("created");
+						${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
+						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+						new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL));
 					}
 				});
-		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
-		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-				new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL));
+
 		</c:if>	
 	}
 

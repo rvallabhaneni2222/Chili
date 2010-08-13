@@ -66,24 +66,6 @@
 	width: 100%;
 }
 
-.y-gwt-SideBarComposite {
-	border: 2px solid #88ACE0;
-}
-
-.y-gwt-OptionsComposite {
-	border: 2px solid #88ACE0;
-}
-
-.SideBarComposite {
-	
-}
-
-.SearchDisclosurePanel {
-	border: 1px solid #88ACE0;
-	background-color: #E5E5E5;
-	width: 220px;
-}
-
 .y-gwt-ReadEntityCaptionPanel {
 	width: 1010px;
 }

@@ -267,7 +267,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	@Override
 	@WebRemote
 	public ${$class/@name} update(${$class/@name} entity) {
-		return (${$class/@name}) getBeanManager().merge(entity);
+		return (${$class/@name}) getBeanManager().merge(em.merge(entity));
 	}
 
 <%-- process all getRelated entities relations--%>
