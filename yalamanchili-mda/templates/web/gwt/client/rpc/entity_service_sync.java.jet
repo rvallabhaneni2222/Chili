@@ -215,6 +215,11 @@ public interface ${$class/@name}Service extends RemoteService {
 
 	public Map<Long, String> getListBoxValues(String[] columns);
 	
+<c:if test="$enableHibernateSearch = 'true'">
+	public List<${$class/@name}> search(String searchText);
+</c:if>	
+	
+	
 <%-- process all getRelated entities relations--%>
 <%--process level2 generizations --%>
 <c:if test="not($class/@name = $parentClass2/@name)">

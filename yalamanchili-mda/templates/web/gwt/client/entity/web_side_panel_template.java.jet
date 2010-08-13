@@ -1,9 +1,16 @@
 <java:format>
 package ${$packageName}.${lower-case($class/@name)};
+<c:if test="$enableHibernateSearch = 'true'">
+import info.yalamanchili.gwt.widgets.FindWidget;
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
+import java.util.List;
+</c:if>	
 
 import ${$webPackage}${camelCase($projectName)}Welcome;
 import ${$webPackage}Roles;
 import ${$groupID}.client.${$package/@name}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel.${$class/@name}TableType;
+
 import info.yalamanchili.gwt.composite.SideBarComposite;
 import info.yalamanchili.gwt.widgets.ClickableLink;
 
@@ -23,7 +30,10 @@ public class ${$class/@name}SideBar extends SideBarComposite {
 	}
 
 	ClickableLink createLink = new ClickableLink("Create ${$class/@name}");
-
+<c:if test="$enableHibernateSearch = 'true'">
+	FindWidget findWidget = new FindWidget(this);
+</c:if>		
+	
 	private static class ${$class/@name}LazySearchPanel extends LazyPanel {
 		@Override
 		protected Widget createWidget() {
@@ -50,9 +60,8 @@ public class ${$class/@name}SideBar extends SideBarComposite {
 
 	@Override
 	protected void addWidgets() {
-		
 			panel.add(createLink);
-		
+			panel.add(findWidget);	
 	}
 
 	@Override
@@ -60,6 +69,21 @@ public class ${$class/@name}SideBar extends SideBarComposite {
 		if (event.getSource() == createLink) {
 			createLinkClicked();
 		}
+<c:if test="$enableHibernateSearch = 'true'">
+		if (event.getSource() == findWidget.getFindButton()) {
+			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().search(findWidget.getSearchText(),
+							new ALAsyncCallback<List<${$class/@name}>>() {
+								@Override
+								public void onResponse(List<${$class/@name}> arg0) {
+								${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
+									${camelCase($projectName)}Welcome.instance().getEntityPanel()
+											.add((new ReadAll${$class/@name}sPanel(arg0)));
+								}
+
+							});
+		}	
+</c:if>			
+	
 	}
 
 
