@@ -10,18 +10,6 @@
 	border-left: 2px solid #88ACE0;
 }
 
-/* Logo Image*/
-.logo-Image {
-	height:55px;
-	width:180px;
-}
-
-/* panel to display the create user, login/logout, welcome user links this is added north 1 widget to Docklayoutpanel*/
-.statusPanel {
-	width: 100%;
-	border: 2px solid #88ACE0;
-}
-
 /* this panel holds the Menu tab items to hold the entity maintainence tasks*/
 .entityMenuBar {
 	width: 100%;
