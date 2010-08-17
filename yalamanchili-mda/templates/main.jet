@@ -322,7 +322,7 @@
     <ws:copyFile src="templates/web/gwt/public/images/logo.gif" target="images/logo.gif" />
     		<ws:folder path="WEB-INF">
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_webxml_template.xml.jet" path="web.xml"/>
-    	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_jboss-web.xml.jet" path="jboss-web.xml"/>
+    	 <%--	<ws:file template="templates/web/webapp/WEB-INF/webapp_jboss-web.xml.jet" path="jboss-web.xml"/> --%>
     	 	<ws:file template="templates/web/webapp/WEB-INF/webapp_components.xml.jet" path="components.xml"/>
     		</ws:folder>
     		
@@ -397,7 +397,7 @@
     </ws:folder>
     <ws:folder path="src/main/webapp">
 	<ws:file template="templates/rest/main/webapp/WEB-INF/components.xml.jet" path="WEB-INF/components.xml"/>
-	<ws:file template="templates/rest/main/webapp/WEB-INF/rest_jboss-web.xml.jet" path="WEB-INF/jboss-web.xml"/>
+	<%-- <ws:file template="templates/rest/main/webapp/WEB-INF/rest_jboss-web.xml.jet" path="WEB-INF/jboss-web.xml"/> --%>
 	<ws:file template="templates/rest/main/webapp/WEB-INF/web.xml.jet" path="WEB-INF/web.xml"/>
     </ws:folder>
     <ws:folder path="src/main/resources">

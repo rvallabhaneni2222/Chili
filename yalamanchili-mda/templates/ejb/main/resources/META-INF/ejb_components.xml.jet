@@ -15,7 +15,5 @@
                  http://jboss.com/products/seam/cache http://jboss.com/products/seam/cache-2.2.xsd
                  http://jboss.com/products/seam/web http://jboss.com/products/seam/web-2.2.xsd
                  http://jboss.com/products/seam/components http://jboss.com/products/seam/components-2.2.xsd">
-    <component name="dozerMapper" class="org.dozer.DozerBeanMapper"
-		scope="application" startup="true">
-	</component>             
+          
 </components>
