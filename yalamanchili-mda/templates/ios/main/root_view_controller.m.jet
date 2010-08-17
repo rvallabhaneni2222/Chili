@@ -135,7 +135,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSString *tabName=[list objectAtIndex:indexPath.row];
 	NSLog(@"%@",tabName);
-//	NSURL *url=[NSURL URLWithString:@"http://localhost:8080/automanage-soa-1.0-SNAPSHOT/seam/resource/restv1/manage/login/user/user"];
+//	NSURL *url=[NSURL URLWithString:@"http://localhost:8080/${$projectName}-soa-1.0-SNAPSHOT/seam/resource/restv1/manage/login/user/user"];
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
 	<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
 		<c:if test="$class/@isDependent = 'false'">

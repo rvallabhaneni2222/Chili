@@ -6,7 +6,8 @@
 
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
 <c:setVariable select="'info.yalamanchili.project'" var="groupID"/>
-<c:setVariable select="'info/yalamanchili/project'" var="groupIDNEW"/>
+<c:setVariable select="'info/yalamanchili/project'" var="groupIDWithFolder"/>
+<c:setVariable select="'info_yalamanchili_project'" var="groupIDWithUnderScore"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
 <c:setVariable select="'/Users/yphanikumar/codebase/generated'" var="location"/>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
@@ -66,12 +67,12 @@
 	<ws:file path="pom.xml" template="templates/jpa/jpa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">   	
     	<%--create gwt.xml file to include these  --%>	
-    	<ws:folder path="${$groupIDNEW}">
+    	<ws:folder path="${$groupIDWithFolder}">
     	<ws:file path="entity.gwt.xml" template="templates/jpa/jpa_gwtxml.template.xml.jet" />
     	</ws:folder>
     	<%--iterate through the packages and create jpa classes and enumerations --%>		
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-    		<ws:folder path="${$groupIDNEW}/entity/${$package/@name}">
+    		<ws:folder path="${$groupIDWithFolder}/entity/${$package/@name}">
     		<%-- create enumerations in the package--%>
     		<c:iterate select="$package/Namespace.ownedElement/Enumeration" var="enumeration">
     		<ws:file path="{$enumeration/@name}.java" template="templates/jpa/enumeration_template.java.jet" />	
@@ -90,7 +91,7 @@
     </ws:folder>
     <ws:folder path="src/test/java">
     <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-    	 <ws:folder path="${$groupIDNEW}/entity/${$package/@name}">
+    	 <ws:folder path="${$groupIDWithFolder}/entity/${$package/@name}">
 			<%-- create test classes in the package--%>
 			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
 			<ws:file path="{$class/@name}Test.java" template="templates/jpa/test/jpa_enitity_test.java.jet" />
@@ -116,7 +117,7 @@
 <ws:project name="{$projectName}-ejb" location="{$location}/{$projectName}-ejb">
 	<ws:file path="pom.xml" template="templates/ejb/ejb_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
-     <ws:folder path="${$groupIDNEW}/ejb">		
+     <ws:folder path="${$groupIDWithFolder}/ejb">		
      		<%-- Generic EJB interface--%>
      		<ws:file path="GenericService.java" template="templates/ejb/main/ejb_generic_service_interface.java.jet" />
 			<%-- Generic EJB Local interface--%>
@@ -129,7 +130,7 @@
 
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">	
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-    		<ws:folder path="${$groupIDNEW}/ejb/${$package/@name}/${lower-case($class/@name)}">
+    		<ws:folder path="${$groupIDWithFolder}/ejb/${$package/@name}/${lower-case($class/@name)}">
 	    		<%-- CRUD EJB interface--%>
 	    		<ws:file path="{$class/@name}Service.java" template="templates/ejb/main/ejb_service_template.java.jet" />
 				<%-- CRUD EJB Local interface--%>
@@ -150,7 +151,7 @@
     <c:setVariable select="concat($groupID,'.ejb.')" var="ejbPackage"/>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">	
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-    		<ws:folder path="${$groupIDNEW}/ejb/${$package/@name}/${lower-case($class/@name)}">
+    		<ws:folder path="${$groupIDWithFolder}/ejb/${$package/@name}/${lower-case($class/@name)}">
 			<%--Embedded Test--%>
 			<ws:file path="${$class/@name}ServiceTest.java" template="templates/ejb/test/ejb_embedded_test.java.jet" />
 			</ws:folder>
@@ -175,12 +176,12 @@
 <ws:project name="{$projectName}-webapp" location="{$location}/{$projectName}-webapp">
 	<ws:file path="pom.xml" template="templates/web/webapp_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
-    	<ws:folder path="${$groupIDNEW}/public">
+    	<ws:folder path="${$groupIDWithFolder}/public">
     	<ws:file template="templates/web/gwt/public/web_css_template.css.jet" path="{$projectName}.css"/>
     	</ws:folder>
      	<%--create folder for icons  --%>
      	
-     	<ws:folder path="${$groupIDNEW}">
+     	<ws:folder path="${$groupIDWithFolder}">
 		<%--create gwt.xml file to include these  --%>		
     	<ws:file  path="{$projectName}.gwt.xml" template="templates/web/gwt/web_gwtxml_template.xml.jet"/>
     	</ws:folder>
@@ -188,24 +189,24 @@
     	<c:setVariable select="concat($groupID,'.client.')" var="webPackage"/>
     	
     	<%-- RPC  --%>
-    	<ws:folder path="${$groupIDNEW}/client/rpc">
+    	<ws:folder path="${$groupIDWithFolder}/client/rpc">
     	<ws:file  path="${camelCase($projectName)}Service.java" template="templates/web/gwt/client/rpc/app_service_sync.java.jet"/>
     	<ws:file  path="${camelCase($projectName)}ServiceAsync.java" template="templates/web/gwt/client/rpc/app_service_async.java.jet"/>
     	</ws:folder>
     	<%-- Current project servlet,GWT servlet and GileadService  --%>
-    	<ws:folder path="${$groupIDNEW}/server">
+    	<ws:folder path="${$groupIDWithFolder}/server">
     	<ws:file  path="GWTServiceImpl.java" template="templates/web/gwt/server/web_gwtservice_class_template.java.jet"/>
     	<ws:file  path="${camelCase($projectName)}ServiceImpl.java" template="templates/web/gwt/server/app_service_impl.java.jet"/>
     	<ws:file  path="GileadService.java" template="templates/web/gwt/server/gilead_service.java.jet"/>
     	</ws:folder>
     	
 		<%-- gwt messages and constants files--%>
-		<ws:folder path="${$groupIDNEW}/client/internalization">
+		<ws:folder path="${$groupIDWithFolder}/client/internalization">
 		<ws:file  path="${camelCase($projectName)}Constants.properties" template="templates/web/gwt/client/internalization/web_gwt_constants.properties.jet"/>
 		<ws:file  path="${camelCase($projectName)}Messages.properties" template="templates/web/gwt/client/internalization/web_gwt_messages.properties.jet"/>
 		</ws:folder>
 		
-		<ws:folder path="${$groupIDNEW}/client">
+		<ws:folder path="${$groupIDWithFolder}/client">
     	<%--  Entry point class --%>
     	<ws:file  path="${camelCase($projectName)}Welcome.java" template="templates/web/gwt/client/web_entrypoint_class_template.java.jet"/>
     	<%-- Entities Enum class --%>
@@ -258,7 +259,7 @@
 			<%-- CRUD and search panels--%>
     		 <%-- check to see if this is not a abstract class--%>
     		 <c:if test="$class/@isAbstract = 'false'">
-    		 <ws:folder path="${$groupIDNEW}/client/${lower-case($package/@name)}/${lower-case($class/@name)}">
+    		 <ws:folder path="${$groupIDWithFolder}/client/${lower-case($package/@name)}/${lower-case($class/@name)}">
 					<%--rpc sync class --%>
 					<ws:file  path="{$class/@name}Service.java" template="templates/web/gwt/client/rpc/entity_service_sync.java.jet"/>
 					<%--rpc async class --%>
@@ -303,7 +304,7 @@
 						
 			</ws:folder>
 			<%--service class impl --%>
-	    	<ws:folder path="${$groupIDNEW}/server">
+	    	<ws:folder path="${$groupIDWithFolder}/server">
 	    		<ws:file  path="${$class/@name}ServiceImpl.java" template="templates/web/gwt/server/entity_service_impl.java.jet"/>
 	    	</ws:folder>		
 	    	
@@ -328,7 +329,7 @@
     </ws:folder>
     <ws:folder path="src/test/java">
     <%--server test class--%>
-    <ws:folder path="{$groupIDNEW}/server">
+    <ws:folder path="{$groupIDWithFolder}/server">
     <ws:file  path="ServerTest.java" template="templates/web/test/gwt/server/web_server_impl_test.java.jet"/>
     </ws:folder>
     </ws:folder>
@@ -351,7 +352,7 @@
 <ws:project name="{$projectName}-rest" location="{$location}/{$projectName}-rest">
 	<ws:file path="pom.xml" template="templates/rest/rest_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
-			<ws:folder path="${$groupIDNEW}/rest">
+			<ws:folder path="${$groupIDWithFolder}/rest">
 			<%-- rest service class--%>
 			<ws:file  path="${camelCase($projectName)}Service.java" template="templates/rest/main/rest_manage.java.jet"/>
 			</ws:folder>    
@@ -387,7 +388,7 @@
 					</c:iterate>  					  		 			 
 				</c:if>
 			</c:iterate>
-			<ws:folder path="${$groupIDNEW}/rest/${$package/@name}">
+			<ws:folder path="${$groupIDWithFolder}/rest/${$package/@name}">
 			<%-- rest service class--%>
 			<ws:file  path="{$class/@name}Service.java" template="templates/rest/main/entity_rest_service.java.jet"/>
 			</ws:folder>
@@ -410,7 +411,7 @@
 	<ws:file path="AndroidManifest.xml" template="templates/android/android_manifest_template.xml.jet"/>
 	<ws:file path="default.properties" template="templates/android/android_default.properties.jet"/>
 	<ws:folder path="src">
-		<ws:folder path="${$groupIDNEW}/android">
+		<ws:folder path="${$groupIDWithFolder}/android">
 			<ws:file  path="${camelCase($projectName)}Main.java" template="templates/android/main/Main.java.jet"/>
 			<ws:file  path="Login.java" template="templates/android/main/login.java.jet"/>
 			<ws:file  path="HttpHelper.java" template="templates/android/main/http_helper.java.jet"/>
@@ -451,7 +452,7 @@
 			</c:iterate>
 			<%-- Create Entity CRUD java Activitoes--%>	  
 			<ws:folder path="src"> 
-				<ws:folder path="${$groupIDNEW}/android/${$package/@name}/${lower-case($class/@name)}"> 
+				<ws:folder path="${$groupIDWithFolder}/android/${$package/@name}/${lower-case($class/@name)}"> 
 					<ws:file  path="ReadAll{$class/@name}s.java" template="templates/android/main/read_all.java.jet"/>
 					<ws:file  path="${$class/@name}Adapter.java" template="templates/android/main/readall_adapter.java.jet"/>
 					<ws:file  path="Read{$class/@name}.java" template="templates/android/main/read_entity.java.jet"/>
@@ -531,8 +532,8 @@
 			</c:iterate>
 			<%-- Entity interface TO--%>	
 			<ws:folder path="transfer-objects">
-				<ws:file path="info_yalamanchili_project_entity_${lower-case($package/@name)}_${$class/@name}.h" template="templates/ios/transfer-objects/entity_interface.h.jet"/>
-				<ws:file path="info_yalamanchili_project_entity_${lower-case($package/@name)}_${$class/@name}.m" template="templates/ios/transfer-objects/entity_implementation.m.jet"/>
+				<ws:file path="${$groupIDWithUnderScore}_entity_${lower-case($package/@name)}_${$class/@name}.h" template="templates/ios/transfer-objects/entity_interface.h.jet"/>
+				<ws:file path="${$groupIDWithUnderScore}_entity_${lower-case($package/@name)}_${$class/@name}.m" template="templates/ios/transfer-objects/entity_implementation.m.jet"/>
 			</ws:folder>
 			<%-- Entity CRUD Controllers--%>
 			<ws:folder path="${lower-case($package/@name)}-${lower-case($class/@name)}">
@@ -585,7 +586,7 @@
 			<%--  looping complete --%>	
 			<%-- Entity interface TO--%>	
 			<ws:folder path="src/test/java">
-				<ws:folder path="${$groupIDNEW}/test/${$package/@name}">
+				<ws:folder path="${$groupIDWithFolder}/test/${$package/@name}">
 				<c:if test="$class/@isDependent = 'false'">  
 				<%--	<ws:file path="{$class/@name}Test.java" template="templates/test/test/test_entity_selenium_class.java.jet"/> --%>
 					<ws:file path="{$class/@name}Test.java" template="templates/test/test/test_entity_webdriver_class.java.jet"/>

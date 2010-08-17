@@ -41,7 +41,7 @@
 		</dependency>
 		<dependency>
 			<groupId>info.yalamanchili.project</groupId>
-			<artifactId>automanage-jpa</artifactId>
+			<artifactId>${$projectName}-jpa</artifactId>
 			<version>${$version}</version>
 			<exclusions>
 				<exclusion>
