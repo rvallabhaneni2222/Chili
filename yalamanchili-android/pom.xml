@@ -26,4 +26,11 @@
 				http://repository.jboss.com/maven2/ </url>
 		</repository>
 	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>yalamanchili</id>
+			<name>yalamanchili repository</name>
+			<url>https://yalamanchili.googlecode.com/svn/maven2</url>
+		</repository>
+	</distributionManagement>
 </project>
