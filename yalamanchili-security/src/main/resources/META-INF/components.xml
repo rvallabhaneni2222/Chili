@@ -14,7 +14,7 @@
 
 	<security:jpa-identity-store user-class="info.yalamanchili.security.jpa.YUser"
 		role-class="info.yalamanchili.security.jpa.YRole" entity-manager="#{yem}" />
-
+<core:dispatcher/>
 	<persistence:managed-persistence-context
 		name="yem" auto-create="true" persistence-unit-jndi-name="java:/yalamanchili" />
 </components>
