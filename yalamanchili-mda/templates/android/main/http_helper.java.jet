@@ -16,8 +16,8 @@ public class HttpHelper {
 	protected static DefaultHttpClient httpclient;
 	public static XStream xstream = new XStream();
 
-	public static String baseURL = "http://10.0.2.2/${$projectName}-soa-1.0-SNAPSHOT/seam/resource/restv1/crud/";
-	public static String manageURL = "http://10.0.2.2/${$projectName}-soa-1.0-SNAPSHOT/seam/resource/restv1/manage/";
+	public static String baseURL = "http://10.0.2.2/${$projectName}-rest/seam/resource/restv1/crud/";
+	public static String manageURL = "http://10.0.2.2/${$projectName}-rest/seam/resource/restv1/manage/";
 
 	public static DefaultHttpClient getHttpClient() {
 		if (httpclient == null) {

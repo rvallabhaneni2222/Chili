@@ -24,16 +24,19 @@ public class Login extends Activity implements OnClickListener {
 	}
 
 	public void onClick(View arg0) {
-		Log.d("debug", username.getValue());
-		HttpHelper.setCredentials(username.getValue(), password.getValue());
-		new AsyncHttp(this) {
-			@Override
-			protected void onResponse(String result) {
-				Intent intent = new Intent(Login.this, AutomanageMain.class);
-				startActivity(intent);
-			}
-		}.execute(HttpHelper.manageURL + "login" + "/" + username.getValue()
-				+ "/" + password.getValue());
+		Intent intent = new Intent(Login.this, ${camelCase($projectName)}Main.class);
+		startActivity(intent);
+		return;
+		//Log.d("debug", username.getValue());
+		//HttpHelper.setCredentials(username.getValue(), password.getValue());
+		//new AsyncHttp(this) {
+			//@Override
+			//protected void onResponse(String result) {
+				//Intent intent = new Intent(Login.this, ${camelCase($projectName)}.class);
+				//startActivity(intent);
+			//}
+		//}.execute(HttpHelper.manageURL + "login" + "/" + username.getValue()
+			//	+ "/" + password.getValue());
 	}
 
 	protected void assignFields() {
