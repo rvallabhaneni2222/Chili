@@ -27,6 +27,12 @@
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>
+			<artifactId>${$projectName}-rest</artifactId>
+			<version>${$version}</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-ejb</artifactId>
 			<version>${$version}</version>
 			<type>ejb</type>

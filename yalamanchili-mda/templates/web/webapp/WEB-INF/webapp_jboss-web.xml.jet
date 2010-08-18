@@ -3,7 +3,7 @@
       <loader-repository>  
          ${$groupID}:archive=${$projectName}-app-${$version}.war  
          <loader-repository-config>  
-            java2ParentDelegation=true  
+            java2ParentDelegation=false  
          </loader-repository-config>  
       </loader-repository>  
    </class-loading>  
