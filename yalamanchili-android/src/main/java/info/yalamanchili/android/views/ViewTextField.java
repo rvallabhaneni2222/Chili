@@ -1,7 +1,8 @@
 package info.yalamanchili.android.views;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,8 +26,6 @@ public class ViewTextField extends LinearLayout {
 	public void init() {
 		setOrientation(LinearLayout.VERTICAL);
 		label = new TextView(getContext());
-//		label.setTextSize(new Float(12));
-		label.setTextColor(ColorStateList.valueOf(56));
 		text = new TextView(getContext());
 		errorMsg = new TextView(getContext());
 		int lHeight = LayoutParams.WRAP_CONTENT;
@@ -34,6 +33,8 @@ public class ViewTextField extends LinearLayout {
 		addView(label, new LinearLayout.LayoutParams(lWidth, lHeight));
 		addView(text, new LinearLayout.LayoutParams(lWidth, lHeight));
 		addView(errorMsg, new LinearLayout.LayoutParams(lWidth, lHeight));
+		label.setTypeface(Typeface.DEFAULT_BOLD);
+//		label.setBackgroundColor(Color.LTGRAY);
 	}
 
 	public void setValue(String value) {

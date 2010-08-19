@@ -21,7 +21,6 @@ public class NumberEditText extends EditText {
 		super(context, attrs, defStyle);
 	}
 
-	
 	public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
 		Log.d("D", new Integer(keyCode).toString());
 		Log.d("D", new Integer(keyEvent.getKeyCode()).toString());

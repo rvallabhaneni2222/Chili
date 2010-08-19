@@ -1,6 +1,7 @@
 package info.yalamanchili.android.views;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,6 +33,7 @@ public class EditTextField extends LinearLayout {
 		addView(label, new LinearLayout.LayoutParams(lWidth, lHeight));
 		addView(text, new LinearLayout.LayoutParams(lWidth, lHeight));
 		addView(errorMsg, new LinearLayout.LayoutParams(lWidth, lHeight));
+		label.setTypeface(Typeface.DEFAULT_BOLD);
 	}
 
 	public void setValue(String value) {
