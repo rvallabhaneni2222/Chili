@@ -480,6 +480,7 @@
     </ws:folder>
     <ws:folder path="res/menu">
 	<ws:file template="templates/android/res/menu/main_menu.xml.jet" path="main_menu.xml"/>
+	<ws:file template="templates/android/res/menu/read_all_search_menu.xml.jet" path="read_all_search_menu.xml"/>
     </ws:folder>
     <ws:folder path="res/values">
     <ws:file template="templates/android/res/values/strings_template.xml.jet" path="strings.xml"/>

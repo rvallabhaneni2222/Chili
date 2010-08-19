@@ -1,13 +1,22 @@
 <java:format>
 package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
 
-
+<c:if test="$class/@isDependent = 'false'">  
+import android.view.ContextMenu;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.Menu;
+</c:if>	
 import info.yalamanchili.project.android.HttpHelper;
 import info.yalamanchili.project.android.R;
 import info.yalamanchili.android.widgets.ReadAllPageBar;
+import android.util.Log;
 
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
-		<%-- process compsition associations--%>
+<c:if test="$class/@isDependent = 'true'">
+	<%-- process compsition associations--%>
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 	<c:iterate select="$association/Association.connection" var="association_connection">
 		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
@@ -28,7 +37,7 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 										<%-- check to see if class2 is parent and child--%>
 										<c:if test="not($class2/@parent1 = $class2/@name)">
 										<c:if test="not($class2/@hasChildren = $class2/@name)">
-									import	${$groupID}.entity.${$package/@name}.${$class2/@name};
+										import	${$groupID}.entity.${$package/@name}.${$class2/@name};
 										</c:if>
 										<%-- has parent and no children--%>
 										<c:if test="$class2/@hasChildren = $class2/@name">
@@ -50,7 +59,7 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 		</c:iterate>
 	</c:iterate>
 </c:iterate>
-
+</c:if>
 import java.util.ArrayList;
 import java.util.List;
 import ${$groupID}.android.AsyncHttp;
@@ -87,7 +96,9 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 		int resID = R.layout.readall_list;
 		${lower-case($class/@name)}Adapter = new ${$class/@name}Adapter(ReadAll${$class/@name}s.this, resID, ${lower-case($class/@name)}s);
 		${lower-case($class/@name)}ListView.setAdapter(${lower-case($class/@name)}Adapter);
-		loadPage(0,new Integer(getString(R.string.page_size)));
+<c:if test="$class/@isDependent = 'false'"> 		
+		registerForContextMenu(${lower-case($class/@name)}ListView);
+</c:if>		
 	}
 	
 	public void customizeTitle(){
@@ -118,6 +129,41 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 		intent.putExtra("id", ${lower-case($class/@name)}.getId());
 		startActivity(intent);
 	}
+	
+<c:if test="$class/@isDependent = 'false'">  
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.read_all_search_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.search:
+	Log.d("aaaaaaaaaaaaaaaaaaaaaa", "in searchl");
+			break;
+		}
+		return true;
+	}
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.${lower-case($class/@name)}_menu, menu);
+	}
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+				.getMenuInfo();
+		Log.d("aaaaaaaaaaaaaaaaaaaaaa", "in contes sel");
+		return true;
+	}
+</c:if>	
 
 	
 	public String getReadALLURL() {
@@ -126,7 +172,9 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 	}
 	
 	public void onClick(View arg0) {
-		<%-- process compsition associations--%>
+<c:if test="$class/@isDependent = 'true'">
+Object parent = getIntent().getSerializableExtra("parent");	
+	<%-- process compsition associations--%>
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 	<c:iterate select="$association/Association.connection" var="association_connection">
 		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
@@ -148,45 +196,33 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 										<c:if test="not($class2/@parent1 = $class2/@name)">
 										<c:if test="not($class2/@hasChildren = $class2/@name)">
 										if (arg0.getId() == create.getId()) {
-										Object result = getIntent().getSerializableExtra("parent");
-											if (result != null) {
 												Intent addIntent = new Intent(this, Create${$class/@name}.class);
 												${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
-												${lower-case($class/@name)}.set${$class2/@name}((${$class2/@name}) result);
+												${lower-case($class/@name)}.set${$class2/@name}((${$class2/@name}) parent);
 												addIntent.putExtra("entity", ${lower-case($class/@name)});
 												startActivity(addIntent);
-												return;
-											}
 											}
 										</c:if>
 										<%-- has parent and no children--%>
 										<c:if test="$class2/@hasChildren = $class2/@name">
 										if (arg0.getId() == create.getId()) {
-										Object result = getIntent().getSerializableExtra("parent");
-											if (result != null) {
 												Intent addIntent = new Intent(this, Create${$class/@name}.class);
 												${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
-												${lower-case($class/@name)}.set${$class2/@name}((${$class2/@name}) result);
+												${lower-case($class/@name)}.set${$class2/@name}((${$class2/@name}) parent);
 												addIntent.putExtra("entity", ${lower-case($class/@name)});
 												startActivity(addIntent);
-												return;
-											}
 											}
 										</c:if>
 										</c:if>
 										<%-- no parent and has children--%>
 										 <c:if test="$class2/@parent1 = $class2/@name">
 										 <c:if test="not($class2/@hasChildren = $class2/@name)">
-										 if (arg0.getId() == create.getId()) {
-										Object result = getIntent().getSerializableExtra("parent");
-											if (result != null) {
+										if (arg0.getId() == create.getId()) {
 												Intent addIntent = new Intent(this, Create${$class/@name}.class);
 												${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
-												${lower-case($class/@name)}.set${$class2/@name}((${$class2/@name}) result);
+												${lower-case($class/@name)}.set${$class2/@name}((${$class2/@name}) parent);
 												addIntent.putExtra("entity", ${lower-case($class/@name)});
 												startActivity(addIntent);
-												return;
-											}
 											}
 										 </c:if>
 										 </c:if>
@@ -199,10 +235,13 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 		</c:iterate>
 	</c:iterate>
 </c:iterate>
+</c:if>
+<c:if test="$class/@isDependent = 'false'">
 		if (arg0.getId() == create.getId()) {
 		Intent createIntent = new Intent(this, Create${$class/@name}.class);
 		startActivity(createIntent);
 		}
+</c:if>		
 		if (arg0.getId() == nextPage.getId()) {
 			loadNextPage();
 		}
@@ -226,6 +265,22 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 	
 	protected void loadPage(int pageOffSet, int pageSize) {
 		${lower-case($class/@name)}Adapter.clear();
+<c:if test="$class/@isDependent = 'true'">
+	String parentResource=getIntent().getStringExtra("resource");
+			new AsyncHttp(this) {
+				@Override
+				protected void onResponse(String result) {
+					Object obj = HttpHelper.xstream.fromXML(result);
+					if (obj instanceof List<?>) {
+						for (${$class/@name} entity : (List<${$class/@name}>) HttpHelper.xstream
+								.fromXML(result)) {
+							${lower-case($class/@name)}Adapter.add(entity);
+						}
+					}
+				}
+			}.execute(parentResource);
+</c:if>
+<c:if test="$class/@isDependent = 'false'">
 		new AsyncHttp(this) {
 			@Override
 			protected void onResponse(String result) {
@@ -238,6 +293,18 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 				}
 			}
 		}.execute(getReadALLURL());
+</c:if>		
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		Log.d("info.yalamacnhili.android","in start");
+		main();
+	}
+	
+	public void main() {
+		loadPage(0, new Integer(getString(R.string.page_size)));
 	}
 }
 </java:format>
