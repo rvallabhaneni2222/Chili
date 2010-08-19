@@ -457,6 +457,7 @@
 					<ws:file  path="${$class/@name}Adapter.java" template="templates/android/main/readall_adapter.java.jet"/>
 					<ws:file  path="Read{$class/@name}.java" template="templates/android/main/read_entity.java.jet"/>
 					<ws:file  path="Create{$class/@name}.java" template="templates/android/main/create_entity.java.jet"/>
+					<ws:file  path="Search{$class/@name}.java" template="templates/android/main/entity/search_entity.java.jet"/>
 				</ws:folder>
 			</ws:folder>
 			 <%-- Create Entity CRUD layout xml's--%>
@@ -477,6 +478,7 @@
 	<ws:file template="templates/android/res/layout/entity_readall_template.xml.jet" path="entity_readall.xml"/>
 	<ws:file template="templates/android/res/layout/readall_list.xml.jet" path="readall_list.xml"/>
 	<ws:file template="templates/android/res/layout/login.xml.jet" path="login.xml"/>
+	<ws:file template="templates/android/res/layout/entity_search.xml.jet" path="entity_search.xml"/>
     </ws:folder>
     <ws:folder path="res/menu">
 	<ws:file template="templates/android/res/menu/main_menu.xml.jet" path="main_menu.xml"/>

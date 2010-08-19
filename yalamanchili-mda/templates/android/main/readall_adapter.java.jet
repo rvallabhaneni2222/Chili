@@ -2,7 +2,7 @@
 package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
 
 
-import info.yalamanchili.project.android.R;
+import ${$groupID}.android.R;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import java.util.List;
 import android.content.Context;

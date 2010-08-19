@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.Menu;
 </c:if>	
 import info.yalamanchili.project.android.HttpHelper;
-import info.yalamanchili.project.android.R;
+import ${$groupID}.android.R;
 import info.yalamanchili.android.widgets.ReadAllPageBar;
 import android.util.Log;
 
@@ -142,7 +142,8 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.search:
-	Log.d("aaaaaaaaaaaaaaaaaaaaaa", "in searchl");
+			Intent intent = new Intent(this, Search${$class/@name}.class);
+			startActivity(intent);
 			break;
 		}
 		return true;
