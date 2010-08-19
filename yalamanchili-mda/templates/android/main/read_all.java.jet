@@ -167,7 +167,7 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 </c:if>	
 
 	
-	public String getReadALLURL() {
+	public String getReadALLURL(Integer pageOffSet, Integer pageSize) {
 	return HttpHelper.baseURL + "${lower-case($class/@name)}/readall/" + pageOffSet.toString()
 				+ "/" + getString(R.string.page_size);
 	}
@@ -266,7 +266,24 @@ Object parent = getIntent().getSerializableExtra("parent");
 	
 	protected void loadPage(int pageOffSet, int pageSize) {
 		${lower-case($class/@name)}Adapter.clear();
+		String intent = getIntent().getStringExtra("intent");
+		if ("SEARCH".equals(intent)) {
+			new AsyncHttp(this) {
+				@Override
+				protected void onResponse(String result) {
+					Object obj = HttpHelper.xstream.fromXML(result);
+					if (obj instanceof List<?>) {
+						for (${$class/@name} entity : (List<${$class/@name}>) HttpHelper.xstream
+								.fromXML(result)) {
+							${lower-case($class/@name)}Adapter.add(entity);
+						}
+					}
+				}
+			}.execute(getSearchURL());
+		} 
+				
 <c:if test="$class/@isDependent = 'true'">
+	else {
 	String parentResource=getIntent().getStringExtra("resource");
 			new AsyncHttp(this) {
 				@Override
@@ -280,8 +297,10 @@ Object parent = getIntent().getSerializableExtra("parent");
 					}
 				}
 			}.execute(parentResource);
+		}	
 </c:if>
 <c:if test="$class/@isDependent = 'false'">
+	else {
 		new AsyncHttp(this) {
 			@Override
 			protected void onResponse(String result) {
@@ -293,10 +312,16 @@ Object parent = getIntent().getSerializableExtra("parent");
 					}
 				}
 			}
-		}.execute(getReadALLURL());
+		}.execute(getReadALLURL(pageOffSet, pageSize));
+	}	
 </c:if>		
 	}
-	
+
+	protected String getSearchURL() {
+		String searchText = getIntent().getStringExtra("searchText");
+		return HttpHelper.baseURL + "${lower-case($class/@name)}/search/" + searchText;
+	}
+		
 	@Override
 	public void onStart() {
 		super.onStart();

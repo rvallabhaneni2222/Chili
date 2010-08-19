@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.content.Intent;
 
 public class Search${$class/@name} extends Activity implements OnClickListener {
 	EditText searchText;
@@ -30,7 +31,12 @@ public class Search${$class/@name} extends Activity implements OnClickListener {
 	public void onClick(View arg0) {
 
 		if (arg0 == searchButton) {
-			Log.d("asdfasdfasdfasdfasdf", "in search");
+			Intent intent = new Intent(this, ReadAll${$class/@name}s.class);
+			intent.putExtra("intent", "SEARCH");
+			String search = (searchText.getText() != null) ? searchText
+					.getText().toString().trim() : " ";
+			intent.putExtra("searchText", search);
+			startActivity(intent);
 		}
 
 	}
