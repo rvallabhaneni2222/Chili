@@ -6,6 +6,7 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import info.yalamanchili.android.http.HttpHelper;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import info.yalamanchili.android.views.ViewTextField;
 import ${$groupID}.android.R;
 import info.yalamanchili.android.http.AsyncHttpGet;
@@ -19,6 +20,8 @@ import android.view.View.OnClickListener;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 <%--process level 1 generizations --%>
 <c:if test="not($class/@name = $parentClass1/@name)">
@@ -136,6 +139,8 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 
 	protected ${$class/@name} ${lower-case($class/@name)};
 	protected Button done;
+	protected Button update;
+	protected Button delete;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -145,13 +150,10 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 		customizeTitle();
 		done = (Button) findViewById(R.id.read_done);
 		done.setOnClickListener(this);
-			new AsyncHttpGet(this) {
-			@Override
-			protected void onResponse(String result) {
-				load(result);
-			}
-		}.execute(getReadURL());
-
+		update = (Button) findViewById(R.id.read_update);
+		update.setOnClickListener(this);
+		delete = (Button) findViewById(R.id.read_delete);
+		delete.setOnClickListener(this);
 	}
 	
 	public void customizeTitle(){
@@ -335,15 +337,34 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 	}
 	
 	public void onClick(View arg0) {
-	
-	if (arg0 == done) {
-		finish();
+		if (arg0 == done) {
+			finish();
+		}
+		if (arg0 == update) {
+			Intent intent = new Intent(this, Update${$class/@name}.class);
+			intent.putExtra("entity", ${lower-case($class/@name)});
+			startActivity(intent);
+		}
+		if (arg0 == delete) {
+			Toast.makeText(getApplicationContext(), "aaa", Toast.LENGTH_SHORT);
 		}
 	}
 	
 	public String getReadURL() {
 	Long id = getIntent().getLongExtra("id", new Long(1));
 	return ${camelCase($projectName)}Main.baseURL + "${lower-case($class/@name)}/read/" + id;
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		Log.d("info.yalamacnhili.android", "in start");
+		new AsyncHttpGet(this) {
+			@Override
+			protected void onResponse(String result) {
+				load(result);
+			}
+		}.execute(getReadURL());
 	}
 	
 

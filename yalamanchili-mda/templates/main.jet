@@ -450,10 +450,11 @@
 			<%-- Create Entity CRUD java Activitoes--%>	  
 			<ws:folder path="src"> 
 				<ws:folder path="${$groupIDWithFolder}/android/${$package/@name}/${lower-case($class/@name)}"> 
-					<ws:file  path="ReadAll{$class/@name}s.java" template="templates/android/main/read_all.java.jet"/>
-					<ws:file  path="${$class/@name}Adapter.java" template="templates/android/main/readall_adapter.java.jet"/>
-					<ws:file  path="Read{$class/@name}.java" template="templates/android/main/read_entity.java.jet"/>
-					<ws:file  path="Create{$class/@name}.java" template="templates/android/main/create_entity.java.jet"/>
+					<ws:file  path="ReadAll{$class/@name}s.java" template="templates/android/main/entity/read_all.java.jet"/>
+					<ws:file  path="${$class/@name}Adapter.java" template="templates/android/main/entity/readall_adapter.java.jet"/>
+					<ws:file  path="Read{$class/@name}.java" template="templates/android/main/entity/read_entity.java.jet"/>
+					<ws:file  path="Create{$class/@name}.java" template="templates/android/main/entity/create_entity.java.jet"/>
+					<ws:file  path="Update{$class/@name}.java" template="templates/android/main/entity/update_entity.java.jet"/>
 					<ws:file  path="Search{$class/@name}.java" template="templates/android/main/entity/search_entity.java.jet"/>
 				</ws:folder>
 			</ws:folder>

@@ -25,6 +25,9 @@
       		 <activity android:name="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}.Create${$class/@name}"
                   android:label="@string/app_name">
       		 </activity>
+      		 <activity android:name="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}.Update${$class/@name}"
+                  android:label="@string/app_name">
+      		 </activity>      		 
       		 <activity android:name="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}.Search${$class/@name}"
                   android:label="@string/app_name">
       		 </activity>
