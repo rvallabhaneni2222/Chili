@@ -36,6 +36,7 @@ public class ViewTextField extends LinearLayout {
 		label.setTypeface(Typeface.DEFAULT_BOLD);
 		text.setBackgroundColor(Color.LTGRAY);
 		text.setTextColor(Color.BLACK);
+
 	}
 
 	public void setValue(String value) {
