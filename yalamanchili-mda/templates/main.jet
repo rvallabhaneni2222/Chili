@@ -9,7 +9,7 @@
 <c:setVariable select="'info/yalamanchili/project'" var="groupIDWithFolder"/>
 <c:setVariable select="'info_yalamanchili_project'" var="groupIDWithUnderScore"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
-<c:setVariable select="'/Users/yphanikumar/codebase/generated'" var="location"/>
+<c:setVariable select="'C://codebase//generated'" var="location"/>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <%--versions --%>
 <c:setVariable select="'2.0.0'" var="gwt-version"/>
@@ -414,9 +414,6 @@
 		<ws:folder path="${$groupIDWithFolder}/android">
 			<ws:file  path="${camelCase($projectName)}Main.java" template="templates/android/main/Main.java.jet"/>
 			<ws:file  path="Login.java" template="templates/android/main/login.java.jet"/>
-			<ws:file  path="HttpHelper.java" template="templates/android/main/http_helper.java.jet"/>
-			<ws:file  path="AsyncHttp.java" template="templates/android/main/AsyncHttp_template.java.jet"/>
-			<ws:file  path="AsyncHttpPut.java" template="templates/android/main/AsyncHttpPut_template.java.jet"/>
 		</ws:folder>
    </ws:folder>
    <%--Iterate through the packages and classes--%>

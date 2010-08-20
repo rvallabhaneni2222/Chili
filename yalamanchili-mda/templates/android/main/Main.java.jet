@@ -65,13 +65,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-
+import info.yalamanchili.android.http.HttpHelper;
+import info.yalamanchili.android.http.AsyncHttpGet;
 /**
  * HelloFlashlight is a sample application for the usage of the Maven Android Plugin.
  * The code is trivial and not the focus of this example and therefore not really documented.
  */
 public class ${camelCase($projectName)}Main extends ListActivity {
 
+	public static String baseURL = "http://10.0.2.2:8080/automanage-rest/seam/resource/restv1/crud/";
+	public static String manageURL = "http://10.0.2.2:8080/automanage-rest/seam/resource/restv1/manage/";
 	private SimpleAdapter notes;
 	
     @Override
@@ -174,21 +177,21 @@ public class ${camelCase($projectName)}Main extends ListActivity {
 	}
 
 	public void logout() {
-		new AsyncHttp(this) {
+		new AsyncHttpGet(this) {
 			@Override
 			protected void onResponse(String result) {
 				finish();
 			}
-		}.execute(HttpHelper.manageURL + "logout");
+		}.execute(${camelCase($projectName)}Main.manageURL + "logout");
 	}
 
 	public void exit() {
-		new AsyncHttp(this) {
+		new AsyncHttpGet(this) {
 			@Override
 			protected void onResponse(String result) {
 				finish();
 			}
-		}.execute(HttpHelper.manageURL + "logout");
+		}.execute(${camelCase($projectName)}Main.manageURL + "logout");
 	}       
 }
 </java:format>

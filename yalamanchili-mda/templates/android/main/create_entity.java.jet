@@ -1,8 +1,9 @@
 <java:format>
 package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
+import ${$groupID}.android.${camelCase($projectName)}Main;
 import info.yalamanchili.android.views.EditTextField;
-import info.yalamanchili.project.android.AsyncHttpPut;
-import ${$groupID}.android.HttpHelper;
+import info.yalamanchili.android.http.AsyncHttpPut;
+import info.yalamanchili.android.http.HttpHelper;
 import android.app.Activity;
 import android.os.Bundle;
 import ${$groupID}.android.R;
@@ -371,7 +372,7 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 	}
 	
 	public String getCreateURL() {
-		return HttpHelper.baseURL + "${lower-case($class/@name)}/create";
+		return ${camelCase($projectName)}Main.baseURL + "${lower-case($class/@name)}/create";
 	}
 
 }

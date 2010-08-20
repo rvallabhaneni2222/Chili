@@ -1,6 +1,6 @@
 <java:format>
 package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
-
+import ${$groupID}.android.${camelCase($projectName)}Main;
 <c:if test="$class/@isDependent = 'false'">  
 import android.view.ContextMenu;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -9,7 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Menu;
 </c:if>	
-import info.yalamanchili.project.android.HttpHelper;
+import info.yalamanchili.android.http.HttpHelper;
 import ${$groupID}.android.R;
 import info.yalamanchili.android.widgets.ReadAllPageBar;
 import android.util.Log;
@@ -62,7 +62,7 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 </c:if>
 import java.util.ArrayList;
 import java.util.List;
-import ${$groupID}.android.AsyncHttp;
+import info.yalamanchili.android.http.AsyncHttpGet;
 
 import android.widget.Button;
 import android.app.Activity;
@@ -168,7 +168,7 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 
 	
 	public String getReadALLURL(Integer pageOffSet, Integer pageSize) {
-	return HttpHelper.baseURL + "${lower-case($class/@name)}/readall/" + pageOffSet.toString()
+	return ${camelCase($projectName)}Main.baseURL + "${lower-case($class/@name)}/readall/" + pageOffSet.toString()
 				+ "/" + getString(R.string.page_size);
 	}
 	
@@ -268,7 +268,7 @@ Object parent = getIntent().getSerializableExtra("parent");
 		${lower-case($class/@name)}Adapter.clear();
 		String intent = getIntent().getStringExtra("intent");
 		if ("SEARCH".equals(intent)) {
-			new AsyncHttp(this) {
+			new AsyncHttpGet(this) {
 				@Override
 				protected void onResponse(String result) {
 					Object obj = HttpHelper.xstream.fromXML(result);
@@ -285,7 +285,7 @@ Object parent = getIntent().getSerializableExtra("parent");
 <c:if test="$class/@isDependent = 'true'">
 	else {
 	String parentResource=getIntent().getStringExtra("resource");
-			new AsyncHttp(this) {
+			new AsyncHttpGet(this) {
 				@Override
 				protected void onResponse(String result) {
 					Object obj = HttpHelper.xstream.fromXML(result);
@@ -301,7 +301,7 @@ Object parent = getIntent().getSerializableExtra("parent");
 </c:if>
 <c:if test="$class/@isDependent = 'false'">
 	else {
-		new AsyncHttp(this) {
+		new AsyncHttpGet(this) {
 			@Override
 			protected void onResponse(String result) {
 				Object obj = HttpHelper.xstream.fromXML(result);
@@ -319,7 +319,7 @@ Object parent = getIntent().getSerializableExtra("parent");
 
 	protected String getSearchURL() {
 		String searchText = getIntent().getStringExtra("searchText");
-		return HttpHelper.baseURL + "${lower-case($class/@name)}/search/" + searchText;
+		return ${camelCase($projectName)}Main.baseURL + "${lower-case($class/@name)}/search/" + searchText;
 	}
 		
 	@Override

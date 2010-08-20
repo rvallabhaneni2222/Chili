@@ -1,14 +1,14 @@
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 <java:format>
 package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
-
+import ${$groupID}.android.${camelCase($projectName)}Main;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
-import ${$groupID}.android.HttpHelper;
+import info.yalamanchili.android.http.HttpHelper;
 import android.app.Activity;
 import android.os.Bundle;
 import info.yalamanchili.android.views.ViewTextField;
 import ${$groupID}.android.R;
-import ${$groupID}.android.AsyncHttp;
+import info.yalamanchili.android.http.AsyncHttpGet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -145,7 +145,7 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 		customizeTitle();
 		done = (Button) findViewById(R.id.read_done);
 		done.setOnClickListener(this);
-			new AsyncHttp(this) {
+			new AsyncHttpGet(this) {
 			@Override
 			protected void onResponse(String result) {
 				load(result);
@@ -343,7 +343,7 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 	
 	public String getReadURL() {
 	Long id = getIntent().getLongExtra("id", new Long(1));
-	return HttpHelper.baseURL + "${lower-case($class/@name)}/read/" + id;
+	return ${camelCase($projectName)}Main.baseURL + "${lower-case($class/@name)}/read/" + id;
 	}
 	
 
