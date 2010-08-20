@@ -16,24 +16,24 @@
 		<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
-							<info.yalamanchili.android.views.EditTextField android:id="@+id/${$class/@name}_read_${$attribute/@name}" android:layout_width="wrap_content"
+							<info.yalamanchili.android.views.ViewTextField android:id="@+id/${$class/@name}_read_${$attribute/@name}" android:layout_width="wrap_content"
 								android:layout_height="wrap_content">
-							</info.yalamanchili.android.views.EditTextField>				
+							</info.yalamanchili.android.views.ViewTextField>				
 				</c:iterate>
 	</c:if>
 	<%-- process parent class level 1 attributes--%>
 	<c:if test="not($class/@name = $parentClass1/@name)">
 				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
-							<info.yalamanchili.android.views.EditTextField android:id="@+id/${$class/@name}_read_${$attribute/@name}" android:layout_width="wrap_content"
+							<info.yalamanchili.android.views.ViewTextField android:id="@+id/${$class/@name}_read_${$attribute/@name}" android:layout_width="wrap_content"
 								android:layout_height="wrap_content">
-							</info.yalamanchili.android.views.EditTextField>				
+							</info.yalamanchili.android.views.ViewTextField>				
 				</c:iterate>
 	</c:if>		
 	<%-- process parent class level 0 attributes--%>	
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-							<info.yalamanchili.android.views.EditTextField android:id="@+id/${$class/@name}_read_${$attribute/@name}" android:layout_width="wrap_content"
+							<info.yalamanchili.android.views.ViewTextField android:id="@+id/${$class/@name}_read_${$attribute/@name}" android:layout_width="wrap_content"
 								android:layout_height="wrap_content">
-							</info.yalamanchili.android.views.EditTextField>				
+							</info.yalamanchili.android.views.ViewTextField>				
 			</c:iterate>
 </LinearLayout>
 </ScrollView>
