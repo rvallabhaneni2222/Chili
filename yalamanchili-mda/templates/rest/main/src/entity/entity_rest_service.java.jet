@@ -9,7 +9,7 @@ import java.util.List;
 import info.yalamanchili.commons.DataType;
 import info.yalamanchili.commons.ReflectionUtils;
 import info.yalamanchili.commons.SearchUtils;
-
+import ${$groupID}.rest.GileadService;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
@@ -148,10 +148,9 @@ import info.yalamanchili.mapper.BeanMapper;
 @Path("/crud/${lower-case($class/@name)}")
 @Scope(ScopeType.STATELESS)
 @Transactional
-public class ${$class/@name}Service {
+public class ${$class/@name}Service extends GileadService{
 
 protected XStream xstream = new XStream();
-protected  BeanMapper mapper = new BeanMapper();
 
 	@In(create = true)
 	protected EntityManager em;
@@ -167,7 +166,7 @@ protected  BeanMapper mapper = new BeanMapper();
 		return xstream.toXML("null");
 		}
 		else{
-		return xstream.toXML(mapper.clonePrimitiveDataTypes(${lower-case($class/@name)}, ${$class/@name}.class));
+		return xstream.toXML(beanManager.clone(${lower-case($class/@name)}));
 		}
 	}
 
@@ -178,7 +177,7 @@ protected  BeanMapper mapper = new BeanMapper();
 	//@Restrict("#{s:hasRole('admin')}")
 	public String create(String entity) {
 		${$class/@name} ${lower-case($class/@name)} = (${$class/@name}) xstream.fromXML(entity);
-		return xstream.toXML(em.merge(${lower-case($class/@name)}));
+		return xstream.toXML(beanManager.clone(em.merge(${lower-case($class/@name)})));
 	}
 
 	@Produces("application/xml")
@@ -188,7 +187,7 @@ protected  BeanMapper mapper = new BeanMapper();
 	//@Restrict("#{s:hasRole('admin')}")
 	public String update(String entity) {
 		${$class/@name} ${lower-case($class/@name)} = (${$class/@name}) xstream.fromXML(entity);
-		return xstream.toXML(em.merge(${lower-case($class/@name)}));
+		return xstream.toXML(beanManager.merge((${lower-case($class/@name)})));
 	}
 
 	@DELETE
@@ -209,7 +208,7 @@ protected  BeanMapper mapper = new BeanMapper();
 		getEntitites.setFirstResult(offset);
 		getEntitites.setMaxResults(limit);
 		for (Object ${lower-case($class/@name)} : getEntitites.getResultList()) {
-			results.add((${$class/@name}) mapper.clonePrimitiveDataTypes(${lower-case($class/@name)}, ${$class/@name}.class));
+			results.add((${$class/@name}) beanManager.clone(${lower-case($class/@name)}));
 		}
 		if(results.size() ==0){
 		return xstream.toXML("null");
@@ -249,8 +248,7 @@ protected  BeanMapper mapper = new BeanMapper();
 																		${$class/@name} ${lower-case($class/@name)} = em.find(${$class/@name}.class, id);
 																		List<${$class2/@name}> ${lower-case($class2/@name)}s = new ArrayList<${$class2/@name}>();
 																		for (${$class2/@name} entity : ${lower-case($class/@name)}.get${$class2/@name}s()) {
-																			${lower-case($class2/@name)}s.add((${$class2/@name}) mapper.clonePrimitiveDataTypes(entity,
-																					${$class2/@name}.class));
+																			${lower-case($class2/@name)}s.add((${$class2/@name}) beanManager.clone(entity));
 																		}
 																		if(${lower-case($class2/@name)}s.size() ==0){
 																			return xstream.toXML("null");
@@ -302,8 +300,7 @@ protected  BeanMapper mapper = new BeanMapper();
 																		${$class/@name} ${lower-case($class/@name)} = em.find(${$class/@name}.class, id);
 																		List<${$class2/@name}> ${lower-case($class2/@name)}s = new ArrayList<${$class2/@name}>();
 																		for (${$class2/@name} entity : ${lower-case($class/@name)}.get${$class2/@name}s()) {
-																			${lower-case($class2/@name)}s.add((${$class2/@name}) mapper.clonePrimitiveDataTypes(entity,
-																					${$class2/@name}.class));
+																			${lower-case($class2/@name)}s.add((${$class2/@name}) beanManager.clone(entity));
 																		}
 																		if(${lower-case($class2/@name)}s.size() ==0){
 																			return xstream.toXML("null");
@@ -356,8 +353,7 @@ protected  BeanMapper mapper = new BeanMapper();
 																		${$class/@name} ${lower-case($class/@name)} = em.find(${$class/@name}.class, id);
 																		List<${$class2/@name}> ${lower-case($class2/@name)}s = new ArrayList<${$class2/@name}>();
 																		for (${$class2/@name} entity : ${lower-case($class/@name)}.get${$class2/@name}s()) {
-																			${lower-case($class2/@name)}s.add((${$class2/@name}) mapper.clonePrimitiveDataTypes(entity,
-																					${$class2/@name}.class));
+																			${lower-case($class2/@name)}s.add((${$class2/@name}) beanManager.clone(entity));
 																		}
 																		if(${lower-case($class2/@name)}s.size() ==0){
 																			return xstream.toXML("null");
@@ -405,8 +401,7 @@ protected  BeanMapper mapper = new BeanMapper();
 								DataType.STRING));
 		Query query = ftem.createFullTextQuery(luceneQuery, ${$class/@name}.class);
 		for (Object obj : query.getResultList()) {
-			results.add((${$class/@name}) mapper.clonePrimitiveDataTypes(obj,
-					${$class/@name}.class));
+			results.add((${$class/@name}) beanManager.clone(obj));
 		}
 		return xstream.toXML(results);
 	}

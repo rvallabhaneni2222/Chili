@@ -1,0 +1,24 @@
+package ${$groupID}.rest;
+
+import info.yalamanchili.commons.JNDIUtils;
+
+import javax.persistence.EntityManagerFactory;
+
+import net.sf.gilead.core.hibernate.jboss.HibernateJBossUtil;
+import net.sf.gilead.gwt.GwtConfigurationHelper;
+import net.sf.gilead.core.PersistentBeanManager;
+
+public class GileadService {
+	protected PersistentBeanManager beanManager;
+
+	public GileadService() {
+		beanManager = GwtConfigurationHelper
+				.initGwtStatelessBeanManager(new HibernateJBossUtil(
+						getEntityManagerFactory()));
+
+	}
+
+	private EntityManagerFactory getEntityManagerFactory() {
+		return (EntityManagerFactory) JNDIUtils.lookup("java:/${$projectName}");
+	}
+}

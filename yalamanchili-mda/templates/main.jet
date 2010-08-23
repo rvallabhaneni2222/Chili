@@ -9,7 +9,7 @@
 <c:setVariable select="'info/yalamanchili/project'" var="groupIDWithFolder"/>
 <c:setVariable select="'info_yalamanchili_project'" var="groupIDWithUnderScore"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
-<c:setVariable select="'C://codebase//generated'" var="location"/>
+<c:setVariable select="'/Users/yphanikumar/codebase/generated'" var="location"/>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <%--versions --%>
 <c:setVariable select="'2.0.0'" var="gwt-version"/>
@@ -354,7 +354,8 @@
     <ws:folder path="src/main/java">
 			<ws:folder path="${$groupIDWithFolder}/rest">
 			<%-- rest service class--%>
-			<ws:file  path="${camelCase($projectName)}Service.java" template="templates/rest/main/rest_manage.java.jet"/>
+			<ws:file  path="${camelCase($projectName)}Service.java" template="templates/rest/main/src/rest_manage.java.jet"/>
+			<ws:file  path="GileadService.java" template="templates/rest/main/src/gilead_service.java.jet"/>
 			</ws:folder>    
         	<%-- Iterate through packages and classes --%>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
@@ -390,7 +391,7 @@
 			</c:iterate>
 			<ws:folder path="${$groupIDWithFolder}/rest/${$package/@name}">
 			<%-- rest service class--%>
-			<ws:file  path="{$class/@name}Service.java" template="templates/rest/main/entity_rest_service.java.jet"/>
+			<ws:file  path="{$class/@name}Service.java" template="templates/rest/main/src/entity/entity_rest_service.java.jet"/>
 			</ws:folder>
 	</c:iterate>
 	</c:iterate>			
