@@ -1,5 +1,8 @@
 #import <UIKit/UIKit.h>
 #import "HttpUtils.h";
+#import "<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name}.h";
+#import "Read${$class/@name}ViewController.h";
+#import	"Create${$class/@name}ViewController.h";
 @interface ReadAll${$class/@name}sViewController : UITableViewController {
 	UIView *readAll${$class/@name}sView;
 	UITableView *readAll${$class/@name}sTableView;

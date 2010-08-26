@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 #import "<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name}.h";
+#import "HttpUtils.h";
 
 @interface Create${$class/@name}ViewController : UIViewController {
 	UIView *create${$class/@name}View;

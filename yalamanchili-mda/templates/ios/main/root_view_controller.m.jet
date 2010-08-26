@@ -1,12 +1,4 @@
 #import "RootViewController.h"
-<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-	<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-		<c:if test="$class/@isDependent = 'false'">
-#import "ReadAll${$class/@name}sViewController.h";
-		</c:if>
-	</c:iterate>
-</c:iterate>	
-#import "HttpHelper.h";
 @implementation RootViewController
 @synthesize list;
 
@@ -84,7 +76,7 @@
     
 	// Configure the cell.
 	NSString *cellText=[list objectAtIndex:indexPath.row];
-	cell.text=cellText;
+	cell.textLabel.text=cellText;
     return cell;
 }
 
@@ -140,7 +132,7 @@
 	<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
 		<c:if test="$class/@isDependent = 'false'">
 		if (@"${$class/@name} Maintainence" == tabName) {
-		 ReadAll${$class/@name}sViewController *readAll${$class/@name}sController = [[ReadAll${$class/@name}sViewController alloc] initWithNibName:@"ReadAll${$class/@name}sViewController" bundle:nil];
+		 ReadAll${$class/@name}sViewController *readAll${$class/@name}sController = [[ReadAll${$class/@name}sViewController alloc] initWithNibName:nil bundle:nil];
 		
 		 [self.navigationController pushViewController:readAll${$class/@name}sController animated:YES];
 		 [readAll${$class/@name}sController release];
@@ -169,6 +161,7 @@
 
 
 - (void)dealloc {
+	[list release];
     [super dealloc];
 }
 

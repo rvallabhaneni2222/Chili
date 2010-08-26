@@ -1,6 +1,4 @@
 #import "Create${$class/@name}ViewController.h"
-#import	"HttpHelper.h";
-#import	"HttpUtils.h";
 
 @implementation Create${$class/@name}ViewController
 /*
@@ -142,7 +140,7 @@
 </c:iterate>
 	NSString *xml=[HttpUtils parseToXML:${lower-case($class/@name)}];
 	NSString *url=[self getCreate${$class/@name}URL];
-	[HttpHelper httpPutData:xml withURL:url];
+	[HttpUtils httpPutData:xml withURL:url];
 }
 
 - (void) textFieldDoneEditing:(id) sender{
@@ -150,7 +148,7 @@
 }
 
 - (NSString*) getCreate${$class/@name}URL{
-	return [[HttpHelper crudURL] stringByAppendingString:@"${lower-case($class/@name)}/create"];
+	return [[HttpUtils crudURL] stringByAppendingString:@"${lower-case($class/@name)}/create"];
 }
 
 - (void)dealloc {

@@ -1,9 +1,4 @@
 #import "ReadAll${$class/@name}sViewController.h"
-#import "HttpUtils.h";
-#import "HttpHelper.h";
-#import "<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name}.h";
-#import "Read${$class/@name}ViewController.h";
-#import	"Create${$class/@name}ViewController.h";
 
 @implementation ReadAll${$class/@name}sViewController
 @synthesize ${lower-case($class/@name)}sList;
@@ -49,7 +44,7 @@
 
 - (void) loadData{
 		NSString *urlString=[self getReadAll${$class/@name}sURL];
-	NSData *data=[HttpHelper httpGetDataFromURL:urlString];
+	NSData *data=[HttpUtils httpGetDataFromURL:urlString];
 	NSArray *temp${lower-case($class/@name)}s=[HttpUtils parseFromXML:data];
 	for (<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)} in temp${lower-case($class/@name)}s) {
 		[${lower-case($class/@name)}s addObject:${lower-case($class/@name)}];
@@ -96,12 +91,12 @@
     }
 	// Configure the cell.
 	NSString *cellText=[${lower-case($class/@name)}sList objectAtIndex:indexPath.row];
-	cell.text=cellText;
+	cell.textLabel.text=cellText;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	Read${$class/@name}ViewController *read${$class/@name}Controller = [[Read${$class/@name}ViewController alloc] initWithNibName:@"Read${$class/@name}Controller" bundle:nil];
+	Read${$class/@name}ViewController *read${$class/@name}Controller = [[Read${$class/@name}ViewController alloc] initWithNibName:nil bundle:nil];
 	<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)}=[${lower-case($class/@name)}s objectAtIndex:indexPath.row];
 	read${$class/@name}Controller.${lower-case($class/@name)}=${lower-case($class/@name)};
 	[self.navigationController pushViewController:read${$class/@name}Controller animated:YES];
@@ -111,14 +106,14 @@
 }
 
 - (void) createClicked:(id) sender{
-	Create${$class/@name}ViewController *create${$class/@name}Controller = [[Create${$class/@name}ViewController alloc] initWithNibName:@"Create${$class/@name}" bundle:nil];
+	Create${$class/@name}ViewController *create${$class/@name}Controller = [[Create${$class/@name}ViewController alloc] initWithNibName:nil bundle:nil];
 	[self.navigationController pushViewController:create${$class/@name}Controller animated:YES];
 	[create${$class/@name}Controller release];
 	create${$class/@name}Controller = nil;
 }
 
 - (NSString*) getReadAll${$class/@name}sURL{
-	return [[HttpHelper crudURL] stringByAppendingString:@"${lower-case($class/@name)}/readall/0/20"];
+	return [[HttpUtils crudURL] stringByAppendingString:@"${lower-case($class/@name)}/readall/0/20"];
 }
 
 - (void)dealloc {
