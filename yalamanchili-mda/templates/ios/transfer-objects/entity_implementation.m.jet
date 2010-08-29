@@ -33,13 +33,15 @@
 </c:choose> 
 </c:iterate>
 - (NSString*) description{
-	NSString *description=@"";
+	NSString *localDescription=@"";
 	<%-- processes the premitive Datatypes and enums--%>
 	<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 		 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 		  <c:when test="${'$StringID'}" > 
-		  description= [description stringByAppendingString:${$attribute/@name}];
-		  description= [description stringByAppendingString:@":"];
+		  if (${$attribute/@name}!=nil){
+		  localDescription= [localDescription stringByAppendingString:${$attribute/@name}];
+		  localDescription= [localDescription stringByAppendingString:@":"];
+		  }
 		  </c:when> 
 		  <c:when test="${'$IntegerID'}" >
 		 
@@ -65,6 +67,6 @@
 		 	  </c:otherwise>
 	</c:choose> 
 	</c:iterate>
-	return description;
+	return localDescription;
 	}
 @end

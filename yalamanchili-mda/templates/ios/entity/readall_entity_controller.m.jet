@@ -13,24 +13,54 @@
 }
 */
 
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
-	CGRect cgRct = CGRectMake(0.0, 0.0, 480, 420);  
-	readAll${$class/@name}sView = [[[UIView alloc] initWithFrame:cgRct] autorelease];	
+	CGRect readAllViewCanvas= CGRectMake(0.0, 0.0, 320, 480);
+	readAll${$class/@name}sView = [[[UIView alloc] initWithFrame:readAllViewCanvas] autorelease];
 	readAll${$class/@name}sView.autoresizesSubviews = YES;              
 	self.view = readAll${$class/@name}sView;
+	[self configurePagingBarView];
+	[self configureReadAllTableView];
+	[readAll${$class/@name}sView addSubview:pagingBarView]; 
+	[readAll${$class/@name}sView addSubview:readAll${$class/@name}sTableView];
 	
+	 
+	readAll${$class/@name}sTableView.delegate = self;
+	readAll${$class/@name}sTableView.dataSource=self;
+}
+
+- (void) configurePagingBarView{
+	CGRect pagingBarCanvas= CGRectMake(0.0, 0.0, 320, 40);
+	pagingBarView = [[[UITableView alloc] initWithFrame:pagingBarCanvas] autorelease];
+	//configure create button
 	createButton= [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
-	createButton.frame = CGRectMake(5,5, 100.0, 30.0);
+	createButton.frame = CGRectMake(5,5, 80, 30.0);
 	[createButton setTitle:@"Create" forState:UIControlStateNormal];
 	[createButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal ];
 	[createButton addTarget:self action:@selector(createClicked:) forControlEvents:UIControlEventTouchUpInside];
 	
-	readAll${$class/@name}sTableView = [[[UITableView alloc] initWithFrame:cgRct] autorelease];	
-	readAll${$class/@name}sTableView.delegate = self;
-	readAll${$class/@name}sTableView.dataSource=self;
-	[readAll${$class/@name}sTableView addSubview:createButton];
-	[self.view addSubview:readAll${$class/@name}sTableView];
+	//configure next button
+	nextButton= [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
+	nextButton.frame = CGRectMake(85,5, 60, 30.0);
+	[nextButton setTitle:@"next" forState:UIControlStateNormal];
+	[nextButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal ];
+	[nextButton addTarget:self action:@selector(nextClicked:) forControlEvents:UIControlEventTouchUpInside];	
+	
+	//configure previous button
+	previousButton= [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
+	previousButton.frame = CGRectMake(145,5, 60, 30.0);
+	[previousButton setTitle:@"previous" forState:UIControlStateNormal];
+	[previousButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal ];
+	[previousButton addTarget:self action:@selector(previousClicked:) forControlEvents:UIControlEventTouchUpInside];	
+	
+	[pagingBarView addSubview:createButton];
+	[pagingBarView addSubview:nextButton];
+	[pagingBarView addSubview:previousButton];
+	
+}
+
+- (void) configureReadAllTableView{
+	CGRect readAllTableViewCanvas= CGRectMake(0.0, 40, 320, 380);
+	readAll${$class/@name}sTableView = [[[UITableView alloc] initWithFrame:readAllTableViewCanvas] autorelease];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -38,18 +68,22 @@
  	[super viewDidLoad];
 	${lower-case($class/@name)}sList =[[NSMutableArray alloc] init];
 	${lower-case($class/@name)}s = [[NSMutableArray alloc] init];
-	[self loadData];
+	${lower-case($class/@name)}sStartIndex=0;
+	[self loadDataWithStartIndex:0 pageSize:nil];
 	self.navigationItem.title=@"${$class/@name}s";
 }
 
-- (void) loadData{
-		NSString *urlString=[self getReadAll${$class/@name}sURL];
-	NSData *data=[HttpUtils httpGetDataFromURL:urlString];
+- (void) loadDataWithStartIndex: (int) startIndex pageSize: (NSString*) pageSize {
+	[${lower-case($class/@name)}sList removeAllObjects];
+	[${lower-case($class/@name)}s removeAllObjects];
+	NSString *urlString=[self getReadAll${$class/@name}sURLWithStartIndex:startIndex];
+	NSData *data=[HttpUtils asyncHttpGetDataFromURL:urlString];
 	NSArray *temp${lower-case($class/@name)}s=[HttpUtils parseFromXML:data];
 	for (<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)} in temp${lower-case($class/@name)}s) {
 		[${lower-case($class/@name)}s addObject:${lower-case($class/@name)}];
 		[${lower-case($class/@name)}sList addObject:[${lower-case($class/@name)} description]];
 	}
+	[readAll${$class/@name}sTableView reloadData];
 }
 
 
@@ -112,8 +146,24 @@
 	create${$class/@name}Controller = nil;
 }
 
-- (NSString*) getReadAll${$class/@name}sURL{
-	return [[HttpUtils crudURL] stringByAppendingString:@"${lower-case($class/@name)}/readall/0/20"];
+- (void) nextClicked:(id) sender{
+	${lower-case($class/@name)}sStartIndex=${lower-case($class/@name)}sStartIndex+ [pageSize intValue];
+	[self loadDataWithStartIndex:${lower-case($class/@name)}sStartIndex pageSize:nil];
+}
+
+- (void) previousClicked:(id) sender{
+	if (${lower-case($class/@name)}sStartIndex >= [pageSize intValue]) {
+		${lower-case($class/@name)}sStartIndex = ${lower-case($class/@name)}sStartIndex
+		- [pageSize intValue];
+		[self loadDataWithStartIndex:${lower-case($class/@name)}sStartIndex pageSize:nil];
+	}
+}
+
+- (NSString*) getReadAll${$class/@name}sURLWithStartIndex: (int) startIndex {
+	NSString* startIndexStr = [NSString stringWithFormat:@"%d", startIndex];
+	NSString* endIndexStr = [NSString stringWithFormat:@"%d", startIndex+[pageSize intValue]];
+	NSString *str=[NSString stringWithFormat:@"${lower-case($class/@name)}/readall/%@/%@", startIndexStr, endIndexStr];
+	return [[HttpUtils crudURL] stringByAppendingString:str];
 }
 
 - (void)dealloc {

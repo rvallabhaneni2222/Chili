@@ -4,9 +4,61 @@
 
 @interface Create${$class/@name}ViewController : UIViewController {
 	UIView *create${$class/@name}View;
-<c:iterate select="$class/Classifier.feature/Attribute" var="attribute"> 
-	UITextField *${$attribute/@name}TF;
-</c:iterate>
+	<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+		<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > UITextField *${$attribute/@name}TF;
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > UITextField *${$attribute/@name}TF;
+				 </c:when>
+				 <c:when test="${'$DateID'}" >  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" >UITextField *${$attribute/@name}TF;
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  UITextField *${$attribute/@name}TF;
+				 </c:when>
+		 		</c:choose>
+		</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+		<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > UITextField *${$attribute/@name}TF;
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > UITextField *${$attribute/@name}TF;
+				 </c:when>
+				 <c:when test="${'$DateID'}" >  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" >UITextField *${$attribute/@name}TF;
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  UITextField *${$attribute/@name}TF;
+				 </c:when>
+		 		</c:choose>
+		</c:iterate>
+	</c:if>		
+	<%-- process parent class level 0 attributes--%>	
+	<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > UITextField *${$attribute/@name}TF;
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > UITextField *${$attribute/@name}TF;
+				 </c:when>
+				 <c:when test="${'$DateID'}" >  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > 
+				 </c:when>
+				 <c:when test="${'$LongID'}" >UITextField *${$attribute/@name}TF;
+				 </c:when>
+				 <c:when test="${'$FloatID'}" >  UITextField *${$attribute/@name}TF;
+				 </c:when>
+		 		</c:choose>
+	</c:iterate>
 	UIButton *createButton;
 }
 - (void) createClicked:(id) sender;

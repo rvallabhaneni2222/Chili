@@ -3,17 +3,26 @@
 #import "<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name}.h";
 #import "Read${$class/@name}ViewController.h";
 #import	"Create${$class/@name}ViewController.h";
+
 @interface ReadAll${$class/@name}sViewController : UITableViewController {
+	int ${lower-case($class/@name)}sStartIndex;
 	UIView *readAll${$class/@name}sView;
+	UIView *pagingBarView;
 	UITableView *readAll${$class/@name}sTableView;
 	UIButton *createButton;
+	UIButton *nextButton;
+	UIButton *previousButton;
 	NSMutableArray *${lower-case($class/@name)}sList;
 	NSMutableArray *${lower-case($class/@name)}s;
 }
 @property (nonatomic,retain) NSMutableArray *${lower-case($class/@name)}sList;
 @property (nonatomic,retain) NSMutableArray *${lower-case($class/@name)}s;
-- (void) loadData;
+- (void) loadDataWithStartIndex: (int) startIndex pageSize: (NSString*) pageSize;
 - (void) createClicked:(id) sender;
-- (NSString*) getReadAll${$class/@name}sURL;
+- (void) nextClicked:(id) sender;
+- (void) previousClicked:(id) sender;
+- (NSString*) getReadAll${$class/@name}sURLWithStartIndex: (int) startIndex;
+- (void) configurePagingBarView;
+- (void) configureReadAllTableView;
 @end
 
