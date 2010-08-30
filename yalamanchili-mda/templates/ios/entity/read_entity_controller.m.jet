@@ -1,5 +1,8 @@
 #import "Read${$class/@name}ViewController.h"
-
+<%
+Integer pageSize = 30;
+Integer pos=0;
+%>
 
 @implementation Read${$class/@name}ViewController
 @synthesize ${lower-case($class/@name)};
@@ -20,50 +23,57 @@
 	read${$class/@name}View= [[UIView alloc] initWithFrame:cgRct]; 
 	read${$class/@name}View.autoresizesSubviews = YES;  
 	read${$class/@name}View.backgroundColor=[UIColor whiteColor];
-	self.view = read${$class/@name}View;   
-	
-<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	self.view = read${$class/@name}View;
+	[self configureOptionsView];
+	[read${$class/@name}View addSubview:optionsBarView];   
+	<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+		<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 	  <c:when test="${'$StringID'}" > 
-		UILabel *${$attribute/@name}L=[[UILabel alloc] initWithFrame:CGRectMake(12,30,260,25)];
+		UILabel *${$attribute/@name}L=[[[UILabel alloc] initWithFrame:CGRectMake(12,<% pos=pos+pageSize; %><%= pos.toString() %>,260,25)] autorelease];
 		[${$attribute/@name}L setText:@"${$attribute/@name}"];
 		[self.view addSubview:${$attribute/@name}L];
-		${$attribute/@name}TF= [[UITextField alloc] initWithFrame:CGRectMake(12, 60, 260, 25)];
+		${$attribute/@name}TF= [[[UITextField alloc] initWithFrame:CGRectMake(12, <% pos=pos+pageSize; %><%= pos.toString() %>, 260, 25)] autorelease];
 		[${$attribute/@name}TF setBorderStyle:UITextBorderStyleLine];
 		[${$attribute/@name}TF setFont:[UIFont fontWithName:@"Times New Roman" size:14]];
+		[${$attribute/@name}TF addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
 		[self.view addSubview:${$attribute/@name}TF];
 	  </c:when> 
 	  <c:when test="${'$IntegerID'}" >
-		UILabel *${$attribute/@name}L=[[UILabel alloc] initWithFrame:CGRectMake(12,30,260,25)];
+		UILabel *${$attribute/@name}L=[[[UILabel alloc] initWithFrame:CGRectMake(12,<% pos=pos+pageSize; %><%= pos.toString() %>,260,25)] autorelease];
 		[${$attribute/@name}L setText:@"${$attribute/@name}"];
 		[self.view addSubview:${$attribute/@name}L];
-		${$attribute/@name}TF= [[UITextField alloc] initWithFrame:CGRectMake(12, 60, 260, 25)];
+		${$attribute/@name}TF= [[[UITextField alloc] initWithFrame:CGRectMake(12, <% pos=pos+pageSize; %><%= pos.toString() %>, 260, 25)] autorelease];
 		[${$attribute/@name}TF setBorderStyle:UITextBorderStyleLine];
 		[${$attribute/@name}TF setFont:[UIFont fontWithName:@"Times New Roman" size:14]];
+		[${$attribute/@name}TF addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
 		[self.view addSubview:${$attribute/@name}TF];
 	  </c:when>
 	  <c:when test="${'$DateID'}" >
-	  
+	
 	  </c:when>
 	  <c:when test="${'$BooleanID'}" >
-	  
+	
 	  </c:when>
 	  <c:when test="${'$LongID'}" >
-		UILabel *${$attribute/@name}L=[[UILabel alloc] initWithFrame:CGRectMake(12,30,260,25)];
+		UILabel *${$attribute/@name}L=[[[UILabel alloc] initWithFrame:CGRectMake(12,<% pos=pos+pageSize; %><%= pos.toString() %>,260,25)] autorelease];
 		[${$attribute/@name}L setText:@"${$attribute/@name}"];
 		[self.view addSubview:${$attribute/@name}L];
-		${$attribute/@name}TF= [[UITextField alloc] initWithFrame:CGRectMake(12, 60, 260, 25)];
+		${$attribute/@name}TF= [[[UITextField alloc] initWithFrame:CGRectMake(12, <% pos=pos+pageSize; %><%= pos.toString() %>, 260, 25)] autorelease];
 		[${$attribute/@name}TF setBorderStyle:UITextBorderStyleLine];
 		[${$attribute/@name}TF setFont:[UIFont fontWithName:@"Times New Roman" size:14]];
+		[${$attribute/@name}TF addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
 		[self.view addSubview:${$attribute/@name}TF];
 	  </c:when>
 	  <c:when test="${'$FloatID'}" >
-		UILabel *${$attribute/@name}L=[[UILabel alloc] initWithFrame:CGRectMake(12,30,260,25)];
+		UILabel *${$attribute/@name}L=[[[UILabel alloc] initWithFrame:CGRectMake(12,<% pos=pos+pageSize; %><%= pos.toString() %>,260,25)] autorelease];
 		[${$attribute/@name}L setText:@"${$attribute/@name}"];
 		[self.view addSubview:${$attribute/@name}L];
-		${$attribute/@name}TF= [[UITextField alloc] initWithFrame:CGRectMake(12, 60, 260, 25)];
+		${$attribute/@name}TF= [[[UITextField alloc] initWithFrame:CGRectMake(12, <% pos=pos+pageSize; %><%= pos.toString() %>, 260, 25)] autorelease];
 		[${$attribute/@name}TF setBorderStyle:UITextBorderStyleLine];
 		[${$attribute/@name}TF setFont:[UIFont fontWithName:@"Times New Roman" size:14]];
+		[${$attribute/@name}TF addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
 		[self.view addSubview:${$attribute/@name}TF];
 	  </c:when>
 	 <c:otherwise> 
@@ -73,26 +83,175 @@
 	 			</c:if>
 	 	</c:iterate>	
 	 	  </c:otherwise>
-</c:choose> 
-</c:iterate>		     
+		</c:choose> 
+		</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+		<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+	  <c:when test="${'$StringID'}" > 
+		UILabel *${$attribute/@name}L=[[[UILabel alloc] initWithFrame:CGRectMake(12,<% pos=pos+pageSize; %><%= pos.toString() %>,260,25)] autorelease];
+		[${$attribute/@name}L setText:@"${$attribute/@name}"];
+		[self.view addSubview:${$attribute/@name}L];
+		${$attribute/@name}TF= [[[UITextField alloc] initWithFrame:CGRectMake(12, <% pos=pos+pageSize; %><%= pos.toString() %>, 260, 25)] autorelease];
+		[${$attribute/@name}TF setBorderStyle:UITextBorderStyleLine];
+		[${$attribute/@name}TF setFont:[UIFont fontWithName:@"Times New Roman" size:14]];
+		[${$attribute/@name}TF addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+		[self.view addSubview:${$attribute/@name}TF];
+	  </c:when> 
+	  <c:when test="${'$IntegerID'}" >
+		UILabel *${$attribute/@name}L=[[[UILabel alloc] initWithFrame:CGRectMake(12,<% pos=pos+pageSize; %><%= pos.toString() %>,260,25)] autorelease];
+		[${$attribute/@name}L setText:@"${$attribute/@name}"];
+		[self.view addSubview:${$attribute/@name}L];
+		${$attribute/@name}TF= [[[UITextField alloc] initWithFrame:CGRectMake(12, <% pos=pos+pageSize; %><%= pos.toString() %>, 260, 25)] autorelease];
+		[${$attribute/@name}TF setBorderStyle:UITextBorderStyleLine];
+		[${$attribute/@name}TF setFont:[UIFont fontWithName:@"Times New Roman" size:14]];
+		[${$attribute/@name}TF addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+		[self.view addSubview:${$attribute/@name}TF];
+	  </c:when>
+	  <c:when test="${'$DateID'}" >
+	
+	  </c:when>
+	  <c:when test="${'$BooleanID'}" >
+	
+	  </c:when>
+	  <c:when test="${'$LongID'}" >
+		UILabel *${$attribute/@name}L=[[[UILabel alloc] initWithFrame:CGRectMake(12,<% pos=pos+pageSize; %><%= pos.toString() %>,260,25)] autorelease];
+		[${$attribute/@name}L setText:@"${$attribute/@name}"];
+		[self.view addSubview:${$attribute/@name}L];
+		${$attribute/@name}TF= [[[UITextField alloc] initWithFrame:CGRectMake(12, <% pos=pos+pageSize; %><%= pos.toString() %>, 260, 25)] autorelease];
+		[${$attribute/@name}TF setBorderStyle:UITextBorderStyleLine];
+		[${$attribute/@name}TF setFont:[UIFont fontWithName:@"Times New Roman" size:14]];
+		[${$attribute/@name}TF addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+		[self.view addSubview:${$attribute/@name}TF];
+	  </c:when>
+	  <c:when test="${'$FloatID'}" >
+		UILabel *${$attribute/@name}L=[[[UILabel alloc] initWithFrame:CGRectMake(12,<% pos=pos+pageSize; %><%= pos.toString() %>,260,25)] autorelease];
+		[${$attribute/@name}L setText:@"${$attribute/@name}"];
+		[self.view addSubview:${$attribute/@name}L];
+		${$attribute/@name}TF= [[[UITextField alloc] initWithFrame:CGRectMake(12, <% pos=pos+pageSize; %><%= pos.toString() %>, 260, 25)] autorelease];
+		[${$attribute/@name}TF setBorderStyle:UITextBorderStyleLine];
+		[${$attribute/@name}TF setFont:[UIFont fontWithName:@"Times New Roman" size:14]];
+		[${$attribute/@name}TF addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+		[self.view addSubview:${$attribute/@name}TF];
+	  </c:when>
+	 <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			<%-- add  enums support--%>
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise>
+		</c:choose> 
+		</c:iterate>
+	</c:if>		
+	<%-- process parent class level 0 attributes--%>	
+	<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+	  <c:when test="${'$StringID'}" > 
+		UILabel *${$attribute/@name}L=[[[UILabel alloc] initWithFrame:CGRectMake(12,<% pos=pos+pageSize; %><%= pos.toString() %>,260,25)] autorelease];
+		[${$attribute/@name}L setText:@"${$attribute/@name}"];
+		[self.view addSubview:${$attribute/@name}L];
+		${$attribute/@name}TF= [[[UITextField alloc] initWithFrame:CGRectMake(12, <% pos=pos+pageSize; %><%= pos.toString() %>, 260, 25)] autorelease];
+		[${$attribute/@name}TF setBorderStyle:UITextBorderStyleLine];
+		[${$attribute/@name}TF setFont:[UIFont fontWithName:@"Times New Roman" size:14]];
+		[${$attribute/@name}TF addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+		[self.view addSubview:${$attribute/@name}TF];
+	  </c:when> 
+	  <c:when test="${'$IntegerID'}" >
+		UILabel *${$attribute/@name}L=[[[UILabel alloc] initWithFrame:CGRectMake(12,<% pos=pos+pageSize; %><%= pos.toString() %>,260,25)] autorelease];
+		[${$attribute/@name}L setText:@"${$attribute/@name}"];
+		[self.view addSubview:${$attribute/@name}L];
+		${$attribute/@name}TF= [[[UITextField alloc] initWithFrame:CGRectMake(12, <% pos=pos+pageSize; %><%= pos.toString() %>, 260, 25)] autorelease];
+		[${$attribute/@name}TF setBorderStyle:UITextBorderStyleLine];
+		[${$attribute/@name}TF setFont:[UIFont fontWithName:@"Times New Roman" size:14]];
+		[${$attribute/@name}TF addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+		[self.view addSubview:${$attribute/@name}TF];
+	  </c:when>
+	  <c:when test="${'$DateID'}" >
+	
+	  </c:when>
+	  <c:when test="${'$BooleanID'}" >
+	
+	  </c:when>
+	  <c:when test="${'$LongID'}" >
+		UILabel *${$attribute/@name}L=[[[UILabel alloc] initWithFrame:CGRectMake(12,<% pos=pos+pageSize; %><%= pos.toString() %>,260,25)] autorelease];
+		[${$attribute/@name}L setText:@"${$attribute/@name}"];
+		[self.view addSubview:${$attribute/@name}L];
+		${$attribute/@name}TF= [[[UITextField alloc] initWithFrame:CGRectMake(12, <% pos=pos+pageSize; %><%= pos.toString() %>, 260, 25)] autorelease];
+		[${$attribute/@name}TF setBorderStyle:UITextBorderStyleLine];
+		[${$attribute/@name}TF setFont:[UIFont fontWithName:@"Times New Roman" size:14]];
+		[${$attribute/@name}TF addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+		[self.view addSubview:${$attribute/@name}TF];
+	  </c:when>
+	  <c:when test="${'$FloatID'}" >
+		UILabel *${$attribute/@name}L=[[[UILabel alloc] initWithFrame:CGRectMake(12,<% pos=pos+pageSize; %><%= pos.toString() %>,260,25)] autorelease];
+		[${$attribute/@name}L setText:@"${$attribute/@name}"];
+		[self.view addSubview:${$attribute/@name}L];
+		${$attribute/@name}TF= [[[UITextField alloc] initWithFrame:CGRectMake(12, <% pos=pos+pageSize; %><%= pos.toString() %>, 260, 25)] autorelease];
+		[${$attribute/@name}TF setBorderStyle:UITextBorderStyleLine];
+		[${$attribute/@name}TF setFont:[UIFont fontWithName:@"Times New Roman" size:14]];
+		[${$attribute/@name}TF addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+		[self.view addSubview:${$attribute/@name}TF];
+	  </c:when>
+	 <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			<%-- add  enums support--%>
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise>
+		</c:choose> 
+	</c:iterate>
 }
 
+- (void) configureOptionsView {
+	CGRect optionsBarCanvas= CGRectMake(0.0, 385, 320, 30);
+	optionsBarView = [[[UIView alloc] initWithFrame:optionsBarCanvas] autorelease];
+	optionsBarView.backgroundColor=UIColor.redColor;
+	
+	optionsButton= [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
+	optionsButton.frame = CGRectMake(0,0, 320, 30.0);
+	[optionsButton setTitle:@"Options" forState:UIControlStateNormal];
+	[optionsButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal ];
+	[optionsButton addTarget:self action:@selector(optionsClicked:) forControlEvents:UIControlEventTouchUpInside];
+	
+	[optionsBarView addSubview:optionsButton];	
+}
 
+- (void) optionsClicked: (id) sender{
+	UIActionSheet *menu=[[UIActionSheet alloc] initWithTitle:@"options" delegate:self cancelButtonTitle:@"cancel" destructiveButtonTitle:nil otherButtonTitles:@"search",@"find",nil];
+	[menu showInView:self.view];
+	[menu release];	
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+		NSLog(@"search");
+	} 
+	else if (buttonIndex == 1) {
+        NSLog(@"find");
+    }
+}
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	self.navigationItem.title=@"Read ${$class/@name}";
-<%-- processes the premitive Datatypes and enums--%>
-<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	
+	<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+		<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-	  <c:when test="${'$StringID'}" > 
-	  ${$attribute/@name}TF.text=[${lower-case($class/@name)} ${$attribute/@name}];
+	  <c:when test="${'$StringID'}" > ${$attribute/@name}TF.text=[${lower-case($class/@name)} ${$attribute/@name}];
 	  </c:when> 
 	  <c:when test="${'$IntegerID'}" >
 	  </c:when>
 	  <c:when test="${'$DateID'}" >
+	
 	  </c:when>
 	  <c:when test="${'$BooleanID'}" >
+	
 	  </c:when>
 	  <c:when test="${'$LongID'}" >
 	  </c:when>
@@ -105,8 +264,63 @@
 	 			</c:if>
 	 	</c:iterate>	
 	 	  </c:otherwise>
-</c:choose> 
-</c:iterate>
+		</c:choose> 
+		</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+		<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+	  <c:when test="${'$StringID'}" > ${$attribute/@name}TF.text=[${lower-case($class/@name)} ${$attribute/@name}];
+	  </c:when> 
+	  <c:when test="${'$IntegerID'}" >
+	  </c:when>
+	  <c:when test="${'$DateID'}" >
+	
+	  </c:when>
+	  <c:when test="${'$BooleanID'}" >
+	
+	  </c:when>
+	  <c:when test="${'$LongID'}" >
+	  </c:when>
+	  <c:when test="${'$FloatID'}" >
+	  </c:when>
+	 <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			<%-- add  enums support--%>
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise>
+		</c:choose>  
+		</c:iterate>
+	</c:if>		
+	<%-- process parent class level 0 attributes--%>	
+	<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+	  <c:when test="${'$StringID'}" > ${$attribute/@name}TF.text=[${lower-case($class/@name)} ${$attribute/@name}];
+	  </c:when> 
+	  <c:when test="${'$IntegerID'}" >
+	  </c:when>
+	  <c:when test="${'$DateID'}" >
+	
+	  </c:when>
+	  <c:when test="${'$BooleanID'}" >
+	
+	  </c:when>
+	  <c:when test="${'$LongID'}" >
+	  </c:when>
+	  <c:when test="${'$FloatID'}" >
+	  </c:when>
+	 <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			<%-- add  enums support--%>
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise>
+		</c:choose>  
+	</c:iterate>
     [super viewDidLoad];
 }
 
@@ -132,9 +346,6 @@
 }
 
 - (void)dealloc {
-<c:iterate select="$class/Classifier.feature/Attribute" var="attribute"> 
- [${$attribute/@name}TF release];
-</c:iterate>
     [super dealloc];
 }
 

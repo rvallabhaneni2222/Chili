@@ -4,7 +4,7 @@
 #import "Read${$class/@name}ViewController.h";
 #import	"Create${$class/@name}ViewController.h";
 
-@interface ReadAll${$class/@name}sViewController : UITableViewController {
+@interface ReadAll${$class/@name}sViewController : UITableViewController<UIActionSheetDelegate> {
 	int ${lower-case($class/@name)}sStartIndex;
 	UIView *readAll${$class/@name}sView;
 	UIView *pagingBarView;
@@ -12,6 +12,8 @@
 	UIButton *createButton;
 	UIButton *nextButton;
 	UIButton *previousButton;
+	UIView *optionsBarView;
+	UIButton *optionsButton;
 	NSMutableArray *${lower-case($class/@name)}sList;
 	NSMutableArray *${lower-case($class/@name)}s;
 }
@@ -21,8 +23,10 @@
 - (void) createClicked:(id) sender;
 - (void) nextClicked:(id) sender;
 - (void) previousClicked:(id) sender;
+- (void) optionsClicked: (id) sender;
 - (NSString*) getReadAll${$class/@name}sURLWithStartIndex: (int) startIndex;
 - (void) configurePagingBarView;
 - (void) configureReadAllTableView;
+- (void) configureOptionsView;
 @end
 

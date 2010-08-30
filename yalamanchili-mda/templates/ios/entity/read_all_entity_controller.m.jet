@@ -20,10 +20,11 @@
 	self.view = readAll${$class/@name}sView;
 	[self configurePagingBarView];
 	[self configureReadAllTableView];
+	[self configureOptionsView];
 	[readAll${$class/@name}sView addSubview:pagingBarView]; 
 	[readAll${$class/@name}sView addSubview:readAll${$class/@name}sTableView];
+	[readAll${$class/@name}sView addSubview:optionsBarView];
 	
-	 
 	readAll${$class/@name}sTableView.delegate = self;
 	readAll${$class/@name}sTableView.dataSource=self;
 }
@@ -40,14 +41,14 @@
 	
 	//configure next button
 	nextButton= [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
-	nextButton.frame = CGRectMake(85,5, 60, 30.0);
+	nextButton.frame = CGRectMake(90,5, 80, 30.0);
 	[nextButton setTitle:@"next" forState:UIControlStateNormal];
 	[nextButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal ];
 	[nextButton addTarget:self action:@selector(nextClicked:) forControlEvents:UIControlEventTouchUpInside];	
 	
 	//configure previous button
 	previousButton= [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
-	previousButton.frame = CGRectMake(145,5, 60, 30.0);
+	previousButton.frame = CGRectMake(175,5, 80, 30.0);
 	[previousButton setTitle:@"previous" forState:UIControlStateNormal];
 	[previousButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal ];
 	[previousButton addTarget:self action:@selector(previousClicked:) forControlEvents:UIControlEventTouchUpInside];	
@@ -59,8 +60,22 @@
 }
 
 - (void) configureReadAllTableView{
-	CGRect readAllTableViewCanvas= CGRectMake(0.0, 40, 320, 380);
+	CGRect readAllTableViewCanvas= CGRectMake(0.0, 40, 320, 345);
 	readAll${$class/@name}sTableView = [[[UITableView alloc] initWithFrame:readAllTableViewCanvas] autorelease];
+}
+
+- (void) configureOptionsView {
+	CGRect optionsBarCanvas= CGRectMake(0.0, 385, 320, 30);
+	optionsBarView = [[[UIView alloc] initWithFrame:optionsBarCanvas] autorelease];
+	optionsBarView.backgroundColor=UIColor.redColor;
+	
+	optionsButton= [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
+	optionsButton.frame = CGRectMake(0,0, 320, 30.0);
+	[optionsButton setTitle:@"Options" forState:UIControlStateNormal];
+	[optionsButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal ];
+	[optionsButton addTarget:self action:@selector(optionsClicked:) forControlEvents:UIControlEventTouchUpInside];
+	
+	[optionsBarView addSubview:optionsButton];	
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -144,6 +159,21 @@
 	[self.navigationController pushViewController:create${$class/@name}Controller animated:YES];
 	[create${$class/@name}Controller release];
 	create${$class/@name}Controller = nil;
+}
+
+- (void) optionsClicked: (id) sender{
+	UIActionSheet *menu=[[UIActionSheet alloc] initWithTitle:@"options" delegate:self cancelButtonTitle:@"cancel" destructiveButtonTitle:nil otherButtonTitles:@"search",@"find",nil];
+	[menu showInView:readAll${$class/@name}sTableView];
+	[menu release];
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+		NSLog(@"search");
+	} 
+	else if (buttonIndex == 1) {
+        NSLog(@"find");
+    }
 }
 
 - (void) nextClicked:(id) sender{
