@@ -3,6 +3,10 @@
 @implementation ReadAll${$class/@name}sViewController
 @synthesize ${lower-case($class/@name)}sList;
 @synthesize ${lower-case($class/@name)}s;
+<c:if test="$class/@isDependent = 'true'">  
+@synthesize parent;
+@synthesize parentResource;
+</c:if>
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -92,8 +96,8 @@
 	[${lower-case($class/@name)}sList removeAllObjects];
 	[${lower-case($class/@name)}s removeAllObjects];
 	NSString *urlString=[self getReadAll${$class/@name}sURLWithStartIndex:startIndex];
-	NSData *data=[HttpUtils asyncHttpGetDataFromURL:urlString];
-	NSArray *temp${lower-case($class/@name)}s=[HttpUtils parseFromXML:data];
+	NSData *data=[HttpHelper asyncHttpGetDataFromURL:urlString];
+	NSArray *temp${lower-case($class/@name)}s=[XMLUtils convertXMLToObjects:data];
 	for (<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)} in temp${lower-case($class/@name)}s) {
 		[${lower-case($class/@name)}s addObject:${lower-case($class/@name)}];
 		[${lower-case($class/@name)}sList addObject:[${lower-case($class/@name)} description]];

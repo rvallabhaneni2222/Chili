@@ -1,11 +1,13 @@
 #import <UIKit/UIKit.h>
 #import "<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name}.h";
+#import "HttpUtils.h";
 
 @interface Read${$class/@name}ViewController : UIViewController<UIActionSheetDelegate> {
 	<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)};<%-- processes the premitive Datatypes and enums--%>
 	UIView *read${$class/@name}View;
 	UIView *optionsBarView;
 	UIButton *optionsButton;
+	UIActionSheet *menu;
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
 		<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
@@ -65,4 +67,5 @@
 @property (nonatomic,retain)	<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)};
 - (void) configureOptionsView;
 - (void) optionsClicked: (id) sender;
+- (NSString*) getReadURLWithID: (int) key;
 @end

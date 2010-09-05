@@ -1,0 +1,11 @@
+#import <Foundation/Foundation.h>
+extern NSString *pageSize;
+
+@interface HttpUtils : NSObject {
+
+}
++ (NSString *)manageURL;
+
++ (NSString *)crudURL;
+
+@end

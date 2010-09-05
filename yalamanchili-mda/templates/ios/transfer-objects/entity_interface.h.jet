@@ -1,6 +1,9 @@
 #import <Foundation/Foundation.h>
 <c:if test="not($class/@parent1 = $class/@name)"> #import"<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@parentClass1Name}.h"; </c:if>
 @interface <c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} : <c:if test="$class/@parentClass1Name = $class/@name"> NSObject </c:if> <c:if test="not($class/@parentClass1Name = $class/@name)"> <c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@parentClass1Name} </c:if>{
+<c:if test="$class/@parentClass1Name = $class/@name">
+	long int entityID; 
+</c:if>
 	<%-- processes the premitive Datatypes and enums--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
@@ -32,6 +35,9 @@
 </c:choose> 
 </c:iterate>
 }
+<c:if test="$class/@parentClass1Name = $class/@name">
+	@property long int entityID; 
+</c:if>
 	<%-- processes the premitive Datatypes and enums--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >

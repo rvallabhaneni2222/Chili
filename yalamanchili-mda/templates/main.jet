@@ -500,6 +500,8 @@
 <ws:folder path="main">
 	<ws:file path="RootViewController.h" template="templates/ios/main/root_view_controller.h.jet"/>
 	<ws:file path="RootViewController.m" template="templates/ios/main/root_view_controller.m.jet"/>
+	<ws:file path="HttpUtils.h" template="templates/ios/main/HttpUtils.h.jet"/>
+	<ws:file path="HttpUtils.m" template="templates/ios/main/HttpUtils.m.jet"/>
 </ws:folder>
    <%--Iterate through the packages and classes--%>
        	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">

@@ -2,6 +2,9 @@
 
 
 @implementation <c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name}
+<c:if test="$class/@parentClass1Name = $class/@name">
+	@synthesize entityID; 
+</c:if>
 <%-- processes the premitive Datatypes and enums--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
@@ -69,4 +72,46 @@
 	</c:iterate>
 	return localDescription;
 	}
+	
+- (void)dealloc
+{
+<%-- processes the premitive Datatypes and enums--%>
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+	  <c:when test="${'$StringID'}" > 
+	  [${$attribute/@name} release];
+	  ${$attribute/@name}=nil;
+	  </c:when> 
+	  <c:when test="${'$IntegerID'}" >
+	  [${$attribute/@name} release];
+	  ${$attribute/@name}=nil;
+	  </c:when>
+	  <c:when test="${'$DateID'}" >
+	  [${$attribute/@name} release];
+	  ${$attribute/@name}=nil;
+	  </c:when>
+	  <c:when test="${'$BooleanID'}" >
+	  [${$attribute/@name} release];
+	  ${$attribute/@name}=nil;
+	  </c:when>
+	  <c:when test="${'$LongID'}" >
+	  [${$attribute/@name} release];
+	  ${$attribute/@name}=nil;
+	  </c:when>
+	  <c:when test="${'$FloatID'}" >
+	  [${$attribute/@name} release];
+	  ${$attribute/@name}=nil;
+	  </c:when>
+	 <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			<%-- add  enums support--%>
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise>
+</c:choose> 
+</c:iterate>
+
+   [super dealloc];
+}
 @end

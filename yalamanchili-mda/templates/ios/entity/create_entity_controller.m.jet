@@ -321,9 +321,9 @@ Integer pos=0;
 			</c:choose> 
 	</c:iterate>
 	
-	NSString *xml=[HttpUtils parseToXML:${lower-case($class/@name)}];
+	NSString *xml=[XMLUtils convertObjectToXML:${lower-case($class/@name)}];
 	NSString *url=[self getCreate${$class/@name}URL];
-	[HttpUtils asyncHttpPutData:xml withURL:url];
+	[HttpHelper asyncHttpPutData:xml withURL:url];
 	[[self navigationController] popViewControllerAnimated:YES];
 }
 
