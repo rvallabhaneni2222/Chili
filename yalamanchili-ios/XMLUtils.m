@@ -36,6 +36,11 @@ static const char* getPropertyType(objc_property_t property) {
 	NSError *error = [[NSError alloc] init];	
 	GDataXMLDocument *xml = [[GDataXMLDocument alloc] initWithData:xmlData 
 														   options:0 error:&error];
+	
+	if([[[xml rootElement] name] isEqualToString:@"string"]){
+		NSLog(@"null response");
+		return nil;
+	}
 	NSArray *list = [xml nodesForXPath:@"//list" error:nil];
 	if(list.count >0){
 		NSArray *entities=[xml.rootElement children];
@@ -82,7 +87,7 @@ static const char* getPropertyType(objc_property_t property) {
 													   withString:@"."];
 	[xmlString appendString:[self getOpenXMLTagForString:entityName]];
 	[xmlString appendString:@"\n"];
-	NSMutableDictionary * propertyDic = [self propertyDictionary:entity];
+	NSMutableDictionary * propertyDic = [self propertyDictionary:[entity class]];
 	for (NSString *key in propertyDic) {
 		if ([entity valueForKey:key]!=nil){
 			[xmlString appendString:[self getOpenXMLTagForString:key]];
@@ -95,6 +100,7 @@ static const char* getPropertyType(objc_property_t property) {
 	}
 	[xmlString appendString:[self getCloseXMLTagForString:entityName]];
 	[xmlString appendString:@"\n"];
+	NSLog(@"%@",xmlString);
 	return xmlString;
 }
 
@@ -146,4 +152,5 @@ static const char* getPropertyType(objc_property_t property) {
     free(properties);
 	return dic;
 }
+
 @end 
