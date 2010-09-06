@@ -18,5 +18,6 @@
 + (NSString*) convertObjectToXML:(id) entity;
 + (NSString*) getOpenXMLTagForString:(NSString*) xmlName;
 + (NSString*) getCloseXMLTagForString:(NSString*) xmlName;
-+ (NSMutableDictionary *)propertDictionary:(NSObject *) objt;
++ (NSMutableDictionary *)propertDictionaryForClass:(NSObject *) entity;
++ (NSMutableDictionary *)propertyDictionary:(Class) clazz;
 @end

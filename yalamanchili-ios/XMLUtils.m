@@ -9,38 +9,23 @@
 #import "XMLUtils.h"
 
 static const char* getPropertyType(objc_property_t property) {
-	
     // parse the property attribues. this is a comma delimited string. the type of the attribute starts with the
-	
     // character 'T' should really just use strsep for this, using a C99 variable sized array.
-	
     const char *attributes = property_getAttributes(property);
 	char buffer[1 + strlen(attributes)];
     strcpy(buffer, attributes);
-	
     char *state = buffer;
 	char *attribute;
-	
-	
-	
     while ((attribute = strsep(&state, ",")) != NULL) {
-		
         if (attribute[0] == 'T' && strlen(attribute)>2) {
-			
             // return a pointer scoped to the autorelease pool. Under GC, this will be a separate block.
-			
             return (const char *)[[NSData dataWithBytes:(attribute + 3) length:strlen(attribute)-4] bytes];
-			
-			
 			
         }else if (attribute[0] == 'T' && strlen(attribute)==2) {
 			return (const char *)[[NSData dataWithBytes:(attribute + 1) length:strlen(attribute)] bytes];
 		}
-		
     }
-	
     return "@";
-	
 }
 
 @implementation XMLUtils
@@ -71,10 +56,20 @@ static const char* getPropertyType(objc_property_t property) {
 													   withString:@"_"];
 	id entity = [[[NSClassFromString(entityName) alloc] init] autorelease];
 	NSArray *attributes=[entityXML children];
+	NSMutableDictionary *propertyDic=[self propertDictionaryForClass:entity];
 	for(GDataXMLElement *attribute in attributes){
 		NSLog(@"processing attribute:%@",attribute.name);
-		[IntrospectionUtils callSetterMethodOnEntity:entity onAttribute:attribute.name withString:attribute.stringValue];
+		NSString *dataType=[propertyDic objectForKey:attribute.name];
+		NSLog(@"dataType:%@",dataType);
+		if([@"NSString" isEqualToString:dataType]){
+			[IntrospectionUtils callSetterMethodOnEntity:entity onAttribute:attribute.name withString:attribute.stringValue];
+		}
+		if([attribute.name isEqualToString:@"id"]){
+			NSNumber *num=[NSNumber numberWithInteger:[attribute.stringValue integerValue]];
+			[IntrospectionUtils callSetterMethodOnEntity:entity onAttribute:@"entityID" withLong:num];		
+		}
 	}
+	NSLog(@"%@",[entity entityID]);
 	return entity;
 }
 
@@ -87,7 +82,7 @@ static const char* getPropertyType(objc_property_t property) {
 													   withString:@"."];
 	[xmlString appendString:[self getOpenXMLTagForString:entityName]];
 	[xmlString appendString:@"\n"];
-	NSMutableDictionary * propertyDic = [self propertDictionary:entity];
+	NSMutableDictionary * propertyDic = [self propertyDictionary:entity];
 	for (NSString *key in propertyDic) {
 		if ([entity valueForKey:key]!=nil){
 			[xmlString appendString:[self getOpenXMLTagForString:key]];
@@ -118,12 +113,20 @@ static const char* getPropertyType(objc_property_t property) {
 	return s;
 }
 
++ (NSMutableDictionary *)propertDictionaryForClass:(NSObject *) entity{
+	NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:1];
+	Class clazz=[entity class];
+	do {
+		[dic addEntriesFromDictionary:[self propertyDictionary:clazz]];
+		clazz=class_getSuperclass(clazz);
+	} while (![[clazz description] isEqualToString:@"NSObject"]);
+	return dic;
+}
 
-+ (NSMutableDictionary *)propertDictionary:(NSObject *) objt{
++ (NSMutableDictionary *)propertyDictionary:(Class) clazz{
     unsigned int outCount, i;
-	
 	NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1]; 
-    objc_property_t *properties = class_copyPropertyList([objt class], &outCount);
+    objc_property_t *properties = class_copyPropertyList(clazz, &outCount);
     for(i = 0; i < outCount; i++) {
         objc_property_t property = properties[i];
         const char *propName = property_getName(property);
@@ -133,17 +136,14 @@ static const char* getPropertyType(objc_property_t property) {
 			//propertyName = [propertyName stringByReplacingOccurrencesOfString:@"@\"NSString\"" withString:@""];		
 			//NSLog(@"propName :: %@",propertyName);
 			NSString *propertyType = [NSString stringWithCString:propType encoding:NSUTF8StringEncoding];
-			
 			//NSLog(@"propertyType :: %@",propertyType);
-			
 			[dic setValue:propertyType forKey:propertyName];
         }
     }
-	
-	
+	if([dic objectForKey:@"entityID"] !=nil){
+		NSLog(@"nil nil nil nil nil");
+	}
     free(properties);
-	
 	return dic;
-	
 }
 @end 

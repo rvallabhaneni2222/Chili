@@ -12,6 +12,7 @@
 @interface IntrospectionUtils : NSObject {
 
 }
++ (NSMutableArray*) getPropertyListForEntity:(id) entity;
 + (NSString*) sayHello: (NSString*) message;
 + (NSMutableArray*) getMethodsForClassName: (NSString*) className;
 + (void) callSetterMethodOnEntity: (id) entity onAttribute: (NSString*) attributeName withString:(NSString*) parameter;
@@ -20,7 +21,8 @@
 + (void) callSetterMethodOnEntity: (id) entity onAttribute: (NSString*) attributeName withDate:(NSDate*) parameter;
 + (void) callSetterMethodOnEntity: (id) entity onAttribute: (NSString*) attributeName withFloat:(float) parameter;
 + (void) callSetterMethodOnEntity: (id) entity onAttribute: (NSString*) attributeName withBoolean:(bool)  parameter;
-+ (NSString*) callGetterMethodOnEntity: (id) entity onAttribute: (NSString*) attributeName;
 + (NSString*) getGetterMethodNameForAttribute:(NSString*) attributeName;
 + (NSString*) getSetterMethodNameForAttribute:(NSString*) attributeName;
++ (Method) getGetterMethodForClass: (id) entity forAttribute:(NSString*) attributeName;
++ (Method) getSetterMethodForClass: (id) entity forAttribute:(NSString*) attributeName;
 @end
