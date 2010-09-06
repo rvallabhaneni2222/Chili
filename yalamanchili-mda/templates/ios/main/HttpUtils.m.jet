@@ -4,7 +4,7 @@
 
 NSString *pageSize=@"10";
 @implementation HttpUtils
-static NSString *crudURL=@"http://10.0.2.2:8080/${lower-case($projectName)}-rest/seam/resource/restv1/crud/";
+static NSString *crudURL=@"http://localhost:8080/${lower-case($projectName)}-rest/seam/resource/restv1/crud/";
 static NSString *manageURL=@"http://localhost:8080/${lower-case($projectName)}-rest/seam/resource/restv1/manage/";
 
 + (NSString *)crudURL { return crudURL; }

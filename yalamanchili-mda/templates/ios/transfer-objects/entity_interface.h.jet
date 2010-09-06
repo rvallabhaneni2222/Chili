@@ -2,7 +2,7 @@
 <c:if test="not($class/@parent1 = $class/@name)"> #import"<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@parentClass1Name}.h"; </c:if>
 @interface <c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} : <c:if test="$class/@parentClass1Name = $class/@name"> NSObject </c:if> <c:if test="not($class/@parentClass1Name = $class/@name)"> <c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@parentClass1Name} </c:if>{
 <c:if test="$class/@parentClass1Name = $class/@name">
-	long int entityID; 
+	NSNumber *entityID; 
 </c:if>
 	<%-- processes the premitive Datatypes and enums--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
@@ -11,7 +11,7 @@
 	  NSString *${$attribute/@name};
 	  </c:when> 
 	  <c:when test="${'$IntegerID'}" >
-	   NSInteger *${$attribute/@name};
+	   NSNumber *${$attribute/@name};
 	  </c:when>
 	  <c:when test="${'$DateID'}" >
 	   NSDate *${$attribute/@name};
@@ -36,7 +36,7 @@
 </c:iterate>
 }
 <c:if test="$class/@parentClass1Name = $class/@name">
-	@property long int entityID; 
+	@property (nonatomic,retain) NSNumber *entityID; 
 </c:if>
 	<%-- processes the premitive Datatypes and enums--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
@@ -45,7 +45,7 @@
 	  @property (nonatomic,retain) NSString *${$attribute/@name};
 	  </c:when> 
 	  <c:when test="${'$IntegerID'}" >
-	  @property (nonatomic,retain) NSInteger *${$attribute/@name};
+	  @property (nonatomic,retain) NSNumber *${$attribute/@name};
 	  </c:when>
 	  <c:when test="${'$DateID'}" >
 	  @property (nonatomic,retain)  NSDate *${$attribute/@name};

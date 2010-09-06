@@ -18,18 +18,14 @@
 	UIView *optionsBarView;
 	UIButton *optionsButton;
 	NSMutableArray *${lower-case($class/@name)}sList;
-	NSMutableArray *${lower-case($class/@name)}s;
-<c:if test="$class/@isDependent = 'true'">  
+	NSMutableArray *${lower-case($class/@name)}s;  
 	id parent;
 	NSString *parentResource;
-</c:if>	
 }
 @property (nonatomic,retain) NSMutableArray *${lower-case($class/@name)}sList;
-@property (nonatomic,retain) NSMutableArray *${lower-case($class/@name)}s;
-<c:if test="$class/@isDependent = 'true'">  
+@property (nonatomic,retain) NSMutableArray *${lower-case($class/@name)}s; 
 @property (nonatomic,retain) id parent;
 @property (nonatomic,retain) NSString *parentResource;
-</c:if>	
 - (void) loadDataWithStartIndex: (int) startIndex pageSize: (NSString*) pageSize;
 - (void) createClicked:(id) sender;
 - (void) nextClicked:(id) sender;
