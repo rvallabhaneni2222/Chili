@@ -700,7 +700,7 @@ Integer pos=0;
 
 - (NSString*) getReadURLWithID: (int) key {
 	NSString* keyStr = [NSString stringWithFormat:@"%d", key];
-	NSString *str=[NSString stringWithFormat:@"car/read/%@", keyStr];
+	NSString *str=[NSString stringWithFormat:@"${lower-case($class/@name)}/read/%@", keyStr];
 	NSLog(@"read url:%@",str);
 	return [[HttpUtils crudURL] stringByAppendingString:str];
 }
