@@ -12,7 +12,23 @@ public class BeanMapperTest {
 	BeanMapper mapper = new BeanMapper();
 
 	@Test
-	public void testClonePrimitiveDataTypes() {
+	public void testMerge() {
+		TestEntity source = new TestEntity();
+		TestEntity target = new TestEntity();
+
+		source.setBooleanField(true);
+		source.setIntegerField(100);
+		source.setStringField("sporce");
+
+		target.setBooleanField(false);
+		target.setIntegerField(200);
+		target.setStringField("targer");
+		mapper.merge(source, target);
+		System.out.println(target.getStringField());
+	}
+
+	@Test
+	public void testClone() {
 		TestEntity entity = new TestEntity();
 		entity.setStringField("test");
 		entity.setLongField(new Long(10));
@@ -22,8 +38,7 @@ public class BeanMapperTest {
 		Calendar cal = Calendar.getInstance();
 		Date date = cal.getTime();
 		entity.setDateField(date);
-		TestEntity result = (TestEntity) mapper.clonePrimitiveDataTypes(entity,
-				TestEntity.class);
+		TestEntity result = (TestEntity) mapper.clone(entity);
 		assertTrue(result != null);
 		assertTrue(result.getIntegerField().equals(new Integer(10)));
 		assertTrue(result.getSuperint().equals(new Integer(10)));

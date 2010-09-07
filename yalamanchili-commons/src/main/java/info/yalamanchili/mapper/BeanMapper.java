@@ -8,7 +8,27 @@ import java.lang.reflect.Method;
 
 public class BeanMapper {
 
-	public Object clonePrimitiveDataTypes(Object source, Class<?> clazz) {
+	public Object clone(Object source) {
+		Object target;
+		try {
+			target = source.getClass().newInstance();
+		} catch (Exception e) {
+			throw new RuntimeException("Could not create new Instance", e);
+		}
+		if (source == null)
+			return null;
+		for (Field field : ReflectionUtils.getAllFields(source.getClass())) {
+			if (!DataType.DEFAULT.equals(ReflectionUtils.getDataType(field))
+					&& !DataType.ENUM
+							.equals(ReflectionUtils.getDataType(field))) {
+				cloneField(source, target, field);
+			}
+		}
+		return target;
+	}
+
+	/* create a new instance and copies the promitive datatypes data */
+	public Object clone(Object source, Class<?> clazz) {
 		Object target;
 		try {
 			target = clazz.newInstance();
@@ -17,8 +37,7 @@ public class BeanMapper {
 		}
 		if (source == null)
 			return null;
-		for (Field field : ReflectionUtils.getAllFields(source
-				.getClass())) {
+		for (Field field : ReflectionUtils.getAllFields(source.getClass())) {
 			if (!DataType.DEFAULT.equals(ReflectionUtils.getDataType(field))
 					&& !DataType.ENUM
 							.equals(ReflectionUtils.getDataType(field))) {
@@ -26,6 +45,30 @@ public class BeanMapper {
 			}
 		}
 		return target;
+	}
+
+	/* merges the source to target by only copyinng the promitive datatypes */
+	public Object merge(Object source, Object target) {
+		for (Field field : ReflectionUtils.getAllFields(source.getClass())) {
+			if (!DataType.DEFAULT.equals(ReflectionUtils.getDataType(field))
+					&& !DataType.ENUM
+							.equals(ReflectionUtils.getDataType(field))) {
+				mergeField(source, target, field);
+			}
+		}
+		return target;
+	}
+
+	public void mergeField(Object source, Object target, Field field) {
+		Method getterMethod = ReflectionUtils.getGetterMethod(field, source
+				.getClass());
+		if (getterMethod != null) {
+			Object sourceVal = ReflectionUtils.callGetterMethod(getterMethod,
+					source);
+			Method setterMethod = ReflectionUtils.getSetterMethod(field, target
+					.getClass());
+			ReflectionUtils.callSetterMethod(setterMethod, target, sourceVal);
+		}
 	}
 
 	public void cloneField(Object source, Object target, Field field) {

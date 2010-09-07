@@ -1,6 +1,7 @@
 package info.yalamanchili.commons;
 
 import java.util.Date;
+import java.util.Set;
 
 public class TestEntity extends TestEntitySuper {
 	protected Long longField;
@@ -9,6 +10,8 @@ public class TestEntity extends TestEntitySuper {
 	protected Integer integerField;
 	protected Float floatField;
 	protected Boolean booleanField;
+	protected Set<TestEntityChildTwo> childrenTwo;
+	protected TestEnum testenum;
 
 	public Long getLongField() {
 		return longField;
@@ -56,6 +59,22 @@ public class TestEntity extends TestEntitySuper {
 
 	public void setBooleanField(Boolean booleanField) {
 		this.booleanField = booleanField;
+	}
+
+	public Set<TestEntityChildTwo> getChildrenTwo() {
+		return childrenTwo;
+	}
+
+	public void setChildrenTwo(Set<TestEntityChildTwo> childrenTwo) {
+		this.childrenTwo = childrenTwo;
+	}
+
+	public TestEnum getTestenum() {
+		return testenum;
+	}
+
+	public void setTestenum(TestEnum testenum) {
+		this.testenum = testenum;
 	}
 
 }
