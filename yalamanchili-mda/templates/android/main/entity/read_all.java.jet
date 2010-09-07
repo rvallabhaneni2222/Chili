@@ -173,8 +173,9 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 	}
 	
 	public void onClick(View arg0) {
-<c:if test="$class/@isDependent = 'true'">
 Object parent = getIntent().getSerializableExtra("parent");	
+		if (arg0.getId() == create.getId()) {
+			if(parent!=null){
 	<%-- process compsition associations--%>
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 	<c:iterate select="$association/Association.connection" var="association_connection">
@@ -236,13 +237,13 @@ Object parent = getIntent().getSerializableExtra("parent");
 		</c:iterate>
 	</c:iterate>
 </c:iterate>
-</c:if>
-<c:if test="$class/@isDependent = 'false'">
-		if (arg0.getId() == create.getId()) {
+		}
+		else{
 		Intent createIntent = new Intent(this, Create${$class/@name}.class);
 		startActivity(createIntent);
 		}
-</c:if>		
+	}
+	
 		if (arg0.getId() == nextPage.getId()) {
 			loadNextPage();
 		}
@@ -282,9 +283,8 @@ Object parent = getIntent().getSerializableExtra("parent");
 			}.execute(getSearchURL());
 		} 
 				
-<c:if test="$class/@isDependent = 'true'">
-	else {
 	String parentResource=getIntent().getStringExtra("resource");
+	if(parentResource!=null){
 			new AsyncHttpGet(this) {
 				@Override
 				protected void onResponse(String result) {
@@ -297,10 +297,8 @@ Object parent = getIntent().getSerializableExtra("parent");
 					}
 				}
 			}.execute(parentResource);
-		}	
-</c:if>
-<c:if test="$class/@isDependent = 'false'">
-	else {
+			return;
+		}
 		new AsyncHttpGet(this) {
 			@Override
 			protected void onResponse(String result) {
@@ -312,9 +310,7 @@ Object parent = getIntent().getSerializableExtra("parent");
 					}
 				}
 			}
-		}.execute(getReadALLURL(pageOffSet, pageSize));
-	}	
-</c:if>		
+		}.execute(getReadALLURL(pageOffSet, pageSize));	
 	}
 
 	protected String getSearchURL() {
