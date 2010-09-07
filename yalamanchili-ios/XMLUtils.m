@@ -74,7 +74,6 @@ static const char* getPropertyType(objc_property_t property) {
 			[IntrospectionUtils callSetterMethodOnEntity:entity onAttribute:@"entityID" withLong:num];		
 		}
 	}
-	NSLog(@"%@",[entity entityID]);
 	return entity;
 }
 
