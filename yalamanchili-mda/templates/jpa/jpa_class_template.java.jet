@@ -146,7 +146,7 @@ ${$attribute/@name};
 
 
 
-<%-- collections Datatypes --%>
+<%-- collections and user defined Datatypes --%>
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 
 	<c:iterate select="$association/Association.connection" var="association_connection">
