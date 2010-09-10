@@ -86,7 +86,7 @@ static const char* getPropertyType(objc_property_t property) {
 													   withString:@"."];
 	[xmlString appendString:[self getOpenXMLTagForString:entityName]];
 	[xmlString appendString:@"\n"];
-	NSMutableDictionary * propertyDic = [self propertyDictionary:[entity class]];
+	NSMutableDictionary * propertyDic = [self propertDictionaryForClass:[entity class]];
 	for (NSString *key in propertyDic) {
 		if ([entity valueForKey:key]!=nil){
 			[xmlString appendString:[self getOpenXMLTagForString:key]];
