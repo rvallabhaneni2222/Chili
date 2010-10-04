@@ -13,9 +13,18 @@
 + (NSString*) sayHello: (NSString*) message{
 	return @"hello world";
 }
-+ (NSMutableArray*) getPropertyListForEntity:(id) entity{
-	
-	return nil;
++ (id) performSelectorOnEntity:(id) entity withName:(NSString*) selectorName{
+	SEL selector= NSSelectorFromString(selectorName);
+	if([entity respondsToSelector:selector]){
+		return [entity performSelector:selector];
+	}
+	else{
+		const char* methodName = sel_getName(selector);
+		NSString *stringFromUTFString = [[NSString alloc] initWithUTF8String:methodName];
+		NSLog(@"Does not respond to slector");
+		NSLog(@"%@",stringFromUTFString );
+		return nil;
+	}
 }
 + (NSMutableArray*) getMethodsForClassName: (NSString*) className{
 	NSLog(@"Class Name:%@",className);
@@ -31,6 +40,22 @@
 		NSLog(@"%@",stringFromUTFString );
 	}
 	return classMethods;
+}
++ (id) callGetterMethodOnEntity: (id) entity onAttribute: (NSString*) attributeName{
+	NSLog(@"ENTITY:%@",entity);
+	NSLog(@"ATTRIBUTE:%@",attributeName);
+	SEL getterMethod= NSSelectorFromString([self getGetterMethodNameForAttribute:attributeName]);
+	//	method_copyArgumentType()
+	if([entity respondsToSelector:getterMethod]){
+		return [entity performSelector:getterMethod];
+	}
+	else{
+		const char* methodName = sel_getName(getterMethod);
+		NSString *stringFromUTFString = [[NSString alloc] initWithUTF8String:methodName];
+		NSLog(@"Does not respond to slector");
+		NSLog(@"%@",stringFromUTFString );
+		return nil;
+	}
 }
 
 + (void) callSetterMethodOnEntity: (id) entity onAttribute: (NSString*) attributeName withString:(NSString*) parameter{

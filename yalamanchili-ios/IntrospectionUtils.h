@@ -12,9 +12,10 @@
 @interface IntrospectionUtils : NSObject {
 
 }
-+ (NSMutableArray*) getPropertyListForEntity:(id) entity;
++ (id) performSelectorOnEntity:(id) entity withName:(NSString*) selectorName;
 + (NSString*) sayHello: (NSString*) message;
 + (NSMutableArray*) getMethodsForClassName: (NSString*) className;
++ (id) callGetterMethodOnEntity: (id) entity onAttribute: (NSString*) attributeName;
 + (void) callSetterMethodOnEntity: (id) entity onAttribute: (NSString*) attributeName withString:(NSString*) parameter;
 + (void) callSetterMethodOnEntity: (id) entity onAttribute: (NSString*) attributeName withInteger:(NSInteger*) parameter;
 + (void) callSetterMethodOnEntity: (id) entity onAttribute: (NSString*) attributeName withLong:(NSNumber*) parameter;

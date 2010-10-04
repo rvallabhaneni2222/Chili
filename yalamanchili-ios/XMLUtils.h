@@ -16,8 +16,11 @@
 + (id) convertXMLToObjects:(NSData*) xmlData;
 + (id) convertXMLToObject:(GDataXMLElement*) entityXML;
 + (NSString*) convertObjectToXML:(id) entity;
++ (NSString*) convertUserObjectToXML:(id) entity withAttributeName:(NSString*) attributeName;
 + (NSString*) getOpenXMLTagForString:(NSString*) xmlName;
 + (NSString*) getCloseXMLTagForString:(NSString*) xmlName;
-+ (NSMutableDictionary *)propertDictionaryForClass:(NSObject *) entity;
++ (NSString*) getOpenXMLTagForString:(NSString*) xmlName withAttributes:(NSDictionary*) attributes;
++ (NSMutableDictionary *)propertyDictionaryForClass:(NSObject *) entity;
 + (NSMutableDictionary *)propertyDictionary:(Class) clazz;
++ (Boolean) isUserdefined:(NSString*) type;
 @end

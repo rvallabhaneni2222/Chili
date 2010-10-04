@@ -61,7 +61,7 @@ static const char* getPropertyType(objc_property_t property) {
 													   withString:@"_"];
 	id entity = [[[NSClassFromString(entityName) alloc] init] autorelease];
 	NSArray *attributes=[entityXML children];
-	NSMutableDictionary *propertyDic=[self propertDictionaryForClass:entity];
+	NSMutableDictionary *propertyDic=[self propertyDictionaryForClass:entity];
 	for(GDataXMLElement *attribute in attributes){
 		NSLog(@"processing attribute:%@",attribute.name);
 		NSString *dataType=[propertyDic objectForKey:attribute.name];
@@ -78,7 +78,7 @@ static const char* getPropertyType(objc_property_t property) {
 }
 
 + (NSString*) convertObjectToXML:(id) entity{
-	NSLog(@"in convert xml to obj");
+	NSLog(@"in convert obj to xml");	
 	NSMutableString *xmlString=[[[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\"?>"] autorelease];
 	const char *objectName = class_getName([entity class]);
 	NSString *entityName = [NSString stringWithCString:objectName encoding:NSASCIIStringEncoding];
@@ -86,21 +86,68 @@ static const char* getPropertyType(objc_property_t property) {
 													   withString:@"."];
 	[xmlString appendString:[self getOpenXMLTagForString:entityName]];
 	[xmlString appendString:@"\n"];
-	NSMutableDictionary * propertyDic = [self propertDictionaryForClass:[entity class]];
+	NSMutableDictionary * propertyDic = [self propertyDictionaryForClass:entity];
+	NSLog(@"propertydic:%@",propertyDic);
 	for (NSString *key in propertyDic) {
 		if ([entity valueForKey:key]!=nil){
-			[xmlString appendString:[self getOpenXMLTagForString:key]];
 			if([[propertyDic valueForKey:key] isEqualToString:[NSString stringWithFormat:@"NSString"]]){
+				[xmlString appendString:[self getOpenXMLTagForString:key]];
 				[xmlString appendString:[entity valueForKey:key]];
+				[xmlString appendString:[self getCloseXMLTagForString:key]];
+				[xmlString appendString:@"\n"];
 			}
-			[xmlString appendString:[self getCloseXMLTagForString:key]];
-			[xmlString appendString:@"\n"];
+			if ([self isUserdefined:[propertyDic valueForKey:key]]) {
+				NSLog(@"Processing user class:%@:",key);
+				id userclass=[IntrospectionUtils performSelectorOnEntity:entity withName:key];
+				if (userclass!=nil) {
+					[xmlString appendString:[self convertUserObjectToXML:userclass withAttributeName:key]];
+				}
+			}
+			
 		}
 	}
 	[xmlString appendString:[self getCloseXMLTagForString:entityName]];
 	[xmlString appendString:@"\n"];
 	NSLog(@"%@",xmlString);
 	return xmlString;
+}
+
++ (NSString*) convertUserObjectToXML:(id) entity withAttributeName:(NSString*) attributeName{
+	NSString *className = NSStringFromClass ([entity class]);
+	className=[className stringByReplacingOccurrencesOfString:@"_" withString:@"."];
+	NSLog(@"in convert sub user class to xml:%@",className);	
+	NSMutableDictionary* attributes = [[[NSMutableDictionary alloc] init] autorelease];
+	[attributes setObject:className forKey:@"class"];
+	NSMutableString *xmlString=[[[NSMutableString alloc] initWithString:[self getOpenXMLTagForString:attributeName withAttributes:attributes]] autorelease];
+	[xmlString appendString:@"\n"];
+	NSMutableDictionary * propertyDic = [self propertyDictionaryForClass:entity];
+	NSLog(@"propetydic:%@",propertyDic);
+	for (NSString *key in propertyDic) {
+		if ([entity valueForKey:key]!=nil){
+			if([key isEqualToString:@"entityID"]){
+				[xmlString appendString:[self getOpenXMLTagForString:@"id"]];
+				[xmlString appendString:[[entity valueForKey:key] stringValue]];
+				[xmlString appendString:[self getCloseXMLTagForString:@"id"]];
+				[xmlString appendString:@"\n"];
+				continue;
+			}
+			if([[propertyDic valueForKey:key] isEqualToString:[NSString stringWithFormat:@"NSString"]]){
+				[xmlString appendString:[self getOpenXMLTagForString:key]];
+				[xmlString appendString:[entity valueForKey:key]];
+				[xmlString appendString:[self getCloseXMLTagForString:key]];
+				[xmlString appendString:@"\n"];
+			}
+			if([[propertyDic valueForKey:key] isEqualToString:[NSString stringWithFormat:@"NSNumber"]]){
+				[xmlString appendString:[self getOpenXMLTagForString:key]];
+				[xmlString appendString:[entity valueForKey:key]];
+				[xmlString appendString:[self getCloseXMLTagForString:key]];
+				[xmlString appendString:@"\n"];
+			}
+		}
+	}
+	[xmlString appendString:[self getCloseXMLTagForString:attributeName]];
+	[xmlString appendString:@"\n"];
+	return xmlString;	
 }
 
 
@@ -117,8 +164,20 @@ static const char* getPropertyType(objc_property_t property) {
 	s = [s stringByAppendingString:@">"];
 	return s;
 }
-
-+ (NSMutableDictionary *)propertDictionaryForClass:(NSObject *) entity{
++ (NSString*) getOpenXMLTagForString:(NSString*) xmlName withAttributes:(NSDictionary*) attributes{
+	NSString *s = [[NSString alloc] initWithString:@"<"];
+	s = [s stringByAppendingString:xmlName];
+	for (NSString *key in attributes) {
+		s = [s stringByAppendingString:@" "];
+		s = [s stringByAppendingString:key];
+		s = [s stringByAppendingString:@"=\""];	
+		s = [s stringByAppendingString:[attributes valueForKey:key]];	
+		s = [s stringByAppendingString:@"\" "];	
+	}
+	s = [s stringByAppendingString:@">"];
+	return s;
+}
++ (NSMutableDictionary *)propertyDictionaryForClass:(NSObject *) entity{
 	NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:1];
 	Class clazz=[entity class];
 	do {
@@ -145,11 +204,16 @@ static const char* getPropertyType(objc_property_t property) {
 			[dic setValue:propertyType forKey:propertyName];
         }
     }
-	if([dic objectForKey:@"entityID"] !=nil){
-		NSLog(@"nil nil nil nil nil");
-	}
     free(properties);
 	return dic;
 }
-
++ (Boolean) isUserdefined:(NSString*) type{
+	NSArray *definedPrimitiveTypes=[NSArray arrayWithObjects:@"NSString",@"NSNumber",@"NSDate",@"NSDouble",@"Boolean",nil];
+	if ([definedPrimitiveTypes containsObject:type]) {
+		return FALSE;
+	}
+	else{
+		return TRUE;		 
+	}
+}
 @end 
