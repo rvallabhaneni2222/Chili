@@ -5,6 +5,8 @@
 #import "HttpHelper.h";
 
 @interface Create${$class/@name}ViewController : UIViewController {
+<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)};
+	id parent;
 	UIView *create${$class/@name}View;
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
@@ -63,6 +65,7 @@
 	</c:iterate>
 	UIButton *createButton;
 }
+@property (nonatomic,retain)	<c:replaceStrings replace="." with="_">${$groupID}</c:replaceStrings>_entity_${lower-case($package/@name)}_${$class/@name} *${lower-case($class/@name)};
 - (void) createClicked:(id) sender;
 - (void) textFieldDoneEditing:(id) sender;
 - (NSString*) getCreate${$class/@name}URL;
