@@ -132,6 +132,11 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 			fields.put(name, booleanField);
 			entityDisplayWidget.add(booleanField);
 		}
+		if (DataType.FLOAT_FIELD.equals(type)) {
+			FloatField floatField = new FloatField(name, readOnly);
+			fields.put(name, floatField);
+			entityDisplayWidget.add(floatField);
+		}
 		if (DataType.PASSWORD_FIELD.equals(type)) {
 			PasswordField passwordField = new PasswordField(name);
 			fields.put(name, passwordField);
@@ -233,6 +238,11 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 		dateField.setDate(date);
 	}
 
+	protected void setField(String fieldName, Float value) {
+		FloatField floatField = (FloatField) fields.get(fieldName);
+		floatField.setFloat(value);
+	}
+
 	/**
 	 * Gets the enum field.
 	 * 
@@ -309,6 +319,11 @@ public abstract class ReadUpdateCreateComposite<T> extends Composite {
 	protected Boolean getBooleanField(String fieldName) {
 		BooleanField booleanField = (BooleanField) fields.get(fieldName);
 		return booleanField.getValue();
+	}
+
+	protected Float getFloatField(String fieldName) {
+		FloatField floatField = (FloatField) fields.get(fieldName);
+		return floatField.getFloat();
 	}
 
 	/**

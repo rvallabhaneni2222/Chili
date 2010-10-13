@@ -56,7 +56,7 @@ public class GWTServletUtils {
 			return DataType.DATE_FIELD;
 		}
 		if (clazz.equals(Float.class)) {
-			return DataType.FLOAT_FEILD;
+			return DataType.FLOAT_FIELD;
 		}
 		if (clazz.isEnum()) {
 			return DataType.ENUM_FIELD;

@@ -305,7 +305,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 							Long result = (Long) method.invoke(t, null);
 							flds.put(fieldName, result);
 						}
-						if (fields.get(fieldName).equals(DataType.FLOAT_FEILD)) {
+						if (fields.get(fieldName).equals(DataType.FLOAT_FIELD)) {
 							Float result = (Float) method.invoke(t, null);
 							flds.put(fieldName, result);
 						}
