@@ -1,16 +1,20 @@
 package info.yalamanchili.commons;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.validator.ClassValidator;
 import org.hibernate.validator.Digits;
 import org.hibernate.validator.DigitsValidator;
 import org.hibernate.validator.EmailValidator;
 import org.hibernate.validator.Future;
 import org.hibernate.validator.FutureValidator;
+import org.hibernate.validator.InvalidValue;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.LengthValidator;
 import org.hibernate.validator.Max;
@@ -35,6 +39,7 @@ public class ValidatorUtils {
 
 	/** The properties. */
 	protected static Properties validatorProperties = new Properties();
+	protected static Map<String, ClassValidator> validators = new HashMap<String, ClassValidator>();
 
 	/**
 	 * Gets the properties.
@@ -63,6 +68,20 @@ public class ValidatorUtils {
 			log.debug("loaded default-yalamanchili-validator.properties");
 		}
 		return validatorProperties;
+	}
+
+	public static InvalidValue[] validateObject(String className, Object entity) {
+		Class clazz;
+		try {
+			clazz = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+		ClassValidator validator = validators.get(className);
+		if (validator == null) {
+			validators.put(className, new ClassValidator(clazz));
+		}
+		return null;
 	}
 
 	/*
