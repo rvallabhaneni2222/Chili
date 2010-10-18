@@ -1,7 +1,7 @@
 package info.yalamanchili.mapper;
 
 import static org.junit.Assert.assertTrue;
-import info.yalamanchili.commons.TestEntity;
+import info.yalamanchili.commons.entity.TestEntity;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package info.yalamanchili.commons;
+package info.yalamanchili.commons.entity;
 
 import java.util.Date;
 

@@ -41,11 +41,6 @@ public class ValidatorUtils {
 	protected static Properties validatorProperties = new Properties();
 	protected static Map<String, ClassValidator> validators = new HashMap<String, ClassValidator>();
 
-	/**
-	 * Gets the properties.
-	 * 
-	 * @return the properties
-	 */
 	public static Properties getValidatorProperties() {
 		return validatorProperties;
 	}
@@ -54,9 +49,6 @@ public class ValidatorUtils {
 		loadProperties();
 	}
 
-	/**
-	 * Load properties.
-	 */
 	public static Properties loadProperties() {
 		try {
 			validatorProperties = PropertyFileLoader
@@ -68,6 +60,43 @@ public class ValidatorUtils {
 			log.debug("loaded default-yalamanchili-validator.properties");
 		}
 		return validatorProperties;
+	}
+
+	public static InvalidValue[] validateEntity(Object entity) {
+		InvalidValue[] values = null;
+		String className = entity.getClass().getName();
+		ClassValidator validator = validators.get(className);
+		if (validator == null) {
+			Class clazz;
+			try {
+				clazz = Class.forName(className);
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException(e);
+			}
+			validators.put(className, new ClassValidator(clazz));
+			validator = validators.get(className);
+		}
+		values = validator.getInvalidValues(entity);
+		return values;
+	}
+
+	public static InvalidValue[] validateField(Object entity,
+			String attributeName) {
+		InvalidValue[] values = null;
+		String className = entity.getClass().getName();
+		ClassValidator validator = validators.get(className);
+		if (validator == null) {
+			Class clazz;
+			try {
+				clazz = Class.forName(className);
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException(e);
+			}
+			validators.put(className, new ClassValidator(clazz));
+			validator = validators.get(className);
+		}
+		values = validator.getInvalidValues(entity, attributeName);
+		return values;
 	}
 
 	public static InvalidValue[] validateObject(String className, Object entity) {
@@ -84,19 +113,6 @@ public class ValidatorUtils {
 		return null;
 	}
 
-	/*
-	 * @Length hibernate validator
-	 */
-	/**
-	 * Validate length.
-	 * 
-	 * @param annotation
-	 *            the annotation
-	 * @param value
-	 *            the value
-	 * @param errorMessages
-	 *            the error messages
-	 */
 	public static void validateLength(Length annotation, String value,
 			List<String> errorMessages) {
 		LengthValidator validator = new LengthValidator();
@@ -107,19 +123,6 @@ public class ValidatorUtils {
 		}
 	}
 
-	/*
-	 * @NotNull hibernate validator
-	 */
-	/**
-	 * Validate not null.
-	 * 
-	 * @param annotation
-	 *            the annotation
-	 * @param value
-	 *            the value
-	 * @param errorMessages
-	 *            the error messages
-	 */
 	public static void validateNotNull(NotNull annotation, Object value,
 			List<String> errorMessages) {
 		if (value == null) {
@@ -134,19 +137,6 @@ public class ValidatorUtils {
 		}
 	}
 
-	/*
-	 * @Email hibernate validator
-	 */
-	/**
-	 * Validate email.
-	 * 
-	 * @param annotation
-	 *            the annotation
-	 * @param value
-	 *            the value
-	 * @param errorMessages
-	 *            the error messages
-	 */
 	public static void validateEmail(org.hibernate.validator.Email annotation,
 			String value, List<String> errorMessages) {
 		EmailValidator validator = new EmailValidator();
@@ -157,19 +147,6 @@ public class ValidatorUtils {
 		}
 	}
 
-	/*
-	 * @Max hibernate validator
-	 */
-	/**
-	 * Validate max.
-	 * 
-	 * @param annotation
-	 *            the annotation
-	 * @param value
-	 *            the value
-	 * @param errorMessages
-	 *            the error messages
-	 */
 	public static void validateMax(Max annotation, Object value,
 			List<String> errorMessages) {
 		MaxValidator validator = new MaxValidator();
@@ -180,19 +157,6 @@ public class ValidatorUtils {
 		}
 	}
 
-	/*
-	 * @Min hibernate validator
-	 */
-	/**
-	 * Validate min.
-	 * 
-	 * @param annotation
-	 *            the annotation
-	 * @param value
-	 *            the value
-	 * @param errorMessages
-	 *            the error messages
-	 */
 	public static void validateMin(Min annotation, Object value,
 			List<String> errorMessages) {
 		MinValidator validator = new MinValidator();
@@ -203,19 +167,6 @@ public class ValidatorUtils {
 		}
 	}
 
-	/*
-	 * @Range hibernate validator
-	 */
-	/**
-	 * Validate range.
-	 * 
-	 * @param annotation
-	 *            the annotation
-	 * @param value
-	 *            the value
-	 * @param errorMessages
-	 *            the error messages
-	 */
 	public static void validateRange(Range annotation, Object value,
 			List<String> errorMessages) {
 		RangeValidator validator = new RangeValidator();
@@ -226,19 +177,6 @@ public class ValidatorUtils {
 		}
 	}
 
-	/*
-	 * @Range hibernate validator
-	 */
-	/**
-	 * Validate digits.
-	 * 
-	 * @param annotation
-	 *            the annotation
-	 * @param value
-	 *            the value
-	 * @param errorMessages
-	 *            the error messages
-	 */
 	public static void validateDigits(Digits annotation, Object value,
 			List<String> errorMessages) {
 		DigitsValidator validator = new DigitsValidator();
@@ -249,19 +187,6 @@ public class ValidatorUtils {
 		}
 	}
 
-	/*
-	 * @Past hibernate validator
-	 */
-	/**
-	 * Validate past.
-	 * 
-	 * @param annotation
-	 *            the annotation
-	 * @param value
-	 *            the value
-	 * @param errorMessages
-	 *            the error messages
-	 */
 	public static void validatePast(Past annotation, Date value,
 			List<String> errorMessages) {
 		PastValidator validator = new PastValidator();
@@ -272,19 +197,6 @@ public class ValidatorUtils {
 		}
 	}
 
-	/*
-	 * @Future hibernate validator
-	 */
-	/**
-	 * Validate future.
-	 * 
-	 * @param annotation
-	 *            the annotation
-	 * @param value
-	 *            the value
-	 * @param errorMessages
-	 *            the error messages
-	 */
 	public static void validateFuture(Future annotation, Date value,
 			List<String> errorMessages) {
 		FutureValidator validator = new FutureValidator();
@@ -295,14 +207,6 @@ public class ValidatorUtils {
 		}
 	}
 
-	/**
-	 * Gets the value.
-	 * 
-	 * @param string
-	 *            the string
-	 * 
-	 * @return the value
-	 */
 	public static String getValue(String string) {
 		log.debug("get value:" + string);
 		String value = (String) validatorProperties.get(string);

@@ -18,18 +18,10 @@ public class JNDIUtils {
 	/** The properties. */
 	protected static Properties jndiProperties = new Properties();
 
-	/**
-	 * Gets the properties.
-	 * 
-	 * @return the properties
-	 */
 	public static Properties getJNDIProperties() {
 		return jndiProperties;
 	}
 
-	/**
-	 * Instantiates a new jNDI utils.
-	 */
 	static {
 		try {
 			jndiProperties = PropertyFileLoader
@@ -42,17 +34,6 @@ public class JNDIUtils {
 		}
 	}
 
-	/**
-	 * Gets the secure initial context.
-	 * 
-	 * @param session
-	 *            the session
-	 * 
-	 * @return the secure initial context
-	 * 
-	 * @throws NamingException
-	 *             the naming exception
-	 */
 //	protected static Context getSecureInitialContext(HttpSession session)
 //			throws NamingException {
 //		Properties props = new Properties();
@@ -92,14 +73,6 @@ public class JNDIUtils {
 		return new InitialContext(props);
 	}
 
-	/**
-	 * Gets the initial context.
-	 * 
-	 * @return the initial context
-	 * 
-	 * @throws NamingException
-	 *             the naming exception
-	 */
 	protected static Context getInitialContext() throws NamingException {
 		Properties props = new Properties();
 		props.put(Context.URL_PKG_PREFIXES, jndiProperties.get(
@@ -109,14 +82,7 @@ public class JNDIUtils {
 		return new InitialContext(props);
 	}
 
-	/**
-	 * Lookup.
-	 * 
-	 * @param jndiName
-	 *            the jndi name
-	 * 
-	 * @return the object
-	 */
+
 	public static Object lookup(String jndiName) {
 		Object object;
 		try {

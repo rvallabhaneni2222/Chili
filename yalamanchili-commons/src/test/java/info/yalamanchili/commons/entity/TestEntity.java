@@ -1,4 +1,6 @@
-package info.yalamanchili.commons;
+package info.yalamanchili.commons.entity;
+
+import info.yalamanchili.commons.TestEnum;
 
 import java.util.Date;
 import java.util.Set;

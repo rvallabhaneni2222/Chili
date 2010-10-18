@@ -3,6 +3,8 @@ package info.yalamanchili.commons;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import info.yalamanchili.commons.entity.TestEntity;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Calendar;

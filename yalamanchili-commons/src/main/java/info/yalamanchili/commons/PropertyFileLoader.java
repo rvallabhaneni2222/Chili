@@ -16,34 +16,6 @@ import org.apache.commons.logging.LogFactory;
 public class PropertyFileLoader {
 	private static final Log log = LogFactory.getLog(PropertyFileLoader.class);
 
-	/**
-	 * Looks up a resource named 'name' in the classpath. The resource must map
-	 * to a file with .properties extention. The name is assumed to be absolute
-	 * and can use either "/" or "." for package segment separation with an
-	 * optional leading "/" and optional ".properties" suffix. Thus, the
-	 * following names refer to the same resource:
-	 * 
-	 * <pre>
-	 * some.pkg.Resource
-	 * some.pkg.Resource.properties
-	 * some/pkg/Resource
-	 * some/pkg/Resource.properties
-	 * /some/pkg/Resource
-	 * /some/pkg/Resource.properties
-	 * </pre>
-	 * 
-	 * @param name
-	 *            classpath resource name [may not be null]
-	 * @param loader
-	 *            classloader through which to load the resource [null is
-	 *            equivalent to the application loader]
-	 * 
-	 * @return resource converted to java.util.Properties [may be null if the
-	 *         resource was not found and THROW_ON_LOAD_FAILURE is false]
-	 * @throws IllegalArgumentException
-	 *             if the resource was not found and THROW_ON_LOAD_FAILURE is
-	 *             true
-	 */
 	public static Properties loadProperties(String name, ClassLoader loader) {
 		if (name == null)
 			throw new IllegalArgumentException("null input: name");
@@ -109,10 +81,6 @@ public class PropertyFileLoader {
 		return result;
 	}
 
-	/**
-	 * A convenience overload of {@link #loadProperties(String, ClassLoader)}
-	 * that uses the current thread's context classloader.
-	 */
 	public static Properties loadProperties(final String name) {
 		return loadProperties(name, Thread.currentThread()
 				.getContextClassLoader());
