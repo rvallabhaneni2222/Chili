@@ -1,22 +1,18 @@
 package info.yalamanchili.gwt.composite;
 
+import net.sf.gilead.pojo.gwt.LightEntity;
+
+import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.Button;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class UpdateComposite.
- */
-public abstract class UpdateComposite<T> extends ReadUpdateCreateComposite<T>
-		implements ClickHandler {
+public abstract class UpdateComposite<T extends LightEntity> extends
+		ReadUpdateCreateComposite<T> implements ClickHandler {
 
 	protected Button update = new Button("update");
 
-	/**
-	 * Inits the update composite.
-	 */
 	public void initUpdateComposite(String className,
 			final ConstantsWithLookup constants) {
 		init(className, false, constants);
@@ -25,27 +21,17 @@ public abstract class UpdateComposite<T> extends ReadUpdateCreateComposite<T>
 		basePanel.addStyleName("y-gwt-UpdateBasePanel");
 		entityDisplayWidget.add(update);
 		update.addClickHandler(this);
-		populateEntityFromFields();
+		populateEntityOnRender();
 	}
 
-	/**
-	 * Populate fields.
-	 */
-	public abstract T populateEntityFromFields();
+	public abstract T populateEntityOnRender();
 
-	/**
-	 * Update button clicked.
-	 */
 	public abstract void updateButtonClicked();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user
-	 * .client.ui.Widget)
-	 */
+	public abstract T populateEntityOnUpdate();
+
 	public void onClick(ClickEvent event) {
+		entity = populateEntityOnUpdate();
 		if (event.getSource() == update) {
 			preValidate();
 		}
@@ -53,7 +39,6 @@ public abstract class UpdateComposite<T> extends ReadUpdateCreateComposite<T>
 
 	protected void preUpdateButtonClicked() {
 		updateButtonClicked();
-
 	}
 
 	protected void postValidate() {

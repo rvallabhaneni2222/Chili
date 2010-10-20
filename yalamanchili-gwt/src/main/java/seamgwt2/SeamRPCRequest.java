@@ -1,8 +1,8 @@
 package seamgwt2;
 
-import com.google.gwt.user.server.rpc.SerializationPolicy;
-
 import java.lang.reflect.Method;
+
+import com.google.gwt.user.server.rpc.SerializationPolicy;
 
 /**
  * @author Tomaz Cerar

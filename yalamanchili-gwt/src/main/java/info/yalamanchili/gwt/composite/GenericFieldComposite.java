@@ -1,59 +1,8 @@
 package info.yalamanchili.gwt.composite;
 
-import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.event.dom.client.KeyPressHandler;
-import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
+//TODO move commons stuff to base field
+public abstract class GenericFieldComposite extends BaseField {
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class GenericFieldComposite.
- */
-public abstract class GenericFieldComposite extends Composite implements
-		KeyPressHandler, KeyUpHandler, KeyDownHandler {
-
-	/** The panel. */
-	protected FlowPanel panel = new FlowPanel();
-
-	/** The field panel. */
-	protected HorizontalPanel fieldPanel = new HorizontalPanel();
-
-	/** The label. */
-	protected Label label = new Label();
-
-	/** The message. */
-	protected Label message = new Label();
-
-	/** The is valid. */
-	protected Boolean isValid = false;
-
-	/**
-	 * Gets the panel.
-	 * 
-	 * @return the panel
-	 */
-	public FlowPanel getPanel() {
-		return panel;
-	}
-
-	/**
-	 * Gets the label.
-	 * 
-	 * @return the label
-	 */
-	public Label getLabel() {
-		return label;
-	}
-
-	/**
-	 * Instantiates a new generic field composite.
-	 * 
-	 * @param labelName
-	 *            the label name
-	 */
 	public GenericFieldComposite(String labelName) {
 		label.setText(labelName);
 		configure();
@@ -61,57 +10,15 @@ public abstract class GenericFieldComposite extends Composite implements
 		initWidget(panel);
 	}
 
-	/**
-	 * Configure.
-	 */
 	protected void configure() {
 		label.addStyleName("y-gwtFieldHeader");
 		message.addStyleName("y-gwt-ErrorMessage");
 	}
 
-	/**
-	 * Adds the widgets.
-	 */
 	protected void addWidgets() {
 		panel.add(label);
 		fieldPanel.add(message);
 		panel.add(fieldPanel);
-	}
-
-	/**
-	 * Sets the message.
-	 * 
-	 * @param text
-	 *            the new message
-	 */
-	public void setMessage(String text) {
-		message.setText(text);
-	}
-
-	/**
-	 * Clear message.
-	 */
-	public void clearMessage() {
-		message.setText("");
-	}
-
-	/**
-	 * Gets the valid.
-	 * 
-	 * @return the valid
-	 */
-	public Boolean getValid() {
-		return isValid;
-	}
-
-	/**
-	 * Sets the valid.
-	 * 
-	 * @param valid
-	 *            the new valid
-	 */
-	public void setValid(Boolean valid) {
-		this.isValid = valid;
 	}
 
 	public abstract void setup();

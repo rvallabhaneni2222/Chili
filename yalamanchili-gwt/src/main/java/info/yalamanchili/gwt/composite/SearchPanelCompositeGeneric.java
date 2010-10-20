@@ -4,6 +4,8 @@ import info.yalamanchili.gwt.widgets.ALSuggestBox;
 
 import java.util.List;
 
+import net.sf.gilead.pojo.gwt.LightEntity;
+
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -11,7 +13,7 @@ import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class SearchPanelCompositeGeneric<T> extends
+public abstract class SearchPanelCompositeGeneric<T extends LightEntity> extends
 		ReadUpdateCreateComposite<T> implements ClickHandler {
 	protected Button searchB = new Button("search");
 

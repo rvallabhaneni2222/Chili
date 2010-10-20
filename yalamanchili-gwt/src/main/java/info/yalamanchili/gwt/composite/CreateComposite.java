@@ -1,24 +1,20 @@
 package info.yalamanchili.gwt.composite;
 
+import net.sf.gilead.pojo.gwt.LightEntity;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.Button;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class CreateComposite.
- */
-public abstract class CreateComposite<T> extends ReadUpdateCreateComposite<T>
-		implements ClickHandler {
+public abstract class CreateComposite<T extends LightEntity> extends
+		ReadUpdateCreateComposite<T> implements ClickHandler {
 
 	public enum CreateCompositeType {
 		CREATE, ADD
 	}
 
 	CreateCompositeType type;
-
-	/** The create. */
 
 	public CreateComposite(CreateCompositeType type) {
 		this.type = type;
@@ -28,9 +24,6 @@ public abstract class CreateComposite<T> extends ReadUpdateCreateComposite<T>
 
 	public Button add = new Button("add");
 
-	/**
-	 * Inits the create composite.
-	 */
 	public void initCreateComposite(String className,
 			final ConstantsWithLookup constants) {
 		init(className, false, constants);
@@ -50,21 +43,12 @@ public abstract class CreateComposite<T> extends ReadUpdateCreateComposite<T>
 
 	protected abstract T populateEntityFromFields();
 
-	/**
-	 * Creates the button clicked.
-	 */
 	protected abstract void createButtonClicked();
 
 	protected abstract void addButtonClicked();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user
-	 * .client.ui.Widget)
-	 */
 	public void onClick(ClickEvent event) {
+		entity = populateEntityFromFields();
 		if (event.getSource() == create) {
 			preValidate();
 		}
@@ -74,7 +58,6 @@ public abstract class CreateComposite<T> extends ReadUpdateCreateComposite<T>
 	}
 
 	protected void preCreateButtonClicked() {
-		entity = populateEntityFromFields();
 		if (CreateCompositeType.CREATE.equals(type)) {
 			createButtonClicked();
 		}

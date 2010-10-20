@@ -1,19 +1,19 @@
 package seamgwt2;
 
-import com.google.gwt.user.server.rpc.SerializationPolicyProvider;
-import com.google.gwt.user.server.rpc.SerializationPolicy;
-import com.google.gwt.user.server.rpc.RPC;
-import com.google.gwt.user.server.rpc.impl.ServerSerializationStreamReader;
-import com.google.gwt.user.server.rpc.impl.TypeNameObfuscator;
-import com.google.gwt.user.client.rpc.RemoteService;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashMap;
+
 import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
+import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.client.rpc.impl.AbstractSerializationStream;
-
-import java.util.HashMap;
-import java.util.Arrays;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
+import com.google.gwt.user.server.rpc.RPC;
+import com.google.gwt.user.server.rpc.SerializationPolicy;
+import com.google.gwt.user.server.rpc.SerializationPolicyProvider;
+import com.google.gwt.user.server.rpc.impl.ServerSerializationStreamReader;
+import com.google.gwt.user.server.rpc.impl.TypeNameObfuscator;
 
 /**
  * RPC.

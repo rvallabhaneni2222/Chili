@@ -1,12 +1,11 @@
 package info.yalamanchili.gwt.composite;
 
+import net.sf.gilead.pojo.gwt.LightEntity;
+
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class ReadComposite.
- */
-public abstract class ReadComposite<T> extends ReadUpdateCreateComposite<T> {
+public abstract class ReadComposite<T extends LightEntity> extends
+		ReadUpdateCreateComposite<T> {
 
 	protected void initReadComposite(T entity, String className,
 			final ConstantsWithLookup constants) {
@@ -17,12 +16,6 @@ public abstract class ReadComposite<T> extends ReadUpdateCreateComposite<T> {
 		readData(entity);
 	}
 
-	/**
-	 * Inits the read composite.
-	 * 
-	 * @param id
-	 *            the id
-	 */
 	protected void initReadComposite(Long id, String className,
 			final ConstantsWithLookup constants) {
 		init(className, true, constants);
@@ -32,20 +25,8 @@ public abstract class ReadComposite<T> extends ReadUpdateCreateComposite<T> {
 		readData(id);
 	}
 
-	/**
-	 * Read data.
-	 * 
-	 * @param id
-	 *            the id
-	 */
 	protected abstract void readData(Long id);
 
-	/**
-	 * Read data.
-	 * 
-	 * @param entity
-	 *            the entity
-	 */
 	protected abstract void readData(T entity);
 
 }

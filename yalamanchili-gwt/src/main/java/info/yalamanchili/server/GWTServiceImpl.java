@@ -18,18 +18,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import net.sf.gilead.pojo.gwt.LightEntity;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.validator.Email;
-import org.hibernate.validator.Future;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.Max;
-import org.hibernate.validator.Min;
-import org.hibernate.validator.NotEmpty;
-import org.hibernate.validator.NotNull;
-import org.hibernate.validator.Past;
-import org.hibernate.validator.Range;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -103,146 +97,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 	}
 
-	public List<String> validateStringField(String className,
-			String attributeName, String value) {
-		List<String> errorMessages = new ArrayList<String>();
-		Class<?> entity = getEntityClass(className);
-		Field field = GWTServletUtils.getField(entity, attributeName);
-		if (field != null)
-			for (Annotation annotation : field.getDeclaredAnnotations()) {
-				if (annotation instanceof NotNull) {
-					ValidatorUtils.validateNotNull((NotNull) annotation, value,
-							errorMessages);
-				}
-				if (annotation instanceof org.hibernate.validator.Length) {
-					ValidatorUtils.validateLength((Length) annotation, value,
-							errorMessages);
-				}
-				if (annotation instanceof org.hibernate.validator.Email) {
-					ValidatorUtils.validateEmail((Email) annotation, value,
-							errorMessages);
-				}
-				if (annotation instanceof org.hibernate.validator.NotEmpty) {
-					ValidatorUtils.validateNotEmpty((NotEmpty) annotation,
-							value, errorMessages);
-				}
-
-			}
-		return errorMessages;
+	public <T extends LightEntity> List<String> validateField(T entity,
+			String attributeName) {
+		return ValidatorUtils.validateField(entity, attributeName);
 	}
 
-	public List<String> validateBooleanField(String className,
-			String attributeName, Boolean value) {
-		List<String> errorMessages = new ArrayList<String>();
-		return errorMessages;
-	}
-
-	public List<String> validateDateField(String className,
-			String attributeName, Date value) {
-		List<String> errorMessages = new ArrayList<String>();
-		Class<?> entity = getEntityClass(className);
-		Field field = GWTServletUtils.getField(entity, attributeName);
-		if (field != null)
-			for (Annotation annotation : field.getDeclaredAnnotations()) {
-				if (annotation instanceof NotNull) {
-					ValidatorUtils.validateNotNull((NotNull) annotation, value,
-							errorMessages);
-				}
-				if (annotation instanceof Past) {
-					ValidatorUtils.validatePast((Past) annotation, value,
-							errorMessages);
-				}
-				if (annotation instanceof Future) {
-					ValidatorUtils.validateFuture((Future) annotation, value,
-							errorMessages);
-				}
-			}
-		return errorMessages;
-	}
-
-	public List<String> validateIntegerField(String className,
-			String attributeName, Integer value) {
-		List<String> errorMessages = new ArrayList<String>();
-		Class<?> entity = getEntityClass(className);
-		Field field = GWTServletUtils.getField(entity, attributeName);
-		if (field != null)
-			for (Annotation annotation : field.getDeclaredAnnotations()) {
-				if (annotation instanceof NotNull) {
-					ValidatorUtils.validateNotNull((NotNull) annotation, value,
-							errorMessages);
-				}
-				if (annotation instanceof Max) {
-					ValidatorUtils.validateMax((Max) annotation, value,
-							errorMessages);
-				}
-				if (annotation instanceof Min) {
-					ValidatorUtils.validateMin((Min) annotation, value,
-							errorMessages);
-				}
-				if (annotation instanceof Range) {
-					ValidatorUtils.validateRange((Range) annotation, value,
-							errorMessages);
-				}
-			}
-		return errorMessages;
-	}
-
-	@Override
-	public List<String> validateFloatField(String className,
-			String attributeName, Float value) {
-		List<String> errorMessages = new ArrayList<String>();
-		Class<?> entity = getEntityClass(className);
-		Field field = GWTServletUtils.getField(entity, attributeName);
-		if (field != null)
-			for (Annotation annotation : field.getDeclaredAnnotations()) {
-				if (annotation instanceof NotNull) {
-					ValidatorUtils.validateNotNull((NotNull) annotation, value,
-							errorMessages);
-				}
-			}
-		return errorMessages;
-	}
-
-	public List<String> validateLongField(String className,
-			String attributeName, Long value) {
-		List<String> errorMessages = new ArrayList<String>();
-		Class<?> entity = getEntityClass(className);
-		Field field = GWTServletUtils.getField(entity, attributeName);
-		if (field != null)
-			for (Annotation annotation : field.getDeclaredAnnotations()) {
-				if (annotation instanceof NotNull) {
-					ValidatorUtils.validateNotNull((NotNull) annotation, value,
-							errorMessages);
-				}
-				if (annotation instanceof Max) {
-					ValidatorUtils.validateMax((Max) annotation, value,
-							errorMessages);
-				}
-				if (annotation instanceof Min) {
-					ValidatorUtils.validateMin((Min) annotation, value,
-							errorMessages);
-				}
-				if (annotation instanceof Range) {
-					ValidatorUtils.validateRange((Range) annotation, value,
-							errorMessages);
-				}
-			}
-		return errorMessages;
-	}
-
-	public List<String> validateEnumField(String className,
-			String attributeName, String value) {
-		List<String> errorMessages = new ArrayList<String>();
-		Class<?> entity = getEntityClass(className);
-		Field field = GWTServletUtils.getField(entity, attributeName);
-		if (field != null)
-			for (Annotation annotation : field.getDeclaredAnnotations()) {
-				if (annotation instanceof NotNull) {
-					ValidatorUtils.validateNotNull((NotNull) annotation, value,
-							errorMessages);
-				}
-			}
-		return errorMessages;
+	public <T extends LightEntity> Map<String, List<String>> validateEntity(
+			T entity) {
+		return ValidatorUtils.validateEntity(entity);
 	}
 
 	public <T extends Serializable> T createEntityFromFields(String className,
@@ -336,7 +198,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return flds;
 	}
 
-	
 	public <T extends Serializable> T updateEntityFromFields(T entity,
 			LinkedHashMap<String, Object> fields) {
 		String className = entity.getClass().getCanonicalName();
@@ -456,7 +317,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public List<String> getClassRelations(String className) {
-		Class clazz=getEntityClass(className);
+		Class clazz = getEntityClass(className);
 		List<String> classRelations = new ArrayList<String>();
 		do {
 			for (Field field : clazz.getDeclaredFields()) {
