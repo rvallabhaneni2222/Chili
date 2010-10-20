@@ -1,17 +1,13 @@
 package info.yalamanchili.gwt.fields;
 
-import info.yalamanchili.gwt.composite.GenericFieldCompositeWithTextBox;
+import info.yalamanchili.gwt.composite.BaseFieldWithTextBox;
 
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.user.client.Window;
 
-public class FloatField extends GenericFieldCompositeWithTextBox {
-
-	public FloatField(String labelName) {
-		super(labelName);
-	}
+public class FloatField extends BaseFieldWithTextBox {
 
 	public FloatField(String labelName, Boolean readOnly) {
 		super(labelName, readOnly);
