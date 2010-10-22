@@ -1,5 +1,6 @@
 package info.yalamanchili.commons;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -62,8 +63,8 @@ public class ValidatorUtils {
 		return validatorProperties;
 	}
 
-	public static InvalidValue[] validateEntity(Object entity) {
-		InvalidValue[] values = null;
+	public static Map<String, List<String>> validateEntity(Object entity) {
+		Map<String, List<String>> errors = new HashMap<String, List<String>>();
 		String className = entity.getClass().getName();
 		ClassValidator validator = validators.get(className);
 		if (validator == null) {
@@ -76,13 +77,21 @@ public class ValidatorUtils {
 			validators.put(className, new ClassValidator(clazz));
 			validator = validators.get(className);
 		}
-		values = validator.getInvalidValues(entity);
-		return values;
+		for (InvalidValue val : validator.getInvalidValues(entity)) {
+			if (errors.containsKey(val.getPropertyName())) {
+				errors.get(val.getPropertyName()).add(val.getMessage());
+			} else {
+				List<String> err = new ArrayList<String>();
+				err.add(val.getMessage());
+				errors.put(val.getPropertyName(), err);
+			}
+		}
+		return errors;
+
 	}
 
-	public static InvalidValue[] validateField(Object entity,
-			String attributeName) {
-		InvalidValue[] values = null;
+	public static List<String> validateField(Object entity, String attributeName) {
+		List<String> errors = new ArrayList<String>();
 		String className = entity.getClass().getName();
 		ClassValidator validator = validators.get(className);
 		if (validator == null) {
@@ -95,8 +104,11 @@ public class ValidatorUtils {
 			validators.put(className, new ClassValidator(clazz));
 			validator = validators.get(className);
 		}
-		values = validator.getInvalidValues(entity, attributeName);
-		return values;
+		for (InvalidValue val : validator.getInvalidValues(entity,
+				attributeName)) {
+			errors.add(val.getMessage());
+		}
+		return errors;
 	}
 
 	public static InvalidValue[] validateObject(String className, Object entity) {
