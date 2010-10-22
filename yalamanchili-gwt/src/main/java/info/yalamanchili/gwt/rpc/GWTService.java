@@ -49,7 +49,7 @@ public interface GWTService extends RemoteService {
 						.create(GWTService.class);
 				ServiceDefTarget endpoint = (ServiceDefTarget) gwtservice;
 				String moduleRelativeURL = GWT.getModuleBaseURL()
-						+ "gwtservices";
+						+ "seam/resource/gwt2";
 				endpoint.setServiceEntryPoint(moduleRelativeURL);
 			}
 			return gwtservice;

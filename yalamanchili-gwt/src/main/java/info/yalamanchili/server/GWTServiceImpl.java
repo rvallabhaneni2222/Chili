@@ -24,9 +24,17 @@ import net.sf.gilead.pojo.gwt.LightEntity;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.annotations.remoting.WebRemote;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+@Transactional
+@Scope(ScopeType.SESSION)
+@Name("info.yalamanchili.gwt.rpc.GWTService")
 public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	private static final long serialVersionUID = 1L;
@@ -58,6 +66,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return DisplayType.DEFAULT;
 	}
 
+	@WebRemote
 	public LinkedHashMap<String, DataType> getAttributes(String className) {
 
 		if (entity_AttributeData.containsKey(className)) {
@@ -97,11 +106,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 	}
 
+	@WebRemote
 	public <T extends LightEntity> List<String> validateField(T entity,
 			String attributeName) {
 		return ValidatorUtils.validateField(entity, attributeName);
 	}
 
+	@WebRemote
 	public <T extends LightEntity> Map<String, List<String>> validateEntity(
 			T entity) {
 		return ValidatorUtils.validateEntity(entity);
@@ -228,6 +239,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return entity;
 	}
 
+	@WebRemote
 	public Enum<?>[] getEnumValues(String className, String attributeName) {
 		Enum<?>[] var = null;
 		Field field = GWTServletUtils.getField(getEntityClass(className),
@@ -316,6 +328,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
+	@WebRemote
 	public List<String> getClassRelations(String className) {
 		Class clazz = getEntityClass(className);
 		List<String> classRelations = new ArrayList<String>();
