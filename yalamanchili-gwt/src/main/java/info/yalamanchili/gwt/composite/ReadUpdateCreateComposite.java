@@ -114,6 +114,14 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 		}
 	}
 
+	protected void addEnumField(String name, Boolean readOnly,
+			String attributeName, String className) {
+		EnumField enumField = new EnumField(name, readOnly, attributeName,
+				className);
+		fields.put(name, enumField);
+		entityDisplayWidget.add(enumField);
+	}
+
 	protected void addDropDown(SelectComposite<?> widget) {
 		entityDisplayWidget.add(widget);
 	}

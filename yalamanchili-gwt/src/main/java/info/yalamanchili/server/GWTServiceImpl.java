@@ -345,7 +345,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				}
 			}
 			clazz = clazz.getSuperclass();
-		} while (!clazz.equals(Serializable.class));
+		} while (!clazz.equals(LightEntity.class));
 		return classRelations;
 	}
 }

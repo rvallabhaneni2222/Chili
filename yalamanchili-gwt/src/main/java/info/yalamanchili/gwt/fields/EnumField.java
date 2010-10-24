@@ -28,7 +28,7 @@ public class EnumField extends BaseField {
 
 					public void onSuccess(Enum<?>[] result) {
 						for (Enum e : result) {
-							listBox.addItem(e.toString());
+							listBox.addItem(e.toString(), e.toString());
 						}
 					}
 
@@ -36,6 +36,8 @@ public class EnumField extends BaseField {
 	}
 
 	public void setValue(String var) {
+		listBox.clear();
+		listBox.addItem(var, var);
 	}
 
 	public String getValue() {
