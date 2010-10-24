@@ -1,6 +1,46 @@
 <java:format>
 package ${$packageName}.${lower-case($class/@name)};
-
+<%--process enums from base and lavel1,2 parents --%>
+	<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+					 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								import ${$groupID}.entity.${lower-case($package/@name)}.${ uppercaseFirst($attribute/@name)};
+					 			</c:if>
+					 	</c:iterate>					 
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+					 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+							import ${$groupID}.entity.${lower-case($package/@name)}.${ uppercaseFirst($attribute/@name)};
+					 			</c:if>
+					 	</c:iterate>					 
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+	</c:if>
+	<%--process premitive data types of base current class --%>
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+					 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								import ${$groupID}.entity.${lower-case($package/@name)}.${ uppercaseFirst($attribute/@name)};
+					 			</c:if>
+					 	</c:iterate>					 
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
@@ -98,7 +138,7 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 	}
 
 	@Override
-	public ${$class/@name} populateEntityFromFields() {
+	public ${$class/@name} populateEntityOnRender() {
 		entity = Read${$class/@name}Panel.instance().getEntity();
 				<%-- process parent class level 2 attributes--%>
 			<c:if test="not($class/@name = $parentClass2/@name)">
@@ -117,6 +157,11 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
 					 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								setEnumFeild("${$attribute/@name}", entity.get${ uppercaseFirst($attribute/@name)}().toString());
+					 			</c:if>
+					 	</c:iterate>					 						
 		 			</c:otherwise>
 		 		</c:choose>
 			</c:iterate>
@@ -138,6 +183,11 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
 					 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								setEnumFeild("${$attribute/@name}", entity.get${ uppercaseFirst($attribute/@name)}().toString());						
+					 			</c:if>
+					 	</c:iterate>					 						
 		 			</c:otherwise>
 		 		</c:choose>
 			</c:iterate>
@@ -157,16 +207,20 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
 					 <c:otherwise>
-		 			</c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								setEnumFeild("${$attribute/@name}", entity.get${ uppercaseFirst($attribute/@name)}().toString());						
+					 			</c:if>
+					 	</c:iterate>												
+		 			</c:otherwise>					 
 		 		</c:choose>
 			</c:iterate>
-			
 			return entity;
 		}
-
+		
 	@Override
-	public void updateButtonClicked() {
-		<%-- process parent class level 2 attributes--%>
+	public ${$class/@name} populateEntityOnUpdate(){
+	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
 	<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
@@ -183,6 +237,11 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 			 <c:when test="${'$FloatID'}" > entity.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
 			 </c:when>
 				 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								entity.set${ uppercaseFirst($attribute/@name)}(${ uppercaseFirst($attribute/@name)}.valueOf(getEnumField("${$attribute/@name}")));
+					 			</c:if>
+					 	</c:iterate>				 
 	 			</c:otherwise>
 	 		</c:choose>
 		</c:iterate>
@@ -204,6 +263,11 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 			 <c:when test="${'$FloatID'}" > entity.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
 			 </c:when>
 				 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								entity.set${ uppercaseFirst($attribute/@name)}(${ uppercaseFirst($attribute/@name)}.valueOf(getEnumField("${$attribute/@name}")));
+					 			</c:if>
+					 	</c:iterate>				 
 	 			</c:otherwise>
 	 		</c:choose>
 		</c:iterate>
@@ -224,6 +288,11 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 			 <c:when test="${'$FloatID'}" > entity.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
 			 </c:when>
 				 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								entity.set${ uppercaseFirst($attribute/@name)}(${ uppercaseFirst($attribute/@name)}.valueOf(getEnumField("${$attribute/@name}")));
+					 			</c:if>
+					 	</c:iterate>				 
 	 			</c:otherwise>
 	 		</c:choose>
 		</c:iterate>
@@ -267,6 +336,12 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 					</c:iterate>
 				</c:iterate>
 			</c:iterate>
+		return entity;	
+	}
+		
+
+	@Override
+	public void updateButtonClicked() {
 		${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().update(entity,
 				new ALAsyncCallback<${$class/@name}>() {
 					public void onResponse(${$class/@name} arg0) {
@@ -306,6 +381,11 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
 				 </c:when>
 					 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								addEnumField("${$attribute/@name}", false, "${$attribute/@name}", ${$class/@name}.class.getName());
+					 			</c:if>
+					 	</c:iterate>					 
 		 			</c:otherwise>
 		 		</c:choose>
 			</c:iterate>
@@ -327,6 +407,11 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
 				 </c:when>
 					 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								addEnumField("${$attribute/@name}", false, "${$attribute/@name}", ${$class/@name}.class.getName());
+					 			</c:if>
+					 	</c:iterate>					 
 		 			</c:otherwise>
 		 		</c:choose>
 			</c:iterate>
@@ -347,10 +432,14 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
 				 </c:when>
 					 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								addEnumField("${$attribute/@name}", false, "${$attribute/@name}", ${$class/@name}.class.getName());
+					 			</c:if>
+					 	</c:iterate>					 
 		 			</c:otherwise>
 		 		</c:choose>
 			</c:iterate>
-			
 			<%-- process dropdowns one to one and many to one unidirectional--%>
 			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 				<c:iterate select="$association/Association.connection" var="association_connection">
