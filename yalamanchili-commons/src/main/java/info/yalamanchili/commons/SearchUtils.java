@@ -31,6 +31,12 @@ public class SearchUtils {
 		return luceneQuery;
 	}
 
+	// TODO fix issue with empty string
+	/**
+	 * Caused by: org.apache.lucene.queryParser.ParseException: Cannot parse '':
+	 * Encountered "<EOF>" at line 1, column 0. Was expecting one of: <NOT> ...
+	 * "+" ... "-" ... "(" ... "*" ... <QUOTED> ... <TERM> ... <PREFIXTERM> ...
+	 */
 	public static String getSearchQuery(String searchText, String... fields) {
 		StringBuilder searchQuery = new StringBuilder();
 		for (String word : splitSearchString(searchText, ' ')) {
