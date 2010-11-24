@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>yalamanchili</groupId>
+	<artifactId>y-common-deps</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>y-common-deps</name>
+	<url>http://maven.apache.org</url>
+
+	<dependencies>
+		<!-- this groups the core j2ee6 apis on jboss6 app server -->
+		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-6.0</artifactId>
+			<version>${jboss.javaee.version}</version>
+			<type>pom</type>
+		</dependency>
+		<!-- need hibernate, search,lucene... -->
+		<!--
+			hibernate search deps START this need to be upgraded 3.2.1 and 2.4.1
+			respectively
+		-->
+		<!--
+			http://code.google.com/p/yalamanchili/issues/detail?id=127&can=1&q=hibernate%20search
+		-->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search</artifactId>
+			<version>${hibernate.search.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>${lucene.core.version}</version>
+		</dependency>
+		<!-- hibernate search deps END -->
+		<!-- seam dependencies START -->
+		<dependency>
+			<groupId>org.jboss.seam</groupId>
+			<artifactId>jboss-seam</artifactId>
+			<version>${seam.version}</version>
+		</dependency>
+		<!-- seam dependencies END -->
+		<!-- y-dependencies START -->
+		<dependency>
+			<groupId>info.yalamanchili.security</groupId>
+			<artifactId>yalamanchili-security</artifactId>
+			<version>${yalamanchili.version}</version>
+		</dependency>
+		<!-- y-dependencies END -->
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
+		<repository>
+			<id>jboss</id>
+			<url>https://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>yalamanchili</id>
+			<name>yalamanchili repository</name>
+			<url>https://yalamanchili.googlecode.com/svn/maven2</url>
+		</repository>
+	</repositories>
+	<properties>
+		<jboss.javaee.version>1.0.0.CR1</jboss.javaee.version>
+		<yalamanchili.version>1.0-SNAPSHOT</yalamanchili.version>
+		<seam.version>2.2.0.GA</seam.version>
+		<lucene.core.version>2.4.1</lucene.core.version>
+		<hibernate.search.version>3.1.1.GA</hibernate.search.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+</project>
