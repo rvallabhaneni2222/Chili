@@ -4,7 +4,7 @@
 	<groupId>yalamanchili</groupId>
 	<artifactId>y-common-deps</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 	<name>y-common-deps</name>
 	<url>http://maven.apache.org</url>
 
@@ -16,7 +16,7 @@
 			<version>${jboss.javaee.version}</version>
 			<type>pom</type>
 		</dependency>
-		<!-- need hibernate, search,lucene... -->
+		<!-- temp need hibernate libs for validation... -->
 		<!--
 			hibernate search deps START this need to be upgraded 3.2.1 and 2.4.1
 			respectively
