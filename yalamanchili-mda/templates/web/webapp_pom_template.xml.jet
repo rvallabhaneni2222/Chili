@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>yalamanchili</groupId>
 			<artifactId>y-common-deps</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${$y-commom-deps-version}</version>
 			<type>pom</type>
 			<scope>provided</scope>
 		</dependency>
