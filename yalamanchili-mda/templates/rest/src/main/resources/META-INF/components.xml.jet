@@ -21,13 +21,4 @@
 		<!-- currently erroring out with stack overflow with multiple calls  -->
  <!-- <security:identity authenticate-method="#{AutomanageRestResource.authenticate}" /> --> 
  
-		<component name="org.jboss.seam.core.init">
-			<property name="jndiPattern">#{ejbName}/local</property>
-		</component> 
- 
-	<!-- <web:authentication-filter url-pattern="/seam/resource/restv1/crud/*"
-		auth-type="basic" /> -->
-		
-		<persistence:managed-persistence-context name="em"
-		auto-create="true" persistence-unit-jndi-name="java:/${$projectName}"/>
 </components>
