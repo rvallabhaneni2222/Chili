@@ -5,8 +5,7 @@ import info.yalamanchili.security.jpa.YUser;
 
 import javax.persistence.EntityManager;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -21,7 +20,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 @Startup
 @BypassInterceptors
 public class StartUp {
-	private static final Log log = LogFactory.getLog(StartUp.class);
+
 	@In(create = true)
 	protected EntityManager yem;
 

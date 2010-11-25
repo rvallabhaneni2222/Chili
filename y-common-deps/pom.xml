@@ -16,7 +16,7 @@
 			<version>${jboss.javaee.version}</version>
 			<type>pom</type>
 		</dependency>
-		<!-- temp need hibernate libs for validation... -->
+		<!-- need to upgrade 4.x and jpa2 bean validation... -->
 		<!-- hibernate validator START-->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -87,9 +87,16 @@
 			<url>https://yalamanchili.googlecode.com/svn/maven2</url>
 		</repository>
 	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>yalamanchili</id>
+			<name>yalamanchili repository</name>
+			<url>https://yalamanchili.googlecode.com/svn/maven2</url>
+		</repository>
+	</distributionManagement>
 	<properties>
 		<jboss.javaee.version>1.0.0.CR1</jboss.javaee.version>
-		<hibernate.validator.version>4.1.0.Final</hibernate.validator.version>
+		<hibernate.validator.version>3.1.0.GA</hibernate.validator.version>
 		<yalamanchili.version>1.0-SNAPSHOT</yalamanchili.version>
 		<seam.version>2.2.0.GA</seam.version>
 		<lucene.core.version>2.4.1</lucene.core.version>
