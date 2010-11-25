@@ -9,7 +9,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import info.yalamanchili.embeddedjboss.JBossUtil;
+
 
 
 public class ${$class/@name}Test {
@@ -18,9 +18,7 @@ public class ${$class/@name}Test {
 
 	@BeforeClass
 	public static void initClass() {
-		JBossUtil.startDeployer();
-		emf = JBossUtil.lookup(EntityManagerFactory.class, "java:/${$projectName}");
-		em = emf.createEntityManager();
+		
 	}
 
 	@Before
@@ -55,7 +53,6 @@ public class ${$class/@name}Test {
 	@AfterClass
 	public static void destroy() {
 		em.close();
-		JBossUtil.shutdownDeployer();
 	}
 }
 </java:format>

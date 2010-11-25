@@ -29,7 +29,7 @@
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-rest</artifactId>
 			<version>${$version}</version>
-			<type>war</type>
+			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>

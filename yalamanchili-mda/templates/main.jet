@@ -342,19 +342,14 @@
   
 </ws:project>
 
-<%--creates the SOA APP project--%>
-<ws:project name="{$projectName}-soa-app" location="{$location}/{$projectName}-soa-app">
-	<ws:file path="pom.xml" template="templates/soa-app/soa_app_pom_template.xml.jet"/>
-</ws:project>
-
-<%--creates the REST WAR for SOA project--%>
+<%--creates the REST JAR for SOA project--%>
 <ws:project name="{$projectName}-rest" location="{$location}/{$projectName}-rest">
 	<ws:file path="pom.xml" template="templates/rest/rest_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
 			<ws:folder path="${$groupIDWithFolder}/rest">
 			<%-- rest service class--%>
-			<ws:file  path="${camelCase($projectName)}Service.java" template="templates/rest/main/src/rest_manage.java.jet"/>
-			<ws:file  path="GileadService.java" template="templates/rest/main/src/gilead_service.java.jet"/>
+			<ws:file  path="${camelCase($projectName)}Service.java" template="templates/rest/src/main/java/rest_manage.java.jet"/>
+			<ws:file  path="GileadService.java" template="templates/rest/src/main/java/gilead_service.java.jet"/>
 			</ws:folder>    
         	<%-- Iterate through packages and classes --%>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
@@ -390,17 +385,13 @@
 			</c:iterate>
 			<ws:folder path="${$groupIDWithFolder}/rest/${$package/@name}">
 			<%-- rest service class--%>
-			<ws:file  path="{$class/@name}Service.java" template="templates/rest/main/src/entity/entity_rest_service.java.jet"/>
+			<ws:file  path="{$class/@name}Service.java" template="templates/rest/src/main/java/entity/entity_rest_service.java.jet"/>
 			</ws:folder>
 	</c:iterate>
 	</c:iterate>			
     </ws:folder>
-    <ws:folder path="src/main/webapp">
-	<ws:file template="templates/rest/main/webapp/WEB-INF/components.xml.jet" path="WEB-INF/components.xml"/>
-	<%-- <ws:file template="templates/rest/main/webapp/WEB-INF/rest_jboss-web.xml.jet" path="WEB-INF/jboss-web.xml"/> --%>
-	<ws:file template="templates/rest/main/webapp/WEB-INF/web.xml.jet" path="WEB-INF/web.xml"/>
-    </ws:folder>
     <ws:folder path="src/main/resources">
+    <ws:file template="templates/rest/src/main/resources/META-INF/components.xml.jet" path="META-INF/components.xml"/>
      <ws:file template="templates/web/seam.properties.jet" path="seam.properties"/>
     </ws:folder>
 </ws:project>

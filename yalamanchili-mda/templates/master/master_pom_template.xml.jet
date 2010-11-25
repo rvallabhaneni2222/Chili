@@ -16,10 +16,10 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>info.yalamanchili</groupId>
-			<artifactId>yalamanchili-embedded-jboss
-			</artifactId>
-			<version>${$yalamanchili-embedded-jboss-version}</version>
+			<groupId>yalamanchili</groupId>
+			<artifactId>y-common-deps</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<type>pom</type>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

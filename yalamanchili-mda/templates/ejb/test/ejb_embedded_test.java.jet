@@ -11,7 +11,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import info.yalamanchili.embeddedjboss.JBossUtil;
+
 
 
 public class ${$class/@name}ServiceTest extends SeamTest{
@@ -21,10 +21,7 @@ public class ${$class/@name}ServiceTest extends SeamTest{
 
 	@BeforeClass
 	public static void initClass() {
-		JBossUtil.startDeployer();
-		bean = JBossUtil.lookup(${$class/@name}ServiceLocal.class, "${lower-case($class/@name)}/local");
-		emf = JBossUtil.lookup(EntityManagerFactory.class, "java:/${$projectName}");
-		em = emf.createEntityManager();
+		
 	}
 
 	@Before
@@ -50,7 +47,6 @@ public class ${$class/@name}ServiceTest extends SeamTest{
 	public static void destroy() {
 		em.close();
 		emf.close();
-		JBossUtil.shutdownDeployer();
 	}
 }
 </java:format>
