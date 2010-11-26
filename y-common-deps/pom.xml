@@ -99,7 +99,7 @@
 		<hibernate.validator.version>3.1.0.GA</hibernate.validator.version>
 		<yalamanchili.version>1.0-SNAPSHOT</yalamanchili.version>
 		<seam.version>2.2.0.GA</seam.version>
-		<lucene.core.version>2.4.1</lucene.core.version>
+		<lucene.core.version>3.0.2</lucene.core.version>
 		<hibernate.search.version>3.1.1.GA</hibernate.search.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
