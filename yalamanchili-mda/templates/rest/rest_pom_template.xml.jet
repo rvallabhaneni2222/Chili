@@ -32,40 +32,12 @@
 			<type>pom</type>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.jboss.seam</groupId>
-			<artifactId>jboss-seam</artifactId>
-			<version>${$seam-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.el</groupId>
-			<artifactId>jboss-el</artifactId>
-			<version>${$seam-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.resteasy</groupId>
-			<artifactId>resteasy-jaxrs
-			</artifactId>
-			<version>1.2.1.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.resteasy</groupId>
-			<artifactId>resteasy-jaxb-provider
-			</artifactId>
-			<version>1.2.1.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.resteasy</groupId>
-			<artifactId>jaxrs-api
-			</artifactId>
-			<version>1.2.1.GA</version>
-		</dependency>
 		<!--  needed to bootstrap resteasy -->
 		<dependency>
-			<groupId>org.resteasy</groupId>
+			<groupId>org.jboss.seam</groupId>
 			<artifactId>jboss-seam-resteasy
 			</artifactId>
-			<version>2.2.0.GA</version>
+			<version>${$seam-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus</groupId>

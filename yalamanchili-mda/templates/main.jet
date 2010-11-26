@@ -14,7 +14,7 @@
 <%--versions --%>
 <c:setVariable select="'2.0.0'" var="gwt-version"/>
 <c:setVariable select="'2.6.2'" var="gwt-log-version"/>
-<c:setVariable select="'2.2.0.GA'" var="seam-version"/>
+<c:setVariable select="'2.2.1.CR2'" var="seam-version"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-embedded-jboss-version"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="y-commom-deps-version"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-commons-version"/>

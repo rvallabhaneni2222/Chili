@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>org.jboss.el</groupId>
 			<artifactId>jboss-el</artifactId>
-			<version>${$seam-version}</version>
+			<version>1.0_02.CR5</version>
 		</dependency>
 	</dependencies>
 	<build>
