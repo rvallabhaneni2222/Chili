@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.persistence.EntityManager;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
+import org.hibernate.Session;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
 
 public class SearchUtils {
 	private static final Log log = LogFactory.getLog(SearchUtils.class);
@@ -29,6 +34,17 @@ public class SearchUtils {
 					e);
 		}
 		return luceneQuery;
+	}
+
+	/*
+	 * this is a temp method to get around.
+	 * http://littlesquare.com/2010/05/upgrading
+	 * -to-hibernate-search-3-2-0-w-seam/
+	 */
+	public static FullTextSession getFullTextSession(EntityManager em) {
+		Session session = (Session) em.getDelegate();
+		return Search.getFullTextSession(session.getSessionFactory()
+				.getCurrentSession());
 	}
 
 	// TODO fix issue with empty string
