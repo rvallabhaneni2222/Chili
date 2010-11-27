@@ -7,8 +7,7 @@ import info.yalamanchili.commons.DataType;
 import info.yalamanchili.commons.ReflectionUtils;
 import info.yalamanchili.commons.SearchUtils;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.hibernate.search.jpa.FullTextEntityManager;
-import org.hibernate.search.jpa.Search;
+import org.hibernate.search.FullTextQuery;
 </c:if>	
 import java.util.HashMap;
 import java.util.Properties;
@@ -542,13 +541,13 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	@WebRemote
 	public List<${$class/@name}> search(String searchText) {
 		List<${$class/@name}> results = new ArrayList<${$class/@name}>();
-		FullTextEntityManager ftem = Search.getFullTextEntityManager(em);
 		org.apache.lucene.search.Query luceneQuery = SearchUtils
 				.getLuceneQuery(searchText, "id", new StandardAnalyzer(),
 						ReflectionUtils.getBeanProperties(${$class/@name}.class,
 								DataType.STRING));
-		Query query = ftem.createFullTextQuery(luceneQuery, ${$class/@name}.class);
-		for (Object obj : query.getResultList()) {
+		FullTextQuery query = SearchUtils.getFullTextSession(em)
+				.createFullTextQuery(luceneQuery,  ${$class/@name}.class);
+		for (Object obj : query.list()) {
 			results.add((${$class/@name}) getBeanManager().clone((obj)));
 		}
 		return results;
