@@ -1,5 +1,8 @@
 package info.yalamanchili.security;
 
+import info.yalamanchili.security.jpa.YRole;
+import info.yalamanchili.security.jpa.YUser;
+
 import javax.persistence.EntityManager;
 
 import org.jboss.seam.ScopeType;
@@ -8,13 +11,13 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Startup;
+import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.async.Asynchronous;
-import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
 @Name("YSecurityStartup")
 @Scope(ScopeType.APPLICATION)
 @Startup
-@BypassInterceptors
+@Transactional
 public class YSecurityStartup {
 
 	@In(create = true)
@@ -22,9 +25,9 @@ public class YSecurityStartup {
 
 	@Observer("org.jboss.seam.postInitialization")
 	@Asynchronous
+	// TODO fix transacton exceptiopn
 	public void initUsersRoles() {
-		// TODO fix null entitymanager issue
-		// log.debug("in init user roles");
+		// System.out.println("QQQQQQQQQ load security init");
 		// YRole userRole = new YRole();
 		// userRole.setRolename("user");
 		// yem.merge(userRole);
