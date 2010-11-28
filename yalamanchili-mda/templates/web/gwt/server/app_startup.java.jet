@@ -1,0 +1,42 @@
+<java:format>
+package ${$groupID}.server;
+
+import javax.persistence.EntityManager;
+
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Observer;
+import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.Startup;
+import org.jboss.seam.annotations.Transactional;
+import org.jboss.seam.annotations.async.Asynchronous;
+
+@Name("${lower-case($projectName)}Startup")
+@Scope(ScopeType.APPLICATION)
+@Startup
+@Transactional
+public class ${camelCase($projectName)}Startup {
+
+	@In(create = true)
+	protected EntityManager em;
+
+	@Asynchronous
+	@Observer("org.jboss.seam.postInitialization")
+	// TODO fix issue
+	/*
+	 * http://code.google.com/p/yalamanchili/issues/detail?id=127&q=hibernate%20search
+	 */
+	public void searchIndexBuilder() {
+		// try {
+		// SearchUtils.getFullTextSession(em).createIndexer()
+		// .batchSizeToLoadObjects(25).cacheMode(CacheMode.NORMAL)
+		// .threadsToLoadObjects(5).threadsForSubsequentFetching(20)
+		// .startAndWait();
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+
+	}
+}
+</java:format>

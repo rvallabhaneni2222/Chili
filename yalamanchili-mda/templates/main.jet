@@ -194,10 +194,11 @@
     	<ws:file  path="${camelCase($projectName)}Service.java" template="templates/web/gwt/client/rpc/app_service_sync.java.jet"/>
     	<ws:file  path="${camelCase($projectName)}ServiceAsync.java" template="templates/web/gwt/client/rpc/app_service_async.java.jet"/>
     	</ws:folder>
-    	<%-- Current project servlet,GWT servlet and GileadService  --%>
+    	<%-- Current project servlet,startup component and GileadService  --%>
     	<ws:folder path="${$groupIDWithFolder}/server">
     	<ws:file  path="${camelCase($projectName)}ServiceImpl.java" template="templates/web/gwt/server/app_service_impl.java.jet"/>
     	<ws:file  path="GileadService.java" template="templates/web/gwt/server/gilead_service.java.jet"/>
+    	<ws:file  path="${camelCase($projectName)}Startup.java" template="templates/web/gwt/server/app_startup.java.jet"/>
     	</ws:folder>
     	
 		<%-- gwt messages and constants files--%>
