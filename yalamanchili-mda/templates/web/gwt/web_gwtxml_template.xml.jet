@@ -1,12 +1,9 @@
 <module>
 	<inherits name="com.google.gwt.user.User" />
 
-	<!-- gwt log -->
-	<!-- Add gwt-log support, default level `OFF` -->
-	<inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />
-
-	<!-- Also compile at `INFO` level -->
-	<extend-property name="log_level" values="DEBUG" />
+	<!-- logging -->
+	<inherits name="com.google.gwt.logging.Logging" />
+	
 	<!-- used to support internationalization -->
 
 	<inherits name='com.google.gwt.i18n.I18N' />

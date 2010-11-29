@@ -60,8 +60,6 @@ import info.yalamanchili.gwt.composite.SelectComposite;
 import java.util.List;
 import java.util.Map;
 
-import com.allen_sauer.gwt.log.client.Log;
-
 public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}> {
 
 	public Select${$class/@name}Panel(String name,SelectCompositeType type) {

@@ -12,7 +12,7 @@
 <c:setVariable select="'/Users/yphanikumar/codebase/generated'" var="location"/>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <%--versions --%>
-<c:setVariable select="'2.0.0'" var="gwt-version"/>
+<c:setVariable select="'2.1.0'" var="gwt-version"/>
 <c:setVariable select="'2.6.2'" var="gwt-log-version"/>
 <c:setVariable select="'2.2.1.CR2'" var="seam-version"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-embedded-jboss-version"/>
@@ -21,7 +21,7 @@
 <c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-gwt-version"/>
 <c:setVariable select="'2.2'" var="hibernate3-maven-plugin-version"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="jpa-testdata-plugin-version"/>
-<c:setVariable select="'1.2'" var="gwt-maven-plugin-version"/>
+<c:setVariable select="'2.1.0'" var="gwt-maven-plugin-version"/>
 <c:setVariable select="'5.1'" var="dozer-version"/>
 <c:setVariable select="'2.3.2'" var="ear-plugin-version"/>
 <c:setVariable select="'1.4'" var="jboss-maven-plugin-version"/>

@@ -12,8 +12,6 @@ package ${$groupID}.client;
 			 </c:iterate>
 	</c:iterate>
 
-import com.allen_sauer.gwt.log.client.DivLogger;
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -24,14 +22,15 @@ import ${$webPackage}internalization.${camelCase($projectName)}Messages;
 import info.yalamanchili.security.jpa.YUser;
 import info.yalamanchili.security.jpa.YRole;
 import com.google.gwt.user.client.ui.Widget;
-import com.allen_sauer.gwt.log.client.DivLogger;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.dom.client.Style.Unit;
 
+import java.util.logging.Logger;
 import java.util.HashSet;
 import java.util.Set;
 
 public class ${camelCase($projectName)}Welcome extends RootPanels implements EntryPoint {
+	private  Logger logger = Logger.getLogger(AutomanageWelcome.class.getName());
 
 	private static ${camelCase($projectName)}Welcome instance;
 	
@@ -53,7 +52,6 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 			.create(${camelCase($projectName)}Messages.class);
 			
 	public void onModuleLoad() {
-			Log.setUncaughtExceptionHandler();
 			instance=this;
 			addListeners();
 			configure();
@@ -69,10 +67,6 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 			roles.add(Roles.valueOf(role.getRolename().toUpperCase()));
 		}
 		this.roles = roles;
-		Widget logger = ((DivLogger) Log.getLogger(DivLogger.class))
-				.getWidget();
-
-		RootLayoutPanel.get().add(logger);
 		onModuleLoad();
 	}
 		
