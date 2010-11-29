@@ -3,18 +3,21 @@ package info.yalamanchili.gwt.composite;
 import info.yalamanchili.gwt.widgets.ALSuggestBox;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.sf.gilead.pojo.gwt.LightEntity;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class SearchPanelCompositeGeneric<T extends LightEntity> extends
-		ReadUpdateCreateComposite<T> implements ClickHandler {
+public abstract class SearchPanelCompositeGeneric<T extends LightEntity>
+		extends ReadUpdateCreateComposite<T> implements ClickHandler {
+	Logger logger = Logger.getLogger(SearchPanelCompositeGeneric.class
+			.getName());
 	protected Button searchB = new Button("search");
 
 	public void initSearchPanelCompositeGeneric(String className,
@@ -46,10 +49,10 @@ public abstract class SearchPanelCompositeGeneric<T extends LightEntity> extends
 			fields.put(name, suggestBox);
 			entityDisplayWidget.insert(suggestBox, index);
 		} else {
-			Log
-					.error("Errror no field with name present:"
-							+ name.toUpperCase());
-			Log.debug("Fields Map contains:" + fields.keySet().toString());
+			logger.log(Level.WARNING, "Errror no field with name present:"
+					+ name.toUpperCase());
+			logger.log(Level.INFO, "Fields Map contains:"
+					+ fields.keySet().toString());
 		}
 
 	}

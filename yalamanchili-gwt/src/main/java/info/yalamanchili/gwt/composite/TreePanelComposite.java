@@ -7,8 +7,9 @@ import info.yalamanchili.gwt.widgets.ClickableLink;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Composite;
@@ -22,6 +23,7 @@ import com.google.gwt.user.client.ui.TreeItem;
  */
 public abstract class TreePanelComposite<T> extends Composite implements
 		ClickHandler {
+	Logger logger = Logger.getLogger(TreePanelComposite.class.getName());
 	protected Map<String, ClickableLink> links = new HashMap<String, ClickableLink>();
 	/** The entity. */
 	protected T entity;
@@ -79,7 +81,7 @@ public abstract class TreePanelComposite<T> extends Composite implements
 		if (links.containsKey(className)) {
 			links.remove(className);
 		} else {
-			Log.debug("link not present:" + className);
+			logger.log(Level.INFO, "link not present:" + className);
 		}
 	}
 

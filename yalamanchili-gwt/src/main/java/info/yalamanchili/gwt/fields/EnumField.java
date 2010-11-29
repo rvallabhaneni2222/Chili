@@ -3,7 +3,9 @@ package info.yalamanchili.gwt.fields;
 import info.yalamanchili.gwt.composite.BaseField;
 import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
 
-import com.allen_sauer.gwt.log.client.Log;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ListBox;
 
@@ -12,7 +14,7 @@ import com.google.gwt.user.client.ui.ListBox;
  * The Class EnumField.
  */
 public class EnumField extends BaseField {
-
+	Logger logger = Logger.getLogger(EnumField.class.getName());
 	protected final ListBox listBox = new ListBox();
 
 	public EnumField(String text, Boolean readOnly, String attributeName,
@@ -23,7 +25,7 @@ public class EnumField extends BaseField {
 				new AsyncCallback<Enum<?>[]>() {
 
 					public void onFailure(Throwable caught) {
-						Log.debug(caught.getMessage());
+						logger.log(Level.SEVERE, caught.getMessage());
 					}
 
 					public void onSuccess(Enum<?>[] result) {

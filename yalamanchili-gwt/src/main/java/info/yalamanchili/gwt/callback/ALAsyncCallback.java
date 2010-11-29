@@ -3,7 +3,9 @@ package info.yalamanchili.gwt.callback;
 import info.yalamanchili.gwt.widgets.LoadingWidget;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 
-import com.allen_sauer.gwt.log.client.Log;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 // TODO: Auto-generated Javadoc
@@ -11,7 +13,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  * The Class ALAsyncCallback.
  */
 public abstract class ALAsyncCallback<T> implements AsyncCallback<T> {
-
+	Logger logger = Logger.getLogger(ALAsyncCallback.class.getName());
 	/** The is completed. */
 	protected Boolean isCompleted = false;
 
@@ -34,7 +36,7 @@ public abstract class ALAsyncCallback<T> implements AsyncCallback<T> {
 	 */
 	public void onFailure(Throwable arg0) {
 		loadingWidget.hide();
-		Log.debug(arg0.getLocalizedMessage());
+		logger.log(Level.SEVERE, arg0.getLocalizedMessage());
 		new ResponseStatusWidget().show("call to server failed");
 	}
 

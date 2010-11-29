@@ -1,8 +1,9 @@
 package info.yalamanchili.gwt.composite;
 
+import java.util.logging.Logger;
+
 import net.sf.gilead.pojo.gwt.LightEntity;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
@@ -10,7 +11,7 @@ import com.google.gwt.user.client.ui.Button;
 
 public abstract class UpdateComposite<T extends LightEntity> extends
 		ReadUpdateCreateComposite<T> implements ClickHandler {
-
+	Logger logger = Logger.getLogger(UpdateComposite.class.getName());
 	protected Button update = new Button("update");
 
 	public void initUpdateComposite(String className,
