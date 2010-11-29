@@ -22,7 +22,7 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernate.validator.version}</version>
-		</dependency>	
+		</dependency>
 		<!-- hibernate validator END-->
 		<!--
 			hibernate search deps START this need to be upgraded 3.2.1 and 2.4.1
@@ -96,7 +96,7 @@
 	</distributionManagement>
 	<properties>
 		<jboss.javaee.version>1.0.0.CR1</jboss.javaee.version>
-		<hibernate.validator.version>3.3.0-SNAPSHOT</hibernate.validator.version>
+		<hibernate.validator.version>3.1.0.GA</hibernate.validator.version>
 		<yalamanchili.version>1.0-SNAPSHOT</yalamanchili.version>
 		<seam.version>2.2.1.CR2</seam.version>
 		<lucene.core.version>2.9.3</lucene.core.version>
