@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Nov 29 09:51:34 EST 2010'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Nov 30 10:04:51 EST 2010'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.30.2(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -193,28 +193,44 @@
           <UML:Namespace.ownedElement>
             <UML:Stereotype xmi.id = '-64--88-0-83-63a32047:12c97f9fe31:-8000:0000000000000EC5'
               name = 'UserPrincipal' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false'/>
+              isAbstract = 'false'>
+              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+            </UML:Stereotype>
             <UML:Stereotype xmi.id = '-64--88-0-83-63a32047:12c97f9fe31:-8000:0000000000000EC6'
               name = 'UserPassword' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false'/>
+              isAbstract = 'false'>
+              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+            </UML:Stereotype>
             <UML:Stereotype xmi.id = '-64--88-0-83-63a32047:12c97f9fe31:-8000:0000000000000EC7'
               name = 'UserFirstName &#9;  ' isSpecification = 'false' isRoot = 'false'
-              isLeaf = 'false' isAbstract = 'false'/>
+              isLeaf = 'false' isAbstract = 'false'>
+              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+            </UML:Stereotype>
             <UML:Stereotype xmi.id = '-64--88-0-83-63a32047:12c97f9fe31:-8000:0000000000000EC8'
               name = 'UserLastName' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false'/>
+              isAbstract = 'false'>
+              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+            </UML:Stereotype>
             <UML:Stereotype xmi.id = '-64--88-0-83-63a32047:12c97f9fe31:-8000:0000000000000EC9'
               name = 'UserEnabled' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false'/>
+              isAbstract = 'false'>
+              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+            </UML:Stereotype>
             <UML:Stereotype xmi.id = '-64--88-0-83-63a32047:12c97f9fe31:-8000:0000000000000ECA'
               name = 'UserRoles' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false'/>
+              isAbstract = 'false'>
+              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+            </UML:Stereotype>
             <UML:Stereotype xmi.id = '-64--88-0-83-63a32047:12c97f9fe31:-8000:0000000000000ECB'
               name = 'RoleName' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false'/>
+              isAbstract = 'false'>
+              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+            </UML:Stereotype>
             <UML:Stereotype xmi.id = '-64--88-0-83-63a32047:12c97f9fe31:-8000:0000000000000ECC'
               name = 'RoleGroups' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false'/>
+              isAbstract = 'false'>
+              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+            </UML:Stereotype>
           </UML:Namespace.ownedElement>
         </UML:Package>
       </UML:Namespace.ownedElement>
