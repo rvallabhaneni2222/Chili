@@ -3,14 +3,24 @@
     <ws:file template="templates/dump.jet" path="{$org.eclipse.jet.resource.project.name}/dump.xml"/>
 </c:if>
 <%--Set Global varibles like projectId,groupId,version...--%>
-
+<%--project properties--%>
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
 <c:setVariable select="'info.yalamanchili.project'" var="groupID"/>
 <c:setVariable select="'info/yalamanchili/project'" var="groupIDWithFolder"/>
 <c:setVariable select="'info_yalamanchili_project'" var="groupIDWithUnderScore"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
-<c:setVariable select="'/Users/yphanikumar/codebase/generated'" var="location"/>
+<c:setVariable select="'c://codebase/zuzubi'" var="location"/>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
+<%--code generation properties--%>
+<c:setVariable select="'TRUE'" var="genMaster"/>
+<c:setVariable select="'FALSE'" var="genApp"/>
+<c:setVariable select="'TRUE'" var="genJPA"/>
+<c:setVariable select="'FALSE'" var="genEJB"/>
+<c:setVariable select="'FALSE'" var="genRest"/>
+<c:setVariable select="'FALSE'" var="genWebapp"/>
+<c:setVariable select="'FALSE'" var="genAndroid"/>
+<c:setVariable select="'FALSE'" var="genIOS"/>
+<c:setVariable select="'FALSE'" var="genTest"/>
 <%--versions --%>
 <c:setVariable select="'2.1.0'" var="gwt-version"/>
 <c:setVariable select="'2.6.2'" var="gwt-log-version"/>
@@ -42,11 +52,13 @@
 <c:include template="templates/main/load_profiles.jet" />
 
 <%--creates the master project--%>
+<c:if test="$genMaster = 'TRUE'">
 <ws:project name="{$projectName}-master" location="{$location}/{$projectName}-master">
 	<ws:file path="pom.xml" template="templates/master/master_pom_template.xml.jet"/>  
 </ws:project>
-
+</c:if>
 <%--creates the APP project--%>
+<c:if test="$genApp = 'TRUE'">
 <ws:project name="{$projectName}-app" location="{$location}/{$projectName}-app">
 	<ws:file path="pom.xml" template="templates/app/app_pom_template.xml.jet"/>
     <ws:folder path="jboss/conf">
@@ -62,8 +74,10 @@
     </ws:folder>
     <ws:folder path="jboss/deploy"/>
 </ws:project>
+</c:if>
 
 <%--creates the JPA project--%>
+<c:if test="$genJPA = 'TRUE'">
 <ws:project name="{$projectName}-jpa" location="{$location}/{$projectName}-jpa">
 	<ws:file path="pom.xml" template="templates/jpa/jpa_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">   	
@@ -111,10 +125,11 @@
 	<ws:file template="templates/ejb/test/resources/login-config.xml.jet" path="login-config.xml"/>
 	<ws:file template="templates/ejb/test/resources/security-beans.xml.jet" path="security-beans.xml"/>
    	</ws:folder>
-
 </ws:project>
+</c:if>
 
 <%--creates the EJB project--%>
+<c:if test="$genEJB = 'TRUE'">
 <ws:project name="{$projectName}-ejb" location="{$location}/{$projectName}-ejb">
 	<ws:file path="pom.xml" template="templates/ejb/ejb_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
@@ -170,10 +185,11 @@
 	<ws:file template="templates/ejb/test/resources/login-config.xml.jet" path="login-config.xml"/>
 	<ws:file template="templates/ejb/test/resources/security-beans.xml.jet" path="security-beans.xml"/>
    	</ws:folder>
-
 </ws:project>
+</c:if>
 
 <%--creates the webapp project--%>
+<c:if test="$genWebapp = 'TRUE'">
 <ws:project name="{$projectName}-webapp" location="{$location}/{$projectName}-webapp">
 	<ws:file path="pom.xml" template="templates/web/webapp_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
@@ -341,10 +357,11 @@
     <ws:copyFile src="templates/web/gwt/seamgwt2/GWTToSeamAdapter.java" target="src/main/java/seamgwt2/GWTToSeamAdapter.java" />
     <ws:copyFile src="templates/web/gwt/seamgwt2/SeamRPC.java" target="src/main/java/seamgwt2/SeamRPC.java" />
     <ws:copyFile src="templates/web/gwt/seamgwt2/SeamRPCRequest.java" target="src/main/java/seamgwt2/SeamRPCRequest.java" />
-  
 </ws:project>
+</c:if>
 
 <%--creates the REST JAR for SOA project--%>
+<c:if test="$genRest = 'TRUE'">
 <ws:project name="{$projectName}-rest" location="{$location}/{$projectName}-rest">
 	<ws:file path="pom.xml" template="templates/rest/rest_pom_template.xml.jet"/>
     <ws:folder path="src/main/java">
@@ -397,8 +414,9 @@
      <ws:file template="templates/web/seam.properties.jet" path="seam.properties"/>
     </ws:folder>
 </ws:project>
-
+</c:if>
 <%--creates the Android project--%>
+<c:if test="$genAndroid = 'TRUE'">
 <ws:project name="{$projectName}-android" location="{$location}/{$projectName}-android">
 	<ws:file path="pom.xml" template="templates/android/android_pom_template.xml.jet"/>
 	<ws:file path="AndroidManifest.xml" template="templates/android/android_manifest_template.xml.jet"/>
@@ -485,8 +503,9 @@
      <ws:folder path="res/drawable-mdpi">
     </ws:folder>
 </ws:project>
-
+</c:if>
 <%--creates the ios project--%>
+<c:if test="$genIOS = 'TRUE'">
 <ws:project name="{$projectName}-ios" location="{$location}/{$projectName}-ios">
 <%--create root view controller files--%>
 <ws:folder path="main">
@@ -542,10 +561,11 @@
 			</ws:folder>			
 			</c:iterate>
 		</c:iterate>
-
 </ws:project>
+</c:if>
 
 <%-- creates the test project--%>
+<c:if test="$genTest = 'TRUE'">
 <ws:project name="{$projectName}-test" location="{$location}/{$projectName}-test">
 	<ws:file path="pom.xml" template="templates/test/test_pom.xml.jet"/>
 	  <%--Iterate through the packages and classes--%>
@@ -595,4 +615,4 @@
 			</c:iterate>
 		</c:iterate>
 </ws:project>
-
+</c:if>
