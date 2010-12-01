@@ -59,7 +59,8 @@
 					</componentProperties>
 				</configuration>
 			</plugin>
-			<plugin>
+			<!--TODO Unable to Load Naming Strategy class from class path:org.hibernate.cfg.ImprovedNamingStrategy -->
+			<!--<plugin>
 				<groupId>info.yalamanchili.maven</groupId>
 				<artifactId>jpa-testdata</artifactId>
 				<version>${$jpa-testdata-plugin-version}</version>
@@ -84,7 +85,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin>-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>

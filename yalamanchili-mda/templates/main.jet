@@ -5,14 +5,14 @@
 <%--Set Global varibles like projectId,groupId,version...--%>
 <%--project properties--%>
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
-<c:setVariable select="'info.yalamanchili.project'" var="groupID"/>
-<c:setVariable select="'info/yalamanchili/project'" var="groupIDWithFolder"/>
-<c:setVariable select="'info_yalamanchili_project'" var="groupIDWithUnderScore"/>
+<c:setVariable select="'com.zuzubi.catalog'" var="groupID"/>
+<c:setVariable select="'com/zuzubi/catalog'" var="groupIDWithFolder"/>
+<c:setVariable select="'com_zuzubi_catalog'" var="groupIDWithUnderScore"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
 <c:setVariable select="'c://codebase/zuzubi'" var="location"/>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <%--code generation properties--%>
-<c:setVariable select="'TRUE'" var="genMaster"/>
+<c:setVariable select="'FALSE'" var="genMaster"/>
 <c:setVariable select="'FALSE'" var="genApp"/>
 <c:setVariable select="'TRUE'" var="genJPA"/>
 <c:setVariable select="'FALSE'" var="genEJB"/>
@@ -37,6 +37,7 @@
 <c:setVariable select="'1.4'" var="jboss-maven-plugin-version"/>
 <c:setVariable select="'2.1'" var="android-version"/>
 <c:setVariable select="'1.3.1'" var="xstream-version"/>
+<c:setVariable select="'1.0.0.Alpha4'" var="arquillian-version"/>
 
 <c:setVariable select="'HSQL'" var="dataBase"/>
 <c:setVariable select="'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#'" var="yalamanchiliMDANameSpace"/>		
@@ -83,41 +84,41 @@
     <ws:folder path="src/main/java">   	
     	<%--create gwt.xml file to include these  --%>	
     	<ws:folder path="${$groupIDWithFolder}">
-    	<ws:file path="entity.gwt.xml" template="templates/jpa/jpa_gwtxml.template.xml.jet" />
+    	<ws:file path="entity.gwt.xml" template="templates/jpa/src/main/jpa_gwtxml.template.xml.jet" />
     	</ws:folder>
     	<%--iterate through the packages and create jpa classes and enumerations --%>		
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		<ws:folder path="${$groupIDWithFolder}/entity/${$package/@name}">
     		<%-- create enumerations in the package--%>
     		<c:iterate select="$package/Namespace.ownedElement/Enumeration" var="enumeration">
-    		<ws:file path="{$enumeration/@name}.java" template="templates/jpa/enumeration_template.java.jet" />	
+    		<ws:file path="{$enumeration/@name}.java" template="templates/jpa/src/main/java/enumeration_template.java.jet" />	
 			</c:iterate>
 			<%-- create JPA source classes in the package--%>
 			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-			<ws:file path="{$class/@name}.java" template="templates/jpa/jpa_class_template.java.jet" />
+			<ws:file path="{$class/@name}.java" template="templates/jpa/src/main/java/jpa_class_template.java.jet" />
 			</c:iterate>
 			</ws:folder>
 		</c:iterate>
     </ws:folder>
     <ws:folder path="src/main/resources">
-    <ws:file template="templates/jpa/jpa_persistence_template.xml.jet" path="META-INF/persistence.xml"/>
- <%--   <ws:file template="templates/jpa/jpa_ormxml_template.xml.jet" path="META-INF/orm.xml"/> --%>
-    <ws:file template="templates/jpa/abbrevation.properties.jet" path="abbrevations.properties"/>
+    <ws:file template="templates/jpa/src/main/resources/jpa_persistence_template.xml.jet" path="META-INF/persistence.xml"/>
+ <%--   <ws:file template="templates/jpa/src/main/resources/jpa_ormxml_template.xml.jet" path="META-INF/orm.xml"/> --%>
+    <ws:file template="templates/jpa/src/main/resources/abbrevation.properties.jet" path="abbrevations.properties"/>
     </ws:folder>
     <ws:folder path="src/test/java">
     <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     	 <ws:folder path="${$groupIDWithFolder}/entity/${$package/@name}">
 			<%-- create test classes in the package--%>
 			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-			<ws:file path="{$class/@name}JPATest.java" template="templates/jpa/test/jpa_enitity_test.java.jet" />
+			<ws:file path="{$class/@name}JPATest.java" template="templates/jpa/src/test/java/jpa_enitity_test.java.jet" />
 			</c:iterate>
 		</ws:folder>	
 		</c:iterate>
     </ws:folder>
     
     <ws:folder path="src/test/resources">
-	<ws:file template="templates/jpa/test/resources/jndi.properties.jet" path="jndi.properties"/>
-	<ws:file template="templates/jpa/main/jpa_persistence_template.xml.jet" path="test-persistence.xml"/>
+	<ws:file template="templates/jpa/src/test/resources/jndi.properties.jet" path="jndi.properties"/>
+	<ws:file template="templates/jpa/src/main/resources/jpa_persistence_template.xml.jet" path="test-persistence.xml"/>
    	</ws:folder>
 </ws:project>
 </c:if>

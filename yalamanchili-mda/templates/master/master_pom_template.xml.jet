@@ -9,11 +9,17 @@
 	<name>${$projectName}-master</name>
 	<url>http://somecompany.com</url>
 	<dependencies>
+		<dependency> 
+   			<groupId>junit</groupId> 
+   			<artifactId>junit</artifactId> 
+   			<version>4.8.1</version> 
+   			<scope>test</scope> 
+		</dependency> 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.1</version>
-			<scope>test</scope>
+   			<groupId>org.jboss.arquillian</groupId>
+   			<artifactId>arquillian-junit</artifactId>
+   			<version>${'${arquillian.version}'}</version>
+   			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>yalamanchili</groupId>
@@ -113,7 +119,7 @@
 	         <dependency>
 	            <groupId>org.jboss.arquillian.container</groupId>
 	            <artifactId>arquillian-jbossas-remote-6</artifactId>
-	            <version>${arquillian.version}</version>
+	            <version>${'${arquillian.version}'}</version>
 	         </dependency>
 	        <dependency>
 	            <groupId>org.jboss.jbossas</groupId>
@@ -141,6 +147,6 @@
 	</repositories>
 	<properties>
 		<gwtVersion>${$gwt-version}</gwtVersion>
-		<arquillian.version>1.0.0.Alpha4</arquillian.version>
+		<arquillian.version>${$arquillian-version}</arquillian.version>
 	</properties>
 </project>
