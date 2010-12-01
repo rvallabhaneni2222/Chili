@@ -106,10 +106,32 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+	   <profile>
+	      <id>jbossas-remote-6</id>
+	      <dependencies>
+	         <dependency>
+	            <groupId>org.jboss.arquillian.container</groupId>
+	            <artifactId>arquillian-jbossas-remote-6</artifactId>
+	            <version>${arquillian.version}</version>
+	         </dependency>
+	        <dependency>
+	            <groupId>org.jboss.jbossas</groupId>
+	            <artifactId>jboss-as-client</artifactId>
+	            <version>6.0.0.20100721-M4</version>
+	            <type>pom</type>
+	        </dependency>
+	      </dependencies>
+	   </profile>
+	</profiles>	
 	<repositories>
 		<repository>
 			<id>yalamanchili</id>
 			<url> http://yalamanchili.googlecode.com/svn/maven2  </url>
+		</repository>
+		<repository>
+			<id>jboss.nexus</id>
+			<url>https://repository.jboss.org/nexus/content/groups/public</url>
 		</repository>
 		<repository>
 			<id>jboss</id>
@@ -119,5 +141,6 @@
 	</repositories>
 	<properties>
 		<gwtVersion>${$gwt-version}</gwtVersion>
+		<arquillian.version>1.0.0.Alpha4</arquillian.version>
 	</properties>
 </project>

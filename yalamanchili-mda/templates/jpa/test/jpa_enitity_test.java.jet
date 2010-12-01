@@ -1,58 +1,77 @@
 <java:format>
 package ${$groupID}.entity.${$package/@name};
 
+import static org.junit.Assert.assertEquals;
+import info.yalamanchili.security.jpa.YUser;
+
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.UserTransaction;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import net.sf.gilead.pojo.base.ILightEntity;
+import net.sf.gilead.pojo.gwt.LightEntity;
+
+import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 
+@RunWith(Arquillian.class)
+public class ${$class/@name}JPATest {
 
-public class ${$class/@name}Test {
-	protected static EntityManagerFactory emf;
-	protected static EntityManager em;
+	@PersistenceContext
+	EntityManager em;
 
-	@BeforeClass
-	public static void initClass() {
-		
-	}
-
-	@Before
-	public void initTest() {
-		initData();
-	}
-
-	public void initData() {
-
-	}
-
-	@Test
-	public void read() {
-
-	}
-
-	@Test
-	public void create() {
-
-	}
-
-	@Test
-	public void update() {
-
+	@Inject
+	UserTransaction utx;
+	
+	@Deployment
+	public static Archive<?> createDeployment() {
+		return ShrinkWrap
+				.create(WebArchive.class, "test.war")
+				.addPackages(true, ${$class/@name}.class.getPackage(),
+						LightEntity.class.getPackage(),
+						ILightEntity.class.getPackage(),
+						YUser.class.getPackage())
+				.addManifestResource("test-persistence.xml", "persistence.xml")
+				.addWebResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 	
-	@After
-	public void destroyTest() {
+	public void insertSampleData() throws Exception {
+		// clear database
+		utx.begin();
+		em.joinTransaction();
 
+		System.out.println("Clear Data...");
+		em.createQuery("delete from ${$class/@name}").executeUpdate();
+
+		// insert records
+		System.out.println("Inserting records...");
+		for (int i = 0; i < 3; i++) {
+			${$class/@name} entity = new ${$class/@name}();
+		//	entity.setName("test category" + i);
+			em.persist(entity);
+		}
+		utx.commit();
 	}
 	
-	@AfterClass
-	public static void destroy() {
-		em.close();
+	@Test
+	public void testInsert() throws Exception {
+		insertSampleData();
+		utx.begin();
+		em.joinTransaction();
+		System.out.println("Selecting (using JPQL)...");
+		Query query = em.createQuery("from ${$class/@name}");
+		System.out.println("Found 1111111111111111111111");
+		assertEquals(query.getResultList().size(), 3);
+		utx.commit();
 	}
 }
 </java:format>

@@ -109,21 +109,15 @@
     	 <ws:folder path="${$groupIDWithFolder}/entity/${$package/@name}">
 			<%-- create test classes in the package--%>
 			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-			<ws:file path="{$class/@name}Test.java" template="templates/jpa/test/jpa_enitity_test.java.jet" />
+			<ws:file path="{$class/@name}JPATest.java" template="templates/jpa/test/jpa_enitity_test.java.jet" />
 			</c:iterate>
 		</ws:folder>	
 		</c:iterate>
     </ws:folder>
     
     <ws:folder path="src/test/resources">
-	<ws:file template="templates/ejb/test/resources/default.persistence.properties.jet" path="default.persistence.properties"/>
-	<ws:file template="templates/ejb/test/resources/ejb3-interceptors-aop.xml.jet" path="ejb3-interceptors-aop.xml"/>
-	<ws:file template="templates/ejb/test/resources/embedded-jboss-beans.xml.jet" path="embedded-jboss-beans.xml"/>
-	<ws:file template="templates/ejb/test/resources/jboss-jms-beans.xml.jet" path="jboss-jms-beans.xml"/>
-	<ws:file template="templates/ejb/test/resources/jndi.properties.jet" path="jndi.properties"/>
-	<ws:file template="templates/ejb/test/resources/log4j.xml.jet" path="log4j.xml"/>
-	<ws:file template="templates/ejb/test/resources/login-config.xml.jet" path="login-config.xml"/>
-	<ws:file template="templates/ejb/test/resources/security-beans.xml.jet" path="security-beans.xml"/>
+	<ws:file template="templates/jpa/test/resources/jndi.properties.jet" path="jndi.properties"/>
+	<ws:file template="templates/jpa/main/jpa_persistence_template.xml.jet" path="test-persistence.xml"/>
    	</ws:folder>
 </ws:project>
 </c:if>
