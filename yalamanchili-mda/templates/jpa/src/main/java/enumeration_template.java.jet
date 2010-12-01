@@ -1,0 +1,17 @@
+<java:merge/>
+<java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
+package ${$groupID}.entity.${$package/@name};
+ 
+<java:importsLocation package="{$package/@name}"/>
+<f:message>generated.class.comment</f:message>
+
+public enum ${$enumeration/@name} {
+<c:iterate select="$enumeration/Enumeration.literal/EnumerationLiteral" var="enumerationlit">
+<f:message>generated.comment</f:message>
+${$enumerationlit/@name},
+</c:iterate>
+}
+</f:bundle>
+</java:format>
