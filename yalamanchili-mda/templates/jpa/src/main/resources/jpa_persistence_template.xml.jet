@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+	version="1.0">
+	<persistence-unit name="${$projectName}">
+		<jta-data-source>java:/${camelCase($projectName)}DS</jta-data-source>
+		<properties>
+		<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy" />
+		<c:if test="$dataBase = 'MYSQL'">
+	 		<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+	 	</c:if>
+	 	<c:if test="$dataBase = 'HSQL'">
+	 		<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
+	 	</c:if>
+		<c:if test="$dataBase = 'ORACLE'">
+	 		<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle9Dialect" />
+	 	</c:if>	
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="jboss.entity.manager.factory.jndi.name"
+				value="java:/${$projectName}" />
+		<c:if test="$enableHibernateSearch = 'true'">
+			<property name="hibernate.search.default.directory_provider"
+				value="org.hibernate.search.store.FSDirectoryProvider" />
+			<property name="hibernate.search.default.indexBase" 
+			value="$JBOSS_HOME/server/default/data/${$projectName}/lucene/indexes" />
+	 	</c:if>				
+		</properties>
+
+	</persistence-unit>
+</persistence>
