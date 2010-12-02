@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$groupID}.entity.${$package/@name};
 
 import static org.junit.Assert.assertEquals;
@@ -22,16 +25,21 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
+<f:message>generated.class.comment</f:message>
 @RunWith(Arquillian.class)
 public class ${$class/@name}JPATest {
-
+	<f:message>generated.comment</f:message>
+	protected static final int ENTITY_SIZE = 3;
+	
+	<f:message>generated.comment</f:message>
 	@PersistenceContext
 	EntityManager em;
-
+	
+	<f:message>generated.comment</f:message>
 	@Inject
 	UserTransaction utx;
 	
+	<f:message>generated.comment</f:message>
 	@Deployment
 	public static Archive<?> createDeployment() {
 		return ShrinkWrap
@@ -44,34 +52,38 @@ public class ${$class/@name}JPATest {
 				.addWebResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 	
-	public void insertSampleData() throws Exception {
-		// clear database
+	<f:message>generated.comment</f:message>
+	public void clearAllEntities() throws Exception {
 		utx.begin();
 		em.joinTransaction();
-
-		System.out.println("Clear Data...");
 		em.createQuery("delete from ${$class/@name}").executeUpdate();
-
-		// insert records
-		System.out.println("Inserting records...");
-		for (int i = 0; i < 3; i++) {
-			${$class/@name} entity = new ${$class/@name}();
-		//	entity.setName("test category" + i);
-			em.persist(entity);
-		}
 		utx.commit();
 	}
 	
-	@Test
-	public void testInsert() throws Exception {
-		insertSampleData();
+	<f:message>generated.comment</f:message>
+	public void insertTestData() throws Exception {
 		utx.begin();
 		em.joinTransaction();
-		System.out.println("Selecting (using JPQL)...");
+		for (int i = 0; i < ENTITY_SIZE; i++) {
+			${$class/@name} entity = new ${$class/@name}();
+			//TODO populate entities
+			em.persist(entity);
+		}
+		utx.commit();
+	}	
+	
+	<f:message>generated.comment</f:message>
+	@Test
+	public void testInsert() throws Exception {
+		clearAllEntities();
+		insertTestData();
+		utx.begin();
+		em.joinTransaction();
 		Query query = em.createQuery("from ${$class/@name}");
-		System.out.println("Found 1111111111111111111111");
-		assertEquals(query.getResultList().size(), 3);
+		assertEquals(query.getResultList().size(), ENTITY_SIZE);
 		utx.commit();
 	}
+	
 }
+</f:bundle>
 </java:format>

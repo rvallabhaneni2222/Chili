@@ -9,7 +9,7 @@
 <c:setVariable select="'com/zuzubi/catalog'" var="groupIDWithFolder"/>
 <c:setVariable select="'com_zuzubi_catalog'" var="groupIDWithUnderScore"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
-<c:setVariable select="'c://codebase/zuzubi'" var="location"/>
+<c:setVariable select="'/Users/yphanikumar/codebase/zuzubi'" var="location"/>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <%--code generation properties--%>
 <c:setVariable select="'FALSE'" var="genMaster"/>

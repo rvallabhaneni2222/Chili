@@ -114,7 +114,7 @@
 	</build>
 	<profiles>
 	   <profile>
-	      <id>jbossas-remote-6</id>
+	      <id>server-tests</id>
 	      <dependencies>
 	         <dependency>
 	            <groupId>org.jboss.arquillian.container</groupId>
