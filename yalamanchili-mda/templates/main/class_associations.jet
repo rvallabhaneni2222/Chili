@@ -1,0 +1,59 @@
+<%-- process associations--%>
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection/AssociationEnd" var="association_end1">
+	<%--process  class1 of the association --%>
+	<c:setVariable select="$association_end1/AssociationEnd.participant/Class/@xmi.idref" var="class1_ID"/>
+	<c:set select="$association" name="class1XMIID">${$class1_ID}</c:set>
+	<%--iterated over classes to get the class name from xmi.id --%>
+		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+			<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+			<c:if test="$class1_ID = $class/@xmi.id">
+			<c:set select="$association" name="class1Name">${$class/@name}</c:set>
+			</c:if>
+			</c:iterate>
+		</c:iterate>
+			<%--get class multiplicity range information --%>
+			<c:if test="$association_end1/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = '1'">
+			<c:if test="$association_end1/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = '1'">
+			<c:set select="$association" name="class1Cardinality">OneToOne</c:set>
+			</c:if>
+			</c:if>
+			<c:if test="$association_end1/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = '0'">
+			<c:if test="$association_end1/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = '-1'">
+			<c:set select="$association" name="class1Cardinality">ZeroToMany</c:set>
+			</c:if>
+			</c:if>	
+			<%--process class association types --%>
+			<c:set select="$association" name="class1Type">${$association_end1/@aggregation}</c:set>				
+	<%-- iterate over the ends to get class 2--%>
+		<c:iterate select="$association/Association.connection/AssociationEnd" var="association_end2">
+		<%--test to get second end of association --%>
+		<c:if test="not($association_end1/@xmi.id = $association_end2/@xmi.id)">
+		<%-- process class 2 of associaton--%>
+		<c:setVariable select="$association_end2/AssociationEnd.participant/Class/@xmi.idref" var="class2_ID"/>
+		<c:set select="$association" name="class2XMIID">${$class2_ID}</c:set>
+		<%--iterated over classes to get the class name from xmi.id --%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+				<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+				<c:if test="$class2_ID = $class/@xmi.id">
+				<c:set select="$association" name="class2Name">${$class/@name}</c:set>
+				</c:if>
+				</c:iterate>
+			</c:iterate>
+				<%--get class multiplicity range information --%>
+				<c:if test="$association_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = '1'">
+				<c:if test="$association_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = '1'">
+				<c:set select="$association" name="class2Cardinality">OneToOne</c:set>
+				</c:if>
+				</c:if>
+				<c:if test="$association_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = '0'">
+				<c:if test="$association_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = '-1'">
+				<c:set select="$association" name="class2Cardinality">ZeroToMany</c:set>
+				</c:if>
+				</c:if>	
+				<%--process class association types --%>
+				<c:set select="$association" name="class2Type">${$association_end2/@aggregation}</c:set>												
+		</c:if>
+		</c:iterate>
+	</c:iterate>									
+</c:iterate>

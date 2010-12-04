@@ -49,6 +49,9 @@
 <%--processes class dependencies to see if the class is a normal class or a composite child --%>
 <c:include template="templates/main/class_dependency.jet" />
 
+<%--process all associations in model --%>
+<c:include template="templates/main/class_associations.jet" />
+
 <%--load and process yalamanchili profiles and stereotypes --%>
 <c:include template="templates/main/load_profiles.jet" />
 
