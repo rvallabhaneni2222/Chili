@@ -159,7 +159,7 @@ ${$attribute/@name};
   					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
   					  	 	<%-- get the end secondary end with other class  --%>
-  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 	
@@ -299,7 +299,7 @@ super();
   					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
   					  	 	<%-- get the end secondary end with other class  --%>
-  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
