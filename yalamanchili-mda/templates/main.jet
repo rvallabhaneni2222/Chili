@@ -14,10 +14,10 @@
 <%--code generation properties--%>
 <c:setVariable select="'FALSE'" var="genMaster"/>
 <c:setVariable select="'FALSE'" var="genApp"/>
-<c:setVariable select="'TRUE'" var="genJPA"/>
-<c:setVariable select="'FALSE'" var="genEJB"/>
+<c:setVariable select="'FALSE'" var="genJPA"/>
+<c:setVariable select="'TRUE'" var="genEJB"/>
 <c:setVariable select="'FALSE'" var="genRest"/>
-<c:setVariable select="'FALSE'" var="genWebapp"/>
+<c:setVariable select="'TRUE'" var="genWebapp"/>
 <c:setVariable select="'FALSE'" var="genAndroid"/>
 <c:setVariable select="'FALSE'" var="genIOS"/>
 <c:setVariable select="'FALSE'" var="genTest"/>
@@ -173,15 +173,8 @@
 		</c:iterate>
     </ws:folder>
 	<ws:folder path="src/test/resources">
-	<ws:file template="templates/ejb/test/resources/WEB-INF/components.xml.jet" path="WEB-INF/components.xml"/>
-	<ws:file template="templates/ejb/test/resources/default.persistence.properties.jet" path="default.persistence.properties"/>
-	<ws:file template="templates/ejb/test/resources/ejb3-interceptors-aop.xml.jet" path="ejb3-interceptors-aop.xml"/>
-	<ws:file template="templates/ejb/test/resources/embedded-jboss-beans.xml.jet" path="embedded-jboss-beans.xml"/>
-	<ws:file template="templates/ejb/test/resources/jboss-jms-beans.xml.jet" path="jboss-jms-beans.xml"/>
-	<ws:file template="templates/ejb/test/resources/jndi.properties.jet" path="jndi.properties"/>
-	<ws:file template="templates/ejb/test/resources/log4j.xml.jet" path="log4j.xml"/>
-	<ws:file template="templates/ejb/test/resources/login-config.xml.jet" path="login-config.xml"/>
-	<ws:file template="templates/ejb/test/resources/security-beans.xml.jet" path="security-beans.xml"/>
+		<ws:file template="templates/jpa/src/test/resources/jndi.properties.jet" path="jndi.properties"/>
+		<ws:file template="templates/jpa/src/main/resources/jpa_persistence_template.xml.jet" path="test-persistence.xml"/>
    	</ws:folder>
 </ws:project>
 </c:if>

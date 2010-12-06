@@ -1,9 +1,11 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
+
 package ${$groupID}.ejb.${$package/@name}.${lower-case($class/@name)};
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
-import ${$groupID}.ejb.${$package/@name}.${lower-case($class/@name)}.${$class/@name}ServiceLocal;
-import ${$groupID}.ejb.${$package/@name}.${lower-case($class/@name)}.${$class/@name}ServiceRemote;
 import javax.ejb.Stateful;
 import info.yalamanchili.gwt.beans.TableObj;
 import java.util.List;
@@ -20,51 +22,49 @@ import java.util.HashMap;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Destroy;
 import javax.ejb.Remove;
-import org.dozer.Mapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jboss.seam.annotations.In;
 import java.io.Serializable;
+
+<f:message>generated.class.comment</f:message>
 @Stateful(name = "${lower-case($class/@name)}")
 @Name("${lower-case($class/@name)}ServiceBean")
-public class ${$class/@name}ServiceBean implements  ${$class/@name}ServiceLocal, ${$class/@name}ServiceRemote{
+public class ${$class/@name}ServiceBean implements  ${$class/@name}Service{
 
+<f:message>generated.comment</f:message>
 private static final Log log = LogFactory
 			.getLog(${$class/@name}ServiceBean.class);
-			
-	@In
-	Mapper dozerMapper;
 	
-	
+	<f:message>generated.comment</f:message>
 	@PersistenceContext(unitName = "${$projectName}")
 	protected EntityManager entityManager;
 	
-	
-	
-
+	<f:message>generated.comment</f:message>
 	@Override
 	public ${$class/@name} create(${$class/@name} entity) {
-		return dozerMapper.map(entityManager.merge(entity), ${$class/@name}.class);
+		return entityManager.merge(entity);
 	}
-
+	
+	<f:message>generated.comment</f:message>
 	@Override
 	public void delete(${$class/@name} entity) {
 		// TODO Auto-generated method stub
-
 	}
 
-
+	<f:message>generated.comment</f:message>
 	@Override
 	public List<${$class/@name}> getEntities(${$class/@name} entity) {
 	List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
 		Query getEntities = entityManager.createQuery(GWTServletUtils
 				.getSearchQueryString(entity));
 		for (Object obj : getEntities.getResultList()) {
-			entities.add((${$class/@name}) dozerMapper.map((${$class/@name}) obj, ${$class/@name}.class));
+			entities.add((${$class/@name}) obj);
 		}
 		return entities;
 	}
-
+	
+	<f:message>generated.comment</f:message>
 	@Override
 	public TableObj getTableObj(int start) {
 		TableObj<${$class/@name}> tableObj = new TableObj<${$class/@name}>();
@@ -73,16 +73,19 @@ private static final Log log = LogFactory
 		return tableObj;
 	}
 
+	<f:message>generated.comment</f:message>
 	@Override
 	public ${$class/@name} read( Long id) {
-	return dozerMapper.map(entityManager.find(${$class/@name}.class,id), ${$class/@name}.class);
+	return entityManager.find(${$class/@name}.class,id);
 	}
 
+	<f:message>generated.comment</f:message>
 	@Override
 	public ${$class/@name} update(${$class/@name} entity) {
-		return dozerMapper.map(entityManager.merge(entity), ${$class/@name}.class);
+		return entityManager.merge(entity);
 	}
 	
+	<f:message>generated.comment</f:message>
 	public <T extends Serializable> List<${$class/@name}> getEntitiesT(${$class/@name} entity, int start) {
 		List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
 		String query = "from " + entity.getClass().getCanonicalName();
@@ -91,12 +94,13 @@ private static final Log log = LogFactory
 		getEntitites.setFirstResult(start);
 		getEntitites.setMaxResults(10);
 		for (Object obj : getEntitites.getResultList()) {
-			${$class/@name} clone = (${$class/@name}) dozerMapper.map((${$class/@name}) obj, ${$class/@name}.class);
+			${$class/@name} clone = ((${$class/@name}) obj);
 			entities.add(clone);
 		}
 		return entities;
 	}
 
+	<f:message>generated.comment</f:message>
 	public <T extends Serializable> Long getEntitySizeT(${$class/@name} entity) {
 		String query = "select count(entity) from "
 				+ entity.getClass().getCanonicalName() + " entity";
@@ -105,7 +109,7 @@ private static final Log log = LogFactory
 		return (Long) getEntitiesSize.getSingleResult();
 	}
 
-	
+	<f:message>generated.comment</f:message>
 	@Override
 	public Map<Long, String> getListBoxValues(String[] columns) {
 		String query = GWTServletUtils.getListBoxResultsQueryString(
@@ -120,6 +124,7 @@ private static final Log log = LogFactory
 		return values;
 	}
 	
+	<f:message>generated.comment</f:message>
 	@Override
 	public <T extends Serializable> void addAll(T parent, T children,
 			List<Long> ids) {
@@ -148,19 +153,22 @@ private static final Log log = LogFactory
 		}
 	}
 	
-	
+	<f:message>generated.comment</f:message>
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}
-
+	
+	<f:message>generated.comment</f:message>
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 	
+	<f:message>generated.comment</f:message>
 	@Destroy
 	@Remove
 	public void destroy() {
 	}
 
 }
+</f:bundle>
 </java:format>

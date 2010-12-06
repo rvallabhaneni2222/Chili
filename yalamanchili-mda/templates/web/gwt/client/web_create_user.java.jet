@@ -4,7 +4,7 @@ package ${$groupID}.client;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.widgets.CreateUserAbstract;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
-import info.yalamanchili.project.client.rpc.AutomanageService.AutomanageServiceAsync;
+import ${$groupID}.client.rpc.${camelCase($projectName)}Service.${camelCase($projectName)}ServiceAsync;
 
 public class CreateUserPanel extends CreateUserAbstract {
 

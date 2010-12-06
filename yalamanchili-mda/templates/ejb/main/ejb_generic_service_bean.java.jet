@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$groupID}.ejb;
 
 import javax.ejb.Stateful;
@@ -22,31 +25,29 @@ import java.io.Serializable;
 import javax.ejb.Stateless;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import org.dozer.Mapper;
 import org.jboss.seam.annotations.In;
 
+<f:message>generated.class.comment</f:message>
 @Name("genericServiceBean")
 @Stateless(name="generic")
-public class GenericServiceBean implements  GenericServiceLocal, GenericServiceRemote{
-
-private static final Log log = LogFactory
+public class GenericServiceBean implements  GenericService{
+	<f:message>generated.comment</f:message>
+	private static final Log log = LogFactory
 			.getLog(GenericServiceBean.class);
-			
-	@In
-	Mapper dozerMapper;
 	
-	
+	<f:message>generated.comment</f:message>
 	@PersistenceContext(unitName = "${$projectName}")
 	EntityManager entityManager;
 	
-	
+	<f:message>generated.comment</f:message>
 	public <T extends Serializable> List<String> getSuggestionsForName(
 			String name, T entity) {
 		Query query = entityManager.createQuery(GWTServletUtils
 				.getSuggestionsQueryForName(name, entity));
 		return query.getResultList();
 	}
-
+	
+	<f:message>generated.comment</f:message>
 	@Override
 	public <T extends Serializable> List<T> getRelatedEntities(Long entityID,
 			Class sourceClass, T target) {
@@ -73,11 +74,12 @@ private static final Log log = LogFactory
 		}
 		if (res != null)
 			for (T entity : res) {
-			result.add((T) dozerMapper.map( entity, sourceClass));;
+			result.add((T) entity);
 			}
 		return result;
 	}
 	
 
 }
+</f:bundle>
 </java:format>

@@ -1,10 +1,16 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
+
 package ${$groupID}.ejb.${$package/@name}.${lower-case($class/@name)};
 
 import javax.ejb.Remote;
 
+<f:message>generated.class.comment</f:message>
 @Remote
 public interface ${$class/@name}ServiceRemote extends  ${$class/@name}Service {
 
 }
+</f:bundle>
 </java:format>

@@ -62,7 +62,7 @@ import net.sf.gilead.pojo.gwt.LightEntity;
 </c:if>
 @Entity
 public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name} extends <c:if test="$class/@parentClass1Name = $class/@name">  LightEntity </c:if> <c:if test="not($class/@parentClass1Name = $class/@name)">  ${$class/@parentClass1Name} </c:if>  implements Serializable{
-/** @generated */
+<f:message>generated.comment</f:message>
 private static final long serialVersionUID = <f:unique/>L;
 
 <c:if test="$class/@parentClass1Name = $class/@name">

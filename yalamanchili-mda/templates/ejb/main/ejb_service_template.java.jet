@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$groupID}.ejb.${$package/@name}.${lower-case($class/@name)};
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
@@ -6,25 +9,37 @@ import java.util.List;
 import java.util.Map;
 import info.yalamanchili.gwt.beans.TableObj;
 import java.io.Serializable;
+
+<f:message>generated.class.comment</f:message>
 public interface ${$class/@name}Service {
 
+	<f:message>generated.comment</f:message>
     public ${$class/@name} create(${$class/@name} entity);
-
+    
+	<f:message>generated.comment</f:message>
 	public ${$class/@name} read(Long id);
-
+	
+	<f:message>generated.comment</f:message>
 	public ${$class/@name} update(${$class/@name} entity);
-
+	
+	<f:message>generated.comment</f:message>
 	public void delete(${$class/@name} entity);
 
+	<f:message>generated.comment</f:message>
 	public TableObj<${$class/@name}> getTableObj(int start);
 
+	<f:message>generated.comment</f:message>
 	public List<${$class/@name}> getEntities(${$class/@name} entity);
 
+	<f:message>generated.comment</f:message>
 	public Map<Long, String> getListBoxValues(String[] columns);
 
+	<f:message>generated.comment</f:message>
 	public <T extends Serializable> void addAll(T parent, T children,
 			List<Long> ids);
-			
+		
+	<f:message>generated.comment</f:message>		
 	public void destroy();
 }
+</f:bundle>
 </java:format>

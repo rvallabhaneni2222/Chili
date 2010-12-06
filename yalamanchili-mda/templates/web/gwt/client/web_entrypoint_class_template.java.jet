@@ -30,7 +30,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ${camelCase($projectName)}Welcome extends RootPanels implements EntryPoint {
-	private  Logger logger = Logger.getLogger(AutomanageWelcome.class.getName());
+	private  Logger logger = Logger.getLogger(${camelCase($projectName)}Welcome.class.getName());
 
 	private static ${camelCase($projectName)}Welcome instance;
 	

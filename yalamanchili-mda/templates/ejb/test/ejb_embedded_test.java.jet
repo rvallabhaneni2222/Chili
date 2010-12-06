@@ -1,52 +1,37 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
+
 package ${$groupID}.ejb.${$package/@name}.${lower-case($class/@name)};
-import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
-import ${$groupID}.ejb.${$package/@name}.${lower-case($class/@name)}.${$class/@name}ServiceLocal;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-
-import org.jboss.seam.mock.SeamTest;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import javax.ejb.EJB;
 
+<f:message>generated.class.comment</f:message>
+@RunWith(Arquillian.class)
+public class ${$class/@name}ServiceTest {
 
+	<f:message>generated.comment</f:message>
+	@EJB
+	private ${$class/@name}ServiceBean service;
 
-public class ${$class/@name}ServiceTest extends SeamTest{
-	protected static ${$class/@name}ServiceLocal bean;
-	protected static EntityManagerFactory emf;
-	protected static EntityManager em;
-
-	@BeforeClass
-	public static void initClass() {
-		
+	<f:message>generated.comment</f:message>
+	@Deployment
+	public static JavaArchive createTestArchive() {
+		return ShrinkWrap.create(JavaArchive.class, "test.jar").addClasses(
+				${$class/@name}ServiceBean.class, ${$class/@name}Service.class);
 	}
-
-	@Before
-	public void initTest() {
-		initData();
-	}
-
-	public void initData() {
-
-	}
-
+	
+	<f:message>generated.comment</f:message>
 	@Test
-	public void simpleTest() {
+	public void testInsert() throws Exception {
 		
-	}
-	
-	@After
-	public void destroyTest() {
-
-	}
-	
-	@AfterClass
-	public static void destroy() {
-		em.close();
-		emf.close();
-	}
+	}	
 }
+</f:bundle>
 </java:format>
