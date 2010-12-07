@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,13 +20,15 @@ import org.jboss.seam.annotations.Name;
 
 //TODO add @Servlet annotation per servlet 3.0 specification.
 @Name("fileUploadServlet")
+//@WebServlet(urlPatterns = { "/y.file.upload" })
+//TODO fix 404 error pointing to locahost//y.file.upload
 public class FileUploadServlet extends HttpServlet {
 	private static final Log log = LogFactory.getLog(FileUploadServlet.class);
 	private String fileTargetDirectory;
 	private static final long serialVersionUID = 1L;
 
 	public void init() {
-
+		fileTargetDirectory = System.getProperty("file.target.directory");
 	}
 
 	protected void service(HttpServletRequest request,
@@ -34,10 +37,8 @@ public class FileUploadServlet extends HttpServlet {
 			throw new RuntimeException("Target directory for images not set");
 		}
 		if (ServletFileUpload.isMultipartContent(request)) {
-			log.debug("Process image upload");
 			processImageUpload(request, response);
 		} else {
-			log.debug("Process File upload");
 			processFileUpload(request, response);
 		}
 
@@ -57,8 +58,7 @@ public class FileUploadServlet extends HttpServlet {
 			FileItem item = (FileItem) i.next();
 			if (item.isFormField())
 				continue;
-			File imageurl = new File(fileTargetDirectory + item.getName());
-			log.debug("imageURL:" + imageurl);
+			File imageurl = new File(fileTargetDirectory + "/" + item.getName());
 			try {
 				item.write(imageurl);
 			} catch (Exception e) {
