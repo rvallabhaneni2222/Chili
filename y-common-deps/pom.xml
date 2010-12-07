@@ -16,6 +16,12 @@
 			<version>${jboss.javaee.version}</version>
 			<type>pom</type>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>3.0-alpha-1</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- need to upgrade 4.x and jpa2 bean validation... -->
 		<!-- hibernate validator START-->
 		<dependency>
