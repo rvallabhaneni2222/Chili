@@ -90,6 +90,17 @@
 			<artifactId>cglib-nodep</artifactId>
 			<version>2.1</version>
 		</dependency>
+		<!-- file upload support -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>		
 	</dependencies>
 	<modules>
 		<module>../${$projectName}-jpa</module>

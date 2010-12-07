@@ -3,7 +3,9 @@
 
 	<!-- logging -->
 	<inherits name="com.google.gwt.logging.Logging" />
-	
+	<!-- Enable the simple remote handler -->
+  	<set-property name="gwt.logging.firebugHandler" value="ENABLED" />
+  	<set-property name="gwt.logging.consoleHandler" value="DISABLED"/>	
 	<!-- used to support internationalization -->
 
 	<inherits name='com.google.gwt.i18n.I18N' />
