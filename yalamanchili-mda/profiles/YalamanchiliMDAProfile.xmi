@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Nov 30 10:04:51 EST 2010'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Dec 07 17:44:30 EST 2010'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.30.2(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -38,6 +38,12 @@
               isAbstract = 'false'/>
             <UML:DataType xmi.id = '-64--88-2-9--44d67bb8:12ba3d7d012:-8000:0000000000000FE3'
               name = 'Float' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'/>
+            <UML:DataType xmi.id = '-64--88-2-6--304ce72f:12cc2fc6885:-8000:0000000000000CCB'
+              name = 'Image' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'/>
+            <UML:DataType xmi.id = '-64--88-2-6--304ce72f:12cc2fc6885:-8000:0000000000000CCC'
+              name = 'RichText' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
               isAbstract = 'false'/>
           </UML:Namespace.ownedElement>
         </UML:Package>
