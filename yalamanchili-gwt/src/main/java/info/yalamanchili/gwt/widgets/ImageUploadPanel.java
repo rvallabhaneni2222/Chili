@@ -67,8 +67,14 @@ public class ImageUploadPanel extends ALComposite implements ClickHandler {
 		}
 	}
 
+	// TODO HTML5 issue
+	// http://acidmartin.wordpress.com/2009/06/09/the-mystery-of-cfakepath-unveiled/
 	public String getImageName() {
-		return fileUpload.getFilename();
+		return getPlainImageName(fileUpload.getFilename());
 	}
 
+	private String getPlainImageName(String name) {
+		int start = name.lastIndexOf("\\");
+		return name.substring(start + 1, name.length());
+	}
 }

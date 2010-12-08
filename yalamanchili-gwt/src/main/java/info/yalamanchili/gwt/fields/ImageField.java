@@ -3,8 +3,11 @@ package info.yalamanchili.gwt.fields;
 import info.yalamanchili.gwt.composite.BaseField;
 import info.yalamanchili.gwt.widgets.ImageUploadPanel;
 
+import com.google.gwt.user.client.ui.Image;
+
 public class ImageField extends BaseField {
-	ImageUploadPanel imagePanel = new ImageUploadPanel();
+	ImageUploadPanel imageUploadPanel = new ImageUploadPanel();
+	Image image = new Image();
 
 	public ImageField(String labelName, Boolean readOnly) {
 		super(labelName, readOnly);
@@ -14,13 +17,17 @@ public class ImageField extends BaseField {
 	@Override
 	protected void configureAddMainWidget() {
 		if (!readOnly) {
-			fieldPanel.insert(imagePanel, 0);
+			fieldPanel.insert(imageUploadPanel, 0);
 		} else {
-			// TODO add imageview panel
+			fieldPanel.insert(image, 0);
 		}
 	}
 
 	public String getImageName() {
-		return imagePanel.getImageName();
+		return imageUploadPanel.getImageName();
+	}
+
+	public void setImage(String url) {
+		image.setUrl(url);
 	}
 }
