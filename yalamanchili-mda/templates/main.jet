@@ -13,11 +13,11 @@
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <%--code generation properties--%>
 <c:setVariable select="'FALSE'" var="genMaster"/>
-<c:setVariable select="'FALSE'" var="genApp"/>
+<c:setVariable select="'TRUE'" var="genApp"/>
 <c:setVariable select="'FALSE'" var="genJPA"/>
-<c:setVariable select="'TRUE'" var="genEJB"/>
+<c:setVariable select="'FALSE'" var="genEJB"/>
 <c:setVariable select="'FALSE'" var="genRest"/>
-<c:setVariable select="'TRUE'" var="genWebapp"/>
+<c:setVariable select="'FALSE'" var="genWebapp"/>
 <c:setVariable select="'FALSE'" var="genAndroid"/>
 <c:setVariable select="'FALSE'" var="genIOS"/>
 <c:setVariable select="'FALSE'" var="genTest"/>
@@ -67,16 +67,18 @@
 	<ws:file path="pom.xml" template="templates/app/app_pom_template.xml.jet"/>
     <ws:folder path="jboss/conf">
     	<c:if test="$dataBase = 'MYSQL'">
-	 		<ws:file path="{$projectName}-mysql-ds.xml" template="templates/app/app_mysql_ds_template.xml.jet"/>
+	 		<ws:file path="{$projectName}-mysql-ds.xml" template="templates/app/jboss/deploy/app_mysql_ds_template.xml.jet"/>
 	 	</c:if>
 	 	<c:if test="$dataBase = 'HSQL'">
-	 		<ws:file path="{$projectName}-hsql-ds.xml" template="templates/app/app_hsqldb_ds_template.xml.jet"/>
+	 		<ws:file path="{$projectName}-hsql-ds.xml" template="templates/app/jboss/deploy/app_hsqldb_ds_template.xml.jet"/>
 	 	</c:if>
 	 	<c:if test="$dataBase = 'ORACLE'">
-	 		<ws:file path="{$projectName}-oracle-ds.xml" template="templates/app/app_oracle_ds_template.xml.jet"/>
+	 		<ws:file path="{$projectName}-oracle-ds.xml" template="templates/app/jboss/deploy/app_oracle_ds_template.xml.jet"/>
 	 	</c:if>
     </ws:folder>
-    <ws:folder path="jboss/deploy"/>
+    <ws:folder path="jboss/deploy">
+    	<ws:file path="{$projectName}-service.xml" template="templates/app/jboss/deploy/app_service.xml.jet"/>
+    </ws:folder>
 </ws:project>
 </c:if>
 
