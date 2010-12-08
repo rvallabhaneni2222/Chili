@@ -6,6 +6,7 @@ import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.fields.DateField;
 import info.yalamanchili.gwt.fields.EnumField;
 import info.yalamanchili.gwt.fields.FloatField;
+import info.yalamanchili.gwt.fields.ImageField;
 import info.yalamanchili.gwt.fields.IntegerField;
 import info.yalamanchili.gwt.fields.LongField;
 import info.yalamanchili.gwt.fields.PasswordField;
@@ -112,6 +113,11 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 			fields.put(name, dropDownField);
 			entityDisplayWidget.add(dropDownField);
 		}
+		if (DataType.IMAGE_FIELD.equals(type)) {
+			ImageField imageField = new ImageField(name, readOnly);
+			fields.put(name, imageField);
+			entityDisplayWidget.add(imageField);
+		}
 	}
 
 	protected void addEnumField(String name, Boolean readOnly,
@@ -206,6 +212,11 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 	protected String getPasswordField(String fieldName) {
 		PasswordField passwordField = (PasswordField) fields.get(fieldName);
 		return passwordField.getPassword();
+	}
+
+	protected String getImageField(String fieldName) {
+		ImageField imageField = (ImageField) fields.get(fieldName);
+		return imageField.getImageName();
 	}
 
 	protected abstract void addWidgetsBeforeCaptionPanel();

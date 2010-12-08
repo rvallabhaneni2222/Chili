@@ -14,6 +14,14 @@ public abstract class BaseField extends Composite {
 		initWidget(panel);
 	}
 
+	public BaseField(String labelName, Boolean readOnly) {
+		label.setText(labelName);
+		this.readOnly = readOnly;
+		configure();
+		addWidgets();
+		initWidget(panel);
+	}
+
 	protected void configure() {
 		label.addStyleName("tfFieldHeader");
 		message.addStyleName("tfErrorMessage");
@@ -38,6 +46,8 @@ public abstract class BaseField extends Composite {
 
 	protected Boolean isValid = false;
 
+	protected Boolean readOnly = false;
+
 	public FlowPanel getPanel() {
 		return panel;
 	}
@@ -60,6 +70,14 @@ public abstract class BaseField extends Composite {
 
 	public void setValid(Boolean valid) {
 		this.isValid = valid;
+	}
+
+	public Boolean getReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(Boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 
 }
