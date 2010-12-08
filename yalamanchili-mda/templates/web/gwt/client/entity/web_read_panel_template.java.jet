@@ -48,6 +48,8 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 				 </c:when>
 				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
+				 <c:when test="${'$ImageID'}" >  setImageField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -74,6 +76,8 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 				 </c:when>
 				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
+				 <c:when test="${'$ImageID'}" >  setImageField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -99,6 +103,8 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 				 </c:when>
 				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
+				 <c:when test="${'$ImageID'}" >  setImageField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -181,6 +187,8 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 				 </c:when>
 				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", true, DataType.FLOAT_FIELD); 
 				 </c:when>
+				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", true, DataType.IMAGE_FIELD); 
+				 </c:when>				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -207,6 +215,8 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 				 </c:when>
 				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", true, DataType.FLOAT_FIELD); 
 				 </c:when>
+				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", true, DataType.IMAGE_FIELD); 
+				 </c:when>				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -232,6 +242,8 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 				 </c:when>
 				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", true, DataType.FLOAT_FIELD); 
 				 </c:when>
+				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", true, DataType.IMAGE_FIELD); 
+				 </c:when>				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
