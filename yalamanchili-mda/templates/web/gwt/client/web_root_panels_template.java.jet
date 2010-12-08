@@ -4,14 +4,14 @@ package ${$groupID}.client;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-
+import com.google.gwt.user.client.ui.ScrollPanel;
 public class RootPanels {
 	protected FlowPanel sidePanel = new FlowPanel();
 	protected FlowPanel sidePanelTop = new FlowPanel();
 	protected FlowPanel sidePanelBottom = new FlowPanel();
 	protected FlowPanel statusPanel = new FlowPanel();
 	protected HorizontalPanel menuBar = new HorizontalPanel();
-	protected FlowPanel entityPanel = new FlowPanel();
+	protected ScrollPanel entityPanel = new ScrollPanel();
 
 	public RootPanels() {
 	}
@@ -56,11 +56,11 @@ public class RootPanels {
 		this.menuBar = menuBar;
 	}
 
-	public FlowPanel getEntityPanel() {
+	public ScrollPanel getEntityPanel() {
 		return entityPanel;
 	}
 
-	public void setEntityPanel(FlowPanel entityPanel) {
+	public void setEntityPanel(ScrollPanel entityPanel) {
 		this.entityPanel = entityPanel;
 	}
 
