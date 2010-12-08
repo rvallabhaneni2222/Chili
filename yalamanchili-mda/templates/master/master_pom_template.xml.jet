@@ -42,13 +42,13 @@
 			<groupId>info.yalamanchili.commons</groupId>
 			<artifactId>yalamanchili-commons</artifactId>
 			<version>${$yalamanchili-commons-version}</version>
-		</dependency><!-- these 2 libs are copied manually to default lib to escape classcast exception between javax.servlet and seam servlet
+		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
 			<version>${'${gwtVersion}'}</version>
 		</dependency>
-		<dependency>
+	<!--<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>${'${gwtVersion}'}</version>
