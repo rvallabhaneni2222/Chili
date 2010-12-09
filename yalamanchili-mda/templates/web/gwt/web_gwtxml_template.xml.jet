@@ -3,9 +3,10 @@
 
 	<!-- logging -->
 	<inherits name="com.google.gwt.logging.Logging" />
-	<!-- Enable the simple remote handler -->
+	<!-- Enable Firebug logger and disable console logger -->
   	<set-property name="gwt.logging.firebugHandler" value="ENABLED" />
-  	<set-property name="gwt.logging.consoleHandler" value="DISABLED"/>	
+	<set-property name="gwt.logging.popupHandler" value="DISABLED" />
+		
 	<!-- used to support internationalization -->
 	<!-- SMART-GWT support-->
 	<inherits name="com.smartgwt.SmartGwt" />
