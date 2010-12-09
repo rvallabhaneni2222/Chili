@@ -10,6 +10,7 @@ import info.yalamanchili.gwt.fields.ImageField;
 import info.yalamanchili.gwt.fields.IntegerField;
 import info.yalamanchili.gwt.fields.LongField;
 import info.yalamanchili.gwt.fields.PasswordField;
+import info.yalamanchili.gwt.fields.RichTextField;
 import info.yalamanchili.gwt.fields.StringField;
 import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
 
@@ -118,6 +119,11 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 			fields.put(name, imageField);
 			entityDisplayWidget.add(imageField);
 		}
+		if (DataType.RICH_TEXT_AREA.equals(type)) {
+			RichTextField richTextField = new RichTextField(name, readOnly);
+			fields.put(name, richTextField);
+			entityDisplayWidget.add(richTextField);
+		}
 	}
 
 	protected void addEnumField(String name, Boolean readOnly,
@@ -179,6 +185,11 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 		imageField.setImage(url);
 	}
 
+	protected void setRichTextField(String fieldName, String value) {
+		RichTextField richTextField = (RichTextField) fields.get(fieldName);
+		richTextField.setValue(value);
+	}
+
 	protected String getEnumField(String fieldName) {
 		EnumField enumField = (EnumField) fields.get(fieldName);
 		return enumField.getValue();
@@ -222,6 +233,11 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 	protected String getImageField(String fieldName) {
 		ImageField imageField = (ImageField) fields.get(fieldName);
 		return imageField.getImageName();
+	}
+
+	protected String getRichTextField(String fieldName) {
+		RichTextField richTextField = (RichTextField) fields.get(fieldName);
+		return richTextField.getValue();
 	}
 
 	protected abstract void addWidgetsBeforeCaptionPanel();
