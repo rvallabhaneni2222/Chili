@@ -52,6 +52,11 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 			.create(${camelCase($projectName)}Messages.class);
 			
 	public void onModuleLoad() {
+			GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+			public void onUncaughtException(Throwable e) {
+				logger.info(e.getLocalizedMessage());
+			}
+			});
 			instance=this;
 			addListeners();
 			configure();

@@ -406,8 +406,8 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				 </c:when>
 				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, DataType.IMAGE_FIELD); 
 				 </c:when>
-				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, DataType.RICH_TEXT_AREA); 
-				 </c:when>					 				 
+				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", false, DataType.RICH_TEXT_AREA); 
+				 </c:when>				 					 				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -436,7 +436,7 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				 </c:when>
 				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, DataType.IMAGE_FIELD); 
 				 </c:when>	
-				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, DataType.RICH_TEXT_AREA); 
+				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", false, DataType.RICH_TEXT_AREA); 
 				 </c:when>				 				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
@@ -465,7 +465,7 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				 </c:when>
 				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, DataType.IMAGE_FIELD); 
 				 </c:when>	
-				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, DataType.RICH_TEXT_AREA); 
+				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", false, DataType.RICH_TEXT_AREA); 
 				 </c:when>				 				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">

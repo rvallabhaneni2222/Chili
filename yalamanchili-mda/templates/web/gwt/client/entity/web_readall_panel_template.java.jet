@@ -11,6 +11,7 @@ import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.ReadAllComposite;
 import info.yalamanchili.gwt.utils.Utils;
+import info.yalamanchili.gwt.fields.ImageField;
 
 import java.util.List;
 
@@ -107,6 +108,12 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 						 	<c:when test="${'$DateID'}" >
 						  		table.setText(i, <%= y++ %>, Utils.getShortDate(entity.get${uppercaseFirst($attribute/@name)}())); 
 						  	</c:when>
+						 	<c:when test="${'$ImageID'}" >
+						  		table.setWidget(i, <%= y++ %>, new ImageField("", true, entity.get${uppercaseFirst($attribute/@name)}(),100,100)); 
+						  	</c:when>
+						 	<c:when test="${'$RichTextID'}" >
+						  		table.setHTML(i, <%= y++ %>, Utils.entityToString(entity.get${uppercaseFirst($attribute/@name)}())); 
+						  	</c:when>						  							  	
 						 	<c:otherwise> 
 								table.setText(i, <%= y++ %>, Utils.entityToString(entity.get${uppercaseFirst($attribute/@name)}()));
 				 			</c:otherwise>
