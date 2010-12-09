@@ -14,6 +14,14 @@ public class ImageField extends BaseField {
 		configureAddMainWidget();
 	}
 
+	public ImageField(String labelName, Boolean readOnly, String url,
+			int width, int height) {
+		super(labelName, readOnly);
+		image.setUrl(url);
+		image.setPixelSize(width, height);
+		configureAddMainWidget();
+	}
+
 	@Override
 	protected void configureAddMainWidget() {
 		if (!readOnly) {
