@@ -121,6 +121,7 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 		}
 		if (DataType.RICH_TEXT_AREA.equals(type)) {
 			RichTextField richTextField = new RichTextField(name, readOnly);
+			richTextField.addStyleName("y-gwt-RichTextField");
 			fields.put(name, richTextField);
 			entityDisplayWidget.add(richTextField);
 		}

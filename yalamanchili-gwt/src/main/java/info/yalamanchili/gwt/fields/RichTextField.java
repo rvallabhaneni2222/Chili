@@ -14,10 +14,9 @@ public class RichTextField extends BaseField {
 
 	@Override
 	protected void configureAddMainWidget() {
-		editor.addStyleName("y-gwt-RichTextField");
+		editor.addStyleName("y-gwt-RichTextEditor");
 		editor.setBorder("2px");
 		editor.setCanDragResize(true);
-		editor.setShowEdges(true);
 		fieldPanel.insert(editor, 0);
 	}
 
