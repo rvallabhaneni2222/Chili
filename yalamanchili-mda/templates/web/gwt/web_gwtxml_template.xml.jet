@@ -7,7 +7,8 @@
   	<set-property name="gwt.logging.firebugHandler" value="ENABLED" />
   	<set-property name="gwt.logging.consoleHandler" value="DISABLED"/>	
 	<!-- used to support internationalization -->
-
+	<!-- SMART-GWT support-->
+	<inherits name="com.smartgwt.SmartGwt" />
 	<inherits name='com.google.gwt.i18n.I18N' />
 	<extend-property name="locale" values="ES" />
 

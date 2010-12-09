@@ -10,7 +10,7 @@ import ${$packageName}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel.
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-								import ${$groupID}.entity.${lower-case($package/@name)}.${ uppercaseFirst($attribute/@name)};
+								import ${$groupID}.entity.${lower-case($package/@name)}.${ uppercaseFirst($enumeration/@name)};
 					 			</c:if>
 					 	</c:iterate>					 
 		 			</c:otherwise>
@@ -24,7 +24,7 @@ import ${$packageName}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel.
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-							import ${$groupID}.entity.${lower-case($package/@name)}.${ uppercaseFirst($attribute/@name)};
+							import ${$groupID}.entity.${lower-case($package/@name)}.${ uppercaseFirst($enumeration/@name)};
 					 			</c:if>
 					 	</c:iterate>					 
 		 			</c:otherwise>
@@ -37,7 +37,7 @@ import ${$packageName}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel.
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-								import ${$groupID}.entity.${lower-case($package/@name)}.${ uppercaseFirst($attribute/@name)};
+								import ${$groupID}.entity.${lower-case($package/@name)}.${ uppercaseFirst($enumeration/@name)};
 					 			</c:if>
 					 	</c:iterate>					 
 		 			</c:otherwise>
@@ -236,7 +236,9 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
 				 </c:when>
 				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, DataType.IMAGE_FIELD); 
-				 </c:when>				 
+				 </c:when>
+				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", false, DataType.RICH_TEXT_AREA); 
+				 </c:when>					 				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -264,7 +266,9 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
 				 </c:when>
 				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, DataType.IMAGE_FIELD); 
-				 </c:when>				 
+				 </c:when>
+				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", false, DataType.RICH_TEXT_AREA); 
+				 </c:when>					 				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -291,7 +295,9 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
 				 </c:when>
 				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, DataType.IMAGE_FIELD); 
-				 </c:when>				 
+				 </c:when>
+				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", false, DataType.RICH_TEXT_AREA); 
+				 </c:when>					 				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -363,11 +369,13 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 			 <c:when test="${'$FloatID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
 			 </c:when>
 			 <c:when test="${'$ImageID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getImageField("${$attribute/@name}")); 
-			 </c:when>			 
+			 </c:when>
+			 <c:when test="${'$RichTextID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getRichTextField("${$attribute/@name}")); 
+			 </c:when>			 			 
 				 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-								${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(${ uppercaseFirst($attribute/@name)}.valueOf(getEnumField("${$attribute/@name}")));
+								${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(${ uppercaseFirst($enumeration/@name)}.valueOf(getEnumField("${$attribute/@name}")));
 					 			</c:if>
 					 	</c:iterate>				 
 	 			</c:otherwise>
@@ -392,11 +400,13 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 			 <c:when test="${'$FloatID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
 			 </c:when>
 			 <c:when test="${'$ImageID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getImageField("${$attribute/@name}")); 
-			 </c:when>			 
+			 </c:when>
+			 <c:when test="${'$RichTextID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getRichTextField("${$attribute/@name}")); 
+			 </c:when>			 			 
 				 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-								${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(${ uppercaseFirst($attribute/@name)}.valueOf(getEnumField("${$attribute/@name}")));
+								${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(${ uppercaseFirst($enumeration/@name)}.valueOf(getEnumField("${$attribute/@name}")));
 					 			</c:if>
 					 	</c:iterate>				 
 	 			</c:otherwise>
@@ -419,11 +429,13 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 			 <c:when test="${'$FloatID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
 			 </c:when>
 			 <c:when test="${'$ImageID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getImageField("${$attribute/@name}")); 
-			 </c:when>			 
+			 </c:when>
+			 <c:when test="${'$RichTextID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getRichTextField("${$attribute/@name}")); 
+			 </c:when>			 			 
 				 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-								${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(${ uppercaseFirst($attribute/@name)}.valueOf(getEnumField("${$attribute/@name}")));
+								${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(${ uppercaseFirst($enumeration/@name)}.valueOf(getEnumField("${$attribute/@name}")));
 					 			</c:if>
 					 	</c:iterate>				 
 	 			</c:otherwise>

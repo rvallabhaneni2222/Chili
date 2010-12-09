@@ -3,7 +3,6 @@ package ${$webPackage}rpc;
 
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.RemoteService;
 import info.yalamanchili.security.jpa.YUser;
 import info.yalamanchili.security.jpa.YRole;
 /**
@@ -11,7 +10,7 @@ import info.yalamanchili.security.jpa.YRole;
  * directly, GWT does this for you, and calls are marshalled through to the Sync
  * equivalent method in MyService on the server (which is a Seam component).
  */
-public interface ${camelCase($projectName)}ServiceAsync extends RemoteService {
+public interface ${camelCase($projectName)}ServiceAsync  {
 
 	public void login(String username,String password,
 			AsyncCallback<YUser> response);

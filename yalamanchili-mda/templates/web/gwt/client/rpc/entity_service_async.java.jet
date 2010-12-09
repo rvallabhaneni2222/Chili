@@ -183,14 +183,14 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
 	</c:iterate>
 </c:iterate>
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.RemoteService;
+
 
 /**
  * This is the interface the client code uses. You NEVER implement this
  * directly, GWT does this for you, and calls are marshalled through to the Sync
  * equivalent method in MyService on the server (which is a Seam component).
  */
-public interface ${$class/@name}ServiceAsync extends RemoteService {
+public interface ${$class/@name}ServiceAsync  {
 
 	public void create(${$class/@name} entity,
 			AsyncCallback<${$class/@name}> response);
