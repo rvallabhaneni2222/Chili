@@ -186,6 +186,13 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 		imageField.setImage(url);
 	}
 
+	protected void setImageField(String fieldName, String url, int width,
+			int height) {
+		ImageField imageField = (ImageField) fields.get(fieldName);
+		imageField.setPixelSize(width, height);
+		imageField.setImage(url);
+	}
+
 	protected void setRichTextField(String fieldName, String value) {
 		RichTextField richTextField = (RichTextField) fields.get(fieldName);
 		richTextField.setValue(value);
