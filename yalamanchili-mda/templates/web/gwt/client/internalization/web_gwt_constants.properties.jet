@@ -3,3 +3,12 @@ sessionTimeout=300000
 tablePageSize=10
 #GENERAL
 Table_Action=Action
+#Class attributes
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+	<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+#${$class/@name}		
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+${$groupID}.entity.${$package/@name}.${$class/@name}_${$attribute/@name}=${uppercaseFirst ($attribute/@name)}
+			</c:iterate>	
+	</c:iterate>
+</c:iterate>
