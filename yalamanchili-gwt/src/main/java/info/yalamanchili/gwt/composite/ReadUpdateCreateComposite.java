@@ -209,15 +209,15 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 		floatField.setFloat(value);
 	}
 
-	protected void setImageField(String fieldName, String url) {
-		ImageField imageField = (ImageField) fields.get(fieldName);
-		imageField.setImage(url);
-	}
-
 	protected void setImageField(String fieldName, String url, int width,
 			int height) {
 		ImageField imageField = (ImageField) fields.get(fieldName);
 		imageField.setPixelSize(width, height);
+		imageField.setImage(url);
+	}
+
+	protected void setImageField(String fieldName, String url) {
+		ImageField imageField = (ImageField) fields.get(fieldName);
 		imageField.setImage(url);
 	}
 
