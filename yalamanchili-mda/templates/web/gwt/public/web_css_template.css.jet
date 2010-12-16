@@ -3,7 +3,7 @@
 }
 
 /* panel to display the ReadAll, Read, Update entity panels this occupies the center of the DockLayoutPanel of the rool panel. see ProjectWelcome.java under the client package*/
-.entityPanel {
+.entityPanelHolder {
 	width: 100%;
 	border-top: 2px solid #88ACE0;
 	border-right: 2px solid #88ACE0;
@@ -81,14 +81,14 @@
 .y-gwt-ReadEntityCaptionPanel .gwt-TextBox-readonly {
 	background-color: #F5F5F5;
 }
-
+.tfRequired{
+font-weight: bold;
+}
 .y-gwt-ReadEntityCaptionPanel .tfFieldHeader {
-	font-weight: bold;
 	font-size: 10pt;
 }
 
 .y-gwt-CreateEntityCaptionPanel .tfFieldHeader {
-	font-weight: bold;
 	font-size: 10pt;
 }
 
@@ -97,7 +97,6 @@
 }
 
 .y-gwt-UpdateEntityCaptionPanel .tfFieldHeader {
-	font-weight: bold;
 	font-size: 10pt;
 }
 

@@ -11,7 +11,9 @@ public class RootPanels {
 	protected FlowPanel sidePanelBottom = new FlowPanel();
 	protected FlowPanel statusPanel = new FlowPanel();
 	protected HorizontalPanel menuBar = new HorizontalPanel();
-	protected ScrollPanel entityPanel = new ScrollPanel();
+	protected FlowPanel entityPanel = new FlowPanel();
+	//this is a holder to fix issue with not able to add more than one widget to scroll panel
+	protected ScrollPanel entityPanelHolder = new ScrollPanel();
 
 	public RootPanels() {
 	}
@@ -56,11 +58,11 @@ public class RootPanels {
 		this.menuBar = menuBar;
 	}
 
-	public ScrollPanel getEntityPanel() {
+	public FlowPanel getEntityPanel() {
 		return entityPanel;
 	}
 
-	public void setEntityPanel(ScrollPanel entityPanel) {
+	public void setEntityPanel(FlowPanel entityPanel) {
 		this.entityPanel = entityPanel;
 	}
 

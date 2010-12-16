@@ -55,6 +55,9 @@
 <%--load and process yalamanchili profiles and stereotypes --%>
 <c:include template="templates/main/load_profiles.jet" />
 
+<%--processes the required fields on all attributes --%>
+<c:include template="templates/main/required_fields.jet" />
+
 <%--creates the master project--%>
 <c:if test="$genMaster = 'TRUE'">
 <ws:project name="{$projectName}-master" location="{$location}/{$projectName}-master">

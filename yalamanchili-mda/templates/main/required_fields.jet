@@ -1,0 +1,16 @@
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+	<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+		<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">	
+    	<c:set select="$attribute" name="isRequired">false</c:set>
+    		<c:iterate select="$attribute/ModelElement.stereotype" var="stereoType">
+    		<%--check for notnull and not empty --%>
+			<c:if test="$stereoType/Stereotype/@href = $NotEmptyID">
+				<c:set select="$attribute" name="isRequired">true</c:set>		
+			</c:if>
+			<c:if test="$stereoType/Stereotype/@href = $NotNullID">
+				<c:set select="$attribute" name="isRequired">true</c:set>		
+			</c:if>  			    		
+    		</c:iterate>
+ 		</c:iterate>
+	</c:iterate>
+</c:iterate>

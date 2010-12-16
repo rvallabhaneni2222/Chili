@@ -93,12 +93,13 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 		mainPanel.addNorth(statusPanel, 4);
 		mainPanel.addNorth(menuBar, 2);
 		mainPanel.addWest(sidePanel, 15);
-		mainPanel.add(entityPanel);
+		mainPanel.add(entityPanelHolder);
 		mainPanel.addStyleName("mainPanel");
 	}
 	
 	protected void configureEntityPanel() {
-		entityPanel.addStyleName("entityPanel");
+		entityPanelHolder.add(entityPanel);
+		entityPanelHolder.addStyleName("entityPanelHolder");
 	}
 
 	protected void configureMenuBar() {

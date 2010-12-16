@@ -184,26 +184,26 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 	<c:if test="not($class/@name = $parentClass2/@name)">
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", true, DataType.STRING_FIELD); 
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.STRING_FIELD); 
 				 </c:when>
-				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", true, DataType.INTEGER_FIELD); 
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.INTEGER_FIELD); 
 				 </c:when>
-				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", true, DataType.DATE_FIELD);  
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.DATE_FIELD);  
 				 </c:when>
-				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", true, DataType.BOOLEAN_FIELD); 
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.BOOLEAN_FIELD); 
 				 </c:when>
-				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", true, DataType.LONG_FIELD); 
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.LONG_FIELD); 
 				 </c:when>
-				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", true, DataType.FLOAT_FIELD); 
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
 				 </c:when>
-				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", true, DataType.IMAGE_FIELD); 
+				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.IMAGE_FIELD); 
 				 </c:when>
-				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", true, DataType.RICH_TEXT_AREA); 
+				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.RICH_TEXT_AREA); 
 				 </c:when>					 				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-								addEnumField("${$attribute/@name}", false, "${$attribute/@name}", ${$class/@name}.class.getName());
+								addEnumField("${$attribute/@name}", true, ${$attribute/@isRequired}, "${$attribute/@name}", ${$class/@name}.class.getName());
 					 			</c:if>
 					 	</c:iterate>
 		 			</c:otherwise>
@@ -214,26 +214,26 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 	<c:if test="not($class/@name = $parentClass1/@name)">
 				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", true, DataType.STRING_FIELD); 
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.STRING_FIELD); 
 				 </c:when>
-				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", true, DataType.INTEGER_FIELD); 
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.INTEGER_FIELD); 
 				 </c:when>
-				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", true, DataType.DATE_FIELD);  
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.DATE_FIELD);  
 				 </c:when>
-				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", true, DataType.BOOLEAN_FIELD); 
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.BOOLEAN_FIELD); 
 				 </c:when>
-				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", true, DataType.LONG_FIELD); 
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.LONG_FIELD); 
 				 </c:when>
-				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", true, DataType.FLOAT_FIELD); 
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
 				 </c:when>
-				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", true, DataType.IMAGE_FIELD); 
+				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.IMAGE_FIELD); 
 				 </c:when>	
-				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", true, DataType.RICH_TEXT_AREA); 
+				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.RICH_TEXT_AREA); 
 				 </c:when>				 			 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-								addEnumField("${$attribute/@name}", false, "${$attribute/@name}", ${$class/@name}.class.getName());
+								addEnumField("${$attribute/@name}", true, ${$attribute/@isRequired}, "${$attribute/@name}", ${$class/@name}.class.getName());
 					 			</c:if>
 					 	</c:iterate>					 
 		 			</c:otherwise>
@@ -243,26 +243,26 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 	<%-- process baseClass--%>
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", true, DataType.STRING_FIELD); 
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.STRING_FIELD); 
 				 </c:when>
-				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", true, DataType.INTEGER_FIELD); 
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.INTEGER_FIELD); 
 				 </c:when>
-				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", true, DataType.DATE_FIELD);  
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.DATE_FIELD);  
 				 </c:when>
-				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", true, DataType.BOOLEAN_FIELD); 
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.BOOLEAN_FIELD); 
 				 </c:when>
-				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", true, DataType.LONG_FIELD); 
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.LONG_FIELD); 
 				 </c:when>
-				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", true, DataType.FLOAT_FIELD); 
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
 				 </c:when>
-				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", true, DataType.IMAGE_FIELD); 
+				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.IMAGE_FIELD); 
 				 </c:when>	
-				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", true, DataType.RICH_TEXT_AREA); 
+				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", true, ${$attribute/@isRequired}, DataType.RICH_TEXT_AREA); 
 				 </c:when>				 			 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-								addEnumField("${$attribute/@name}", false, "${$attribute/@name}", ${$class/@name}.class.getName());
+								addEnumField("${$attribute/@name}", true, ${$attribute/@isRequired}, "${$attribute/@name}", ${$class/@name}.class.getName());
 					 			</c:if>
 					 	</c:iterate>
 		 			</c:otherwise>
@@ -290,12 +290,12 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 			  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
 			  					    						<%--check for Many to one unidirectional--%>
 			  					    						<c:if test="$association_connection_end/@isNavigable = 'false'">
-			  					    							addField("${lower-case($class2/@name)}", true, DataType.DROPDOWN_FIELD);
+			  					    							addField("${lower-case($class2/@name)}", true, ${$attribute/@isRequired} , DataType.DROPDOWN_FIELD);
 			  					    						</c:if>	
 			  					    						<%--check for one to one --%>	
 			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
 			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-			  					    							addField("${lower-case($class2/@name)}", true, DataType.DROPDOWN_FIELD);
+			  					    							addField("${lower-case($class2/@name)}", true, ${$attribute/@isRequired}, DataType.DROPDOWN_FIELD);
 			  					  		 					</c:if>	
 			  					  		 					</c:if>	
 			  					  		 			</c:if>	

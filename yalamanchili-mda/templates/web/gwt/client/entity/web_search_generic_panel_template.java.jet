@@ -45,17 +45,17 @@ public class ${$class/@name}SearchPanelGeneric extends
 	<c:if test="not($class/@name = $parentClass2/@name)">
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, DataType.STRING_FIELD); 
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.STRING_FIELD); 
 				 </c:when>
-				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, DataType.INTEGER_FIELD); 
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.INTEGER_FIELD); 
 				 </c:when>
-				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, DataType.DATE_FIELD);  
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.DATE_FIELD);  
 				 </c:when>
-				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, DataType.BOOLEAN_FIELD); 
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.BOOLEAN_FIELD); 
 				 </c:when>
-				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, DataType.LONG_FIELD); 
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.LONG_FIELD); 
 				 </c:when>
-				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
 				 </c:when>
 					 <c:otherwise>
 		 			</c:otherwise>
@@ -66,17 +66,17 @@ public class ${$class/@name}SearchPanelGeneric extends
 	<c:if test="not($class/@name = $parentClass1/@name)">
 			<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, DataType.STRING_FIELD); 
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.STRING_FIELD); 
 				 </c:when>
-				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, DataType.INTEGER_FIELD); 
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.INTEGER_FIELD); 
 				 </c:when>
-				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, DataType.DATE_FIELD);  
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.DATE_FIELD);  
 				 </c:when>
-				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, DataType.BOOLEAN_FIELD); 
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.BOOLEAN_FIELD); 
 				 </c:when>
-				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, DataType.LONG_FIELD); 
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.LONG_FIELD); 
 				 </c:when>
-				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
 				 </c:when>
 					 <c:otherwise>
 		 			</c:otherwise>
@@ -86,17 +86,17 @@ public class ${$class/@name}SearchPanelGeneric extends
 	<%-- process base class attributes--%>
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, DataType.STRING_FIELD); 
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.STRING_FIELD); 
 				 </c:when>
-				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, DataType.INTEGER_FIELD); 
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.INTEGER_FIELD); 
 				 </c:when>
-				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, DataType.DATE_FIELD);  
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.DATE_FIELD);  
 				 </c:when>
-				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, DataType.BOOLEAN_FIELD); 
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.BOOLEAN_FIELD); 
 				 </c:when>
-				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, DataType.LONG_FIELD); 
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.LONG_FIELD); 
 				 </c:when>
-				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, DataType.FLOAT_FIELD); 
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
 				 </c:when>
 					 <c:otherwise>
 		 			</c:otherwise>
