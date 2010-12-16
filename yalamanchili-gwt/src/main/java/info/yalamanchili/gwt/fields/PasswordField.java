@@ -9,7 +9,7 @@ public class PasswordField extends BaseField {
 	protected PasswordTextBox password = new PasswordTextBox();
 
 	public PasswordField(String name) {
-		super(name);
+		super(name, false, false);
 		fieldPanel.insert(password, 1);
 	}
 

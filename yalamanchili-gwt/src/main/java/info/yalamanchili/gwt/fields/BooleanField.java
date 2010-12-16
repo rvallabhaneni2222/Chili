@@ -12,8 +12,8 @@ public class BooleanField extends BaseField {
 		return box;
 	}
 
-	public BooleanField(String text, Boolean readOnly) {
-		super(text);
+	public BooleanField(String text, Boolean readOnly, Boolean isRequired) {
+		super(text, readOnly, isRequired);
 		box.setEnabled(!readOnly);
 		// box.setText(text);
 		configureAddMainWidget();

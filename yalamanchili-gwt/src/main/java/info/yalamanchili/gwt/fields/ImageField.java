@@ -10,13 +10,26 @@ public class ImageField extends BaseField {
 	Image image = new Image();
 
 	public ImageField(String labelName, Boolean readOnly) {
-		super(labelName, readOnly);
+		super(labelName, readOnly, false);
+		configureAddMainWidget();
+	}
+
+	public ImageField(String labelName, Boolean readOnly, Boolean isRequired) {
+		super(labelName, readOnly, isRequired);
 		configureAddMainWidget();
 	}
 
 	public ImageField(String labelName, Boolean readOnly, String url,
 			int width, int height) {
-		super(labelName, readOnly);
+		super(labelName, readOnly, false);
+		image.setUrl(url);
+		image.setPixelSize(width, height);
+		configureAddMainWidget();
+	}
+
+	public ImageField(String labelName, Boolean readOnly, Boolean isRequired,
+			String url, int width, int height) {
+		super(labelName, readOnly, isRequired);
 		image.setUrl(url);
 		image.setPixelSize(width, height);
 		configureAddMainWidget();

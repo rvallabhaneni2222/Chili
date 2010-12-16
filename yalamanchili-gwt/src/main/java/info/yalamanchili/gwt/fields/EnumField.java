@@ -17,9 +17,9 @@ public class EnumField extends BaseField {
 	Logger logger = Logger.getLogger(EnumField.class.getName());
 	protected final ListBox listBox = new ListBox();
 
-	public EnumField(String text, Boolean readOnly, String attributeName,
-			String className) {
-		super(text);
+	public EnumField(String text, Boolean readOnly, Boolean isRequired,
+			String attributeName, String className) {
+		super(text, readOnly, isRequired);
 		configureAddMainWidget();
 		GwtServiceAsync.instance().getEnumValues(className, attributeName,
 				new AsyncCallback<Enum<?>[]>() {

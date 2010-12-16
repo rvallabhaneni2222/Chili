@@ -14,9 +14,8 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
  */
 public class StringField extends BaseFieldWithTextBox {
 
-
-	public StringField(String labelName, Boolean readOnly) {
-		super(labelName, readOnly);
+	public StringField(String labelName, Boolean readOnly, Boolean required) {
+		super(labelName, readOnly, required);
 	}
 
 	public String getText() {
@@ -30,19 +29,19 @@ public class StringField extends BaseFieldWithTextBox {
 	@Override
 	public void onKeyPress(KeyPressEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onKeyUp(KeyUpEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onKeyDown(KeyDownEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

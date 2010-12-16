@@ -36,8 +36,8 @@ public class DateField extends BaseField implements KeyPressHandler,
 		return datePicker;
 	}
 
-	public DateField(String labelName, Boolean readOnly) {
-		super(labelName);
+	public DateField(String labelName, Boolean readOnly, Boolean isRequired) {
+		super(labelName, readOnly, isRequired);
 		setReadOnly(readOnly);
 		configureAddMainWidget();
 	}

@@ -34,7 +34,7 @@ public class CreateStudentPanel extends CreateComposite<Student> {
 
 	@Override
 	protected void addWidgets() {
-		addField("firstName", false, DataType.STRING_FIELD);
+		addField("firstName", false, false, DataType.STRING_FIELD);
 
 	}
 

@@ -9,8 +9,8 @@ import com.google.gwt.user.client.Window;
 
 public class FloatField extends BaseFieldWithTextBox {
 
-	public FloatField(String labelName, Boolean readOnly) {
-		super(labelName, readOnly);
+	public FloatField(String labelName, Boolean readOnly, Boolean isRequired) {
+		super(labelName, readOnly, isRequired);
 	}
 
 	public Float getFloat() {

@@ -2,21 +2,20 @@ package info.yalamanchili.gwt.composite;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 
 public abstract class BaseField extends Composite {
 
-	public BaseField(String labelName) {
-		label.setText(labelName);
-		configure();
-		addWidgets();
-		initWidget(panel);
-	}
-
-	public BaseField(String labelName, Boolean readOnly) {
-		label.setText(labelName);
+	public BaseField(String labelName, Boolean readOnly, Boolean required) {
 		this.readOnly = readOnly;
+		this.required = required;
+		if (required) {
+			label.setHTML(labelName + "<em>*</em>");
+			label.addStyleName("tfRequired");
+		} else {
+			label.setHTML(labelName);
+		}
 		configure();
 		addWidgets();
 		initWidget(panel);
@@ -40,28 +39,30 @@ public abstract class BaseField extends Composite {
 
 	protected HorizontalPanel fieldPanel = new HorizontalPanel();
 
-	protected Label label = new Label();
+	protected HTML label = new HTML();
 
-	protected Label message = new Label();
+	protected HTML message = new HTML();
 
 	protected Boolean isValid = false;
 
 	protected Boolean readOnly = false;
 
+	protected Boolean required = false;
+
 	public FlowPanel getPanel() {
 		return panel;
 	}
 
-	public Label getLabel() {
+	public HTML getLabel() {
 		return label;
 	}
 
 	public void setMessage(String text) {
-		message.setText(text);
+		message.setHTML(text);
 	}
 
 	public void clearMessage() {
-		message.setText("");
+		message.setHTML("");
 	}
 
 	public Boolean getValid() {

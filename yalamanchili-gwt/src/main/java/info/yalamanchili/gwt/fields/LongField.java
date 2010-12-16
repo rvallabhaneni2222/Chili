@@ -13,8 +13,8 @@ import com.google.gwt.user.client.Window;
  */
 public class LongField extends BaseFieldWithTextBox {
 
-	public LongField(String labelName, Boolean readOnly) {
-		super(labelName, readOnly);
+	public LongField(String labelName, Boolean readOnly, Boolean isRequired) {
+		super(labelName, readOnly, isRequired);
 	}
 
 	public Long getLong() {

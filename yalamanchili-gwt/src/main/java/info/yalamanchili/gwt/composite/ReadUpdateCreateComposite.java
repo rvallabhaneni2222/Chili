@@ -91,40 +91,41 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 
 	}
 
-	protected void addField(String name, Boolean readOnly, DataType type) {
+	protected void addField(String name, Boolean readOnly, Boolean isRequired,
+			DataType type) {
 		if (DataType.LONG_FIELD.equals(type)) {
 			LongField longField = new LongField(getAttributeLabel(name),
-					readOnly);
+					readOnly, isRequired);
 			fields.put(name, longField);
 			entityDisplayWidget.add(longField);
 		}
 		if (DataType.INTEGER_FIELD.equals(type)) {
 			IntegerField integerField = new IntegerField(
-					getAttributeLabel(name), readOnly);
+					getAttributeLabel(name), readOnly, isRequired);
 			fields.put(name, integerField);
 			entityDisplayWidget.add(integerField);
 		}
 		if (DataType.STRING_FIELD.equals(type)) {
 			StringField stringField = new StringField(getAttributeLabel(name),
-					readOnly);
+					readOnly, isRequired);
 			fields.put(name, stringField);
 			entityDisplayWidget.add(stringField);
 		}
 		if (DataType.DATE_FIELD.equals(type)) {
 			DateField dateField = new DateField(getAttributeLabel(name),
-					readOnly);
+					readOnly, isRequired);
 			fields.put(name, dateField);
 			entityDisplayWidget.add(dateField);
 		}
 		if (DataType.BOOLEAN_FIELD.equals(type)) {
 			BooleanField booleanField = new BooleanField(
-					getAttributeLabel(name), readOnly);
+					getAttributeLabel(name), readOnly, isRequired);
 			fields.put(name, booleanField);
 			entityDisplayWidget.add(booleanField);
 		}
 		if (DataType.FLOAT_FIELD.equals(type)) {
 			FloatField floatField = new FloatField(getAttributeLabel(name),
-					readOnly);
+					readOnly, isRequired);
 			fields.put(name, floatField);
 			entityDisplayWidget.add(floatField);
 		}
@@ -136,19 +137,19 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 		}
 		if (DataType.DROPDOWN_FIELD.equals(type)) {
 			StringField dropDownField = new StringField(
-					getAttributeLabel(name), readOnly);
+					getAttributeLabel(name), readOnly, isRequired);
 			fields.put(name, dropDownField);
 			entityDisplayWidget.add(dropDownField);
 		}
 		if (DataType.IMAGE_FIELD.equals(type)) {
 			ImageField imageField = new ImageField(getAttributeLabel(name),
-					readOnly);
+					readOnly, isRequired);
 			fields.put(name, imageField);
 			entityDisplayWidget.add(imageField);
 		}
 		if (DataType.RICH_TEXT_AREA.equals(type)) {
 			RichTextField richTextField = new RichTextField(
-					getAttributeLabel(name), readOnly);
+					getAttributeLabel(name), readOnly, isRequired);
 			richTextField.addStyleName("y-gwt-RichTextField");
 			fields.put(name, richTextField);
 			entityDisplayWidget.add(richTextField);
@@ -156,9 +157,9 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 	}
 
 	protected void addEnumField(String name, Boolean readOnly,
-			String attributeName, String className) {
+			Boolean isRequired, String attributeName, String className) {
 		EnumField enumField = new EnumField(getAttributeLabel(name), readOnly,
-				attributeName, className);
+				isRequired, attributeName, className);
 		fields.put(name, enumField);
 		entityDisplayWidget.add(enumField);
 	}

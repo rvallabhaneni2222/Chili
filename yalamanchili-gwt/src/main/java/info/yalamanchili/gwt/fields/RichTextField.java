@@ -7,8 +7,8 @@ import com.smartgwt.client.widgets.RichTextEditor;
 public class RichTextField extends BaseField {
 	RichTextEditor editor = new RichTextEditor();
 
-	public RichTextField(String labelName, Boolean readOnly) {
-		super(labelName, readOnly);
+	public RichTextField(String labelName, Boolean readOnly, Boolean required) {
+		super(labelName, readOnly, required);
 		configureAddMainWidget();
 	}
 
