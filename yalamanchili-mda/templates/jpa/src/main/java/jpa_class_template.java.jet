@@ -1,4 +1,4 @@
-<java:merge/>
+
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
@@ -35,16 +35,8 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Index;
 </c:if>	
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
-import org.hibernate.validator.Past;
-import org.hibernate.validator.Range;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.Email;
-import org.hibernate.validator.Future;
-import org.hibernate.validator.Max;
-import org.hibernate.validator.Min;
-import org.hibernate.validator.NotEmpty;
+import javax.validation.constraints.*;
+
 import net.sf.gilead.pojo.gwt.LightEntity;
 
 <f:message>generated.class.comment</f:message>
@@ -85,7 +77,7 @@ private static final long serialVersionUID = <f:unique/>L;
 						<c:iterate select="$taggedvalue/TaggedValue" var="subtag2">
 							<%-- If MAX length TAG--%>
 							<c:if test="$subtag2/TaggedValue.type/TagDefinition/@href = ${'$maxID'}">
-@Length(min=${$subtag1/TaggedValue.dataValue},max=${$subtag2/TaggedValue.dataValue})	
+@Size(min=${$subtag1/TaggedValue.dataValue},max=${$subtag2/TaggedValue.dataValue})	
 							</c:if>
 						</c:iterate>
 		
@@ -101,7 +93,8 @@ private static final long serialVersionUID = <f:unique/>L;
 						<c:iterate select="$taggedvalue/TaggedValue" var="subtag2">
 							<%-- If MAX length TAG--%>
 							<c:if test="$subtag2/TaggedValue.type/TagDefinition/@href = ${'$maxID'}">
-@Range(min=${$subtag1/TaggedValue.dataValue},max=${$subtag2/TaggedValue.dataValue})	
+Min(${$subtag1/TaggedValue.dataValue})
+Max(${$subtag2/TaggedValue.dataValue})								
 							</c:if>
 						</c:iterate>
 					</c:if>
@@ -112,7 +105,7 @@ private static final long serialVersionUID = <f:unique/>L;
 @NotNull
 		</c:if>
 		<c:if test="$stereotype/@href = ${'$NotEmptyID'}">
-@NotEmpty
+@Size(min = 1)
 		</c:if>
 		<c:if test="$stereotype/@href = ${'$PastID'}">
 @Past
