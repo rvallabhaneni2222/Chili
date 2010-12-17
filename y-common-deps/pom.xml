@@ -9,7 +9,22 @@
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
+		<!-- hibernate libs req for hibernate session and naming statergy can be 
+			removed when the hibenrate search fix done -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.5.5-Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>3.5.5-Final</version>
+		</dependency>
+
 		<!-- this groups the core j2ee6 apis on jboss6 app server -->
+		<!-- this gets just the apis not the implementstions like hibernate deps 
+			are required apart from jpa2.0 api -->
 		<dependency>
 			<groupId>org.jboss.spec</groupId>
 			<artifactId>jboss-javaee-6.0</artifactId>
@@ -17,26 +32,13 @@
 			<type>pom</type>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>3.0-alpha-1</version>
-			<scope>provided</scope>
-		</dependency>
-		<!-- need to upgrade 4.x and jpa2 bean validation... -->
-		<!-- hibernate validator START-->
-		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernate.validator.version}</version>
 		</dependency>
-		<!-- hibernate validator END-->
-		<!--
-			hibernate search deps START this need to be upgraded 3.2.1 and 2.4.1
-			respectively
-		-->
-		<!--
-			http://code.google.com/p/yalamanchili/issues/detail?id=127&can=1&q=hibernate%20search
-		-->
+		<!-- hibernate search deps START this need to be upgraded 3.2.1 and 2.4.1 
+			respectively -->
+		<!-- http://code.google.com/p/yalamanchili/issues/detail?id=127&can=1&q=hibernate%20search -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search</artifactId>
@@ -62,7 +64,7 @@
 			<version>${yalamanchili.version}</version>
 		</dependency>
 		<!-- y-dependencies END -->
-		<!--apache commons logging-->
+		<!--apache commons logging -->
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
@@ -113,7 +115,7 @@
 	</distributionManagement>
 	<properties>
 		<jboss.javaee.version>1.0.0.CR1</jboss.javaee.version>
-		<hibernate.validator.version>3.1.0.GA</hibernate.validator.version>
+		<hibernate.validator.version>4.0.2.GA</hibernate.validator.version>
 		<yalamanchili.version>1.0-SNAPSHOT</yalamanchili.version>
 		<seam.version>2.2.1.CR2</seam.version>
 		<lucene.core.version>2.9.3</lucene.core.version>
