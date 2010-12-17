@@ -5,17 +5,14 @@
 <c:iterate select="$myprofile/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
 <%-- check all packages for stereotypes --%>
 <c:iterate select="$package/Namespace.ownedElement/Stereotype" var="stereotype">
-	<c:if test="$stereotype/@name = 'UIElement'">
-		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="UIElementID"/>		
-	</c:if>
 	<c:if test="$stereotype/@name = 'Digits'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="DigitsID"/>		
 	</c:if>
 	<c:if test="$stereotype/@name = 'Future'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="FutureID"/>		
 	</c:if>
-	<c:if test="$stereotype/@name = 'Length'">
-		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="LengthID"/>		
+	<c:if test="$stereotype/@name = 'Size'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="SizeID"/>		
 	</c:if>
 	<c:if test="$stereotype/@name = 'Max'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="MaxID"/>		
@@ -23,6 +20,12 @@
 	<c:if test="$stereotype/@name = 'Min'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="MinID"/>		
 	</c:if>
+	<c:if test="$stereotype/@name = 'DecimalMin'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="DecimalMinID"/>		
+	</c:if>
+	<c:if test="$stereotype/@name = 'DecimalMax'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="DecimalMaxID"/>		
+	</c:if>	
 	<c:if test="$stereotype/@name = 'NotNull'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="NotNullID"/>		
 	</c:if>
@@ -32,21 +35,9 @@
 	<c:if test="$stereotype/@name = 'Past'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="PastID"/>		
 	</c:if>
-	<c:if test="$stereotype/@name = 'Range'">
-		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="RangeID"/>		
-	</c:if>
-	<c:if test="$stereotype/@name = 'Email'">
-		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="EmailID"/>		
-	</c:if>
 </c:iterate>
 <%-- check all packages for tagged Values --%>	
 <c:iterate select="$package/Namespace.ownedElement/TagDefinition" var="tagdefinition">
-	<c:if test="$tagdefinition/@name = 'Position'">
-		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="PositionID"/>		
-	</c:if>
-	<c:if test="$tagdefinition/@name = 'DisplayType'">
-		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="DisplayTypeID"/>		
-	</c:if>
 	<c:if test="$tagdefinition/@name = 'max'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="maxID"/>		
 	</c:if>
@@ -56,6 +47,12 @@
 	<c:if test="$tagdefinition/@name = 'value'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="valueID"/>		
 	</c:if>
+	<c:if test="$tagdefinition/@name = 'integer'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="integerID"/>		
+	</c:if>
+	<c:if test="$tagdefinition/@name = 'fraction'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$tagdefinition/@xmi.id)" var="fractionID"/>		
+	</c:if>	
 </c:iterate>
 <%-- check all packages for DataTypes  --%>	
 <c:iterate select="$package/Namespace.ownedElement/DataType" var="datatype">

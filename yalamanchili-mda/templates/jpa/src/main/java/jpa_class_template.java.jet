@@ -69,7 +69,7 @@ private static final long serialVersionUID = <f:unique/>L;
 <f:message>generated.comment</f:message>
 <%-- processes yalamanchili gwt tags Tag--%>
 	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
-		<c:if test="$stereotype/@href = ${'$LengthID'}">
+		<c:if test="$stereotype/@href = ${'$SizeID'}">
 			<c:iterate select="$attribute/ModelElement.taggedValue" var="taggedvalue">
 				<c:iterate select="$taggedvalue/TaggedValue" var="subtag1">
 				<%-- If MIN length TAG--%>
@@ -85,22 +85,46 @@ private static final long serialVersionUID = <f:unique/>L;
 				</c:iterate>
 			</c:iterate>
 		</c:if>
-		<c:if test="$stereotype/@href = ${'$RangeID'}">
+		<c:if test="$stereotype/@href = ${'$MinID'}">
 			<c:iterate select="$attribute/ModelElement.taggedValue" var="taggedvalue">
-				<c:iterate select="$taggedvalue/TaggedValue" var="subtag1">
+				<c:iterate select="$taggedvalue/TaggedValue" var="subtag">
 				<%-- If MIN length TAG--%>
-					<c:if test="$subtag1/TaggedValue.type/TagDefinition/@href = ${'$minID'}">
-						<c:iterate select="$taggedvalue/TaggedValue" var="subtag2">
-							<%-- If MAX length TAG--%>
-							<c:if test="$subtag2/TaggedValue.type/TagDefinition/@href = ${'$maxID'}">
-Min(${$subtag1/TaggedValue.dataValue})
-Max(${$subtag2/TaggedValue.dataValue})								
-							</c:if>
-						</c:iterate>
+					<c:if test="$subtag/TaggedValue.type/TagDefinition/@href = ${'$minID'}">
+@Min(${$subtag/TaggedValue.dataValue})	
 					</c:if>
 				</c:iterate>
 			</c:iterate>
-		</c:if>				
+		</c:if>	
+		<c:if test="$stereotype/@href = ${'$MaxID'}">
+			<c:iterate select="$attribute/ModelElement.taggedValue" var="taggedvalue">
+				<c:iterate select="$taggedvalue/TaggedValue" var="subtag">
+				<%-- If MIN length TAG--%>
+					<c:if test="$subtag/TaggedValue.type/TagDefinition/@href = ${'$maxID'}">
+@Max(${$subtag/TaggedValue.dataValue})	
+					</c:if>
+				</c:iterate>
+			</c:iterate>
+		</c:if>
+		<c:if test="$stereotype/@href = ${'$DecimalMinID'}">
+			<c:iterate select="$attribute/ModelElement.taggedValue" var="taggedvalue">
+				<c:iterate select="$taggedvalue/TaggedValue" var="subtag">
+				<%-- If MIN length TAG--%>
+					<c:if test="$subtag/TaggedValue.type/TagDefinition/@href = ${'$minID'}">
+@DecimalMin("${$subtag/TaggedValue.dataValue}")	
+					</c:if>
+				</c:iterate>
+			</c:iterate>
+		</c:if>
+		<c:if test="$stereotype/@href = ${'$DecimalMaxID'}">
+			<c:iterate select="$attribute/ModelElement.taggedValue" var="taggedvalue">
+				<c:iterate select="$taggedvalue/TaggedValue" var="subtag">
+				<%-- If MIN length TAG--%>
+					<c:if test="$subtag/TaggedValue.type/TagDefinition/@href = ${'$maxID'}">
+@DecimalMax("${$subtag/TaggedValue.dataValue}")	
+					</c:if>
+				</c:iterate>
+			</c:iterate>
+		</c:if>							
 		<c:if test="$stereotype/@href = ${'$NotNullID'}">
 @NotNull
 		</c:if>

@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Dec 07 17:44:30 EST 2010'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Dec 17 02:00:42 EST 2010'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.30.2(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -68,41 +68,8 @@
             </UML:Stereotype>
           </UML:Namespace.ownedElement>
         </UML:Package>
-        <UML:Package xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018DF'
-          name = 'info.yalamanchili.mda.gwt' isSpecification = 'false' isRoot = 'false'
-          isLeaf = 'false' isAbstract = 'false'>
-          <UML:Namespace.ownedElement>
-            <UML:TagDefinition xmi.id = '-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F76'
-              name = 'Position' isSpecification = 'false'>
-              <UML:TagDefinition.multiplicity>
-                <UML:Multiplicity xmi.id = '-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F7C'>
-                  <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F7B'
-                      lower = '1' upper = '1'/>
-                  </UML:Multiplicity.range>
-                </UML:Multiplicity>
-              </UML:TagDefinition.multiplicity>
-            </UML:TagDefinition>
-            <UML:Stereotype xmi.id = '-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F54'
-              name = 'UIElement' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false'>
-              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
-            </UML:Stereotype>
-            <UML:TagDefinition xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018E4'
-              name = 'DisplayType' isSpecification = 'false'>
-              <UML:TagDefinition.multiplicity>
-                <UML:Multiplicity xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018E8'>
-                  <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018E7'
-                      lower = '1' upper = '1'/>
-                  </UML:Multiplicity.range>
-                </UML:Multiplicity>
-              </UML:TagDefinition.multiplicity>
-            </UML:TagDefinition>
-          </UML:Namespace.ownedElement>
-        </UML:Package>
         <UML:Package xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018E0'
-          name = 'info.yalamanchili.mda.hibernate' isSpecification = 'false' isRoot = 'false'
+          name = 'info.yalamanchili.mda.validation' isSpecification = 'false' isRoot = 'false'
           isLeaf = 'false' isAbstract = 'false'>
           <UML:ModelElement.stereotype>
             <UML:Stereotype xmi.idref = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018EC'/>
@@ -114,7 +81,7 @@
               <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
             </UML:Stereotype>
             <UML:Stereotype xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018EA'
-              name = 'Length' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              name = 'Size' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
               isAbstract = 'false'>
               <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
             </UML:Stereotype>
@@ -132,11 +99,42 @@
               name = 'Digits' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
               isAbstract = 'false'>
               <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
-            </UML:Stereotype>
-            <UML:Stereotype xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018EE'
-              name = 'Range' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false'>
-              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+              <UML:ModelElement.templateParameter>
+                <UML:TemplateParameter xmi.id = '-64--88-2-6-28eb918a:12cf311a97c:-8000:0000000000000CD3'>
+                  <UML:TemplateParameter.parameter>
+                    <UML:Parameter xmi.id = '-64--88-2-6-28eb918a:12cf311a97c:-8000:0000000000000CD2'
+                      name = 'integer' isSpecification = 'false'>
+                      <UML:Parameter.type>
+                        <UML:DataType href = 'http://argouml.org/user-profiles/YalamanchiliMDAProfile.xmi#-91--119--6-96-66633a6:124dff5068f:-8000:0000000000000F4C'/>
+                      </UML:Parameter.type>
+                    </UML:Parameter>
+                  </UML:TemplateParameter.parameter>
+                </UML:TemplateParameter>
+              </UML:ModelElement.templateParameter>
+              <UML:Stereotype.definedTag>
+                <UML:TagDefinition xmi.id = '-64--88-2-6-28eb918a:12cf311a97c:-8000:0000000000000CE8'
+                  name = 'integer' isSpecification = 'false'>
+                  <UML:TagDefinition.multiplicity>
+                    <UML:Multiplicity xmi.id = '-64--88-2-6--64476c9b:12cf31a0ed0:-8000:0000000000000CDA'>
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id = '-64--88-2-6--64476c9b:12cf31a0ed0:-8000:0000000000000CD9'
+                          lower = '0' upper = '1'/>
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:TagDefinition.multiplicity>
+                </UML:TagDefinition>
+                <UML:TagDefinition xmi.id = '-64--88-2-6-28eb918a:12cf311a97c:-8000:0000000000000D0A'
+                  name = 'fraction' isSpecification = 'false'>
+                  <UML:TagDefinition.multiplicity>
+                    <UML:Multiplicity xmi.id = '-64--88-2-6--64476c9b:12cf31a0ed0:-8000:0000000000000CDE'>
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id = '-64--88-2-6--64476c9b:12cf31a0ed0:-8000:0000000000000CDD'
+                          lower = '0' upper = '1'/>
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:TagDefinition.multiplicity>
+                </UML:TagDefinition>
+              </UML:Stereotype.definedTag>
             </UML:Stereotype>
             <UML:Stereotype xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018EF'
               name = 'Past' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
@@ -151,9 +149,9 @@
             <UML:TagDefinition xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018F1'
               name = 'min' isSpecification = 'false'>
               <UML:TagDefinition.multiplicity>
-                <UML:Multiplicity xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018FA'>
+                <UML:Multiplicity xmi.id = '-64--88-2-6-36936488:12cf3043151:-8000:0000000000000CF5'>
                   <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018F9'
+                    <UML:MultiplicityRange xmi.id = '-64--88-2-6-36936488:12cf3043151:-8000:0000000000000CF4'
                       lower = '1' upper = '1'/>
                   </UML:Multiplicity.range>
                 </UML:Multiplicity>
@@ -162,9 +160,9 @@
             <UML:TagDefinition xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018F4'
               name = 'max' isSpecification = 'false'>
               <UML:TagDefinition.multiplicity>
-                <UML:Multiplicity xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018FC'>
+                <UML:Multiplicity xmi.id = '-64--88-2-6--64476c9b:12cf31a0ed0:-8000:0000000000000CE2'>
                   <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '-91--119--6-96-7cd177bd:124e39d24e9:-8000:00000000000018FB'
+                    <UML:MultiplicityRange xmi.id = '-64--88-2-6--64476c9b:12cf31a0ed0:-8000:0000000000000CE1'
                       lower = '1' upper = '1'/>
                   </UML:Multiplicity.range>
                 </UML:Multiplicity>
@@ -173,24 +171,32 @@
             <UML:TagDefinition xmi.id = '-91--119--6-96--630c469f:1256eb1a150:-8000:0000000000001733'
               name = 'value' isSpecification = 'false'>
               <UML:TagDefinition.multiplicity>
-                <UML:Multiplicity xmi.id = '-91--119--6-96--630c469f:1256eb1a150:-8000:0000000000001737'>
+                <UML:Multiplicity xmi.id = '-64--88-2-6-36936488:12cf3043151:-8000:0000000000000CF1'>
                   <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '-91--119--6-96--630c469f:1256eb1a150:-8000:0000000000001736'
+                    <UML:MultiplicityRange xmi.id = '-64--88-2-6-36936488:12cf3043151:-8000:0000000000000CF0'
                       lower = '1' upper = '1'/>
                   </UML:Multiplicity.range>
                 </UML:Multiplicity>
               </UML:TagDefinition.multiplicity>
             </UML:TagDefinition>
-            <UML:Stereotype xmi.id = '-91--119--6-96-371af25b:1256ee9bf74:-8000:0000000000001748'
-              name = 'Email' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false'>
-              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
-            </UML:Stereotype>
             <UML:Stereotype xmi.id = '-64--88-2-15--4c568e94:12571a540e3:-8000:000000000000291E'
               name = 'NotEmpty' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
               isAbstract = 'false'>
               <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
             </UML:Stereotype>
+            <UML:Stereotype xmi.id = '-64--88-2-6-36936488:12cf3043151:-8000:0000000000000CD3'
+              name = 'DecimalMin' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+            </UML:Stereotype>
+            <UML:Stereotype xmi.id = '-64--88-2-6-36936488:12cf3043151:-8000:0000000000000CD4'
+              name = 'DecimalMax' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+            </UML:Stereotype>
+            <UML:Stereotype xmi.id = '-64--88-2-6-36936488:12cf3043151:-8000:0000000000000CE5'
+              name = 'Pattern' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'/>
           </UML:Namespace.ownedElement>
         </UML:Package>
         <UML:Package xmi.id = '-64--88-0-83-63a32047:12c97f9fe31:-8000:0000000000000EC4'
