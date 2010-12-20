@@ -1,6 +1,7 @@
 package info.yalamanchili.commons.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -36,6 +38,8 @@ public class Course implements Serializable {
 	@Max(60)
 	@Min(0)
 	protected Integer noOfStuents;
+	@Digits(fraction = 2, integer = 10)
+	protected BigDecimal tution;
 
 	public Course() {
 		super();
@@ -88,6 +92,14 @@ public class Course implements Serializable {
 
 	public void setNoOfStuents(Integer noOfStuents) {
 		this.noOfStuents = noOfStuents;
+	}
+
+	public BigDecimal getTution() {
+		return tution;
+	}
+
+	public void setTution(BigDecimal tution) {
+		this.tution = tution;
 	}
 
 }

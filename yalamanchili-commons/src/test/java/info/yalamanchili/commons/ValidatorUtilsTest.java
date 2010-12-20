@@ -2,6 +2,7 @@ package info.yalamanchili.commons;
 
 import info.yalamanchili.commons.entity.Course;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,8 @@ public class ValidatorUtilsTest {
 	public void testValidateProperty() {
 		Course c = new Course();
 		c.setWeight(new Float(10.00));
-		System.out.println(ValidatorUtils.validateField(c, "weight"));
+		c.setTution(new BigDecimal("12.12"));
+		System.out.println(ValidatorUtils.validateField(c, "tution"));
 	}
 
 	@After
