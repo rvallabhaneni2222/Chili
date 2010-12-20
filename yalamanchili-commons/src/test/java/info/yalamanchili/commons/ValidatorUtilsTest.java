@@ -29,6 +29,13 @@ public class ValidatorUtilsTest {
 		}
 	}
 
+	@Test
+	public void testValidateProperty() {
+		Course c = new Course();
+		c.setWeight(new Float(10.00));
+		System.out.println(ValidatorUtils.validateField(c, "weight"));
+	}
+
 	@After
 	public void destroy() {
 

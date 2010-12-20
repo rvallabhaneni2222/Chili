@@ -30,7 +30,7 @@ public class Course implements Serializable {
 	protected Date startDate;
 	@Past
 	protected Date endDate;
-	@DecimalMax("5.0")
+	@DecimalMax(value = "5.0")
 	@DecimalMin("0.0")
 	protected Float weight;
 	@Max(60)

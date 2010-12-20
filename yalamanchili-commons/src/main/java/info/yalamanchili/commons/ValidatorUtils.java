@@ -51,6 +51,7 @@ public class ValidatorUtils {
 		return validatorProperties;
 	}
 
+	// TODO use hashmap to cache validators for entities
 	public static Map<String, List<String>> validateEntity(Object entity) {
 		Map<String, List<String>> errors = new HashMap<String, List<String>>();
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -68,6 +69,17 @@ public class ValidatorUtils {
 		}
 		return errors;
 
+	}
+
+	public static List<String> validateField(Object entity, String attributeName) {
+		List<String> errorMessages = new ArrayList<String>();
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+		for (ConstraintViolation v : validator.validateProperty(entity,
+				attributeName)) {
+			errorMessages.add(v.getMessage());
+		}
+		return errorMessages;
 	}
 
 	public static String getValue(String string) {
