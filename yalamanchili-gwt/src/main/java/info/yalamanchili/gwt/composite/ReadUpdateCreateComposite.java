@@ -2,6 +2,7 @@ package info.yalamanchili.gwt.composite;
 
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.fields.BooleanField;
+import info.yalamanchili.gwt.fields.CurrencyField;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.fields.DateField;
 import info.yalamanchili.gwt.fields.EnumField;
@@ -14,6 +15,7 @@ import info.yalamanchili.gwt.fields.RichTextField;
 import info.yalamanchili.gwt.fields.StringField;
 import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -154,6 +156,13 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 			fields.put(name, richTextField);
 			entityDisplayWidget.add(richTextField);
 		}
+		if (DataType.CURRENCY_FIELD.equals(type)) {
+			CurrencyField currencyField = new CurrencyField(
+					getAttributeLabel(name), readOnly, isRequired);
+			currencyField.addStyleName("y-gwt-CurrencyField");
+			fields.put(name, currencyField);
+			entityDisplayWidget.add(currencyField);
+		}
 	}
 
 	protected void addEnumField(String name, Boolean readOnly,
@@ -227,6 +236,11 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 		richTextField.setValue(value);
 	}
 
+	protected void setField(String fieldName, BigDecimal value) {
+		CurrencyField curencyField = (CurrencyField) fields.get(fieldName);
+		curencyField.setValue(value);
+	}
+
 	protected String getEnumField(String fieldName) {
 		EnumField enumField = (EnumField) fields.get(fieldName);
 		return enumField.getValue();
@@ -275,6 +289,11 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 	protected String getRichTextField(String fieldName) {
 		RichTextField richTextField = (RichTextField) fields.get(fieldName);
 		return richTextField.getValue();
+	}
+
+	protected BigDecimal getCurrencyField(String fieldName) {
+		CurrencyField currencyField = (CurrencyField) fields.get(fieldName);
+		return currencyField.getValue();
 	}
 
 	protected abstract void addWidgetsBeforeCaptionPanel();

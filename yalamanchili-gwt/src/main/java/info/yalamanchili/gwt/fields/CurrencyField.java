@@ -1,0 +1,64 @@
+package info.yalamanchili.gwt.fields;
+
+import info.yalamanchili.gwt.composite.BaseFieldWithTextBox;
+
+import java.math.BigDecimal;
+
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.user.client.Window;
+
+public class CurrencyField extends BaseFieldWithTextBox {
+	// TODO add Local info to constructor
+	public CurrencyField(String labelName, Boolean readOnly, Boolean isRequired) {
+		super(labelName, readOnly, isRequired);
+	}
+
+	public BigDecimal getValue() {
+		BigDecimal value = null;
+		if (textbox.getText() == null || textbox.getText().trim().equals(""))
+			return null;
+		try {
+			// TODO check currency validation for 2 decimal points
+			value = new BigDecimal(textbox.getText());
+		} catch (NumberFormatException e) {
+			Window.alert("please enter a valid amount");
+			return null;
+		}
+		return value;
+	}
+
+	public void setValue(BigDecimal var) {
+		if (var != null)
+			textbox.setText(var.toString());
+	}
+
+	@Override
+	public void onKeyPress(KeyPressEvent event) {
+		Integer eventValue = (int) event.getCharCode();
+		// TODO check is the entered key is number or dot
+		if (!(Character.isDigit(event.getCharCode()) || eventValue
+				.equals(new Integer(46)))) {
+			setMessage("invalid value");
+			textbox.cancelKey();
+		} else {
+			clearMessage();
+		}
+
+	}
+
+	@Override
+	public void onKeyUp(KeyUpEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onKeyDown(KeyDownEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+	// TODO
+	// check validation on loose focus?
+}
