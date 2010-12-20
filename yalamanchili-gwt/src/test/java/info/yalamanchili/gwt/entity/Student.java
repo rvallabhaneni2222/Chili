@@ -4,13 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
-import org.hibernate.validator.NotEmpty;
-
 @Entity
 public class Student extends Person {
 
 	private static final long serialVersionUID = 1L;
-	@NotEmpty
+
 	protected String sid;
 	protected Date startDate;
 
