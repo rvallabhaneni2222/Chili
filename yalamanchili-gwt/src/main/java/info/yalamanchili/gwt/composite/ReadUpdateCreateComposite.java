@@ -236,9 +236,9 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 		richTextField.setValue(value);
 	}
 
-	protected void setField(String fieldName, BigDecimal value) {
+	protected void setField(String fieldName, BigDecimal value, boolean format) {
 		CurrencyField curencyField = (CurrencyField) fields.get(fieldName);
-		curencyField.setValue(value);
+		curencyField.setValue(value, format);
 	}
 
 	protected String getEnumField(String fieldName) {

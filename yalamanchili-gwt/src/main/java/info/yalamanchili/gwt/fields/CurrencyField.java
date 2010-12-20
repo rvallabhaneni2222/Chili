@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
 
 public class CurrencyField extends BaseFieldWithTextBox {
@@ -20,7 +21,6 @@ public class CurrencyField extends BaseFieldWithTextBox {
 		if (textbox.getText() == null || textbox.getText().trim().equals(""))
 			return null;
 		try {
-			// TODO check currency validation for 2 decimal points
 			value = new BigDecimal(textbox.getText());
 		} catch (NumberFormatException e) {
 			Window.alert("please enter a valid amount");
@@ -29,9 +29,15 @@ public class CurrencyField extends BaseFieldWithTextBox {
 		return value;
 	}
 
-	public void setValue(BigDecimal var) {
-		if (var != null)
-			textbox.setText(var.toString());
+	public void setValue(BigDecimal var, boolean format) {
+		if (var != null) {
+			if (format) {
+				NumberFormat fmt = NumberFormat.getCurrencyFormat();
+				textbox.setText(fmt.format(var));
+			} else {
+				textbox.setText(var.toString());
+			}
+		}
 	}
 
 	@Override
