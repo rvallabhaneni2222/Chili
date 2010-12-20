@@ -57,6 +57,8 @@ public class ${$class/@name}SearchPanelGeneric extends
 				 </c:when>
 				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
 				 </c:when>
+				 <c:when test="${'$CurrencyID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.CURRENCY_FIELD); 
+				 </c:when>				 
 					 <c:otherwise>
 		 			</c:otherwise>
 		 		</c:choose>
@@ -78,6 +80,8 @@ public class ${$class/@name}SearchPanelGeneric extends
 				 </c:when>
 				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
 				 </c:when>
+				 <c:when test="${'$CurrencyID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.CURRENCY_FIELD); 
+				 </c:when>				 
 					 <c:otherwise>
 		 			</c:otherwise>
 		 		</c:choose>
@@ -98,6 +102,8 @@ public class ${$class/@name}SearchPanelGeneric extends
 				 </c:when>
 				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
 				 </c:when>
+				 <c:when test="${'$CurrencyID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.CURRENCY_FIELD); 
+				 </c:when>				 
 					 <c:otherwise>
 		 			</c:otherwise>
 		 		</c:choose>
@@ -185,6 +191,8 @@ public class ${$class/@name}SearchPanelGeneric extends
 			 </c:when>
 			 <c:when test="${'$FloatID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
 			 </c:when>
+			 <c:when test="${'$CurrencyID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getCurrencyField("${$attribute/@name}")); 
+			 </c:when>			 
 				 <c:otherwise>
 	 			</c:otherwise>
 	 		</c:choose>
@@ -206,6 +214,8 @@ public class ${$class/@name}SearchPanelGeneric extends
 			 </c:when>
 			 <c:when test="${'$FloatID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
 			 </c:when>
+			 <c:when test="${'$CurrencyID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getCurrencyField("${$attribute/@name}")); 
+			 </c:when>				 
 				 <c:otherwise>
 	 			</c:otherwise>
 	 		</c:choose>
@@ -225,6 +235,8 @@ public class ${$class/@name}SearchPanelGeneric extends
 			 </c:when>
 			 <c:when test="${'$FloatID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
 			 </c:when>
+			 <c:when test="${'$CurrencyID'}" > ${lower-case($class/@name)}.set${ uppercaseFirst($attribute/@name)}(getCurrencyField("${$attribute/@name}")); 
+			 </c:when>				 
 				 <c:otherwise>
 	 			</c:otherwise>
 	 		</c:choose>

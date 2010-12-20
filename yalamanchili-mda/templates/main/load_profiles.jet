@@ -74,6 +74,9 @@
 	<c:if test="$datatype/@name = 'Float'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="FloatID"/>		
 	</c:if>
+	<c:if test="$datatype/@name = 'Currency'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="CurrencyID"/>		
+	</c:if>	
 	<c:if test="$datatype/@name = 'Image'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$datatype/@xmi.id)" var="ImageID"/>		
 	</c:if>
