@@ -57,11 +57,7 @@
 				<version>${$ear-plugin-version}</version>
 				<configuration>
 					<unpackTypes>war,ejb</unpackTypes>
-					<defaultLibBundleDir>lib</defaultLibBundleDir>
-			      <!--     <jboss>
-			             <version>5</version>
-			             <loader-repository>${$groupID}:loader=${$projectName}-app-${$version}.ear</loader-repository>
-			           </jboss>	-->				
+					<defaultLibBundleDir>lib</defaultLibBundleDir>			
 					<modules>
 						<webModule>
 							<groupId>${$groupID}
