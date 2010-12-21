@@ -12,6 +12,8 @@ import com.google.gwt.user.client.Window;
 
 public class CurrencyField extends BaseFieldWithTextBox {
 	// TODO add Local info to constructor
+	protected static NumberFormat fmt = NumberFormat.getCurrencyFormat();
+
 	public CurrencyField(String labelName, Boolean readOnly, Boolean isRequired) {
 		super(labelName, readOnly, isRequired);
 	}
@@ -32,12 +34,15 @@ public class CurrencyField extends BaseFieldWithTextBox {
 	public void setValue(BigDecimal var, boolean format) {
 		if (var != null) {
 			if (format) {
-				NumberFormat fmt = NumberFormat.getCurrencyFormat();
 				textbox.setText(fmt.format(var));
 			} else {
 				textbox.setText(var.toString());
 			}
 		}
+	}
+
+	public static String format(BigDecimal value) {
+		return (value == null) ? "" : fmt.format(value);
 	}
 
 	@Override
