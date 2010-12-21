@@ -156,7 +156,7 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				 </c:when>
 				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
+				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}(),false); 
 				 </c:when>				 
 				 <c:when test="${'$ImageID'}" >  setImageField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
@@ -188,7 +188,7 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				 </c:when>
 				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
+				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}(),false); 
 				 </c:when>					 
 				 <c:when test="${'$ImageID'}" >  setImageField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>	
@@ -218,7 +218,7 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				 </c:when>
 				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
+				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}(),false); 
 				 </c:when>					 
 				 <c:when test="${'$ImageID'}" >  setImageField("${$attribute/@name}",entity.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>	
