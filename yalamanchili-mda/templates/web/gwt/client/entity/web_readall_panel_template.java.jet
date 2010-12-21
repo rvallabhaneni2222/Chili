@@ -11,7 +11,7 @@ import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.ReadAllComposite;
 import info.yalamanchili.gwt.utils.Utils;
-import info.yalamanchili.gwt.fields.ImageField;
+import info.yalamanchili.gwt.fields.*;
 
 import java.util.List;
 
@@ -112,6 +112,9 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 						  		table.setWidget(i, <%= y++ %>, new ImageField("", true, ${camelCase($projectName)}Welcome.constants
 								.imagesTargetDirectory() + entity.get${uppercaseFirst($attribute/@name)}(),100,100)); 
 						  	</c:when>
+						 	<c:when test="${'$CurrencyID'}" >
+						 		table.setText(i, <%= y++ %>, CurrencyField.format(entity.get${uppercaseFirst($attribute/@name)}()));
+						  	</c:when>						  	
 						 	<c:when test="${'$RichTextID'}" >
 						  		table.setHTML(i, <%= y++ %>, Utils.entityToString(entity.get${uppercaseFirst($attribute/@name)}())); 
 						  	</c:when>						  							  	
