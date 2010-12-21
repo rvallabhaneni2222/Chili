@@ -48,7 +48,7 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 				 </c:when>
 				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}(),true); 
 				 </c:when>				 
 				 <c:when test="${'$ImageID'}" >  setImageField("${$attribute/@name}",${camelCase($projectName)}Welcome.constants
 								.imagesTargetDirectory() + ${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}(),400,400); 
@@ -81,7 +81,7 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 				 </c:when>
 				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}(),true); 
 				 </c:when>				 
 				 <c:when test="${'$ImageID'}" >  setImageField("${$attribute/@name}",${camelCase($projectName)}Welcome.constants
 								.imagesTargetDirectory() + ${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}(),400,400); 
@@ -113,7 +113,7 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 				 </c:when>
 				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}()); 
+				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}(),true); 
 				 </c:when>				 
 				 <c:when test="${'$ImageID'}" >  setImageField("${$attribute/@name}",${camelCase($projectName)}Welcome.constants
 								.imagesTargetDirectory() + ${lower-case($class/@name)}.get${ uppercaseFirst($attribute/@name)}(),400,400); 
