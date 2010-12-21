@@ -105,7 +105,19 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>1.4</version>
-		</dependency>		
+		</dependency>	
+		<!-- hibernate ehcache -->
+		<!--<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>3.5.5-Final</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency> -->			
 	</dependencies>
 	<modules>
 		<module>../${$projectName}-jpa</module>
