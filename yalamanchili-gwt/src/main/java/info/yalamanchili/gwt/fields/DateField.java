@@ -1,6 +1,7 @@
 package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.BaseField;
+import info.yalamanchili.gwt.utils.Utils;
 
 import java.util.Date;
 
@@ -55,8 +56,10 @@ public class DateField extends BaseField implements KeyPressHandler,
 	}
 
 	public void setDate(Date date) {
-		if (date != null)
+		if (date != null) {
+			dateField.setText(Utils.getShortDate(date));
 			datePicker.setValue(date);
+		}
 	}
 
 	public void setReadOnly(Boolean readOnly) {
@@ -78,10 +81,11 @@ public class DateField extends BaseField implements KeyPressHandler,
 			public void onClick(ClickEvent event) {
 				PopupPanel popupPanel = new PopupPanel(true);
 				popupPanel.add(datePicker);
-				popupPanel.setPopupPosition(dateButton.getAbsoluteLeft()
-						+ dateButton.getOffsetWidth(), dateButton
-						.getAbsoluteTop()
-						+ dateButton.getOffsetHeight());
+				popupPanel.setPopupPosition(
+						dateButton.getAbsoluteLeft()
+								+ dateButton.getOffsetWidth(),
+						dateButton.getAbsoluteTop()
+								+ dateButton.getOffsetHeight());
 				popupPanel.show();
 			}
 		};
