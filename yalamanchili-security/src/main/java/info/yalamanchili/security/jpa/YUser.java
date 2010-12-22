@@ -22,9 +22,10 @@ public class YUser extends LightEntity {
 	private static final long serialVersionUID = 4093061330460788496L;
 
 	private Integer userId;
-	// TODO https://jira.jboss.org/browse/JBSEAM-3556
-	private String username;
 
+	private String username;
+	// TODO need to remove
+	// @UserPassword(hash = "md5")
 	private String passwordHash;
 
 	private Set<YRole> roles;
