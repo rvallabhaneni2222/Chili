@@ -14,7 +14,7 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.log.Log;
 
-@Name("YSecurityStartup")
+@Name("info.yalamanchili.security.Startup")
 @Scope(ScopeType.APPLICATION)
 public class YSecurityStartup {
 	@Logger
