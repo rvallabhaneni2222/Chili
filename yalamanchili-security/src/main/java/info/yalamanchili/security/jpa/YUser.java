@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import net.sf.gilead.pojo.gwt.LightEntity;
@@ -17,15 +19,15 @@ import org.jboss.seam.annotations.security.management.UserRoles;
 @Entity
 public class YUser extends LightEntity {
 
-	public static final long serialVersionUID = 4093061330460788496L;
+	private static final long serialVersionUID = 4093061330460788496L;
 
-	public Integer userId;
+	private Integer userId;
 	// TODO https://jira.jboss.org/browse/JBSEAM-3556
-	public String username;
+	private String username;
 
-	public String passwordHash;
+	private String passwordHash;
 
-	public Set<YRole> roles;
+	private Set<YRole> roles;
 
 	@Id
 	@GeneratedValue
@@ -57,6 +59,7 @@ public class YUser extends LightEntity {
 
 	@UserRoles
 	@ManyToMany(targetEntity = YRole.class)
+	@JoinTable(name = "UserRoles", joinColumns = @JoinColumn(name = "UserId"), inverseJoinColumns = @JoinColumn(name = "RoleId"))
 	public Set<YRole> getRoles() {
 		if (roles == null) {
 			roles = new HashSet<YRole>();
