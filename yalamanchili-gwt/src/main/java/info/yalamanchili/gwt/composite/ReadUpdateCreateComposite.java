@@ -80,21 +80,6 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 		addWidgets();
 	}
 
-	// // TODO has the same functionality(ReadAllComposite.protected String
-	// // getClassValue(String id)) need to merge these
-	// protected String getAttributeLabel(String attribute) {
-	// if (constants == null)
-	// return attribute;
-	// String key = classCanonicalName + "_" + attribute;
-	// key = key.replace(".", "_");
-	// logger.info(key);
-	// try {
-	// return constants.getString(key);
-	// } catch (MissingResourceException e) {
-	// return attribute;
-	// }
-	// }
-
 	protected void addField(String name, Boolean readOnly, Boolean isRequired,
 			DataType type) {
 		if (DataType.LONG_FIELD.equals(type)) {

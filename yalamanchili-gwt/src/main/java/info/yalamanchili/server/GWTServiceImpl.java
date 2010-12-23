@@ -1,5 +1,7 @@
 package info.yalamanchili.server;
 
+import info.yalamanchili.commons.ReflectionUtils;
+import info.yalamanchili.commons.SearchUtils;
 import info.yalamanchili.commons.ValidatorUtils;
 import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.fields.DataType;
@@ -28,6 +30,8 @@ import javax.persistence.TypedQuery;
 
 import net.sf.gilead.pojo.gwt.LightEntity;
 
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.hibernate.search.FullTextQuery;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -362,23 +366,24 @@ public class GWTServiceImpl extends GileadService implements GWTService {
 		return classRelations;
 	}
 
+	/* security */
+
 	@Override
 	@WebRemote
 	public YUser createUser(YUser entity) {
-		yem.persist(entity);
-		return entity;
+		return (YUser) getBeanManager().clone(yem.merge(entity));
 	}
 
 	@Override
 	@WebRemote
 	public YUser readUser(Long id) {
-		return yem.find(YUser.class, id);
+		return (YUser) getBeanManager().clone(yem.find(YUser.class, id));
 	}
 
 	@Override
 	@WebRemote
 	public YUser updateUser(YUser entity) {
-		return yem.merge(entity);
+		return (YUser) getBeanManager().merge(yem.merge(entity));
 	}
 
 	@Override
@@ -408,29 +413,51 @@ public class GWTServiceImpl extends GileadService implements GWTService {
 	@Override
 	@WebRemote
 	public List<String> getSuggestionsForNameUser(String name, YUser entity) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = yem.createQuery(GWTServletUtils
+				.getSuggestionsQueryForName(name, new YUser()));
+		return query.getResultList();
 	}
 
 	@Override
 	@WebRemote
 	public List<YUser> getEntitiesUser(YUser entity) {
-		// TODO Auto-generated method stub
-		return null;
+		List<YUser> entities = new ArrayList<YUser>();
+		Query getEntities = yem.createQuery(GWTServletUtils
+				.getSearchQueryString(entity));
+		for (Object obj : getEntities.getResultList()) {
+			entities.add((YUser) getBeanManager().clone(obj));
+		}
+		return entities;
 	}
 
 	@Override
 	@WebRemote
 	public Map<Long, String> getListBoxValues(String[] columns) {
-		// TODO Auto-generated method stub
-		return null;
+		String query = GWTServletUtils.getListBoxResultsQueryString(
+				YUser.class.getCanonicalName(), columns);
+		Map<Long, String> values = new HashMap<Long, String>();
+		Query getListBoxValues = yem.createQuery(query);
+		for (Object obj : getListBoxValues.getResultList()) {
+			Object[] obs = (Object[]) obj;
+			values.put((Long) obs[0], (String) obs[1]);
+		}
+		return values;
 	}
 
 	@Override
 	@WebRemote
 	public List<YUser> searchUser(String searchText) {
-		// TODO Auto-generated method stub
-		return null;
+		List<YUser> results = new ArrayList<YUser>();
+		org.apache.lucene.search.Query luceneQuery = SearchUtils
+				.getLuceneQuery(searchText, "id", new StandardAnalyzer(),
+						ReflectionUtils.getBeanProperties(YUser.class,
+								info.yalamanchili.commons.DataType.STRING));
+		FullTextQuery query = SearchUtils.getFullTextSession(yem)
+				.createFullTextQuery(luceneQuery, YUser.class);
+		for (Object obj : query.list()) {
+			results.add((YUser) getBeanManager().clone((obj)));
+		}
+		return results;
 	}
 
 	public static <T extends Serializable> Long getEntitySize(EntityManager em,
