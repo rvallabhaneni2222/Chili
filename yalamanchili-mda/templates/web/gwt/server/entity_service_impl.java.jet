@@ -216,7 +216,7 @@ import org.jboss.seam.annotations.remoting.WebRemote;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.ScopeType;
 import info.yalamanchili.trace.Trace;
-
+import info.yalamanchili.server.GileadService;
 
 @Trace
 @Transactional
@@ -226,6 +226,9 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	private static final Log log = LogFactory
 			.getLog(${$class/@name}ServiceImpl.class);
 
+	public ${$class/@name}ServiceImpl() {
+		super("java:/${$projectName}");
+	}
 	//@In(create = true)
 	//protected GenericServiceLocal genericServiceBean;
 

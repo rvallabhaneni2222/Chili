@@ -12,9 +12,9 @@
 <c:setVariable select="'/Users/yphanikumar/codebase/zuzubi/trunk'" var="location"/>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <%--code generation properties--%>
-<c:setVariable select="'TRUE'" var="genMaster"/>
-<c:setVariable select="'TRUE'" var="genApp"/>
-<c:setVariable select="'TRUE'" var="genJPA"/>
+<c:setVariable select="'FALSE'" var="genMaster"/>
+<c:setVariable select="'FALSE'" var="genApp"/>
+<c:setVariable select="'FALSE'" var="genJPA"/>
 <c:setVariable select="'FALSE'" var="genEJB"/>
 <c:setVariable select="'FALSE'" var="genRest"/>
 <c:setVariable select="'TRUE'" var="genWebapp"/>
@@ -209,7 +209,6 @@
     	<%-- Current project servlet,startup component and GileadService  --%>
     	<ws:folder path="${$groupIDWithFolder}/server">
     	<ws:file  path="${camelCase($projectName)}ServiceImpl.java" template="templates/web/gwt/server/app_service_impl.java.jet"/>
-    	<ws:file  path="GileadService.java" template="templates/web/gwt/server/gilead_service.java.jet"/>
     	<ws:file  path="${camelCase($projectName)}Startup.java" template="templates/web/gwt/server/app_startup.java.jet"/>
     	</ws:folder>
     	

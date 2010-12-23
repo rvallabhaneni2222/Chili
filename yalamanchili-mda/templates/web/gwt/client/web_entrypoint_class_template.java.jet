@@ -11,6 +11,11 @@ package ${$groupID}.client;
     		 </c:if>	
 			 </c:iterate>
 	</c:iterate>
+import info.yalamanchili.gwt.security.user.ReadAllUsersPanel;
+import info.yalamanchili.gwt.security.user.ReadAllUsersPanel.YUserTableType;
+import info.yalamanchili.security.jpa.YRole;
+import info.yalamanchili.security.jpa.YUser;
+import info.yalamanchili.gwt.security.user.UserSideBar;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -19,8 +24,6 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.Command;
 import ${$webPackage}internalization.${camelCase($projectName)}Constants;
 import ${$webPackage}internalization.${camelCase($projectName)}Messages;
-import info.yalamanchili.security.jpa.YUser;
-import info.yalamanchili.security.jpa.YRole;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.dom.client.Style.Unit;
@@ -114,11 +117,15 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 			 </c:iterate> 
 	</c:iterate>
 	
+		MenuBar adminBar = new MenuBar(true);
+		adminBar.addItem("Users", userCmd);
 
 		MenuBar menu = new MenuBar();
 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
 		menu.addItem("${upper-case($package/@name)}", ${lower-case($package/@name)}Bar);
 		</c:iterate>
+		//TODO check admin role
+		menu.addItem("ADMIN", adminBar);
 
 		menuBar.add(menu);
 
@@ -145,7 +152,6 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 
 	}
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-    MenuBar ${lower-case($package/@name)}Bar = new MenuBar(true);
 			 <%-- iterate through class and add only non composite children and non parent--%>
 			 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
 			 	<c:if test="$class/@isDependent = 'false'">  
@@ -162,6 +168,20 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 			};
 				</c:if>
 			 </c:iterate> 
-	</c:iterate>	
+	</c:iterate>
+	//USERS ADMIN	
+		Command userCmd = new Command() {
+
+		@Override
+		public void execute() {
+			getEntityPanel().clear();
+			getEntityPanel().add(
+					new ReadAllUsersPanel(YUserTableType.READALL,
+							getEntityPanel(),getSidePanelTop(),getSidePanelBottom()));
+			getSidePanelTop().clear();
+			getSidePanelTop().add(new UserSideBar());
+		}
+
+	};
 }
 </java:format>

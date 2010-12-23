@@ -17,6 +17,7 @@ import org.jboss.seam.annotations.Transactional;
 import javax.persistence.Query;
 import info.yalamanchili.security.jpa.YUser;
 import info.yalamanchili.security.jpa.YRole;
+import info.yalamanchili.server.GileadService;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.ScopeType;
 
@@ -28,6 +29,10 @@ public class ${camelCase($projectName)}ServiceImpl extends GileadService impleme
 	private static final Log log = LogFactory
 			.getLog(${camelCase($projectName)}ServiceImpl.class);
 	
+	public ${camelCase($projectName)}ServiceImpl() {
+		super("java:/${$projectName}");
+	}
+		
 	@In(create = true)
 	protected EntityManager yem;
 
