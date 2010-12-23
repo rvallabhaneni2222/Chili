@@ -19,17 +19,17 @@ import org.jboss.seam.annotations.security.management.RoleName;
 public class YRole extends LightEntity {
 
 	private static final long serialVersionUID = 5472657332417332843L;
-	private Integer roleId;
+	private Long roleId;
 	private String rolename;
 	private Set<YRole> groups;
 
 	@Id
 	@GeneratedValue
-	public Integer getRoleId() {
+	public Long getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(Integer roleId) {
+	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
 	}
 

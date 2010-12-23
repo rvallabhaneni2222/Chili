@@ -21,7 +21,7 @@ public class YUser extends LightEntity {
 
 	private static final long serialVersionUID = 4093061330460788496L;
 
-	private Integer userId;
+	private Long userId;
 
 	private String username;
 	// TODO need to remove
@@ -32,11 +32,11 @@ public class YUser extends LightEntity {
 
 	@Id
 	@GeneratedValue
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
