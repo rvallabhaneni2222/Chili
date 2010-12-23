@@ -1,6 +1,8 @@
 package info.yalamanchili.gwt.rpc;
 
+import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.fields.DataType;
+import info.yalamanchili.security.jpa.YUser;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -39,5 +41,28 @@ public interface GWTServiceAsync {
 	//
 	// <T extends Serializable> void getFieldsDataFromEntity(T t,
 	// AsyncCallback<LinkedHashMap<String, Object>> data);
+	/* sercurity services async */
+	public void createUser(YUser entity, AsyncCallback<YUser> response);
+
+	public void readUser(Long id, AsyncCallback<YUser> response);
+
+	public void updateUser(YUser entity, AsyncCallback<YUser> response);
+
+	public void deleteUser(YUser entity, AsyncCallback<java.lang.Void> response);
+
+	public void getTableObjUser(int start,
+			AsyncCallback<TableObj<YUser>> response);
+
+	public void getSuggestionsForNameUser(String name, YUser entity,
+			AsyncCallback<List<String>> response);
+
+	public void getEntitiesUser(YUser entity,
+			AsyncCallback<List<YUser>> response);
+
+	public void getListBoxValues(String[] columns,
+			AsyncCallback<Map<Long, String>> response);
+
+	public void searchUser(String searchText,
+			AsyncCallback<List<YUser>> response);
 
 }

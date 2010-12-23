@@ -14,6 +14,7 @@ import info.yalamanchili.gwt.fields.PasswordField;
 import info.yalamanchili.gwt.fields.RichTextField;
 import info.yalamanchili.gwt.fields.StringField;
 import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
+import info.yalamanchili.gwt.utils.Utils;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -79,86 +80,92 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 		addWidgets();
 	}
 
-	protected String getAttributeLabel(String attribute) {
-		String key = classCanonicalName + "_" + attribute;
-		key = key.replace(".", "_");
-		logger.info(key);
-		try {
-			return constants.getString(key);
-			// TODO fix error with no source code available for
-			// missingresourceexception
-		} catch (Exception e) {
-			return attribute;
-		}
-
-	}
+	// // TODO has the same functionality(ReadAllComposite.protected String
+	// // getClassValue(String id)) need to merge these
+	// protected String getAttributeLabel(String attribute) {
+	// if (constants == null)
+	// return attribute;
+	// String key = classCanonicalName + "_" + attribute;
+	// key = key.replace(".", "_");
+	// logger.info(key);
+	// try {
+	// return constants.getString(key);
+	// } catch (MissingResourceException e) {
+	// return attribute;
+	// }
+	// }
 
 	protected void addField(String name, Boolean readOnly, Boolean isRequired,
 			DataType type) {
 		if (DataType.LONG_FIELD.equals(type)) {
-			LongField longField = new LongField(getAttributeLabel(name),
-					readOnly, isRequired);
+			LongField longField = new LongField(Utils.getAttributeLabel(name,
+					classCanonicalName, constants), readOnly, isRequired);
 			fields.put(name, longField);
 			entityDisplayWidget.add(longField);
 		}
 		if (DataType.INTEGER_FIELD.equals(type)) {
 			IntegerField integerField = new IntegerField(
-					getAttributeLabel(name), readOnly, isRequired);
+					Utils.getAttributeLabel(name, classCanonicalName, constants),
+					readOnly, isRequired);
 			fields.put(name, integerField);
 			entityDisplayWidget.add(integerField);
 		}
 		if (DataType.STRING_FIELD.equals(type)) {
-			StringField stringField = new StringField(getAttributeLabel(name),
-					readOnly, isRequired);
+			StringField stringField = new StringField(Utils.getAttributeLabel(
+					name, classCanonicalName, constants), readOnly, isRequired);
 			fields.put(name, stringField);
 			entityDisplayWidget.add(stringField);
 		}
 		if (DataType.DATE_FIELD.equals(type)) {
-			DateField dateField = new DateField(getAttributeLabel(name),
-					readOnly, isRequired);
+			DateField dateField = new DateField(Utils.getAttributeLabel(name,
+					classCanonicalName, constants), readOnly, isRequired);
 			fields.put(name, dateField);
 			entityDisplayWidget.add(dateField);
 		}
 		if (DataType.BOOLEAN_FIELD.equals(type)) {
 			BooleanField booleanField = new BooleanField(
-					getAttributeLabel(name), readOnly, isRequired);
+					Utils.getAttributeLabel(name, classCanonicalName, constants),
+					readOnly, isRequired);
 			fields.put(name, booleanField);
 			entityDisplayWidget.add(booleanField);
 		}
 		if (DataType.FLOAT_FIELD.equals(type)) {
-			FloatField floatField = new FloatField(getAttributeLabel(name),
-					readOnly, isRequired);
+			FloatField floatField = new FloatField(Utils.getAttributeLabel(
+					name, classCanonicalName, constants), readOnly, isRequired);
 			fields.put(name, floatField);
 			entityDisplayWidget.add(floatField);
 		}
 		if (DataType.PASSWORD_FIELD.equals(type)) {
 			PasswordField passwordField = new PasswordField(
-					getAttributeLabel(name));
+					Utils.getAttributeLabel(name, classCanonicalName, constants));
 			fields.put(name, passwordField);
 			entityDisplayWidget.add(passwordField);
 		}
 		if (DataType.DROPDOWN_FIELD.equals(type)) {
 			StringField dropDownField = new StringField(
-					getAttributeLabel(name), readOnly, isRequired);
+					Utils.getAttributeLabel(name, classCanonicalName, constants),
+					readOnly, isRequired);
 			fields.put(name, dropDownField);
 			entityDisplayWidget.add(dropDownField);
 		}
 		if (DataType.IMAGE_FIELD.equals(type)) {
-			ImageField imageField = new ImageField(getAttributeLabel(name),
-					readOnly, isRequired);
+			ImageField imageField = new ImageField(Utils.getAttributeLabel(
+					name, classCanonicalName, constants), readOnly, isRequired);
 			fields.put(name, imageField);
 			entityDisplayWidget.add(imageField);
 		}
 		if (DataType.RICH_TEXT_AREA.equals(type)) {
 			RichTextField richTextField = new RichTextField(
-					getAttributeLabel(name), readOnly, isRequired);
+					Utils.getAttributeLabel(name, classCanonicalName, constants),
+					readOnly, isRequired);
 			richTextField.addStyleName("y-gwt-RichTextField");
 			fields.put(name, richTextField);
 			entityDisplayWidget.add(richTextField);
 		}
 		if (DataType.CURRENCY_FIELD.equals(type)) {
 			CurrencyField currencyField = new CurrencyField(
-					getAttributeLabel(name), readOnly, isRequired);
+					Utils.getAttributeLabel(name, classCanonicalName, constants),
+					readOnly, isRequired);
 			currencyField.addStyleName("y-gwt-CurrencyField");
 			fields.put(name, currencyField);
 			entityDisplayWidget.add(currencyField);
@@ -167,8 +174,9 @@ public abstract class ReadUpdateCreateComposite<T extends LightEntity> extends
 
 	protected void addEnumField(String name, Boolean readOnly,
 			Boolean isRequired, String attributeName, String className) {
-		EnumField enumField = new EnumField(getAttributeLabel(name), readOnly,
-				isRequired, attributeName, className);
+		EnumField enumField = new EnumField(Utils.getAttributeLabel(name,
+				classCanonicalName, constants), readOnly, isRequired,
+				attributeName, className);
 		fields.put(name, enumField);
 		entityDisplayWidget.add(enumField);
 	}

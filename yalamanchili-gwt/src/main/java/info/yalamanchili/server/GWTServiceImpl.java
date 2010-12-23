@@ -1,10 +1,12 @@
 package info.yalamanchili.server;
 
 import info.yalamanchili.commons.ValidatorUtils;
+import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.rpc.GWTService;
 import info.yalamanchili.gwt.ui.DisplayType;
 import info.yalamanchili.gwt.ui.UIElement;
+import info.yalamanchili.security.jpa.YUser;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
@@ -20,25 +22,38 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import net.sf.gilead.pojo.gwt.LightEntity;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.remoting.WebRemote;
+import org.jboss.seam.log.Log;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
+/** this class acts as service for all server calls from y-gwt project widgets */
 @Transactional
 @Scope(ScopeType.SESSION)
 @Name("info.yalamanchili.gwt.rpc.GWTService")
-public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
+public class GWTServiceImpl extends GileadService implements GWTService {
+
+	public GWTServiceImpl() {
+		super("java:/yalamanchili");
+	}
 
 	private static final long serialVersionUID = 1L;
-	private static final Log log = LogFactory.getLog(GWTServiceImpl.class);
+	@Logger
+	private Log log;
+
+	@In(create = true)
+	protected EntityManager yem;
+
 	private static HashMap<String, LinkedHashMap<String, DataType>> entity_AttributeData = new HashMap<String, LinkedHashMap<String, DataType>>();
 	private static HashMap<String, LinkedHashMap<String, DataType>> entity_AttributeData_CAPS = new HashMap<String, LinkedHashMap<String, DataType>>();
 
@@ -56,9 +71,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			if (annotation instanceof UIElement) {
 				UIElement element = ((UIElement) annotation);
 				if (element.displayType() != null) {
-					log
-							.debug("display type"
-									+ element.displayType().toString());
+					log.debug("display type" + element.displayType().toString());
 					return element.displayType();
 				}
 			}
@@ -79,8 +92,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			LinkedHashMap<String, DataType> dataFields = new LinkedHashMap<String, DataType>();
 			Class<?> entity = getEntityClass(className);
 			for (Field field : GWTServletUtils.getEntityFieldsInOrder(entity)) {
-				dataFields.put(field.getName(), GWTServletUtils
-						.getDataType(field));
+				dataFields.put(field.getName(),
+						GWTServletUtils.getDataType(field));
 			}
 			entity_AttributeData.put(className, dataFields);
 			return dataFields;
@@ -96,8 +109,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		} else {
 			Class<?> entity = getEntityClass(className);
 			for (Field field : GWTServletUtils.getEntityFieldsInOrder(entity)) {
-				dataFields.put(field.getName().toUpperCase(), GWTServletUtils
-						.getDataType(field));
+				dataFields.put(field.getName().toUpperCase(),
+						GWTServletUtils.getDataType(field));
 			}
 			log.debug("class:" + className
 					+ " is a new class info adding info to map_CAPS");
@@ -347,5 +360,84 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			clazz = clazz.getSuperclass();
 		} while (!clazz.equals(LightEntity.class));
 		return classRelations;
+	}
+
+	@Override
+	@WebRemote
+	public YUser createUser(YUser entity) {
+		yem.persist(entity);
+		return entity;
+	}
+
+	@Override
+	@WebRemote
+	public YUser readUser(Long id) {
+		return yem.find(YUser.class, id);
+	}
+
+	@Override
+	@WebRemote
+	public YUser updateUser(YUser entity) {
+		return yem.merge(entity);
+	}
+
+	@Override
+	@WebRemote
+	public void deleteUser(YUser entity) {
+		yem.remove(entity);
+	}
+
+	@Override
+	@WebRemote
+	public TableObj<YUser> getTableObjUser(int start) {
+		List<YUser> users = new ArrayList<YUser>();
+		TableObj<YUser> tableObj = new TableObj<YUser>();
+		TypedQuery<YUser> getUsers = yem.createQuery(
+				"from " + YUser.class.getCanonicalName(), YUser.class);
+		getUsers.setFirstResult(start);
+		getUsers.setMaxResults(10);
+		for (YUser u : getUsers.getResultList()) {
+			users.add((YUser) getBeanManager().clone(u));
+		}
+		tableObj.setRecords(users);
+		tableObj.setNumberOfRecords(GWTServiceImpl.getEntitySize(yem,
+				YUser.class));
+		return tableObj;
+	}
+
+	@Override
+	@WebRemote
+	public List<String> getSuggestionsForNameUser(String name, YUser entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	@WebRemote
+	public List<YUser> getEntitiesUser(YUser entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	@WebRemote
+	public Map<Long, String> getListBoxValues(String[] columns) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	@WebRemote
+	public List<YUser> searchUser(String searchText) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static <T extends Serializable> Long getEntitySize(EntityManager em,
+			Class<?> clazz) {
+		String query = "select count(entity) from " + clazz.getCanonicalName()
+				+ " entity";
+		Query getEntitiesSize = em.createQuery(query);
+		return (Long) getEntitiesSize.getSingleResult();
 	}
 }

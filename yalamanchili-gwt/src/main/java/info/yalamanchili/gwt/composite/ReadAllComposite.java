@@ -3,10 +3,10 @@ package info.yalamanchili.gwt.composite;
 import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.fields.ListBoxField;
 import info.yalamanchili.gwt.utils.Alignment;
+import info.yalamanchili.gwt.utils.Utils;
 import info.yalamanchili.gwt.widgets.ClickableLink;
 
 import java.util.List;
-import java.util.MissingResourceException;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -15,9 +15,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.HTMLTable.Cell;
 
 public abstract class ReadAllComposite<T> extends ALComposite implements
 		ClickHandler, ChangeHandler {
@@ -56,14 +56,6 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 	/** The no of results l. */
 	protected Label noOfResultsL = new Label("Total Results:");
 
-	/**
-	 * Inits the table.
-	 * 
-	 * @param classCanonicalName
-	 *            the class canonical name
-	 * @param constants
-	 *            the constants
-	 */
 	protected void initTable(T t, ConstantsWithLookup constants) {
 		this.classCanonicalName = t.getClass().getName();
 		this.constants = constants;
@@ -99,22 +91,12 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 		tablePanel.addStyleName("y-gwt-TablePanel");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see info.yalamanchili.gwt.composite.ALComposite#addListeners()
-	 */
 	@Override
 	protected void addListeners() {
 		goToPage.addChangeHandler(this);
 		table.addClickHandler(this);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see info.yalamanchili.gwt.composite.ALComposite#addWidgets()
-	 */
 	@Override
 	protected void addWidgets() {
 		pagingPanel.add(goToPage);
@@ -149,9 +131,6 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 		}
 	}
 
-	/**
-	 * Configure table.
-	 */
 	public abstract void preFetchTable(int start);
 
 	public void postFetchTable(TableObj table) {
@@ -167,108 +146,42 @@ public abstract class ReadAllComposite<T> extends ALComposite implements
 
 	public abstract void createTableHeader();
 
-	/**
-	 * Creates the view icon.
-	 * 
-	 * @param row
-	 *            the row
-	 * @param id
-	 *            the id
-	 */
 	protected void createViewIcon(int row, Long id) {
 		ClickableLink link = new ClickableLink("view");
 		link.setTitle(id.toString());
 		table.setWidget(row, 0, link);
 	}
 
-	/**
-	 * Gets the entity id.
-	 * 
-	 * @param row
-	 *            the row
-	 * 
-	 * @return the entity id
-	 */
 	protected Long getEntityId(int row) {
 		return new Long(table.getWidget(row, 0).getTitle());
 	}
 
 	public abstract void fillData(List<T> entities);
 
-	/**
-	 * View clicked.
-	 * 
-	 * @param row
-	 *            the row
-	 * @param col
-	 *            the col
-	 */
 	public abstract void viewClicked(int row, int col);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user
-	 * .client.ui.Widget)
-	 */
 	public void onClick(ClickEvent event) {
 		if (event.getSource() == table) {
 			Cell clickedCell = table.getCellForEvent(event);
 			if (clickedCell != null && clickedCell.getRowIndex() != 0)
-				viewClicked(clickedCell.getRowIndex(), clickedCell
-						.getCellIndex());
+				viewClicked(clickedCell.getRowIndex(),
+						clickedCell.getCellIndex());
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.client.ui.ChangeListener#onChange(com.google.gwt.
-	 * user.client.ui.Widget)
-	 */
 	public void onChange(ChangeEvent event) {
 		if (event.getSource() == goToPage.getListBox()) {
 			preFetchTable((goToPage.getValue().intValue() * pageSize) - 10);
 		}
 	}
 
-	/**
-	 * Gets the class value.
-	 * 
-	 * @param id
-	 *            the id
-	 * 
-	 * @return the class value
-	 */
+	// TODO move to pakage gwt.utils.Utils.java
 	protected String getClassValue(String id) {
-		String property = classCanonicalName.replace(".", "_") + "_" + id;
-		String value = "";
-		try {
-			value = constants.getString(property);
-		} catch (MissingResourceException e) {
-			value = id;
-		}
-		return value;
+		return Utils.getAttributeLabel(id, classCanonicalName, constants);
 	}
 
-	/**
-	 * Gets the key value.
-	 * 
-	 * @param id
-	 *            the id
-	 * 
-	 * @return the key value
-	 */
+	// TODO move to pakage gwt.utils.Utils.java
 	protected String getKeyValue(String id) {
-		String value = "";
-		try {
-			value = constants.getString(id);
-		} catch (MissingResourceException e) {
-			value = id;
-		}
-		return value;
+		return Utils.getKeyValue(id, constants);
 	}
-
 }
