@@ -18,6 +18,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+//TODO can merge the class methods into Gileadservice
 public class GWTServletUtils {
 	private static final Log log = LogFactory.getLog(GWTServletUtils.class);
 
@@ -69,9 +70,7 @@ public class GWTServletUtils {
 			if (annotation instanceof UIElement) {
 				UIElement element = ((UIElement) annotation);
 				if (element.displayType() != null) {
-					log
-							.debug("display type"
-									+ element.displayType().toString());
+					log.debug("display type" + element.displayType().toString());
 					return element.displayType();
 				}
 			}

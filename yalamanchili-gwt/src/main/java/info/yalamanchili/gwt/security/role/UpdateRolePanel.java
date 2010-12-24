@@ -1,40 +1,39 @@
-package info.yalamanchili.gwt.security.user;
+package info.yalamanchili.gwt.security.role;
 
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.UpdateComposite;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.security.AdminService.AdminServiceAsync;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
+import info.yalamanchili.security.jpa.YRole;
 import info.yalamanchili.security.jpa.YUser;
 
-public class UpdateUserPanel extends UpdateComposite<YUser> {
+public class UpdateRolePanel extends UpdateComposite<YRole> {
 
-	public UpdateUserPanel() {
+	public UpdateRolePanel() {
 		initUpdateComposite(YUser.class.getName(), null);
 	}
 
 	@Override
-	public YUser populateEntityOnRender() {
-		entity = ReadUserPanel.instance().getEntity();
-		setField("username", entity.getUsername());
-		setField("passwordHash", entity.getPasswordHash());
+	public YRole populateEntityOnRender() {
+		entity = ReadRolePanel.instance().getEntity();
+		setField("rolename", entity.getRolename());
 		return entity;
 	}
 
 	@Override
-	public YUser populateEntityOnUpdate() {
-		entity.setUsername(getStringField("username"));
-		entity.setPasswordHash(getStringField("passwordHash"));
+	public YRole populateEntityOnUpdate() {
+		entity.setRolename(getStringField("rolename"));
 		return entity;
 	}
 
 	@Override
 	public void updateButtonClicked() {
-		AdminServiceAsync.instance().updateUser(entity,
-				new ALAsyncCallback<YUser>() {
+		AdminServiceAsync.instance().updateRole(entity,
+				new ALAsyncCallback<YRole>() {
 
 					@Override
-					public void onResponse(YUser user) {
+					public void onResponse(YRole user) {
 						new ResponseStatusWidget().show("updated");
 					}
 
@@ -55,8 +54,7 @@ public class UpdateUserPanel extends UpdateComposite<YUser> {
 
 	@Override
 	protected void addWidgets() {
-		addField("username", false, true, DataType.STRING_FIELD);
-		addField("passwordHash", false, false, DataType.STRING_FIELD);
+		addField("rolename", false, true, DataType.STRING_FIELD);
 	}
 
 	@Override

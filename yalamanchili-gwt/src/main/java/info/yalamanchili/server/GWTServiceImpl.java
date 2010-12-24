@@ -8,6 +8,7 @@ import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.rpc.GWTService;
 import info.yalamanchili.gwt.ui.DisplayType;
 import info.yalamanchili.gwt.ui.UIElement;
+import info.yalamanchili.security.jpa.YRole;
 import info.yalamanchili.security.jpa.YUser;
 
 import java.io.Serializable;
@@ -54,9 +55,6 @@ public class GWTServiceImpl extends GileadService implements GWTService {
 	private static final long serialVersionUID = 1L;
 	@Logger
 	private Log log;
-
-	@In(create = true)
-	protected EntityManager yem;
 
 	private static HashMap<String, LinkedHashMap<String, DataType>> entity_AttributeData = new HashMap<String, LinkedHashMap<String, DataType>>();
 	private static HashMap<String, LinkedHashMap<String, DataType>> entity_AttributeData_CAPS = new HashMap<String, LinkedHashMap<String, DataType>>();
@@ -351,7 +349,8 @@ public class GWTServiceImpl extends GileadService implements GWTService {
 		List<String> classRelations = new ArrayList<String>();
 		do {
 			for (Field field : clazz.getDeclaredFields()) {
-				if (field.getType().equals(java.util.List.class)) {
+				if (field.getType().equals(java.util.List.class)
+						|| field.getType().equals(java.util.Set.class)) {
 					ParameterizedType type = (ParameterizedType) field
 							.getGenericType();
 					Type[] typeArguments = type.getActualTypeArguments();
@@ -366,105 +365,4 @@ public class GWTServiceImpl extends GileadService implements GWTService {
 		return classRelations;
 	}
 
-	/* security */
-
-	@Override
-	@WebRemote
-	public YUser createUser(YUser entity) {
-		return (YUser) getBeanManager().clone(yem.merge(entity));
-	}
-
-	@Override
-	@WebRemote
-	public YUser readUser(Long id) {
-		return (YUser) getBeanManager().clone(yem.find(YUser.class, id));
-	}
-
-	@Override
-	@WebRemote
-	public YUser updateUser(YUser entity) {
-		return (YUser) getBeanManager().merge(yem.merge(entity));
-	}
-
-	@Override
-	@WebRemote
-	public void deleteUser(YUser entity) {
-		yem.remove(entity);
-	}
-
-	@Override
-	@WebRemote
-	public TableObj<YUser> getTableObjUser(int start) {
-		List<YUser> users = new ArrayList<YUser>();
-		TableObj<YUser> tableObj = new TableObj<YUser>();
-		TypedQuery<YUser> getUsers = yem.createQuery(
-				"from " + YUser.class.getCanonicalName(), YUser.class);
-		getUsers.setFirstResult(start);
-		getUsers.setMaxResults(10);
-		for (YUser u : getUsers.getResultList()) {
-			users.add((YUser) getBeanManager().clone(u));
-		}
-		tableObj.setRecords(users);
-		tableObj.setNumberOfRecords(GWTServiceImpl.getEntitySize(yem,
-				YUser.class));
-		return tableObj;
-	}
-
-	@Override
-	@WebRemote
-	public List<String> getSuggestionsForNameUser(String name, YUser entity) {
-		Query query = yem.createQuery(GWTServletUtils
-				.getSuggestionsQueryForName(name, new YUser()));
-		return query.getResultList();
-	}
-
-	@Override
-	@WebRemote
-	public List<YUser> getEntitiesUser(YUser entity) {
-		List<YUser> entities = new ArrayList<YUser>();
-		Query getEntities = yem.createQuery(GWTServletUtils
-				.getSearchQueryString(entity));
-		for (Object obj : getEntities.getResultList()) {
-			entities.add((YUser) getBeanManager().clone(obj));
-		}
-		return entities;
-	}
-
-	@Override
-	@WebRemote
-	public Map<Long, String> getListBoxValues(String[] columns) {
-		String query = GWTServletUtils.getListBoxResultsQueryString(
-				YUser.class.getCanonicalName(), columns);
-		Map<Long, String> values = new HashMap<Long, String>();
-		Query getListBoxValues = yem.createQuery(query);
-		for (Object obj : getListBoxValues.getResultList()) {
-			Object[] obs = (Object[]) obj;
-			values.put((Long) obs[0], (String) obs[1]);
-		}
-		return values;
-	}
-
-	@Override
-	@WebRemote
-	public List<YUser> searchUser(String searchText) {
-		List<YUser> results = new ArrayList<YUser>();
-		org.apache.lucene.search.Query luceneQuery = SearchUtils
-				.getLuceneQuery(searchText, "id", new StandardAnalyzer(),
-						ReflectionUtils.getBeanProperties(YUser.class,
-								info.yalamanchili.commons.DataType.STRING));
-		FullTextQuery query = SearchUtils.getFullTextSession(yem)
-				.createFullTextQuery(luceneQuery, YUser.class);
-		for (Object obj : query.list()) {
-			results.add((YUser) getBeanManager().clone((obj)));
-		}
-		return results;
-	}
-
-	public static <T extends Serializable> Long getEntitySize(EntityManager em,
-			Class<?> clazz) {
-		String query = "select count(entity) from " + clazz.getCanonicalName()
-				+ " entity";
-		Query getEntitiesSize = em.createQuery(query);
-		return (Long) getEntitiesSize.getSingleResult();
-	}
 }

@@ -1,19 +1,20 @@
-package info.yalamanchili.gwt.security.user;
+package info.yalamanchili.gwt.security.role;
 
 import info.yalamanchili.gwt.composite.CreateComposite.CreateCompositeType;
 import info.yalamanchili.gwt.composite.OptionsComposite;
+import info.yalamanchili.gwt.composite.SelectComposite.SelectCompositeType;
 import info.yalamanchili.gwt.security.SecurityWelcome;
 import info.yalamanchili.gwt.utils.Alignment;
 
 import com.google.gwt.user.client.Window;
 
-public class UserOptionsPanel extends OptionsComposite {
+public class RoleOptionsPanel extends OptionsComposite {
 
-	public UserOptionsPanel(OptionsCompositeType type) {
+	public RoleOptionsPanel(OptionsCompositeType type) {
 		super(type);
 	}
 
-	public UserOptionsPanel(Alignment alignment, OptionsCompositeType type) {
+	public RoleOptionsPanel(Alignment alignment, OptionsCompositeType type) {
 		super(alignment, type);
 	}
 
@@ -26,7 +27,7 @@ public class UserOptionsPanel extends OptionsComposite {
 	@Override
 	public void updateLinkClicked() {
 		SecurityWelcome.entityPanel.clear();
-		SecurityWelcome.entityPanel.add(new UpdateUserPanel());
+		SecurityWelcome.entityPanel.add(new UpdateRolePanel());
 	}
 
 	@Override
@@ -49,7 +50,7 @@ public class UserOptionsPanel extends OptionsComposite {
 	@Override
 	public void createLinkClicked() {
 		SecurityWelcome.entityPanel.clear();
-		SecurityWelcome.entityPanel.add(new CreateUserPanel(
+		SecurityWelcome.entityPanel.add(new CreateRolePanel(
 				CreateCompositeType.CREATE));
 	}
 
@@ -60,6 +61,8 @@ public class UserOptionsPanel extends OptionsComposite {
 
 	@Override
 	public void addAllLinkClicked() {
-
+		SecurityWelcome.entityPanel.clear();
+		SecurityWelcome.entityPanel.add(new SelectRolePanel("YRole",
+				SelectCompositeType.ALL));
 	}
 }

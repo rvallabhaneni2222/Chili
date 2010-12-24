@@ -4,7 +4,7 @@ import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
 import info.yalamanchili.gwt.composite.ReadComposite;
 import info.yalamanchili.gwt.fields.DataType;
-import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
+import info.yalamanchili.gwt.security.AdminService.AdminServiceAsync;
 import info.yalamanchili.security.jpa.YUser;
 
 public class ReadUserPanel extends ReadComposite<YUser> {
@@ -23,7 +23,7 @@ public class ReadUserPanel extends ReadComposite<YUser> {
 
 	@Override
 	protected void readData(Long id) {
-		GwtServiceAsync.instance().readUser(id, new ALAsyncCallback<YUser>() {
+		AdminServiceAsync.instance().readUser(id, new ALAsyncCallback<YUser>() {
 
 			@Override
 			public void onResponse(YUser user) {

@@ -1,4 +1,4 @@
-package info.yalamanchili.gwt.security.user;
+package info.yalamanchili.gwt.security.role;
 
 import info.yalamanchili.gwt.composite.CreateComposite.CreateCompositeType;
 import info.yalamanchili.gwt.composite.SideBarComposite;
@@ -13,26 +13,26 @@ import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.LazyPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class UserSideBar extends SideBarComposite {
-	private static UserSideBar instance;
+public class RoleSideBar extends SideBarComposite {
+	private static RoleSideBar instance;
 
-	public static UserSideBar instance() {
+	public static RoleSideBar instance() {
 		return instance;
 	}
 
-	ClickableLink createLink = new ClickableLink("Create User");
+	ClickableLink createLink = new ClickableLink("Create Role");
 	FindWidget findWidget = new FindWidget(this);
 
-	private static class UserLazySearchPanel extends LazyPanel {
+	private static class RoleLazySearchPanel extends LazyPanel {
 		@Override
 		protected Widget createWidget() {
-			return new UserSearchPanelGeneric();
+			return new RoleSearchPanelGeneric();
 		}
 	}
 
-	UserLazySearchPanel userLazySearchPanel = new UserLazySearchPanel();
+	RoleLazySearchPanel roleLazySearchPanel = new RoleLazySearchPanel();
 
-	public UserSideBar() {
+	public RoleSideBar() {
 		instance = this;
 		initSideBarComposite();
 	}
@@ -44,7 +44,7 @@ public class UserSideBar extends SideBarComposite {
 
 	@Override
 	protected void configure() {
-		panel.addStyleName("UserSidePanel");
+		panel.addStyleName("RoleSidePanel");
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class UserSideBar extends SideBarComposite {
 
 	protected void createLinkClicked() {
 		SecurityWelcome.entityPanel.clear();
-		SecurityWelcome.entityPanel.add(new CreateUserPanel(
+		SecurityWelcome.entityPanel.add(new CreateRolePanel(
 				CreateCompositeType.CREATE));
 	}
 
@@ -73,12 +73,13 @@ public class UserSideBar extends SideBarComposite {
 
 	@Override
 	public void onSearchClose(CloseEvent<DisclosurePanel> arg0) {
-		searchPanel.remove(userLazySearchPanel);
+		searchPanel.remove(roleLazySearchPanel);
 	}
 
 	@Override
 	public void onSearchOpen(OpenEvent<DisclosurePanel> arg0) {
-		searchPanel.add(userLazySearchPanel);
-		userLazySearchPanel.setVisible(true);
+		searchPanel.add(roleLazySearchPanel);
+		roleLazySearchPanel.setVisible(true);
 	}
+
 }

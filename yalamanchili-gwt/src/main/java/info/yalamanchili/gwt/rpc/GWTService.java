@@ -1,8 +1,6 @@
 package info.yalamanchili.gwt.rpc;
 
-import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.fields.DataType;
-import info.yalamanchili.security.jpa.YUser;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -39,25 +37,6 @@ public interface GWTService extends RemoteService {
 	// <T extends Serializable> LinkedHashMap<String, Object>
 	// getFieldsDataFromEntity(
 	// T t);
-
-	/* services for security maintaincence */
-	public YUser createUser(YUser entity);
-
-	public YUser readUser(Long id);
-
-	public YUser updateUser(YUser entity);
-
-	public void deleteUser(YUser entity);
-
-	public TableObj<YUser> getTableObjUser(int start);
-
-	public List<String> getSuggestionsForNameUser(String name, YUser entity);
-
-	public List<YUser> getEntitiesUser(YUser entity);
-
-	public Map<Long, String> getListBoxValues(String[] columns);
-
-	public List<YUser> searchUser(String searchText);
 
 	public static class GwtServiceAsync {
 

@@ -35,11 +35,6 @@ public abstract class TreePanelComposite<T> extends Composite implements
 	protected Tree tree = new Tree();
 	protected TreeItem rootNode = new TreeItem("root");
 
-	/**
-	 * Gets the entity.
-	 * 
-	 * @return the entity
-	 */
 	public T getEntity() {
 		return entity;
 	}
@@ -85,19 +80,10 @@ public abstract class TreePanelComposite<T> extends Composite implements
 		}
 	}
 
-	/**
-	 * Adds the listeners.
-	 */
 	protected abstract void addListeners();
 
-	/**
-	 * Configure.
-	 */
 	protected abstract void configure();
 
-	/**
-	 * Adds the widgets.
-	 */
 	protected abstract void addWidgets();
 
 	public void onClick(ClickEvent event) {
@@ -113,12 +99,6 @@ public abstract class TreePanelComposite<T> extends Composite implements
 
 	public abstract void linkClicked(String entiyName);
 
-	/**
-	 * Load entity.
-	 * 
-	 * @param id
-	 *            the id
-	 */
 	public abstract T loadEntity();
 
 	protected String getClassSimpleName(String name) {
