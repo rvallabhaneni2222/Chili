@@ -438,7 +438,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 													addMethod = method;
 												}
 											}
-											${lower-case($class2/@name)} = em.merge(${lower-case($class2/@name)});
+											${lower-case($class2/@name)} = em.find(${$class2/@name}.class,${lower-case($class2/@name)}.getId());
 											for (Long id : ids) {
 												${$class/@name} child = (${$class/@name}) em.find(${lower-case($class/@name)}.getClass(), id);
 												if (child == null) {

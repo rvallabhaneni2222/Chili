@@ -11,8 +11,8 @@ package ${$groupID}.client;
     		 </c:if>	
 			 </c:iterate>
 	</c:iterate>
-import info.yalamanchili.gwt.security.user.ReadAllUsersPanel;
-import info.yalamanchili.gwt.security.user.ReadAllUsersPanel.YUserTableType;
+import info.yalamanchili.gwt.security.SecurityWelcome;
+import info.yalamanchili.gwt.security.SecurityWelcome.CMD_TYPE;
 import info.yalamanchili.security.jpa.YRole;
 import info.yalamanchili.security.jpa.YUser;
 import info.yalamanchili.gwt.security.user.UserSideBar;
@@ -119,7 +119,8 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 	
 		MenuBar adminBar = new MenuBar(true);
 		adminBar.addItem("Users", userCmd);
-
+		adminBar.addItem("Roles", roleCmd);
+		
 		MenuBar menu = new MenuBar();
 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
 		menu.addItem("${upper-case($package/@name)}", ${lower-case($package/@name)}Bar);
@@ -174,14 +175,22 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 
 		@Override
 		public void execute() {
-			getEntityPanel().clear();
-			getEntityPanel().add(
-					new ReadAllUsersPanel(YUserTableType.READALL,
-							getEntityPanel(),getSidePanelTop(),getSidePanelBottom()));
-			getSidePanelTop().clear();
-			getSidePanelTop().add(new UserSideBar());
+			new SecurityWelcome(CMD_TYPE.USER,getEntityPanel(), getSidePanelTop(),
+					getSidePanelBottom());
 		}
 
 	};
+	
+
+	// ROLES ADMIN
+	Command roleCmd = new Command() {
+
+		@Override
+		public void execute() {
+			new SecurityWelcome(CMD_TYPE.ROLE, getEntityPanel(),
+					getSidePanelTop(), getSidePanelBottom());
+		}
+
+	};	
 }
 </java:format>
