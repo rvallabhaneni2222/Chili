@@ -72,4 +72,8 @@ public class YUser extends LightEntity {
 		this.roles = roles;
 	}
 
+	public void addRole(YRole role) {
+		this.getRoles().add(role);
+	}
+
 }
