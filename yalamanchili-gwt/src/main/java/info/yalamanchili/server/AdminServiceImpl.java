@@ -2,6 +2,7 @@ package info.yalamanchili.server;
 
 import info.yalamanchili.commons.ReflectionUtils;
 import info.yalamanchili.commons.SearchUtils;
+import info.yalamanchili.gwt.beans.MultiSelectObj;
 import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.security.AdminService;
 import info.yalamanchili.security.jpa.YRole;
@@ -10,8 +11,10 @@ import info.yalamanchili.security.jpa.YUser;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -114,6 +117,20 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 			values.put((Long) obs[0], (String) obs[1]);
 		}
 		return values;
+	}
+
+	@Override
+	@WebRemote
+	public MultiSelectObj getUserRoles(YUser user, String[] columns) {
+		user = yem.find(YUser.class, user.getUserId());
+		Set<Long> ids = new HashSet<Long>();
+		MultiSelectObj obj = new MultiSelectObj();
+		obj.setAvailable(getListBoxValuesRole(columns));
+		for (YRole role : user.getRoles()) {
+			ids.add(role.getRoleId());
+		}
+		obj.setSelected(ids);
+		return obj;
 	}
 
 	@Override

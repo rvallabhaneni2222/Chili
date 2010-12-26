@@ -19,6 +19,10 @@ public class Utils {
 		return DateTimeFormat.getShortDateFormat().format(date);
 	}
 
+	public static String getClassSimpleName(String name) {
+		return (name.substring(name.lastIndexOf(".") + 1));
+	}
+
 	public static String entityToString(Object entity) {
 		if (entity == null) {
 			return "";

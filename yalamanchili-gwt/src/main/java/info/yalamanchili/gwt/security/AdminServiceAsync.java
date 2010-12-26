@@ -1,5 +1,6 @@
 package info.yalamanchili.gwt.security;
 
+import info.yalamanchili.gwt.beans.MultiSelectObj;
 import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.security.jpa.YRole;
 import info.yalamanchili.security.jpa.YUser;
@@ -31,6 +32,9 @@ public interface AdminServiceAsync {
 
 	public void getListBoxValues(String[] columns,
 			AsyncCallback<Map<Long, String>> response);
+
+	public void getUserRoles(YUser user, String[] columns,
+			AsyncCallback<MultiSelectObj> response);
 
 	public void searchUser(String searchText,
 			AsyncCallback<List<YUser>> response);

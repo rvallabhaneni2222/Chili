@@ -1,5 +1,6 @@
 package info.yalamanchili.gwt.security;
 
+import info.yalamanchili.gwt.beans.MultiSelectObj;
 import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.security.jpa.YRole;
 import info.yalamanchili.security.jpa.YUser;
@@ -28,6 +29,8 @@ public interface AdminService extends RemoteService {
 	public List<YUser> getEntitiesUser(YUser entity);
 
 	public Map<Long, String> getListBoxValues(String[] columns);
+
+	public MultiSelectObj getUserRoles(YUser user, String[] columns);
 
 	public List<YUser> searchUser(String searchText);
 

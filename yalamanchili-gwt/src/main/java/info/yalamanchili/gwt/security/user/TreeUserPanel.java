@@ -1,16 +1,13 @@
 package info.yalamanchili.gwt.security.user;
 
+import info.yalamanchili.gwt.beans.MultiSelectObj;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
-import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
 import info.yalamanchili.gwt.composite.TreePanelComposite;
 import info.yalamanchili.gwt.security.AdminService.AdminServiceAsync;
 import info.yalamanchili.gwt.security.SecurityWelcome;
-import info.yalamanchili.gwt.security.role.ReadAllRolesPanel;
-import info.yalamanchili.gwt.security.role.RoleOptionsPanel;
+import info.yalamanchili.gwt.security.role.SelectRolePanel;
 import info.yalamanchili.security.jpa.YRole;
 import info.yalamanchili.security.jpa.YUser;
-
-import java.util.List;
 
 public class TreeUserPanel extends TreePanelComposite<YUser> {
 	private static TreeUserPanel instance;
@@ -48,27 +45,33 @@ public class TreeUserPanel extends TreePanelComposite<YUser> {
 	}
 
 	@Override
-	public void linkClicked(final String link) {
+	public void treeNodeSelected(final String link) {
 
-		if (link.contains(YRole.class.getName())) {
-			AdminServiceAsync.instance().getRolesForUser(entity.getUserId(),
-					new ALAsyncCallback<List<YRole>>() {
+		if (YRole.class.getName().contains(link)) {
+			String[] columns = { "rolename", };
+			AdminServiceAsync.instance().getUserRoles(entity, columns,
+					new ALAsyncCallback<MultiSelectObj>() {
 
 						@Override
-						public void onResponse(List<YRole> roles) {
-							ReadAllRolesPanel readAllRolesPanel = new ReadAllRolesPanel(
-									roles);
+						public void onResponse(MultiSelectObj arg0) {
 							SecurityWelcome.entityPanel.clear();
-							SecurityWelcome.entityPanel.add(readAllRolesPanel);
 							SecurityWelcome.entityPanel
-									.add(new RoleOptionsPanel(
-											OptionsCompositeType.ADD_ALL));
+									.add(new SelectRolePanel("Select Roles",
+											arg0.getAvailable(), arg0
+													.getSelected()));
 
 						}
 
 					});
 
 		}
+
+	}
+
+	@Override
+	public void showEntity() {
+		SecurityWelcome.entityPanel.clear();
+		SecurityWelcome.entityPanel.add(new ReadUserPanel(entity.getUserId()));
 
 	}
 }

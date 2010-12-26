@@ -2,38 +2,28 @@ package info.yalamanchili.gwt.composite;
 
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
-import info.yalamanchili.gwt.widgets.ClickableLink;
+import info.yalamanchili.gwt.utils.Utils;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class TreePanelComposite.
- */
 public abstract class TreePanelComposite<T> extends Composite implements
-		ClickHandler {
+		SelectionHandler<TreeItem> {
 	Logger logger = Logger.getLogger(TreePanelComposite.class.getName());
-	protected Map<String, ClickableLink> links = new HashMap<String, ClickableLink>();
-	/** The entity. */
+
 	protected T entity;
 
-	/** The panel. */
 	protected FlowPanel panel = new FlowPanel();
 
-	/** The tree. */
 	protected Tree tree = new Tree();
-	protected TreeItem rootNode = new TreeItem("root");
+	protected TreeItem rootItem = new TreeItem("root");
 
 	public T getEntity() {
 		return entity;
@@ -46,8 +36,8 @@ public abstract class TreePanelComposite<T> extends Composite implements
 	public void initTreePanelComposite(String className) {
 		panel.add(tree);
 		panel.addStyleName("y-gwt-TreePanel");
-		rootNode.setText(getClassSimpleName(className));
-		tree.addItem(rootNode);
+		addRooNode(className);
+		tree.addSelectionHandler(this);
 		GwtServiceAsync.instance().getClassRelations(className,
 				new ALAsyncCallback<List<String>>() {
 
@@ -65,18 +55,41 @@ public abstract class TreePanelComposite<T> extends Composite implements
 
 	}
 
+	public void onSelection(SelectionEvent<TreeItem> event) {
+		entity = loadEntity();
+		entity.getClass().getName();
+		TreeItem selectedItem = (TreeItem) event.getSelectedItem();
+		TreeItem root = tree.getItem(0);
+		if (root.equals(selectedItem)) {
+			logger.info("root selected");
+			showEntity();
+		} else {
+			logger.info("treemode lsee:" + selectedItem.getTitle());
+			treeNodeSelected(selectedItem.getTitle());
+		}
+	}
+
+	protected void addRooNode(String className) {
+		rootItem.setText(Utils.getClassSimpleName(className).toLowerCase());
+		rootItem.setTitle(Utils.getClassSimpleName(className));
+		rootItem.addStyleName("y-gwt-treePanelComposite-Node");
+		tree.addItem(rootItem);
+	}
+
 	protected void addFirstChildLink(String name) {
-		ClickableLink link = new ClickableLink(getClassSimpleName(name));
-		rootNode.addItem(link);
-		links.put(name, link);
-		link.addClickHandler(this);
+		TreeItem child = new TreeItem(Utils.getClassSimpleName(name).toLowerCase());
+		child.addStyleName("y-gwt-treePanelComposite-Node");
+		child.setTitle(Utils.getClassSimpleName(name));
+		rootItem.addItem(child);
 	}
 
 	protected void removeFirstChildLink(String className) {
-		if (links.containsKey(className)) {
-			links.remove(className);
-		} else {
-			logger.log(Level.INFO, "link not present:" + className);
+		TreeItem root = tree.getItem(0);
+		for (int i = 0; i < root.getChildCount(); i++) {
+			TreeItem child = root.getChild(i);
+			if (className.contains(child.getTitle())) {
+				child.remove();
+			}
 		}
 	}
 
@@ -86,22 +99,11 @@ public abstract class TreePanelComposite<T> extends Composite implements
 
 	protected abstract void addWidgets();
 
-	public void onClick(ClickEvent event) {
-		entity = loadEntity();
-
-		for (String link : links.keySet()) {
-			if (event.getSource().equals(links.get(link))) {
-				linkClicked(link);
-			}
-		}
-
-	}
-
-	public abstract void linkClicked(String entiyName);
+	// TODO rename to treenode clicked
+	public abstract void treeNodeSelected(String entiyName);
 
 	public abstract T loadEntity();
 
-	protected String getClassSimpleName(String name) {
-		return (name.substring(name.lastIndexOf(".") + 1)).toLowerCase();
-	}
+	public abstract void showEntity();
+
 }

@@ -45,9 +45,9 @@ public class TreeRolePanel extends TreePanelComposite<YRole> {
 	}
 
 	@Override
-	public void linkClicked(final String link) {
+	public void treeNodeSelected(final String link) {
 
-		if (link.contains(YRole.class.getName())) {
+		if (YRole.class.getName().contains(link)) {
 			AdminServiceAsync.instance().getRolesForRole(entity.getRoleId(),
 					new ALAsyncCallback<List<YRole>>() {
 
@@ -66,6 +66,13 @@ public class TreeRolePanel extends TreePanelComposite<YRole> {
 					});
 
 		}
+
+	}
+
+	@Override
+	public void showEntity() {
+		SecurityWelcome.entityPanel.clear();
+		SecurityWelcome.entityPanel.add(new ReadRolePanel(entity.getRoleId()));
 
 	}
 

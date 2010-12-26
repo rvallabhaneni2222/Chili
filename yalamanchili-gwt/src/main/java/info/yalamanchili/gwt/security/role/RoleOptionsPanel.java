@@ -2,7 +2,6 @@ package info.yalamanchili.gwt.security.role;
 
 import info.yalamanchili.gwt.composite.CreateComposite.CreateCompositeType;
 import info.yalamanchili.gwt.composite.OptionsComposite;
-import info.yalamanchili.gwt.composite.SelectComposite.SelectCompositeType;
 import info.yalamanchili.gwt.security.SecurityWelcome;
 import info.yalamanchili.gwt.utils.Alignment;
 
@@ -61,8 +60,6 @@ public class RoleOptionsPanel extends OptionsComposite {
 
 	@Override
 	public void addAllLinkClicked() {
-		SecurityWelcome.entityPanel.clear();
-		SecurityWelcome.entityPanel.add(new SelectRolePanel("YRole",
-				SelectCompositeType.ALL));
+
 	}
 }

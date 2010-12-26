@@ -9,15 +9,12 @@ import info.yalamanchili.security.jpa.YRole;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class SelectRolePanel extends SelectComposite<YRole> {
-
-	public SelectRolePanel(String name, SelectCompositeType type) {
-		super(name, type);
-	}
-
-	public SelectRolePanel(String name, YRole entity) {
-		super(name, entity);
+	public SelectRolePanel(String title, Map<Long, String> available,
+			Set<Long> selected) {
+		super(title, available, selected);
 	}
 
 	@Override
