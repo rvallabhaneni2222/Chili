@@ -153,7 +153,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 
 
 	@Override
-	public void linkClicked(final String link) {
+	public void treeNodeSelected(final String link) {
 
 <%--process level 1 generizations --%>
 <c:if test="not($class/@name = $parentClass1/@name)">
@@ -178,7 +178,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
 							  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-							  					  		 			if (link.contains(${$class2/@name}.class.getName())) {
+							  					  		 			if (${$class2/@name}.class.getName().contains(link)) {
 													${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
 													entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
 																					@Override
@@ -243,7 +243,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
 							  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-								  					  		 			if (link.contains(${$class2/@name}.class.getName())) {
+								  					  		 			if (${$class2/@name}.class.getName().contains(link)) {
 													${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
 													entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
 																					@Override
@@ -310,7 +310,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-							  					  		 			if (link.contains(${$class2/@name}.class.getName())) {
+							  					  		 			if (${$class2/@name}.class.getName().contains(link)) {
 													${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
 													entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
 																					@Override
@@ -353,6 +353,10 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 	</c:iterate>
 </c:iterate>	
 	}
+@Override
+	public void showEntity() {
+		
 
+	}
 }
 </java:format>

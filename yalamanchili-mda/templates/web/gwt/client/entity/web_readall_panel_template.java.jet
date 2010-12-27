@@ -207,9 +207,9 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 
 	}
 <c:if test="$class/@isDependent = 'true'">	
-    public void refresh() {
-		parentTree.linkClicked(parentTreeClass);
-	}	
+	public void refresh() {
+		parentTree.treeNodeSelected(Utils.getClassSimpleName(parentTreeClass));
+	}
 </c:if>
 }
 </java:format>
