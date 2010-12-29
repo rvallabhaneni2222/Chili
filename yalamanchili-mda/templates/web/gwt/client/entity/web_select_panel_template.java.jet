@@ -4,7 +4,7 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
-
+import info.yalamanchili.gwt.composite.TreePanelComposite;
 
 import info.yalamanchili.gwt.composite.SelectComposite;
 	<%-- process all many on source and non composites on target--%>
@@ -117,7 +117,11 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	@Override	
+	public void onAddAll(TreePanelComposite parent, List<Long> ids) {
+	}
+	
 	@Override
 	public void onAddAll(List<Long> ids) {
 	<%-- process all many on source and non composites on target--%>

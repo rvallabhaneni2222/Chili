@@ -182,6 +182,7 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
 
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 import info.yalamanchili.gwt.beans.TableObj;
+import info.yalamanchili.gwt.beans.MultiSelectObj;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 
 import java.io.Serializable;
@@ -219,7 +220,7 @@ public interface ${$class/@name}Service extends RemoteService {
 	public List<${$class/@name}> search(String searchText);
 </c:if>	
 	
-	
+	//TODO need to review which of these are actually needed
 <%-- process all getRelated entities relations--%>
 <%--process level2 generizations --%>
 <c:if test="not($class/@name = $parentClass2/@name)">
@@ -234,7 +235,7 @@ public interface ${$class/@name}Service extends RemoteService {
   					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
   					  	 	<%-- get the end secondary end with other class  --%>
-  					  	 	<c:if test="not($association_connection_end_classID2 = $classID)">
+  					  	 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)">
   					  		 	<%-- process many on target--%>
 								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
@@ -244,7 +245,11 @@ public interface ${$class/@name}Service extends RemoteService {
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
-  					  		 			</c:if> 
+	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
+	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
+	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns);
+	  					  		 			</c:if>
+  					  		 			</c:if>
   					  		 		</c:iterate>
   							  	</c:if> 
 								</c:if>	
@@ -270,7 +275,7 @@ public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
   					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
   					  	 	<%-- get the end secondary end with other class  --%>
-  					  	 	<c:if test="not($association_connection_end_classID2 = $classID)">
+  					  	 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)">
   					  		 	<%-- process many on target--%>
 								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
@@ -280,7 +285,11 @@ public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
-  					  		 			</c:if> 
+	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
+	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
+	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns);
+	  					  		 			</c:if>
+  					  		 			</c:if>   					  		 			
   					  		 		</c:iterate>
   							  	</c:if> 
 								</c:if>	
@@ -304,7 +313,7 @@ public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
   					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
   					  	 	<%-- get the end secondary end with other class  --%>
-  					  	 	<c:if test="not($association_connection_end_classID2 = $classID)">
+  					  	 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)">
   					  		 	<%-- process many on target--%>
 								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   								<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
@@ -314,7 +323,12 @@ public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
+	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
+	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
+	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns);
+	  					  		 			</c:if>
   					  		 			</c:if> 
+ 					  		 			
   					  		 		</c:iterate>
   							  	</c:if> 
 								</c:if>	
@@ -342,14 +356,14 @@ public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
   					  	 <c:if test="not($association_connection_end2/@aggregation = 'composite')">
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
   					  	 	<%-- get the end secondary end with other class  --%>
-  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
   					  		 	<%-- check to see if this is a navigable relation--%>
   					  		 	<c:if test="$association_connection_end/@isNavigable = 'true'">
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-  					  		 			public void addAll(${$class2/@name} ${lower-case($class2/@name)}, ${$class/@name} ${lower-case($class/@name)},
-			List<Long> children);
+  					  		 			public void addAll(${$class2/@name} ${lower-case($class2/@name)}, ${$class/@name} children,
+			List<Long> childrenIds);
   					  		 			</c:if> 
   					  		 		</c:iterate>
   					  		 	</c:if>	
@@ -376,7 +390,7 @@ public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
   					  	 <c:if test="$association_connection_end2/@aggregation = 'composite'">
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
   					  	 	<%-- get the end secondary end with other class  --%>
-  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 

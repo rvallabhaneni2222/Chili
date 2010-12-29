@@ -172,7 +172,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
   					  								<c:if test="not($association_connection_end/@aggregation = 'none')">
 							  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 							  					  	 	<%-- get the end secondary end with other class  --%>
-							  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+							  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
 										  					 <%-- check to see if this is a navigable relation--%>
 										  					 <c:if test="$association_connection_end/@isNavigable = 'true'">										  					  		 	 
 							  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
@@ -237,7 +237,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
   					  								<c:if test="not($association_connection_end/@aggregation = 'none')">
 							  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 							  					  	 	<%-- get the end secondary end with other class  --%>
-							  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+							  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
 										  					 <%-- check to see if this is a navigable relation--%>
 										  					 <c:if test="$association_connection_end/@isNavigable = 'true'">										  					  		 	 
 							  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
@@ -301,7 +301,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
   					  	 <c:if test="$association_connection_end2/@aggregation = 'none'">
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
   					  	 	<%-- get the end secondary end with other class  --%>
-  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
   					  		 	<%-- check to see if this is a navigable relation--%>
   					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
   					  		 	<%-- process many on target--%>
