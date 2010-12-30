@@ -49,11 +49,6 @@ public class SelectRolePanel extends SelectComposite<YRole> {
 	}
 
 	@Override
-	public void onAddAll(List<Long> ids) {
-
-	}
-
-	@Override
 	protected void addListeners() {
 		// TODO Auto-generated method stub
 

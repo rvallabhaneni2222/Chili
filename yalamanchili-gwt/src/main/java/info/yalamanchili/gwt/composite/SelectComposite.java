@@ -13,7 +13,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -37,8 +36,6 @@ public abstract class SelectComposite<T> extends ALComposite implements
 
 	protected MultiListBox multiListBox;
 
-	public Button addButton = new Button("add");
-
 	public enum SelectCompositeType {
 		ONE, ALL
 	}
@@ -55,10 +52,7 @@ public abstract class SelectComposite<T> extends ALComposite implements
 		// NOT SUPPORTED
 		// Multiple select box (many to many relations)
 		if (SelectCompositeType.ALL.equals(type)) {
-			listBox = new ListBox(true);
-			panel.add(addButton);
-			addButton.addClickHandler(this);
-			listBox.setVisibleItemCount(10);
+			throw new UnsupportedOperationException();
 		}
 		// select one in (many to one relations)
 		if (SelectCompositeType.ONE.equals(type)) {
@@ -82,8 +76,7 @@ public abstract class SelectComposite<T> extends ALComposite implements
 		multiListBox.unselectButton.addClickHandler(this);
 		panel.add(multiListBox);
 	}
-
-	@Deprecated
+//used for update panel dropdown
 	public SelectComposite(String name, T entity) {
 		this.entity = entity;
 		init(panel);
@@ -125,13 +118,11 @@ public abstract class SelectComposite<T> extends ALComposite implements
 	public abstract void setSelectedEntity(T entity);
 
 	public void onClick(ClickEvent event) {
-		if (event.getSource().equals(addButton)) {
-			onAddAll(getSelectedIds());
-		}
 		if (event.getSource().equals(multiListBox.selectButton)) {
 			onAddAll(parent, multiListBox.getSelectedIds());
 		}
 		if (event.getSource().equals(multiListBox.unselectButton)) {
+			logger.info("unsupported for unselecrt");
 			throw new UnsupportedOperationException("not supported");
 		}
 	}
@@ -149,9 +140,6 @@ public abstract class SelectComposite<T> extends ALComposite implements
 	public abstract void getSelectedEntity(Long id);
 
 	public abstract void onAdd();
-
-	// TODO replace with
-	public abstract void onAddAll(List<Long> ids);
 
 	public abstract void onAddAll(TreePanelComposite parent, List<Long> ids);
 }
