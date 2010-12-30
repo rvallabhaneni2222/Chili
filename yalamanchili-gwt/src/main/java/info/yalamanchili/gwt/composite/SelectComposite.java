@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.ListBox;
 public abstract class SelectComposite<T> extends ALComposite implements
 		ClickHandler, ChangeHandler {
 	private Logger logger = Logger.getLogger(SelectComposite.class.getName());
+	protected TreePanelComposite parent;
 	protected T entity;
 
 	public T getEntity() {
@@ -51,6 +52,7 @@ public abstract class SelectComposite<T> extends ALComposite implements
 	public SelectComposite(String name, SelectCompositeType type) {
 		this.type = type;
 		init(panel);
+		// NOT SUPPORTED
 		// Multiple select box (many to many relations)
 		if (SelectCompositeType.ALL.equals(type)) {
 			listBox = new ListBox(true);
@@ -71,9 +73,10 @@ public abstract class SelectComposite<T> extends ALComposite implements
 	}
 
 	// Multiple select box (many to many relations)
-	public SelectComposite(String title, Map<Long, String> available,
-			Set<Long> selected) {
+	public SelectComposite(String title, TreePanelComposite parent,
+			Map<Long, String> available, Set<Long> selected) {
 		init(panel);
+		this.parent = parent;
 		multiListBox = new MultiListBox(title, available, selected);
 		multiListBox.selectButton.addClickHandler(this);
 		multiListBox.unselectButton.addClickHandler(this);
@@ -126,10 +129,10 @@ public abstract class SelectComposite<T> extends ALComposite implements
 			onAddAll(getSelectedIds());
 		}
 		if (event.getSource().equals(multiListBox.selectButton)) {
-			onAddAll(multiListBox.getSelectedIds());
+			onAddAll(parent, multiListBox.getSelectedIds());
 		}
 		if (event.getSource().equals(multiListBox.unselectButton)) {
-			throw new UnsupportedOperationException("");
+			throw new UnsupportedOperationException("not supported");
 		}
 	}
 
@@ -147,5 +150,8 @@ public abstract class SelectComposite<T> extends ALComposite implements
 
 	public abstract void onAdd();
 
+	// TODO replace with
 	public abstract void onAddAll(List<Long> ids);
+
+	public abstract void onAddAll(TreePanelComposite parent, List<Long> ids);
 }

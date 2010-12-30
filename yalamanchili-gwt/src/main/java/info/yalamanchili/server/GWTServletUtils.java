@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -143,6 +146,19 @@ public class GWTServletUtils {
 		query = query.substring(0, query.length() - 1);
 		query = query.concat(" FROM " + className);
 		return query;
+	}
+
+	public static Map<Long, String> getListBoxValues(Class<?> clazz,
+			String[] columns, EntityManager em) {
+		String query = GWTServletUtils.getListBoxResultsQueryString(
+				clazz.getCanonicalName(), columns);
+		Map<Long, String> values = new HashMap<Long, String>();
+		Query getListBoxValues = em.createQuery(query);
+		for (Object obj : getListBoxValues.getResultList()) {
+			Object[] obs = (Object[]) obj;
+			values.put((Long) obs[0], (String) obs[1]);
+		}
+		return values;
 	}
 
 	public static List<Field> getEntityFieldsInOrder(Class<?> clazz) {

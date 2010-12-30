@@ -34,7 +34,7 @@ public interface AdminServiceAsync {
 			AsyncCallback<Map<Long, String>> response);
 
 	public void getUserRoles(YUser user, String[] columns,
-			AsyncCallback<MultiSelectObj> response);
+			AsyncCallback<MultiSelectObj<YRole>> response);
 
 	public void searchUser(String searchText,
 			AsyncCallback<List<YUser>> response);
@@ -65,8 +65,14 @@ public interface AdminServiceAsync {
 
 	public void addRoles(YUser user, List<Long> children,
 			AsyncCallback<java.lang.Void> response);
-
+	
+	public void addRoles(YRole role, List<Long> children,
+			AsyncCallback<java.lang.Void> response);
+	
 	public void getRolesForUser(Long user, AsyncCallback<List<YRole>> response);
 
 	public void getRolesForRole(Long user, AsyncCallback<List<YRole>> response);
+
+	public void getRoleRoles(YRole role, String[] columns,
+			AsyncCallback<MultiSelectObj<YRole>> response);
 }

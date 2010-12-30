@@ -1,13 +1,11 @@
 package info.yalamanchili.gwt.security.role;
 
+import info.yalamanchili.gwt.beans.MultiSelectObj;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
-import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
 import info.yalamanchili.gwt.composite.TreePanelComposite;
 import info.yalamanchili.gwt.security.AdminService.AdminServiceAsync;
 import info.yalamanchili.gwt.security.SecurityWelcome;
 import info.yalamanchili.security.jpa.YRole;
-
-import java.util.List;
 
 public class TreeRolePanel extends TreePanelComposite<YRole> {
 	private static TreeRolePanel instance;
@@ -48,23 +46,25 @@ public class TreeRolePanel extends TreePanelComposite<YRole> {
 	public void treeNodeSelected(final String link) {
 
 		if (YRole.class.getName().contains(link)) {
-			AdminServiceAsync.instance().getRolesForRole(entity.getRoleId(),
-					new ALAsyncCallback<List<YRole>>() {
+			String[] columns = { "rolename", };
+			AdminServiceAsync.instance().getRoleRoles(entity, columns,
+					new ALAsyncCallback<MultiSelectObj<YRole>>() {
 
 						@Override
-						public void onResponse(List<YRole> roles) {
-							ReadAllRolesPanel readAllRolesPanel = new ReadAllRolesPanel(
-									roles);
+						public void onResponse(MultiSelectObj<YRole> arg0) {
 							SecurityWelcome.entityPanel.clear();
-							SecurityWelcome.entityPanel.add(readAllRolesPanel);
 							SecurityWelcome.entityPanel
-									.add(new RoleOptionsPanel(
-											OptionsCompositeType.ADD_ALL));
+									.add(new ReadAllRolesPanel(arg0
+											.getSelectedObjs()));
+							SecurityWelcome.entityPanel.clear();
+							SecurityWelcome.entityPanel
+									.add(new SelectRolePanel("Select Roles",
+											TreeRolePanel.instance, arg0.getAvailable(), arg0
+													.getSelected()));
 
 						}
 
 					});
-
 		}
 
 	}

@@ -121,15 +121,18 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 
 	@Override
 	@WebRemote
-	public MultiSelectObj getUserRoles(YUser user, String[] columns) {
+	public MultiSelectObj<YRole> getUserRoles(YUser user, String[] columns) {
 		user = yem.find(YUser.class, user.getUserId());
 		Set<Long> ids = new HashSet<Long>();
-		MultiSelectObj obj = new MultiSelectObj();
+		List<YRole> childObjs = new ArrayList<YRole>();
+		MultiSelectObj<YRole> obj = new MultiSelectObj<YRole>();
 		obj.setAvailable(getListBoxValuesRole(columns));
 		for (YRole role : user.getRoles()) {
 			ids.add(role.getRoleId());
+			childObjs.add((YRole) getBeanManager().clone(role));
 		}
 		obj.setSelected(ids);
+		obj.setSelectedObjs(childObjs);
 		return obj;
 	}
 
@@ -284,4 +287,37 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 		}
 		return res;
 	}
+
+	@Override
+	@WebRemote
+	public MultiSelectObj<YRole> getRoleRoles(YRole parent, String[] columns) {
+		parent = yem.find(YRole.class, parent.getRoleId());
+		Set<Long> childIds = new HashSet<Long>();
+		List<YRole> childObjs = new ArrayList<YRole>();
+		MultiSelectObj<YRole> obj = new MultiSelectObj<YRole>();
+		obj.setAvailable(getListBoxValuesRole(columns));
+		for (YRole entity : parent.getGroups()) {
+			childObjs.add((YRole) getBeanManager().clone(entity));
+			childIds.add(entity.getRoleId());
+		}
+		obj.setSelectedObjs(childObjs);
+		obj.setSelected(childIds);
+		return obj;
+	}
+
+	@Override
+	@WebRemote
+	public void addRoles(YRole role, List<Long> children) {
+		role = yem.find(YRole.class, role.getRoleId());
+		for (Long id : children) {
+			YRole child = (YRole) yem.find(YRole.class, id);
+			if (child == null) {
+				throw new RuntimeException("error find entity with id:" + id
+						+ ":on:" + child.getClass().getName());
+			}
+			role.getGroups().add(child);
+		}
+
+	}
+
 }

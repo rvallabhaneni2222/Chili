@@ -2,19 +2,20 @@ package info.yalamanchili.gwt.security.role;
 
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.SelectComposite;
+import info.yalamanchili.gwt.composite.TreePanelComposite;
 import info.yalamanchili.gwt.security.AdminService.AdminServiceAsync;
-import info.yalamanchili.gwt.security.user.TreeUserPanel;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import info.yalamanchili.security.jpa.YRole;
+import info.yalamanchili.security.jpa.YUser;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class SelectRolePanel extends SelectComposite<YRole> {
-	public SelectRolePanel(String title, Map<Long, String> available,
-			Set<Long> selected) {
-		super(title, available, selected);
+	public SelectRolePanel(String title, TreePanelComposite parent,
+			Map<Long, String> available, Set<Long> selected) {
+		super(title, parent, available, selected);
 	}
 
 	@Override
@@ -49,17 +50,7 @@ public class SelectRolePanel extends SelectComposite<YRole> {
 
 	@Override
 	public void onAddAll(List<Long> ids) {
-		AdminServiceAsync.instance().addRoles(
-				TreeUserPanel.instance().getEntity(), ids,
-				new ALAsyncCallback<Void>() {
 
-					@Override
-					public void onResponse(Void arg0) {
-						new ResponseStatusWidget().show("added");
-
-					}
-
-				});
 	}
 
 	@Override
@@ -80,4 +71,34 @@ public class SelectRolePanel extends SelectComposite<YRole> {
 
 	}
 
+	@Override
+	public void onAddAll(TreePanelComposite parent, List<Long> ids) {
+		if (parent.getEntity() instanceof YUser) {
+			AdminServiceAsync.instance().addRoles((YUser) parent.getEntity(),
+					ids, new ALAsyncCallback<Void>() {
+
+						@Override
+						public void onResponse(Void arg0) {
+							new ResponseStatusWidget()
+									.show("roles added to User");
+
+						}
+
+					});
+		}
+		if (parent.getEntity() instanceof YRole) {
+			AdminServiceAsync.instance().addRoles((YRole) parent.getEntity(),
+					ids, new ALAsyncCallback<Void>() {
+
+						@Override
+						public void onResponse(Void arg0) {
+							new ResponseStatusWidget()
+									.show("roles added to Role");
+
+						}
+
+					});
+		}
+
+	}
 }

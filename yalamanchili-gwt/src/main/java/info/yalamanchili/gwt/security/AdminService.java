@@ -30,7 +30,7 @@ public interface AdminService extends RemoteService {
 
 	public Map<Long, String> getListBoxValues(String[] columns);
 
-	public MultiSelectObj getUserRoles(YUser user, String[] columns);
+	public MultiSelectObj<YRole> getUserRoles(YUser user, String[] columns);
 
 	public List<YUser> searchUser(String searchText);
 
@@ -54,10 +54,14 @@ public interface AdminService extends RemoteService {
 	public List<YRole> searchRole(String searchText);
 
 	public void addRoles(YUser user, List<Long> children);
+	
+	public void addRoles(YRole role, List<Long> children);
 
 	public List<YRole> getRolesForUser(Long user);
 
 	public List<YRole> getRolesForRole(Long user);
+
+	public MultiSelectObj<YRole> getRoleRoles(YRole role, String[] columns);
 
 	public static class AdminServiceAsync {
 
