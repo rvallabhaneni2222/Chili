@@ -8,6 +8,7 @@ import ${$webPackage}${camelCase($projectName)}Welcome;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.TreePanelComposite;
 import info.yalamanchili.gwt.widgets.ClickableLink;
+import info.yalamanchili.gwt.beans.MultiSelectObj;
 import com.google.gwt.user.client.Window;
 import java.util.List;
 import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;			
@@ -37,6 +38,7 @@ import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
 							  					  		 			import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanel;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}OptionsPanel;
+							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panel;
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
 							  							  	</c:if>
@@ -71,6 +73,7 @@ import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
 							  					  		 			import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanel;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}OptionsPanel;
+							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panel;
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
 							  							  	</c:if>
@@ -103,6 +106,7 @@ import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
   					  		 			import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
   					  		 				import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanel;
   					  		 				import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}OptionsPanel;
+  					  		 				import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panel;
   					  		 			</c:if> 
   					  		 		</c:iterate>
   							  	</c:if> 
@@ -179,33 +183,46 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 							  					  		 			if (${$class2/@name}.class.getName().contains(link)) {
-													${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
-													entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
-																					@Override
-																					public void onResponse(List<${$class2/@name}> arg0) {
-																						ReadAll${$class2/@name}sPanel readAll${$class2/@name}sPanel= new ReadAll${$class2/@name}sPanel(arg0);
-																						<%-- check to see if its composite child to add parent tree info--%>
-																						<c:if test="$association_connection_end/@aggregation = 'composite'">
-																						readAll${$class2/@name}sPanel.parentTree = Tree${$class/@name}Panel.this;
-																						readAll${$class2/@name}sPanel.parentTreeClass = link;
-																						</c:if>																						
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel()
-																						.clear();
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(readAll${$class2/@name}sPanel);
-																						<%-- check to see if its ADD or ADD_ALL--%>
-																						<c:if test="not($association_connection_end/@aggregation = 'composite')">
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-																													new ${$class2/@name}OptionsPanel(
-																													OptionsCompositeType.ADD_ALL));
-																						</c:if>
-																						<c:if test="$association_connection_end/@aggregation = 'composite'">
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-																													new ${$class2/@name}OptionsPanel(
-																													OptionsCompositeType.ADD));
-																						</c:if>
-																					}
-														
-																				});
+							  					  		 			<%--for composite add --%>
+																		<c:if test="$association_connection_end/@aggregation = 'composite'">
+																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
+																			entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
+																											@Override
+																											public void onResponse(List<${$class2/@name}> arg0) {
+																												ReadAll${$class2/@name}sPanel readAll${$class2/@name}sPanel= new ReadAll${$class2/@name}sPanel(arg0);
+																												readAll${$class2/@name}sPanel.parentTree = Tree${$class/@name}Panel.this;
+																												readAll${$class2/@name}sPanel.parentTreeClass = link;																				
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
+																												.clear();
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(readAll${$class2/@name}sPanel);
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+																																			new ${$class2/@name}OptionsPanel(
+																																			OptionsCompositeType.ADD));
+																											}
+																				
+																										});
+																		</c:if>
+							  					  		 			<%--for non composite add_all --%>
+																		<c:if test="not($association_connection_end/@aggregation = 'composite')">
+																				String[] ${lower-case($class2/@name)}Columns = { 
+																			<c:iterate select="$class2/Classifier.feature/Attribute" var="attribute">
+																			<%-- processes the premitive Datatypes --%>
+																				 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > "${$attribute/@name}", </c:when> 
+																			</c:choose> 
+																			</c:iterate>	
+																				 };
+																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
+																			entity,${lower-case($class2/@name)}Columns,new ALAsyncCallback<MultiSelectObj<${$class2/@name}>>() {
+																											@Override
+																											public void onResponse(MultiSelectObj<${$class2/@name}> arg0) {																			
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
+																												.clear();
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new ReadAll${$class2/@name}sPanel(arg0.getSelectedObjs()));
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new Select${$class2/@name}Panel("Select ${$class2/@name}s",Tree${$class/@name}Panel.instance(),arg0.getAvailable(),arg0.getSelected()));
+																											}
+																				
+																										});
+																		</c:if>																										  					  		 			
 																	}
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
@@ -244,33 +261,46 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 								  					  		 			if (${$class2/@name}.class.getName().contains(link)) {
-													${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
-													entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
-																					@Override
-																					public void onResponse(List<${$class2/@name}> arg0) {
-																						ReadAll${$class2/@name}sPanel readAll${$class2/@name}sPanel= new ReadAll${$class2/@name}sPanel(arg0);
-																						<%-- check to see if its composite child to add parent tree info--%>
-																						<c:if test="$association_connection_end/@aggregation = 'composite'">
-																						readAll${$class2/@name}sPanel.parentTree = Tree${$class/@name}Panel.this;
-																						readAll${$class2/@name}sPanel.parentTreeClass = link;
-																						</c:if>																						
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel()
-																						.clear();
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(readAll${$class2/@name}sPanel);
-																						<%-- check to see if its ADD or ADD_ALL--%>
-																						<c:if test="not($association_connection_end/@aggregation = 'composite')">
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-																													new ${$class2/@name}OptionsPanel(
-																													OptionsCompositeType.ADD_ALL));
-																						</c:if>
-																						<c:if test="$association_connection_end/@aggregation = 'composite'">
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-																													new ${$class2/@name}OptionsPanel(
-																													OptionsCompositeType.ADD));
-																						</c:if>
-																					}
-														
-																				});
+							  					  		 			<%--for composite add --%>
+																		<c:if test="$association_connection_end/@aggregation = 'composite'">
+																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
+																			entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
+																											@Override
+																											public void onResponse(List<${$class2/@name}> arg0) {
+																												ReadAll${$class2/@name}sPanel readAll${$class2/@name}sPanel= new ReadAll${$class2/@name}sPanel(arg0);
+																												readAll${$class2/@name}sPanel.parentTree = Tree${$class/@name}Panel.this;
+																												readAll${$class2/@name}sPanel.parentTreeClass = link;																				
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
+																												.clear();
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(readAll${$class2/@name}sPanel);
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+																																			new ${$class2/@name}OptionsPanel(
+																																			OptionsCompositeType.ADD));
+																											}
+																				
+																										});
+																		</c:if>
+							  					  		 			<%--for non composite add_all --%>
+																		<c:if test="not($association_connection_end/@aggregation = 'composite')">
+																				String[] ${lower-case($class2/@name)}Columns = { 
+																			<c:iterate select="$class2/Classifier.feature/Attribute" var="attribute">
+																			<%-- processes the premitive Datatypes --%>
+																				 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > "${$attribute/@name}", </c:when> 
+																			</c:choose> 
+																			</c:iterate>	
+																				 };
+																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
+																			entity,${lower-case($class2/@name)}Columns,new ALAsyncCallback<MultiSelectObj<${$class2/@name}>>() {
+																											@Override
+																											public void onResponse(MultiSelectObj<${$class2/@name}> arg0) {																			
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
+																												.clear();
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new ReadAll${$class2/@name}sPanel(arg0.getSelectedObjs()));
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new Select${$class2/@name}Panel("Select ${$class2/@name}s",Tree${$class/@name}Panel.instance(),arg0.getAvailable(),arg0.getSelected()));
+																											}
+																				
+																										});
+																		</c:if>	
 																	}
 
 							  					  		 			</c:if> 
@@ -311,33 +341,46 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 							  					  		 			if (${$class2/@name}.class.getName().contains(link)) {
-													${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
-													entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
-																					@Override
-																					public void onResponse(List<${$class2/@name}> arg0) {
-																						ReadAll${$class2/@name}sPanel readAll${$class2/@name}sPanel= new ReadAll${$class2/@name}sPanel(arg0);
-																						<%-- check to see if its composite child to add parent tree info--%>
-																						<c:if test="$association_connection_end/@aggregation = 'composite'">
-																						readAll${$class2/@name}sPanel.parentTree = Tree${$class/@name}Panel.this;
-																						readAll${$class2/@name}sPanel.parentTreeClass = link;
-																						</c:if>																						
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel()
-																						.clear();
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(readAll${$class2/@name}sPanel);
-																						<%-- check to see if its ADD or ADD_ALL--%>
-																						<c:if test="not($association_connection_end/@aggregation = 'composite')">
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-																													new ${$class2/@name}OptionsPanel(
-																													OptionsCompositeType.ADD_ALL));
-																						</c:if>
-																						<c:if test="$association_connection_end/@aggregation = 'composite'">
-																						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-																													new ${$class2/@name}OptionsPanel(
-																													OptionsCompositeType.ADD));
-																						</c:if>
-																					}
-														
-																				});
+							  					  		 			<%--for composite add --%>
+																		<c:if test="$association_connection_end/@aggregation = 'composite'">
+																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
+																			entity.getId(),new ALAsyncCallback<List<${$class2/@name}>>() {
+																											@Override
+																											public void onResponse(List<${$class2/@name}> arg0) {
+																												ReadAll${$class2/@name}sPanel readAll${$class2/@name}sPanel= new ReadAll${$class2/@name}sPanel(arg0);
+																												readAll${$class2/@name}sPanel.parentTree = Tree${$class/@name}Panel.this;
+																												readAll${$class2/@name}sPanel.parentTreeClass = link;																				
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
+																												.clear();
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(readAll${$class2/@name}sPanel);
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+																																			new ${$class2/@name}OptionsPanel(
+																																			OptionsCompositeType.ADD));
+																											}
+																				
+																										});
+																		</c:if>
+							  					  		 			<%--for non composite add_all --%>
+																		<c:if test="not($association_connection_end/@aggregation = 'composite')">
+																				String[] ${lower-case($class2/@name)}Columns = { 
+																			<c:iterate select="$class2/Classifier.feature/Attribute" var="attribute">
+																			<%-- processes the premitive Datatypes --%>
+																				 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > "${$attribute/@name}", </c:when> 
+																			</c:choose> 
+																			</c:iterate>	
+																				 };
+																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
+																			entity,${lower-case($class2/@name)}Columns,new ALAsyncCallback<MultiSelectObj<${$class2/@name}>>() {
+																											@Override
+																											public void onResponse(MultiSelectObj<${$class2/@name}> arg0) {																			
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
+																												.clear();
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new ReadAll${$class2/@name}sPanel(arg0.getSelectedObjs()));
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new Select${$class2/@name}Panel("Select ${$class2/@name}s",Tree${$class/@name}Panel.instance(),arg0.getAvailable(),arg0.getSelected()));
+																											}
+																				
+																										});
+																		</c:if>	
 																	}
 
   					  		 			</c:if> 

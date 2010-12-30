@@ -12,7 +12,8 @@ import org.hibernate.search.FullTextQuery;
 </c:if>	
 import java.util.HashMap;
 import java.util.Properties;
-
+import java.util.HashSet;
+import java.util.Set;
 import javax.ejb.EJB;
 
 import org.jboss.seam.annotations.Transactional;
@@ -310,7 +311,19 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	@Override
 	@WebRemote	  					  		 			
 	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns){
-	return null;
+		entity = em.find(${$class/@name}.class, entity.getId());
+		Set<Long> ids = new HashSet<Long>();
+		List<${$class2/@name}> childObjs = new ArrayList<${$class2/@name}>();
+		MultiSelectObj<${$class2/@name}> obj = new MultiSelectObj<${$class2/@name}>();
+		obj.setAvailable(GWTServletUtils.getListBoxValues(${$class2/@name}.class,
+				columns, em));
+		for (${$class2/@name} child : entity.get${$class2/@name}s()) {
+			ids.add(child.getId());
+			childObjs.add((${$class2/@name}) getBeanManager().clone(child));
+		}
+		obj.setSelected(ids);
+		obj.setSelectedObjs(childObjs);
+		return obj;
 	}
 	  					  		 			</c:if>	
   					  		 			</c:if> 
@@ -362,7 +375,19 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	@Override
 	@WebRemote	  					  		 			
 	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns){
-	return null;
+		entity = em.find(${$class/@name}.class, entity.getId());
+		Set<Long> ids = new HashSet<Long>();
+		List<${$class2/@name}> childObjs = new ArrayList<${$class2/@name}>();
+		MultiSelectObj<${$class2/@name}> obj = new MultiSelectObj<${$class2/@name}>();
+		obj.setAvailable(GWTServletUtils.getListBoxValues(${$class2/@name}.class,
+				columns, em));
+		for (${$class2/@name} child : entity.get${$class2/@name}s()) {
+			ids.add(child.getId());
+			childObjs.add((${$class2/@name}) getBeanManager().clone(child));
+		}
+		obj.setSelected(ids);
+		obj.setSelectedObjs(childObjs);
+		return obj;
 	}
 	  					  		 			</c:if>		
 	
@@ -413,7 +438,19 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	@Override
 	@WebRemote	  					  		 			
 	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns){
-	return null;
+		entity = em.find(${$class/@name}.class, entity.getId());
+		Set<Long> ids = new HashSet<Long>();
+		List<${$class2/@name}> childObjs = new ArrayList<${$class2/@name}>();
+		MultiSelectObj<${$class2/@name}> obj = new MultiSelectObj<${$class2/@name}>();
+		obj.setAvailable(GWTServletUtils.getListBoxValues(${$class2/@name}.class,
+				columns, em));
+		for (${$class2/@name} child : entity.get${$class2/@name}s()) {
+			ids.add(child.getId());
+			childObjs.add((${$class2/@name}) getBeanManager().clone(child));
+		}
+		obj.setSelected(ids);
+		obj.setSelectedObjs(childObjs);
+		return obj;
 	}
 	  					  		 			</c:if>		
   					  		 			</c:if> 
