@@ -140,7 +140,7 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 			  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
 			  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 			  					  	 	<%-- get the end secondary end with other class  --%>
-			  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+			  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
 			  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
 			  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 			  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 			  		 			
@@ -148,16 +148,16 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 			  					  		 			<%-- check target is one side--%>
 			  					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
 			  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-			  					    						<%--check for Many to one unidirectional--%>
-			  					    						<c:if test="$association_connection_end/@isNavigable = 'false'">
+  					    						<%--process only non composites --%>
+  					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">			  					    						
 			  					    							setDropDownField("${lower-case($class2/@name)}", ${lower-case($class/@name)}.get${$class2/@name}());
-			  					    						</c:if>	
 			  					    						<%--check for one to one --%>	
 			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
 			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
 			  					    							setDropDownField("${lower-case($class2/@name)}", ${lower-case($class/@name)}.get${$class2/@name}());
 			  					  		 					</c:if>	
 			  					  		 					</c:if>	
+			  					  		 			</c:if>		
 			  					  		 			</c:if>	
 			  					  		 			</c:if>	
 			  					  		 			</c:if> 
@@ -281,7 +281,7 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 		 		</c:choose>
 			</c:iterate>
 			
-			<%-- process dropdowns one to one and many to one unidirectional--%>
+			<%-- process dropdowns one to one and many to one --%>
 			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 				<c:iterate select="$association/Association.connection" var="association_connection">
 					<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
@@ -292,7 +292,7 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 			  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
 			  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 			  					  	 	<%-- get the end secondary end with other class  --%>
-			  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+			  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
 			  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
 			  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
 			  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 			  		 			
@@ -300,16 +300,16 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 			  					  		 			<%-- check target is one side--%>
 			  					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
 			  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-			  					    						<%--check for Many to one unidirectional--%>
-			  					    						<c:if test="$association_connection_end/@isNavigable = 'false'">
-			  					    							addField("${lower-case($class2/@name)}", true, ${$attribute/@isRequired} , DataType.DROPDOWN_FIELD);
-			  					    						</c:if>	
+  					    						<%--process only non composites --%>
+  					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">			  					    						
+			  					    							addField("${lower-case($class2/@name)}", true, true , DataType.DROPDOWN_FIELD);
 			  					    						<%--check for one to one --%>	
 			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
 			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
 			  					    							addField("${lower-case($class2/@name)}", true, ${$attribute/@isRequired}, DataType.DROPDOWN_FIELD);
 			  					  		 					</c:if>	
 			  					  		 					</c:if>	
+			  					  		 			</c:if>		
 			  					  		 			</c:if>	
 			  					  		 			</c:if>	
 			  					  		 			</c:if> 
