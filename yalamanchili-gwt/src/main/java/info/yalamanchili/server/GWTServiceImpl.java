@@ -8,8 +8,8 @@ import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.rpc.GWTService;
 import info.yalamanchili.gwt.ui.DisplayType;
 import info.yalamanchili.gwt.ui.UIElement;
-import info.yalamanchili.security.jpa.YRole;
-import info.yalamanchili.security.jpa.YUser;
+import info.yalamanchili.security.gwt.YRole;
+import info.yalamanchili.security.gwt.YUser;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;

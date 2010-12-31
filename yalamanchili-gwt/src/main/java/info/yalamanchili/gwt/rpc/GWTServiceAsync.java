@@ -2,8 +2,8 @@ package info.yalamanchili.gwt.rpc;
 
 import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.fields.DataType;
-import info.yalamanchili.security.jpa.YRole;
-import info.yalamanchili.security.jpa.YUser;
+import info.yalamanchili.security.gwt.YRole;
+import info.yalamanchili.security.gwt.YUser;
 
 import java.util.LinkedHashMap;
 import java.util.List;

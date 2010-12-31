@@ -2,5 +2,4 @@
 	<inherits name="com.google.gwt.user.User" />
 	<source path='gwt' />
 	<stylesheet src="yalamanchili-gwt.css" />
-	<inherits name='info.yalamanchili.security.security-jpa' />
 </module>
