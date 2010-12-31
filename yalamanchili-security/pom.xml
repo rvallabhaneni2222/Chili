@@ -19,32 +19,64 @@
 			<artifactId>y-common-deps</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>${gwtVersion}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>info.yalamanchili.gwt</groupId>
+			<artifactId>yalamanchili-gwt</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.yalamanchili.commons</groupId>
+			<artifactId>yalamanchili-commons</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.seam</groupId>
+			<artifactId>jboss-seam-remoting</artifactId>
+			<version>2.2.0.GA</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- GILEAD deps -->
 		<dependency>
 			<groupId>net.sf.gilead</groupId>
 			<artifactId>gilead-core</artifactId>
 			<version>1.3.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.gilead</groupId>
+			<artifactId>gilead-hibernate</artifactId>
+			<version>1.3.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.gilead</groupId>
+			<artifactId>gilead4gwt</artifactId>
+			<version>1.3.2</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>info/yalamanchili/**</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>gwt-maven-plugin</artifactId>
-				<version>1.2</version>
-				<configuration>
-					<module>info.yalamanchili.security.security-jpa</module>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>resources</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jboss-maven-plugin</artifactId>
@@ -86,4 +118,7 @@
 			<url>https://yalamanchili.googlecode.com/svn/maven2</url>
 		</repository>
 	</distributionManagement>
+	<properties>
+		<gwtVersion>2.1.0</gwtVersion>
+	</properties>
 </project>

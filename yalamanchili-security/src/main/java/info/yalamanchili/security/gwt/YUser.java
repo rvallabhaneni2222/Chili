@@ -1,4 +1,5 @@
-package info.yalamanchili.security.jpa;
+package info.yalamanchili.security.gwt;
+
 
 import java.util.HashSet;
 import java.util.Set;

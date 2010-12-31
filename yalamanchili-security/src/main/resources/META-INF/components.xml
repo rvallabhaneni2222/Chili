@@ -12,8 +12,8 @@
                  http://jboss.com/products/seam/web http://jboss.com/products/seam/web-2.2.xsd
                  http://jboss.com/products/seam/components http://jboss.com/products/seam/components-2.2.xsd">
 
-	<security:jpa-identity-store user-class="info.yalamanchili.security.jpa.YUser"
-		role-class="info.yalamanchili.security.jpa.YRole" entity-manager="#{yem}" />
+	<security:jpa-identity-store user-class="info.yalamanchili.security.gwt.YUser"
+		role-class="info.yalamanchili.security.gwt.YRole" entity-manager="#{yem}" />
 <core:dispatcher/>
 	<persistence:managed-persistence-context
 		name="yem" auto-create="true" persistence-unit-jndi-name="java:/yalamanchili" />
