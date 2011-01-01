@@ -1,13 +1,17 @@
+<java:merge/>
 <java:format>
-
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$groupID}.client;
-
+<f:message>generated.class.comment</f:message>
 public enum Entity {
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		 <f:message>generated.comment</f:message>
     			${upper-case($class/@name)},
 			 </c:iterate>
 	</c:iterate>
 }
+</f:bundle>
 </java:format>

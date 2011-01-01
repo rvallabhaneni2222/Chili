@@ -1,18 +1,19 @@
+<java:merge/>
 <java:format>
-
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$groupID}.client;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.widgets.CreateUserAbstract;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import ${$groupID}.client.rpc.${camelCase($projectName)}Service.${camelCase($projectName)}ServiceAsync;
-
+<f:message>generated.class.comment</f:message>
 public class CreateUserPanel extends CreateUserAbstract {
-
+	<f:message>generated.comment</f:message>
 	@Override
 	public void createUserClicked() {
 				${camelCase($projectName)}ServiceAsync.instance().createUser(usernameTF.getText(),
 				passwordTF.getPassword(), new ALAsyncCallback<Void>() {
-
 					@Override
 					public void onResponse(Void arg0) {
 						new ResponseStatusWidget().show("new User created");
@@ -23,4 +24,5 @@ public class CreateUserPanel extends CreateUserAbstract {
 	}
 
 }
+</f:bundle>
 </java:format>

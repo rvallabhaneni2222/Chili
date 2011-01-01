@@ -5,7 +5,7 @@
 package ${$groupID}.entity.${$package/@name};
 
 import static org.junit.Assert.assertEquals;
-import info.yalamanchili.security.jpa.YUser;
+import info.yalamanchili.security.gwt.YUser;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

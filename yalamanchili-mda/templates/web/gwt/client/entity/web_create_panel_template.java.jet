@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 package ${$packageName}.${lower-case($class/@name)};
 import ${$packageName}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel.${$class/@name}TableType;
@@ -135,7 +138,7 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
 import info.yalamanchili.gwt.fields.DataType;
 
-
+<f:message>generated.class.comment</f:message>
 public class Create${$class/@name}Panel extends CreateComposite<${$class/@name}> {
 <%-- process dropdowns one tone and many to one --%>
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
@@ -158,11 +161,13 @@ public class Create${$class/@name}Panel extends CreateComposite<${$class/@name}>
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
   					    						<%--process only non composites --%>
   					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">
+<f:message>generated.comment</f:message>  					    						
   					    							Select${$class2/@name}Panel select${$class2/@name}Panel = new Select${$class2/@name}Panel("${$class2/@name}",
 													SelectCompositeType.ONE);
   					    						<%--check for one to one --%>	
   					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+<f:message>generated.comment</f:message>
   					    							Select${$class2/@name}Panel select${$class2/@name}Panel = new Select${$class2/@name}Panel("${$class2/@name}",
 													SelectCompositeType.ONE);
   					  		 					</c:if>	
@@ -179,13 +184,14 @@ public class Create${$class/@name}Panel extends CreateComposite<${$class/@name}>
 	</c:iterate>
 </c:iterate>
 
+<f:message>generated.comment</f:message>
 public Create${$class/@name}Panel(CreateCompositeType type) {
 	super(type);
 		initCreateComposite(${$class/@name}.class.getName(), ${camelCase($projectName)}Welcome.constants);
 	}
 	
 
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void createButtonClicked() {
 		<c:if test="$class/@isDependent = 'false'">  
@@ -201,19 +207,19 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 
 		</c:if>	
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addListeners() {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addWidgetsBeforeCaptionPanel() {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addWidgets() {
 	<%-- process parent class level 2 attributes--%>
@@ -351,7 +357,7 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 				</c:iterate>
 			</c:iterate>	
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected ${$class/@name} populateEntityFromFields() {
 		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
@@ -492,12 +498,12 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 			</c:iterate>
 		return ${lower-case($class/@name)};
 	}
-	
+<f:message>generated.comment</f:message>	
 	@Override
 	protected void configure() {
 
 	}
-	
+<f:message>generated.comment</f:message>	
 	@Override
 	protected void addButtonClicked() {
 	<%-- check to see is this class is a comp first--%>
@@ -579,4 +585,5 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
 	}	
 
 }
+</f:bundle>
 </java:format>

@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$packageName}.${lower-case($class/@name)};
 <%--process enums from base and lavel1,2 parents --%>
 	<%-- process parent class level 2 attributes--%>
@@ -85,7 +88,7 @@ import info.yalamanchili.gwt.composite.SelectComposite.SelectCompositeType;
 		</c:iterate>
 	</c:iterate>
 </c:iterate>
-
+<f:message>generated.class.comment</f:message>
 public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}> {
 
 <%-- process dropdowns one tone and many to one --%>
@@ -108,12 +111,14 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
   					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
   					    						<%--process only non composites --%>
-  					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">  					    						
+  					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">
+<f:message>generated.comment</f:message>  					    						  					    						
   					    							Select${$class2/@name}Panel select${$class2/@name}Panel = new Select${$class2/@name}Panel("${$class2/@name}",
 													Read${$class/@name}Panel.instance().getEntity().get${$class2/@name}());
   					    						<%--check for one to one --%>	
   					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+<f:message>generated.comment</f:message>  					    						
   					    							Select${$class2/@name}Panel select${$class2/@name}Panel = new Select${$class2/@name}Panel("${$class2/@name}",
 													Read${$class/@name}Panel.instance().getEntity().get${$class2/@name}());
   					  		 					</c:if>	
@@ -129,11 +134,11 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 		</c:iterate>
 	</c:iterate>
 </c:iterate>
-
+<f:message>generated.comment</f:message>
 	public Update${$class/@name}Panel() {
 		initUpdateComposite(${$class/@name}.class.getName(), ${camelCase($projectName)}Welcome.constants);
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	public ${$class/@name} populateEntityOnRender() {
 		entity = Read${$class/@name}Panel.instance().getEntity();
@@ -272,7 +277,7 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 			</c:iterate>			
 			return entity;
 		}
-		
+<f:message>generated.comment</f:message>		
 	@Override
 	public ${$class/@name} populateEntityOnUpdate(){
 	<%-- process parent class level 2 attributes--%>
@@ -412,7 +417,7 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 		return entity;	
 	}
 		
-
+<f:message>generated.comment</f:message>
 	@Override
 	public void updateButtonClicked() {
 		${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().update(entity,
@@ -422,19 +427,19 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 					}
 				});
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addListeners() {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addWidgetsBeforeCaptionPanel() {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addWidgets() {
 		<%-- process parent class level 2 attributes--%>
@@ -571,10 +576,11 @@ public class Update${$class/@name}Panel extends UpdateComposite<${$class/@name}>
 				</c:iterate>
 			</c:iterate>	
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void configure() {
 
 	}
 }
+</f:bundle>
 </java:format>

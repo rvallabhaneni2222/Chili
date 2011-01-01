@@ -1,3 +1,4 @@
+<java:merge/>
 imagesTargetDirectory=/pictures/
 sessionTimeout=300000
 tablePageSize=10

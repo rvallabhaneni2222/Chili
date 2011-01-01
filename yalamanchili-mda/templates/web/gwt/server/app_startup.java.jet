@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$groupID}.server;
 
 import javax.persistence.EntityManager;
@@ -11,15 +14,17 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Startup;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.async.Asynchronous;
-
+<f:message>generated.class.comment</f:message>
 @Name("${lower-case($projectName)}Startup")
 @Scope(ScopeType.APPLICATION)
-@Startup
-
+//@startup not needed?
+//@Startup
 public class ${camelCase($projectName)}Startup {
+<f:message>generated.comment</f:message>
 @In(create = true)
 	protected EntityManager em;
 
+<f:message>generated.comment</f:message>
 	// TODO fix issue
 	/*
 	 * http://code.google.com/p/yalamanchili/issues/detail?id=127&q=hibernate%20
@@ -39,4 +44,5 @@ public class ${camelCase($projectName)}Startup {
 
 	}
 }
+</f:bundle>
 </java:format>

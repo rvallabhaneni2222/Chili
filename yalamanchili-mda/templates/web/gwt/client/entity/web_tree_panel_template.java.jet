@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 
 
@@ -119,43 +122,44 @@ import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.TreeItem;
-
+<f:message>generated.class.comment</f:message>
 public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@name" > <c:when test="$class/@name" > TreePanelComposite<${$class/@name}> </c:when> <c:otherwise> TreeAbstract${$parentClass1/@name}Panel</c:otherwise>  </c:choose> {
+<f:message>generated.comment</f:message>
 	private static Tree${$class/@name}Panel instance;
-
+<f:message>generated.comment</f:message>
 	public static Tree${$class/@name}Panel instance() {
 		return instance;
 	}
-
+<f:message>generated.comment</f:message>
 	public Tree${$class/@name}Panel() {
 		instance=this;
 		initTreePanelComposite(${$class/@name}.class.getName());
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addListeners() {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addWidgets() {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void configure() {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	public ${$class/@name} loadEntity() {
 		return Read${$class/@name}Panel.instance().getEntity();
 	}
 
-
+<f:message>generated.comment</f:message>
 	@Override
 	public void treeNodeSelected(final String link) {
 
@@ -396,10 +400,12 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 	</c:iterate>
 </c:iterate>	
 	}
+<f:message>generated.comment</f:message>	
 @Override
 	public void showEntity() {
 		
 
 	}
 }
+</f:bundle>
 </java:format>

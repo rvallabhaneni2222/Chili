@@ -1,5 +1,7 @@
+<java:merge/>
 <java:format>
-
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$groupID}.client;
 
 
@@ -9,10 +11,11 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.event.dom.client.ClickEvent;
 import ${$webPackage}rpc.${camelCase($projectName)}Service.${camelCase($projectName)}ServiceAsync;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
-
+<f:message>generated.class.comment</f:message>
 public class StatusPanel extends AbstractStatusPanel {
+<f:message>generated.comment</f:message>
 	LoginPanel loginPanel = new LoginPanel();
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void loginClicked() {
 
@@ -23,14 +26,14 @@ public class StatusPanel extends AbstractStatusPanel {
 
 	}
 
-
+<f:message>generated.comment</f:message>
 	@Override
 	public void logoutSuccessfull() {
 		statusBar.remove(logoutLink);
 		statusBar.setWidget(1, 2, loginLink);
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void logoutClicked() {
 		${camelCase($projectName)}ServiceAsync.instance().logout(new ALAsyncCallback<Void>() {
@@ -43,7 +46,7 @@ public class StatusPanel extends AbstractStatusPanel {
 
 		});
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void createUserClicked() {
 		CreateUserPanel createUserPanel = new CreateUserPanel();
@@ -53,7 +56,7 @@ public class StatusPanel extends AbstractStatusPanel {
 		createUserPanel.show();
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void setUser() {
 				if (${camelCase($projectName)}Welcome.instance().user != null) {
@@ -67,4 +70,5 @@ public class StatusPanel extends AbstractStatusPanel {
 
 }
 
+</f:bundle>
 </java:format>

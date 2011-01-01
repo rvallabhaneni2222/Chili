@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$packageName}.${lower-case($class/@name)};
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
@@ -61,22 +64,22 @@ import info.yalamanchili.gwt.composite.SelectComposite;
 
 import java.util.List;
 import java.util.Map;
-
+<f:message>generated.class.comment</f:message>
 public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}> {
-
+<f:message>generated.comment</f:message>
 	public Select${$class/@name}Panel(String title, TreePanelComposite parent,
 			Map<Long, String> available, Set<Long> selected) {
 		super(title, parent, available, selected);
 	}
-
+<f:message>generated.comment</f:message>
 	public Select${$class/@name}Panel(String name,SelectCompositeType type) {
 		super(name,type);
 	}
-	
+<f:message>generated.comment</f:message>	
 	public Select${$class/@name}Panel(String name,${$class/@name} entity) {
 		super(name,entity);
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void initListBox() {
 	String[] columns = { 
@@ -97,7 +100,7 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 				});
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	public void getSelectedEntity(Long id) {
 		${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().read(id,
@@ -112,19 +115,19 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 				});
 
 	}
-	
+<f:message>generated.comment</f:message>	
 	public void setSelectedEntity(${$class/@name} entity) {
 		if (entity.getId() != null)
 			listBox.setItemSelected(valueIndex.get(entity.getId()), true);
 	}
 	
-
+<f:message>generated.comment</f:message>
 	@Override
 	public void onAdd() {
 		// TODO Auto-generated method stub
 
 	}
-	
+<f:message>generated.comment</f:message>	
 	@Override	
 	public void onAddAll(TreePanelComposite parent, List<Long> ids) {
 	<%-- process all many on source and non composites on target--%>
@@ -179,19 +182,19 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 	</c:iterate>	
 	}
 	
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addListeners() {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addWidgets() {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void configure() {
 		// TODO Auto-generated method stub
@@ -199,4 +202,5 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 	}
 
 }
+</f:bundle>
 </java:format>

@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 <c:setVariable select="$class/@xmi.id" var="isChild"/>
 package ${$packageName}.${lower-case($class/@name)};
@@ -19,30 +22,28 @@ import info.yalamanchili.gwt.composite.TreePanelComposite;
 </c:iterate>
 
 <c:choose select="$isChild" > <c:when test="$class/@name" > import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($parentClass)}.TreeAbstract${$parentClass}Panel; </c:when>   </c:choose>
-
+<f:message>generated.class.comment</f:message>
 public abstract class TreeAbstract${$class/@name}Panel extends <c:choose select="$isChild" > <c:when test="$class/@xmi.id" > TreePanelComposite<${$class/@name}> </c:when> <c:otherwise> TreeAbstract${$parentClass}Panel</c:otherwise>  </c:choose> {
-
+<f:message>generated.comment</f:message>
 private static TreeAbstract${$class/@name}Panel instance;
-
+<f:message>generated.comment</f:message>
 	public static TreeAbstract${$class/@name}Panel instance() {
 		return instance;
 	}
-	
+<f:message>generated.comment</f:message>	
 	public TreeAbstract${$class/@name}Panel() {
 	instance=this;
 	}
-
+<f:message>generated.comment</f:message>
 	protected abstract void addListeners();
-	
-	
+<f:message>generated.comment</f:message>	
 	protected abstract void addWidgets();
-
+<f:message>generated.comment</f:message>
 	protected abstract void configure() ;
-
+<f:message>generated.comment</f:message>
 	public abstract ${$class/@name} loadEntity();
-
-
+<f:message>generated.comment</f:message>
 	public abstract void linkClicked(String link);
-
 }
+</f:bundle>
 </java:format>

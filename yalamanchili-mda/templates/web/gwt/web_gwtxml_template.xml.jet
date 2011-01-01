@@ -17,7 +17,7 @@
 	<inherits name='${$groupID}.entity' />
 	
 	<!-- used to include the y-security entities in the gwt compiler path -->
-	<inherits name='info.yalamanchili.security.security-jpa' />
+	<inherits name='info.yalamanchili.security.yalamanchili-security' />
 	
 	<!-- used to include yalamanchili-gwt project in gwt compiler path -->
 	<inherits name='info.yalamanchili.yalamanchili-gwt' />

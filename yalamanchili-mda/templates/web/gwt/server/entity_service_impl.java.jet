@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$groupID}.server;
 
 
@@ -224,35 +227,38 @@ import info.yalamanchili.server.GileadService;
 @Transactional
 @Scope(ScopeType.SESSION)
 @Name("${$packageName}.${lower-case($class/@name)}.${$class/@name}Service")
+<f:message>generated.class.comment</f:message>
 public class ${$class/@name}ServiceImpl extends GileadService implements ${$packageName}.${lower-case($class/@name)}.${$class/@name}Service {
+<f:message>generated.comment</f:message>
 	private static final Log log = LogFactory
 			.getLog(${$class/@name}ServiceImpl.class);
-
+<f:message>generated.comment</f:message>
 	public ${$class/@name}ServiceImpl() {
 		super("java:/${$projectName}");
 	}
+<f:message>generated.comment</f:message>	
 	//@In(create = true)
 	//protected GenericServiceLocal genericServiceBean;
-
+<f:message>generated.comment</f:message>
 	//@In(create = true)
 	//protected ${$class/@name}ServiceLocal ${lower-case($class/@name)}ServiceBean;
-	
+<f:message>generated.comment</f:message>	
 	@In(create = true)
 	protected EntityManager em;
-	
+<f:message>generated.comment</f:message>	
 	@Override
 	@WebRemote
 	public ${$class/@name} create(${$class/@name} entity) {
 		return  (${$class/@name}) getBeanManager().clone(em.merge(entity));
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	@WebRemote
 	public void delete(${$class/@name} entity) {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	@WebRemote
 	public TableObj<${$class/@name}> getTableObj( int start) {
@@ -261,13 +267,13 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 		tableObj.setNumberOfRecords(getEntitySize());
 		return tableObj;
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	@WebRemote
 	public ${$class/@name} read( Long id) {
 		return (${$class/@name}) getBeanManager().clone(em.find(${$class/@name}.class, id));
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	@WebRemote
 	public ${$class/@name} update(${$class/@name} entity) {
@@ -296,7 +302,8 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
   					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
-  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2">
+<f:message>generated.comment</f:message>  					  		 			 
 	@Override
 	@WebRemote
 	public  List<${$class2/@name}> get${$class2/@name}s(Long entityID) {
@@ -308,6 +315,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	}
 	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
 	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
+<f:message>generated.comment</f:message>	  					  		 			
 	@Override
 	@WebRemote	  					  		 			
 	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns){
@@ -360,7 +368,8 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
   					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
-  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2">
+<f:message>generated.comment</f:message>  					  		 			 
 	@Override
 	@WebRemote
 	public  List<${$class2/@name}> get${$class2/@name}s(Long entityID) {
@@ -372,6 +381,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	}
 	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
 	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
+<f:message>generated.comment</f:message>	  					  		 			
 	@Override
 	@WebRemote	  					  		 			
 	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns){
@@ -423,7 +433,8 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
   					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
-  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2">
+<f:message>generated.comment</f:message>  					  		 			 
 	@Override
 	@WebRemote
 	public  List<${$class2/@name}> get${$class2/@name}s(Long entityID) {
@@ -435,6 +446,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	}
 	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
 	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
+<f:message>generated.comment</f:message>	  					  		 			
 	@Override
 	@WebRemote	  					  		 			
 	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns){
@@ -489,6 +501,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2">
   					  		 			//TODO fix this remove generics
+<f:message>generated.comment</f:message>  					  		 			
   					  		 			@Override
 										@WebRemote
 										public void addAll(${$class2/@name} ${lower-case($class2/@name)}, ${$class/@name} children,
@@ -530,9 +543,8 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 		</c:iterate>
 	</c:iterate>
 </c:iterate>	
-	
-	
-
+		
+<f:message>generated.comment</f:message>
 	@Override
 	@WebRemote
 	public List<${$class/@name}> getEntities(${$class/@name} entity) {
@@ -544,7 +556,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 		}
 		return entities;
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	@WebRemote
 	public  Map<Long, String> getListBoxValues(String[] columns) {
@@ -558,8 +570,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 		return values;
 	}
 
-	
-
+<f:message>generated.comment</f:message>
 	@Override
 	@WebRemote
 	public List<String> getSuggestionsForName(String name, ${$class/@name} entity) {
@@ -585,7 +596,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
- 											
+<f:message>generated.comment</f:message> 											
 	@Override
 	@WebRemote
 	public  void merge(${$class/@name} entity, ${$class2/@name} child) {
@@ -603,6 +614,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 </c:iterate>
 
 <c:if test="$enableHibernateSearch = 'true'">
+<f:message>generated.comment</f:message>
 	@Override
 	@WebRemote
 	public List<${$class/@name}> search(String searchText) {
@@ -621,7 +633,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 </c:if>
 
 	
-
+<f:message>generated.comment</f:message>
 	public <T extends Serializable> List<${$class/@name}> getEntities(int start) {
 		List<${$class/@name}> entities = new ArrayList<${$class/@name}>();
 		String query = "from " + ${$class/@name}.class.getCanonicalName();
@@ -635,7 +647,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 		}
 		return entities;
 	}
-
+<f:message>generated.comment</f:message>
 	public <T extends Serializable> Long getEntitySize() {
 		String query = "select count(entity) from "
 				+ ${$class/@name}.class.getCanonicalName() + " entity";
@@ -644,4 +656,5 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	}	
 	
 }
+</f:bundle>
 </java:format>

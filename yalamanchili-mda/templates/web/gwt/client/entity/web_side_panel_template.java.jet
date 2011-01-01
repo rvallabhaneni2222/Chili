@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$packageName}.${lower-case($class/@name)};
 <c:if test="$enableHibernateSearch = 'true'">
 import info.yalamanchili.gwt.widgets.FindWidget;
@@ -21,49 +24,51 @@ import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.LazyPanel;
 import com.google.gwt.user.client.ui.Widget;
 import info.yalamanchili.gwt.composite.CreateComposite.CreateCompositeType;
-
+<f:message>generated.class.comment</f:message>
 public class ${$class/@name}SideBar extends SideBarComposite {
+<f:message>generated.comment</f:message>
 	private static ${$class/@name}SideBar ${lower-case($class/@name)}SideBar;
-
+<f:message>generated.comment</f:message>
 	public static ${$class/@name}SideBar instance() {
 		return ${lower-case($class/@name)}SideBar;
 	}
-
+<f:message>generated.comment</f:message>
 	ClickableLink createLink = new ClickableLink("Create ${$class/@name}");
 <c:if test="$enableHibernateSearch = 'true'">
+<f:message>generated.comment</f:message>
 	FindWidget findWidget = new FindWidget(this);
 </c:if>		
-	
+<f:message>generated.comment</f:message>	
 	private static class ${$class/@name}LazySearchPanel extends LazyPanel {
 		@Override
 		protected Widget createWidget() {
 			return new ${$class/@name}SearchPanelGeneric();
 		}
 	}
-	
+<f:message>generated.comment</f:message>	
 	${$class/@name}LazySearchPanel ${lower-case($class/@name)}LazySearchPanel = new ${$class/@name}LazySearchPanel();
-	
+<f:message>generated.comment</f:message>	
 	public ${$class/@name}SideBar() {
 		${lower-case($class/@name)}SideBar = this;
 		initSideBarComposite();
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addListeners() {
 		createLink.addClickHandler(this);
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void configure() {
 		panel.addStyleName("${$class/@name}SidePanel");
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addWidgets() {
 			panel.add(createLink);
 			panel.add(findWidget);	
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	public void onClick(ClickEvent event) {
 		if (event.getSource() == createLink) {
@@ -86,26 +91,27 @@ public class ${$class/@name}SideBar extends SideBarComposite {
 	
 	}
 
-
+<f:message>generated.comment</f:message>
 	protected void createLinkClicked() {
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
 				new Create${$class/@name}Panel(CreateCompositeType.CREATE));
 	}
-
+<f:message>generated.comment</f:message>
 	protected void reload${$class/@name}() {
 		
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	public void onSearchClose(CloseEvent<DisclosurePanel> arg0) {
 		searchPanel.remove(${lower-case($class/@name)}LazySearchPanel);
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	public void onSearchOpen(OpenEvent<DisclosurePanel> arg0) {
 		searchPanel.add(${lower-case($class/@name)}LazySearchPanel);
 		${lower-case($class/@name)}LazySearchPanel.setVisible(true);
 	}
 }
+</f:bundle>
 </java:format>

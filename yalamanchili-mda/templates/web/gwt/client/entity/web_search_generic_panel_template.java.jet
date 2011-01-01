@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$packageName}.${lower-case($class/@name)};
 
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
@@ -11,34 +14,34 @@ import java.util.List;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.widgets.ALSuggestBox;
 
-
+<f:message>generated.class.comment</f:message>
 public class ${$class/@name}SearchPanelGeneric extends
 		SearchPanelCompositeGeneric<${$class/@name}> {
-		
+<f:message>generated.comment</f:message>		
 	private static ${$class/@name}SearchPanelGeneric instance;
-
+<f:message>generated.comment</f:message>
 	public static ${$class/@name}SearchPanelGeneric instance() {
 		return instance;
 	}
-
+<f:message>generated.comment</f:message>
 	public ${$class/@name}SearchPanelGeneric() {
 		instance = this;
 		initSearchPanelCompositeGeneric("${$class/@name}",
 				${camelCase($projectName)}Welcome.constants);
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addListeners() {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addWidgetsBeforeCaptionPanel() {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addWidgets() {
 	<%-- process parent class level 2 attributes--%>
@@ -158,12 +161,12 @@ public class ${$class/@name}SearchPanelGeneric extends
 				</c:if>
 			</c:iterate>
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void configure() {
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void searchButtonClicked() {
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
@@ -171,7 +174,7 @@ public class ${$class/@name}SearchPanelGeneric extends
 				(new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL_SEARCH)));
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected ${$class/@name} populateEntity() {
 		${$class/@name} ${lower-case($class/@name)} = new ${$class/@name}();
@@ -243,9 +246,10 @@ public class ${$class/@name}SearchPanelGeneric extends
 		</c:iterate>
 		return ${lower-case($class/@name)};
 	}
-	
+<f:message>generated.comment</f:message>	
 	protected void postValidate() {
 
 	}
 }
+</f:bundle>
 </java:format>

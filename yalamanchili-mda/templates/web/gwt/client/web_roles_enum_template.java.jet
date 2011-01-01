@@ -1,8 +1,14 @@
+<java:merge/>
 <java:format>
-
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$groupID}.client;
-
+<f:message>generated.class.comment</f:message>
 public enum Roles {
-	USER,ADMIN
+<f:message>generated.comment</f:message>
+	USER,
+<f:message>generated.comment</f:message>
+	ADMIN
 }
+</f:bundle>
 </java:format>

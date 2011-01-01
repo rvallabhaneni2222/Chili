@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$groupID}.server;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,33 +18,35 @@ import org.jboss.seam.security.Identity;
 import javax.security.auth.login.LoginException;
 import org.jboss.seam.annotations.Transactional;
 import javax.persistence.Query;
-import info.yalamanchili.security.jpa.YUser;
-import info.yalamanchili.security.jpa.YRole;
+import info.yalamanchili.security.gwt.YUser;
+import info.yalamanchili.security.gwt.YRole;
 import info.yalamanchili.server.GileadService;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.ScopeType;
 
+<f:message>generated.class.comment</f:message>
 @Trace
 @Transactional
 @Scope(ScopeType.SESSION)
 @Name("${$webPackage}rpc.${camelCase($projectName)}Service")
 public class ${camelCase($projectName)}ServiceImpl extends GileadService implements ${$webPackage}rpc.${camelCase($projectName)}Service {
+<f:message>generated.comment</f:message>
 	private static final Log log = LogFactory
 			.getLog(${camelCase($projectName)}ServiceImpl.class);
-	
+<f:message>generated.comment</f:message>	
 	public ${camelCase($projectName)}ServiceImpl() {
 		super("java:/${$projectName}");
 	}
-		
+<f:message>generated.comment</f:message>		
 	@In(create = true)
 	protected EntityManager yem;
-
+<f:message>generated.comment</f:message>
 	@In(create = true)
 	protected Identity identity;
-	
+<f:message>generated.comment</f:message>	
 	@In(create = true)
 	protected IdentityManager identityManager;
-
+<f:message>generated.comment</f:message>
 	@Override
 	@WebRemote
 	public YUser login(String username, String password) {
@@ -59,7 +64,8 @@ public class ${camelCase($projectName)}ServiceImpl extends GileadService impleme
 			return null;
 		}
 	}
-
+	
+<f:message>generated.comment</f:message>
 	@Observer("org.jboss.seam.security.loginSuccessful")
 	public void loginSuccessFull() {
 		log.debug("org.jboss.seam.security.loginSuccessful");
@@ -91,4 +97,5 @@ public class ${camelCase($projectName)}ServiceImpl extends GileadService impleme
 		identity.logout();
 	}
 }
+</f:bundle>
 </java:format>

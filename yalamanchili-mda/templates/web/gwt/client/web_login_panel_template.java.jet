@@ -1,9 +1,12 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 
 package ${$groupID}.client;
 
-import info.yalamanchili.security.jpa.YUser;
-import info.yalamanchili.security.jpa.YRole;
+import info.yalamanchili.security.gwt.YUser;
+import info.yalamanchili.security.gwt.YRole;
 import com.google.gwt.user.client.Window;
 import info.yalamanchili.gwt.widgets.LoginPanelAbstract;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
@@ -11,8 +14,9 @@ import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import java.util.HashSet;
 import java.util.Set;
 import ${$webPackage}rpc.${camelCase($projectName)}Service.${camelCase($projectName)}ServiceAsync;
+<f:message>generated.class.comment</f:message>
 public class LoginPanel extends LoginPanelAbstract {
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void loginClicked() {
 				${camelCase($projectName)}ServiceAsync.instance().login(usernameTb.getText(),
@@ -34,7 +38,7 @@ public class LoginPanel extends LoginPanelAbstract {
 	}
 	
 	
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void setAutoLogout() {
 		// TODO Auto-generated method stub
@@ -43,4 +47,5 @@ public class LoginPanel extends LoginPanelAbstract {
 
 }
 
+</f:bundle>
 </java:format>

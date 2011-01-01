@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$packageName}.${lower-case($class/@name)};
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
@@ -10,21 +13,22 @@ import info.yalamanchili.gwt.utils.Alignment;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
 import com.google.gwt.user.client.ui.DockPanel;
-
+<f:message>generated.class.comment</f:message>
 public class Read${$class/@name}Panel extends ReadComposite<${$class/@name}> {
+<f:message>generated.comment</f:message>
 private static Read${$class/@name}Panel read${$class/@name}Panel;
-
+<f:message>generated.comment</f:message>
 	${$class/@name}OptionsPanel options = new ${$class/@name}OptionsPanel(OptionsCompositeType.CRUD);
-
+<f:message>generated.comment</f:message>
 	public static Read${$class/@name}Panel instance() {
 		return read${$class/@name}Panel;
 	}
-
+<f:message>generated.comment</f:message>
 	public Read${$class/@name}Panel(Long id) {
 		read${$class/@name}Panel = this;
 		initReadComposite(id, ${$class/@name}.class.getName(), ${camelCase($projectName)}Welcome.constants);
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void readData(Long id) {
 		${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().read(id,
@@ -171,19 +175,19 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 					}
 				});
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addListeners() {
 		// TODO Auto-generated method stub
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addWidgetsBeforeCaptionPanel() {
 		basePanel.add(options);
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void addWidgets() {
 		<%-- process parent class level 2 attributes--%>
@@ -321,20 +325,21 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
 				</c:iterate>
 			</c:iterate>	
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void configure() {
 
 	}
-
+<f:message>generated.comment</f:message>
 	@Override
 	protected void readData(${$class/@name} entity) {
 		// TODO Auto-generated method stub
 
 	}
-	
+<f:message>generated.comment</f:message>	
 	protected void postValidate() {
 
 	}
 }
+</f:bundle>
 </java:format>

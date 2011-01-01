@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$packageName}.${lower-case($class/@name)};
 
 import info.yalamanchili.gwt.beans.TableObj;
@@ -191,33 +194,35 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  * directly, GWT does this for you, and calls are marshalled through to the Sync
  * equivalent method in MyService on the server (which is a Seam component).
  */
+ <f:message>generated.class.comment</f:message>
 public interface ${$class/@name}ServiceAsync  {
-
+<f:message>generated.comment</f:message>
 	public void create(${$class/@name} entity,
 			AsyncCallback<${$class/@name}> response);
 
-
+<f:message>generated.comment</f:message>
 	public  void read( Long id,
 			AsyncCallback<${$class/@name}> response);
-
+<f:message>generated.comment</f:message>
 	public void update(${$class/@name} entity,
 			AsyncCallback<${$class/@name}> response);
-
+<f:message>generated.comment</f:message>
 	public void delete(${$class/@name} entity,
 			AsyncCallback<java.lang.Void> response);
-
+<f:message>generated.comment</f:message>
 	public  void getTableObj(int start,
 			AsyncCallback<TableObj<${$class/@name}>> response);
-			
+<f:message>generated.comment</f:message>			
 	public  void getSuggestionsForName(String name,
 			${$class/@name} entity, AsyncCallback<List<String>> response);
-
+<f:message>generated.comment</f:message>
 	public  void getEntities(${$class/@name} entity,
 			AsyncCallback<List<${$class/@name}>> response);
-
+<f:message>generated.comment</f:message>
 	public void getListBoxValues(String[] columns, AsyncCallback<Map<Long, String>> response);
 	
 <c:if test="$enableHibernateSearch = 'true'">
+<f:message>generated.comment</f:message>
 	public void search(String searchText, AsyncCallback<List<${$class/@name}>> response);
 </c:if>	
 	
@@ -244,9 +249,11 @@ public interface ${$class/@name}ServiceAsync  {
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+<f:message>generated.comment</f:message>  					  		 			
 public void get${$class2/@name}s(Long entityID,AsyncCallback<List<${$class2/@name}>> response);
 	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
 	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
+<f:message>generated.comment</f:message>	  					  		 			
 	public void get${$class2/@name}s(${$class/@name} entity, String[] columns,AsyncCallback<MultiSelectObj<${$class2/@name}>> response);
 	  					  		 			</c:if>   
   					  		 			</c:if>  					  		 			
@@ -283,10 +290,12 @@ public void get${$class2/@name}s(Long entityID,AsyncCallback<List<${$class2/@nam
   					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
-  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2">
+<f:message>generated.comment</f:message>  					  		 			 
 public void get${$class2/@name}s(Long entityID,AsyncCallback<List<${$class2/@name}>> response);
 	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
 	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
+<f:message>generated.comment</f:message>	  					  		 			
 	public void get${$class2/@name}s(${$class/@name} entity, String[] columns,AsyncCallback<MultiSelectObj<${$class2/@name}>> response);
 	  					  		 			</c:if>  
   					  		 			</c:if> 
@@ -322,10 +331,12 @@ public void get${$class2/@name}s(Long entityID,AsyncCallback<List<${$class2/@nam
   					  		 	<c:if test="$association_connection_end2/@isNavigable = 'true'">
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
-  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2">
+<f:message>generated.comment</f:message>  					  		 			 
 public void get${$class2/@name}s(Long entityID,AsyncCallback<List<${$class2/@name}>> response);
  	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
 	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
+<f:message>generated.comment</f:message>	  					  		 			
 	public void get${$class2/@name}s(${$class/@name} entity, String[] columns,AsyncCallback<MultiSelectObj<${$class2/@name}>> response);
 	  					  		 			</c:if>  
   					  		 			</c:if> 
@@ -362,7 +373,8 @@ public void get${$class2/@name}s(Long entityID,AsyncCallback<List<${$class2/@nam
   					  		 	<c:if test="$association_connection_end/@isNavigable = 'true'">
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
-  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2">
+<f:message>generated.comment</f:message>  					  		 			 
   					  		 			public  void addAll(${$class2/@name} ${lower-case($class2/@name)}, ${$class/@name} children,
 			List<Long> childrenIds, AsyncCallback<java.lang.Void> response);
   					  		 			</c:if> 
@@ -394,7 +406,8 @@ public void get${$class2/@name}s(Long entityID,AsyncCallback<List<${$class2/@nam
   					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
-  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2">
+<f:message>generated.comment</f:message>  					  		 			 
  										public void merge(${$class/@name} entity, ${$class2/@name} child,AsyncCallback<java.lang.Void> response);
   					  		 			</c:if> 
   					  		 		</c:iterate>
@@ -407,4 +420,5 @@ public void get${$class2/@name}s(Long entityID,AsyncCallback<List<${$class2/@nam
 </c:iterate>	
 			
 }
+</f:bundle>
 </java:format>

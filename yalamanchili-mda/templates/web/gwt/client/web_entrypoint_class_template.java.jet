@@ -1,4 +1,7 @@
+<java:merge/>
 <java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
 package ${$groupID}.client;
 
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
@@ -11,11 +14,11 @@ package ${$groupID}.client;
     		 </c:if>	
 			 </c:iterate>
 	</c:iterate>
-import info.yalamanchili.gwt.security.SecurityWelcome;
-import info.yalamanchili.gwt.security.SecurityWelcome.CMD_TYPE;
-import info.yalamanchili.security.jpa.YRole;
-import info.yalamanchili.security.jpa.YUser;
-import info.yalamanchili.gwt.security.user.UserSideBar;
+import info.yalamanchili.security.gwt.SecurityWelcome;
+import info.yalamanchili.security.gwt.SecurityWelcome.CMD_TYPE;
+import info.yalamanchili.security.gwt.YRole;
+import info.yalamanchili.security.gwt.YUser;
+import info.yalamanchili.security.gwt.user.UserSideBar;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -31,29 +34,32 @@ import com.google.gwt.dom.client.Style.Unit;
 import java.util.logging.Logger;
 import java.util.HashSet;
 import java.util.Set;
-
+<f:message>generated.class.comment</f:message>
 public class ${camelCase($projectName)}Welcome extends RootPanels implements EntryPoint {
-	private  Logger logger = Logger.getLogger(${camelCase($projectName)}Welcome.class.getName());
-
+<f:message>generated.comment</f:message>
+	private static Logger logger = Logger.getLogger(${camelCase($projectName)}Welcome.class.getName());
+<f:message>generated.comment</f:message>
 	private static ${camelCase($projectName)}Welcome instance;
-	
+<f:message>generated.comment</f:message>	
 	public DockLayoutPanel mainPanel = new DockLayoutPanel(Unit.EM);
+<f:message>generated.comment</f:message>	
 	public String user;
+<f:message>generated.comment</f:message>	
 	public Set<Roles> roles = new HashSet<Roles>();
-	
+<f:message>generated.comment</f:message>	
 	public static ${camelCase($projectName)}Welcome instance(){
 	if (instance == null) {
 			return new ${camelCase($projectName)}Welcome();
 		}
 		return instance;
 	}
-
+<f:message>generated.comment</f:message>
 	public static ${camelCase($projectName)}Constants constants = (${camelCase($projectName)}Constants) GWT
 			.create(${camelCase($projectName)}Constants.class);
-
+<f:message>generated.comment</f:message>
 	public static ${camelCase($projectName)}Messages messages = (${camelCase($projectName)}Messages) GWT
 			.create(${camelCase($projectName)}Messages.class);
-			
+<f:message>generated.comment</f:message>			
 	public void onModuleLoad() {
 			GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
 			public void onUncaughtException(Throwable e) {
@@ -65,7 +71,7 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 			configure();
 			RootLayoutPanel.get().add(mainPanel);
 		}
-		
+<f:message>generated.comment</f:message>		
 		public void reLoad(YUser user) {
 		RootLayoutPanel.get().clear();
 		instance = null;
@@ -77,10 +83,10 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 		this.roles = roles;
 		onModuleLoad();
 	}
-		
+<f:message>generated.comment</f:message>		
 		protected void addListeners() {
 		}
-
+<f:message>generated.comment</f:message>
 	protected void configure() {
 		configureEntityPanel();
 		configureStatusPanel();
@@ -90,7 +96,7 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 		configureMainPanel();
 		configureMenuBar();
 	}
-	
+<f:message>generated.comment</f:message>	
 	protected void configureMainPanel() {
 	/* the units addNorth(statusPanel, 3) represents the spacing need to play with values to get the right layout*/
 		mainPanel.addNorth(statusPanel, 4);
@@ -99,12 +105,13 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 		mainPanel.add(entityPanelHolder);
 		mainPanel.addStyleName("mainPanel");
 	}
-	
+<f:message>generated.comment</f:message>	
 	protected void configureEntityPanel() {
 		entityPanelHolder.add(entityPanel);
 		entityPanelHolder.addStyleName("entityPanelHolder");
 	}
-
+	
+<f:message>generated.comment</f:message>
 	protected void configureMenuBar() {
 	menuBar.addStyleName("entityMenuBar");
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
@@ -131,21 +138,21 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 		menuBar.add(menu);
 
 	}
-	
+<f:message>generated.comment</f:message>
 	protected void configureStatusPanel() {
 		statusPanel.addStyleName("statusPanel");
 		statusPanel.add(new StatusPanel());
 	}
-
+<f:message>generated.comment</f:message>
 	protected void configureSideBar() {
 		sidePanel.addStyleName("sidePanel");
 	}
-
+<f:message>generated.comment</f:message>
 	protected void configureSideBarTop() {
 		sidePanel.add(sidePanelTop);
 		sidePanelTop.addStyleName("sidePanelTop");
 	}
-
+<f:message>generated.comment</f:message>
 	protected void configureSideBarBottom() {
 		sidePanel.add(sidePanelBottom);
 		sidePanelBottom.addStyleName("sidePanelBottom");
@@ -156,6 +163,7 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 			 <%-- iterate through class and add only non composite children and non parent--%>
 			 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
 			 	<c:if test="$class/@isDependent = 'false'">  
+<f:message>generated.comment</f:message>			 	
     			Command ${lower-case($class/@name)}Cmd= new Command() {
 
 				@Override
@@ -170,6 +178,7 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 				</c:if>
 			 </c:iterate> 
 	</c:iterate>
+<f:message>generated.comment</f:message>	
 	//USERS ADMIN	
 		Command userCmd = new Command() {
 
@@ -181,7 +190,7 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 
 	};
 	
-
+<f:message>generated.comment</f:message>
 	// ROLES ADMIN
 	Command roleCmd = new Command() {
 
@@ -193,4 +202,5 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 
 	};	
 }
+</f:bundle>
 </java:format>
