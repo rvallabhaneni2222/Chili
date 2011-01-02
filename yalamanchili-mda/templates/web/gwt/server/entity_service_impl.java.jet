@@ -620,7 +620,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	public List<${$class/@name}> search(String searchText) {
 		List<${$class/@name}> results = new ArrayList<${$class/@name}>();
 		org.apache.lucene.search.Query luceneQuery = SearchUtils
-				.getLuceneQuery(searchText, "id", new StandardAnalyzer(),
+				.getLuceneQuery(searchText, "id", new StandardAnalyzer(Version.LUCENE_30),
 						ReflectionUtils.getBeanProperties(${$class/@name}.class,
 								DataType.STRING));
 		FullTextQuery query = SearchUtils.getFullTextSession(em)

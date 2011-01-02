@@ -14,6 +14,7 @@ import ${$groupID}.rest.GileadService;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
+import org.apache.lucene.util.Version;
 </c:if>
 <%--process level 1 generizations --%>
 <c:if test="not($class/@name = $parentClass1/@name)">
@@ -397,7 +398,7 @@ public class ${$class/@name}Service {
 		List<${$class/@name}> results = new ArrayList<${$class/@name}>();
 		FullTextEntityManager ftem = Search.getFullTextEntityManager(em);
 		org.apache.lucene.search.Query luceneQuery = SearchUtils
-				.getLuceneQuery(searchText, "id", new StandardAnalyzer(),
+				.getLuceneQuery(searchText, "id", new StandardAnalyzer(Version.LUCENE_30),
 						ReflectionUtils.getBeanProperties(${$class/@name}.class,
 								DataType.STRING));
 		Query query = ftem.createFullTextQuery(luceneQuery, ${$class/@name}.class);
