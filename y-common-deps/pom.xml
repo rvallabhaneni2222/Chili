@@ -43,11 +43,33 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search</artifactId>
 			<version>${hibernate.search.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>	
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-commons-annotations</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate.javax.persistence</groupId>
+					<artifactId>hibernate-jpa-2.0-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>jgroups</groupId>
+					<artifactId>jgroups</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>${lucene.core.version}</version>
+			<version>3.0.3</version>
 		</dependency>
 		<!-- hibernate search deps END -->
 		<!-- seam dependencies START -->
@@ -134,8 +156,7 @@
 		<hibernate.validator.version>4.0.2.GA</hibernate.validator.version>
 		<yalamanchili.version>1.0-SNAPSHOT</yalamanchili.version>
 		<seam.version>2.2.1.CR2</seam.version>
-		<lucene.core.version>2.9.3</lucene.core.version>
-		<hibernate.search.version>3.2.1.Final</hibernate.search.version>
+		<hibernate.search.version>3.3.0.Final</hibernate.search.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 </project>
