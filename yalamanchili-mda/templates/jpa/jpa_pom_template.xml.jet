@@ -81,7 +81,7 @@
 					</componentProperties>
 				</configuration>
 			</plugin>
-			<plugin>
+		<!--	<plugin>
 				<groupId>info.yalamanchili.maven</groupId>
 				<artifactId>jpa-testdata</artifactId>
 				<version>${$jpa-testdata-plugin-version}</version>
@@ -106,7 +106,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
