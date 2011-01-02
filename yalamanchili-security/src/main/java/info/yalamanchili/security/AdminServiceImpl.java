@@ -23,6 +23,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.util.Version;
 import org.hibernate.search.FullTextQuery;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -143,9 +144,9 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 	public List<YUser> searchUser(String searchText) {
 		List<YUser> results = new ArrayList<YUser>();
 		org.apache.lucene.search.Query luceneQuery = SearchUtils
-				.getLuceneQuery(searchText, "id", new StandardAnalyzer(),
-						ReflectionUtils.getBeanProperties(YUser.class,
-								info.yalamanchili.commons.DataType.STRING));
+				.getLuceneQuery(searchText, "id", new StandardAnalyzer(
+						Version.LUCENE_30), ReflectionUtils.getBeanProperties(
+						YUser.class, info.yalamanchili.commons.DataType.STRING));
 		FullTextQuery query = SearchUtils.getFullTextSession(yem)
 				.createFullTextQuery(luceneQuery, YUser.class);
 		for (Object obj : query.list()) {
@@ -245,9 +246,9 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 	public List<YRole> searchRole(String searchText) {
 		List<YRole> results = new ArrayList<YRole>();
 		org.apache.lucene.search.Query luceneQuery = SearchUtils
-				.getLuceneQuery(searchText, "id", new StandardAnalyzer(),
-						ReflectionUtils.getBeanProperties(YRole.class,
-								info.yalamanchili.commons.DataType.STRING));
+				.getLuceneQuery(searchText, "id", new StandardAnalyzer(
+						Version.LUCENE_30), ReflectionUtils.getBeanProperties(
+						YRole.class, info.yalamanchili.commons.DataType.STRING));
 		FullTextQuery query = SearchUtils.getFullTextSession(yem)
 				.createFullTextQuery(luceneQuery, YRole.class);
 		for (Object obj : query.list()) {
