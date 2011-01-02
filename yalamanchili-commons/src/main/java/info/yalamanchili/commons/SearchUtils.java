@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
@@ -20,9 +20,9 @@ public class SearchUtils {
 	private static final Log log = LogFactory.getLog(SearchUtils.class);
 
 	public static Query getLuceneQuery(String searchText, String defaultField,
-			Analyzer analyzer, String... fields) {
+			StandardAnalyzer analyzer, String... fields) {
 		log.debug("SearchString:" + searchText);
-		QueryParser parser = new QueryParser(defaultField, analyzer);
+		QueryParser parser = new QueryParser(searchText, analyzer);
 		org.apache.lucene.search.Query luceneQuery;
 		String searchQuery = SearchUtils.getSearchQuery(searchText, fields)
 				.trim();
