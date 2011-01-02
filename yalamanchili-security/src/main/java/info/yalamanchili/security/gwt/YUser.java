@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Size;
 
 import net.sf.gilead.pojo.gwt.LightEntity;
 
@@ -23,13 +24,13 @@ public class YUser extends LightEntity {
 	private static final long serialVersionUID = 4093061330460788496L;
 
 	private Long userId;
-
+	@Size(min = 1)
 	private String username;
-	// TODO need to remove
-	// @UserPassword(hash = "md5")
+
+	@Size(min = 1)
 	private String passwordHash;
 
-	private Set<YRole> roles;
+	private Set<YRole> roles; 
 
 	@Id
 	@GeneratedValue
@@ -50,7 +51,7 @@ public class YUser extends LightEntity {
 		this.username = username;
 	}
 
-	@UserPassword(hash = "none")
+	@UserPassword(hash = "md5")
 	public String getPasswordHash() {
 		return passwordHash;
 	}

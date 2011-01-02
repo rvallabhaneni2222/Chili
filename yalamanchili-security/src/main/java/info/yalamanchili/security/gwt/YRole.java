@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Size;
 
 import net.sf.gilead.pojo.gwt.LightEntity;
 
@@ -20,6 +21,7 @@ public class YRole extends LightEntity {
 
 	private static final long serialVersionUID = 5472657332417332843L;
 	private Long roleId;
+	@Size(min = 1)
 	private String rolename;
 	private Set<YRole> groups;
 
