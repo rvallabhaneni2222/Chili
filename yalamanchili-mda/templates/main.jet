@@ -12,12 +12,12 @@
 <c:setVariable select="'/Users/yphanikumar/codebase/zuzubi/trunk'" var="location"/>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <%--code generation properties--%>
-<c:setVariable select="'TRUE'" var="genMaster"/>
-<c:setVariable select="'TRUE'" var="genApp"/>
-<c:setVariable select="'TRUE'" var="genJPA"/>
-<c:setVariable select="'TRUE'" var="genEJB"/>
+<c:setVariable select="'FALSE'" var="genMaster"/>
+<c:setVariable select="'FALSE'" var="genApp"/>
+<c:setVariable select="'FALSE'" var="genJPA"/>
+<c:setVariable select="'FALSE'" var="genEJB"/>
 <c:setVariable select="'TRUE'" var="genRest"/>
-<c:setVariable select="'TRUE'" var="genWebapp"/>
+<c:setVariable select="'FALSE'" var="genWebapp"/>
 <c:setVariable select="'FALSE'" var="genAndroid"/>
 <c:setVariable select="'FALSE'" var="genIOS"/>
 <c:setVariable select="'FALSE'" var="genTest"/>

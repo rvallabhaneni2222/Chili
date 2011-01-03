@@ -58,11 +58,6 @@
 			<artifactId>gwt-user</artifactId>
 			<version>${'${gwtVersion}'}</version>
 		</dependency> -->
-		<dependency>
-			<groupId>org.jboss.seam</groupId>
-			<artifactId>jboss-seam-remoting</artifactId>
-			<version>2.2.0.GA</version>
-		</dependency>
 				<!-- gilead libraries -->
 		<dependency>
 			<groupId>net.sf.gilead</groupId>
@@ -84,16 +79,92 @@
 			<groupId>net.sf.beanlib</groupId>
 			<artifactId>beanlib</artifactId>
 			<version>5.0.2beta</version>
+			<exclusions>
+				<exclusion>
+					<groupId>cglib</groupId>
+					<artifactId>cglib</artifactId>				
+				</exclusion>
+				<exclusion>
+					<groupId>xstream</groupId>
+					<artifactId>xstream</artifactId>				
+				</exclusion>				
+				<exclusion>
+					<groupId>asm</groupId>
+					<artifactId>asm</artifactId>				
+				</exclusion>	
+				<exclusion>
+					<groupId>aopalliance</groupId>
+					<artifactId>aopalliance</artifactId>				
+				</exclusion>	
+				<exclusion>
+					<groupId>net.jcip</groupId>
+					<artifactId>jcip-annotations</artifactId>				
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>				
+				</exclusion>				
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.beanlib</groupId>
 			<artifactId>beanlib-hibernate</artifactId>
 			<version>5.0.2beta</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate</artifactId>				
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>				
+				</exclusion>				
+				<exclusion>
+					<groupId>ehcache</groupId>
+					<artifactId>ehcache</artifactId>				
+				</exclusion>	
+				<exclusion>
+					<groupId>asm</groupId>
+					<artifactId>asm-attrs</artifactId>				
+				</exclusion>	
+				<exclusion>
+					<groupId>antlr</groupId>
+					<artifactId>antlr</artifactId>				
+				</exclusion>				
+			</exclusions>			
 		</dependency>
 		<dependency>
 			<groupId>net.sf.cglib</groupId>
 			<artifactId>cglib-nodep</artifactId>
 			<version>2.1</version>
+		</dependency>
+		<!--seam remoting -->
+		<dependency>
+			<groupId>org.jboss.seam</groupId>
+			<artifactId>jboss-seam-remoting</artifactId>
+			<version>2.2.0.GA</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.seam</groupId>
+					<artifactId>jboss-seam</artifactId>				
+				</exclusion>
+				<exclusion>
+					<groupId>dom4j</groupId>
+					<artifactId>dom4j</artifactId>				
+				</exclusion>				
+				<exclusion>
+					<groupId>xstream</groupId>
+					<artifactId>xstream</artifactId>				
+				</exclusion>	
+				<exclusion>
+					<groupId>xpp3</groupId>
+					<artifactId>xpp3_min</artifactId>				
+				</exclusion>	
+				<exclusion>
+					<groupId>org.jboss.el</groupId>
+					<artifactId>jboss-el</artifactId>				
+				</exclusion>				
+			</exclusions>			
 		</dependency>
 		<!-- file upload support -->
 		<dependency>
