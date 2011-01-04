@@ -191,18 +191,18 @@ ${$attribute/@name};
   					    						<%--check the relations--%>
   					    							<%-- Composite @ManyToOne--%>			
   					    							<c:if test="$association_connection_end2/@aggregation = 'composite'">
- @ManyToOne 					    							
+ @ManyToOne(cascade = CascadeType.MERGE)			    							
   					    							</c:if>  
   					    							<%-- Aggregate @ManyToOne--%>
   					    							<c:if test="$association_connection_end2/@aggregation = 'aggregate'">
- @ManyToOne 					    							
+ @ManyToOne(cascade = CascadeType.MERGE) 					    							
   					    							</c:if> 
  													<%-- Association OneToOne or OneToMany--%>
    					    							<c:if test="$association_connection_end2/@aggregation = 'none'">
   					    								<%-- check for one or many realations--%>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
- @OneToOne 					    				
+ @OneToOne 	(cascade = CascadeType.ALL,  orphanRemoval = true)				    				
 				    										</c:if>
 				    									</c:if>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
@@ -220,12 +220,12 @@ ${$attribute/@name};
    					    						<%--check the relations--%>
   					    							<%-- Composite @ManyToOne--%>
   					    							<c:if test="$association_connection_end/@aggregation = 'composite'">
- @OneToMany(mappedBy="${lowercaseFirst($class/@name)}", cascade = CascadeType.ALL)	
+ @OneToMany(mappedBy="${lowercaseFirst($class/@name)}", cascade = CascadeType.ALL,  orphanRemoval = true)	
   protected 	List<${$class2/@name}>  ${lowercaseFirst($class2/@name)}s;				    							
   					    							</c:if>  
   					    							<%-- Aggregate @ManyToOne--%>
   					    							<c:if test="$association_connection_end/@aggregation = 'aggregate'">
- @OneToMany(mappedBy="${lowercaseFirst($class/@name)}")	
+ @OneToMany(mappedBy="${lowercaseFirst($class/@name)}", cascade = CascadeType.MERGE)	
   protected 	List<${$class2/@name}>  ${lowercaseFirst($class2/@name)}s;		    							
   					    							</c:if> 
   					    							<%-- Association OneToOne or OneToMany--%>

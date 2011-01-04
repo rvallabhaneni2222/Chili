@@ -16,8 +16,8 @@
 <c:setVariable select="'FALSE'" var="genApp"/>
 <c:setVariable select="'FALSE'" var="genJPA"/>
 <c:setVariable select="'FALSE'" var="genEJB"/>
-<c:setVariable select="'TRUE'" var="genRest"/>
-<c:setVariable select="'FALSE'" var="genWebapp"/>
+<c:setVariable select="'FALSE'" var="genRest"/>
+<c:setVariable select="'TRUE'" var="genWebapp"/>
 <c:setVariable select="'FALSE'" var="genAndroid"/>
 <c:setVariable select="'FALSE'" var="genIOS"/>
 <c:setVariable select="'FALSE'" var="genTest"/>

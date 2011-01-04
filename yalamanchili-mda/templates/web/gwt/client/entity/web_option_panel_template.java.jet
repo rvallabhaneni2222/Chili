@@ -6,10 +6,10 @@ package ${$packageName}.${lower-case($class/@name)};
 
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
+import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.OptionsComposite;
 import info.yalamanchili.gwt.utils.Alignment;
-import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.Window;
 import info.yalamanchili.gwt.composite.CreateComposite.CreateCompositeType;
 import info.yalamanchili.gwt.composite.SelectComposite.SelectCompositeType;
 <f:message>generated.class.comment</f:message>
@@ -25,8 +25,17 @@ public class ${$class/@name}OptionsPanel extends OptionsComposite {
 <f:message>generated.comment</f:message>
 	@Override
 	public void deleteLinkClicked() {
-		Window.alert("delete clicked");
+	${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().
+	delete(Read${$class/@name}Panel.instance().getEntity(),
+						new ALAsyncCallback<Void>() {
 
+							@Override
+							public void onResponse(Void arg0) {
+								new ResponseStatusWidget().show("deleted");
+
+							}
+
+						});
 	}
 <f:message>generated.comment</f:message>
 	@Override

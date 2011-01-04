@@ -255,8 +255,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	@Override
 	@WebRemote
 	public void delete(${$class/@name} entity) {
-		// TODO Auto-generated method stub
-
+		em.remove(em.find(${$class/@name}.class, entity.getId()));
 	}
 <f:message>generated.comment</f:message>
 	@Override
@@ -600,7 +599,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	@Override
 	@WebRemote
 	public  void merge(${$class/@name} entity, ${$class2/@name} child) {
-		entity.set${$class2/@name}(child);
+		entity.set${$class2/@name}(em.find(${$class2/@name}.class, child.getId()));
 		em.merge(entity);
 	}
   					  		 			</c:if> 
