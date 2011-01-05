@@ -18,7 +18,7 @@ import java.util.Properties;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.EJB;
-
+import org.apache.lucene.util.Version;
 import org.jboss.seam.annotations.Transactional;
 import ${$groupID}.ejb.GenericServiceLocal;
 import org.apache.commons.logging.Log;
@@ -276,7 +276,8 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 	@Override
 	@WebRemote
 	public ${$class/@name} update(${$class/@name} entity) {
-		return (${$class/@name}) getBeanManager().merge(em.merge(entity));
+		em.merge(getBeanManager().merge(entity));
+		return entity;
 	}
 
 <%-- process all getRelated entities relations--%>
