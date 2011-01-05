@@ -5,6 +5,8 @@ import info.yalamanchili.security.gwt.YUser;
 
 import javax.persistence.EntityManager;
 
+import org.jboss.seam.util.Base64;
+
 public class SecurityUtil {
 
 	public static YUser createUser(EntityManager em, String username,
@@ -36,4 +38,15 @@ public class SecurityUtil {
 		}
 		return em.merge(group);
 	}
+
+	public static String getMD5Hash(String input) {
+		try {
+			byte[] hash = java.security.MessageDigest.getInstance("MD5")
+					.digest(input.getBytes());
+			return Base64.encodeBytes(hash);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }
