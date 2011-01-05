@@ -55,6 +55,7 @@ public class ${camelCase($projectName)}ServiceImpl extends GileadService impleme
 		}
 		identity.getCredentials().setUsername(username);
 		identity.getCredentials().setPassword(password);
+		//can also use identityManager.authenticate(username, password)
 		if (("loggedIn").equals(identity.login())) {
 			Query getUserQuery = yem.createQuery("from YUser where username='"
 					+ username + "'");
