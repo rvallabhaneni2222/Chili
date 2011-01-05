@@ -14,7 +14,7 @@
 <%--code generation properties--%>
 <c:setVariable select="'FALSE'" var="genMaster"/>
 <c:setVariable select="'FALSE'" var="genApp"/>
-<c:setVariable select="'FALSE'" var="genJPA"/>
+<c:setVariable select="'TRUE'" var="genJPA"/>
 <c:setVariable select="'FALSE'" var="genEJB"/>
 <c:setVariable select="'FALSE'" var="genRest"/>
 <c:setVariable select="'TRUE'" var="genWebapp"/>

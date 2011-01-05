@@ -13,6 +13,9 @@ import ${$webPackage}rpc.${camelCase($projectName)}Service.${camelCase($projectN
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 <f:message>generated.class.comment</f:message>
 public class StatusPanel extends AbstractStatusPanel {
+	public StatusPanel() {
+		statusBar.remove(createUserLink);
+	}
 <f:message>generated.comment</f:message>
 	LoginPanel loginPanel = new LoginPanel();
 <f:message>generated.comment</f:message>

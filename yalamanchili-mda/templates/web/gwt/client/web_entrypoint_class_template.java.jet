@@ -45,7 +45,7 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 <f:message>generated.comment</f:message>	
 	public String user;
 <f:message>generated.comment</f:message>	
-	public Set<Roles> roles = new HashSet<Roles>();
+	public static Set<String> roles = new HashSet<String>();
 <f:message>generated.comment</f:message>	
 	public static ${camelCase($projectName)}Welcome instance(){
 	if (instance == null) {
@@ -76,11 +76,10 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 		RootLayoutPanel.get().clear();
 		instance = null;
 		this.user = user.getUsername();
-		Set<Roles> roles = new HashSet<Roles>();
 		for (YRole role : user.getRoles()) {
-			roles.add(Roles.valueOf(role.getRolename().toUpperCase()));
+			roles.add(role.getRolename().toUpperCase());
 		}
-		this.roles = roles;
+		logger.info(roles.toString());
 		onModuleLoad();
 	}
 <f:message>generated.comment</f:message>		
@@ -113,6 +112,8 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 	
 <f:message>generated.comment</f:message>
 	protected void configureMenuBar() {
+	MenuBar menu = new MenuBar();
+	
 	menuBar.addStyleName("entityMenuBar");
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     MenuBar ${lower-case($package/@name)}Bar = new MenuBar(true);
@@ -124,19 +125,19 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 			 </c:iterate> 
 	</c:iterate>
 	
-		MenuBar adminBar = new MenuBar(true);
-		adminBar.addItem("Users", userCmd);
-		adminBar.addItem("Roles", roleCmd);
-		
-		MenuBar menu = new MenuBar();
 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
 		menu.addItem("${upper-case($package/@name)}", ${lower-case($package/@name)}Bar);
 		</c:iterate>
-		//TODO check admin role
-		menu.addItem("ADMIN", adminBar);
-
+		
+		if (roles.contains("ADMIN")) {
+			MenuBar adminBar = new MenuBar(true);
+			adminBar.addItem("Users", userCmd);
+			adminBar.addItem("Roles", roleCmd);
+			// TODO check admin role
+			menu.addItem("ADMIN", adminBar);
+		}
+					
 		menuBar.add(menu);
-
 	}
 <f:message>generated.comment</f:message>
 	protected void configureStatusPanel() {

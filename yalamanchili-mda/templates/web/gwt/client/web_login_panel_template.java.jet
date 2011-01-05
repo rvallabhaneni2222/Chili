@@ -27,6 +27,7 @@ public class LoginPanel extends LoginPanelAbstract {
 						if (arg0 != null) {
 						new ${camelCase($projectName)}Welcome().reLoad(arg0);
 							new ResponseStatusWidget().show("login success");
+							LoginPanel.this.hide();
 						} else {
 							new ResponseStatusWidget().show("login failed");
 						}
