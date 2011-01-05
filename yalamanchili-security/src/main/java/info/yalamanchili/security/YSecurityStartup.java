@@ -31,6 +31,7 @@ public class YSecurityStartup {
 		// USER ROLE
 		YRole userRole = new YRole();
 		userRole.setRolename("user");
+		userRole.getGroups().add(userRole);
 		yem.persist(userRole);
 		// ADMIN ROLE
 		YRole adminRole = new YRole();

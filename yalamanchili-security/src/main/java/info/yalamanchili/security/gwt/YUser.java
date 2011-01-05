@@ -51,7 +51,7 @@ public class YUser extends LightEntity {
 		this.username = username;
 	}
 
-	@UserPassword(hash = "md5")
+	@UserPassword(hash = "none")
 	public String getPasswordHash() {
 		return passwordHash;
 	}
