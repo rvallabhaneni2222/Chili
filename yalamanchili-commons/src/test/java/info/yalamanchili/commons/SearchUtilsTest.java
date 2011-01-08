@@ -17,8 +17,7 @@ public class SearchUtilsTest {
 
 	@Test
 	public void testSearch() {
-		SearchUtils.getLuceneQuery("bob", "amtrim", new StandardAnalyzer(),
-				"amtrim");
+		
 	}
 
 	@After

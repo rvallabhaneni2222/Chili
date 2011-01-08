@@ -9,9 +9,10 @@ import javax.persistence.EntityManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.util.Version;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -20,18 +21,16 @@ public class SearchUtils {
 	private static final Log log = LogFactory.getLog(SearchUtils.class);
 
 	public static Query getLuceneQuery(String searchText, String defaultField,
-			StandardAnalyzer analyzer, String... fields) {
-		log.debug("SearchString:" + searchText);
-		QueryParser parser = new QueryParser(searchText, analyzer);
-		org.apache.lucene.search.Query luceneQuery;
-		String searchQuery = SearchUtils.getSearchQuery(searchText, fields)
-				.trim();
-		log.debug("SearchQuery:" + searchQuery);
+			StandardAnalyzer anaylyzer, String... fields) { 
+		MultiFieldQueryParser parser = new MultiFieldQueryParser(
+				Version.LUCENE_30, fields, new StandardAnalyzer(
+						Version.LUCENE_30));
+		org.apache.lucene.search.Query luceneQuery = null;
 		try {
-			luceneQuery = parser.parse(searchQuery);
+			luceneQuery = parser.parse(getSearchQuery(searchText, fields));
 		} catch (ParseException e) {
-			throw new RuntimeException("Unable to parse query: " + searchQuery,
-					e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return luceneQuery;
 	}
