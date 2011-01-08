@@ -36,29 +36,16 @@ public abstract class SelectComposite<T> extends ALComposite implements
 
 	protected MultiListBox multiListBox;
 
-	public enum SelectCompositeType {
-		ONE, ALL
-	}
-
 	protected Map<Long, String> values = new HashMap<Long, String>();
 	protected Map<Long, Integer> valueIndex = new HashMap<Long, Integer>();
 	protected Long entityID;
 
-	protected SelectCompositeType type;
-
-	public SelectComposite(String name, SelectCompositeType type) {
-		this.type = type;
+	/** user for create entity panels with no value selected */
+	public SelectComposite(String name) {
 		init(panel);
-		// NOT SUPPORTED
-		// Multiple select box (many to many relations)
-		if (SelectCompositeType.ALL.equals(type)) {
-			throw new UnsupportedOperationException();
-		}
 		// select one in (many to one relations)
-		if (SelectCompositeType.ONE.equals(type)) {
-			listBox = new ListBox();
-			listBox.addChangeHandler(this);
-		}
+		listBox = new ListBox();
+		listBox.addChangeHandler(this);
 		listBox.addItem("          ", "0");
 		label.setText(name);
 		panel.add(label);
@@ -66,7 +53,10 @@ public abstract class SelectComposite<T> extends ALComposite implements
 		initListBox();
 	}
 
-	// Multiple select box (many to many relations)
+	/**
+	 * Multiple select box (many to many & one to many non compositions
+	 * relations)
+	 */
 	public SelectComposite(String title, TreePanelComposite parent,
 			Map<Long, String> available, Set<Long> selected) {
 		init(panel);
@@ -76,7 +66,8 @@ public abstract class SelectComposite<T> extends ALComposite implements
 		multiListBox.unselectButton.addClickHandler(this);
 		panel.add(multiListBox);
 	}
-//used for update panel dropdown
+
+	/** used for update panel dropdown with a value(entity) selected */
 	public SelectComposite(String name, T entity) {
 		this.entity = entity;
 		init(panel);
