@@ -11,7 +11,7 @@ import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.OptionsComposite;
 import info.yalamanchili.gwt.utils.Alignment;
 import info.yalamanchili.gwt.composite.CreateComposite.CreateCompositeType;
-import info.yalamanchili.gwt.composite.SelectComposite.SelectCompositeType;
+
 <f:message>generated.class.comment</f:message>
 public class ${$class/@name}OptionsPanel extends OptionsComposite {
 <f:message>generated.comment</f:message>
@@ -78,9 +78,7 @@ public class ${$class/@name}OptionsPanel extends OptionsComposite {
 <f:message>generated.comment</f:message>	
 	@Override
 	public  void addAllLinkClicked(){
-	${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
-		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-				new Select${$class/@name}Panel("${$class/@name}",SelectCompositeType.ALL));
+	//use selectcomposite with multiselect box
 	}
 	
 	

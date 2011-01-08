@@ -155,12 +155,6 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
   					    						<%--process only non composites --%>
   					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">			  					    						
 			  					    							setDropDownField("${lower-case($class2/@name)}", ${lower-case($class/@name)}.get${$class2/@name}());
-			  					    						<%--check for one to one --%>	
-			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
-			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-			  					    							setDropDownField("${lower-case($class2/@name)}", ${lower-case($class/@name)}.get${$class2/@name}());
-			  					  		 					</c:if>	
-			  					  		 					</c:if>	
 			  					  		 			</c:if>		
 			  					  		 			</c:if>	
 			  					  		 			</c:if>	
@@ -307,12 +301,6 @@ private static Read${$class/@name}Panel read${$class/@name}Panel;
   					    						<%--process only non composites --%>
   					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">			  					    						
 			  					    							addField("${lower-case($class2/@name)}", true, true , DataType.DROPDOWN_FIELD);
-			  					    						<%--check for one to one --%>	
-			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
-			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-			  					    							addField("${lower-case($class2/@name)}", true, ${$attribute/@isRequired}, DataType.DROPDOWN_FIELD);
-			  					  		 					</c:if>	
-			  					  		 					</c:if>	
 			  					  		 			</c:if>		
 			  					  		 			</c:if>	
 			  					  		 			</c:if>	

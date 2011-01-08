@@ -130,7 +130,6 @@ import ${$packageName}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel.
 	</c:iterate>
 </c:iterate>
 
-import info.yalamanchili.gwt.composite.SelectComposite.SelectCompositeType;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.CreateComposite;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
@@ -162,16 +161,7 @@ public class Create${$class/@name}Panel extends CreateComposite<${$class/@name}>
   					    						<%--process only non composites --%>
   					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">
 <f:message>generated.comment</f:message>  					    						
-  					    							Select${$class2/@name}Panel select${$class2/@name}Panel = new Select${$class2/@name}Panel("${$class2/@name}",
-													SelectCompositeType.ONE);
-  					    						<%--check for one to one --%>	
-  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
-  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-<f:message>generated.comment</f:message>
-  					    							Select${$class2/@name}Panel select${$class2/@name}Panel = new Select${$class2/@name}Panel("${$class2/@name}",
-													SelectCompositeType.ONE);
-  					  		 					</c:if>	
-  					  		 					</c:if>
+  					    							Select${$class2/@name}Panel select${$class2/@name}Panel = new Select${$class2/@name}Panel("${$class2/@name}");
   					  		 					</c:if>	
   					  		 			</c:if>	
   					  		 			</c:if>	
@@ -339,12 +329,6 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
   					    						<%--process only non composites --%>
   					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">			  					    						
 			  					    							addDropDown(select${$class2/@name}Panel);
-			  					    						<%--check for one to one --%>	
-			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
-			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-			  					    							addDropDown(select${$class2/@name}Panel);
-			  					  		 					</c:if>	
-			  					  		 					</c:if>
 			  					  		 			</c:if>			
 			  					  		 			</c:if>	
 			  					  		 			</c:if>	
@@ -479,12 +463,6 @@ public Create${$class/@name}Panel(CreateCompositeType type) {
   					    						<%--process only non composites --%>
   					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">			  					    						
 			  					    							${lower-case($class/@name)}.set${uppercaseFirst($class2/@name)}(select${$class2/@name}Panel.getEntity());
-			  					    						<%--check for one to one --%>	
-			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
-			  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-			  					    							${lower-case($class/@name)}.set${uppercaseFirst($class2/@name)}(select${$class2/@name}Panel.getEntity());
-			  					  		 					</c:if>	
-			  					  		 					</c:if>	
 			  					  		 			</c:if>		
 			  					  		 			</c:if>	
 			  					  		 			</c:if>	

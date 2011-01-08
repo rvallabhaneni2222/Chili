@@ -355,7 +355,7 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
 			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
 		<%-- check is the association is corresponding to the class  --%>
-					<c:if test="$association_connection_end/@xmi.id = $association_connection_end2/@xmi.id">
+					<c:if test="$association_connection_end_classID = $classID">
   					   	<%-- iterate over the iterations ends  --%>
   					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />

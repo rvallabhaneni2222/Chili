@@ -42,8 +42,6 @@ private static TreeAbstract${$class/@name}Panel instance;
 	protected abstract void configure() ;
 <f:message>generated.comment</f:message>
 	public abstract ${$class/@name} loadEntity();
-<f:message>generated.comment</f:message>
-	public abstract void linkClicked(String link);
 }
 </f:bundle>
 </java:format>

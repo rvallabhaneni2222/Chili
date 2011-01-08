@@ -1,4 +1,4 @@
-<java:merge/>
+
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
@@ -72,8 +72,8 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
 		super(title, parent, available, selected);
 	}
 <f:message>generated.comment</f:message>
-	public Select${$class/@name}Panel(String name,SelectCompositeType type) {
-		super(name,type);
+	public Select${$class/@name}Panel(String name) {
+		super(name);
 	}
 <f:message>generated.comment</f:message>	
 	public Select${$class/@name}Panel(String name,${$class/@name} entity) {
