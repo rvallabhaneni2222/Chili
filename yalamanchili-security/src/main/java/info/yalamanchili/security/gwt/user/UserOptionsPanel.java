@@ -1,12 +1,12 @@
 package info.yalamanchili.security.gwt.user;
 
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.CreateComposite.CreateCompositeType;
 import info.yalamanchili.gwt.composite.OptionsComposite;
-
 import info.yalamanchili.gwt.utils.Alignment;
+import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
+import info.yalamanchili.security.gwt.AdminService.AdminServiceAsync;
 import info.yalamanchili.security.gwt.SecurityWelcome;
-
-import com.google.gwt.user.client.Window;
 
 public class UserOptionsPanel extends OptionsComposite {
 
@@ -20,7 +20,16 @@ public class UserOptionsPanel extends OptionsComposite {
 
 	@Override
 	public void deleteLinkClicked() {
-		Window.alert("delete clicked");
+		AdminServiceAsync.instance().deleteUser(
+				ReadUserPanel.instance().getEntity(),
+				new ALAsyncCallback<Void>() {
+
+					@Override
+					public void onResponse(Void arg0) {
+						new ResponseStatusWidget().show("deleted");
+					}
+
+				});
 
 	}
 

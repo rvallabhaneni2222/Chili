@@ -67,7 +67,7 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 	@Override
 	@WebRemote
 	public void deleteUser(YUser entity) {
-		yem.remove(entity);
+		yem.remove(yem.find(YUser.class, entity.getUserId()));
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 	@Override
 	@WebRemote
 	public void deleteRole(YRole entity) {
-		yem.remove(entity);
+		yem.remove(yem.find(YUser.class, entity.getRoleId()));
 	}
 
 	@Override

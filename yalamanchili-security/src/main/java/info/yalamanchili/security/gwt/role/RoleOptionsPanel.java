@@ -1,11 +1,12 @@
 package info.yalamanchili.security.gwt.role;
 
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.CreateComposite.CreateCompositeType;
 import info.yalamanchili.gwt.composite.OptionsComposite;
 import info.yalamanchili.gwt.utils.Alignment;
+import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
+import info.yalamanchili.security.gwt.AdminService.AdminServiceAsync;
 import info.yalamanchili.security.gwt.SecurityWelcome;
-
-import com.google.gwt.user.client.Window;
 
 public class RoleOptionsPanel extends OptionsComposite {
 
@@ -19,14 +20,24 @@ public class RoleOptionsPanel extends OptionsComposite {
 
 	@Override
 	public void deleteLinkClicked() {
-		Window.alert("delete clicked");
+		AdminServiceAsync.instance().deleteRole(
+				ReadRolePanel.instance().getEntity(),
+				new ALAsyncCallback<Void>() {
+
+					@Override
+					public void onResponse(Void arg0) {
+						new ResponseStatusWidget().show("deleted");
+					}
+
+				});
 
 	}
 
 	@Override
 	public void updateLinkClicked() {
 		info.yalamanchili.security.gwt.SecurityWelcome.entityPanel.clear();
-		info.yalamanchili.security.gwt.SecurityWelcome.entityPanel.add(new UpdateRolePanel());
+		info.yalamanchili.security.gwt.SecurityWelcome.entityPanel
+				.add(new UpdateRolePanel());
 	}
 
 	@Override
