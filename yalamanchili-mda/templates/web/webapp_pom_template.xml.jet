@@ -86,7 +86,8 @@
 					</runTarget>
 					<style>DETAILED</style>
 					<noServer>false</noServer>
-					<draftCompile>true</draftCompile>
+					<!-- use only for dev-->
+					<!-- <draftCompile>true</draftCompile> -->
 					<soyc>false</soyc>
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
 					<!-- target dir for generated interfaces-->

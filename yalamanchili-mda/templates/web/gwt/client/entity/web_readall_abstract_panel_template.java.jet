@@ -41,8 +41,20 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 		<%
 		int x = 1;
 		%>
+<%-- process parent class level 2 attributes--%>
+<c:if test="not($class/@name = $parentClass2/@name)">
+<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+			table.setText(0, <%= x++ %>, getClassValue("${$attribute/@name}"));
+</c:iterate>
+</c:if>	
+<%-- process parent class level 1 attributes--%>
+<c:if test="not($class/@name = $parentClass1/@name)">
+<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+			table.setText(0, <%= x++ %>, getClassValue("${$attribute/@name}"));
+</c:iterate>
+</c:if>		
+<%-- process base class attributes--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-<%-- processes yalamanchili gwt tags Tag--%>
 			table.setText(0, <%= x++ %>, getClassValue("${$attribute/@name}"));
 </c:iterate>
 			<%-- process dropdowns one to one and many to one unidirectional--%>

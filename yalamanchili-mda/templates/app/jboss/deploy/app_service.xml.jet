@@ -1,5 +1,5 @@
 <mbean code="org.jboss.varia.property.SystemPropertiesService" name="jboss.util:type=Service,name=${lower-case($projectName)}">
   <attribute name="Properties">
-    file.target.directory=/Users/yphanikumar/zuzubi/pictures.war/
+    file.target.directory=/Users/yphanikumar/${$projectName}/pictures.war/
   </attribute>
 </mbean>

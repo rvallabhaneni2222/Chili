@@ -5,11 +5,56 @@ tablePageSize=10
 #GENERAL
 Table_Action=Action
 #Class attributes
-<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
-	<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
-#${$class/@name}		
-			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+    	<%-- Iterate through packages and classes --%>
+    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
+    		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">	
+#${$class/@name}	    		 
+    		<%-- process generizations upto 2 levels and get teh parent classes if any--%>
+    		<c:setVariable select="$class/@xmi.id" var="classID"/>
+			<c:setVariable select="$class" var="parentClass1"/>
+			<c:setVariable select="$class" var="parentClass2"/>
+			<%--process generizations --%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+			 <%-- if child class--%>
+				<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $classID">
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+			  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+			  			<%-- get level 1 parent--%>
+			  			<c:setVariable select="$otherClass" var="parentClass1"/>
+								<%-- second round to get level 2 --%>
+								<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
+								 <%-- if child class--%>
+									<c:if test="$generalization/Generalization.child/Class/@xmi.idref = $parentClass1/@xmi.id">
+										<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="otherClass">
+								  			<c:if test="$otherClass/@xmi.id = $generalization/Generalization.parent/Class/@xmi.idref">
+								  			<%-- get level 2 parent--%>
+								  			<c:setVariable select="$otherClass" var="parentClass2"/>	  			
+								  			</c:if>
+										</c:iterate>  					  		 			 
+									</c:if>
+							</c:iterate>
+								  									 				
+			  			</c:if>
+					</c:iterate>  					  		 			 
+				</c:if>
+			</c:iterate>
+<%-- process parent class level 2 attributes--%>
+<c:if test="not($class/@name = $parentClass2/@name)">
+<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 ${$groupID}.entity.${$package/@name}.${$class/@name}_${$attribute/@name}=${uppercaseFirst ($attribute/@name)}
-			</c:iterate>	
-	</c:iterate>
 </c:iterate>
+</c:if>	
+<%-- process parent class level 1 attributes--%>
+<c:if test="not($class/@name = $parentClass1/@name)">
+<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+${$groupID}.entity.${$package/@name}.${$class/@name}_${$attribute/@name}=${uppercaseFirst ($attribute/@name)}
+</c:iterate>
+</c:if>		
+<%-- process base class attributes--%>		
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+${$groupID}.entity.${$package/@name}.${$class/@name}_${$attribute/@name}=${uppercaseFirst ($attribute/@name)}
+</c:iterate>		
+	    	
+			 </c:iterate>
+		</c:iterate>

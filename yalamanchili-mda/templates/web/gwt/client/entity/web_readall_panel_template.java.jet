@@ -55,8 +55,20 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 		<%
 		int x = 1;
 		%>
+<%-- process parent class level 2 attributes--%>
+<c:if test="not($class/@name = $parentClass2/@name)">
+<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+			table.setText(0, <%= x++ %>, getClassValue("${$attribute/@name}"));
+</c:iterate>
+</c:if>	
+<%-- process parent class level 1 attributes--%>
+<c:if test="not($class/@name = $parentClass1/@name)">
+<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+			table.setText(0, <%= x++ %>, getClassValue("${$attribute/@name}"));
+</c:iterate>
+</c:if>		
+<%-- process base class attributes--%>		
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-<%-- processes yalamanchili gwt tags Tag--%>
 			table.setText(0, <%= x++ %>, getClassValue("${$attribute/@name}"));
 </c:iterate>
 			<%-- process dropdowns one to one and many to one unidirectional--%>
@@ -108,6 +120,53 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 			<%
 			int y = 1;
 			%>
+			<%-- process parent class level 2 attributes--%>
+			<c:if test="not($class/@name = $parentClass2/@name)">
+			<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+						 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > 
+						 	<c:when test="${'$DateID'}" >
+						  		table.setText(i, <%= y++ %>, Utils.getShortDate(entity.get${uppercaseFirst($attribute/@name)}())); 
+						  	</c:when>
+						 	<c:when test="${'$ImageID'}" >
+						  		table.setWidget(i, <%= y++ %>, new ImageField("", true, ${camelCase($projectName)}Welcome.constants
+								.imagesTargetDirectory() + entity.get${uppercaseFirst($attribute/@name)}(),100,100)); 
+						  	</c:when>
+						 	<c:when test="${'$CurrencyID'}" >
+						 		table.setText(i, <%= y++ %>, CurrencyField.format(entity.get${uppercaseFirst($attribute/@name)}()));
+						  	</c:when>						  	
+						 	<c:when test="${'$RichTextID'}" >
+						  		table.setHTML(i, <%= y++ %>, Utils.entityToString(entity.get${uppercaseFirst($attribute/@name)}())); 
+						  	</c:when>						  							  	
+						 	<c:otherwise> 
+								table.setText(i, <%= y++ %>, Utils.entityToString(entity.get${uppercaseFirst($attribute/@name)}()));
+				 			</c:otherwise>
+						</c:choose> 
+			</c:iterate>
+			</c:if>	
+			<%-- process parent class level 1 attributes--%>
+			<c:if test="not($class/@name = $parentClass1/@name)">
+			<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+												 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > 
+						 	<c:when test="${'$DateID'}" >
+						  		table.setText(i, <%= y++ %>, Utils.getShortDate(entity.get${uppercaseFirst($attribute/@name)}())); 
+						  	</c:when>
+						 	<c:when test="${'$ImageID'}" >
+						  		table.setWidget(i, <%= y++ %>, new ImageField("", true, ${camelCase($projectName)}Welcome.constants
+								.imagesTargetDirectory() + entity.get${uppercaseFirst($attribute/@name)}(),100,100)); 
+						  	</c:when>
+						 	<c:when test="${'$CurrencyID'}" >
+						 		table.setText(i, <%= y++ %>, CurrencyField.format(entity.get${uppercaseFirst($attribute/@name)}()));
+						  	</c:when>						  	
+						 	<c:when test="${'$RichTextID'}" >
+						  		table.setHTML(i, <%= y++ %>, Utils.entityToString(entity.get${uppercaseFirst($attribute/@name)}())); 
+						  	</c:when>						  							  	
+						 	<c:otherwise> 
+								table.setText(i, <%= y++ %>, Utils.entityToString(entity.get${uppercaseFirst($attribute/@name)}()));
+				 			</c:otherwise>
+						</c:choose> 
+			</c:iterate>
+			</c:if>		
+			<%-- process base class attributes--%>			
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 						 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > 
 						 	<c:when test="${'$DateID'}" >
