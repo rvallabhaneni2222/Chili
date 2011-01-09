@@ -133,4 +133,5 @@ public abstract class SelectComposite<T> extends ALComposite implements
 	public abstract void onAdd();
 
 	public abstract void onAddAll(TreePanelComposite parent, List<Long> ids);
+//	public abstract void onRemoveAll(TreePanelComposite parent, List<Long> ids);
 }

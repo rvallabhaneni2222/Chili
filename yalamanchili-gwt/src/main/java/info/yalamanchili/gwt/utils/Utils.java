@@ -23,6 +23,7 @@ public class Utils {
 		return (name.substring(name.lastIndexOf(".") + 1));
 	}
 
+	// TODO rename to toString
 	public static String entityToString(Object entity) {
 		if (entity == null) {
 			return "";
@@ -31,6 +32,10 @@ public class Utils {
 		}
 	}
 
+	/**
+	 * used to get UI display value from constants for the give attribute in a
+	 * class
+	 */
 	public static String getAttributeLabel(String attribute,
 			String classCanonicalName, ConstantsWithLookup constants) {
 		if (constants == null)
@@ -44,6 +49,9 @@ public class Utils {
 		}
 	}
 
+	/**
+	 * used to get UI display value from constants for the key
+	 */
 	public static String getKeyValue(String id, ConstantsWithLookup constants) {
 		if (constants == null)
 			return id;
