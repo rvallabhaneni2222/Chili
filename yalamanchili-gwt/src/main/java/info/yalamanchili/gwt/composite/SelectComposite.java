@@ -113,8 +113,9 @@ public abstract class SelectComposite<T> extends ALComposite implements
 			onAddAll(parent, multiListBox.getSelectedIds());
 		}
 		if (event.getSource().equals(multiListBox.unselectButton)) {
-			logger.info("unsupported for unselecrt");
-			throw new UnsupportedOperationException("not supported");
+			logger.info("remove all");
+			logger.info(multiListBox.getSelectedIds().toString());
+			onRemoveAll(parent, multiListBox.getSelectedIds());
 		}
 	}
 
@@ -133,5 +134,6 @@ public abstract class SelectComposite<T> extends ALComposite implements
 	public abstract void onAdd();
 
 	public abstract void onAddAll(TreePanelComposite parent, List<Long> ids);
-//	public abstract void onRemoveAll(TreePanelComposite parent, List<Long> ids);
+
+	public abstract void onRemoveAll(TreePanelComposite parent, List<Long> ids);
 }
