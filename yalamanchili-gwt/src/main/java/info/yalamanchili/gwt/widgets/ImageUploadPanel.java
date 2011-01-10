@@ -10,9 +10,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ImageUploadPanel extends ALComposite implements ClickHandler {
 	private Logger logger = Logger.getLogger(ImageUploadPanel.class.getName());
@@ -50,7 +50,8 @@ public class ImageUploadPanel extends ALComposite implements ClickHandler {
 
 		formPanel.addSubmitHandler(new FormPanel.SubmitHandler() {
 			public void onSubmit(SubmitEvent event) {
-				// TODO display progress
+				logger.info("form action:" + formPanel.getAction());
+				logger.info("Image name:" + fileUpload.getFilename());
 			}
 		});
 		formPanel
