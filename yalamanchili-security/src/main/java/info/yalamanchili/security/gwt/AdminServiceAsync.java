@@ -66,6 +66,12 @@ public interface AdminServiceAsync {
 
 	public void addRoles(YRole role, List<Long> children,
 			AsyncCallback<java.lang.Void> response);
+	
+	public void removeRoles(YUser user, List<Long> children,
+			AsyncCallback<java.lang.Void> response);
+
+	public void removeRoles(YRole role, List<Long> children,
+			AsyncCallback<java.lang.Void> response);
 
 	public void getRolesForUser(Long user, AsyncCallback<List<YRole>> response);
 

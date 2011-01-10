@@ -54,6 +54,10 @@ public interface AdminService extends RemoteService {
 	public void addRoles(YUser user, List<Long> children);
 
 	public void addRoles(YRole role, List<Long> children);
+	
+	public void removeRoles(YUser user, List<Long> children);
+
+	public void removeRoles(YRole role, List<Long> children);
 
 	public List<YRole> getRolesForUser(Long user);
 

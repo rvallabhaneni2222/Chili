@@ -4,9 +4,9 @@ import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.SelectComposite;
 import info.yalamanchili.gwt.composite.TreePanelComposite;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
+import info.yalamanchili.security.gwt.AdminService.AdminServiceAsync;
 import info.yalamanchili.security.gwt.YRole;
 import info.yalamanchili.security.gwt.YUser;
-import info.yalamanchili.security.gwt.AdminService.AdminServiceAsync;
 
 import java.util.List;
 import java.util.Map;
@@ -89,6 +89,39 @@ public class SelectRolePanel extends SelectComposite<YRole> {
 						public void onResponse(Void arg0) {
 							new ResponseStatusWidget()
 									.show("roles added to Role");
+
+						}
+
+					});
+		}
+
+	}
+
+	@Override
+	public void onRemoveAll(TreePanelComposite parent, List<Long> ids) {
+		if (parent.getEntity() instanceof YUser) {
+			AdminServiceAsync.instance().removeRoles(
+					(YUser) parent.getEntity(), ids,
+					new ALAsyncCallback<Void>() {
+
+						@Override
+						public void onResponse(Void arg0) {
+							new ResponseStatusWidget()
+									.show("roles removed from user");
+
+						}
+
+					});
+		}
+		if (parent.getEntity() instanceof YRole) {
+			AdminServiceAsync.instance().removeRoles(
+					(YRole) parent.getEntity(), ids,
+					new ALAsyncCallback<Void>() {
+
+						@Override
+						public void onResponse(Void arg0) {
+							new ResponseStatusWidget()
+									.show("roles removed from role");
 
 						}
 

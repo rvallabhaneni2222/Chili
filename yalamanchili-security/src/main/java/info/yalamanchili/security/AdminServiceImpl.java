@@ -323,4 +323,33 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 
 	}
 
+	@Override
+	@WebRemote
+	public void removeRoles(YUser user, List<Long> children) {
+		user = yem.find(YUser.class, user.getUserId());
+		for (Long id : children) {
+			YRole child = (YRole) yem.find(YRole.class, id);
+			if (child == null) {
+				throw new RuntimeException("error find entity with id:" + id
+						+ ":on:" + child.getClass().getName());
+			}
+			user.getRoles().remove(child);
+		}
+
+	}
+
+	@Override
+	@WebRemote
+	public void removeRoles(YRole role, List<Long> children) {
+		role = yem.find(YRole.class, role.getRoleId());
+		for (Long id : children) {
+			YRole child = (YRole) yem.find(YRole.class, id);
+			if (child == null) {
+				throw new RuntimeException("error find entity with id:" + id
+						+ ":on:" + child.getClass().getName());
+			}
+			role.getGroups().remove(child);
+		}
+	}
+
 }
