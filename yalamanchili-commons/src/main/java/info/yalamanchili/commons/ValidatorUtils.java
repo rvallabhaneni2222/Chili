@@ -34,23 +34,6 @@ public class ValidatorUtils {
 		return validatorProperties;
 	}
 
-	static {
-		loadProperties();
-	}
-
-	public static Properties loadProperties() {
-		try {
-			validatorProperties = PropertyFileLoader
-					.loadProperties("yalamanchili-validator.properties");
-			log.debug("loaded yalamanchili-validator.properties");
-		} catch (IllegalArgumentException exception) {
-			validatorProperties = PropertyFileLoader
-					.loadProperties("default-yalamanchili-validator.properties");
-			log.debug("loaded default-yalamanchili-validator.properties");
-		}
-		return validatorProperties;
-	}
-
 	// TODO use hashmap to cache validators for entities
 	public static Map<String, List<String>> validateEntity(Object entity) {
 		Map<String, List<String>> errors = new HashMap<String, List<String>>();
@@ -80,15 +63,6 @@ public class ValidatorUtils {
 			errorMessages.add(v.getMessage());
 		}
 		return errorMessages;
-	}
-
-	public static String getValue(String string) {
-		log.debug("get value:" + string);
-		String value = (String) validatorProperties.get(string);
-		log.debug("property value:" + string + ":" + value);
-		if (value == null)
-			return string;
-		return value;
 	}
 
 }
