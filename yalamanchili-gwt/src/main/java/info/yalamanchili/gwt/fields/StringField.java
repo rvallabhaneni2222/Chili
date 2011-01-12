@@ -26,6 +26,7 @@ public class StringField extends BaseFieldWithTextBox {
 		textbox.setText(text);
 	}
 
+	// TODO can these be moved to a top level???
 	@Override
 	public void onKeyPress(KeyPressEvent arg0) {
 		// TODO Auto-generated method stub

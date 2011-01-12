@@ -2,6 +2,7 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.BaseField;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 
 public class PasswordField extends BaseField {
@@ -21,6 +22,12 @@ public class PasswordField extends BaseField {
 	protected void configureAddMainWidget() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void onChange(ChangeEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

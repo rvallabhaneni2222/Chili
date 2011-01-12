@@ -2,6 +2,7 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.BaseField;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.user.client.ui.CheckBox;
 
 public class BooleanField extends BaseField {
@@ -37,6 +38,12 @@ public class BooleanField extends BaseField {
 	@Override
 	protected void configureAddMainWidget() {
 		fieldPanel.insert(box, 0);
+	}
+
+	@Override
+	public void onChange(ChangeEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

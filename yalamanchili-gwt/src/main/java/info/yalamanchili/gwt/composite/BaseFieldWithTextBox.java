@@ -1,5 +1,8 @@
 package info.yalamanchili.gwt.composite;
 
+import java.util.logging.Logger;
+
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -8,7 +11,7 @@ import com.google.gwt.user.client.ui.TextBox;
 //TODO move commons stuff to base field
 public abstract class BaseFieldWithTextBox extends BaseField implements
 		KeyPressHandler, KeyUpHandler, KeyDownHandler {
-
+	Logger log = Logger.getLogger(BaseFieldWithTextBox.class.getName());
 	protected TextBox textbox = new TextBox();
 
 	public TextBox getTextbox() {
@@ -38,4 +41,9 @@ public abstract class BaseFieldWithTextBox extends BaseField implements
 		textbox.setReadOnly(true);
 	}
 
+	@Override
+	public void onChange(ChangeEvent event) {
+		log.info("on change");
+		// TODO logic to fire validation
+	}
 }

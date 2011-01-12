@@ -6,6 +6,7 @@ import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ListBox;
 
@@ -49,5 +50,11 @@ public class EnumField extends BaseField {
 	@Override
 	protected void configureAddMainWidget() {
 		fieldPanel.insert(listBox, 0);
+	}
+
+	@Override
+	public void onChange(ChangeEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 }

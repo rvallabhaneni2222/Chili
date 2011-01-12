@@ -3,6 +3,7 @@ package info.yalamanchili.gwt.fields;
 import info.yalamanchili.gwt.composite.BaseField;
 import info.yalamanchili.gwt.widgets.ImageUploadPanel;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.user.client.ui.Image;
 
 public class ImageField extends BaseField {
@@ -50,5 +51,11 @@ public class ImageField extends BaseField {
 
 	public void setImage(String url) {
 		image.setUrl(url);
+	}
+
+	@Override
+	public void onChange(ChangeEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 }

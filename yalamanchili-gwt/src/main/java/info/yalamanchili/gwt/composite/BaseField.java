@@ -1,11 +1,12 @@
 package info.yalamanchili.gwt.composite;
 
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
-public abstract class BaseField extends Composite {
+public abstract class BaseField extends Composite implements ChangeHandler {
 
 	public BaseField(String labelName, Boolean readOnly, Boolean required) {
 		this.readOnly = readOnly;
@@ -48,6 +49,9 @@ public abstract class BaseField extends Composite {
 	protected Boolean readOnly = false;
 
 	protected Boolean required = false;
+	// this is actual bean/entity attribute name can be used to validation
+	// purposes
+	protected String attributeName = null;
 
 	public FlowPanel getPanel() {
 		return panel;

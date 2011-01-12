@@ -37,6 +37,7 @@ public class IntegerField extends BaseFieldWithTextBox {
 	}
 
 	@Override
+	//TODO add logic to accept backspace as valid
 	public void onKeyPress(KeyPressEvent event) {
 		if (!Character.isDigit(event.getCharCode())) {
 			setMessage("invalid value");

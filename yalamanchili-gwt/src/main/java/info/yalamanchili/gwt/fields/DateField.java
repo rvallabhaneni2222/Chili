@@ -5,6 +5,7 @@ import info.yalamanchili.gwt.utils.Utils;
 
 import java.util.Date;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
@@ -109,6 +110,12 @@ public class DateField extends BaseField implements KeyPressHandler,
 	public void onKeyDown(KeyDownEvent event) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void onChange(ChangeEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

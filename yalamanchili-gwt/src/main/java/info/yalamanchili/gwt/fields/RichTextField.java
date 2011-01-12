@@ -2,6 +2,7 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.BaseField;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.smartgwt.client.widgets.RichTextEditor;
 
 public class RichTextField extends BaseField {
@@ -26,5 +27,11 @@ public class RichTextField extends BaseField {
 
 	public void setValue(String value) {
 		editor.setValue(value);
+	}
+
+	@Override
+	public void onChange(ChangeEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 }
