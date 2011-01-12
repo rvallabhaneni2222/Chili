@@ -65,4 +65,10 @@ public class ValidatorUtils {
 		return errorMessages;
 	}
 
+	public static List<String> validateField(String className,
+			String attributeName, Object value) {
+		List<String> errorMessages = new ArrayList<String>();
+
+		return errorMessages;
+	}
 }
