@@ -2,15 +2,15 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.BaseField;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 
 public class PasswordField extends BaseField {
 
 	protected PasswordTextBox password = new PasswordTextBox();
 
-	public PasswordField(String name) {
-		super(name, false, false);
+	public PasswordField(String labelName, String attributeName,
+			String className) {
+		super(labelName, attributeName, className, false, false);
 		fieldPanel.insert(password, 1);
 	}
 
@@ -25,9 +25,9 @@ public class PasswordField extends BaseField {
 	}
 
 	@Override
-	public void onChange(ChangeEvent event) {
+	public void validate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

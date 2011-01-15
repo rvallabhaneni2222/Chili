@@ -14,8 +14,9 @@ public class CurrencyField extends BaseFieldWithTextBox {
 	// TODO add Local info to constructor
 	protected static NumberFormat fmt = NumberFormat.getCurrencyFormat();
 
-	public CurrencyField(String labelName, Boolean readOnly, Boolean isRequired) {
-		super(labelName, readOnly, isRequired);
+	public CurrencyField(String labelName, String attributeName,
+			String className, Boolean readOnly, Boolean isRequired) {
+		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 
 	public BigDecimal getValue() {

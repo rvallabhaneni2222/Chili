@@ -1,15 +1,10 @@
 package info.yalamanchili.server;
 
-import info.yalamanchili.commons.ReflectionUtils;
-import info.yalamanchili.commons.SearchUtils;
 import info.yalamanchili.commons.ValidatorUtils;
-import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.rpc.GWTService;
 import info.yalamanchili.gwt.ui.DisplayType;
 import info.yalamanchili.gwt.ui.UIElement;
-import info.yalamanchili.security.gwt.YRole;
-import info.yalamanchili.security.gwt.YUser;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
@@ -25,16 +20,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
 import net.sf.gilead.pojo.gwt.LightEntity;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.hibernate.search.FullTextQuery;
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -122,15 +110,24 @@ public class GWTServiceImpl extends GileadService implements GWTService {
 	}
 
 	@WebRemote
+	@Override
 	public <T extends LightEntity> List<String> validateField(T entity,
 			String attributeName) {
 		return ValidatorUtils.validateField(entity, attributeName);
 	}
 
 	@WebRemote
+	@Override
 	public <T extends LightEntity> Map<String, List<String>> validateEntity(
 			T entity) {
 		return ValidatorUtils.validateEntity(entity);
+	}
+
+	@Override
+	@WebRemote
+	public List<String> validateStringField(String className,
+			String attributeName, String value) {
+		return ValidatorUtils.validateField(className, attributeName, value);
 	}
 
 	public <T extends Serializable> T createEntityFromFields(String className,

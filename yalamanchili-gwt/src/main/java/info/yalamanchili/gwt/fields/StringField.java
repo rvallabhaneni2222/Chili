@@ -1,6 +1,11 @@
 package info.yalamanchili.gwt.fields;
 
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.BaseFieldWithTextBox;
+import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
+
+import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
@@ -13,9 +18,11 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
  * @author ayalamanchili
  */
 public class StringField extends BaseFieldWithTextBox {
+	Logger log = Logger.getLogger(StringField.class.getName());
 
-	public StringField(String labelName, Boolean readOnly, Boolean required) {
-		super(labelName, readOnly, required);
+	public StringField(String labelName, String attributeName,
+			String className, Boolean readOnly, Boolean isRequired) {
+		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 
 	public String getText() {
@@ -43,6 +50,25 @@ public class StringField extends BaseFieldWithTextBox {
 	public void onKeyDown(KeyDownEvent arg0) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void validate() {
+		log.info("on change");
+		clearMessage();
+		GwtServiceAsync.instance().validateStringField(className,
+				attributeName, getText(), new ALAsyncCallback<List<String>>() {
+
+					@Override
+					public void onResponse(List<String> arg0) {
+						if (arg0.size() > 0) {
+							setMessage(arg0.get(0));
+							// TODO setValid()?
+						}
+
+					}
+
+				});
 	}
 
 }

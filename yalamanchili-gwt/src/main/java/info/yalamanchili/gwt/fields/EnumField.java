@@ -6,7 +6,6 @@ import info.yalamanchili.gwt.rpc.GWTService.GwtServiceAsync;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ListBox;
 
@@ -18,9 +17,9 @@ public class EnumField extends BaseField {
 	Logger logger = Logger.getLogger(EnumField.class.getName());
 	protected final ListBox listBox = new ListBox();
 
-	public EnumField(String text, Boolean readOnly, Boolean isRequired,
-			String attributeName, String className) {
-		super(text, readOnly, isRequired);
+	public EnumField(String labelName, String attributeName, String className,
+			Boolean readOnly, Boolean isRequired) {
+		super(labelName, attributeName, className, readOnly, isRequired);
 		configureAddMainWidget();
 		GwtServiceAsync.instance().getEnumValues(className, attributeName,
 				new AsyncCallback<Enum<?>[]>() {
@@ -53,8 +52,8 @@ public class EnumField extends BaseField {
 	}
 
 	@Override
-	public void onChange(ChangeEvent event) {
+	public void validate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

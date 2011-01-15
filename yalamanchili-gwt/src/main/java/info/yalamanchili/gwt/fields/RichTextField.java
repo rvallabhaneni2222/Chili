@@ -3,15 +3,15 @@ package info.yalamanchili.gwt.fields;
 import info.yalamanchili.gwt.composite.BaseField;
 import info.yalamanchili.gwt.widgets.RichTextToolBar;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.user.client.ui.RichTextArea;
 
 public class RichTextField extends BaseField {
 	RichTextArea area = new RichTextArea();
 	RichTextToolBar bar = new RichTextToolBar(area);
 
-	public RichTextField(String labelName, Boolean readOnly, Boolean required) {
-		super(labelName, readOnly, required);
+	public RichTextField(String labelName, String attributeName,
+			String className, Boolean readOnly, Boolean isRequired) {
+		super(labelName, attributeName, className, readOnly, isRequired);
 		configureAddMainWidget();
 	}
 
@@ -40,7 +40,7 @@ public class RichTextField extends BaseField {
 	}
 
 	@Override
-	public void onChange(ChangeEvent event) {
+	public void validate() {
 		// TODO Auto-generated method stub
 
 	}

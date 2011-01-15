@@ -2,7 +2,6 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.BaseField;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.user.client.ui.CheckBox;
 
 public class BooleanField extends BaseField {
@@ -13,8 +12,9 @@ public class BooleanField extends BaseField {
 		return box;
 	}
 
-	public BooleanField(String text, Boolean readOnly, Boolean isRequired) {
-		super(text, readOnly, isRequired);
+	public BooleanField(String text, String attributeName, String className,
+			Boolean readOnly, Boolean isRequired) {
+		super(text, attributeName, className, readOnly, isRequired);
 		box.setEnabled(!readOnly);
 		// box.setText(text);
 		configureAddMainWidget();
@@ -41,9 +41,9 @@ public class BooleanField extends BaseField {
 	}
 
 	@Override
-	public void onChange(ChangeEvent event) {
+	public void validate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -1,9 +1,6 @@
 package info.yalamanchili.gwt.rpc;
 
-import info.yalamanchili.gwt.beans.TableObj;
 import info.yalamanchili.gwt.fields.DataType;
-import info.yalamanchili.security.gwt.YRole;
-import info.yalamanchili.security.gwt.YUser;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,6 +27,9 @@ public interface GWTServiceAsync {
 	<T extends LightEntity> void validateEntity(T entity,
 			AsyncCallback<Map<String, List<String>>> errors);
 
+	void validateStringField(String className, String attributeName,
+			String value, AsyncCallback<List<String>> errors);
+
 	// <T extends Serializable> void createEntityFromFields(String className,
 	// LinkedHashMap<String, Object> fields, AsyncCallback<T> entity);
 	//
@@ -42,6 +42,5 @@ public interface GWTServiceAsync {
 	//
 	// <T extends Serializable> void getFieldsDataFromEntity(T t,
 	// AsyncCallback<LinkedHashMap<String, Object>> data);
-
 
 }

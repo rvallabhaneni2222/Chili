@@ -25,6 +25,9 @@ public interface GWTService extends RemoteService {
 
 	<T extends LightEntity> Map<String, List<String>> validateEntity(T entity);
 
+	List<String> validateStringField(String className, String attributeName,
+			String value);
+
 	// <T extends Serializable> T createEntityFromFields(String className,
 	// LinkedHashMap<String, Object> fields);
 	//

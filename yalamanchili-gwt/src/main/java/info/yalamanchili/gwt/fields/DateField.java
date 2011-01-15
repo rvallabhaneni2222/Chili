@@ -5,7 +5,6 @@ import info.yalamanchili.gwt.utils.Utils;
 
 import java.util.Date;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
@@ -38,8 +37,9 @@ public class DateField extends BaseField implements KeyPressHandler,
 		return datePicker;
 	}
 
-	public DateField(String labelName, Boolean readOnly, Boolean isRequired) {
-		super(labelName, readOnly, isRequired);
+	public DateField(String labelName, String attributeName, String className,
+			Boolean readOnly, Boolean isRequired) {
+		super(labelName, attributeName, className, readOnly, isRequired);
 		setReadOnly(readOnly);
 		configureAddMainWidget();
 	}
@@ -113,9 +113,9 @@ public class DateField extends BaseField implements KeyPressHandler,
 	}
 
 	@Override
-	public void onChange(ChangeEvent event) {
+	public void validate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

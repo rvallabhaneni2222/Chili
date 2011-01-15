@@ -13,8 +13,8 @@ import com.google.gwt.user.client.Window;
  */
 public class IntegerField extends BaseFieldWithTextBox {
 
-	public IntegerField(String text, Boolean readOnly, Boolean isRequired) {
-		super(text, readOnly, isRequired);
+	public IntegerField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
+		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 
 	public void setInteger(Integer number) {
