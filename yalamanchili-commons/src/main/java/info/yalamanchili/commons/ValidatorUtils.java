@@ -65,10 +65,20 @@ public class ValidatorUtils {
 		return errorMessages;
 	}
 
+	// ** validates field attribute by creating the object */
 	public static List<String> validateField(String className,
 			String attributeName, Object value) {
-		List<String> errorMessages = new ArrayList<String>();
-
-		return errorMessages;
+		if (className == null || className.trim().equals("")
+				|| attributeName == null || attributeName.trim().equals("")) {
+			return new ArrayList<String>();
+		}
+		try {
+			Class entityClass = Class.forName(className);
+			Object entity = entityClass.newInstance();
+			ReflectionUtils.callSetter(entity, attributeName, value);
+			return validateField(entity, attributeName);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

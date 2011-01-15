@@ -55,6 +55,13 @@ public class ValidatorUtilsTest {
 				"numeric value out of bounds (<10 digits>.<2 digits> expected)");
 	}
 
+	/** this is to test the GWT per field validation on loose focus */
+	@Test
+	public void testValidateField() {
+		System.out.println(ValidatorUtils.validateField(Course.class.getName(),
+				"weight", new Float("1212.3")));
+	}
+
 	@After
 	public void destroy() {
 

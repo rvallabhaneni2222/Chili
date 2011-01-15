@@ -190,8 +190,14 @@ public class ReflectionUtils {
 		return methods;
 	}
 
+	public static Object callGetter(Object entity, String attributeName) {
+		return callGetterMethod(
+				getGetterMethod(getField(entity.getClass(), attributeName),
+						entity.getClass()), entity);
+	}
+
 	public static Field getField(Class<?> clazz, String attributeName) {
-		for (Field field : clazz.getDeclaredFields()) {
+		for (Field field : getAllFields(clazz)) {
 			if (field.getName().compareToIgnoreCase(attributeName) == 0) {
 				return field;
 			}
@@ -237,6 +243,13 @@ public class ReflectionUtils {
 			}
 		}
 		return result;
+	}
+
+	public static void callSetter(Object entity, String attributeName,
+			Object value) {
+		callSetterMethod(
+				getSetterMethod(getField(entity.getClass(), attributeName),
+						entity.getClass()), entity, value);
 	}
 
 	public static Method getSetterMethod(Field field, Class<?> clazz) {

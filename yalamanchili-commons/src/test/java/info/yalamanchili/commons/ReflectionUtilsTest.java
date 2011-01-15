@@ -2,8 +2,8 @@ package info.yalamanchili.commons;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
 import info.yalamanchili.commons.entity.TestEntity;
+import info.yalamanchili.commons.entity.TestEntityChildTwo;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -162,6 +162,20 @@ public class ReflectionUtilsTest {
 		for (String a : ReflectionUtils.getBeanProperties(TestEntity.class,
 				DataType.STRING)) {
 			System.out.println(a);
+		}
+	}
+
+	@Test
+	public void testCallSetterGetter() {
+		Class clazz;
+		try {
+			clazz = Class.forName(TestEntityChildTwo.class.getName());
+			Object instance = clazz.newInstance();
+			ReflectionUtils.callSetter(instance, "childTwoName", "testname");
+			System.out.println(ReflectionUtils.callGetter(instance, "childTwoName"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
