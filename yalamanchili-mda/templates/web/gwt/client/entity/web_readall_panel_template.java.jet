@@ -128,7 +128,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 						  		table.setText(i, <%= y++ %>, Utils.getShortDate(entity.get${uppercaseFirst($attribute/@name)}())); 
 						  	</c:when>
 						 	<c:when test="${'$ImageID'}" >
-						  		table.setWidget(i, <%= y++ %>, new ImageField("", true, ${camelCase($projectName)}Welcome.constants
+						  		table.setWidget(i, <%= y++ %>, new ImageField("","","", true, ${camelCase($projectName)}Welcome.constants
 								.imagesTargetDirectory() + entity.get${uppercaseFirst($attribute/@name)}(),100,100)); 
 						  	</c:when>
 						 	<c:when test="${'$CurrencyID'}" >
@@ -151,7 +151,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 						  		table.setText(i, <%= y++ %>, Utils.getShortDate(entity.get${uppercaseFirst($attribute/@name)}())); 
 						  	</c:when>
 						 	<c:when test="${'$ImageID'}" >
-						  		table.setWidget(i, <%= y++ %>, new ImageField("", true, ${camelCase($projectName)}Welcome.constants
+						  		table.setWidget(i, <%= y++ %>, new ImageField("","","", true, ${camelCase($projectName)}Welcome.constants
 								.imagesTargetDirectory() + entity.get${uppercaseFirst($attribute/@name)}(),100,100)); 
 						  	</c:when>
 						 	<c:when test="${'$CurrencyID'}" >
@@ -173,7 +173,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 						  		table.setText(i, <%= y++ %>, Utils.getShortDate(entity.get${uppercaseFirst($attribute/@name)}())); 
 						  	</c:when>
 						 	<c:when test="${'$ImageID'}" >
-						  		table.setWidget(i, <%= y++ %>, new ImageField("", true, ${camelCase($projectName)}Welcome.constants
+						  		table.setWidget(i, <%= y++ %>, new ImageField("","","", true, ${camelCase($projectName)}Welcome.constants
 								.imagesTargetDirectory() + entity.get${uppercaseFirst($attribute/@name)}(),100,100)); 
 						  	</c:when>
 						 	<c:when test="${'$CurrencyID'}" >
