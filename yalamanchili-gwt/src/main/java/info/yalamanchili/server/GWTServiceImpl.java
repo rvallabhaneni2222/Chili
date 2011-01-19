@@ -1,5 +1,6 @@
 package info.yalamanchili.server;
 
+import info.yalamanchili.commons.ReflectionUtils;
 import info.yalamanchili.commons.ValidatorUtils;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.rpc.GWTService;
@@ -254,7 +255,7 @@ public class GWTServiceImpl extends GileadService implements GWTService {
 	@WebRemote
 	public Enum<?>[] getEnumValues(String className, String attributeName) {
 		Enum<?>[] var = null;
-		Field field = GWTServletUtils.getField(getEntityClass(className),
+		Field field = ReflectionUtils.getField(getEntityClass(className),
 				attributeName);
 		Class<?> entity = getEntityClass(className);
 		for (Method m : field.getType().getDeclaredMethods()) {
@@ -283,7 +284,7 @@ public class GWTServiceImpl extends GileadService implements GWTService {
 	public Object getEnumValue(String className, String attributeName,
 			String value) {
 		Object var = null;
-		Field field = GWTServletUtils.getField(getEntityClass(className),
+		Field field = ReflectionUtils.getField(getEntityClass(className),
 				attributeName);
 		Class<?> entity = getEntityClass(className);
 		for (Method m : field.getType().getDeclaredMethods()) {

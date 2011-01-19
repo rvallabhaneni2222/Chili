@@ -25,15 +25,6 @@ import org.apache.commons.logging.LogFactory;
 public class GWTServletUtils {
 	private static final Log log = LogFactory.getLog(GWTServletUtils.class);
 
-	public static Field getField(Class<?> clazz, String attributeName) {
-		for (Field field : clazz.getDeclaredFields()) {
-			if (field.getName().compareToIgnoreCase(attributeName) == 0) {
-				return field;
-			}
-		}
-		return null;
-	}
-
 	public static DataType getDataType(Field field) {
 		Class<?> clazz = field.getType();
 		DisplayType displayType = getDisplayType(field);
