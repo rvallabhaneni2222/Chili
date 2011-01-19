@@ -177,7 +177,6 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
 							  					  	 <%-- process only non composits or non aggregations and --%>
   					  								<c:if test="$association_connection_end2/@aggregation = 'none'">
-  					  								<c:if test="not($association_connection_end/@aggregation = 'none')">
 							  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 							  					  	 	<%-- get the end secondary end with other class  --%>
 							  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
@@ -233,7 +232,6 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  							  	</c:if> 
 							  							  	</c:if>
 							  							  	</c:if>  
-							  							  	</c:if>
 							  					 	  </c:iterate> 
 							  					 						 	 				 	  
 												</c:if> 											
@@ -255,7 +253,6 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
 							  					  	 <%-- process only non composits or non aggregations and --%>
   					  								<c:if test="$association_connection_end2/@aggregation = 'none'">
-  					  								<c:if test="not($association_connection_end/@aggregation = 'none')">
 							  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
 							  					  	 	<%-- get the end secondary end with other class  --%>
 							  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
@@ -311,8 +308,7 @@ public class Tree${$class/@name}Panel extends <c:choose select="$parentClass1/@n
 							  					  		 		</c:iterate>
 							  							  	</c:if> 
 							  							  	</c:if>
-							  							  	</c:if> 
-							  							  	</c:if>   
+							  							  	</c:if>
 							  					 	  </c:iterate> 
 							  					 						 	 				 	  
 												</c:if> 											
