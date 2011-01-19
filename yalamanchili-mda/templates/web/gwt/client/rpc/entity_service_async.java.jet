@@ -254,7 +254,7 @@ public void get${$class2/@name}s(Long entityID,AsyncCallback<List<${$class2/@nam
 	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
 	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
 <f:message>generated.comment</f:message>	  					  		 			
-	public void get${$class2/@name}s(${$class/@name} entity, String[] columns,AsyncCallback<MultiSelectObj<${$class2/@name}>> response);
+	public void get${$class2/@name}s(Long entityID, String[] columns,AsyncCallback<MultiSelectObj<${$class2/@name}>> response);
 	  					  		 			</c:if>   
   					  		 			</c:if>  					  		 			
   					  		 		</c:iterate>
@@ -296,7 +296,7 @@ public void get${$class2/@name}s(Long entityID,AsyncCallback<List<${$class2/@nam
 	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
 	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
 <f:message>generated.comment</f:message>	  					  		 			
-	public void get${$class2/@name}s(${$class/@name} entity, String[] columns,AsyncCallback<MultiSelectObj<${$class2/@name}>> response);
+	public void get${$class2/@name}s(Long entityID, String[] columns,AsyncCallback<MultiSelectObj<${$class2/@name}>> response);
 	  					  		 			</c:if>  
   					  		 			</c:if> 
    					  		 			
@@ -337,7 +337,7 @@ public void get${$class2/@name}s(Long entityID,AsyncCallback<List<${$class2/@nam
  	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
 	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
 <f:message>generated.comment</f:message>	  					  		 			
-	public void get${$class2/@name}s(${$class/@name} entity, String[] columns,AsyncCallback<MultiSelectObj<${$class2/@name}>> response);
+	public void get${$class2/@name}s(Long entityID, String[] columns,AsyncCallback<MultiSelectObj<${$class2/@name}>> response);
 	  					  		 			</c:if>  
   					  		 			</c:if> 
   					  		 			  					  		 			

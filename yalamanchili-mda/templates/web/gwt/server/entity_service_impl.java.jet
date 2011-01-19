@@ -318,8 +318,8 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 <f:message>generated.comment</f:message>	  					  		 			
 	@Override
 	@WebRemote	  					  		 			
-	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns){
-		entity = em.find(${$class/@name}.class, entity.getId());
+	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(Long entityID, String[] columns){
+		${$class/@name} entity = em.find(${$class/@name}.class, entityID);
 		Set<Long> ids = new HashSet<Long>();
 		List<${$class2/@name}> childObjs = new ArrayList<${$class2/@name}>();
 		MultiSelectObj<${$class2/@name}> obj = new MultiSelectObj<${$class2/@name}>();
@@ -384,8 +384,8 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 <f:message>generated.comment</f:message>	  					  		 			
 	@Override
 	@WebRemote	  					  		 			
-	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns){
-		entity = em.find(${$class/@name}.class, entity.getId());
+	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(Long entityID, String[] columns){
+		${$class/@name} entity = em.find(${$class/@name}.class, entityID);
 		Set<Long> ids = new HashSet<Long>();
 		List<${$class2/@name}> childObjs = new ArrayList<${$class2/@name}>();
 		MultiSelectObj<${$class2/@name}> obj = new MultiSelectObj<${$class2/@name}>();
@@ -449,8 +449,8 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 <f:message>generated.comment</f:message>	  					  		 			
 	@Override
 	@WebRemote	  					  		 			
-	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns){
-		entity = em.find(${$class/@name}.class, entity.getId());
+	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(Long entityID, String[] columns){
+		${$class/@name} entity = em.find(${$class/@name}.class, entityID);
 		Set<Long> ids = new HashSet<Long>();
 		List<${$class2/@name}> childObjs = new ArrayList<${$class2/@name}>();
 		MultiSelectObj<${$class2/@name}> obj = new MultiSelectObj<${$class2/@name}>();

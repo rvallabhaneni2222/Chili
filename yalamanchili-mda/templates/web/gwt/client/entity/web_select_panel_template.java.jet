@@ -18,6 +18,8 @@ import info.yalamanchili.gwt.composite.SelectComposite;
 		<%--check if the source is many side --%>
 		<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   		<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+  		<%-- check if the target association is navigable--%>
+  		<c:if test="$association_connection_end/@isNavigable = 'true'">
 			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
 			<%-- check is the association is corresponding to the class  --%>
 					<c:if test="$association_connection_end_classID = $classID"> 
@@ -26,41 +28,25 @@ import info.yalamanchili.gwt.composite.SelectComposite;
   					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
   					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
   					  	 	<%-- get the end secondary end with other class  --%>
-  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
   					  		 	<%-- process only non composites on target--%>
   					  		 	<c:if test="not($association_connection_end2/@aggregation = 'composite')">
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-  					  		 				<%-- check if this is a parent--%>
-					  					  	<c:setVariable select="$class2/@xmi.id" var="isParent"/>
-											<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
-												<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $class2/@xmi.id">
-												<%-- update flag variable--%>
-												<c:setVariable select="$class2/@name" var="isParent"/>
-												</c:if>															
-											</c:iterate>
-											<%-- if class is a Parent class--%>
-							    		 	<c:if test="$isParent = $class2/@name">  
-								    		 	import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.TreeAbstract${$class2/@name}Panel;
-											</c:if>
-											<%-- if class is a regular  class--%>
-											<c:if test="$isParent = $class2/@xmi.id">  
-								    		 	import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Tree${$class2/@name}Panel;
-								    		 	import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
-											</c:if>			
-	
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
   					  		 			</c:if> 
   					  		 		</c:iterate>
   					  		 	 </c:if> 	
   							  	</c:if> 
   					 	  </c:iterate> 					 	 				 	  
 				</c:if>
+			</c:if>	
 			</c:if>			
 			</c:if>													
 		</c:iterate>
+		</c:iterate>
 	</c:iterate>
-</c:iterate>
 
 import java.util.List;
 import java.util.Map;

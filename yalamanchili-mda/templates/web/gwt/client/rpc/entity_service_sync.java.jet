@@ -255,7 +255,7 @@ public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
 	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
 	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
 <f:message>generated.comment</f:message>	  					  		 			
-	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns);
+	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(Long entityID, String[] columns);
 	  					  		 			</c:if>
   					  		 			</c:if>
   					  		 		</c:iterate>
@@ -297,7 +297,7 @@ public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
 	  					  		 			<%-- check to see if the parent side is aggregation or none--%> 
 	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
 <f:message>generated.comment</f:message>	  					  		 			
-	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns);
+	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(Long entityID, String[] columns);
 	  					  		 			</c:if>
   					  		 			</c:if>   					  		 			
   					  		 		</c:iterate>
@@ -337,7 +337,7 @@ public  List<${$class2/@name}> get${$class2/@name}s(Long entityID);
 	  					  		 			<%-- check to see if the parent side is aggregation or none--%>	  					  		 			 
 	  					  		 			<c:if test="not($association_connection_end/@aggregation = 'composite')">
 <f:message>generated.comment</f:message>	  					  		 			
-	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(${$class/@name} entity, String[] columns);
+	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(Long entityID, String[] columns);
 	  					  		 			</c:if>
   					  		 			</c:if> 
  					  		 			
