@@ -15,10 +15,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-			<groupId>info.yalamanchili</groupId>
-			<artifactId>yalamanchili-embedded-jboss
-			</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<groupId>yalamanchili</groupId>
+			<artifactId>y-common-deps</artifactId>
+			<version>${$y-commom-deps-version}</version>
+			<type>pom</type>
 			<scope>provided</scope>
 		</dependency>
         <dependency>
@@ -40,11 +40,15 @@
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>info.yalamanchili.project</groupId>
+			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-jpa</artifactId>
 			<version>${$version}</version>
 			<exclusions>
-								<exclusion>
+				<exclusion>
+					<groupId>info.yalamanchili.gwt</groupId>
+					<artifactId>yalamanchili-gwt</artifactId>
+				</exclusion>
+				<exclusion>
 					<groupId>com.google.gwt</groupId>
 					<artifactId>gwt-servlet</artifactId>
 				</exclusion>
@@ -64,6 +68,14 @@
 					<groupId>info.yalamanchili.gwt</groupId>
 					<artifactId>yalamanchili-gwt</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>info.yalamanchili.commons</groupId>
+					<artifactId>yalamanchili-commons</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.smartgwt</groupId>
+					<artifactId>smartgwt:jar</artifactId>
+				</exclusion>					
 				<exclusion>
 					<groupId>net.sf.gilead</groupId>
 					<artifactId>gilead-hibernate</artifactId>
@@ -85,6 +97,14 @@
 					<artifactId>cglib-nodep</artifactId>
 				</exclusion>
 				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>commons-fileupload</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>commons-io</artifactId>
+				</exclusion>								
+				<exclusion>
 					<groupId>org.apache.lucene</groupId>
 					<artifactId>lucene-core</artifactId>
 				</exclusion>
@@ -102,7 +122,7 @@
 			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 				<artifactId>maven-android-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>2.8.4</version>
 				<configuration>
 					<sdk>
 						<path>/Users/yphanikumar/android-sdk-mac_86</path>

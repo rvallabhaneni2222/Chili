@@ -73,8 +73,8 @@ import info.yalamanchili.android.http.AsyncHttpGet;
  */
 public class ${camelCase($projectName)}Main extends ListActivity {
 
-	public static String baseURL = "http://10.0.2.2:8080/${lower-case($projectName)}-rest/seam/resource/restv1/crud/";
-	public static String manageURL = "http://10.0.2.2:8080/a${lower-case($projectName)}-rest/seam/resource/restv1/manage/";
+	public static String baseURL = "http://10.0.2.2:8080/${lower-case($projectName)}-webapp/seam/resource/restv1/crud/";
+	public static String manageURL = "http://10.0.2.2:8080/${lower-case($projectName)}-webapp/seam/resource/restv1/manage/";
 	private SimpleAdapter notes;
 	
     @Override
