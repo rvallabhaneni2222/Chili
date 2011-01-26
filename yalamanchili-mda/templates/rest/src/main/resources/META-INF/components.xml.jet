@@ -17,7 +17,8 @@
 
 	<resteasy:application resource-path-prefix="/restv1">
 	</resteasy:application>
-
+	<!-- this is using the default authentication-->
+	<web:authentication-filter url-pattern="/seam/resource/restv1/crud/*" auth-type="basic"/>
 		<!-- currently erroring out with stack overflow with multiple calls  -->
  <!-- <security:identity authenticate-method="#{AutomanageRestResource.authenticate}" /> --> 
  
