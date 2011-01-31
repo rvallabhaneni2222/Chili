@@ -1,0 +1,17 @@
+<%!
+/**
+ * groupIDWithFolder
+ */
+	public String getGroupIDWithFolder(String groupID) {
+		return groupID.replace(".", "/");
+	}
+%>
+
+<%!
+/**
+ * groupIDWithUnderScore
+ */
+	public String getGroupIDWithUnderScore(String groupID) {
+		return groupID.replace(".", "_");
+	}
+%>

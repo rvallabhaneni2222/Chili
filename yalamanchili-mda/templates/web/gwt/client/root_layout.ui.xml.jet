@@ -1,9 +1,12 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:${lower-case($projectName)}="urn:import:${$groupID}.client">
 	<g:DockLayoutPanel unit='EM' addStyleNames='mainPanel'>
 		<g:north size='4'>
-			<g:FlowPanel addStyleNames='statusPanel' ui:field='statusPanel'></g:FlowPanel>
+			<g:FlowPanel addStyleNames='statusPanel' ui:field='statusPanel'>
+				<zuzubi:StatusPanel ui:field="${lower-case($projectName)}StatusPanel"></zuzubi:StatusPanel>
+			</g:FlowPanel>
 		</g:north>
 		<g:north size='2'>
 			<g:HorizontalPanel ui:field='menuBar'

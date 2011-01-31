@@ -30,6 +30,9 @@ public class RootLayout extends Composite {
 <f:message>generated.comment</f:message>			
 	@UiField
 	public FlowPanel statusPanel;
+<f:message>generated.comment</f:message>		
+	@UiField
+	public StatusPanel ${lower-case($projectName)}StatusPanel;	
 <f:message>generated.comment</f:message>
 	@UiField
 	public HorizontalPanel menuBar;
