@@ -30,12 +30,13 @@ import ${$webPackage}internalization.${camelCase($projectName)}Messages;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.ui.FlowPanel;
 
 import java.util.logging.Logger;
 import java.util.HashSet;
 import java.util.Set;
 <f:message>generated.class.comment</f:message>
-public class ${camelCase($projectName)}Welcome extends RootPanels implements EntryPoint {
+public class ${camelCase($projectName)}Welcome implements EntryPoint {
 <f:message>generated.comment</f:message>
 	private static Logger logger = Logger.getLogger(${camelCase($projectName)}Welcome.class.getName());
 <f:message>generated.comment</f:message>
@@ -67,9 +68,10 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 			}
 			});
 			instance=this;
+			RootLayout rootLayout = new RootLayout();
 			addListeners();
 			configure();
-			RootLayoutPanel.get().add(mainPanel);
+			RootLayoutPanel.get().add(rootLayout);
 		}
 <f:message>generated.comment</f:message>		
 		public void reLoad(YUser user) {
@@ -92,29 +94,18 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 		configureSideBarTop();
 		configureSideBarBottom();
 		configureSideBar();
-		configureMainPanel();
 		configureMenuBar();
 	}
-<f:message>generated.comment</f:message>	
-	protected void configureMainPanel() {
-	/* the units addNorth(statusPanel, 3) represents the spacing need to play with values to get the right layout*/
-		mainPanel.addNorth(statusPanel, 4);
-		mainPanel.addNorth(menuBar, 2);
-		mainPanel.addWest(sidePanel, 15);
-		mainPanel.add(entityPanelHolder);
-		mainPanel.addStyleName("mainPanel");
-	}
+
 <f:message>generated.comment</f:message>	
 	protected void configureEntityPanel() {
-		entityPanelHolder.add(entityPanel);
-		entityPanelHolder.addStyleName("entityPanelHolder");
+
 	}
 	
 <f:message>generated.comment</f:message>
 	protected void configureMenuBar() {
 	MenuBar menu = new MenuBar();
-	
-	menuBar.addStyleName("entityMenuBar");
+
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     MenuBar ${lower-case($package/@name)}Bar = new MenuBar(true);
 			 <%-- iterate through class and add only non composite children and non parent--%>
@@ -137,28 +128,23 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 			menu.addItem("ADMIN", adminBar);
 		}
 					
-		menuBar.add(menu);
+		RootLayout.instance().menuBar.add(menu);
 	}
 <f:message>generated.comment</f:message>
 	protected void configureStatusPanel() {
-		statusPanel.addStyleName("statusPanel");
-		statusPanel.add(new StatusPanel());
+		RootLayout.instance().statusPanel.add(new StatusPanel());
 	}
 <f:message>generated.comment</f:message>
 	protected void configureSideBar() {
-		sidePanel.addStyleName("sidePanel");
+		
 	}
 <f:message>generated.comment</f:message>
 	protected void configureSideBarTop() {
-		sidePanel.add(sidePanelTop);
-		sidePanelTop.addStyleName("sidePanelTop");
+		
 	}
 <f:message>generated.comment</f:message>
 	protected void configureSideBarBottom() {
-		sidePanel.add(sidePanelBottom);
-		sidePanelBottom.addStyleName("sidePanelBottom");
-		
-
+	
 	}
 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
 			 <%-- iterate through class and add only non composite children and non parent--%>
@@ -201,7 +187,22 @@ public class ${camelCase($projectName)}Welcome extends RootPanels implements Ent
 					getSidePanelTop(), getSidePanelBottom());
 		}
 
-	};	
+	};
+		
+// TODO remove
+	public FlowPanel getEntityPanel() {
+		return RootLayout.instance().entityPanel;
+	}
+
+	// TODO remove
+	public FlowPanel getSidePanelTop() {
+		return RootLayout.instance().sidePanelTop;
+	}
+
+	// TODO remove
+	public FlowPanel getSidePanelBottom() {
+		return RootLayout.instance().sidePanelBottom;
+	}	
 }
 </f:bundle>
 </java:format>

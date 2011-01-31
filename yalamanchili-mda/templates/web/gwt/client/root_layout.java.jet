@@ -1,0 +1,58 @@
+<java:merge/>
+<java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
+package ${$groupID}.client;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.Widget;
+/** this class holds the App rootlayout structure*/
+<f:message>generated.class.comment</f:message>
+public class RootLayout extends Composite {
+<f:message>generated.comment</f:message>
+	private static RootLayout instance;
+<f:message>generated.comment</f:message>
+	public static RootLayout instance() {
+		return instance;
+	}
+<f:message>generated.comment</f:message>
+	interface RootLayoutUiBinder extends UiBinder<Widget, RootLayout> {
+	}
+<f:message>generated.comment</f:message>
+	private static RootLayoutUiBinder rootLayoutUIBinder = GWT
+			.create(RootLayoutUiBinder.class);
+<f:message>generated.comment</f:message>			
+	@UiField
+	public FlowPanel statusPanel;
+<f:message>generated.comment</f:message>
+	@UiField
+	public HorizontalPanel menuBar;
+<f:message>generated.comment</f:message>
+	@UiField
+	public FlowPanel sidePanel;
+<f:message>generated.comment</f:message>
+	@UiField
+	public FlowPanel sidePanelTop;
+<f:message>generated.comment</f:message>
+	@UiField
+	public FlowPanel sidePanelBottom;
+<f:message>generated.comment</f:message>
+	@UiField
+	public ScrollPanel entityPanelHolder;
+<f:message>generated.comment</f:message>
+	@UiField
+	public FlowPanel entityPanel;
+<f:message>generated.comment</f:message>
+	public RootLayout() {
+		initWidget(rootLayoutUIBinder.createAndBindUi(this));
+		instance = this;
+	}
+}
+</f:bundle>
+</java:format>

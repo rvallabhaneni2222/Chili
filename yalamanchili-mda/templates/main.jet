@@ -5,11 +5,11 @@
 <%--Set Global varibles like projectId,groupId,version...--%>
 <%--project properties--%>
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
-<c:setVariable select="'com.automanage.catalog'" var="groupID"/>
-<c:setVariable select="'com/automanage/catalog'" var="groupIDWithFolder"/>
-<c:setVariable select="'com_automanage_catalog'" var="groupIDWithUnderScore"/>
+<c:setVariable select="'com.zuzubi.catalog'" var="groupID"/>
+<c:setVariable select="'com/zuzubi/catalog'" var="groupIDWithFolder"/>
+<c:setVariable select="'com_zuzubi_catalog'" var="groupIDWithUnderScore"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
-<c:setVariable select="'/Users/yphanikumar/codebase/automanage/trunk'" var="location"/>
+<c:setVariable select="'/Users/yphanikumar/codebase/zuzubi/trunk'" var="location"/>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <%--code generation properties--%>
 <c:setVariable select="'FALSE'" var="genMaster"/>
@@ -223,8 +223,10 @@
     	<ws:file  path="${camelCase($projectName)}Welcome.java" template="templates/web/gwt/client/web_entrypoint_class_template.java.jet"/>
     	<%-- Entities Enum class --%>
     	<ws:file  path="Entity.java" template="templates/web/gwt/client/web_entity_enum_template.java.jet"/>
-    	<%--  RootPanels class --%>
-    	<ws:file  path="RootPanels.java" template="templates/web/gwt/client/web_root_panels_template.java.jet"/>
+    	<%--  RootLayout class corresponding to rootlayout uibinder --%>
+    	<ws:file  path="RootLayout.java" template="templates/web/gwt/client/root_layout.java.jet"/>
+    	<%--  RootLayout uibinder finder --%>
+    	<ws:file  path="RootLayout.ui.xml" template="templates/web/gwt/client/root_layout.ui.xml.jet"/>
     	<%--  ROLES class --%>
     	<ws:file  path="Roles.java" template="templates/web/gwt/client/web_roles_enum_template.java.jet"/>
     	<%--  Login panel class --%>

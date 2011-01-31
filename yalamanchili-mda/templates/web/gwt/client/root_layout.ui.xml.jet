@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<g:DockLayoutPanel unit='EM' addStyleNames='mainPanel'>
+		<g:north size='4'>
+			<g:FlowPanel addStyleNames='statusPanel' ui:field='statusPanel'></g:FlowPanel>
+		</g:north>
+		<g:north size='2'>
+			<g:HorizontalPanel ui:field='menuBar'
+				addStyleNames='entityMenuBar'></g:HorizontalPanel>
+		</g:north>
+		<g:west size='15'>
+			<g:FlowPanel addStyleNames='sidePanel' ui:field='sidePanel'>
+				<g:FlowPanel addStyleNames='sidePanelTop' ui:field='sidePanelTop'></g:FlowPanel>
+				<g:FlowPanel addStyleNames='sidePanelBottom' ui:field='sidePanelBottom'></g:FlowPanel>
+			</g:FlowPanel>
+		</g:west>
+
+		<g:center>
+			<g:ScrollPanel addStyleNames='entityPanelHolder'
+				ui:field='entityPanelHolder'>
+				<g:FlowPanel ui:field='entityPanel'></g:FlowPanel>
+			</g:ScrollPanel>
+		</g:center>
+	</g:DockLayoutPanel>
+</ui:UiBinder>
