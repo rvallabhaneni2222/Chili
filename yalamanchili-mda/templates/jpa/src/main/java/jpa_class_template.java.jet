@@ -38,7 +38,7 @@ import org.hibernate.search.annotations.Index;
 </c:if>	
 import javax.validation.constraints.*;
 
-import net.sf.gilead.pojo.gwt.LightEntity;
+import info.yalamanchili.gwt.jpa.AbstractEntity;
 
 <f:message>generated.class.comment</f:message>
 <%-- check and add hibernate search --%>
@@ -54,16 +54,9 @@ import net.sf.gilead.pojo.gwt.LightEntity;
 </c:if> 
 </c:if>
 @Entity
-public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name} extends <c:if test="$class/@parentClass1Name = $class/@name">  LightEntity </c:if> <c:if test="not($class/@parentClass1Name = $class/@name)">  ${$class/@parentClass1Name} </c:if>  implements Serializable{
+public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name} extends <c:if test="$class/@parentClass1Name = $class/@name">  AbstractEntity </c:if> <c:if test="not($class/@parentClass1Name = $class/@name)">  ${$class/@parentClass1Name} </c:if> {
 <f:message>generated.comment</f:message>
 private static final long serialVersionUID = <f:unique/>L;
-
-<c:if test="$class/@parentClass1Name = $class/@name">
-<f:message>generated.comment</f:message>
-	@Id
-	@GeneratedValue
-	protected Long id; 
-</c:if>
 
 <%-- Process annotations on the primitive datatypes--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
@@ -265,19 +258,6 @@ public ${$class/@name}() {
 super();   
 }
 </c:if> 
-
-<%-- if class has a parent--%>
-<c:if test="$class/@parentClass1Name = $class/@name">
-<f:message>generated.comment</f:message>
-	public Long getId() {
-		return id;
-	}
-<f:message>generated.comment</f:message>
-	public void setId(Long id) {
-		this.id = id;
-	}
-</c:if>
-
 	
 <%-- getters and setters --%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
