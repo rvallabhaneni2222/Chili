@@ -1,4 +1,4 @@
-<java:merge/>
+
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
@@ -30,6 +30,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Transient;
+<c:if test="$supportJAXB = 'TRUE'">
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
+</c:if>
 <c:if test="$enableHibernateSearch = 'true'">
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
@@ -56,12 +61,14 @@ import info.yalamanchili.gwt.jpa.AbstractEntity;
 @Entity
 public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name} extends <c:if test="$class/@parentClass1Name = $class/@name">  AbstractEntity </c:if> <c:if test="not($class/@parentClass1Name = $class/@name)">  ${$class/@parentClass1Name} </c:if> {
 <f:message>generated.comment</f:message>
+<c:if test="$supportJAXB = 'TRUE'">
+@Transient 
+</c:if>
 private static final long serialVersionUID = <f:unique/>L;
 
 <%-- Process annotations on the primitive datatypes--%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 <f:message>generated.comment</f:message>
-<%-- processes yalamanchili gwt tags Tag--%>
 	<c:iterate select="$attribute/ModelElement.stereotype/Stereotype" var="stereotype">
 		<c:if test="$stereotype/@href = ${'$SizeID'}">
 			<c:iterate select="$attribute/ModelElement.taggedValue" var="taggedvalue">
@@ -137,6 +144,9 @@ private static final long serialVersionUID = <f:unique/>L;
 	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > @Field </c:when> <c:when test="${'$IntegerID'}" > @Field(index=Index.UN_TOKENIZED) 	</c:when><c:when test="${'$DateID'}" > @Field(index=Index.UN_TOKENIZED) </c:when><c:when test="${'$BooleanID'}" >@Field(index=Index.UN_TOKENIZED) </c:when><c:when test="${'$LongID'}" > @Field(index=Index.UN_TOKENIZED) </c:when><c:when test="${'$FloatID'}" > @Field(index=Index.UN_TOKENIZED) </c:when> <c:when test="${'$ImageID'}" > @Field </c:when> <c:when test="${'$RichTextID'}" > @Field </c:when><c:when test="${'$CurrencyID'}" > @Field(index=Index.UN_TOKENIZED) </c:when>
 </c:choose>
 </c:if>	
+<c:if test="$supportJAXB = 'TRUE'">
+@XmlElement 
+</c:if>
 <%-- processes the premitive Datatypes and enums--%>
 	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > protected String </c:when> <c:when test="${'$IntegerID'}" > protected Integer </c:when><c:when test="${'$DateID'}" > protected Date </c:when><c:when test="${'$BooleanID'}" >protected  Boolean </c:when><c:when test="${'$LongID'}" > protected Long </c:when><c:when test="${'$FloatID'}" > protected Float </c:when> <c:when test="${'$ImageID'}" > protected String </c:when> <c:when test="${'$RichTextID'}" > protected String </c:when><c:when test="${'$CurrencyID'}" > @Digits(fraction = 2, integer = 10) protected BigDecimal </c:when>
 	 <c:otherwise> 
@@ -145,7 +155,7 @@ private static final long serialVersionUID = <f:unique/>L;
 	 			@Enumerated(EnumType.STRING)
 				<c:if test="$enableHibernateSearch = 'true'">
 				@Field
-				</c:if>	 			
+				</c:if>		
 	 			protected  ${$enumeration/@name} 
 	 			</c:if>
 	 	</c:iterate>	
@@ -180,14 +190,20 @@ ${$attribute/@name};
   					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
   					  		 			<%-- check if the multiplicityis one to one--%>
   					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
-  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">  					    						
   					    						<%--check the relations--%>
   					    							<%-- Composite @ManyToOne--%>			
   					    							<c:if test="$association_connection_end2/@aggregation = 'composite'">
+<c:if test="$supportJAXB = 'TRUE'">
+@XmlElement 
+</c:if>  					    							
  @ManyToOne(cascade = CascadeType.MERGE)			    							
   					    							</c:if>  
   					    							<%-- Aggregate @ManyToOne--%>
   					    							<c:if test="$association_connection_end2/@aggregation = 'aggregate'">
+<c:if test="$supportJAXB = 'TRUE'">
+@XmlElement 
+</c:if>  					    							
  @ManyToOne(cascade = CascadeType.MERGE) 					    							
   					    							</c:if> 
  													<%-- Association OneToOne or OneToMany--%>
@@ -195,11 +211,17 @@ ${$attribute/@name};
   					    								<%-- check for one or many realations--%>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
- @OneToOne 	(cascade = CascadeType.ALL)				    				
+<c:if test="$supportJAXB = 'TRUE'">
+@XmlElement 
+</c:if>   					    									
+@OneToOne 	(cascade = CascadeType.ALL)				    				
 				    										</c:if>
 				    									</c:if>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+<c:if test="$supportJAXB = 'TRUE'">
+@XmlElement 
+</c:if>   					    									
  @ManyToOne 					    				
 				    										</c:if>
 				    									</c:if>		    							
@@ -209,15 +231,21 @@ ${$attribute/@name};
   					  		 			</c:if>
   										 <%-- check if the multiplicityis one to many--%>
    					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
-  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">					    						
    					    						<%--check the relations--%>
   					    							<%-- Composite @ManyToOne--%>
   					    							<c:if test="$association_connection_end/@aggregation = 'composite'">
+<c:if test="$supportJAXB = 'TRUE'">
+@XmlTransient 
+</c:if>    					    							
  @OneToMany(mappedBy="${lowercaseFirst($class/@name)}", cascade = CascadeType.ALL,  orphanRemoval = true)	
   protected 	List<${$class2/@name}>  ${lowercaseFirst($class2/@name)}s;				    							
   					    							</c:if>  
   					    							<%-- Aggregate @ManyToOne--%>
   					    							<c:if test="$association_connection_end/@aggregation = 'aggregate'">
+<c:if test="$supportJAXB = 'TRUE'">
+@XmlTransient 
+</c:if>    					    							
  @OneToMany(mappedBy="${lowercaseFirst($class/@name)}", cascade = CascadeType.MERGE)	
   protected 	List<${$class2/@name}>  ${lowercaseFirst($class2/@name)}s;		    							
   					    							</c:if> 
@@ -226,12 +254,18 @@ ${$attribute/@name};
   					    								<%-- check for one or many realations--%>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+<c:if test="$supportJAXB = 'TRUE'">
+@XmlTransient 
+</c:if>    					    									
  @OneToMany (mappedBy="${lowercaseFirst($class/@name)}")	
   protected 	List<${$class2/@name}>  ${lowercaseFirst($class2/@name)}s;			    				
 				    										</c:if>
 				    									</c:if>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+<c:if test="$supportJAXB = 'TRUE'">
+@XmlTransient 
+</c:if>    					    									
  @ManyToMany 	
   protected 	Set<${$class2/@name}>  ${lowercaseFirst($class2/@name)}s;				    				
 				    										</c:if>
