@@ -21,6 +21,9 @@
 	
 	<!-- used to include yalamanchili-gwt project in gwt compiler path -->
 	<inherits name='info.yalamanchili.yalamanchili-gwt' />
+	<!-- used to include yalamanchili-commons(AbstractEntity) project in gwt 
+		compiler path -->
+	<inherits name='info.yalamanchili.yalamanchili-commons' />	
 	
 	<!-- gilead libs-->
 	<inherits name='net.sf.gilead.Gilead4Gwt' />
