@@ -9,18 +9,19 @@
 <c:setVariable select="'com/zuzubi/catalog'" var="groupIDWithFolder"/>
 <c:setVariable select="'com_zuzubi_catalog'" var="groupIDWithUnderScore"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
-<c:setVariable select="'/Users/yphanikumar/codebase/zuzubi/trunk'" var="location"/>
+<c:setVariable select="'C:/codebase/zuzubi/trunk'" var="location"/>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <%--code generation properties--%>
 <c:setVariable select="'FALSE'" var="genMaster"/>
 <c:setVariable select="'FALSE'" var="genApp"/>
-<c:setVariable select="'FALSE'" var="genJPA"/>
+<c:setVariable select="'TRUE'" var="genJPA"/>
 <c:setVariable select="'FALSE'" var="genEJB"/>
 <c:setVariable select="'FALSE'" var="genRest"/>
-<c:setVariable select="'TRUE'" var="genWebapp"/>
+<c:setVariable select="'FALSE'" var="genWebapp"/>
 <c:setVariable select="'FALSE'" var="genAndroid"/>
 <c:setVariable select="'FALSE'" var="genIOS"/>
 <c:setVariable select="'FALSE'" var="genTest"/>
+<c:setVariable select="'FALSE'" var="genPOMS"/>
 <%--versions --%>
 <c:setVariable select="'2.1.0'" var="gwt-version"/>
 <c:setVariable select="'2.2.1.CR2'" var="seam-version"/>
@@ -66,7 +67,9 @@
 <%--creates the APP project--%>
 <c:if test="$genApp = 'TRUE'">
 <ws:project name="{$projectName}-app" location="{$location}/{$projectName}-app">
+	<c:if test="$genPOMS = 'TRUE'">
 	<ws:file path="pom.xml" template="templates/app/app_pom_template.xml.jet"/>
+	</c:if>
     <ws:folder path="jboss/conf">
     	<c:if test="$dataBase = 'MYSQL'">
 	 		<ws:file path="{$projectName}-mysql-ds.xml" template="templates/app/jboss/deploy/app_mysql_ds_template.xml.jet"/>
@@ -88,7 +91,9 @@
 <%--creates the JPA project--%>
 <c:if test="$genJPA = 'TRUE'">
 <ws:project name="{$projectName}-jpa" location="{$location}/{$projectName}-jpa">
+	<c:if test="$genPOMS = 'TRUE'">
 	<ws:file path="pom.xml" template="templates/jpa/jpa_pom_template.xml.jet"/>
+	</c:if>
     <ws:folder path="src/main/java">   	
     	<%--create gwt.xml file to include these  --%>	
     	<ws:folder path="${$groupIDWithFolder}">
@@ -134,7 +139,9 @@
 <%--creates the EJB project--%>
 <c:if test="$genEJB = 'TRUE'">
 <ws:project name="{$projectName}-ejb" location="{$location}/{$projectName}-ejb">
+	<c:if test="$genPOMS = 'TRUE'">	
 	<ws:file path="pom.xml" template="templates/ejb/ejb_pom_template.xml.jet"/>
+	</c:if>
     <ws:folder path="src/main/java">
      <ws:folder path="${$groupIDWithFolder}/ejb">		
      		<%-- Generic EJB interface--%>
@@ -187,7 +194,9 @@
 <%--creates the webapp project--%>
 <c:if test="$genWebapp = 'TRUE'">
 <ws:project name="{$projectName}-webapp" location="{$location}/{$projectName}-webapp">
+	<c:if test="$genPOMS = 'TRUE'">
 	<ws:file path="pom.xml" template="templates/web/webapp_pom_template.xml.jet"/>
+	</c:if>
     <ws:folder path="src/main/java">
     	<ws:folder path="${$groupIDWithFolder}/public">
     	<ws:file template="templates/web/gwt/public/web_css_template.css.jet" path="{$projectName}.css"/>
@@ -360,7 +369,9 @@
 <%--creates the REST JAR for SOA project--%>
 <c:if test="$genRest = 'TRUE'">
 <ws:project name="{$projectName}-rest" location="{$location}/{$projectName}-rest">
+	<c:if test="$genPOMS = 'TRUE'">
 	<ws:file path="pom.xml" template="templates/rest/rest_pom_template.xml.jet"/>
+	</c:if>
     <ws:folder path="src/main/java">
 			<ws:folder path="${$groupIDWithFolder}/rest">
 			<%-- rest service class--%>
@@ -415,7 +426,9 @@
 <%--creates the Android project--%>
 <c:if test="$genAndroid = 'TRUE'">
 <ws:project name="{$projectName}-android" location="{$location}/{$projectName}-android">
+	<c:if test="$genPOMS = 'TRUE'">
 	<ws:file path="pom.xml" template="templates/android/android_pom_template.xml.jet"/>
+	</c:if>
 	<ws:file path="AndroidManifest.xml" template="templates/android/android_manifest_template.xml.jet"/>
 	<ws:file path="default.properties" template="templates/android/android_default.properties.jet"/>
 	<ws:folder path="src">
