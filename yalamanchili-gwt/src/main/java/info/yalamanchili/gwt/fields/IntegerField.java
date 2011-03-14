@@ -5,15 +5,13 @@ import info.yalamanchili.gwt.composite.BaseFieldWithTextBox;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.Window;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class IntegerField.
- */
 public class IntegerField extends BaseFieldWithTextBox {
-
-	public IntegerField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
+	@UiConstructor
+	public IntegerField(String labelName, String attributeName,
+			String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 
@@ -37,7 +35,7 @@ public class IntegerField extends BaseFieldWithTextBox {
 	}
 
 	@Override
-	//TODO add logic to accept backspace as valid
+	// TODO add logic to accept backspace as valid
 	public void onKeyPress(KeyPressEvent event) {
 		if (!Character.isDigit(event.getCharCode())) {
 			setMessage("invalid value");

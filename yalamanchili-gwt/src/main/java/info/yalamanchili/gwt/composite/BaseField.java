@@ -70,6 +70,10 @@ public abstract class BaseField extends Composite implements BlurHandler {
 		return label;
 	}
 
+	public void setLabelText(String name) {
+		label.setHTML(name);
+	}
+
 	public void setMessage(String text) {
 		message.setHTML(text);
 	}

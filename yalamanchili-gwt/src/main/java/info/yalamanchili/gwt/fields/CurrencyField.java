@@ -8,12 +8,14 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.i18n.client.NumberFormat;
+import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.Window;
 
 public class CurrencyField extends BaseFieldWithTextBox {
 	// TODO add Local info to constructor
 	protected static NumberFormat fmt = NumberFormat.getCurrencyFormat();
 
+	@UiConstructor
 	public CurrencyField(String labelName, String attributeName,
 			String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);

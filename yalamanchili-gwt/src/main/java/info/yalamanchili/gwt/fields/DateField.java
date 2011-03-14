@@ -16,6 +16,7 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -37,6 +38,7 @@ public class DateField extends BaseField implements KeyPressHandler,
 		return datePicker;
 	}
 
+	@UiConstructor
 	public DateField(String labelName, String attributeName, String className,
 			Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);

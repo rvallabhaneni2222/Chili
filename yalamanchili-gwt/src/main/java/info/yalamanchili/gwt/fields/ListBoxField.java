@@ -3,6 +3,7 @@ package info.yalamanchili.gwt.fields;
 import info.yalamanchili.gwt.utils.Alignment;
 
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.ui.CellPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -10,10 +11,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class ListBoxField.
- */
 public class ListBoxField extends Composite {
 
 	/** The panel. */
@@ -25,12 +22,7 @@ public class ListBoxField extends Composite {
 	/** The listbox. */
 	ListBox listbox = new ListBox();
 
-	/**
-	 * Instantiates a new list box field.
-	 * 
-	 * @param labelName
-	 *            the label name
-	 */
+	@UiConstructor
 	public ListBoxField(String labelName) {
 		panel = new VerticalPanel();
 		initWidget(panel);
@@ -39,14 +31,6 @@ public class ListBoxField extends Composite {
 		addWidgets();
 	}
 
-	/**
-	 * Instantiates a new list box field.
-	 * 
-	 * @param labelName
-	 *            the label name
-	 * @param alignment
-	 *            the alignment
-	 */
 	public ListBoxField(String labelName, Alignment alignment) {
 		switch (alignment) {
 		case HORIZONTAL:
@@ -62,56 +46,26 @@ public class ListBoxField extends Composite {
 		addWidgets();
 	}
 
-	/**
-	 * Configure.
-	 */
 	protected void configure() {
 	}
 
-	/**
-	 * Adds the widgets.
-	 */
 	protected void addWidgets() {
 		panel.add(label);
 		panel.add(listbox);
 	}
 
-	/**
-	 * Gets the value.
-	 * 
-	 * @return the value
-	 */
 	public Long getValue() {
 		return new Long(listbox.getValue(listbox.getSelectedIndex()));
 	}
 
-	/**
-	 * Adds the value.
-	 * 
-	 * @param value
-	 *            the value
-	 * @param item
-	 *            the item
-	 */
 	public void addValue(Long value, String item) {
 		listbox.addItem(item, value.toString());
 	}
 
-	/**
-	 * Adds the change listener.
-	 * 
-	 * @param changeListener
-	 *            the change listener
-	 */
 	public void addChangeHandler(ChangeHandler changeHandler) {
 		listbox.addChangeHandler(changeHandler);
 	}
 
-	/**
-	 * Gets the list box.
-	 * 
-	 * @return the list box
-	 */
 	public ListBox getListBox() {
 		return listbox;
 	}

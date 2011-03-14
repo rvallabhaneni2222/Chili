@@ -5,6 +5,7 @@ import info.yalamanchili.gwt.composite.BaseFieldWithTextBox;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.Window;
 
 // TODO: Auto-generated Javadoc
@@ -12,8 +13,9 @@ import com.google.gwt.user.client.Window;
  * The Class LongField.
  */
 public class LongField extends BaseFieldWithTextBox {
-
-	public LongField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
+	@UiConstructor
+	public LongField(String labelName, String attributeName, String className,
+			Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 

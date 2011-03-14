@@ -5,11 +5,13 @@ import info.yalamanchili.gwt.composite.BaseFieldWithTextBox;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.Window;
 
 public class FloatField extends BaseFieldWithTextBox {
-
-	public FloatField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
+	@UiConstructor
+	public FloatField(String labelName, String attributeName, String className,
+			Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 
@@ -32,7 +34,7 @@ public class FloatField extends BaseFieldWithTextBox {
 	}
 
 	@Override
-	//TODO add logic to accept backspace as valid
+	// TODO add logic to accept backspace as valid
 	public void onKeyPress(KeyPressEvent event) {
 		Integer eventValue = (int) event.getCharCode();
 		if (!(Character.isDigit(event.getCharCode()) || eventValue

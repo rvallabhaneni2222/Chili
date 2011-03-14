@@ -2,12 +2,14 @@ package info.yalamanchili.gwt.fields;
 
 import info.yalamanchili.gwt.composite.BaseField;
 
+import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 
 public class PasswordField extends BaseField {
 
 	protected PasswordTextBox password = new PasswordTextBox();
 
+	@UiConstructor
 	public PasswordField(String labelName, String attributeName,
 			String className) {
 		super(labelName, attributeName, className, false, false);
