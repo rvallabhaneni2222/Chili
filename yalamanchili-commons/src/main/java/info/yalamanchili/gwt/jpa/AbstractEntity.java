@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -21,9 +20,8 @@ import net.sf.gilead.pojo.gwt.LightEntity;
  */
 @XmlType
 @MappedSuperclass
-public class AbstractEntity extends LightEntity implements Serializable{
-	@Transient
-	public static final long serialVersionUID = 196919661993L;
+public abstract class AbstractEntity extends LightEntity implements
+		Serializable {
 
 	@XmlAttribute
 	@Version
