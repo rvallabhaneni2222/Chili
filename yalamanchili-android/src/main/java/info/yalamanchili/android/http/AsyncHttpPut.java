@@ -1,11 +1,10 @@
 package info.yalamanchili.android.http;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
+import org.apache.http.StatusLine;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.StatusLine;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -31,7 +30,7 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 	@Override
 	protected String doInBackground(String... arg0) {
 		String result = "";
-		Log.d("debug", "HttpPutURI" + arg0[0]);
+		Log.d("debug", "HttpPutURI:" + arg0[0]);
 		try {
 			HttpPut put = new HttpPut(arg0[0]);
 			put.setEntity(new StringEntity(arg0[1]));
@@ -39,7 +38,8 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 			response = httpclient.execute(put);
 			result = HttpHelper.request(response);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException("Http Put called failed for uri:"
+					+ arg0[0] + e);
 		}
 		return result;
 	}
@@ -54,8 +54,9 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 		Log.d("debug", "HttpPut Response code" + status.getStatusCode());
 		/* http response success */
 		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 300) {
-		//TODO FIX this is needed for get(working) for put this is not necessary
-			//result = HttpHelper.request(response);
+			// TODO FIX this is needed for get(working) for put this is not
+			// necessary
+			// result = HttpHelper.request(response);
 			onResponse(result);
 		} /* http response failure */
 		else {
