@@ -17,6 +17,7 @@ public class CreateUserPanel extends CreateUserAbstract {
 					@Override
 					public void onResponse(Void arg0) {
 						new ResponseStatusWidget().show("new User created");
+						CreateUserPanel.this.hide();
 					}
 
 				});
