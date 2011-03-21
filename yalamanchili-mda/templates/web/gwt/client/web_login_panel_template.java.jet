@@ -14,6 +14,7 @@ import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import java.util.HashSet;
 import java.util.Set;
 import info.yalamanchili.security.gwt.AdminService.AdminServiceAsync;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 <f:message>generated.class.comment</f:message>
 public class LoginPanel extends LoginPanelAbstract {
@@ -27,6 +28,8 @@ public class LoginPanel extends LoginPanelAbstract {
 					public void onResponse(YUser arg0) {
 						if (arg0 != null) {
 						new ${camelCase($projectName)}Welcome().reLoad(arg0);
+							RootLayoutPanel.get().clear();
+							new ZuzubiWelcome().onModuleLoad();
 							new ResponseStatusWidget().show("login success");
 							LoginPanel.this.hide();
 						} else {

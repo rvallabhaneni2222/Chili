@@ -5,7 +5,7 @@
 	<g:DockLayoutPanel unit='EM' addStyleNames='mainPanel'>
 		<g:north size='4'>
 			<g:FlowPanel addStyleNames='statusPanel' ui:field='statusPanel'>
-				<zuzubi:StatusPanel ui:field="${lower-case($projectName)}StatusPanel"></zuzubi:StatusPanel>
+				<${lower-case($projectName)}:StatusPanel ui:field="${lower-case($projectName)}StatusPanel"></${lower-case($projectName)}:StatusPanel>
 			</g:FlowPanel>
 		</g:north>
 		<g:north size='2'>

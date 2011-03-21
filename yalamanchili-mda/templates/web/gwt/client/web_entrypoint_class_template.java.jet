@@ -73,12 +73,6 @@ public class ${camelCase($projectName)}Welcome implements EntryPoint {
 			instance=this;
 			init();
 		}
-<f:message>generated.comment</f:message>		
-		public void reLoad(YUser user) {
-		RootLayoutPanel.get().clear();
-		instance = null;
-		onModuleLoad();
-	}
 <f:message>generated.comment</f:message>	
 	public void init() {
 		AdminServiceAsync.instance().getUser(new ALAsyncCallback<YUser>() {
