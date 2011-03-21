@@ -31,6 +31,8 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.remoting.WebRemote;
+import org.jboss.seam.security.Identity;
+import org.jboss.seam.security.management.IdentityManager;
 
 @Transactional
 @Scope(ScopeType.SESSION)
@@ -42,7 +44,66 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 	}
 
 	@In(create = true)
+	protected Identity identity;
+
+	@In(create = true)
+	protected IdentityManager identityManager;
+
+	@In(create = true)
 	protected EntityManager yem;
+
+	/* FOR APP LOGIN */
+	@Override
+	@WebRemote
+	public void createUser(YUser user, Set<String> roles) {
+		Identity.setSecurityEnabled(false);
+		identityManager.createUser(user.getUsername(), user.getPasswordHash());
+		for (String role : roles) {
+			identityManager.grantRole(user.getUsername(), role);
+		}
+		Identity.setSecurityEnabled(true);
+	}
+
+	@Override
+	@WebRemote
+	public YUser login(String userName, String password) {
+		identity.getCredentials().setUsername(userName);
+		identity.getCredentials().setPassword(password);
+		// can also use identityManager.authenticate(username, password)
+		if (("loggedIn").equals(identity.login())) {
+			YUser user = SecurityUtil.getUserForPrincipal(yem,
+					identity.getPrincipal());
+			return (YUser) getBeanManager().clone(user);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	@WebRemote
+	public void logout() {
+		identity.logout();
+	}
+
+	@Override
+	@WebRemote
+	public YUser getUser() {
+		if (identity.isLoggedIn()) {
+			System.out.println("logged in ");
+			YUser user = SecurityUtil.getUserForPrincipal(yem,
+					identity.getPrincipal());
+			Set<YRole> roles = user.getRoles();
+			user = (YUser) getBeanManager().clone(user);
+			for (YRole role : roles) {
+				user.addRole((YRole) getBeanManager().clone(role));
+			}
+			return user;
+
+		} else {
+			System.out.println("not logged in");
+			return null;
+		}
+	}
 
 	/* security YUSER */
 

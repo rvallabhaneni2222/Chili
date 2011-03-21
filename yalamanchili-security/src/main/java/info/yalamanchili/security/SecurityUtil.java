@@ -3,7 +3,10 @@ package info.yalamanchili.security;
 import info.yalamanchili.security.gwt.YRole;
 import info.yalamanchili.security.gwt.YUser;
 
+import java.security.Principal;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.jboss.seam.util.Base64;
 
@@ -24,6 +27,14 @@ public class SecurityUtil {
 		role.setRolename(rolename);
 		em.persist(role);
 		return role;
+	}
+
+	public static YUser getUserForPrincipal(EntityManager em,
+			Principal principal) {
+		Query getUserQuery = em.createQuery("from "
+				+ YUser.class.getSimpleName() + " where username='"
+				+ principal.getName() + "'");
+		return (YUser) getUserQuery.getSingleResult();
 	}
 
 	public static YUser addRoleToUser(EntityManager em, YUser user, YRole role) {

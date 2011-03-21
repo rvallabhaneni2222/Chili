@@ -5,10 +5,21 @@ import info.yalamanchili.gwt.beans.TableObj;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface AdminServiceAsync {
+	/* FOR APP LOGIN */
+	public void createUser(YUser entity, Set<String> roles,
+			AsyncCallback<Void> response);
+
+	public void login(String userName, String password,
+			AsyncCallback<YUser> response);
+
+	public void logout(AsyncCallback<Void> response);
+
+	public void getUser(AsyncCallback<YUser> response);
 
 	/* USER ENTITY */
 	public void createUser(YUser entity, AsyncCallback<YUser> response);
@@ -66,7 +77,7 @@ public interface AdminServiceAsync {
 
 	public void addRoles(YRole role, List<Long> children,
 			AsyncCallback<java.lang.Void> response);
-	
+
 	public void removeRoles(YUser user, List<Long> children,
 			AsyncCallback<java.lang.Void> response);
 

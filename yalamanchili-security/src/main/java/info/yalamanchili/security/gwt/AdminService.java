@@ -5,12 +5,25 @@ import info.yalamanchili.gwt.beans.TableObj;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
+/** this is used by admin/security gwt module */
 public interface AdminService extends RemoteService {
+	/* FOR APP LOGIN */
+	public void createUser(YUser entity, Set<String> roles);
+
+	public YUser login(String userName, String password);
+
+	public void logout();
+
+	public YUser getUser();
+
+	// public boolean login(String userName, String password);
+
 	/* USER ENTITY */
 	public YUser createUser(YUser entity);
 
@@ -54,7 +67,7 @@ public interface AdminService extends RemoteService {
 	public void addRoles(YUser user, List<Long> children);
 
 	public void addRoles(YRole role, List<Long> children);
-	
+
 	public void removeRoles(YUser user, List<Long> children);
 
 	public void removeRoles(YRole role, List<Long> children);
