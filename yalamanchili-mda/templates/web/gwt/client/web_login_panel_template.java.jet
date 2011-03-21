@@ -29,7 +29,7 @@ public class LoginPanel extends LoginPanelAbstract {
 						if (arg0 != null) {
 						new ${camelCase($projectName)}Welcome().reLoad(arg0);
 							RootLayoutPanel.get().clear();
-							new ZuzubiWelcome().onModuleLoad();
+							new ${camelCase($projectName)}Welcome().onModuleLoad();
 							new ResponseStatusWidget().show("login success");
 							LoginPanel.this.hide();
 						} else {

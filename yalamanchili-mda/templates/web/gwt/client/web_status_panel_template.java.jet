@@ -35,7 +35,7 @@ public class StatusPanel extends AbstractStatusPanel {
 	@Override
 	public void logoutSuccessfull() {
 		RootLayoutPanel.get().clear();
-		new ZuzubiWelcome().onModuleLoad();
+		new ${camelCase($projectName)}Welcome().onModuleLoad();
 
 	}
 <f:message>generated.comment</f:message>

@@ -88,7 +88,7 @@ public class ${camelCase($projectName)}Welcome implements EntryPoint {
 					}
 				}
 				RootLayout rootLayout = new RootLayout();
-				// configure();
+				configure();
 				addListeners();
 				RootLayoutPanel.get().add(rootLayout);
 
@@ -101,7 +101,6 @@ public class ${camelCase($projectName)}Welcome implements EntryPoint {
 		protected void addListeners() {
 		}
 <f:message>generated.comment</f:message>
-//TODO remove
 	protected void configure() {
 		configureEntityPanel();
 		configureStatusPanel();
