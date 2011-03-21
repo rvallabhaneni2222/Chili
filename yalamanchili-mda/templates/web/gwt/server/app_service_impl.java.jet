@@ -47,56 +47,7 @@ public class ${camelCase($projectName)}ServiceImpl extends GileadService impleme
 	@In(create = true)
 	protected IdentityManager identityManager;
 <f:message>generated.comment</f:message>
-	@Override
-	@WebRemote
-	public YUser login(String username, String password) {
-		if (log.isDebugEnabled()) {
-			log.debug("in login for user:" + username);
-		}
-		identity.getCredentials().setUsername(username);
-		identity.getCredentials().setPassword(password);
-		//can also use identityManager.authenticate(username, password)
-		if (("loggedIn").equals(identity.login())) {
-			Query getUserQuery = yem.createQuery("from YUser where username='"
-					+ username + "'");
-			YUser user = (YUser) getUserQuery.getSingleResult();
-		return (YUser) getBeanManager().clone(user);
-		} else {
-			return null;
-		}
-	}
-	
-<f:message>generated.comment</f:message>
-	@Observer("org.jboss.seam.security.loginSuccessful")
-	public void loginSuccessFull() {
-		log.debug("org.jboss.seam.security.loginSuccessful");
-	}
 
-	@Observer("org.jboss.seam.security.loginFailed")
-	public void loginFailed() {
-		log.debug("rg.jboss.seam.security.loginFailed");
-	}
-
-	@Observer("org.jboss.seam.security.alreadyLoggedIn")
-	public void alreadyLoggedIn() {
-		log.debug("rg.jboss.seam.security.loginFailed");
-	}
-	
-	@Override
-	@WebRemote
-	public void createUser(String username, String password) {
-		log.debug("in create user:" + username);
-		Identity.setSecurityEnabled(false);
-		identityManager.createUser(username, password);
-		identityManager.grantRole(username, "user");
-		Identity.setSecurityEnabled(true);
-	}
-
-	@Override
-	@WebRemote
-	public void logout() {
-		identity.logout();
-	}
 }
 </f:bundle>
 </java:format>

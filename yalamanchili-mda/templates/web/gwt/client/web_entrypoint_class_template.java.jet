@@ -87,7 +87,7 @@ public class ${camelCase($projectName)}Welcome implements EntryPoint {
 				if (user != null) {
 					logger.info("initUser on response" + user.getUsername());
 					isLoggedIn = true;
-					ZuzubiWelcome.instance().user = user.getUsername();
+					${camelCase($projectName)}Welcome.instance().user = user.getUsername();
 					for (YRole role : user.getRoles()) {
 						logger.info("role:" + role.getRolename());
 						roles.add(role.getRolename().toUpperCase());

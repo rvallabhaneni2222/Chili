@@ -17,12 +17,13 @@ public class CreateUserPanel extends CreateUserAbstract {
 	@Override
 	public void createUserClicked() {
 	final YUser yuser = new YUser();
-		yuser.setUsername(usernameTF.getText());
-		yuser.setPasswordHash(passwordTF.getPassword());
+		final YUser user = new YUser();
+		user.setUsername(usernameTF.getText());
+		user.setPasswordHash(passwordTF.getPassword());
 		Set<String> roles = new HashSet<String>();
 		roles.add("user");
-				AdminServiceAsync.instance().createUser(usernameTF.getText(),
-				passwordTF.getPassword(), new ALAsyncCallback<Void>() {
+		AdminServiceAsync.instance().createUser(user, roles,
+				new ALAsyncCallback<Void>() {
 					@Override
 					public void onResponse(Void arg0) {
 						new ResponseStatusWidget().show("new User created");
