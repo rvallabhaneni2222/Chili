@@ -31,6 +31,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
+import info.yalamanchili.security.gwt.AdminService.AdminServiceAsync;
 
 import java.util.logging.Logger;
 import java.util.HashSet;
@@ -46,7 +47,9 @@ public class ${camelCase($projectName)}Welcome implements EntryPoint {
 <f:message>generated.comment</f:message>	
 	public String user;
 <f:message>generated.comment</f:message>	
-	public static Set<String> roles = new HashSet<String>();
+	public Set<String> roles = new HashSet<String>();
+<f:message>generated.comment</f:message>	
+	public boolean isLoggedIn = false;
 <f:message>generated.comment</f:message>	
 	public static ${camelCase($projectName)}Welcome instance(){
 	if (instance == null) {
@@ -68,26 +71,43 @@ public class ${camelCase($projectName)}Welcome implements EntryPoint {
 			}
 			});
 			instance=this;
-			RootLayout rootLayout = new RootLayout();
-			addListeners();
-			configure();
-			RootLayoutPanel.get().add(rootLayout);
+			init();
 		}
 <f:message>generated.comment</f:message>		
 		public void reLoad(YUser user) {
 		RootLayoutPanel.get().clear();
 		instance = null;
-		this.user = user.getUsername();
-		for (YRole role : user.getRoles()) {
-			roles.add(role.getRolename().toUpperCase());
-		}
-		logger.info(roles.toString());
 		onModuleLoad();
 	}
+<f:message>generated.comment</f:message>	
+	public void init() {
+		AdminServiceAsync.instance().getUser(new ALAsyncCallback<YUser>() {
+			@Override
+			public void onResponse(YUser user) {
+				if (user != null) {
+					logger.info("initUser on response" + user.getUsername());
+					isLoggedIn = true;
+					ZuzubiWelcome.instance().user = user.getUsername();
+					for (YRole role : user.getRoles()) {
+						logger.info("role:" + role.getRolename());
+						roles.add(role.getRolename().toUpperCase());
+					}
+				}
+				RootLayout rootLayout = new RootLayout();
+				// configure();
+				addListeners();
+				RootLayoutPanel.get().add(rootLayout);
+
+			}
+
+		});
+	}
+	
 <f:message>generated.comment</f:message>		
 		protected void addListeners() {
 		}
 <f:message>generated.comment</f:message>
+//TODO remove
 	protected void configure() {
 		configureEntityPanel();
 		configureStatusPanel();

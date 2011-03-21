@@ -7,20 +7,13 @@ package ${$webPackage}rpc;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import info.yalamanchili.security.gwt.YUser;
-import info.yalamanchili.security.gwt.YRole;
 /**
  * This is a GWT service, which will be implemented as a Seam component on the
  * server (see the server package). GWT uses strongly typed RPC interfaces.
  */
  <f:message>generated.class.comment</f:message>
 public interface ${camelCase($projectName)}Service extends RemoteService {
-<f:message>generated.comment</f:message>
-	public YUser login(String userName,String password);
-<f:message>generated.comment</f:message>	
-	public void createUser(String username, String password);
-<f:message>generated.comment</f:message>
-	public void logout();
+
 <f:message>generated.comment</f:message>	
 	public static class ${camelCase($projectName)}ServiceAsync {
 		private static ${$webPackage}rpc.${camelCase($projectName)}ServiceAsync service;

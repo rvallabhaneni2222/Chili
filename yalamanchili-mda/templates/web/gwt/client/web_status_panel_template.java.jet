@@ -9,8 +9,9 @@ import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import info.yalamanchili.gwt.widgets.AbstractStatusPanel;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.event.dom.client.ClickEvent;
-import ${$webPackage}rpc.${camelCase($projectName)}Service.${camelCase($projectName)}ServiceAsync;
+import info.yalamanchili.security.gwt.AdminService.AdminServiceAsync;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
+
 <f:message>generated.class.comment</f:message>
 public class StatusPanel extends AbstractStatusPanel {
 	public StatusPanel() {
@@ -39,7 +40,7 @@ public class StatusPanel extends AbstractStatusPanel {
 <f:message>generated.comment</f:message>
 	@Override
 	protected void logoutClicked() {
-		${camelCase($projectName)}ServiceAsync.instance().logout(new ALAsyncCallback<Void>() {
+		AdminServiceAsync.instance().logout(new ALAsyncCallback<Void>() {
 
 			@Override
 			public void onResponse(Void arg0) {
@@ -65,6 +66,7 @@ public class StatusPanel extends AbstractStatusPanel {
 				if (${camelCase($projectName)}Welcome.instance().user != null) {
 			userLink.setText("welcome " + ${camelCase($projectName)}Welcome.instance().user);
 			statusBar.remove(loginLink);
+			statusBar.remove(createUserLink);
 			statusBar.setWidget(1, 2, logoutLink);
 		}
 

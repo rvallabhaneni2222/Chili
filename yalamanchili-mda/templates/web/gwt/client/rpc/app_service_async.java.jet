@@ -6,8 +6,6 @@ package ${$webPackage}rpc;
 
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import info.yalamanchili.security.gwt.YUser;
-import info.yalamanchili.security.gwt.YRole;
 /**
  * This is the interface the client code uses. You NEVER implement this
  * directly, GWT does this for you, and calls are marshalled through to the Sync
@@ -15,14 +13,6 @@ import info.yalamanchili.security.gwt.YRole;
  */
  <f:message>generated.class.comment</f:message>
 public interface ${camelCase($projectName)}ServiceAsync  {
-<f:message>generated.comment</f:message>
-	public void login(String username,String password,
-			AsyncCallback<YUser> response);
-<f:message>generated.comment</f:message>
-	public void createUser(String username, String password,
-			AsyncCallback<java.lang.Void> response);
-<f:message>generated.comment</f:message>			
-	public void logout(AsyncCallback<java.lang.Void> response);
 
 }
 </f:bundle>

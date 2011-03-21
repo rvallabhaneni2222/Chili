@@ -6,13 +6,22 @@ package ${$groupID}.client;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.widgets.CreateUserAbstract;
 import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
-import ${$groupID}.client.rpc.${camelCase($projectName)}Service.${camelCase($projectName)}ServiceAsync;
+import info.yalamanchili.security.gwt.AdminService.AdminServiceAsync;
+import info.yalamanchili.security.gwt.YUser;
+
+import java.util.HashSet;
+import java.util.Set;
 <f:message>generated.class.comment</f:message>
 public class CreateUserPanel extends CreateUserAbstract {
 	<f:message>generated.comment</f:message>
 	@Override
 	public void createUserClicked() {
-				${camelCase($projectName)}ServiceAsync.instance().createUser(usernameTF.getText(),
+	final YUser yuser = new YUser();
+		yuser.setUsername(usernameTF.getText());
+		yuser.setPasswordHash(passwordTF.getPassword());
+		Set<String> roles = new HashSet<String>();
+		roles.add("user");
+				AdminServiceAsync.instance().createUser(usernameTF.getText(),
 				passwordTF.getPassword(), new ALAsyncCallback<Void>() {
 					@Override
 					public void onResponse(Void arg0) {

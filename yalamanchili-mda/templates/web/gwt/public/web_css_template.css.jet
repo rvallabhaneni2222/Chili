@@ -1,7 +1,6 @@
 .mainPanel {
 	
 }
-
 /* panel to display the ReadAll, Read, Update entity panels this occupies the center of the DockLayoutPanel of the rool panel. see ProjectWelcome.java under the client package*/
 .entityPanelHolder {
 	width: 100%;
@@ -18,7 +17,7 @@
 
 /* this panel holds the search bar and is tied to west of the docklayoutpanel */
 .sidePanel {
-	
+	border-top: 2px solid #88ACE0;
 }
 
 .sidePanelTop {
