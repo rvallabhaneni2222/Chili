@@ -72,7 +72,7 @@ public class FileUploadServlet extends HttpServlet {
 
 	protected void processFileUpload(HttpServletRequest request,
 			HttpServletResponse response) {
-		// TODO
+		throw new UnsupportedOperationException("to be implemented");
 	}
 
 	public String getFileTargetDirectory() {
