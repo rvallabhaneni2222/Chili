@@ -64,8 +64,12 @@ public class ImageUploadPanel extends ALComposite implements ClickHandler {
 
 	public void onClick(ClickEvent event) {
 		if (event.getSource() == submit) {
-			formPanel.submit();
+			submit();
 		}
+	}
+
+	public void submit() {
+		formPanel.submit();
 	}
 
 	// TODO HTML5 issue
