@@ -55,7 +55,8 @@ public class FileUploadServlet extends HttpServlet {
 		}
 		for (Iterator<?> i = items.iterator(); i.hasNext();) {
 			FileItem item = (FileItem) i.next();
-			if (item.isFormField())
+			if (item.isFormField() || item.getName() == null
+					|| item.getName().trim().equals(""))
 				continue;
 			File imageurl = new File(fileTargetDirectory + "/" + item.getName());
 			try {
