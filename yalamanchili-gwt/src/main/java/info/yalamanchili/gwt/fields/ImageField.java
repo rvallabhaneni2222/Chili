@@ -36,6 +36,7 @@ public class ImageField extends BaseField {
 	}
 
 	@UiConstructor
+	@Deprecated
 	public ImageField(String labelName, String attributeName, String className,
 			Boolean readOnly, Boolean isRequired, String url, int width,
 			int height) {
@@ -43,6 +44,21 @@ public class ImageField extends BaseField {
 		image.setUrl(url);
 		image.setPixelSize(width, height);
 		configureAddMainWidget();
+	}
+
+	@UiConstructor
+	public ImageField(String labelName, String attributeName, String className,
+			Boolean readOnly, Boolean isRequired, String url, String width,
+			String height) {
+		super(labelName, attributeName, className, readOnly, isRequired);
+		setPixelSize(width, height);
+		image.setUrl(url);
+
+		configureAddMainWidget();
+	}
+
+	public void setPixelSize(String width, String height) {
+		image.setPixelSize(Integer.parseInt(width), Integer.parseInt(height));
 	}
 
 	@Override
