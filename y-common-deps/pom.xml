@@ -6,8 +6,14 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>y-common-deps</name>
-	<url>http://maven.apache.org</url>
-
+	<url>http://yalamanchili.googlecode.com/</url>
+	<scm>
+		<connection>scm:svn:http://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk
+		</connection>
+		<developerConnection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk
+		</developerConnection>
+		<url>http://code.google.com/p/yalamanchili/source/browse/</url>
+	</scm>
 	<dependencies>
 		<!-- hibernate libs req for hibernate session and naming statergy can be 
 			removed when the hibenrate search fix done -->
@@ -46,7 +52,7 @@
 			<exclusions>
 				<exclusion>
 					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-core</artifactId>	
+					<artifactId>hibernate-core</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>org.hibernate</groupId>
@@ -66,11 +72,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-	<!--	<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-core</artifactId>
-			<version>3.0.3</version>
-		</dependency>-->
+		<!-- <dependency> <groupId>org.apache.lucene</groupId> <artifactId>lucene-core</artifactId> 
+			<version>3.0.3</version> </dependency> -->
 		<!-- hibernate search deps END -->
 		<!-- seam dependencies START -->
 		<dependency>
