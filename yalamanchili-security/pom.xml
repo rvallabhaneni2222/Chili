@@ -6,7 +6,14 @@
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>yalamanchili-security</name>
-	<url>http://maven.apache.org</url>
+	<url>http://code.google.com/p/yalamanchili</url>
+	<scm>
+		<connection>scm:svn:http://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk
+		</connection>
+		<developerConnection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk
+		</developerConnection>
+		<url>http://code.google.com/p/yalamanchili/source/browse/</url>
+	</scm>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -113,7 +120,7 @@
 		<repository>
 			<id>jboss.nexus</id>
 			<url>https://repository.jboss.org/nexus/content/groups/public</url>
-		</repository>		
+		</repository>
 	</repositories>
 	<distributionManagement>
 		<repository>
