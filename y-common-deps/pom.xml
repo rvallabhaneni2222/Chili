@@ -86,7 +86,7 @@
 		<dependency>
 			<groupId>info.yalamanchili.security</groupId>
 			<artifactId>yalamanchili-security</artifactId>
-			<version>${yalamanchili.version}</version>
+			<version>1.0-alpha</version>
 		</dependency>
 		<!-- y-dependencies END -->
 		<!--apache commons logging -->
