@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>yalamanchili</groupId>
 	<artifactId>y-common-deps</artifactId>
-	<version>1.0-beta-SNAPSHOHT</version>
+	<version>1.0-beta-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>y-common-deps</name>
 	<url>http://yalamanchili.googlecode.com/</url>
