@@ -8,9 +8,9 @@
 	<name>yalamanchili-commons</name>
 	<url>http://code.google.com/p/yalamanchili</url>
 	<scm>
-		<connection>scm:svn:http://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk
+		<connection>scm:svn:http://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/yalamanchili-commons
 		</connection>
-		<developerConnection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk
+		<developerConnection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/yalamanchili-commons
 		</developerConnection>
 		<url>http://code.google.com/p/yalamanchili/source/browse/</url>
 	</scm>
@@ -24,7 +24,7 @@
 		<dependency>
 			<groupId>yalamanchili</groupId>
 			<artifactId>y-common-deps</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0</version>
 			<type>pom</type>
 			<scope>provided</scope>
 		</dependency>
