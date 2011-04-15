@@ -2,16 +2,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>yalamanchili</groupId>
 	<artifactId>y-common-deps</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>y-common-deps</version>
 	<packaging>pom</packaging>
 	<name>y-common-deps</name>
 	<url>http://yalamanchili.googlecode.com/</url>
 	<scm>
-		<connection>scm:svn:http://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/y-common-deps
+		<connection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/branches/1.0/1.0
 		</connection>
-		<developerConnection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/y-common-deps
+		<developerConnection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/branches/1.0/1.0
 		</developerConnection>
-		<url>http://code.google.com/p/yalamanchili/source/browse/</url>
+		<url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/branches/1.0/1.0</url>
 	</scm>
 	<dependencies>
 		<!-- hibernate libs req for hibernate session and naming statergy can be 
