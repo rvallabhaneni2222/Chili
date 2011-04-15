@@ -3,15 +3,15 @@
 	<groupId>info.yalamanchili.gwt</groupId>
 	<artifactId>yalamanchili-gwt</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0</version>
+	<version>1.1-SNAPSHOT</version>
 	<name>yalamanchili-gwt</name>
 	<url>http://code.google.com/p/yalamanchili</url>
 	<scm>
-		<connection>scm:svn:http://yalamanchili.googlecode.com/svn/yalamanchili/componenets/tags/yalamanchili-gwt-1.0
+		<connection>scm:svn:http://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/yalamanchili-gwt
 		</connection>
-		<developerConnection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/tags/yalamanchili-gwt-1.0
+		<developerConnection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/yalamanchili-gwt
 		</developerConnection>
-		<url>http://code.google.com/p/yalamanchili/source/browse/tags/yalamanchili-gwt-1.0</url>
+		<url>http://code.google.com/p/yalamanchili/source/browse/</url>
 	</scm>
 	<build>
 		<resources>
