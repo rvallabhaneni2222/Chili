@@ -11,7 +11,7 @@ public class GwtServiceImplTest {
 
 	@Before
 	public void init() {
-		service = new GWTServiceImpl();
+
 	}
 
 	@Test
