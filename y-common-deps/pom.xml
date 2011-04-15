@@ -7,11 +7,11 @@
 	<name>y-common-deps</name>
 	<url>http://yalamanchili.googlecode.com/</url>
 	<scm>
-		<connection>scm:svn:http://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/y-common-deps
+		<connection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/branches/1.0/y-common-deps
 		</connection>
-		<developerConnection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/y-common-deps
+		<developerConnection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/branches/1.0/y-common-deps
 		</developerConnection>
-		<url>http://code.google.com/p/yalamanchili/source/browse/</url>
+		<url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/branches/1.0/y-common-deps</url>
 	</scm>
 	<dependencies>
 		<!-- hibernate libs req for hibernate session and naming statergy can be 
