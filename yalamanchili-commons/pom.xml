@@ -3,15 +3,15 @@
 	<groupId>info.yalamanchili.commons</groupId>
 	<artifactId>yalamanchili-commons</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0</version>
+	<version>1.1-SNAPSHOT</version>
 	<name>yalamanchili-commons</name>
 	<url>http://code.google.com/p/yalamanchili</url>
 	<scm>
-		<connection>scm:svn:http://yalamanchili.googlecode.com/svn/yalamanchili/componenets/tags/yalamanchili-commons-1.0
+		<connection>scm:svn:http://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/yalamanchili-commons
 		</connection>
-		<developerConnection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/tags/yalamanchili-commons-1.0
+		<developerConnection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/yalamanchili-commons
 		</developerConnection>
-		<url>http://code.google.com/p/yalamanchili/source/browse/tags/yalamanchili-commons-1.0</url>
+		<url>http://code.google.com/p/yalamanchili/source/browse/</url>
 	</scm>
 	<dependencies>
 		<dependency>
