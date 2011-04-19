@@ -3,13 +3,13 @@
 	<parent>
 		<groupId>${$groupID}</groupId>
 		<artifactId>${$projectName}-master</artifactId>
-		<version>${$version}</version>
+		<version>${'${'}${$projectName}${'.version}'}</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>${$groupID}</groupId>
 	<artifactId>${$projectName}-jpa</artifactId>
 	<name>${$projectName}-jpa</name>
-	<version>${$version}</version>
+	<version>${'${'}${$projectName}${'.version}'}</version>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 	</dependencies>

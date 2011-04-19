@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>${$groupID}</groupId>
 	<artifactId>${$projectName}-test</artifactId>
-	<version>${$version}</version>
+	<version>${'{'}${$projectName}${'.version}'}</version>
 	<packaging>jar</packaging>
 	<name>${$projectName}-test</name>
 	<url>http://maven.apache.org</url>
@@ -11,18 +11,18 @@
 		<dependency>
 			<groupId>info.yalamanchili.project</groupId>
 			<artifactId>${$projectName}-jpa</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${'{'}${$projectName}${'.version}'}</version>
 		</dependency>
 		<dependency>
 			<groupId>info.yalamanchili</groupId>
-			<artifactId>yalamanchili-embedded-jboss
+			<artifactId>y-common-deps
 			</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${'${yalamanchili.version}'}</version>
 		</dependency>
 		<dependency>
 			<groupId>info.yalamanchili.qa</groupId>
 			<artifactId>yalamanchili-qa</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${'${yalamanchili.version}'}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -82,4 +82,8 @@
 			<url> http://yalamanchili.googlecode.com/svn/maven2  </url>
 		</repository>
 	</repositories>
+	<properties>
+		<${$projectName}.version>${$version}</${$projectName}.version>
+		<yalamanchili.version>${$yalamanchili-version}</yalamanchili.version>
+	</properties>	
 </project>

@@ -4,7 +4,7 @@
     <groupId>${$groupID}</groupId>
 	<artifactId>${$projectName}-android</artifactId>
 	<packaging>apk</packaging>
-	<version>${$version}</version>
+	<version>${'{'}${$projectName}${'.version}'}</version>
 	<name>${$projectName}-android</name>
 
     <dependencies>
@@ -17,7 +17,7 @@
         <dependency>
 			<groupId>yalamanchili</groupId>
 			<artifactId>y-common-deps</artifactId>
-			<version>${$y-commom-deps-version}</version>
+			<version>${'${yalamanchili.version}'}</version>
 			<type>pom</type>
 			<scope>provided</scope>
 		</dependency>
@@ -37,12 +37,12 @@
 			<groupId>info.yalamanchili.android</groupId>
 			<artifactId>yalamanchili-android
 			</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${'${yalamanchili.version}'}</version>
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-jpa</artifactId>
-			<version>${$version}</version>
+			<version>${'{'}${$projectName}${'.version}'}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>info.yalamanchili.gwt</groupId>
@@ -152,5 +152,9 @@
 			<url>
 				http://repository.jboss.com/maven2/ </url>
 		</repository>
-	</repositories>
+	</repositories>	
+	<properties>
+		<${$projectName}.version>${$version}</${$projectName}.version>
+		<yalamanchili.version>${$yalamanchili-version}</yalamanchili.version>
+	</properties>	
 </project>

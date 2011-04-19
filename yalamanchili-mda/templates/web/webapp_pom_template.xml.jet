@@ -4,7 +4,7 @@
 	<groupId>${$groupID}</groupId>
 	<artifactId>${$projectName}-webapp</artifactId>
 	<packaging>war</packaging>
-	<version>${$version}</version>
+	<version>${'{'}${$projectName}${'.version}'}</version>
 	<name>${$projectName}-webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-jpa</artifactId>
-			<version>${$version}</version>
+			<version>${'{'}${$projectName}${'.version}'}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -41,14 +41,14 @@
 		<dependency>
 			<groupId>yalamanchili</groupId>
 			<artifactId>y-common-deps</artifactId>
-			<version>${$y-commom-deps-version}</version>
+			<version>${'${yalamanchili.version}'}</version>
 			<type>pom</type>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>info.yalamanchili.security</groupId>
 			<artifactId>yalamanchili-security</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${'${yalamanchili.version}'}</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- needed for gwt hosted mode START -->
@@ -144,6 +144,8 @@
 		</repository>
 	</repositories>
 	<properties>
+		<${$projectName}.version>${$version}</${$projectName}.version>
+		<yalamanchili.version>${$yalamanchili-version}</yalamanchili.version>	
 		<gwtVersion>${$gwt-version}</gwtVersion>
 	</properties>
 </project>

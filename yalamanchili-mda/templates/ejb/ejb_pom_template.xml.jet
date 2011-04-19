@@ -3,13 +3,13 @@
 	<parent>
 		<groupId>${$groupID}</groupId>
 		<artifactId>${$projectName}-master</artifactId>
-		<version>${$version}</version>
+		<version>${'${'}${$projectName}${'.version}'}</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>${$groupID}</groupId>
 	<artifactId>${$projectName}-ejb</artifactId>
 	<packaging>jar</packaging>
-	<version>${$version}</version>
+	<version>${'${'}${$projectName}${'.version}'}</version>
 	<name>${$projectName}-ejb</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-jpa</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${'${'}${$projectName}${'.version}'}</version>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
