@@ -161,8 +161,8 @@
 	<properties>
 		<jboss.javaee.version>1.0.0.CR1</jboss.javaee.version>
 		<hibernate.validator.version>4.0.2.GA</hibernate.validator.version>
-		<yalamanchili.version>1.0-SNAPSHOT</yalamanchili.version>
-		<seam.version>2.2.1.CR2</seam.version>
+		<yalamanchili.version>1.1-SNAPSHOT</yalamanchili.version>
+		<seam.version>2.2.1.Final</seam.version>
 		<hibernate.search.version>3.3.0.Final</hibernate.search.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
