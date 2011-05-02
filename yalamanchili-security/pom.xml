@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>yalamanchili</groupId>
 			<artifactId>y-common-deps</artifactId>
-			<version>1.0</version>
+			<version>1.1-SNAPSHOT</version>
 			<type>pom</type>
 		</dependency>
 		<dependency>
@@ -35,13 +35,13 @@
 		<dependency>
 			<groupId>info.yalamanchili.gwt</groupId>
 			<artifactId>yalamanchili-gwt</artifactId>
-			<version>1.0</version>
+			<version>1.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>info.yalamanchili.commons</groupId>
 			<artifactId>yalamanchili-commons</artifactId>
-			<version>1.0</version>
+			<version>1.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
