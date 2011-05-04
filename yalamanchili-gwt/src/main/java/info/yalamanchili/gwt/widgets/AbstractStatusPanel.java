@@ -19,6 +19,7 @@ public abstract class AbstractStatusPanel extends ALComposite implements
 
 	protected FlexTable statusBar = new FlexTable();
 	protected Label userLink = new Label("Welcome Guest");
+	// TODO use cleint bundle? and ui binder
 	Image logo = new Image("images/logo.gif");
 
 	protected ClickableLink loginLink = new ClickableLink("login");
@@ -48,10 +49,14 @@ public abstract class AbstractStatusPanel extends ALComposite implements
 		statusBar.setStyleName("y-gwt-AbstracttatusPanel");
 		logo.setStyleName("y-gwt-AbstractStatusPanel-LogoImage");
 		statusBar.getFlexCellFormatter().setRowSpan(0, 0, 2);
-		statusBar.getCellFormatter().addStyleName(1, 3, "y-gwt-AbstractStatusPanel-UserLink");
-		statusBar.getCellFormatter().addStyleName(1, 2, "y-gwt-AbstractStatusPanel-LoginLink");
-		statusBar.getCellFormatter().addStyleName(0, 0, "y-gwt-AbstractStatusPanel-LogoLink");
-		statusBar.getCellFormatter().addStyleName(1, 1, "y-gwt-AbstractStatusPanel-CreateUserLink");
+		statusBar.getCellFormatter().addStyleName(1, 3,
+				"y-gwt-AbstractStatusPanel-UserLink");
+		statusBar.getCellFormatter().addStyleName(1, 2,
+				"y-gwt-AbstractStatusPanel-LoginLink");
+		statusBar.getCellFormatter().addStyleName(0, 0,
+				"y-gwt-AbstractStatusPanel-LogoLink");
+		statusBar.getCellFormatter().addStyleName(1, 1,
+				"y-gwt-AbstractStatusPanel-CreateUserLink");
 
 		statusBar.getCellFormatter().setHorizontalAlignment(0, 3,
 				HasHorizontalAlignment.ALIGN_RIGHT);
