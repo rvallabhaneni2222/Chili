@@ -28,6 +28,7 @@ import org.hibernate.search.FullTextQuery;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.remoting.WebRemote;
@@ -52,7 +53,7 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 	@In(create = true)
 	protected EntityManager yem;
 
-	/* FOR APP LOGIN */
+	/* Generic APP LOGIN Module */
 	@Override
 	@WebRemote
 	public void createUser(YUser user, Set<String> roles) {
@@ -105,7 +106,8 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 		}
 	}
 
-	/* security YUSER */
+	/* Generic APP LOGIN Module */
+	/* helpers for security entity YUSER */
 
 	@Override
 	@WebRemote
@@ -224,7 +226,8 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 		return (Long) getEntitiesSize.getSingleResult();
 	}
 
-	/* security YROLE */
+	/* helpers for security entity YUSER */
+	/* helpers for security entity YROLE */
 
 	@Override
 	@WebRemote
@@ -413,4 +416,15 @@ public class AdminServiceImpl extends GileadService implements AdminService {
 		}
 	}
 
+	/* helpers for security entity YROLE */
+	/* Observers for Login events, extend these when necessary */
+	//@Observer("org.jboss.seam.security.loginSuccessful")
+	public void loginSuccessFull() {
+		System.out.println("org.jboss.seam.security.loginSuccessful");
+	}
+
+	//@Observer("org.jboss.seam.security.loginFailed")
+	public void loginFailed() {
+		System.out.println("rg.jboss.seam.security.loginFailed");
+	}
 }
