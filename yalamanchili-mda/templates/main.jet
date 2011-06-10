@@ -5,29 +5,29 @@
 <%--Set Global varibles like projectId,groupId,version...--%>
 <%--project properties--%>
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
-<c:setVariable select="'com.automanage.catalog'" var="groupID"/>
-<c:setVariable select="'com/automanage/catalog'" var="groupIDWithFolder"/>
-<c:setVariable select="'com_automanage_catalog'" var="groupIDWithUnderScore"/>
+<c:setVariable select="'com.dante.office'" var="groupID"/>
+<c:setVariable select="'com/dante/office'" var="groupIDWithFolder"/>
+<c:setVariable select="'com_dante_office'" var="groupIDWithUnderScore"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
-<c:setVariable select="'C:/codebase/automanage/trunk'" var="location"/>
+<c:setVariable select="'C:/codebase/dante-office/trunk/office-master'" var="location"/>
 <%--features--%>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <c:setVariable select="'FALSE'" var="supportJAXB"/>
 <%--code generation properties--%>
 <c:setVariable select="'FALSE'" var="genMaster"/>
 <c:setVariable select="'FALSE'" var="genApp"/>
-<c:setVariable select="'FALSE'" var="genJPA"/>
+<c:setVariable select="'TRUE'" var="genJPA"/>
 <c:setVariable select="'FALSE'" var="genEJB"/>
 <c:setVariable select="'FALSE'" var="genRest"/>
-<c:setVariable select="'TRUE'" var="genWebapp"/>
+<c:setVariable select="'FALSE'" var="genWebapp"/>
 <c:setVariable select="'FALSE'" var="genAndroid"/>
 <c:setVariable select="'FALSE'" var="genIOS"/>
 <c:setVariable select="'FALSE'" var="genTest"/>
 <c:setVariable select="'FALSE'" var="genPOMS"/>
 <%--versions --%>
-<c:setVariable select="'1.0'" var="yalamanchili-version"/>
+<c:setVariable select="'1.1-SNAPSHOT'" var="yalamanchili-version"/>
 <c:setVariable select="'2.1.0'" var="gwt-version"/>
-<c:setVariable select="'2.2.1.CR2'" var="seam-version"/>
+<c:setVariable select="'2.2.1.Final'" var="seam-version"/>
 <%-- TODO removed use yalamanchili.version instead else override--%>
 <c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-embedded-jboss-version"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="y-commom-deps-version"/>
