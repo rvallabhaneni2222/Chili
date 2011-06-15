@@ -5,6 +5,10 @@ import info.yalamanchili.http.SyncHttp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +25,20 @@ import org.apache.http.protocol.HTTP;
 
 public class GoogleService {
 	public static final String GOOGLE_LOGIN_URI = "https://www.google.com/accounts/ClientLogin";
-	public static final String GOOGLE_C2DM_SEND_URI = "https://android.apis.google.com/c2dm/send";
+	public static final String GOOGLE_C2DM_SEND_URI = "http://android.apis.google.com/c2dm/send";
+
+	private static final String AUTH_KEY = "DQAAALAAAACzAaxF1y0oguyfPzGiO4iVmbXannLlvhN2Dx-sN4QB6Flv8v6HSd5h4nC3ksTu1EShFbw2TMlNO6R1wqqRd7G3kI3xyCiyz5SpSVo1aEtckHHXPClFcksV9OU4mOJ8Z3LGDl6GAtt3gDAaQA7V1Q5GaEf9g0l_oIU2s-lHawCPjLJYv0FXGw8bc4YvDoV7MJJPoygXYxMGl5YD7qFN0ritbuvNExyRZzsDANxAnz72kw";
+
+	public static final String PARAM_REGISTRATION_ID = "registration_id";
+
+	public static final String PARAM_DELAY_WHILE_IDLE = "delay_while_idle";
+
+	public static final String PARAM_COLLAPSE_KEY = "collapse_key";
+
+	private static final String UTF8 = "UTF-8";
+
+	// Registration is currently hardcoded
+	private final static String YOUR_REGISTRATION_STRING = "APA91bFZZXc5Iakv8hk2pH41hhVdzrpuVlJqaDXbKwqozC0u7ZkhfR5vrakMKpKmKgAA4kqxxWIrtKfH5IiR2ChFuqUl0kcNjps5LGMImjRheMSmu93LffY";
 
 	public static String login(String email, String password,
 			String accountType, String service, String source,
@@ -60,6 +77,40 @@ public class GoogleService {
 	public static String getAuthToken(String str) {
 		int start = str.indexOf("Auth=");
 		return str.substring(start + 5);
+	}
+
+	public static void sendTest() throws Exception {
+		StringBuilder postDataBuilder = new StringBuilder();
+		postDataBuilder.append(PARAM_REGISTRATION_ID).append("=")
+				.append(YOUR_REGISTRATION_STRING);
+		postDataBuilder.append("&").append(PARAM_COLLAPSE_KEY).append("=")
+				.append("0");
+
+		postDataBuilder.append("&").append("data.payload").append("=")
+				.append(URLEncoder.encode("Lars war hier", UTF8));
+
+		byte[] postData = postDataBuilder.toString().getBytes(UTF8);
+
+		// Hit the dm URL.
+
+		URL url = new URL(GOOGLE_C2DM_SEND_URI);
+
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setDoOutput(true);
+		conn.setUseCaches(false);
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("Content-Type",
+				"application/x-www-form-urlencoded;charset=UTF-8");
+		conn.setRequestProperty("Content-Length",
+				Integer.toString(postData.length));
+		conn.setRequestProperty("Authorization", "GoogleLogin auth=" + AUTH_KEY);
+
+		OutputStream out = conn.getOutputStream();
+		out.write(postData);
+		out.close();
+
+		System.out.println(conn.getResponseCode());
+
 	}
 
 	public static String httpPost(String uri, String contentType,
