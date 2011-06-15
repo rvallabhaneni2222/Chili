@@ -64,8 +64,9 @@ public class SyncHttp {
 		}
 		try {
 			UrlEncodedFormEntity e = new UrlEncodedFormEntity(nvps, HTTP.UTF_8);
-			System.out.println(new BufferedReader(new InputStreamReader(e
-					.getContent())).readLine());
+			System.out.println("http post body:"
+					+ new BufferedReader(new InputStreamReader(e.getContent()))
+							.readLine());
 			post.setEntity(e);
 			response = HttpHelper.getHttpClient().execute(post);
 		} catch (Exception e) {
