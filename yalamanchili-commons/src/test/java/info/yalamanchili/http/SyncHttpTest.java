@@ -1,7 +1,5 @@
 package info.yalamanchili.http;
 
-import info.yalamanchili.commons.GoogleService;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,11 +23,4 @@ public class SyncHttpTest {
 		System.out.println(res);
 	}
 
-	@Test
-	public void testGoogleLogin() {
-		String res = GoogleService.login("dummy1833@gmail.com",
-				"dummypassowrd", "GOOGLE", "ac2dm",
-				"com.dante.catalog.android", null, null);
-		System.out.println(res);
-	}
 }

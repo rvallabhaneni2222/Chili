@@ -1,4 +1,4 @@
-package info.yalamanchili.commons;
+package info.yalamanchili.google;
 
 import info.yalamanchili.http.SyncHttp;
 
@@ -14,7 +14,7 @@ public class GoogleService {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("accountType", accountType);
 		params.put("Email", email);
-		params.put("Passwd	", password);
+		params.put("Passwd", password);
 		params.put("service", service);
 		params.put("source", source);
 		if (logintoken != null)
@@ -24,4 +24,5 @@ public class GoogleService {
 		return SyncHttp.httpPost(GOOGLE_LOGIN_URI,
 				"application/x-www-form-urlencoded", params);
 	}
+
 }

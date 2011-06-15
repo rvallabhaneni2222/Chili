@@ -1,6 +1,8 @@
 package info.yalamanchili.http;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +63,10 @@ public class SyncHttp {
 			nvps.add(new BasicNameValuePair(key, params.get(key)));
 		}
 		try {
-			post.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+			UrlEncodedFormEntity e = new UrlEncodedFormEntity(nvps, HTTP.UTF_8);
+			System.out.println(new BufferedReader(new InputStreamReader(e
+					.getContent())).readLine());
+			post.setEntity(e);
 			response = HttpHelper.getHttpClient().execute(post);
 		} catch (Exception e) {
 			throw new RuntimeException("Http Post called failed for uri:" + uri
