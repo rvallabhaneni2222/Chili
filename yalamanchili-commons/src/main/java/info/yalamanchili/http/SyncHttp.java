@@ -46,9 +46,9 @@ public class SyncHttp {
 			throw new RuntimeException("Http Put called failed for uri:"
 					+ params[0] + e);
 		}
-		if (response != null)
+		if (response != null) {
 			return HttpHelper.request(response);
-		else
+		} else
 			return null;
 	}
 
@@ -68,7 +68,6 @@ public class SyncHttp {
 					+ e);
 		}
 		if (response != null) {
-			System.out.println(HttpHelper.request(response));
 			return HttpHelper.request(response);
 		} else
 			return null;

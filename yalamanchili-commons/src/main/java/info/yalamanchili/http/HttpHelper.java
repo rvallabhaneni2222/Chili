@@ -10,11 +10,8 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import com.thoughtworks.xstream.XStream;
-
 public class HttpHelper {
 	protected static DefaultHttpClient httpclient;
-	public static XStream xstream = new XStream();
 
 	public static DefaultHttpClient getHttpClient() {
 		if (httpclient == null) {
@@ -37,7 +34,8 @@ public class HttpHelper {
 		BufferedReader reader = null;
 		InputStream in = null;
 		/* http response success */
-		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 300) {
+		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 300
+				|| status.getStatusCode() == 403) {
 
 			try {
 				in = response.getEntity().getContent();
@@ -47,6 +45,7 @@ public class HttpHelper {
 				while ((line = reader.readLine()) != null) {
 					str.append(line + "\n");
 				}
+				reader.close();
 				in.close();
 				result = str.toString();
 			} catch (Exception e) {
