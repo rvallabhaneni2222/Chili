@@ -34,8 +34,7 @@ public class HttpHelper {
 		BufferedReader reader = null;
 		InputStream in = null;
 		/* http response success */
-		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 300
-				|| status.getStatusCode() == 403) {
+		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 300) {
 
 			try {
 				in = response.getEntity().getContent();
