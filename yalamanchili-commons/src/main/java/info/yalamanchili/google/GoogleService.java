@@ -48,8 +48,8 @@ public class GoogleService {
 		return str.substring(start + 5);
 	}
 
-	public static void sendTest(String message, String authKey, String regId,
-			String collapseKey) throws Exception {
+	public static String sendC2DMMessage(String message, String authKey,
+			String regId, String collapseKey) throws Exception {
 		StringBuilder postDataBuilder = new StringBuilder();
 		postDataBuilder.append(PARAM_REGISTRATION_ID).append("=").append(regId);
 		postDataBuilder.append("&").append(PARAM_COLLAPSE_KEY).append("=")
@@ -59,7 +59,6 @@ public class GoogleService {
 				.append(URLEncoder.encode(message, UTF8));
 
 		byte[] postData = postDataBuilder.toString().getBytes(UTF8);
-
 
 		URL url = new URL(GOOGLE_C2DM_SEND_URI);
 
@@ -71,7 +70,8 @@ public class GoogleService {
 				"application/x-www-form-urlencoded;charset=UTF-8");
 		conn.setRequestProperty("Content-Length",
 				Integer.toString(postData.length));
-		conn.setRequestProperty("Authorization", "GoogleLogin auth=" + authKey);
+		conn.setRequestProperty("Authorization",
+				"GoogleLogin auth=" + authKey.trim());
 
 		OutputStream out = conn.getOutputStream();
 		out.write(postData);
@@ -94,6 +94,7 @@ public class GoogleService {
 		if (!responseLine.contains("id=")) {
 			throw new RuntimeException("Error sending message");
 		}
+		return responseLine.substring(responseLine.indexOf("id=") + 3);
 	}
 
 }
