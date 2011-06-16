@@ -21,15 +21,19 @@ public class GoogleServiceTest {
 	@Test
 	public void testC2DMSend() {
 		try {
-			GoogleService.sendTest();
+			String authKey = GoogleService.login(SENDER_EMAIL, PASSWORD,
+					ACCOUNT_TYPE, SERVICE, SOURCE_ID, null, null);
+			GoogleService.sendTest("test message", authKey.trim(),
+					DEVICE_REG_ID, "q3");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		String auth = GoogleService.login(SENDER_EMAIL, PASSWORD, ACCOUNT_TYPE,
-//				SERVICE, SOURCE_ID, null, null);
-//		String res = GoogleService.sendC2DMMessage(DEVICE_REG_ID, "q22",
-//				"testmsg", "1", auth);
-//		System.out.println(res);
+		// String auth = GoogleService.login(SENDER_EMAIL, PASSWORD,
+		// ACCOUNT_TYPE,
+		// SERVICE, SOURCE_ID, null, null);
+		// String res = GoogleService.sendC2DMMessage(DEVICE_REG_ID, "q22",
+		// "testmsg", "1", auth);
+		// System.out.println(res);
 	}
 }
