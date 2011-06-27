@@ -1,5 +1,7 @@
 package info.yalamanchili.android.http;
 
+import info.yalamanchili.http.HttpHelper;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.HttpPut;
@@ -28,18 +30,22 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 	}
 
 	@Override
-	protected String doInBackground(String... arg0) {
+	protected String doInBackground(String... params) {
 		String result = "";
-		Log.d("debug", "HttpPutURI:" + arg0[0]);
+		Log.d("debug", "HttpPutURI:" + params[0]);
 		try {
-			HttpPut put = new HttpPut(arg0[0]);
-			put.setEntity(new StringEntity(arg0[1]));
-			put.setHeader("Content-Type", "application/xml");
+			HttpPut put = new HttpPut(params[0]);
+			put.setEntity(new StringEntity(params[1]));
+			if (params[2] == null) {
+				put.setHeader("Content-Type", "application/xml");
+			} else {
+				put.setHeader("Content-Type", params[2]);
+			}
 			response = httpclient.execute(put);
-			result = HttpHelper.request(response);
+			result = HttpHelper.convertResponse(response);
 		} catch (Exception e) {
 			throw new RuntimeException("Http Put called failed for uri:"
-					+ arg0[0] + e);
+					+ params[0] + e);
 		}
 		return result;
 	}
