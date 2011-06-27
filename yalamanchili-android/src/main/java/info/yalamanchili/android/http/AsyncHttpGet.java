@@ -20,14 +20,14 @@ public abstract class AsyncHttpGet extends AsyncTask<String, Integer, String> {
 	protected ProgressDialog dialog;
 
 	public AsyncHttpGet(Activity activity) {
-		dialog = new ProgressDialog(activity);
+		//dialog = new ProgressDialog(activity);
 		httpclient = HttpHelper.getHttpClient();
 	}
 
 	@Override
 	protected void onPreExecute() {
-		dialog.setMessage("Loading...");
-		dialog.show();
+		//dialog.setMessage("Loading...");
+		//dialog.show();
 	}
 
 	/** do stuff in different thread */
@@ -51,7 +51,7 @@ public abstract class AsyncHttpGet extends AsyncTask<String, Integer, String> {
 
 	@Override
 	protected void onPostExecute(String result) {
-		dialog.dismiss();
+	//	dialog.dismiss();
 		StatusLine status = response.getStatusLine();
 		Log.d("debug", "HttpGet Response code" + status.getStatusCode());
 		/* http response success */
