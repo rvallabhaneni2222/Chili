@@ -2,8 +2,8 @@ package info.yalamanchili.commons;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import info.yalamanchili.commons.entity.TestEntity;
-import info.yalamanchili.commons.entity.TestEntityChildTwo;
+import info.yalamanchili.commons.entity.Entity;
+import info.yalamanchili.commons.entity.EntityChildTwo;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -26,7 +26,7 @@ public class ReflectionUtilsTest {
 
 	@Test
 	public void testToString() {
-		TestEntity entity = new TestEntity();
+		Entity entity = new Entity();
 		entity.setIntegerField(new Integer(10));
 		entity.setStringField("test");
 		entity.setLongField(new Long(10));
@@ -47,23 +47,23 @@ public class ReflectionUtilsTest {
 		Field longField = null;
 		Field dateField = null;
 		try {
-			integerField = TestEntity.class.getDeclaredField("integerField");
-			StringField = TestEntity.class.getDeclaredField("stringField");
-			floatField = TestEntity.class.getDeclaredField("floatField");
-			longField = TestEntity.class.getDeclaredField("longField");
-			dateField = TestEntity.class.getDeclaredField("dateField");
+			integerField = Entity.class.getDeclaredField("integerField");
+			StringField = Entity.class.getDeclaredField("stringField");
+			floatField = Entity.class.getDeclaredField("floatField");
+			longField = Entity.class.getDeclaredField("longField");
+			dateField = Entity.class.getDeclaredField("dateField");
 		} catch (Exception e) {
 			fail("cannot find one or more field in the object specified");
 		}
 		Method integerMethod = ReflectionUtils.getGetterMethod(integerField,
-				TestEntity.class);
+				Entity.class);
 		assertTrue(integerMethod.getReturnType()
 				.isAssignableFrom(Integer.class));
 	}
 
 	@Test
 	public void testCallGetterMethod() {
-		TestEntity entity = new TestEntity();
+		Entity entity = new Entity();
 		entity.setIntegerField(new Integer(10));
 		entity.setStringField("test");
 		entity.setLongField(new Long(10));
@@ -107,23 +107,23 @@ public class ReflectionUtilsTest {
 		Field longField = null;
 		Field dateField = null;
 		try {
-			integerField = TestEntity.class.getDeclaredField("integerField");
-			StringField = TestEntity.class.getDeclaredField("stringField");
-			floatField = TestEntity.class.getDeclaredField("floatField");
-			longField = TestEntity.class.getDeclaredField("longField");
-			dateField = TestEntity.class.getDeclaredField("dateField");
+			integerField = Entity.class.getDeclaredField("integerField");
+			StringField = Entity.class.getDeclaredField("stringField");
+			floatField = Entity.class.getDeclaredField("floatField");
+			longField = Entity.class.getDeclaredField("longField");
+			dateField = Entity.class.getDeclaredField("dateField");
 		} catch (Exception e) {
 			fail("cannot find one or more field in the object specified");
 		}
 		Method integerMethod = ReflectionUtils.getSetterMethod(integerField,
-				TestEntity.class);
+				Entity.class);
 		assertTrue(integerMethod.getParameterTypes()[0]
 				.isAssignableFrom(Integer.class));
 	}
 
 	@Test
 	public void testCallSetterMethod() {
-		TestEntity entity = new TestEntity();
+		Entity entity = new Entity();
 		Field integerField = null;
 		Field StringField = null;
 		Field floatField = null;
@@ -154,12 +154,12 @@ public class ReflectionUtilsTest {
 
 	@Test
 	public void testGetAllFields() {
-		ReflectionUtils.getAllFields(TestEntity.class);
+		ReflectionUtils.getAllFields(Entity.class);
 	}
 
 	@Test
 	public void testGetBeanProperties() {
-		for (String a : ReflectionUtils.getBeanProperties(TestEntity.class,
+		for (String a : ReflectionUtils.getBeanProperties(Entity.class,
 				DataType.STRING)) {
 			System.out.println(a);
 		}
@@ -169,7 +169,7 @@ public class ReflectionUtilsTest {
 	public void testCallSetterGetter() {
 		Class clazz;
 		try {
-			clazz = Class.forName(TestEntityChildTwo.class.getName());
+			clazz = Class.forName(EntityChildTwo.class.getName());
 			Object instance = clazz.newInstance();
 			ReflectionUtils.callSetter(instance, "childTwoName", "testname");
 			System.out.println(ReflectionUtils.callGetter(instance, "childTwoName"));

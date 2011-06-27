@@ -2,13 +2,13 @@ package info.yalamanchili.commons.entity;
 
 import java.util.Date;
 
-public class TestEntityChildOne {
+public class EntityChildOne {
 	protected Long id;
 	protected String childOneName;
 	protected Date childDate;
-	protected TestEntityChildOne childOne;
+	protected EntityChildOne childOne;
 
-	public TestEntityChildOne() {
+	public EntityChildOne() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -37,11 +37,11 @@ public class TestEntityChildOne {
 		this.childDate = childDate;
 	}
 
-	public TestEntityChildOne getChildOne() {
+	public EntityChildOne getChildOne() {
 		return childOne;
 	}
 
-	public void setChildOne(TestEntityChildOne childOne) {
+	public void setChildOne(EntityChildOne childOne) {
 		this.childOne = childOne;
 	}
 

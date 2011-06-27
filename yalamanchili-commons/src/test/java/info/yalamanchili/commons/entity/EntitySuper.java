@@ -2,10 +2,10 @@ package info.yalamanchili.commons.entity;
 
 import java.util.List;
 
-public class TestEntitySuper {
+public class EntitySuper {
 	protected String superString;
 	protected Integer superint;
-	protected List<TestEntityChildOne> childrenOne;
+	protected List<EntityChildOne> childrenOne;
 	
 	public String getSuperString() {
 		return superString;
@@ -19,10 +19,10 @@ public class TestEntitySuper {
 	public void setSuperint(Integer superint) {
 		this.superint = superint;
 	}
-	public List<TestEntityChildOne> getChildrenOne() {
+	public List<EntityChildOne> getChildrenOne() {
 		return childrenOne;
 	}
-	public void setChildrenOne(List<TestEntityChildOne> childrenOne) {
+	public void setChildrenOne(List<EntityChildOne> childrenOne) {
 		this.childrenOne = childrenOne;
 	}
 

@@ -1,24 +1,32 @@
 package info.yalamanchili.google;
 
+import static org.junit.Assert.fail;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class GoogleServiceTest {
-
+	/** reg id of the device registered with C2DM received as part of reg process*/
 	private static final String DEVICE_REG_ID = "APA91bE2msaGs4PKafzm123wD3jhP0oVyeodpsYnqmDSVJPgsKIoA5kE8ZzS3KKClTCcKZjqAW79aA-nPAsi7eZs3cuDF5Er1pr8B0U5eWsMiU6TJgfGsvw";
-	private static final String SENDER_EMAIL = "dummy1833@gmail.com";
-	private static final String PASSWORD = "dummypassword";
+	// ** email registered with C2DM service*/
+	private static final String SENDER_EMAIL = "******";
+	private static final String PASSWORD = "*********";
 	private static final String SERVICE = "ac2dm";
 	private static final String ACCOUNT_TYPE = "HOSTED_OR_GOOGLE";
 	private static final String SOURCE_ID = "com.dante.catalog.android-1.0";
 
-	// @Test
+	/** run on demand */
+	@Test
+	@Ignore
 	public void testGoogleLogin() {
 		String res = GoogleService.login(SENDER_EMAIL, PASSWORD, ACCOUNT_TYPE,
 				SERVICE, SOURCE_ID, null, null);
 		System.out.println(res);
 	}
 
+	/** run on demand */
 	@Test
+	@Ignore
 	public void testC2DMSend() {
 		try {
 			String authKey = GoogleService.login(SENDER_EMAIL, PASSWORD,
@@ -26,14 +34,7 @@ public class GoogleServiceTest {
 			GoogleService.sendC2DMMessage("test message", authKey.trim(),
 					DEVICE_REG_ID, "q3");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
-		// String auth = GoogleService.login(SENDER_EMAIL, PASSWORD,
-		// ACCOUNT_TYPE,
-		// SERVICE, SOURCE_ID, null, null);
-		// String res = GoogleService.sendC2DMMessage(DEVICE_REG_ID, "q22",
-		// "testmsg", "1", auth);
-		// System.out.println(res);
 	}
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import org.jboss.seam.annotations.Name;
 @Name("fileUploadServlet")
 // @WebServlet(urlPatterns = { "/y.file.upload" })
 // TODO fix 404 error pointing to locahost//y.file.upload
+//try @WebServlet(name = "TestServlet", urlPatterns = { "/com.dante.office.office/test" })
 public class FileUploadServlet extends HttpServlet {
 	private static final Log log = LogFactory.getLog(FileUploadServlet.class);
 	private String fileTargetDirectory;

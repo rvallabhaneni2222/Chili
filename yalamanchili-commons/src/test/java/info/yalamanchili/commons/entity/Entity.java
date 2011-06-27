@@ -1,19 +1,18 @@
 package info.yalamanchili.commons.entity;
 
-import info.yalamanchili.commons.TestEnum;
 
 import java.util.Date;
 import java.util.Set;
 
-public class TestEntity extends TestEntitySuper {
+public class Entity extends EntitySuper {
 	protected Long longField;
 	protected String stringField;
 	protected Date dateField;
 	protected Integer integerField;
 	protected Float floatField;
 	protected Boolean booleanField;
-	protected Set<TestEntityChildTwo> childrenTwo;
-	protected TestEnum testenum;
+	protected Set<EntityChildTwo> childrenTwo;
+	protected DummyEnum testenum;
 
 	public Long getLongField() {
 		return longField;
@@ -63,19 +62,19 @@ public class TestEntity extends TestEntitySuper {
 		this.booleanField = booleanField;
 	}
 
-	public Set<TestEntityChildTwo> getChildrenTwo() {
+	public Set<EntityChildTwo> getChildrenTwo() {
 		return childrenTwo;
 	}
 
-	public void setChildrenTwo(Set<TestEntityChildTwo> childrenTwo) {
+	public void setChildrenTwo(Set<EntityChildTwo> childrenTwo) {
 		this.childrenTwo = childrenTwo;
 	}
 
-	public TestEnum getTestenum() {
+	public DummyEnum getTestenum() {
 		return testenum;
 	}
 
-	public void setTestenum(TestEnum testenum) {
+	public void setTestenum(DummyEnum testenum) {
 		this.testenum = testenum;
 	}
 

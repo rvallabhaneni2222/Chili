@@ -1,7 +1,7 @@
 package info.yalamanchili.mapper;
 
 import static org.junit.Assert.assertTrue;
-import info.yalamanchili.commons.entity.TestEntity;
+import info.yalamanchili.commons.entity.Entity;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -13,8 +13,8 @@ public class BeanMapperTest {
 
 	@Test
 	public void testMerge() {
-		TestEntity source = new TestEntity();
-		TestEntity target = new TestEntity();
+		Entity source = new Entity();
+		Entity target = new Entity();
 
 		source.setBooleanField(true);
 		source.setIntegerField(100);
@@ -29,7 +29,7 @@ public class BeanMapperTest {
 
 	@Test
 	public void testClone() {
-		TestEntity entity = new TestEntity();
+		Entity entity = new Entity();
 		entity.setStringField("test");
 		entity.setLongField(new Long(10));
 		entity.setIntegerField(10);
@@ -38,7 +38,7 @@ public class BeanMapperTest {
 		Calendar cal = Calendar.getInstance();
 		Date date = cal.getTime();
 		entity.setDateField(date);
-		TestEntity result = (TestEntity) mapper.clone(entity);
+		Entity result = (Entity) mapper.clone(entity);
 		assertTrue(result != null);
 		assertTrue(result.getIntegerField().equals(new Integer(10)));
 		assertTrue(result.getSuperint().equals(new Integer(10)));

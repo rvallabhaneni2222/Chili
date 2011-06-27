@@ -1,11 +1,11 @@
 package info.yalamanchili.commons.entity;
 
-public class TestEntityChildTwo {
+public class EntityChildTwo {
 	protected Long id;
 	protected String childTwoName;
-	protected TestEntityChildTwo childTwo;
+	protected EntityChildTwo childTwo;
 
-	public TestEntityChildTwo() {
+	public EntityChildTwo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -26,11 +26,11 @@ public class TestEntityChildTwo {
 		this.childTwoName = childTwoName;
 	}
 
-	public TestEntityChildTwo getChildTwo() {
+	public EntityChildTwo getChildTwo() {
 		return childTwo;
 	}
 
-	public void setChildTwo(TestEntityChildTwo childTwo) {
+	public void setChildTwo(EntityChildTwo childTwo) {
 		this.childTwo = childTwo;
 	}
 
