@@ -29,7 +29,7 @@ public class SyncHttp {
 					+ e);
 		}
 		if (response != null)
-			return HttpHelper.request(response);
+			return HttpHelper.convertResponse(response);
 		else
 			return null;
 	}
@@ -49,7 +49,7 @@ public class SyncHttp {
 					+ params[0] + e);
 		}
 		if (response != null) {
-			return HttpHelper.request(response);
+			return HttpHelper.convertResponse(response);
 		} else
 			return null;
 	}
@@ -74,7 +74,7 @@ public class SyncHttp {
 					+ e);
 		}
 		if (response != null) {
-			return HttpHelper.request(response);
+			return HttpHelper.convertResponse(response);
 		} else
 			return null;
 	}

@@ -28,7 +28,7 @@ public class HttpHelper {
 				new UsernamePasswordCredentials(username, password));
 	}
 
-	public static String request(HttpResponse response) {
+	public static String convertResponse(HttpResponse response) {
 		StatusLine status = response.getStatusLine();
 		String result = "";
 		BufferedReader reader = null;
