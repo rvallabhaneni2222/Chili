@@ -20,14 +20,14 @@ public abstract class AsyncHttpGet extends AsyncTask<String, Integer, String> {
 	protected ProgressDialog dialog;
 
 	public AsyncHttpGet(Activity activity) {
-		//dialog = new ProgressDialog(activity);
+		// dialog = new ProgressDialog(activity);
 		httpclient = HttpHelper.getHttpClient();
 	}
 
 	@Override
 	protected void onPreExecute() {
-		//dialog.setMessage("Loading...");
-		//dialog.show();
+		// dialog.setMessage("Loading...");
+		// dialog.show();
 	}
 
 	/** do stuff in different thread */
@@ -38,9 +38,12 @@ public abstract class AsyncHttpGet extends AsyncTask<String, Integer, String> {
 		this.publishProgress(0);
 		try {
 			response = httpclient.execute(new HttpGet(arg0[0]));
+			Log.d("qqqqq", response.toString());
 			result = HttpHelper.convertResponse(response);
+			Log.d("qqqqq", result);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException("Http get call failed for the uri"
+					+ arg0[0] + e);
 		}
 		return result;
 	}
@@ -51,7 +54,7 @@ public abstract class AsyncHttpGet extends AsyncTask<String, Integer, String> {
 
 	@Override
 	protected void onPostExecute(String result) {
-	//	dialog.dismiss();
+		// dialog.dismiss();
 		StatusLine status = response.getStatusLine();
 		Log.d("debug", "HttpGet Response code" + status.getStatusCode());
 		/* http response success */
