@@ -9,32 +9,31 @@
 	<groupId>${$groupID}</groupId>
 	<artifactId>${$projectName}-app</artifactId>
 	<packaging>ear</packaging>
-	<version>${'{'}${$projectName}${'.version}'}</version>
 	<name>${$projectName}-app</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-jpa</artifactId>
-			<version>${'{'}${$projectName}${'.version}'}</version>
+			<version>${'${'}${'pom.version}'}</version>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-webapp</artifactId>
-			<version>${'{'}${$projectName}${'.version}'}</version>
+			<version>${'${'}${'pom.version}'}</version>
 			<type>war</type>
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-rest</artifactId>
-			<version>${'{'}${$projectName}${'.version}'}</version>
+			<version>${'${'}${'pom.version}'}</version>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-ejb</artifactId>
-			<version>${'{'}${$projectName}${'.version}'}</version>
+			<version>${'${'}${'pom.version}'}</version>
 			<type>ejb</type>
 		</dependency>
 		<dependency>

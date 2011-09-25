@@ -5,7 +5,7 @@
 	<groupId>${$groupID}</groupId>
 	<artifactId>${$projectName}-master</artifactId>
 	<packaging>pom</packaging>
-	<version>${'{'}${$projectName}${'.version}'}</version>
+	<version>${$version}</version>
 	<name>${$projectName}-master</name>
 	<url>http://somecompany.com</url>
 	<dependencies>
@@ -46,12 +46,7 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>${'${gwtVersion}'}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.smartgwt</groupId>
-			<artifactId>smartgwt</artifactId>
-			<version>2.2</version>
+			<version>${'${gwt.version}'}</version>
 		</dependency>
 	<!--<dependency>
 			<groupId>com.google.gwt</groupId>
@@ -282,5 +277,6 @@
 		<${$projectName}.version>${$version}</${$projectName}.version>
 		<yalamanchili.version>${$yalamanchili-version}</yalamanchili.version>
 		<arquillian.version>${$arquillian-version}</arquillian.version>
+		<gwt.version>${$gwt-version}</gwt.version>
 	</properties>
 </project>

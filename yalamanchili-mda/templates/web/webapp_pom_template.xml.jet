@@ -4,38 +4,38 @@
 	<groupId>${$groupID}</groupId>
 	<artifactId>${$projectName}-webapp</artifactId>
 	<packaging>war</packaging>
-	<version>${'{'}${$projectName}${'.version}'}</version>
+	<version>${$version}</version>
 	<name>${$projectName}-webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-ejb</artifactId>
-			<version>${$version}</version>
+			<version>${'${'}${'pom.version}'}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-jpa</artifactId>
-			<version>${'{'}${$projectName}${'.version}'}</version>
+			<version>${'${'}${'pom.version}'}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-dev</artifactId>
-			<version>${'${gwtVersion}'}</version>
+			<version>${'${gwt.version}'}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>${'${gwtVersion}'}</version>
+			<version>${'${gwt.version}'}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-			<version>${'${gwtVersion}'}</version>
+			<version>${'${gwt.version}'}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -90,7 +90,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin
 				</artifactId>
-				<version>${$gwt-maven-plugin-version}</version>
+				<version>${'${gwt.version}'}</version>
 				<dependencies>
 				</dependencies>
 				<configuration>
@@ -144,8 +144,7 @@
 		</repository>
 	</repositories>
 	<properties>
-		<${$projectName}.version>${$version}</${$projectName}.version>
 		<yalamanchili.version>${$yalamanchili-version}</yalamanchili.version>	
-		<gwtVersion>${$gwt-version}</gwtVersion>
+		<gwt.version>${$gwt-version}</gwt.version>
 	</properties>
 </project>

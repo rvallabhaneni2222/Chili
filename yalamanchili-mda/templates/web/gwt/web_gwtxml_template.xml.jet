@@ -8,10 +8,11 @@
 	<set-property name="gwt.logging.popupHandler" value="DISABLED" />
 		
 	<!-- used to support internationalization -->
-	<!-- SMART-GWT support-->
-	<inherits name="com.smartgwt.SmartGwt" />
 	<inherits name='com.google.gwt.i18n.I18N' />
 	<extend-property name="locale" values="ES" />
+	
+	<!-- gwt client bundle to load resources -->
+	<inherits name="com.google.gwt.resources.Resources"/>
 
 	<!-- used to include the jpa entities in the gwt compiler path -->
 	<inherits name='${$groupID}.entity' />

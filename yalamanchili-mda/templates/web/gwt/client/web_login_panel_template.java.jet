@@ -27,7 +27,6 @@ public class LoginPanel extends LoginPanelAbstract {
 					@Override
 					public void onResponse(YUser arg0) {
 						if (arg0 != null) {
-						new ${camelCase($projectName)}Welcome().reLoad(arg0);
 							RootLayoutPanel.get().clear();
 							new ${camelCase($projectName)}Welcome().onModuleLoad();
 							new ResponseStatusWidget().show("login success");
