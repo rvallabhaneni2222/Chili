@@ -15,9 +15,9 @@
 <c:setVariable select="'FALSE'" var="supportJAXB"/>
 <%--code generation properties--%>
 <c:setVariable select="'FALSE'" var="genMaster"/>
-<c:setVariable select="'TRUE'" var="genApp"/>
-<c:setVariable select="'TRUE'" var="genJPA"/>
-<c:setVariable select="'TRUE'" var="genEJB"/>
+<c:setVariable select="'FALSE'" var="genApp"/>
+<c:setVariable select="'FALSE'" var="genJPA"/>
+<c:setVariable select="'FALSE'" var="genEJB"/>
 <c:setVariable select="'FALSE'" var="genRest"/>
 <c:setVariable select="'TRUE'" var="genWebapp"/>
 <c:setVariable select="'FALSE'" var="genAndroid"/>
@@ -26,7 +26,8 @@
 <c:setVariable select="'FALSE'" var="genPOMS"/>
 <%--versions --%>
 <c:setVariable select="'1.1-SNAPSHOT'" var="yalamanchili-version"/>
-<c:setVariable select="'2.3.0'" var="gwt-version"/>
+<c:setVariable select="'2.4.0'" var="gwt-version"/>
+<c:setVariable select="'2.3.0'" var="gwt-plugin-version"/>
 <c:setVariable select="'2.2.1.Final'" var="seam-version"/>
 <%-- TODO removed use yalamanchili.version instead else override--%>
 <c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-embedded-jboss-version"/>
@@ -220,6 +221,7 @@
     	<ws:file  path="${camelCase($projectName)}Service.java" template="templates/web/gwt/client/rpc/app_service_sync.java.jet"/>
     	<ws:file  path="${camelCase($projectName)}ServiceAsync.java" template="templates/web/gwt/client/rpc/app_service_async.java.jet"/>
     	</ws:folder>
+    	    	
     	<%-- Current project servlet,startup component and GileadService  --%>
     	<ws:folder path="${$groupIDWithFolder}/server">
     	<ws:file  path="${camelCase($projectName)}ServiceImpl.java" template="templates/web/gwt/server/app_service_impl.java.jet"/>
@@ -249,6 +251,8 @@
     	<ws:file  path="CreateUserPanel.java" template="templates/web/gwt/client/web_create_user.java.jet"/>
     	<%--  Status panel class --%>
     	<ws:file  path="StatusPanel.java" template="templates/web/gwt/client/web_status_panel_template.java.jet"/>
+    	<%--  App Request factory class --%>
+    	<ws:file  path="${camelCase($projectName)}RequestFactory.java" template="templates/web/gwt/client/app_request_factory.java.jet"/>    	
     	</ws:folder>
     	
     	<%-- Iterate through packages and classes --%>
@@ -292,6 +296,10 @@
 					<ws:file  path="{$class/@name}Service.java" template="templates/web/gwt/client/rpc/entity_service_sync.java.jet"/>
 					<%--rpc async class --%>
 					<ws:file  path="{$class/@name}ServiceAsync.java" template="templates/web/gwt/client/rpc/entity_service_async.java.jet"/>
+					<%--request factory entity proxy class --%>
+					<ws:file  path="{$class/@name}Proxy.java" template="templates/web/gwt/client/rf/entity_proxy.java.jet"/>	
+					<%--request factory entity request class --%>
+					<ws:file  path="{$class/@name}Request.java" template="templates/web/gwt/client/rf/entity_request.java.jet"/>										
 					<%-- Create Entity Panel--%>
 					<ws:file  path="Create{$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_create_panel_template.java.jet"/>
 					<%-- Generic Search Panel--%>
@@ -331,6 +339,10 @@
 						</c:if>
 						
 			</ws:folder>
+			<!-- Entity Dao classes -->
+    		<ws:folder path="${$groupIDWithFolder}/server/${lower-case($package/@name)}/${lower-case($class/@name)}">
+    			<ws:file  path="${$class/@name}Dao.java" template="templates/web/gwt/server/entity_dao.java.jet"/>
+    		</ws:folder>			
 			<%--service class impl --%>
 	    	<ws:folder path="${$groupIDWithFolder}/server">
 	    		<ws:file  path="${$class/@name}ServiceImpl.java" template="templates/web/gwt/server/entity_service_impl.java.jet"/>

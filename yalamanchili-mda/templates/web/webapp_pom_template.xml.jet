@@ -51,6 +51,13 @@
 			<version>${'${yalamanchili.version}'}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- GWT request factory -->
+		<dependency>
+			<groupId>com.google.web.bindery</groupId>
+			<artifactId>requestfactory-server</artifactId>
+			<version>2.4.0</version>
+			<scope>provided</scope>
+		</dependency>		
 		<!-- needed for gwt hosted mode START -->
 		<!--<dependency>
 			<groupId>org.hibernate</groupId>
@@ -90,7 +97,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin
 				</artifactId>
-				<version>${'${gwt.version}'}</version>
+				<version>${'${gwt.plugin.version}'}</version>
 				<dependencies>
 				</dependencies>
 				<configuration>
@@ -128,6 +135,27 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<version>2.0.5</version>
+				<executions>
+					<execution>
+						<id>process</id>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<phase>generate-sources</phase>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.google.web.bindery</groupId>
+						<artifactId>requestfactory-apt</artifactId>
+						<version>${'${gwt.version}'}</version>
+					</dependency>
+				</dependencies>
+			</plugin>			
 		</plugins>
 	</build>
 	<pluginRepositories>
@@ -142,9 +170,14 @@
 			<id>jboss.nexus</id>
 			<url>https://repository.jboss.org/nexus/content/groups/public</url>
 		</repository>
+		<repository>
+			<id>google</id>
+			<url>https://oss.sonatype.org/content/repositories/google-releases/</url>
+		</repository>		
 	</repositories>
 	<properties>
 		<yalamanchili.version>${$yalamanchili-version}</yalamanchili.version>	
 		<gwt.version>${$gwt-version}</gwt.version>
+		<gwt.plugin.version>${$gwt-plugin-version}</gwt.plugin.version>
 	</properties>
 </project>

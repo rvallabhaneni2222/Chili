@@ -19,7 +19,7 @@ import info.yalamanchili.security.gwt.SecurityWelcome.CMD_TYPE;
 import info.yalamanchili.security.gwt.YRole;
 import info.yalamanchili.security.gwt.YUser;
 import info.yalamanchili.security.gwt.user.UserSideBar;
-
+import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -32,6 +32,7 @@ import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
 import info.yalamanchili.security.gwt.AdminService.AdminServiceAsync;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 import java.util.logging.Logger;
 import java.util.HashSet;
@@ -58,11 +59,12 @@ public class ${camelCase($projectName)}Welcome implements EntryPoint {
 		return instance;
 	}
 <f:message>generated.comment</f:message>
-	public static ${camelCase($projectName)}Constants constants = (${camelCase($projectName)}Constants) GWT
-			.create(${camelCase($projectName)}Constants.class);
+	public static ${camelCase($projectName)}Constants constants = (${camelCase($projectName)}Constants) GWT.create(${camelCase($projectName)}Constants.class);
 <f:message>generated.comment</f:message>
-	public static ${camelCase($projectName)}Messages messages = (${camelCase($projectName)}Messages) GWT
-			.create(${camelCase($projectName)}Messages.class);
+	public static ${camelCase($projectName)}Messages messages = (${camelCase($projectName)}Messages) GWT.create(${camelCase($projectName)}Messages.class);
+<f:message>generated.comment</f:message>	
+	public static ${camelCase($projectName)}RequestFactory requestFactory = GWT.create( ${camelCase($projectName)}RequestFactory.class);
+						
 <f:message>generated.comment</f:message>			
 	public void onModuleLoad() {
 			GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
@@ -91,7 +93,7 @@ public class ${camelCase($projectName)}Welcome implements EntryPoint {
 				configure();
 				addListeners();
 				RootLayoutPanel.get().add(rootLayout);
-
+				requestFactory.initialize(new SimpleEventBus());
 			}
 
 		});

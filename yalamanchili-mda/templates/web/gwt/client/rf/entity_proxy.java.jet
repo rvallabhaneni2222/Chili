@@ -1,0 +1,95 @@
+<java:merge/>
+<java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
+<c:setVariable select="$class/@xmi.id" var="classID"/>
+package ${$packageName}.${lower-case($class/@name)};
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.ArrayList;
+import java.math.BigDecimal;
+<%--process enums from base and lavel1,2 parents --%>
+	<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+		<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:otherwise>
+					<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 		<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								import ${$groupID}.entity.${lower-case($package/@name)}.${ uppercaseFirst($enumeration/@name)};
+					 		</c:if>
+					</c:iterate>					 
+		 		</c:otherwise>
+		 	</c:choose>
+		</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+		<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:otherwise>
+					 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 	<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+							import ${$groupID}.entity.${lower-case($package/@name)}.${ uppercaseFirst($enumeration/@name)};
+					 	</c:if>
+					</c:iterate>					 
+		 		</c:otherwise>
+		 	</c:choose>
+		</c:iterate>
+	</c:if>
+	<%--process premitive data types of base current class --%>
+	<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+		<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+			 <c:otherwise>
+				<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 <c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+						import ${$groupID}.entity.${lower-case($package/@name)}.${ uppercaseFirst($enumeration/@name)};
+					 </c:if>
+				</c:iterate>					 
+		 	</c:otherwise>
+		</c:choose>
+	</c:iterate>				
+<%--process level 1 generizations for parent class proxy imports--%>
+<c:if test="not($class/@name = $parentClass1/@name)">
+ import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($parentClass1/@name)}.${$parentClass1/@name}Proxy;
+</c:if>
+<%--process level 2 generizations --%>
+<c:if test="not($class/@name = $parentClass2/@name)">
+ import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($parentClass2/@name)}.${$parentClass2/@name}Proxy;
+</c:if>		
+
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import info.yalamanchili.requestfactory.GenericEntityLocator;
+import com.google.web.bindery.requestfactory.shared.EntityProxy;
+import com.google.web.bindery.requestfactory.shared.ProxyFor;
+
+@ProxyFor(value = ${$class/@name}.class, locator = GenericEntityLocator.class)
+public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> interface ${$class/@name}Proxy extends <c:if test="$class/@parentClass1Name = $class/@name">  EntityProxy </c:if> <c:if test="not($class/@parentClass1Name = $class/@name)">  ${$class/@parentClass1Name}Proxy </c:if> {
+
+<%-- getters and setters --%>
+<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+	<%--getters for basic attributes --%>
+	<f:message>generated.comment</f:message>
+	public  <c:choose select="$attribute/StructuralFeature.type/DataType/@href" >  <c:when test="${'$StringID'}" >String</c:when> <c:when test="${'$IntegerID'}" >Integer</c:when><c:when test="${'$DateID'}" >Date</c:when><c:when test="${'$BooleanID'}" >Boolean</c:when><c:when test="${'$LongID'}" > Long </c:when><c:when test="${'$FloatID'}" >Float</c:when> <c:when test="${'$ImageID'}" >String</c:when> <c:when test="${'$RichTextID'}" >String</c:when> <c:when test="${'$CurrencyID'}" >BigDecimal</c:when> <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			 ${$enumeration/@name} 
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise> </c:choose> get${uppercaseFirst($attribute/@name)}();
+	<f:message>generated.comment</f:message>
+	public void set${uppercaseFirst($attribute/@name)}(<c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" >String</c:when> <c:when test="${'$IntegerID'}" >Integer</c:when><c:when test="${'$DateID'}" >Date</c:when><c:when test="${'$BooleanID'}" >Boolean</c:when><c:when test="${'$LongID'}" > Long </c:when><c:when test="${'$FloatID'}" >Float</c:when> <c:when test="${'$ImageID'}" >String</c:when> <c:when test="${'$RichTextID'}" >String</c:when> <c:when test="${'$CurrencyID'}" >BigDecimal</c:when> <c:otherwise> 
+	 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+	 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+	 			 ${$enumeration/@name} 
+	 			</c:if>
+	 	</c:iterate>	
+	 	  </c:otherwise> </c:choose> <c:get select="$attribute/@name" />);
+	
+</c:iterate>
+}
+</f:bundle>
+</java:format>

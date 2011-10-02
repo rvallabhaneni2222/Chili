@@ -30,6 +30,9 @@
 	<inherits name='net.sf.gilead.Gilead4Gwt' />
 	<inherits name='net.sf.gilead.emul.java5.ejb3.Ejb3' />
 	
+	<!--  GWT request factory -->
+	<inherits name='com.google.web.bindery.requestfactory.RequestFactory' />	
+	
 	<entry-point class="${$groupID}.client.${camelCase($projectName)}Welcome" />
 	<stylesheet src="${$projectName}.css" />
 
