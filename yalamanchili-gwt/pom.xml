@@ -82,7 +82,7 @@
 		</dependency>
 	</dependencies>
 	<properties>
-		<gwtVersion>2.1.0</gwtVersion>
+		<gwtVersion>2.4.0</gwtVersion>
 	</properties>
 	<repositories>
 		<repository>
@@ -90,9 +90,8 @@
 			<url> http://yalamanchili.googlecode.com/svn/maven2  </url>
 		</repository>
 		<repository>
-			<id>jboss</id>
-			<url>
-				http://repository.jboss.com/maven2/ </url>
+			<id>google</id>
+			<url>https://oss.sonatype.org/content/repositories/google-releases/</url>
 		</repository>
 		<repository>
 			<id>jboss2</id>
