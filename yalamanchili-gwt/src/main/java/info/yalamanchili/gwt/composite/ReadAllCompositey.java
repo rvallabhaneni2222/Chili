@@ -1,6 +1,7 @@
 package info.yalamanchili.gwt.composite;
 
 import info.yalamanchili.gwt.fields.ListBoxField;
+import info.yalamanchili.gwt.rf.GenericRequest;
 import info.yalamanchili.gwt.utils.Alignment;
 import info.yalamanchili.gwt.utils.Utils;
 import info.yalamanchili.gwt.widgets.ClickableLink;
@@ -18,10 +19,24 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.web.bindery.requestfactory.shared.EntityProxy;
+import com.google.web.bindery.requestfactory.shared.Receiver;
 
-public abstract class ReadAllCompositey<T> extends ALComposite implements
-		ClickHandler, ChangeHandler {
+public abstract class ReadAllCompositey<T extends EntityProxy> extends
+		ALComposite implements ClickHandler, ChangeHandler {
+
+	protected GenericRequest<T> request;
 	private Logger logger = Logger.getLogger(ReadAllCompositey.class.getName());
+
+	public ReadAllTableType tableType;
+
+	/**
+	 * @generated
+	 */
+	public enum ReadAllTableType {
+		READALL, READALL_SEARCH
+	}
+
 	/** The panel. */
 	protected FlowPanel panel = new FlowPanel();
 
@@ -108,11 +123,20 @@ public abstract class ReadAllCompositey<T> extends ALComposite implements
 	 * @param noOfRecords
 	 *            the no of records
 	 */
-	public void initPaging(Long noOfRecords) {
-		pageSize = new Integer(10);
-		numberOfRecords = noOfRecords;
-		noOfResultsL.setText("Total Results:" + noOfRecords.toString());
-		createPageLinks();
+	public void configurePaging() {
+		request.size().fire(new Receiver<Long>() {
+
+			@Override
+			public void onSuccess(Long noOfRecords) {
+				// TODO get from config
+				pageSize = new Integer(10);
+				numberOfRecords = noOfRecords;
+				noOfResultsL.setText("Total Results:" + noOfRecords.toString());
+				createPageLinks();
+			}
+
+		});
+
 	}
 
 	/**
@@ -127,12 +151,31 @@ public abstract class ReadAllCompositey<T> extends ALComposite implements
 		}
 	}
 
-	public abstract void preFetchTable(int start);
+	public abstract GenericRequest<T> getRequest();
+
+	public void preFetchTable(int start) {
+		// TODO call just once?
+		request = getRequest();
+		if (ReadAllTableType.READALL.equals(tableType)) {
+			request.query(start, 10).fire(new Receiver<List<T>>() {
+
+				@Override
+				public void onSuccess(List<T> proxys) {
+					// TODO get limit from config also do pagin init
+					postFetchTable(proxys, 10l);
+				}
+
+			});
+		}
+		if (ReadAllTableType.READALL_SEARCH.equals(tableType)) {
+			// TODO
+		}
+	}
 
 	public void postFetchTable(List<T> proxys, Long size) {
-		initPaging(size);
 		createTableHeader();
 		fillData(proxys);
+		configurePaging();
 	}
 
 	public void postFetchTable(List<T> proxys) {
