@@ -12,4 +12,6 @@ public interface GenericRequest<T extends EntityProxy> extends RequestContext {
 	Request<Void> save(T entity);
 
 	Request<List<T>> query(int start, int limit);
+
+	Request<Long> size();
 }
