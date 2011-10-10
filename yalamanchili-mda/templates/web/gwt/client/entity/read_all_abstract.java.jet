@@ -26,19 +26,13 @@ public class ReadAll${$class/@name}sPanely extends ReadAllCompositey<${$class/@n
 	public String parentTreeClass;
 </c:if>
 <f:message>generated.comment</f:message>
-	private  ${$class/@name}TableType tableType;
-<f:message>generated.comment</f:message>
-	public enum ${$class/@name}TableType {
-		READALL, READALL_SEARCH
-	}
-<f:message>generated.comment</f:message>
 	public ReadAll${$class/@name}sPanely(List<${$class/@name}Proxy> proxys) {
 		instance=this;
 		initTable("${$class/@name}", proxys, ${camelCase($projectName)}Welcome.constants);
 		
 	}
 <f:message>generated.comment</f:message>	
-	public ReadAll${$class/@name}sPanely(${$class/@name}TableType tableType) {
+	public ReadAll${$class/@name}sPanely(ReadAllTableType tableType) {
 		instance=this;
 		this.tableType = tableType;
 		initTable("${$class/@name}",
@@ -228,25 +222,9 @@ public class ReadAll${$class/@name}sPanely extends ReadAllCompositey<${$class/@n
 	}
 <f:message>generated.comment</f:message>
 	@Override
-	public void preFetchTable(int start) {
-		if (${$class/@name}TableType.READALL.equals(tableType)) {
-			${$class/@name}Request request = ${camelCase($projectName)}Welcome.instance().requestFactory
+	public ${$class/@name}Request getRequest() {
+		return ${camelCase($projectName)}Welcome.instance().requestFactory
 					.${lower-case($class/@name)}Request();
-			request.query(start, 10).fire(new Receiver<List<${$class/@name}Proxy>>() {
-
-				@Override
-				public void onSuccess(List<${$class/@name}Proxy> proxys) {
-				//TODO get limit from config also do pagin init
-					postFetchTable(proxys, 10l);
-
-				}
-
-			});		
-		}
-		if (${$class/@name}TableType.READALL_SEARCH.equals(tableType)) {
-			//TODO
-		}
-
 	}
 <f:message>generated.comment</f:message>
 	@Override

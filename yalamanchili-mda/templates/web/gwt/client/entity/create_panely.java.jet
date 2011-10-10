@@ -4,7 +4,7 @@
 <f:message>copyright</f:message>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 package ${$packageName}.${lower-case($class/@name)};
-import ${$packageName}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanely.${$class/@name}TableType;
+import info.yalamanchili.gwt.composite.ReadAllCompositey.ReadAllTableType;
 
 <%--process enums from base and lavel1,2 parents --%>
 	<%-- process parent class level 2 attributes--%>
@@ -473,7 +473,7 @@ public Create${$class/@name}Panely(CreateCompositeType type) {
 	protected void successfullyCreated() {
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-						new ReadAll${$class/@name}sPanely(${$class/@name}TableType.READALL));
+						new ReadAll${$class/@name}sPanely(ReadAllTableType.READALL));
 	}
 	
 <f:message>generated.comment</f:message>	
