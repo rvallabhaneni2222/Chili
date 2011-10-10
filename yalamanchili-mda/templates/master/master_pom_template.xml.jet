@@ -224,7 +224,13 @@
 					<artifactId>hibernate-core</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency> -->			
+		</dependency> -->	
+		<!-- this is fro deployment issues with seam and gwt class conflict -->
+		<dependency>
+			<groupId>javax.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>1.2_15</version>
+		</dependency>				
 	</dependencies>
 	<modules>
 		<module>../${$projectName}-jpa</module>

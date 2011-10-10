@@ -4,7 +4,7 @@
 <f:message>copyright</f:message>
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 package ${$packageName}.${lower-case($class/@name)};
-
+import info.yalamanchili.gwt.rf.GenericRequest;
 import ${$groupID}.server.${lower-case($package/@name)}.${lower-case($class/@name)}.${$class/@name}Dao;
 import info.yalamanchili.requestfactory.RequestFactoryDaoLocator;
 
@@ -13,7 +13,7 @@ import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.Service;
 
 @Service(value = ${$class/@name}Dao.class, locator = RequestFactoryDaoLocator.class)
-public interface ${$class/@name}Request extends RequestContext {
+public interface ${$class/@name}Request extends GenericRequest< ${$class/@name}Proxy> {
 	Request<${$class/@name}Proxy> findById(Long id);
 
 	Request<Void> save(${$class/@name}Proxy entity);

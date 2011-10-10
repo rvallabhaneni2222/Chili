@@ -1,4 +1,4 @@
-<java:merge/>
+
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
@@ -11,6 +11,34 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.ArrayList;
 import java.math.BigDecimal;
+
+<%-- related classes import--%>
+<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+				<%-- check is the association is corresponding to the class  --%>
+				<c:if test="$association_connection_end_classID = $classID"> 
+					<%-- iterate over the iterations ends  --%>
+  					<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 		<%-- get the end secondary end with other class  --%>
+  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
+  					  		 		<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+	  					  		 			<%-- check to see the association is navigable in the first case--%>
+	  										<c:if test="$association_connection_end2/@isNavigable = 'true'">
+import ${$packageName}.${lower-case($class2/@name)}.${$class2/@name}Proxy;					
+	  										</c:if>
+  										</c:if>	
+  									</c:iterate>
+  								</c:if>	
+  					</c:iterate>								
+				</c:if>
+		</c:iterate>
+	</c:iterate>
+</c:iterate>					 	
 <%--process enums from base and lavel1,2 parents --%>
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
@@ -68,6 +96,13 @@ import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
 @ProxyFor(value = ${$class/@name}.class, locator = GenericEntityLocator.class)
 public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> interface ${$class/@name}Proxy extends <c:if test="$class/@parentClass1Name = $class/@name">  EntityProxy </c:if> <c:if test="not($class/@parentClass1Name = $class/@name)">  ${$class/@parentClass1Name}Proxy </c:if> {
+<%--getter and seeter for id attribute --%>
+<c:if test="$class/@parentClass1Name = $class/@name">
+<f:message>generated.comment</f:message>
+  public Long getId();
+<f:message>generated.comment</f:message>  
+  public void setId(Long id);
+</c:if>
 
 <%-- getters and setters --%>
 <c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
@@ -90,6 +125,81 @@ public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> interface ${$cla
 	 	  </c:otherwise> </c:choose> <c:get select="$attribute/@name" />);
 	
 </c:iterate>
+<%-- user defined types getters and setters-->
+<%--getters for collection attributes --%>
+	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+	
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID"> 
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+  					  		 			
+  					  		 			<%-- check to see the association is navigable in the first case--%>
+  										<c:if test="$association_connection_end2/@isNavigable = 'true'">		
+  					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
+  					  		 			<%-- check if target is one side--%>
+  					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+<%-- gettter returning a non collection--%>
+ <f:message>generated.comment</f:message>													
+ public 	${$class2/@name}Proxy get${$class2/@name}();
+<%-- setter returning a non clooection--%>
+<f:message>generated.comment</f:message>
+  public 	void set${$class2/@name}(${$class2/@name}Proxy ${lowercaseFirst($class2/@name)});
+ 
+  					  		 					</c:if>  
+  					  		 			</c:if>
+  					  		 			
+  										 <%-- check if target is many side--%>
+   					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+   		
+	 										<%-- check if source is many side--%>
+	 										<%-- this is a many to many--%>
+	 										<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
+	  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
+	  					    						<%-- gettter returning a collection--%>	
+	  					    						<f:message>generated.comment</f:message>			    											    									    						
+														 public 	Set<${$class2/@name}Proxy>  get${$class2/@name}s();
+														<%-- setter returning a collection--%>
+														<f:message>generated.comment</f:message>	
+														 public 	  void set${$class2/@name}s(Set<${$class2/@name}Proxy> ${lowercaseFirst($class2/@name)}s);
+	  					    						</c:if>  
+	  					  		 			</c:if>
+	  					  		 			<%-- check if source is one side--%>
+	  					  		 			<%-- this is a one to many--%>
+	  					  		 			<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+	  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+	  					    						<%-- gettter returning a collection--%>	
+	  					    							<f:message>generated.comment</f:message>			    											    									    						
+														 public 	List<${$class2/@name}Proxy>  get${$class2/@name}s();
+														<%-- setter returning a collection--%>
+														<f:message>generated.comment</f:message>	
+														 public 	  void set${$class2/@name}s(List<${$class2/@name}Proxy> ${lowercaseFirst($class2/@name)}s);
+	  					    						</c:if>  
+	  					  		 			</c:if>
+  					
+				  		 					</c:if>  
+  					  		 			</c:if>
+  					  		 			
+  					  		 			</c:if> 
+  					  		 			</c:if>
+  					  		 		</c:iterate>
+  							  	</c:if> 
+  					 	  </c:iterate> 					 	 				 	  
+					</c:if> 											
+		</c:iterate>
+	</c:iterate>
+	</c:iterate>
 }
 </f:bundle>
 </java:format>

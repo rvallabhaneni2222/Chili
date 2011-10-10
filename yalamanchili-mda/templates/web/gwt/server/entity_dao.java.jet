@@ -7,23 +7,38 @@ package ${$groupID}.server.${lower-case($package/@name)}.${lower-case($class/@na
 import info.yalamanchili.requestfactory.GenericDao;
 import info.yalamanchili.trace.Trace;
 
-import javax.persistence.EntityManager;
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import info.yalamanchili.server.GenericGWTDao;
+import info.yalamanchili.commons.DataType;
+import info.yalamanchili.commons.ReflectionUtils;
+import info.yalamanchili.commons.SearchUtils;
+import info.yalamanchili.gwt.beans.TableObj;
+import info.yalamanchili.server.GWTServletUtils;
+import info.yalamanchili.server.GenericGWTDao;
+import info.yalamanchili.trace.Trace;
 
-import org.jboss.seam.annotations.AutoCreate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.util.Version;
+import org.hibernate.search.FullTextQuery;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.ScopeType;
-import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
-
+import org.jboss.seam.annotations.Transactional;
 <f:message>generated.class.comment</f:message>
 
 @Trace
 @Transactional
 @Scope(ScopeType.EVENT)
 @Name("${lower-case($class/@name)}Dao")
-public class ${$class/@name}Dao extends GenericDao<${$class/@name}> {
+public class ${$class/@name}Dao extends GenericGWTDao<${$class/@name}> {
 
 	@In(create = true)
 	protected EntityManager em;
@@ -39,6 +54,75 @@ public class ${$class/@name}Dao extends GenericDao<${$class/@name}> {
 		}
 		em.merge(entity);
 	}
+	
+	@Override
+	public void delete(long id) {
+		em.remove(id);
+	}
+
+	@Override
+	public List<${$class/@name}> query(int start, int limit) {
+		String query = "from " + ${$class/@name}.class.getCanonicalName();
+		Query getEntitites = em.createQuery(query);
+		getEntitites.setFirstResult(start);
+		// TODO externalize the max results value
+		getEntitites.setMaxResults(limit);
+		return getEntitites.getResultList();
+	}
+
+	@Override
+	public List<${$class/@name}> search(String searchText) {
+		org.apache.lucene.search.Query luceneQuery = SearchUtils
+				.getLuceneQuery(searchText, "id", new StandardAnalyzer(
+						Version.LUCENE_30), ReflectionUtils.getBeanProperties(
+						${$class/@name}.class, DataType.STRING));
+		FullTextQuery query = SearchUtils.getFullTextSession(em)
+				.createFullTextQuery(luceneQuery, ${$class/@name}.class);
+		return query.list();
+	}
+
+	@Override
+	public List<${$class/@name}> search(${$class/@name} entity) {
+		Query getEntitiesQuery = em.createQuery(GWTServletUtils
+				.getSearchQueryString(entity));
+		return getEntitiesQuery.getResultList();
+	}
+
+	@Override
+	public Long size() {
+		String query = "select count(entity) from "
+				+ ${$class/@name}.class.getCanonicalName() + " entity";
+		Query getEntitiesSize = em.createQuery(query);
+		return (Long) getEntitiesSize.getSingleResult();
+	}
+	
+	@Override
+	public List<String> getSuggestionsForName(String name, ${$class/@name} entity) {
+		Query query = em.createQuery(GWTServletUtils
+				.getSuggestionsQueryForName(name, entity));
+		return query.getResultList();
+	}
+
+	@Override
+	public Map<Long, String> getListBoxValues(String[] columns) {
+		String query = GWTServletUtils.getListBoxResultsQueryString(
+				${$class/@name}.class.getCanonicalName(), columns);
+		Map<Long, String> values = new HashMap<Long, String>();
+		Query getListBoxValues = em.createQuery(query);
+		for (Object obj : getListBoxValues.getResultList()) {
+			Object[] obs = (Object[]) obj;
+			values.put((Long) obs[0], (String) obs[1]);
+		}
+		return values;
+	}
+
+	@Override
+	public TableObj<?> getTableObj(int start) {
+		TableObj<${$class/@name}> tableObj = new TableObj<${$class/@name}>();
+		tableObj.setRecords(query(start, 10));
+		tableObj.setNumberOfRecords(size());
+		return tableObj;
+	}	
 }
 </f:bundle>
 </java:format>
