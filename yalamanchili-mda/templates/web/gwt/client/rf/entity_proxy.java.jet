@@ -90,7 +90,7 @@ import ${$packageName}.${lower-case($class2/@name)}.${$class2/@name}Proxy;
 </c:if>		
 
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
-import info.yalamanchili.requestfactory.GenericEntityLocator;
+import ${$groupID}.server.rf.GenericEntityLocator;
 import com.google.web.bindery.requestfactory.shared.EntityProxy;
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
 

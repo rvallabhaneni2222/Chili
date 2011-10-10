@@ -5,6 +5,7 @@
 <c:setVariable select="$class/@xmi.id" var="classID"/>
 package ${$packageName}.${lower-case($class/@name)};
 import info.yalamanchili.gwt.rf.GenericRequest;
+import java.util.List;
 import ${$groupID}.server.${lower-case($package/@name)}.${lower-case($class/@name)}.${$class/@name}Dao;
 import info.yalamanchili.requestfactory.RequestFactoryDaoLocator;
 
@@ -17,6 +18,10 @@ public interface ${$class/@name}Request extends GenericRequest< ${$class/@name}P
 	Request<${$class/@name}Proxy> findById(Long id);
 
 	Request<Void> save(${$class/@name}Proxy entity);
+	
+	Request<List<${$class/@name}Proxy>> query(int start, int limit);
+
+	Request<Long> size();
 
 }
 </f:bundle>

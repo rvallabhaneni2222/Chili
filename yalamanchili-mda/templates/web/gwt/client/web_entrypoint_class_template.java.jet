@@ -14,6 +14,7 @@ package ${$groupID}.client;
     		 </c:if>	
 			 </c:iterate>
 	</c:iterate>
+import info.yalamanchili.gwt.exception.GWTUncaughtExceptionHandler;
 import info.yalamanchili.security.gwt.SecurityWelcome;
 import info.yalamanchili.security.gwt.SecurityWelcome.CMD_TYPE;
 import info.yalamanchili.security.gwt.YRole;
@@ -67,11 +68,7 @@ public class ${camelCase($projectName)}Welcome implements EntryPoint {
 						
 <f:message>generated.comment</f:message>			
 	public void onModuleLoad() {
-			GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
-			public void onUncaughtException(Throwable e) {
-				logger.info(e.getLocalizedMessage());
-			}
-			});
+			GWT.setUncaughtExceptionHandler(new GWTUncaughtExceptionHandler());
 			instance=this;
 			init();
 		}

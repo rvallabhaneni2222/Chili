@@ -330,14 +330,16 @@
 			    		 	<%-- Tree  Panel --%>
 			    		 	<ws:file  path="TreeAbstract${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_tree_abstract_panel_template.java.jet"/>
 							<%-- Read All Entities Panel--%>
-							<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_abstract_panel_template.java.jet"/>		
+							<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_abstract_panel_template.java.jet"/>
+							<ws:file  path="ReadAll{$class/@name}sPanely.java" template="templates/web/gwt/client/entity/read_all_abstract.java.jet"/>		
 						</c:if>
 						<%-- if class is a regular  class--%>
 						<c:if test="$isParent = $class/@xmi.id">  
 			    		 	<%-- Tree  Panel --%>
 			    		 	<ws:file  path="Tree${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_tree_panel_template.java.jet"/>
 							<%-- Read All Entities Panel--%>
-							<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_panel_template.java.jet"/>		
+							<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_panel_template.java.jet"/>
+							<ws:file  path="ReadAll{$class/@name}sPanely.java" template="templates/web/gwt/client/entity/read_all_panel.java.jet"/>		
 						</c:if>
 						
 			</ws:folder>
@@ -349,7 +351,10 @@
 	    	<ws:folder path="${$groupIDWithFolder}/server">
 	    		<ws:file  path="${$class/@name}ServiceImpl.java" template="templates/web/gwt/server/entity_service_impl.java.jet"/>
 	    	</ws:folder>		
-	    	
+			<%--generic entity locator --%>
+	    	<ws:folder path="${$groupIDWithFolder}/server/rf">
+	    		<ws:file  path="GenericEntityLocator.java" template="templates/web/gwt/server/rf/generic_entity_locator.java.jet"/>
+	    	</ws:folder>		    	
 			 </c:if>
 			 </c:iterate>
 		</c:iterate>

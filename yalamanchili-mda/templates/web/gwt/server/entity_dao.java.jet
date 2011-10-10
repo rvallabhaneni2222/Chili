@@ -44,14 +44,10 @@ public class ${$class/@name}Dao extends GenericGWTDao<${$class/@name}> {
 	protected EntityManager em;
 
 	public ${$class/@name} findById(Long id) {
-		return new ${$class/@name}();
+		return em.find( ${$class/@name}.class, id);
 	}
 
 	public void save(${$class/@name} entity) {
-		System.out.println("------------------------------- save");
-		if (em == null) {
-			System.out.println("nu00000000000ll entity manager");
-		}
 		em.merge(entity);
 	}
 	

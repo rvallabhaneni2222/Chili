@@ -1,28 +1,24 @@
-
+<java:merge/>
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
 package ${$packageName}.${lower-case($class/@name)};
 
-import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
 <%-- add these only for composites--%>
 <c:if test="$class/@isDependent = 'true'">	
 import info.yalamanchili.gwt.composite.TreePanelComposite;
 </c:if>
-import info.yalamanchili.gwt.beans.TableObj;
-import info.yalamanchili.gwt.callback.ALAsyncCallback;
-import info.yalamanchili.gwt.composite.ReadAllComposite;
+import info.yalamanchili.gwt.composite.ReadAllCompositey;
 import info.yalamanchili.gwt.utils.Utils;
 import info.yalamanchili.gwt.fields.*;
-
+import com.google.web.bindery.requestfactory.shared.Receiver;
 import java.util.List;
 
-import com.google.gwt.user.client.ui.DockPanel;
 <f:message>generated.class.comment</f:message>
-public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@name}> {
+public class ReadAll${$class/@name}sPanely extends ReadAllCompositey<${$class/@name}Proxy> {
 <f:message>generated.comment</f:message>
-	public static ReadAll${$class/@name}sPanel instance;
+	public static ReadAll${$class/@name}sPanely instance;
 <%-- add these only for composites--%>
 <c:if test="$class/@isDependent = 'true'">
 <f:message>generated.comment</f:message>	
@@ -36,16 +32,16 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 		READALL, READALL_SEARCH
 	}
 <f:message>generated.comment</f:message>
-	public ReadAll${$class/@name}sPanel(List<${$class/@name}> entities) {
+	public ReadAll${$class/@name}sPanely(List<${$class/@name}Proxy> proxys) {
 		instance=this;
-		initTable(new ${$class/@name}(), entities, ${camelCase($projectName)}Welcome.constants);
+		initTable("${$class/@name}", proxys, ${camelCase($projectName)}Welcome.constants);
 		
 	}
 <f:message>generated.comment</f:message>	
-	public ReadAll${$class/@name}sPanel(${$class/@name}TableType tableType) {
+	public ReadAll${$class/@name}sPanely(${$class/@name}TableType tableType) {
 		instance=this;
 		this.tableType = tableType;
-		initTable(new ${$class/@name}(),
+		initTable("${$class/@name}",
 				${camelCase($projectName)}Welcome.constants);
 	}
 <f:message>generated.comment</f:message>
@@ -113,9 +109,9 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 	}
 <f:message>generated.comment</f:message>
 	@Override
-	public void fillData(List<${$class/@name}> entities) {
+	public void fillData(List<${$class/@name}Proxy> proxys) {
 		int i = 1;
-		for (${$class/@name} entity : entities) {
+		for (${$class/@name}Proxy entity : proxys) {
 			createViewIcon(i, entity.getId());
 			<%
 			int y = 1;
@@ -234,28 +230,21 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 	@Override
 	public void preFetchTable(int start) {
 		if (${$class/@name}TableType.READALL.equals(tableType)) {
-			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getTableObj(start, new ALAsyncCallback<TableObj<${$class/@name}>>() {
+			${$class/@name}Request request = ${camelCase($projectName)}Welcome.instance().requestFactory
+					.${lower-case($class/@name)}Request();
+			request.query(start, 10).fire(new Receiver<List<${$class/@name}Proxy>>() {
 
-						@Override
-						public void onResponse(TableObj<${$class/@name}> tableObj) {
-							postFetchTable(tableObj);
+				@Override
+				public void onSuccess(List<${$class/@name}Proxy> proxys) {
+				//TODO get limit from config also do pagin init
+					postFetchTable(proxys, 10l);
 
-						}
+				}
 
-					});
+			});		
 		}
 		if (${$class/@name}TableType.READALL_SEARCH.equals(tableType)) {
-			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().getEntities(
-					${$class/@name}SearchPanelGeneric.instance().getEntity(),
-					new ALAsyncCallback<List<${$class/@name}>>() {
-
-						@Override
-						public void onResponse(List<${$class/@name}> arg0) {
-							postFetchTable(arg0);
-
-						}
-
-					});
+			//TODO
 		}
 
 	}
@@ -264,7 +253,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 	public void viewClicked(int row, int col) {
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-				new Read${$class/@name}Panel(getEntityId(row)));
+				new Read${$class/@name}Panel(getProxyId(row)));
 		${camelCase($projectName)}Welcome.instance().getSidePanelTop().clear();
 		${camelCase($projectName)}Welcome.instance().getSidePanelTop()
 				.add(new Tree${$class/@name}Panel());
