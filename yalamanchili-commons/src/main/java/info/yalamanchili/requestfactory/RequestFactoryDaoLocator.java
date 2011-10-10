@@ -20,13 +20,4 @@ public class RequestFactoryDaoLocator implements ServiceLocator {
 		return instantiatedClass;
 	}
 
-	public static Object getComponent(Class<?> clazz) {
-		Object instantiatedClass = Component.getInstance(clazz);
-		if (instantiatedClass == null) {
-			throw new RuntimeException("Could not instantiate request factory"
-					+ clazz.getSimpleName());
-		}
-		return instantiatedClass;
-	}
-
 }

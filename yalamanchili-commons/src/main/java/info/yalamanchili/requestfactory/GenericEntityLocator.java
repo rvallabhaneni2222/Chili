@@ -4,7 +4,7 @@ import info.yalamanchili.gwt.jpa.AbstractEntity;
 
 import com.google.web.bindery.requestfactory.shared.Locator;
 
-public class GenericEntityLocator<T> extends Locator<T, Long> {
+public abstract class GenericEntityLocator<T> extends Locator<T, Long> {
 	protected T entity;
 
 	@Override
@@ -18,11 +18,7 @@ public class GenericEntityLocator<T> extends Locator<T, Long> {
 	}
 
 	@Override
-	public T find(Class<? extends T> clazz, Long id) {
-		GenericDao dao = (GenericDao) RequestFactoryDaoLocator
-				.getComponent(clazz);
-		return (T) dao.findById(id);
-	}
+	public abstract T find(Class<? extends T> clazz, Long id);
 
 	@Override
 	public Class<T> getDomainType() {
