@@ -18,6 +18,7 @@ import net.sf.gilead.pojo.gwt.LightEntity;
  * 
  * @author ayalamanchili
  */
+//TODO move to non gwt package since not needed with request factory
 @XmlType
 @MappedSuperclass
 public abstract class AbstractEntity extends LightEntity implements
