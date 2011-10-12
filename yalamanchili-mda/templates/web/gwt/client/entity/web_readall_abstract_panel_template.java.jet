@@ -194,7 +194,7 @@ public class ReadAll${$class/@name}sPanel extends ReadAllComposite<${$class/@nam
 	public void viewClicked(int row, int col) {
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-				new Read${$class/@name}Panel(getEntityId(row)));
+				new Read${$class/@name}Panely(getEntityId(row)));
 
 	}
 

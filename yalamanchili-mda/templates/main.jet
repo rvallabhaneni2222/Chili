@@ -307,6 +307,7 @@
 					<ws:file  path="${$class/@name}SearchPanelGeneric.java" template="templates/web/gwt/client/entity/web_search_generic_panel_template.java.jet"/>
 					<%-- Read Panel--%>
 					<ws:file  path="Read${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_read_panel_template.java.jet"/>
+					<ws:file  path="Read${$class/@name}Panely.java" template="templates/web/gwt/client/entity/read_panely.java.jet"/>
 					<%-- Update Panel--%>
 					<ws:file  path="Update${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_update_panel_template.java.jet"/>
 					<%-- Side  Panel--%>
@@ -329,6 +330,7 @@
 		    		 	<c:if test="$isParent = $class/@name">  
 			    		 	<%-- Tree  Panel --%>
 			    		 	<ws:file  path="TreeAbstract${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_tree_abstract_panel_template.java.jet"/>
+			    		 	<ws:file  path="TreeAbstract${$class/@name}Panely.java" template="templates/web/gwt/client/entity/tree_panel_abstract.java.jet"/>
 							<%-- Read All Entities Panel--%>
 							<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_abstract_panel_template.java.jet"/>
 							<ws:file  path="ReadAll{$class/@name}sPanely.java" template="templates/web/gwt/client/entity/read_all_abstract.java.jet"/>		
@@ -337,6 +339,7 @@
 						<c:if test="$isParent = $class/@xmi.id">  
 			    		 	<%-- Tree  Panel --%>
 			    		 	<ws:file  path="Tree${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_tree_panel_template.java.jet"/>
+			    		 	<ws:file  path="Tree${$class/@name}Panely.java" template="templates/web/gwt/client/entity/tree_panely.java.jet"/>
 							<%-- Read All Entities Panel--%>
 							<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_panel_template.java.jet"/>
 							<ws:file  path="ReadAll{$class/@name}sPanely.java" template="templates/web/gwt/client/entity/read_all_panel.java.jet"/>		

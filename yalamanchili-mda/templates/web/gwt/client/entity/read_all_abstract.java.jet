@@ -1,4 +1,4 @@
-<java:merge/>
+
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
@@ -7,7 +7,7 @@ package ${$packageName}.${lower-case($class/@name)};
 import ${$webPackage}${camelCase($projectName)}Welcome;
 <%-- add these only for composites--%>
 <c:if test="$class/@isDependent = 'true'">	
-import info.yalamanchili.gwt.composite.TreePanelComposite;
+import info.yalamanchili.gwt.composite.TreePanelCompositey;
 </c:if>
 import info.yalamanchili.gwt.composite.ReadAllCompositey;
 import info.yalamanchili.gwt.utils.Utils;
@@ -22,7 +22,7 @@ public class ReadAll${$class/@name}sPanely extends ReadAllCompositey<${$class/@n
 <%-- add these only for composites--%>
 <c:if test="$class/@isDependent = 'true'">
 <f:message>generated.comment</f:message>	
-	public TreePanelComposite parentTree;
+	public TreePanelCompositey parentTree;
 	public String parentTreeClass;
 </c:if>
 <f:message>generated.comment</f:message>
