@@ -57,8 +57,7 @@ public abstract class TreePanelCompositey<T extends EntityProxy> extends
 	}
 
 	public void onSelection(SelectionEvent<TreeItem> event) {
-		proxy = loadProxy();
-		proxy.getClass().getName();
+		loadProxyAndRequest();
 		TreeItem selectedItem = (TreeItem) event.getSelectedItem();
 		TreeItem root = tree.getItem(0);
 		if (root.equals(selectedItem)) {
@@ -104,7 +103,8 @@ public abstract class TreePanelCompositey<T extends EntityProxy> extends
 	// TODO rename to treenode clicked
 	public abstract void treeNodeSelected(String entiyName);
 
-	public abstract T loadProxy();
+	// init the proxy and rf request
+	public abstract void loadProxyAndRequest();
 
 	public abstract void showProxy();
 

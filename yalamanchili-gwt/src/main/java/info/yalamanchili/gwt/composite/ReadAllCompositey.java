@@ -83,7 +83,7 @@ public abstract class ReadAllCompositey<T extends EntityProxy> extends
 		this.classCanonicalName = className;
 		this.constants = constants;
 		init(panel);
-		postFetchTable(proxys, new Long(proxys.size()));
+		postFetchTable(proxys);
 	}
 
 	/*
@@ -181,6 +181,7 @@ public abstract class ReadAllCompositey<T extends EntityProxy> extends
 	public void postFetchTable(List<T> proxys) {
 		createTableHeader();
 		fillData(proxys);
+		// TODO paging
 	}
 
 	public abstract void createTableHeader();
