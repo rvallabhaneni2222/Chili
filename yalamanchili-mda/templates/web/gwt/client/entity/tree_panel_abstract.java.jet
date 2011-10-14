@@ -42,7 +42,7 @@ private static TreeAbstract${$class/@name}Panely instance;
 <f:message>generated.comment</f:message>
 	protected abstract void configure() ;
 <f:message>generated.comment</f:message>
-	public abstract ${$class/@name}Proxy loadProxy();
+	public abstract void loadProxyAndRequest();
 }
 </f:bundle>
 </java:format>

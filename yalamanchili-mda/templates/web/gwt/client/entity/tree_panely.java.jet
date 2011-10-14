@@ -12,6 +12,7 @@ import info.yalamanchili.gwt.composite.TreePanelCompositey;
 import info.yalamanchili.gwt.widgets.ClickableLink;
 import info.yalamanchili.gwt.beans.MultiSelectObj;
 import com.google.gwt.user.client.Window;
+import info.yalamanchili.gwt.rf.GenericRequest;
 import java.util.List;
 import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;			
 import com.google.web.bindery.requestfactory.shared.Receiver;
@@ -129,6 +130,8 @@ import com.google.gwt.user.client.ui.TreeItem;
 <f:message>generated.class.comment</f:message>
 public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@name" > <c:when test="$class/@name" > TreePanelCompositey<${$class/@name}Proxy> </c:when> <c:otherwise> TreeAbstract${$parentClass1/@name}Panely</c:otherwise>  </c:choose> {
 <f:message>generated.comment</f:message>
+	protected ${$class/@name}Request request;
+<f:message>generated.comment</f:message>
 	private static Tree${$class/@name}Panely instance;
 <f:message>generated.comment</f:message>
 	public static Tree${$class/@name}Panely instance() {
@@ -159,8 +162,9 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 	}
 <f:message>generated.comment</f:message>
 	@Override
-	public ${$class/@name}Proxy loadProxy() {
-		return Read${$class/@name}Panely.instance().getEntity();
+	public void loadProxyAndRequest() {
+		proxy = Read${$class/@name}Panely.instance().getEntity();
+		request = ${camelCase($projectName)}Welcome.requestFactory.${lower-case($class/@name)}Request();
 	}
 
 <f:message>generated.comment</f:message>
@@ -192,7 +196,7 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 							  					  		 			if (${$class2/@name}.class.getName().contains(link)) {
 							  					  		 			<%--for composite add --%>
 																		<c:if test="$association_connection_end/@aggregation = 'composite'">
-																			${$class/@name}Request request = ${camelCase($projectName)}Welcome.requestFactory.${lower-case($class/@name)}Request();
+																			
 																			request.get${$class2/@name}s(proxy.getId()).fire(
 																					new Receiver<List<${$class2/@name}Proxy>>() {
 																
@@ -269,7 +273,7 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 								  					  		 			if (${$class2/@name}.class.getName().contains(link)) {
 							  					  		 			<%--for composite add --%>
 																		<c:if test="$association_connection_end/@aggregation = 'composite'">
-																			${$class/@name}Request request = ${camelCase($projectName)}Welcome.requestFactory.${lower-case($class/@name)}Request();
+																			
 																			request.get${$class2/@name}s(proxy.getId()).fire(
 																					new Receiver<List<${$class2/@name}Proxy>>() {
 																
@@ -349,7 +353,7 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 							  					  		 			if (${$class2/@name}.class.getName().contains(link)) {
 							  					  		 			<%--for composite add --%>
 																		<c:if test="$association_connection_end/@aggregation = 'composite'">
-																			${$class/@name}Request request = ${camelCase($projectName)}Welcome.requestFactory.${lower-case($class/@name)}Request();
+																			
 																			request.get${$class2/@name}s(proxy.getId()).fire(
 																					new Receiver<List<${$class2/@name}Proxy>>() {
 																
