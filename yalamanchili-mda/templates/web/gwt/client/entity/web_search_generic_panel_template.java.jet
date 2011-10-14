@@ -6,7 +6,7 @@ package ${$packageName}.${lower-case($class/@name)};
 
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 import ${$webPackage}${camelCase($projectName)}Welcome;
-import ${$groupID}.client.${$package/@name}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel.${$class/@name}TableType;
+import info.yalamanchili.gwt.composite.ReadAllCompositey.ReadAllTableType;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.SearchPanelCompositeGeneric;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -171,7 +171,7 @@ public class ${$class/@name}SearchPanelGeneric extends
 	protected void searchButtonClicked() {
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-				(new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL_SEARCH)));
+				(new ReadAll${$class/@name}sPanely(ReadAllTableType.READALL_SEARCH)));
 
 	}
 <f:message>generated.comment</f:message>

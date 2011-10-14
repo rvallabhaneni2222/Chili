@@ -40,7 +40,6 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 							  					  		 			import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}Proxy;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanely;
-							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanel;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}OptionsPanel;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panely;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panel;
@@ -78,7 +77,6 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 							  					  		 			import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}Proxy;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanely;
-							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanel;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}OptionsPanel;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panely;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panel;
@@ -114,7 +112,6 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
   					  		 										import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}Proxy;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanely;
-							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanel;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}OptionsPanel;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panely;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panel;					  		 			</c:if> 
@@ -228,8 +225,8 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 																											public void onResponse(MultiSelectObj<${$class2/@name}> arg0) {																			
 																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
 																												.clear();
-																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new ReadAll${$class2/@name}sPanel(arg0.getSelectedObjs()));
-																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new Select${$class2/@name}Panel("Select ${$class2/@name}s",Tree${$class/@name}Panel.instance(),arg0.getAvailable(),arg0.getSelected()));
+																											
+																											
 																											}
 																				
 																										});
@@ -305,8 +302,8 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 																											public void onResponse(MultiSelectObj<${$class2/@name}> arg0) {																			
 																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
 																												.clear();
-																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new ReadAll${$class2/@name}sPanel(arg0.getSelectedObjs()));
-																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new Select${$class2/@name}Panel("Select ${$class2/@name}s",Tree${$class/@name}Panel.instance(),arg0.getAvailable(),arg0.getSelected()));
+																												
+																											
 																											}
 																				
 																										});
@@ -385,8 +382,8 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 																											public void onResponse(MultiSelectObj<${$class2/@name}> arg0) {																			
 																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
 																												.clear();
-																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new ReadAll${$class2/@name}sPanel(arg0.getSelectedObjs()));
-																												${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new Select${$class2/@name}Panel("Select ${$class2/@name}s",Tree${$class/@name}Panel.instance(),arg0.getAvailable(),arg0.getSelected()));
+																											
+																											
 																											}
 																				
 																										});

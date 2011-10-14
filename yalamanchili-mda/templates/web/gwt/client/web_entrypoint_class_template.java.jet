@@ -1,4 +1,4 @@
-<java:merge/>
+
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
@@ -8,12 +8,12 @@ package ${$groupID}.client;
     		 <c:setVariable select="concat($webPackage,$package/@name)" var="packageName"/>	
     		 <c:iterate select="$package/Namespace.ownedElement/Class" var="class">
     		 <c:if test="$class/@isAbstract = 'false'">
-    			import ${$groupID}.client.${$package/@name}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel;
-    			import ${$groupID}.client.${$package/@name}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanel.${$class/@name}TableType;
+    			import ${$groupID}.client.${$package/@name}.${lower-case($class/@name)}.ReadAll${$class/@name}sPanely;
     			import ${$groupID}.client.${$package/@name}.${lower-case($class/@name)}.${$class/@name}SideBar;
     		 </c:if>	
 			 </c:iterate>
 	</c:iterate>
+import info.yalamanchili.gwt.composite.ReadAllCompositey.ReadAllTableType;	
 import info.yalamanchili.gwt.exception.GWTUncaughtExceptionHandler;
 import info.yalamanchili.security.gwt.SecurityWelcome;
 import info.yalamanchili.security.gwt.SecurityWelcome.CMD_TYPE;
@@ -168,7 +168,7 @@ public class ${camelCase($projectName)}Welcome implements EntryPoint {
 				@Override
 				public void execute() {
 					getEntityPanel().clear();
-					getEntityPanel().add(new ReadAll${$class/@name}sPanel(${$class/@name}TableType.READALL));
+					getEntityPanel().add(new ReadAll${$class/@name}sPanely(ReadAllTableType.READALL));
 					getSidePanelTop().clear();
 					getSidePanelTop().add(new ${$class/@name}SideBar());
 				}

@@ -1,4 +1,4 @@
-<java:merge/>
+
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
@@ -10,7 +10,7 @@ import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.OptionsComposite;
 import info.yalamanchili.gwt.utils.Alignment;
-import info.yalamanchili.gwt.composite.CreateComposite.CreateCompositeType;
+import info.yalamanchili.gwt.composite.CreateCompositey.CreateCompositeType;
 
 <f:message>generated.class.comment</f:message>
 public class ${$class/@name}OptionsPanel extends OptionsComposite {
@@ -25,24 +25,14 @@ public class ${$class/@name}OptionsPanel extends OptionsComposite {
 <f:message>generated.comment</f:message>
 	@Override
 	public void deleteLinkClicked() {
-	${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().
-	delete(Read${$class/@name}Panel.instance().getEntity(),
-						new ALAsyncCallback<Void>() {
-
-							@Override
-							public void onResponse(Void arg0) {
-								new ResponseStatusWidget().show("deleted");
-
-							}
-
-						});
+//TODO delete
 	}
 <f:message>generated.comment</f:message>
 	@Override
 	public void updateLinkClicked() {
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-				new Update${$class/@name}Panel());
+				new Update${$class/@name}Panely());
 	}
 <f:message>generated.comment</f:message>
 	@Override
@@ -66,14 +56,14 @@ public class ${$class/@name}OptionsPanel extends OptionsComposite {
 	public void createLinkClicked() {
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-				new Create${$class/@name}Panel(CreateCompositeType.CREATE));
+				new Create${$class/@name}Panely(CreateCompositeType.CREATE));
 
 	}
 <f:message>generated.comment</f:message>
 	@Override
 	public void addLinkClicked() {
 		${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-				new Create${$class/@name}Panel(CreateCompositeType.ADD));
+				new Create${$class/@name}Panely(CreateCompositeType.ADD));
 	}
 <f:message>generated.comment</f:message>	
 	@Override

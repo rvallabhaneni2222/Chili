@@ -301,15 +301,16 @@
 					<%--request factory entity request class --%>
 					<ws:file  path="{$class/@name}Request.java" template="templates/web/gwt/client/rf/entity_request.java.jet"/>										
 					<%-- Create Entity Panel--%>
-					<ws:file  path="Create{$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_create_panel_template.java.jet"/>
+					<%--<ws:file  path="Create{$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_create_panel_template.java.jet"/>--%>
 					<ws:file  path="Create{$class/@name}Panely.java" template="templates/web/gwt/client/entity/create_panely.java.jet"/>
 					<%-- Generic Search Panel--%>
 					<ws:file  path="${$class/@name}SearchPanelGeneric.java" template="templates/web/gwt/client/entity/web_search_generic_panel_template.java.jet"/>
 					<%-- Read Panel--%>
-					<ws:file  path="Read${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_read_panel_template.java.jet"/>
+					<%--<ws:file  path="Read${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_read_panel_template.java.jet"/>--%>
 					<ws:file  path="Read${$class/@name}Panely.java" template="templates/web/gwt/client/entity/read_panely.java.jet"/>
 					<%-- Update Panel--%>
-					<ws:file  path="Update${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_update_panel_template.java.jet"/>
+					<%--<ws:file  path="Update${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_update_panel_template.java.jet"/>--%>
+					<ws:file  path="Update${$class/@name}Panely.java" template="templates/web/gwt/client/entity/update_panely.java.jet"/>
 					<%-- Side  Panel--%>
 					<ws:file  path="${$class/@name}SideBar.java" template="templates/web/gwt/client/entity/web_side_panel_template.java.jet"/>
 					<%-- Options Panel--%>
@@ -329,19 +330,19 @@
 						<%-- if class is a Parent class--%>
 		    		 	<c:if test="$isParent = $class/@name">  
 			    		 	<%-- Tree  Panel --%>
-			    		 	<ws:file  path="TreeAbstract${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_tree_abstract_panel_template.java.jet"/>
+			    		<%-- 	<ws:file  path="TreeAbstract${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_tree_abstract_panel_template.java.jet"/>--%>
 			    		 	<ws:file  path="TreeAbstract${$class/@name}Panely.java" template="templates/web/gwt/client/entity/tree_panel_abstract.java.jet"/>
 							<%-- Read All Entities Panel--%>
-							<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_abstract_panel_template.java.jet"/>
+						<%--	<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_abstract_panel_template.java.jet"/>--%>
 							<ws:file  path="ReadAll{$class/@name}sPanely.java" template="templates/web/gwt/client/entity/read_all_abstract.java.jet"/>		
 						</c:if>
 						<%-- if class is a regular  class--%>
 						<c:if test="$isParent = $class/@xmi.id">  
 			    		 	<%-- Tree  Panel --%>
-			    		 	<ws:file  path="Tree${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_tree_panel_template.java.jet"/>
+			    		 <%--	<ws:file  path="Tree${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_tree_panel_template.java.jet"/>--%>
 			    		 	<ws:file  path="Tree${$class/@name}Panely.java" template="templates/web/gwt/client/entity/tree_panely.java.jet"/>
 							<%-- Read All Entities Panel--%>
-							<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_panel_template.java.jet"/>
+						<%--<ws:file  path="ReadAll{$class/@name}sPanel.java" template="templates/web/gwt/client/entity/web_readall_panel_template.java.jet"/>--%>
 							<ws:file  path="ReadAll{$class/@name}sPanely.java" template="templates/web/gwt/client/entity/read_all_panel.java.jet"/>		
 						</c:if>
 						

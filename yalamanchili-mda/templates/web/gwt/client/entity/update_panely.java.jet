@@ -2,10 +2,7 @@
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
-<c:setVariable select="$class/@xmi.id" var="classID"/>
 package ${$packageName}.${lower-case($class/@name)};
-import info.yalamanchili.gwt.composite.ReadAllCompositey.ReadAllTableType;
-
 <%--process enums from base and lavel1,2 parents --%>
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
@@ -46,55 +43,16 @@ import info.yalamanchili.gwt.composite.ReadAllCompositey.ReadAllTableType;
 					 	</c:iterate>					 
 		 			</c:otherwise>
 		 		</c:choose>
-			</c:iterate>	
-	<%-- process compsition associations--%>
-	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
-	<c:iterate select="$association/Association.connection" var="association_connection">
-		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
-			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
-		<%-- check is the association is corresponding to the class  --%>
-					<c:if test="$association_connection_end_classID = $classID"> 
-					<%-- process only compositions--%>
-  					   	<%-- iterate over the iterations ends  --%>
-  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
-  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
-  					  	 	<%-- get the end secondary end with other class  --%>
-  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
-  					  		 	<%-- check if this is a comp--%>
-  					  		 	<c:if test="$association_connection_end2/@aggregation = 'composite'">
-  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
-  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
-  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-  					  		 			
-  					  		 				<%-- check if this is a parent--%>
-					  					  	<c:setVariable select="$class2/@xmi.id" var="isParent"/>
-											<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Generalization" var="generalization">
-												<c:if test="$generalization/Generalization.parent/Class/@xmi.idref = $class2/@xmi.id">
-												<%-- update flag variable--%>
-												<c:setVariable select="$class2/@name" var="isParent"/>
-												</c:if>															
-											</c:iterate>
-											<%-- if class is a Parent class--%>
-											import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
-							    		 	<c:if test="$isParent = $class2/@name">  
-								    		 	import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.TreeAbstract${$class2/@name}Panely;
-											</c:if>
-											<%-- if class is a regular  class--%>
-											import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
-											<c:if test="$isParent = $class2/@xmi.id">  
-											import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Tree${$class2/@name}Panely;
-											</c:if>	  					  		 			
-  					  		 			</c:if> 
-  					  		 		</c:iterate>
-  					  		 	 </c:if> 	
-  							  	</c:if> 
-  					 	  </c:iterate> 					 	 				 	  
-				</c:if>												
-		</c:iterate>
-	</c:iterate>
-</c:iterate>
+			</c:iterate>
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import ${$webPackage}${camelCase($projectName)}Welcome;
+import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
+import info.yalamanchili.gwt.composite.ReadAllCompositey.ReadAllTableType;
+import info.yalamanchili.gwt.composite.UpdateCompositey;
+import info.yalamanchili.gwt.fields.DataType;
+import info.yalamanchili.gwt.rf.GenericRequest;
 
-<%-- process dropdowns one tone and many to one --%>
+<%-- process dropdowns one tone and many to one unidirectional--%>
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 	<c:iterate select="$association/Association.connection" var="association_connection">
 		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
@@ -130,17 +88,9 @@ import info.yalamanchili.gwt.composite.ReadAllCompositey.ReadAllTableType;
 		</c:iterate>
 	</c:iterate>
 </c:iterate>
-
-import info.yalamanchili.gwt.callback.ALAsyncCallback;
-import info.yalamanchili.gwt.composite.CreateCompositey;
-import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
-import ${$webPackage}${camelCase($projectName)}Welcome;
-import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
-import info.yalamanchili.gwt.fields.DataType;
-import info.yalamanchili.gwt.rf.GenericRequest;
-
 <f:message>generated.class.comment</f:message>
-public class Create${$class/@name}Panely extends CreateCompositey<${$class/@name}Proxy> {
+public class Update${$class/@name}Panely extends UpdateCompositey<${$class/@name}Proxy> {
+
 <%-- process dropdowns one tone and many to one --%>
 <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 	<c:iterate select="$association/Association.connection" var="association_connection">
@@ -158,13 +108,15 @@ public class Create${$class/@name}Panely extends CreateCompositey<${$class/@name
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 			  		 			
   					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
   					  		 			<%-- check target is one side--%>
+  					  		 			<%-- TODO need to check navaigability? --%>
   					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
   					    						<%--process only non composites --%>
   					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">
-<f:message>generated.comment</f:message>  					    						
-  					    							Select${$class2/@name}Panely select${$class2/@name}Panel = new Select${$class2/@name}Panely("${$class2/@name}");
-  					  		 					</c:if>	
+<f:message>generated.comment</f:message>  					    						  					    						
+  					    							Select${$class2/@name}Panely select${$class2/@name}Panel = new Select${$class2/@name}Panely("${$class2/@name}",
+													Read${$class/@name}Panely.instance().getEntity().get${$class2/@name}());
+  					  		 			</c:if>		
   					  		 			</c:if>	
   					  		 			</c:if>	
   					  		 			</c:if> 
@@ -175,165 +127,119 @@ public class Create${$class/@name}Panely extends CreateCompositey<${$class/@name
 		</c:iterate>
 	</c:iterate>
 </c:iterate>
-
 <f:message>generated.comment</f:message>
-public Create${$class/@name}Panely(CreateCompositeType type) {
-	super(type);
-		initCreateComposite(${$class/@name}.class.getName(), ${camelCase($projectName)}Welcome.constants);
-	}
-	
-<f:message>generated.comment</f:message>
-	@Override
-	protected void addListeners() {
-		// TODO Auto-generated method stub
-
+	public Update${$class/@name}Panely() {
+		initUpdateComposite("${$groupID}.entity.${lower-case($package/@name)}.${$class/@name}", ${camelCase($projectName)}Welcome.constants);
 	}
 <f:message>generated.comment</f:message>
 	@Override
-	protected void addWidgetsBeforeCaptionPanel() {
-		// TODO Auto-generated method stub
-
-	}
-<f:message>generated.comment</f:message>
-	@Override
-	protected void addWidgets() {
-	<%-- process parent class level 2 attributes--%>
-	<c:if test="not($class/@name = $parentClass2/@name)">
-				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+	public ${$class/@name}Proxy populateEntityOnRender() {
+		proxy = Read${$class/@name}Panely.instance().getEntity();
+				<%-- process parent class level 2 attributes--%>
+			<c:if test="not($class/@name = $parentClass2/@name)">
+			<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.STRING_FIELD); 
+				 <c:when test="${'$StringID'}" > setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.INTEGER_FIELD); 
+				 <c:when test="${'$IntegerID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.DATE_FIELD);  
+				 <c:when test="${'$DateID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.BOOLEAN_FIELD); 
+				 <c:when test="${'$BooleanID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.LONG_FIELD); 
+				 <c:when test="${'$LongID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
+				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.IMAGE_FIELD); 
+				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}(),false); 
+				 </c:when>				 
+				 <c:when test="${'$ImageID'}" >  setImageField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.RICH_TEXT_AREA); 
-				 </c:when>
-				 <c:when test="${'$CurrencyID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.CURRENCY_FIELD); 
-				 </c:when>				 					 				 
+				 <c:when test="${'$RichTextID'}" >  setRichTextField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>					 				 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-								addEnumField("${$attribute/@name}", false, ${$attribute/@isRequired}, "${$attribute/@name}", ${$class/@name}.class.getName());
+								setEnumFeild("${$attribute/@name}", proxy.get${ uppercaseFirst($attribute/@name)}().toString());
 					 			</c:if>
-					 	</c:iterate>					 
+					 	</c:iterate>					 						
 		 			</c:otherwise>
 		 		</c:choose>
 			</c:iterate>
-	</c:if>
-	<%-- process parent class level 1 attributes--%>
-	<c:if test="not($class/@name = $parentClass1/@name)">
-				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+			</c:if>
+			<%-- process parent class level 1 attributes--%>
+			<c:if test="not($class/@name = $parentClass1/@name)">
+			<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.STRING_FIELD); 
+				 <c:when test="${'$StringID'}" > setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.INTEGER_FIELD); 
+				 <c:when test="${'$IntegerID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.DATE_FIELD);  
+				 <c:when test="${'$DateID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.BOOLEAN_FIELD); 
+				 <c:when test="${'$BooleanID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.LONG_FIELD); 
+				 <c:when test="${'$LongID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
+				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.IMAGE_FIELD); 
-				 </c:when>
-				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.RICH_TEXT_AREA); 
+				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}(),false); 
+				 </c:when>					 
+				 <c:when test="${'$ImageID'}" >  setImageField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>	
-				 <c:when test="${'$CurrencyID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.CURRENCY_FIELD); 
-				 </c:when>				 				 				 
+				 <c:when test="${'$RichTextID'}" >  setRichTextField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>					 			 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-								addEnumField("${$attribute/@name}", false, ${$attribute/@isRequired}, "${$attribute/@name}", ${$class/@name}.class.getName());
+								setEnumFeild("${$attribute/@name}", proxy.get${ uppercaseFirst($attribute/@name)}().toString());						
 					 			</c:if>
-					 	</c:iterate>					 
+					 	</c:iterate>					 						
 		 			</c:otherwise>
 		 		</c:choose>
 			</c:iterate>
-	</c:if>
-	<%--process premitive data types of base current class --%>
+			</c:if>
+			<%-- process parent class level 0 attributes--%>
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.STRING_FIELD); 
+				 <c:when test="${'$StringID'}" > setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.INTEGER_FIELD); 
+				 <c:when test="${'$IntegerID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.DATE_FIELD);  
+				 <c:when test="${'$DateID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.BOOLEAN_FIELD); 
+				 <c:when test="${'$BooleanID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.LONG_FIELD); 
+				 <c:when test="${'$LongID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
+				 <c:when test="${'$FloatID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
 				 </c:when>
-				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.IMAGE_FIELD); 
-				 </c:when>
-				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.RICH_TEXT_AREA); 
-				 </c:when>
-				 <c:when test="${'$CurrencyID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.CURRENCY_FIELD); 
-				 </c:when>				 					 				 
+				 <c:when test="${'$CurrencyID'}" >  setField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}(),false); 
+				 </c:when>					 
+				 <c:when test="${'$ImageID'}" >  setImageField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>	
+				 <c:when test="${'$RichTextID'}" >  setRichTextField("${$attribute/@name}",proxy.get${ uppercaseFirst($attribute/@name)}()); 
+				 </c:when>					 			 
 					 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-								addEnumField("${$attribute/@name}", false, ${$attribute/@isRequired}, "${$attribute/@name}", ${$class/@name}.class.getName());
+								setEnumFeild("${$attribute/@name}", proxy.get${ uppercaseFirst($attribute/@name)}().toString());						
 					 			</c:if>
-					 	</c:iterate>					 
-		 			</c:otherwise>
+					 	</c:iterate>												
+		 			</c:otherwise>					 
 		 		</c:choose>
 			</c:iterate>
-			
-			<%-- process dropdowns one to one and many to one unidirectional--%>
-			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
-				<c:iterate select="$association/Association.connection" var="association_connection">
-					<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
-						<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
-					<%-- check is the association is corresponding to the class  --%>
-								<c:if test="$association_connection_end_classID = $classID"> 
-			  					   	<%-- iterate over the iterations ends  --%>
-			  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
-			  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
-			  					  	 	<%-- get the end secondary end with other class  --%>
-			  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
-			  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
-			  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
-			  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 			  		 			
-			  					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
-			  					  		 			<%-- check target is one side--%>
-			  					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
-			  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-  					    						<%--process only non composites --%>
-  					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">			  					    						
-			  					    							addDropDown(select${$class2/@name}Panel);
-			  					  		 			</c:if>			
-			  					  		 			</c:if>	
-			  					  		 			</c:if>	
-			  					  		 			</c:if> 
-			  					  		 		</c:iterate>
-			  							  	</c:if> 
-			  					 	  </c:iterate> 					 	 				 	  
-								</c:if> 											
-					</c:iterate>
-				</c:iterate>
-			</c:iterate>	
-	}
-<f:message>generated.comment</f:message>
+		//no need to render dropdowns		
+			return proxy;
+		}
+<f:message>generated.comment</f:message>		
 	@Override
-	protected ${$class/@name}Proxy populateEntityFromFields() {
-		request = (GenericRequest< ${$class/@name}Proxy>)  ${camelCase($projectName)}Welcome.requestFactory.${lower-case($class/@name)}Request();
-		proxy = request.create(${$class/@name}Proxy.class);
+	public ${$class/@name}Proxy populateEntityOnUpdate(){
+	request = (GenericRequest<${$class/@name}Proxy>) ${camelCase($projectName)}Welcome.requestFactory
+				.${lower-case($class/@name)}Request();
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
-		<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+	<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 			 <c:when test="${'$StringID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getStringField("${$attribute/@name}")); 
 			 </c:when>
@@ -352,7 +258,7 @@ public Create${$class/@name}Panely(CreateCompositeType type) {
 			 <c:when test="${'$RichTextID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getRichTextField("${$attribute/@name}")); 
 			 </c:when>
 			 <c:when test="${'$CurrencyID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getCurrencyField("${$attribute/@name}")); 
-			 </c:when>			 			 			 
+			 </c:when>				 			 			 
 				 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -362,11 +268,41 @@ public Create${$class/@name}Panely(CreateCompositeType type) {
 	 			</c:otherwise>
 	 		</c:choose>
 		</c:iterate>
-
 	</c:if>
 	<%-- process parent class level 1 attributes--%>
 	<c:if test="not($class/@name = $parentClass1/@name)">
-		<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+	<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+			 <c:when test="${'$StringID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getStringField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$IntegerID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getIntegerField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$DateID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getDateField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$BooleanID'}" >proxy.set${ uppercaseFirst($attribute/@name)}(getBooleanField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$LongID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getLongField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$FloatID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
+			 </c:when>
+			 <c:when test="${'$ImageID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getImageField("${$attribute/@name}")); 
+			 </c:when>	
+			 <c:when test="${'$RichTextID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getRichTextField("${$attribute/@name}")); 
+			 </c:when>	
+			 <c:when test="${'$CurrencyID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getCurrencyField("${$attribute/@name}")); 
+			 </c:when>			 		 		 
+				 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								proxy.set${ uppercaseFirst($attribute/@name)}(${ uppercaseFirst($enumeration/@name)}.valueOf(getEnumField("${$attribute/@name}")));
+					 			</c:if>
+					 	</c:iterate>				 
+	 			</c:otherwise>
+	 		</c:choose>
+		</c:iterate>
+	</c:if>
+	<%-- process base class attributes--%>
+	<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 			 <c:when test="${'$StringID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getStringField("${$attribute/@name}")); 
 			 </c:when>
@@ -385,38 +321,7 @@ public Create${$class/@name}Panely(CreateCompositeType type) {
 			 <c:when test="${'$RichTextID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getRichTextField("${$attribute/@name}")); 
 			 </c:when>	
 			 <c:when test="${'$CurrencyID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getCurrencyField("${$attribute/@name}")); 
-			 </c:when>				 		 			 
-				 <c:otherwise>
-					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
-					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
-								proxy.set${ uppercaseFirst($attribute/@name)}(${ uppercaseFirst($enumeration/@name)}.valueOf(getEnumField("${$attribute/@name}")));
-					 			</c:if>
-					 	</c:iterate>				 
-	 			</c:otherwise>
-	 		</c:choose>
-		</c:iterate>
-	</c:if>
-		<%-- process base class --%>
-		<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-			<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-			 <c:when test="${'$StringID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getStringField("${$attribute/@name}")); 
-			 </c:when>
-			 <c:when test="${'$IntegerID'}" >proxy.set${ uppercaseFirst($attribute/@name)}(getIntegerField("${$attribute/@name}")); 
-			 </c:when>
-			 <c:when test="${'$DateID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getDateField("${$attribute/@name}")); 
-			 </c:when>
-			 <c:when test="${'$BooleanID'}" >proxy.set${ uppercaseFirst($attribute/@name)}(getBooleanField("${$attribute/@name}")); 
-			 </c:when>
-			 <c:when test="${'$LongID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getLongField("${$attribute/@name}")); 
-			 </c:when>
-			 <c:when test="${'$FloatID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getFloatField("${$attribute/@name}")); 
-			 </c:when>
-			 <c:when test="${'$ImageID'}" > proxy.set${ uppercaseFirst($attribute/@name)}(getImageField("${$attribute/@name}")); 
-			 </c:when>
-			 <c:when test="${'$RichTextID'}" >proxy.set${ uppercaseFirst($attribute/@name)}(getRichTextField("${$attribute/@name}")); 
-			 </c:when>		
-			 <c:when test="${'$CurrencyID'}" >proxy.set${ uppercaseFirst($attribute/@name)}(getCurrencyField("${$attribute/@name}")); 
-			 </c:when>				 	 			 
+			 </c:when>			 		 			 
 				 <c:otherwise>
 					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
 					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
@@ -427,7 +332,7 @@ public Create${$class/@name}Panely(CreateCompositeType type) {
 	 		</c:choose>
 		</c:iterate>
 		
-			<%-- process dropdowns one tone and many to one unidirectional--%>
+		<%-- process dropdowns one tone and many to one --%>
 			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
 				<c:iterate select="$association/Association.connection" var="association_connection">
 					<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
@@ -460,25 +365,165 @@ public Create${$class/@name}Panely(CreateCompositeType type) {
 					</c:iterate>
 				</c:iterate>
 			</c:iterate>
-		return proxy;
+		return proxy;	
 	}
-<f:message>generated.comment</f:message>	
+	
+	<f:message>generated.comment</f:message>
+	@Override
+	protected void successfullyUpdated() {
+		AutomanageWelcome.instance().getEntityPanel().clear();
+		AutomanageWelcome.instance().getEntityPanel()
+				.add(new ReadAll${$class/@name}sPanely(ReadAllTableType.READALL));
+
+	}
+		
+<f:message>generated.comment</f:message>
+	@Override
+	protected void addListeners() {
+		// TODO Auto-generated method stub
+
+	}
+<f:message>generated.comment</f:message>
+	@Override
+	protected void addWidgetsBeforeCaptionPanel() {
+		// TODO Auto-generated method stub
+
+	}
+<f:message>generated.comment</f:message>
+	@Override
+	protected void addWidgets() {
+		<%-- process parent class level 2 attributes--%>
+	<c:if test="not($class/@name = $parentClass2/@name)">
+				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.STRING_FIELD); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.INTEGER_FIELD); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.DATE_FIELD);  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.BOOLEAN_FIELD); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.LONG_FIELD); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
+				 </c:when>
+				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.IMAGE_FIELD); 
+				 </c:when>
+				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.RICH_TEXT_AREA); 
+				 </c:when>
+				 <c:when test="${'$CurrencyID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.CURRENCY_FIELD); 
+				 </c:when>				 				 					 				 
+					 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								addEnumField("${$attribute/@name}", false, ${$attribute/@isRequired}, "${$attribute/@name}", ${$class/@name}.class.getName());
+					 			</c:if>
+					 	</c:iterate>					 
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+	</c:if>
+	<%-- process parent class level 1 attributes--%>
+	<c:if test="not($class/@name = $parentClass1/@name)">
+				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.STRING_FIELD); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.INTEGER_FIELD); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.DATE_FIELD);  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.BOOLEAN_FIELD); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.LONG_FIELD); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
+				 </c:when>
+				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.IMAGE_FIELD); 
+				 </c:when>	
+				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.RICH_TEXT_AREA); 
+				 </c:when>
+				 <c:when test="${'$CurrencyID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.CURRENCY_FIELD); 
+				 </c:when>				 				 				 
+					 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								addEnumField("${$attribute/@name}", false, ${$attribute/@isRequired}, "${$attribute/@name}", ${$class/@name}.class.getName());
+					 			</c:if>
+					 	</c:iterate>					 
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+	</c:if>
+	<%-- process base class attributes --%>
+			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
+				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
+				 <c:when test="${'$StringID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.STRING_FIELD); 
+				 </c:when>
+				 <c:when test="${'$IntegerID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.INTEGER_FIELD); 
+				 </c:when>
+				 <c:when test="${'$DateID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.DATE_FIELD);  
+				 </c:when>
+				 <c:when test="${'$BooleanID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.BOOLEAN_FIELD); 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.LONG_FIELD); 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.FLOAT_FIELD); 
+				 </c:when>
+				 <c:when test="${'$ImageID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.IMAGE_FIELD); 
+				 </c:when>	
+				 <c:when test="${'$RichTextID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.RICH_TEXT_AREA); 
+				 </c:when>	
+				 <c:when test="${'$CurrencyID'}" > addField("${$attribute/@name}", false, ${$attribute/@isRequired}, DataType.CURRENCY_FIELD); 
+				 </c:when>				 			 				 
+					 <c:otherwise>
+					 	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Enumeration" var="enumeration">
+					 			<c:if test="$attribute/StructuralFeature.type/Enumeration/@xmi.idref = $enumeration/@xmi.id">
+								addEnumField("${$attribute/@name}", false, ${$attribute/@isRequired}, "${$attribute/@name}", ${$class/@name}.class.getName());
+					 			</c:if>
+					 	</c:iterate>					 
+		 			</c:otherwise>
+		 		</c:choose>
+			</c:iterate>
+			<%-- process dropdowns one to one and many to one unidirectional--%>
+			<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+				<c:iterate select="$association/Association.connection" var="association_connection">
+					<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+						<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+					<%-- check is the association is corresponding to the class  --%>
+								<c:if test="$association_connection_end_classID = $classID"> 
+			  					   	<%-- iterate over the iterations ends  --%>
+			  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+			  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+			  					  	 	<%-- get the end secondary end with other class  --%>
+			  					  		 	<c:if test="not($association_connection_end/@xmi.id = $association_connection_end2/@xmi.id)"> 
+			  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+			  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+			  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 			  		 			
+			  					  		 			<%-- This processes the JPA realations @OneToMany, @ManyToMany, @OneToOne etc--%>
+			  					  		 			<%-- check target is one side--%>
+			  					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
+			  					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
+  					    						<%--process only non composites --%>
+  					    						<c:if test="not($association_connection_end2/@aggregation = 'composite')">			  					    									  					    							
+			  					    						addDropDown(select${$class2/@name}Panel);
+			  					  		 			</c:if>		
+			  					  		 			</c:if>	
+			  					  		 			</c:if>	
+			  					  		 			</c:if> 
+			  					  		 		</c:iterate>
+			  							  	</c:if> 
+			  					 	  </c:iterate> 					 	 				 	  
+								</c:if> 											
+					</c:iterate>
+				</c:iterate>
+			</c:iterate>	
+	}
+<f:message>generated.comment</f:message>
 	@Override
 	protected void configure() {
 
-	}
-
-<f:message>generated.comment</f:message>	
-	@Override
-	protected void successfullyCreated() {
-		${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
-						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
-						new ReadAll${$class/@name}sPanely(ReadAllTableType.READALL));
-	}
-	
-<f:message>generated.comment</f:message>	
-	@Override
-	protected void addButtonClicked() {
 	}
 }
 </f:bundle>

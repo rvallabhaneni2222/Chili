@@ -1,4 +1,4 @@
-<java:merge/>
+
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
@@ -10,6 +10,7 @@ import info.yalamanchili.gwt.utils.Alignment;
 import info.yalamanchili.gwt.fields.DataType;
 import info.yalamanchili.gwt.rf.GenericRequest;
 import info.yalamanchili.gwt.composite.OptionsComposite.OptionsCompositeType;
+import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 <f:message>generated.class.comment</f:message>
 public class Read${$class/@name}Panely extends ReadCompositey<${$class/@name}Proxy> {
 <f:message>generated.comment</f:message>
