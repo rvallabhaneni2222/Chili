@@ -17,7 +17,6 @@ public class GWTUncaughtExceptionHandler implements UncaughtExceptionHandler {
 		Throwable exceptionToDisplay = getExceptionToDisplay(e);
 		// Replace with your favorite message dialog, e.g. GXT's MessageBox
 		logger.info(exceptionToDisplay.getMessage());
-		Window.alert(exceptionToDisplay.getMessage());
 	}
 
 	private static Throwable getExceptionToDisplay(Throwable throwable) {
