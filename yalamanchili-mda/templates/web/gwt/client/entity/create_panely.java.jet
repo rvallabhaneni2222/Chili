@@ -78,11 +78,13 @@ import info.yalamanchili.gwt.composite.ReadAllCompositey.ReadAllTableType;
 											import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
 							    		 	<c:if test="$isParent = $class2/@name">  
 								    		 	import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.TreeAbstract${$class2/@name}Panely;
+								    		 	import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}Proxy;
 											</c:if>
 											<%-- if class is a regular  class--%>
 											import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
 											<c:if test="$isParent = $class2/@xmi.id">  
 											import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Tree${$class2/@name}Panely;
+											import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}Proxy;
 											</c:if>	  					  		 			
   					  		 			</c:if> 
   					  		 		</c:iterate>
@@ -478,7 +480,60 @@ public Create${$class/@name}Panely(CreateCompositeType type) {
 	
 <f:message>generated.comment</f:message>	
 	@Override
-	protected void addButtonClicked() {
+	protected void setParent() {
+	<%-- check to see is this class is a comp first--%>
+	<c:if test="$class/@isDependent = 'true'">
+	<%-- process compsition associations--%>
+	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Association" var="association">
+	<c:iterate select="$association/Association.connection" var="association_connection">
+		<c:iterate select="$association_connection/AssociationEnd" var="association_connection_end">
+			<c:setVariable select="$association_connection_end/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID" />
+		<%-- check is the association is corresponding to the class  --%>
+					<c:if test="$association_connection_end_classID = $classID"> 
+					<%-- process only compositions--%>
+  					   	<%-- iterate over the iterations ends  --%>
+  					  	 <c:iterate select="$association_connection/AssociationEnd" var="association_connection_end2">
+  					  	 <c:setVariable select="$association_connection_end2/AssociationEnd.participant/Class/@xmi.idref" var="association_connection_end_classID2" />
+  					  	 	<%-- get the end secondary end with other class  --%>
+  					  		 	<c:if test="not($association_connection_end_classID2 = $classID)"> 
+  					  		 	<%-- check if this is a comp--%>
+  					  		 	<c:if test="$association_connection_end2/@aggregation = 'composite'">
+  					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
+  					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
+  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
+										<%-- check to see if class2 is parent and child--%>
+										<c:if test="not($class2/@parent1 = $class2/@name)">
+										<c:if test="not($class2/@hasChildren = $class2/@name)">
+										proxy.set${$class2/@name}( (${$class2/@name}Proxy) TreeAbstract${$class2/@name}Panely.instance().getEntity());
+										</c:if>
+										<%-- has parent and no children--%>
+										<c:if test="$class2/@hasChildren = $class2/@name">
+										proxy.set${$class2/@name}((${$class2/@name}Proxy)Tree${$class2/@name}Panely.instance().getEntity());
+										</c:if>
+										</c:if>
+										<%-- no parent and has children--%>
+										 <c:if test="$class2/@parent1 = $class2/@name">
+										 <c:if test="not($class2/@hasChildren = $class2/@name)">
+											proxy.set${$class2/@name}( (${$class2/@name}Proxy) TreeAbstract${$class2/@name}Panely.instance().getEntity());
+										 </c:if>
+										 </c:if>
+  					  		 			</c:if> 
+  					  		 		</c:iterate>
+  					  		 	 </c:if> 	
+  							  	</c:if> 
+  					 	  </c:iterate> 					 	 				 	  
+				</c:if>												
+		</c:iterate>
+	</c:iterate>
+</c:iterate>
+</c:if>		
+	}
+<f:message>generated.comment</f:message>
+	@Override
+	protected void successfullyAdded() {
+			${camelCase($projectName)}Welcome.instance().getEntityPanel().clear();
+						${camelCase($projectName)}Welcome.instance().getEntityPanel().add(
+						new ReadAll${$class/@name}sPanely(ReadAllTableType.READALL));
 	}
 }
 </f:bundle>

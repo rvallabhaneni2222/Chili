@@ -234,6 +234,7 @@
 	</dependencies>
 	<modules>
 		<module>../${$projectName}-jpa</module>
+		<module>../${$projectName}-dao</module>
 		<module>../${$projectName}-ejb</module>
 		<module>../${$projectName}-webapp</module>
 		<module>../${$projectName}-rest</module>

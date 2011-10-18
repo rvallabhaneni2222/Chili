@@ -9,7 +9,10 @@
 		
 	<!-- used to support internationalization -->
 	<inherits name='com.google.gwt.i18n.I18N' />
-	<extend-property name="locale" values="ES" />
+
+	<!-- limit dev compile permutation to only firefox -->
+	<!-- REMOVE IN PRODUCTION-->
+ 	<set-property name="user.agent" value="gecko1_8"/>
 	
 	<!-- gwt client bundle to load resources -->
 	<inherits name="com.google.gwt.resources.Resources"/>

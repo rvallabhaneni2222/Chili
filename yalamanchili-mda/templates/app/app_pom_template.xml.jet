@@ -20,6 +20,12 @@
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>
+			<artifactId>${$projectName}-dao</artifactId>
+			<version>${'${'}${'pom.version}'}</version>
+			<type>ejb</type>
+		</dependency>		
+		<dependency>
+			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-webapp</artifactId>
 			<version>${'${'}${'pom.version}'}</version>
 			<type>war</type>
