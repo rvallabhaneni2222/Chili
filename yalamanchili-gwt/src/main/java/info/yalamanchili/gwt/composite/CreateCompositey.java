@@ -70,7 +70,23 @@ public abstract class CreateCompositey<T extends EntityProxy> extends
 
 	protected abstract void successfullyCreated();
 
-	protected abstract void addButtonClicked();
+	protected void addButtonClicked() {
+		logger.info("add");
+		request.save(proxy).fire(new Receiver() {
+
+			@Override
+			public void onResponse(Void arg0) {
+				new ResponseStatusWidget().show("added");
+				logger.info("fine--");
+				successfullyAdded();
+			}
+
+		});
+	}
+
+	protected abstract void setParent();
+
+	protected abstract void successfullyAdded();
 
 	public void onClick(ClickEvent event) {
 		if (event.getSource() == create || event.getSource() == add) {
@@ -81,6 +97,9 @@ public abstract class CreateCompositey<T extends EntityProxy> extends
 			createButtonClicked();
 		}
 		if (CreateCompositeType.ADD.equals(type)) {
+			logger.info("set paremnt");
+			setParent();
+			logger.info("calling add cliecld");
 			addButtonClicked();
 		}
 	}
@@ -98,6 +117,7 @@ public abstract class CreateCompositey<T extends EntityProxy> extends
 		public abstract void onResponse(Void res);
 
 		public void onSuccess(Void arg0) {
+			logger.info("on success");
 			loadingWidget.hide();
 			onResponse(arg0);
 		}
@@ -105,6 +125,7 @@ public abstract class CreateCompositey<T extends EntityProxy> extends
 		/* override these methods in create entity panels as needed */
 		@Override
 		public void onFailure(ServerFailure error) {
+			logger.info("on failure");
 			logger.info(error.getMessage());
 			loadingWidget.hide();
 		}
