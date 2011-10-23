@@ -8,6 +8,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import net.sf.gilead.pojo.gwt.LightEntity;
@@ -18,9 +19,10 @@ import net.sf.gilead.pojo.gwt.LightEntity;
  * 
  * @author ayalamanchili
  */
-//TODO move to non gwt package since not needed with request factory
+// TODO move to non gwt package since not needed with request factory
 @XmlType
 @MappedSuperclass
+@XmlRootElement
 public abstract class AbstractEntity extends LightEntity implements
 		Serializable {
 
