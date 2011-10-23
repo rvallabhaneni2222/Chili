@@ -504,7 +504,11 @@ public Create${$class/@name}Panely(CreateCompositeType type) {
 										<%-- check to see if class2 is parent and child--%>
 										<c:if test="not($class2/@parent1 = $class2/@name)">
 										<c:if test="not($class2/@hasChildren = $class2/@name)">
-										proxy.set${$class2/@name}( (${$class2/@name}Proxy) TreeAbstract${$class2/@name}Panely.instance().getEntity());
+										// this is a issue with gwt rf
+										// http://yalamanchili.info:8080/jira/browse/YCORE-71
+										${$class2/@name}Proxy parent = ${camelCase($projectName)}Welcome.requestFactory.${lower-case($class2/@name)}Request().create(${$class2/@name}Proxy.class);
+										parent.setId(TreeAbstract${$class2/@name}Panely.instance().getEntity().getId());
+										proxy.set${$class2/@name}(parent);
 										</c:if>
 										<%-- has parent and no children--%>
 										<c:if test="$class2/@hasChildren = $class2/@name">
@@ -514,7 +518,11 @@ public Create${$class/@name}Panely(CreateCompositeType type) {
 										<%-- no parent and has children--%>
 										 <c:if test="$class2/@parent1 = $class2/@name">
 										 <c:if test="not($class2/@hasChildren = $class2/@name)">
-											proxy.set${$class2/@name}( (${$class2/@name}Proxy) TreeAbstract${$class2/@name}Panely.instance().getEntity());
+											// this is a issue with gwt rf
+											// http://yalamanchili.info:8080/jira/browse/YCORE-71
+											${$class2/@name}Proxy parent = ${camelCase($projectName)}Welcome.requestFactory.${lower-case($class2/@name)}Request().create(${$class2/@name}Proxy.class);
+											parent.setId(TreeAbstract${$class2/@name}Panely.instance().getEntity().getId());
+											proxy.set${$class2/@name}(parent);
 										 </c:if>
 										 </c:if>
   					  		 			</c:if> 
