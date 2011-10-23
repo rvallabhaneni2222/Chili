@@ -195,16 +195,12 @@ ${$attribute/@name};
   					    						<%--check the relations--%>
   					    							<%-- Composite @ManyToOne--%>			
   					    							<c:if test="$association_connection_end2/@aggregation = 'composite'">
-<c:if test="$supportJAXB = 'TRUE'">
-@XmlElement 
-</c:if>  					    							
- @ManyToOne(cascade = CascadeType.MERGE)			    							
+  					    							
+@ManyToOne(cascade = CascadeType.MERGE)			    							
   					    							</c:if>  
   					    							<%-- Aggregate @ManyToOne--%>
   					    							<c:if test="$association_connection_end2/@aggregation = 'aggregate'">
-<c:if test="$supportJAXB = 'TRUE'">
-@XmlElement 
-</c:if>  					    							
+ 					    							
  @ManyToOne(cascade = CascadeType.MERGE) 					    							
   					    							</c:if> 
  													<%-- Association OneToOne or OneToMany--%>
@@ -212,17 +208,13 @@ ${$attribute/@name};
   					    								<%-- check for one or many realations--%>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-<c:if test="$supportJAXB = 'TRUE'">
-@XmlElement 
-</c:if>   					    									
+  					    									
 @OneToOne 	(cascade = CascadeType.ALL)				    				
 				    										</c:if>
 				    									</c:if>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
-<c:if test="$supportJAXB = 'TRUE'">
-@XmlElement 
-</c:if>   					    									
+  					    									
  @ManyToOne 					    				
 				    										</c:if>
 				    									</c:if>		    							
@@ -236,17 +228,13 @@ ${$attribute/@name};
    					    						<%--check the relations--%>
   					    							<%-- Composite @ManyToOne--%>
   					    							<c:if test="$association_connection_end/@aggregation = 'composite'">
-<c:if test="$supportJAXB = 'TRUE'">
-@XmlTransient 
-</c:if>    					    							
+    					    							
  @OneToMany(mappedBy="${lowercaseFirst($class/@name)}", cascade = CascadeType.ALL,  orphanRemoval = true)	
   protected 	List<${$class2/@name}>  ${lowercaseFirst($class2/@name)}s;				    							
   					    							</c:if>  
   					    							<%-- Aggregate @ManyToOne--%>
   					    							<c:if test="$association_connection_end/@aggregation = 'aggregate'">
-<c:if test="$supportJAXB = 'TRUE'">
-@XmlTransient 
-</c:if>    					    							
+   					    							
  @OneToMany(mappedBy="${lowercaseFirst($class/@name)}", cascade = CascadeType.MERGE)	
   protected 	List<${$class2/@name}>  ${lowercaseFirst($class2/@name)}s;		    							
   					    							</c:if> 
@@ -255,18 +243,14 @@ ${$attribute/@name};
   					    								<%-- check for one or many realations--%>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
-<c:if test="$supportJAXB = 'TRUE'">
-@XmlTransient 
-</c:if>    					    									
+  					    									
  @OneToMany (mappedBy="${lowercaseFirst($class/@name)}")	
   protected 	List<${$class2/@name}>  ${lowercaseFirst($class2/@name)}s;			    				
 				    										</c:if>
 				    									</c:if>
   					    								<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
   					    									<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
-<c:if test="$supportJAXB = 'TRUE'">
-@XmlTransient 
-</c:if>    					    									
+  					    									
  @ManyToMany 	
   protected 	Set<${$class2/@name}>  ${lowercaseFirst($class2/@name)}s;				    				
 				    										</c:if>
@@ -344,7 +328,10 @@ super();
   					  		 			<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
   					    						<c:if test="$association_connection_end2/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
 <%-- gettter returning a non collection--%>
- <f:message>generated.comment</f:message>													
+ <f:message>generated.comment</f:message>	
+<c:if test="$supportJAXB = 'TRUE'">
+@XmlElement 
+</c:if>												
  public 	${$class2/@name} get${$class2/@name}() {
  return  this.${lowercaseFirst($class2/@name)};
  }
@@ -366,7 +353,10 @@ super();
 	 										<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 0">
 	  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = -1">
 	  					    						<%-- gettter returning a collection--%>	
-	  					    						<f:message>generated.comment</f:message>			    											    									    						
+	  					    						<f:message>generated.comment</f:message>	
+	  					    							<c:if test="$supportJAXB = 'TRUE'">
+														@XmlTransient 
+														</c:if>  		    											    									    						
 														 public 	Set<${$class2/@name}>  get${$class2/@name}s(){
 														 if(this.${lowercaseFirst($class2/@name)}s==null){
 														 
@@ -396,7 +386,10 @@ super();
 	  					  		 			<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@lower = 1">
 	  					    						<c:if test="$association_connection_end/AssociationEnd.multiplicity/Multiplicity/Multiplicity.range/MultiplicityRange/@upper = 1">
 	  					    						<%-- gettter returning a collection--%>	
-	  					    							<f:message>generated.comment</f:message>			    											    									    						
+	  					    							<f:message>generated.comment</f:message>	
+	  					    							<c:if test="$supportJAXB = 'TRUE'">
+														@XmlTransient 
+														</c:if>  		    											    									    						
 														 public 	List<${$class2/@name}>  get${$class2/@name}s(){
 														 if(this.${lowercaseFirst($class2/@name)}s==null){
 														  //TODO actual

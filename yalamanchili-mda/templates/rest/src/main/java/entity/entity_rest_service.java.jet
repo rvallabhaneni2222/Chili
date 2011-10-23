@@ -161,14 +161,8 @@ public class ${$class/@name}Service {
 	@GET
 	@Path("/read/{id}")
 	//@Restrict("#{s:hasRole('user')}")
-	public String read(@PathParam("id") Long id) {
-		${$class/@name} ${lower-case($class/@name)} = em.find(${$class/@name}.class, id);
-		if(${lower-case($class/@name)} ==null){
-		return xstream.toXML("null");
-		}
-		else{
-		return xstream.toXML(mapper.clone(${lower-case($class/@name)}));
-		}
+	public ${$class/@name} read(@PathParam("id") Long id) {
+		return em.find(${$class/@name}.class, id);
 	}
 
 	@PUT

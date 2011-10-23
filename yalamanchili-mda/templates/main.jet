@@ -9,18 +9,18 @@
 <c:setVariable select="'com/automanage/catalog'" var="groupIDWithFolder"/>
 <c:setVariable select="'com_automanage_catalog'" var="groupIDWithUnderScore"/>
 <c:setVariable select="'1.1-SNAPSHOT'" var="version"/>
-<c:setVariable select="'C:/codebase/automanage/trunk/'" var="location"/>
+<c:setVariable select="'/home/ayalamanchili/codebase/automanage/trunk'" var="location"/>
 <%--features--%>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <c:setVariable select="'TRUE'" var="supportJAXB"/>
 <%--code generation properties--%>
-<c:setVariable select="'TRUE'" var="genMaster"/>
-<c:setVariable select="'TRUE'" var="genApp"/>
+<c:setVariable select="'FALSE'" var="genMaster"/>
+<c:setVariable select="'FALSE'" var="genApp"/>
 <c:setVariable select="'TRUE'" var="genJPA"/>
-<c:setVariable select="'TRUE'" var="genDAO"/>
-<c:setVariable select="'TRUE'" var="genEJB"/>
+<c:setVariable select="'FALSE'" var="genDAO"/>
+<c:setVariable select="'FALSE'" var="genEJB"/>
 <c:setVariable select="'TRUE'" var="genRest"/>
-<c:setVariable select="'TRUE'" var="genWebapp"/>
+<c:setVariable select="'FALSE'" var="genWebapp"/>
 <c:setVariable select="'FALSE'" var="genAndroid"/>
 <c:setVariable select="'FALSE'" var="genIOS"/>
 <c:setVariable select="'FALSE'" var="genTest"/>
