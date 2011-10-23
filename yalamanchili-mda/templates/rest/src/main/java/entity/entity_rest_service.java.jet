@@ -3,6 +3,7 @@
 package ${$groupID}.rest.${$package/@name};
 import info.yalamanchili.mapper.BeanMapper;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
+import ${$groupID}.dao.${lower-case($package/@name)}.${lower-case($class/@name)}.${$class/@name}DAO;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -142,7 +143,6 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.security.Restrict;
-import com.thoughtworks.xstream.XStream;
 
 @Name("${$class/@name}Resource")
 @Path("/crud/${lower-case($class/@name)}")
@@ -152,9 +152,10 @@ import com.thoughtworks.xstream.XStream;
 @Transactional
 public class ${$class/@name}Service {
 
-	protected XStream xstream = new XStream();
-	BeanMapper mapper = new BeanMapper();
-	@In(create = true)
+	@In("${lower-case($class/@name)}Daoy")
+	protected ${$class/@name}DAO dao;
+	
+	@In
 	protected EntityManager em;
 	
 
@@ -162,50 +163,35 @@ public class ${$class/@name}Service {
 	@Path("/read/{id}")
 	//@Restrict("#{s:hasRole('user')}")
 	public ${$class/@name} read(@PathParam("id") Long id) {
-		return em.find(${$class/@name}.class, id);
+		return dao.findById(id);
 	}
 
 	@PUT
 	@Path("/create")
 	//@Restrict("#{s:hasRole('admin')}")
-	public String create(String entity) {
-		${$class/@name} ${lower-case($class/@name)} = (${$class/@name}) xstream.fromXML(entity);
-		return xstream.toXML(mapper.clone(em.merge(${lower-case($class/@name)})));
+	public void create(${$class/@name} entity) {
+		dao.save(entity);
 	}
 
 	@PUT
 	@Path("/update")
 	//@Restrict("#{s:hasRole('admin')}")
-	public String update(String entity) {
-		${$class/@name} ${lower-case($class/@name)} = (${$class/@name}) xstream.fromXML(entity);
-		return xstream.toXML(mapper.merge(${lower-case($class/@name)},${lower-case($class/@name)}));
+	public void update(${$class/@name} entity) {
+		dao.save(entity);
 	}
 
 	@DELETE
 	@Path("/delete/{id}")
 	//@Restrict("#{s:hasRole('admin')}")
-	public void delete(@PathParam("id") String id) {
-		em.remove(em.find(${$class/@name}.class, id));
+	public void delete(@PathParam("id") Long id) {
+		dao.delete(id);
 	}
 
 	@GET
 	@Path("/readall/{offset}/{limit}")
-	public String readAll(@PathParam("offset") int offset,
+	public List<${$class/@name}> readAll(@PathParam("offset") int offset,
 			@PathParam("limit") int limit) {
-		List<${$class/@name}> results = new ArrayList<${$class/@name}>();
-		String query = "from " + ${$class/@name}.class.getCanonicalName();
-		Query getEntitites = em.createQuery(query);
-		getEntitites.setFirstResult(offset);
-		getEntitites.setMaxResults(limit);
-		for (Object ${lower-case($class/@name)} : getEntitites.getResultList()) {
-			results.add((${$class/@name}) mapper.clone(${lower-case($class/@name)}));
-		}
-		if(results.size() ==0){
-		return xstream.toXML("null");
-		}
-		else{
-		return xstream.toXML(results);
-		}
+		return dao.query(offset, limit);
 	}
 	
 <%--process level 1 generizations --%>
@@ -233,18 +219,8 @@ public class ${$class/@name}Service {
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 							  					  		 			@GET
 																	@Path("/read/{id}/${lower-case($class2/@name)}s")
-																	public String get${$class2/@name}s(@PathParam("id") Long id) {
-																		${$class/@name} ${lower-case($class/@name)} = em.find(${$class/@name}.class, id);
-																		List<${$class2/@name}> ${lower-case($class2/@name)}s = new ArrayList<${$class2/@name}>();
-																		for (${$class2/@name} entity : ${lower-case($class/@name)}.get${$class2/@name}s()) {
-																			${lower-case($class2/@name)}s.add((${$class2/@name}) mapper.clone(entity));
-																		}
-																		if(${lower-case($class2/@name)}s.size() ==0){
-																			return xstream.toXML("null");
-																			}
-																			else{
-																			return xstream.toXML(${lower-case($class2/@name)}s);
-																			}
+																	public Collection<${$class2/@name}> get${$class2/@name}s(@PathParam("id") Long id) {
+																			return dao.findById(id).get${$class2/@name}s();
 																	}
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
@@ -284,18 +260,8 @@ public class ${$class/@name}Service {
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 							  					  		 			@GET
 																	@Path("/read/{id}/${lower-case($class2/@name)}s")
-																	public String get${$class2/@name}s(@PathParam("id") Long id) {
-																		${$class/@name} ${lower-case($class/@name)} = em.find(${$class/@name}.class, id);
-																		List<${$class2/@name}> ${lower-case($class2/@name)}s = new ArrayList<${$class2/@name}>();
-																		for (${$class2/@name} entity : ${lower-case($class/@name)}.get${$class2/@name}s()) {
-																			${lower-case($class2/@name)}s.add((${$class2/@name}) mapper.clone(entity));
-																		}
-																		if(${lower-case($class2/@name)}s.size() ==0){
-																			return xstream.toXML("null");
-																			}
-																			else{
-																			return xstream.toXML(${lower-case($class2/@name)}s);
-																			}
+																	public Collection<${$class2/@name}> get${$class2/@name}s(@PathParam("id") Long id) {
+																		return dao.findById(id).get${$class2/@name}s();
 																	}
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
@@ -336,18 +302,8 @@ public class ${$class/@name}Service {
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
   					  		 										@GET
 																	@Path("/read/{id}/${lower-case($class2/@name)}s")
-																	public String get${$class2/@name}s(@PathParam("id") Long id) {
-																		${$class/@name} ${lower-case($class/@name)} = em.find(${$class/@name}.class, id);
-																		List<${$class2/@name}> ${lower-case($class2/@name)}s = new ArrayList<${$class2/@name}>();
-																		for (${$class2/@name} entity : ${lower-case($class/@name)}.get${$class2/@name}s()) {
-																			${lower-case($class2/@name)}s.add((${$class2/@name}) mapper.clone(entity));
-																		}
-																		if(${lower-case($class2/@name)}s.size() ==0){
-																			return xstream.toXML("null");
-																			}
-																			else{
-																			return xstream.toXML(${lower-case($class2/@name)}s);
-																			}
+																	public Collection<${$class2/@name}> get${$class2/@name}s(@PathParam("id") Long id) {
+																		return dao.findById(id).get${$class2/@name}s();
 																	}
   					  		 			
   					  		 			</c:if> 
@@ -366,29 +322,14 @@ public class ${$class/@name}Service {
 	
 	@GET
 	@Path("/count")
-	public String count() {
-		String query = "select count(entity) from "
-				+ ${$class/@name}.class.getCanonicalName() + " entity";
-		Query getEntitiesSize = em.createQuery(query);
-		Long count = (Long) getEntitiesSize.getSingleResult();
-		return count.toString();
-
+	public Long count() {
+		return dao.size();
 	}
 <c:if test="$enableHibernateSearch = 'true'">
 	@GET
 	@Path("/search/{searchText}")
-	public String search(@PathParam("searchText") String searchText) {
-		List<${$class/@name}> results = new ArrayList<${$class/@name}>();
-		FullTextEntityManager ftem = Search.getFullTextEntityManager(em);
-		org.apache.lucene.search.Query luceneQuery = SearchUtils
-				.getLuceneQuery(searchText, "id", new StandardAnalyzer(Version.LUCENE_30),
-						ReflectionUtils.getBeanProperties(${$class/@name}.class,
-								DataType.STRING));
-		Query query = ftem.createFullTextQuery(luceneQuery, ${$class/@name}.class);
-		for (Object obj : query.getResultList()) {
-			results.add((${$class/@name}) mapper.clone(obj));
-		}
-		return xstream.toXML(results);
+	public List<${$class/@name}> search(@PathParam("searchText") String searchText) {
+		return dao.search(searchText);
 	}
 </c:if>		
 
