@@ -129,6 +129,6 @@
 		</repository>
 	</distributionManagement>
 	<properties>
-		<gwtVersion>2.1.0</gwtVersion>
+		<gwtVersion>2.4.0</gwtVersion>
 	</properties>
 </project>

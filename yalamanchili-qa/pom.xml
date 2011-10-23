@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>info.yalamanchili.commons</groupId>
 			<artifactId>yalamanchili-commons</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>

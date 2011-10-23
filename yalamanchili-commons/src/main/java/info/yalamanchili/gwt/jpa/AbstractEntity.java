@@ -26,11 +26,11 @@ import net.sf.gilead.pojo.gwt.LightEntity;
 public abstract class AbstractEntity extends LightEntity implements
 		Serializable {
 
-	@XmlAttribute
+	
 	@Version
 	private Integer version;
 
-	@XmlElement
+	
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -38,11 +38,11 @@ public abstract class AbstractEntity extends LightEntity implements
 	public Long getId() {
 		return id;
 	}
-
+	@XmlElement
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	@XmlAttribute
 	public Integer getVersion() {
 		return version;
 	}
