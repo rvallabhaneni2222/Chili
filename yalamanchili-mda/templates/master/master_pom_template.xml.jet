@@ -237,7 +237,7 @@
 		<module>../${$projectName}-dao</module>
 		<module>../${$projectName}-ejb</module>
 		<module>../${$projectName}-webapp</module>
-		<module>../${$projectName}-rest</module>
+		<module>../${$projectName}-jrs</module>
 		<module>../${$projectName}-app</module>
 	</modules>
 	<build>

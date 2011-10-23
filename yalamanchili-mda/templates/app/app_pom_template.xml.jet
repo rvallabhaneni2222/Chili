@@ -32,7 +32,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>
-			<artifactId>${$projectName}-rest</artifactId>
+			<artifactId>${$projectName}-jrs</artifactId>
 			<version>${'${'}${'pom.version}'}</version>
 			<type>ejb</type>
 		</dependency>

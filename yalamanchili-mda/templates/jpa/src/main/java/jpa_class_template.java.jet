@@ -1,4 +1,4 @@
-<java:merge/>
+
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
@@ -32,6 +32,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Transient;
 <c:if test="$supportJAXB = 'TRUE'">
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 </c:if>
@@ -57,6 +58,9 @@ import info.yalamanchili.gwt.jpa.AbstractEntity;
 <c:if test="not($class/@hasChildren = $class/@name)">
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 </c:if> 
+</c:if>
+<c:if test="$supportJAXB = 'TRUE'">
+@XmlRootElement
 </c:if>
 @Entity
 public <c:if test="$class/@isAbstract = 'true'">abstract</c:if> class ${$class/@name} extends <c:if test="$class/@parentClass1Name = $class/@name">  AbstractEntity </c:if> <c:if test="not($class/@parentClass1Name = $class/@name)">  ${$class/@parentClass1Name} </c:if> {
@@ -144,9 +148,6 @@ private static final long serialVersionUID = <f:unique/>L;
 	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > @Field </c:when> <c:when test="${'$IntegerID'}" > @Field(index=Index.UN_TOKENIZED) 	</c:when><c:when test="${'$DateID'}" > @Field(index=Index.UN_TOKENIZED) </c:when><c:when test="${'$BooleanID'}" >@Field(index=Index.UN_TOKENIZED) </c:when><c:when test="${'$LongID'}" > @Field(index=Index.UN_TOKENIZED) </c:when><c:when test="${'$FloatID'}" > @Field(index=Index.UN_TOKENIZED) </c:when> <c:when test="${'$ImageID'}" > @Field </c:when> <c:when test="${'$RichTextID'}" > @Field </c:when><c:when test="${'$CurrencyID'}" > @Field(index=Index.UN_TOKENIZED) </c:when>
 </c:choose>
 </c:if>	
-<c:if test="$supportJAXB = 'TRUE'">
-@XmlElement 
-</c:if>
 <%-- processes the premitive Datatypes and enums--%>
 	 <c:choose select="$attribute/StructuralFeature.type/DataType/@href" > <c:when test="${'$StringID'}" > protected String </c:when> <c:when test="${'$IntegerID'}" > protected Integer </c:when><c:when test="${'$DateID'}" > protected Date </c:when><c:when test="${'$BooleanID'}" >protected  Boolean </c:when><c:when test="${'$LongID'}" > protected Long </c:when><c:when test="${'$FloatID'}" > protected Float </c:when> <c:when test="${'$ImageID'}" > protected String </c:when> <c:when test="${'$RichTextID'}" > protected String </c:when><c:when test="${'$CurrencyID'}" > @Digits(fraction = 2, integer = 10) protected BigDecimal </c:when>
 	 <c:otherwise> 

@@ -12,14 +12,14 @@
 <c:setVariable select="'C:/codebase/automanage/trunk/'" var="location"/>
 <%--features--%>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
-<c:setVariable select="'FALSE'" var="supportJAXB"/>
+<c:setVariable select="'TRUE'" var="supportJAXB"/>
 <%--code generation properties--%>
-<c:setVariable select="'FALSE'" var="genMaster"/>
-<c:setVariable select="'FALSE'" var="genApp"/>
-<c:setVariable select="'FALSE'" var="genJPA"/>
+<c:setVariable select="'TRUE'" var="genMaster"/>
+<c:setVariable select="'TRUE'" var="genApp"/>
+<c:setVariable select="'TRUE'" var="genJPA"/>
 <c:setVariable select="'TRUE'" var="genDAO"/>
-<c:setVariable select="'FALSE'" var="genEJB"/>
-<c:setVariable select="'FALSE'" var="genRest"/>
+<c:setVariable select="'TRUE'" var="genEJB"/>
+<c:setVariable select="'TRUE'" var="genRest"/>
 <c:setVariable select="'TRUE'" var="genWebapp"/>
 <c:setVariable select="'FALSE'" var="genAndroid"/>
 <c:setVariable select="'FALSE'" var="genIOS"/>
@@ -29,7 +29,7 @@
 <c:setVariable select="'1.1-SNAPSHOT'" var="yalamanchili-version"/>
 <c:setVariable select="'2.4.0'" var="gwt-version"/>
 <c:setVariable select="'2.3.0'" var="gwt-plugin-version"/>
-<c:setVariable select="'2.2.1.Final'" var="seam-version"/>
+<c:setVariable select="'2.2.2.Final'" var="seam-version"/>
 <%-- TODO removed use yalamanchili.version instead else override--%>
 <c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-embedded-jboss-version"/>
 <c:setVariable select="'1.0-SNAPSHOT'" var="y-commom-deps-version"/>
@@ -423,7 +423,7 @@
 
 <%--creates the REST JAR for SOA project--%>
 <c:if test="$genRest = 'TRUE'">
-<ws:project name="{$projectName}-rest" location="{$location}/{$projectName}-rest">
+<ws:project name="{$projectName}-jrs" location="{$location}/{$projectName}-jrs">
 	<c:if test="$genPOMS = 'TRUE'">
 	<ws:file path="pom.xml" template="templates/rest/rest_pom_template.xml.jet"/>
 	</c:if>
@@ -431,7 +431,6 @@
 			<ws:folder path="${$groupIDWithFolder}/rest">
 			<%-- rest service class--%>
 			<ws:file  path="${camelCase($projectName)}Service.java" template="templates/rest/src/main/java/rest_manage.java.jet"/>
-			<ws:file  path="GileadService.java" template="templates/rest/src/main/java/gilead_service.java.jet"/>
 			</ws:folder>    
         	<%-- Iterate through packages and classes --%>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
