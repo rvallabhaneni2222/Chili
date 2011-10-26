@@ -188,14 +188,14 @@ import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@na
 
 import info.yalamanchili.gwt.rf.GenericRequest;
 import java.util.List;
-import ${$groupID}.server.${lower-case($package/@name)}.${lower-case($class/@name)}.${$class/@name}Dao;
+import ${$groupID}.server.rf.${$class/@name}GWTDao;
 import info.yalamanchili.requestfactory.RequestFactoryDaoLocator;
 
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.Service;
 
-@Service(value = ${$class/@name}Dao.class, locator = RequestFactoryDaoLocator.class)
+@Service(value = ${$class/@name}GWTDao.class, locator = RequestFactoryDaoLocator.class)
 public interface ${$class/@name}Request extends GenericRequest< ${$class/@name}Proxy> {
 	Request<${$class/@name}Proxy> findById(Long id);
 

@@ -230,7 +230,6 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
 																												.clear();
 																											
-																											
 																											}
 																				
 																										});
@@ -306,8 +305,6 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 																											public void onResponse(MultiSelectObj<${$class2/@name}> arg0) {																			
 																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
 																												.clear();
-																												
-																											
 																											}
 																				
 																										});
@@ -386,7 +383,6 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 																											public void onResponse(MultiSelectObj<${$class2/@name}> arg0) {																			
 																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
 																												.clear();
-																											
 																											
 																											}
 																				

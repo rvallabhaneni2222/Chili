@@ -2,7 +2,7 @@
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
-package ${$groupID}.server.${lower-case($package/@name)}.${lower-case($class/@name)};
+package ${$groupID}.server.rf;
 
 <%-- process all getRelated entities relations--%>
 <%--process level2 generizations --%>
@@ -217,8 +217,8 @@ import org.jboss.seam.annotations.Transactional;
 @Trace
 @Transactional
 @Scope(ScopeType.EVENT)
-@Name("${lower-case($class/@name)}Dao")
-public class ${$class/@name}Dao extends GenericGWTDao<${$class/@name}> {
+@Name("${lower-case($class/@name)}GWTDao")
+public class ${$class/@name}GWTDao extends GenericGWTDao<${$class/@name}> {
 
 	@In(create = true)
 	protected EntityManager em;

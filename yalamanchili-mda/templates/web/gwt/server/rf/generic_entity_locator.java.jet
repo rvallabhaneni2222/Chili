@@ -8,7 +8,7 @@ import info.yalamanchili.gwt.jpa.AbstractEntity;
 import info.yalamanchili.requestfactory.GenericDao;
 
 import com.google.web.bindery.requestfactory.shared.Locator;
-
+//TODO move to y-commons or y-gwt
 public class GenericEntityLocator<T> extends Locator<T, Long> {
 
 	protected T entity;
@@ -26,7 +26,7 @@ public class GenericEntityLocator<T> extends Locator<T, Long> {
 	@Override
 	public T find(Class<? extends T> clazz, Long id) {
 		GenericDao dao = (GenericDao) info.yalamanchili.inject.Locator
-				.getInstance(clazz.getSimpleName().toLowerCase() + "Dao");
+				.getInstance(clazz.getSimpleName().toLowerCase() + "GWTDao");
 		return (T) dao.findById(id);
 	}
 

@@ -373,17 +373,16 @@
 							<ws:file  path="ReadAll{$class/@name}sPanely.java" template="templates/web/gwt/client/entity/read_all_panel.java.jet"/>		
 						</c:if>
 						
-			</ws:folder>
-			<!-- Entity Dao classes -->
-    		<ws:folder path="${$groupIDWithFolder}/server/${lower-case($package/@name)}/${lower-case($class/@name)}">
-    			<ws:file  path="${$class/@name}Dao.java" template="templates/web/gwt/server/entity_dao.java.jet"/>
-    		</ws:folder>			
+			</ws:folder>			
 			<%--service class impl --%>
 	    	<ws:folder path="${$groupIDWithFolder}/server">
 	    		<ws:file  path="${$class/@name}ServiceImpl.java" template="templates/web/gwt/server/entity_service_impl.java.jet"/>
 	    	</ws:folder>		
 			<%--generic entity locator --%>
 	    	<ws:folder path="${$groupIDWithFolder}/server/rf">
+	    		<%--GWT entityDAO classes --%>	
+	    		<ws:file  path="${$class/@name}GWTDao.java" template="templates/web/gwt/server/entity_gwt_dao.java.jet"/>
+	    		<%--TODO remove after moved to different package--%>
 	    		<ws:file  path="GenericEntityLocator.java" template="templates/web/gwt/server/rf/generic_entity_locator.java.jet"/>
 	    	</ws:folder>		    	
 			 </c:if>
