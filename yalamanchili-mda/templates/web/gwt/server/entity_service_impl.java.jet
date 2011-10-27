@@ -1,4 +1,4 @@
-<java:merge/>
+
 <java:format>
 <f:bundle basename="templates/resources/messages">
 <f:message>copyright</f:message>
@@ -9,7 +9,7 @@ package ${$groupID}.server;
 import info.yalamanchili.commons.DataType;
 import info.yalamanchili.commons.ReflectionUtils;
 import info.yalamanchili.commons.SearchUtils;
-import info.yalamanchili.gwt.beans.MultiSelectObj;
+import info.yalamanchili.gwt.beans.MultiSelectObjy;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.hibernate.search.FullTextQuery;
 </c:if>	
@@ -318,19 +318,16 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 <f:message>generated.comment</f:message>	  					  		 			
 	@Override
 	@WebRemote	  					  		 			
-	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(Long entityID, String[] columns){
+	public MultiSelectObjy get${$class2/@name}sMultiSelect(Long entityID, String[] columns){
 		${$class/@name} entity = em.find(${$class/@name}.class, entityID);
 		Set<Long> ids = new HashSet<Long>();
-		List<${$class2/@name}> childObjs = new ArrayList<${$class2/@name}>();
-		MultiSelectObj<${$class2/@name}> obj = new MultiSelectObj<${$class2/@name}>();
+		MultiSelectObjy obj = new MultiSelectObjy();
 		obj.setAvailable(GWTServletUtils.getListBoxValues(${$class2/@name}.class,
 				columns, em));
 		for (${$class2/@name} child : entity.get${$class2/@name}s()) {
 			ids.add(child.getId());
-			childObjs.add((${$class2/@name}) getBeanManager().clone(child));
 		}
 		obj.setSelected(ids);
-		obj.setSelectedObjs(childObjs);
 		return obj;
 	}
 	  					  		 			</c:if>	
@@ -384,19 +381,16 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 <f:message>generated.comment</f:message>	  					  		 			
 	@Override
 	@WebRemote	  					  		 			
-	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(Long entityID, String[] columns){
+	public MultiSelectObjy get${$class2/@name}sMultiSelect(Long entityID, String[] columns){
 		${$class/@name} entity = em.find(${$class/@name}.class, entityID);
 		Set<Long> ids = new HashSet<Long>();
-		List<${$class2/@name}> childObjs = new ArrayList<${$class2/@name}>();
-		MultiSelectObj<${$class2/@name}> obj = new MultiSelectObj<${$class2/@name}>();
+		MultiSelectObjy obj = new MultiSelectObjy();
 		obj.setAvailable(GWTServletUtils.getListBoxValues(${$class2/@name}.class,
 				columns, em));
 		for (${$class2/@name} child : entity.get${$class2/@name}s()) {
 			ids.add(child.getId());
-			childObjs.add((${$class2/@name}) getBeanManager().clone(child));
 		}
 		obj.setSelected(ids);
-		obj.setSelectedObjs(childObjs);
 		return obj;
 	}
 	  					  		 			</c:if>		
@@ -449,19 +443,16 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 <f:message>generated.comment</f:message>	  					  		 			
 	@Override
 	@WebRemote	  					  		 			
-	public MultiSelectObj<${$class2/@name}> get${$class2/@name}s(Long entityID, String[] columns){
+	public MultiSelectObjy get${$class2/@name}sMultiSelect(Long entityID, String[] columns){
 		${$class/@name} entity = em.find(${$class/@name}.class, entityID);
 		Set<Long> ids = new HashSet<Long>();
-		List<${$class2/@name}> childObjs = new ArrayList<${$class2/@name}>();
-		MultiSelectObj<${$class2/@name}> obj = new MultiSelectObj<${$class2/@name}>();
+		MultiSelectObjy obj = new MultiSelectObjy();
 		obj.setAvailable(GWTServletUtils.getListBoxValues(${$class2/@name}.class,
 				columns, em));
 		for (${$class2/@name} child : entity.get${$class2/@name}s()) {
 			ids.add(child.getId());
-			childObjs.add((${$class2/@name}) getBeanManager().clone(child));
 		}
 		obj.setSelected(ids);
-		obj.setSelectedObjs(childObjs);
 		return obj;
 	}
 	  					  		 			</c:if>		
@@ -504,32 +495,16 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 <f:message>generated.comment</f:message>  					  		 			
   					  		 			@Override
 										@WebRemote
-										public void addAll(${$class2/@name} ${lower-case($class2/@name)}, ${$class/@name} children,
-												List<Long> ids) {							
-											// find getter
-											Method addMethod = null;
-											for (Method method : ${lower-case($class2/@name)}.getClass().getMethods()) {
-												if (method.getName().equalsIgnoreCase(
-														"add" + children.getClass().getSimpleName())) {
-													addMethod = method;
-												}
-											}
-											${lower-case($class2/@name)} = em.find(${$class2/@name}.class,${lower-case($class2/@name)}.getId());
+										public void add${$class2/@name}${$class/@name}s(Long ${lower-case($class2/@name)}Id,List<Long> ids) {							
+										${$class2/@name}	${lower-case($class2/@name)} = em.find(${$class2/@name}.class,${lower-case($class2/@name)}Id);
 											for (Long id : ids) {
-												${$class/@name} child = (${$class/@name}) em.find(children.getClass(), id);
+												${$class/@name} child = (${$class/@name}) em.find(${$class/@name}.class, id);
 												if (child == null) {
 													throw new RuntimeException("error find entity with id:" + id
 															+ ":on:" + child.getClass().getName());
 												}
-												try {
-													addMethod.invoke(${lower-case($class2/@name)}, child);
-												} catch (Exception e) {
-													e.printStackTrace();
-													throw new RuntimeException("error calling method:"
-															+ addMethod.getName() + ":on:"
-															+ ${lower-case($class2/@name)}.getClass().getSimpleName());
-												}
-											}
+												${lower-case($class2/@name)}.add${$class/@name}(child);
+											}											
 										} 
   					  		 			</c:if> 
   					  		 		</c:iterate>
@@ -570,11 +545,10 @@ public class ${$class/@name}ServiceImpl extends GileadService implements ${$pack
 <f:message>generated.comment</f:message>  					  		 			
   					  		 			@Override
 										@WebRemote
-										public void removeAll(${$class2/@name} ${lower-case($class2/@name)}, ${$class/@name} children,
-												List<Long> ids) {							
-											${lower-case($class2/@name)} = em.find(${$class2/@name}.class,${lower-case($class2/@name)}.getId());
+										public void remove${$class2/@name}${$class/@name}s(Long ${lower-case($class2/@name)}Id,List<Long> ids) {
+										${$class2/@name}	${lower-case($class2/@name)} = em.find(${$class2/@name}.class,${lower-case($class2/@name)}Id);
 											for (Long id : ids) {
-												${$class/@name} child = (${$class/@name}) em.find(children.getClass(), id);
+												${$class/@name} child = (${$class/@name}) em.find(${$class/@name}.class, id);
 												if (child == null) {
 													throw new RuntimeException("error find entity with id:" + id
 															+ ":on:" + child.getClass().getName());

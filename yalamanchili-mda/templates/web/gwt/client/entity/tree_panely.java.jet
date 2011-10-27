@@ -10,7 +10,7 @@ import ${$webPackage}${camelCase($projectName)}Welcome;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.TreePanelCompositey;
 import info.yalamanchili.gwt.widgets.ClickableLink;
-import info.yalamanchili.gwt.beans.MultiSelectObj;
+import info.yalamanchili.gwt.beans.MultiSelectObjy;
 import com.google.gwt.user.client.Window;
 import info.yalamanchili.gwt.rf.GenericRequest;
 import java.util.List;
@@ -42,8 +42,7 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}Proxy;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanely;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}OptionsPanel;
-							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panely;
-							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panel;
+							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panely;							  					  		 		
 							  					  		 			</c:if> 
 							  					  		 		</c:iterate>
 							  							  	</c:if>
@@ -79,8 +78,7 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}Proxy;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanely;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}OptionsPanel;
-							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panely;
-							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panel;
+							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panely;							  					  		 		
 							  					  		 			</c:if>							  					  		 		
 							  					  		 			</c:iterate>
 							  							  	</c:if>
@@ -115,7 +113,7 @@ import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.ReadAll${$class2/@name}sPanely;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.${$class2/@name}OptionsPanel;
 							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panely;
-							  					  		 			import ${$groupID}.client.${lower-case($package/@name)}.${lower-case($class2/@name)}.Select${$class2/@name}Panel;					  		 			</c:if> 
+							  			</c:if> 
   					  		 		</c:iterate>
   							  	</c:if> 
   							  	</c:if>	
@@ -223,13 +221,13 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 																			</c:choose> 
 																			</c:iterate>	
 																				 };
-																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
-																			entity.getId(),${lower-case($class2/@name)}Columns,new ALAsyncCallback<MultiSelectObj<${$class2/@name}>>() {
+																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}sMultiSelect(
+																			entity.getId(),${lower-case($class2/@name)}Columns,new ALAsyncCallback<MultiSelectObjy>() {
 																											@Override
-																											public void onResponse(MultiSelectObj<${$class2/@name}> arg0) {																			
+																											public void onResponse(MultiSelectObjy arg0) {																			
 																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
 																												.clear();
-																											
+																												${camelCase($projectName)}Welcome.instance().getEntityPanel()..add(new Select${$class2/@name}Panely("${$class2/@name}s",Tree${$class/@name}Panely.this,arg0));																			
 																											}
 																				
 																										});
@@ -299,12 +297,13 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 																			</c:choose> 
 																			</c:iterate>	
 																				 };
-																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
-																			proxy.getId(),${lower-case($class2/@name)}Columns,new ALAsyncCallback<MultiSelectObj<${$class2/@name}>>() {
+																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}sMultiSelect(
+																			proxy.getId(),${lower-case($class2/@name)}Columns,new ALAsyncCallback<MultiSelectObjy>() {
 																											@Override
-																											public void onResponse(MultiSelectObj<${$class2/@name}> arg0) {																			
+																											public void onResponse(MultiSelectObjy arg0) {																			
 																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
 																												.clear();
+																											${camelCase($projectName)}Welcome.instance().getEntityPanel()..add(new Select${$class2/@name}Panely("${$class2/@name}s",Tree${$class/@name}Panely.this,arg0));	
 																											}
 																				
 																										});
@@ -377,13 +376,13 @@ public class Tree${$class/@name}Panely extends <c:choose select="$parentClass1/@
 																			</c:choose> 
 																			</c:iterate>	
 																				 };
-																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}s(
-																			proxy.getId(),${lower-case($class2/@name)}Columns,new ALAsyncCallback<MultiSelectObj<${$class2/@name}>>() {
+																			${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().get${$class2/@name}sMultiSelect(
+																			proxy.getId(),${lower-case($class2/@name)}Columns,new ALAsyncCallback<MultiSelectObjy>() {
 																											@Override
-																											public void onResponse(MultiSelectObj<${$class2/@name}> arg0) {																			
+																											public void onResponse(MultiSelectObjy arg0) {																			
 																												${camelCase($projectName)}Welcome.instance().getEntityPanel()
 																												.clear();
-																											
+																											${camelCase($projectName)}Welcome.instance().getEntityPanel().add(new Select${$class2/@name}Panely("${$class2/@name}s",Tree${$class/@name}Panely.this,arg0));
 																											}
 																				
 																										});

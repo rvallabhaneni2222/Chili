@@ -343,7 +343,6 @@
 					<%-- Options Panel--%>
 					<ws:file  path="${$class/@name}OptionsPanel.java" template="templates/web/gwt/client/entity/web_option_panel_template.java.jet"/>
 					<%-- Select Panel--%>
-					<ws:file  path="Select${$class/@name}Panel.java" template="templates/web/gwt/client/entity/web_select_panel_template.java.jet"/>
 					<ws:file  path="Select${$class/@name}Panely.java" template="templates/web/gwt/client/entity/select_panely.java.jet"/>
 					
 						<%-- check for parent(abstract) classes--%>

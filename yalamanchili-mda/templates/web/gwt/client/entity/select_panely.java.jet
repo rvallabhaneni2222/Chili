@@ -9,6 +9,7 @@ import info.yalamanchili.gwt.widgets.ResponseStatusWidget;
 import info.yalamanchili.gwt.callback.ALAsyncCallback;
 import info.yalamanchili.gwt.composite.TreePanelCompositey;
 import info.yalamanchili.gwt.composite.SelectCompositey;
+import info.yalamanchili.gwt.beans.MultiSelectObjy;
 import java.util.Set;
 
 import info.yalamanchili.gwt.composite.SelectComposite;
@@ -35,7 +36,7 @@ import info.yalamanchili.gwt.composite.SelectComposite;
   					  		 	<%-- iterate throught all the classes to get the other class on the association--%>
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
-import ${$groupID}.entity.${lower-case($package/@name)}.${$class2/@name};
+import ${$packageName}.${lower-case($class2/@name)}.${$class2/@name}Proxy;
   					  		 			</c:if> 
   					  		 		</c:iterate>
   					  		 	 </c:if> 	
@@ -55,8 +56,8 @@ import java.util.Map;
 public class Select${$class/@name}Panely extends SelectCompositey<${$class/@name}Proxy> {
 <f:message>generated.comment</f:message>
 	public Select${$class/@name}Panely(String title, TreePanelCompositey parent,
-			Map<Long, String> available, Set<Long> selected) {
-		super(title, parent, available, selected);
+			MultiSelectObjy obj) {
+		super(title, parent, obj);
 	}
 <f:message>generated.comment</f:message>
 	public Select${$class/@name}Panely(String name) {
@@ -134,8 +135,8 @@ public class Select${$class/@name}Panely extends SelectCompositey<${$class/@name
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 //TODO need to check parent realation in case to user AbstractTreePanel instead of TreePanel
-											if (parent.getEntity() instanceof ${$class2/@name}) {
-												${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().addAll((${$class2/@name}) parent.getEntity(),new ${$class/@name}(),
+											if (parent.getEntity() instanceof ${$class2/@name}Proxy) {
+												${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().add${$class2/@name}${$class/@name}s(((${$class2/@name}Proxy) parent.getEntity()).getId(),
 														ids, new ALAsyncCallback<Void>() {
 									
 															@Override
@@ -189,8 +190,8 @@ public class Select${$class/@name}Panely extends SelectCompositey<${$class/@name
   					  		 		<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package/Namespace.ownedElement/Class" var="class2">
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 //TODO need to check parent realation in case to user AbstractTreePanel instead of TreePanel
-											if (parent.getEntity() instanceof ${$class2/@name}) {
-												${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().removeAll((${$class2/@name}) parent.getEntity(),new ${$class/@name}(),
+											if (parent.getEntity() instanceof ${$class2/@name}Proxy) {
+												${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().remove${$class2/@name}${$class/@name}s(((${$class2/@name}Proxy) parent.getEntity()).getId(),
 														ids, new ALAsyncCallback<Void>() {
 									
 															@Override

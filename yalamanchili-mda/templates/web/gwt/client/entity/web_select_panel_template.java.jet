@@ -141,17 +141,7 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 //TODO need to check parent realation in case to user AbstractTreePanel instead of TreePanel
 											if (parent.getEntity() instanceof ${$class2/@name}) {
-												${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().addAll((${$class2/@name}) parent.getEntity(),new ${$class/@name}(),
-														ids, new ALAsyncCallback<Void>() {
-									
-															@Override
-															public void onResponse(Void arg0) {
-																new ResponseStatusWidget()
-																		.show("${$class/@name}s added to ${$class2/@name}");
-									
-															}
-									
-														});
+
 											}		
 	
   					  		 			</c:if> 
@@ -196,17 +186,7 @@ public class Select${$class/@name}Panel extends SelectComposite<${$class/@name}>
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 //TODO need to check parent realation in case to user AbstractTreePanel instead of TreePanel
 											if (parent.getEntity() instanceof ${$class2/@name}) {
-												${$packageName}.${lower-case($class/@name)}.${$class/@name}Service.${$class/@name}ServiceAsync.instance().removeAll((${$class2/@name}) parent.getEntity(),new ${$class/@name}(),
-														ids, new ALAsyncCallback<Void>() {
-									
-															@Override
-															public void onResponse(Void arg0) {
-																new ResponseStatusWidget()
-																		.show("${$class/@name}s removed from ${$class2/@name}");
-									
-															}
-									
-														});
+
 											}		
 	
   					  		 			</c:if> 
