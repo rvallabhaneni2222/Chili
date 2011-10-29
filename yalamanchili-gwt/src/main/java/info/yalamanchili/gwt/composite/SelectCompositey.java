@@ -1,12 +1,12 @@
 package info.yalamanchili.gwt.composite;
 
+import info.yalamanchili.gwt.beans.MultiSelectObjy;
 import info.yalamanchili.gwt.widgets.MultiListBox;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -60,10 +60,11 @@ public abstract class SelectCompositey<T extends EntityProxy> extends
 	 * relations)
 	 */
 	public SelectCompositey(String title, TreePanelCompositey parent,
-			Map<Long, String> available, Set<Long> selected) {
+			MultiSelectObjy multiSelect) {
 		init(panel);
 		this.parent = parent;
-		multiListBox = new MultiListBox(title, available, selected);
+		multiListBox = new MultiListBox(title, multiSelect.getAvailable(),
+				multiSelect.getSelected());
 		multiListBox.selectButton.addClickHandler(this);
 		multiListBox.unselectButton.addClickHandler(this);
 		panel.add(multiListBox);
