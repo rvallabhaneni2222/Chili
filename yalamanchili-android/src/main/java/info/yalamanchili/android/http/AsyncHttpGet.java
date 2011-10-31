@@ -38,7 +38,6 @@ public abstract class AsyncHttpGet extends AsyncTask<String, Integer, String> {
 		this.publishProgress(0);
 		try {
 			response = httpclient.execute(new HttpGet(arg0[0]));
-			result = HttpHelper.convertResponse(response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
