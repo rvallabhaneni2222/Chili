@@ -9,7 +9,7 @@
 <c:setVariable select="'com/automanage/catalog'" var="groupIDWithFolder"/>
 <c:setVariable select="'com_automanage_catalog'" var="groupIDWithUnderScore"/>
 <c:setVariable select="'1.1-SNAPSHOT'" var="version"/>
-<c:setVariable select="'/home/ayalamanchili/codebase/automanage/trunk'" var="location"/>
+<c:setVariable select="'C://codebase//automanage//trunk'" var="location"/>
 <%--features--%>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <c:setVariable select="'TRUE'" var="supportJAXB"/>
@@ -20,11 +20,11 @@
 <c:setVariable select="'FALSE'" var="genDAO"/>
 <c:setVariable select="'FALSE'" var="genEJB"/>
 <c:setVariable select="'FALSE'" var="genRest"/>
-<c:setVariable select="'TRUE'" var="genWebapp"/>
-<c:setVariable select="'FALSE'" var="genAndroid"/>
+<c:setVariable select="'FALSE'" var="genWebapp"/>
+<c:setVariable select="'TRUE'" var="genAndroid"/>
 <c:setVariable select="'FALSE'" var="genIOS"/>
 <c:setVariable select="'FALSE'" var="genTest"/>
-<c:setVariable select="'FALSE'" var="genPOMS"/>
+<c:setVariable select="'TRUE'" var="genPOMS"/>
 <%--versions --%>
 <c:setVariable select="'1.1-SNAPSHOT'" var="yalamanchili-version"/>
 <c:setVariable select="'2.4.0'" var="gwt-version"/>
@@ -479,14 +479,13 @@
 <c:if test="$genAndroid = 'TRUE'">
 <ws:project name="{$projectName}-android" location="{$location}/{$projectName}-android">
 	<c:if test="$genPOMS = 'TRUE'">
-	<ws:file path="pom.xml" template="templates/android/android_pom_template.xml.jet"/>
+	<ws:file path="pom.xml" template="templates/androidy/pom.xml.jet"/>
 	</c:if>
-	<ws:file path="AndroidManifest.xml" template="templates/android/android_manifest_template.xml.jet"/>
-	<ws:file path="default.properties" template="templates/android/android_default.properties.jet"/>
-	<ws:folder path="src">
+	<ws:file path="AndroidManifest.xml" template="templates/androidy/android_manifest.xml.jet"/>
+	<ws:file path="default.properties" template="templates/androidy/project.properties.jet"/>
+	<ws:folder path="src/main/java">
 		<ws:folder path="${$groupIDWithFolder}/android">
-			<ws:file  path="${camelCase($projectName)}Main.java" template="templates/android/main/Main.java.jet"/>
-			<ws:file  path="Login.java" template="templates/android/main/login.java.jet"/>
+			<ws:file  path="${camelCase($projectName)}Welcome.java" template="templates/androidy/src/main/java/Welcome.java.jet"/>
 		</ws:folder>
    </ws:folder>
    <%--Iterate through the packages and classes--%>
@@ -521,42 +520,31 @@
 				</c:if>
 			</c:iterate>
 			<%-- Create Entity CRUD java Activitoes--%>	  
-			<ws:folder path="src"> 
+			<ws:folder path="src/main/java"> 
 				<ws:folder path="${$groupIDWithFolder}/android/${$package/@name}/${lower-case($class/@name)}"> 
-					<ws:file  path="ReadAll{$class/@name}s.java" template="templates/android/main/entity/read_all.java.jet"/>
-					<ws:file  path="${$class/@name}Adapter.java" template="templates/android/main/entity/readall_adapter.java.jet"/>
-					<ws:file  path="Read{$class/@name}.java" template="templates/android/main/entity/read_entity.java.jet"/>
-					<ws:file  path="Create{$class/@name}.java" template="templates/android/main/entity/create_entity.java.jet"/>
-					<ws:file  path="Update{$class/@name}.java" template="templates/android/main/entity/update_entity.java.jet"/>
-					<ws:file  path="Search{$class/@name}.java" template="templates/android/main/entity/search_entity.java.jet"/>
+					
 				</ws:folder>
 			</ws:folder>
 			 <%-- Create Entity CRUD layout xml's--%>
 			<ws:folder path="res/layout">
-			<ws:file path="${lower-case($class/@name)}_read.xml" template="templates/android/res/layout/entity_read_template.xml.jet"/>
-			<ws:file path="${lower-case($class/@name)}_create.xml" template="templates/android/res/layout/entity_create_template.xml.jet"/>
+			
 			</ws:folder>
 			<%-- Create Entity Menu layout.xml--%>	
 			<ws:folder path="res/menu">
-			<ws:file path="${lower-case($class/@name)}_menu.xml" template="templates/android/res/menu/entity_menu_template.xml.jet"/>
+		
 			</ws:folder>
 			</c:iterate>
 		</c:iterate>
 	<ws:folder path="res/layout">
-	<ws:file template="templates/android/res/layout/main_template.xml.jet" path="main.xml"/>
-	<ws:file template="templates/android/res/layout/app_title_bar.xml.jet" path="${lower-case($projectName)}_title_bar.xml"/>
-	<ws:file template="templates/android/res/layout/list_item.xml.jet" path="list_item.xml"/>
-	<ws:file template="templates/android/res/layout/entity_readall_template.xml.jet" path="entity_readall.xml"/>
-	<ws:file template="templates/android/res/layout/readall_list.xml.jet" path="readall_list.xml"/>
-	<ws:file template="templates/android/res/layout/login.xml.jet" path="login.xml"/>
-	<ws:file template="templates/android/res/layout/entity_search.xml.jet" path="entity_search.xml"/>
+	
+	<ws:file template="templates/androidy/res/layout/list_item.xml.jet" path="list_item.xml"/>
+	<ws:file template="templates/androidy/res/layout/entity_readall.xml.jet" path="entity_readall.xml"/>
+	<ws:file template="templates/androidy/res/layout/readall_list.xml.jet" path="readall_list.xml"/>
     </ws:folder>
     <ws:folder path="res/menu">
-	<ws:file template="templates/android/res/menu/main_menu.xml.jet" path="main_menu.xml"/>
-	<ws:file template="templates/android/res/menu/read_all_search_menu.xml.jet" path="read_all_search_menu.xml"/>
     </ws:folder>
     <ws:folder path="res/values">
-    <ws:file template="templates/android/res/values/strings_template.xml.jet" path="strings.xml"/>
+    <ws:file template="templates/androidy/res/values/strings.xml.jet" path="strings.xml"/>
     </ws:folder>
      <ws:folder path="res/drawable-hdpi">
     </ws:folder>
