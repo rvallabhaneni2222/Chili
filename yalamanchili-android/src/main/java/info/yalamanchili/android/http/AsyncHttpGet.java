@@ -20,24 +20,28 @@ public abstract class AsyncHttpGet extends AsyncTask<String, Integer, String> {
 	protected ProgressDialog dialog;
 
 	public AsyncHttpGet(Activity activity) {
-		//dialog = new ProgressDialog(activity);
+		// dialog = new ProgressDialog(activity);
 		httpclient = HttpHelper.getHttpClient();
 	}
 
 	@Override
 	protected void onPreExecute() {
-		//dialog.setMessage("Loading...");
-		//dialog.show();
+		// dialog.setMessage("Loading...");
+		// dialog.show();
 	}
 
 	/** do stuff in different thread */
 	@Override
-	protected String doInBackground(String... arg0) {
-		Log.d("debug", "HttpGetURI" + arg0[0]);
+	protected String doInBackground(String... params) {
+		Log.d("debug", "HttpGetURI" + params[0]);
 		String result = "";
 		this.publishProgress(0);
 		try {
-			response = httpclient.execute(new HttpGet(arg0[0]));
+			HttpGet getRequest = new HttpGet(params[0]);
+			//DEFAULT
+			//TODO need option to override
+			getRequest.addHeader("Accept", "application/json");
+			response = httpclient.execute(getRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,13 +54,11 @@ public abstract class AsyncHttpGet extends AsyncTask<String, Integer, String> {
 
 	@Override
 	protected void onPostExecute(String result) {
-	//	dialog.dismiss();
+		// dialog.dismiss();
 		StatusLine status = response.getStatusLine();
 		Log.d("debug", "HttpGet Response code" + status.getStatusCode());
 		/* http response success */
 		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 300) {
-			// TODO FIX this is needed for get(working) for put this is not
-			// necessary
 			result = HttpHelper.convertResponse(response);
 			onResponse(result);
 		} /* http response failure */
