@@ -11,6 +11,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		 <activity android:name="${$groupID}.android.${$package/@name}.${lower-case($class/@name)}.ReadAll${$class/@name}s"
+                  android:label="@string/app_name">
+      		 </activity>
+			</c:iterate>
+		</c:iterate>        
     </application>
 		
     <uses-permission android:name="android.permission.INTERNET" >

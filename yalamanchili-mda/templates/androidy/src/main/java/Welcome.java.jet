@@ -55,17 +55,13 @@ import ${$groupID}.R;
 			 <%-- check for flag varibles and add menu item class--%>	    		 
     		 <c:if test="$isComposite = $class/@xmi.id">
     		 <c:if test="$isParent = $class/@xmi.id">
-    		 //	import ${$groupID}.android.${$package/@name}.${lower-case($class/@name)}.ReadAll${$class/@name}s;
+    		import ${$groupID}.android.${$package/@name}.${lower-case($class/@name)}.ReadAll${$class/@name}s;
 			</c:if>
 			</c:if>
 			</c:if>
 		</c:iterate> 
 	</c:iterate>
 	
-/**
- * HelloFlashlight is a sample application for the usage of the Maven Android Plugin.
- * The code is trivial and not the focus of this example and therefore not really documented.
- */
 public class ${camelCase($projectName)}Welcome extends ListActivity {
 
 	public static String baseURL = "http://10.0.2.2:8080/${lower-case($projectName)}-webapp/seam/resource/restv1/crud/";
@@ -137,8 +133,8 @@ public class ${camelCase($projectName)}Welcome extends ListActivity {
     		 <c:if test="$isParent = $class/@xmi.id">
     		 	HashMap<String, Object> ${lower-case($class/@name)}Maintainence = new HashMap<String, Object>();
 				${lower-case($class/@name)}Maintainence.put("text", "${$class/@name} Maintainence");
-				//Intent ${lower-case($class/@name)}Intent = new Intent(this, ReadAll${$class/@name}s.class);
-				//${lower-case($class/@name)}Maintainence.put("intent", ${lower-case($class/@name)}Intent);
+				Intent ${lower-case($class/@name)}Intent = new Intent(this, ReadAll${$class/@name}s.class);
+				${lower-case($class/@name)}Maintainence.put("intent", ${lower-case($class/@name)}Intent);
 				list.add(${lower-case($class/@name)}Maintainence);
 			</c:if>
 			</c:if>
