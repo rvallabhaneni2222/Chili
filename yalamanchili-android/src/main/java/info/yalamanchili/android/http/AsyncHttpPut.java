@@ -38,7 +38,6 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 			put.setHeader("content-type", "application/json");
 			put.setEntity(new StringEntity(params[1]));
 			response = httpclient.execute(put);
-			result = HttpHelper.convertResponse(response);
 		} catch (Exception e) {
 			throw new RuntimeException("Http Put called failed for uri:"
 					+ params[0] + e);
@@ -51,14 +50,12 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 	}
 
 	protected void onPostExecute(String result) {
+		Log.d("yalamanchili", "result:" + result);
 		dialog.dismiss();
 		StatusLine status = response.getStatusLine();
 		Log.d("debug", "HttpPut Response code" + status.getStatusCode());
 		/* http response success */
 		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 300) {
-			// TODO FIX this is needed for get(working) for put this is not
-			// necessary
-			// result = HttpHelper.request(response);
 			onResponse(result);
 		} /* http response failure */
 		else {
