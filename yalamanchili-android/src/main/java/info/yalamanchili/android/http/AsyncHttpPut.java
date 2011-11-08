@@ -35,12 +35,8 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 		Log.d("debug", "HttpPutURI:" + params[0]);
 		try {
 			HttpPut put = new HttpPut(params[0]);
+			put.setHeader("content-type", "application/json");
 			put.setEntity(new StringEntity(params[1]));
-			if (params[2] == null) {
-				put.setHeader("Content-Type", "application/xml");
-			} else {
-				put.setHeader("Content-Type", params[2]);
-			}
 			response = httpclient.execute(put);
 			result = HttpHelper.convertResponse(response);
 		} catch (Exception e) {
