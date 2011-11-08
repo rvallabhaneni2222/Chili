@@ -212,6 +212,7 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 	if (arg0 == create) {
 		create.setEnabled(false);
 		JSONObject ${lower-case($class/@name)};
+		JSONObject wrapper = new JSONObject();
 			if (getIntent().getSerializableExtra("entity") != null) {
 				${lower-case($class/@name)} = (JSONObject) getIntent().getSerializableExtra("entity");
 			} else {
@@ -279,9 +280,10 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 		 			</c:otherwise>
 		 		</c:choose>
 			</c:iterate>
+			wrapper.put("${lower-case($class/@name)}",${lower-case($class/@name)});	
 			} catch (Exception e) {
 				e.printStackTrace();
-			}		
+			}	
 			new AsyncHttpPut(this) {
 				@Override
 				protected void onResponse(String result) {
@@ -291,7 +293,7 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 					finish();
 
 				}
-			}.execute(getCreateURL(), ${lower-case($class/@name)}.toString());
+			}.execute(getCreateURL(),wrapper.toString());
 	}
 		<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">

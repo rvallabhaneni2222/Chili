@@ -40,10 +40,12 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 	private ${$class/@name}Adapter ${lower-case($class/@name)}Adapter;
 	
 	@Override
+	//TODO move common logic to generic class ReadAllEntity
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.entity_readall);
+		customizeTitle();
 		getControls();
 		setListeners();
 		int resID = R.layout.readall_list;
@@ -67,6 +69,12 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 		${lower-case($class/@name)}ListView = (ListView) findViewById(R.id.readall_listview);
 	}	
 
+	public void customizeTitle(){
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.${lower-case($projectName)}_title_bar);
+	     TextView mytitletext = (TextView) findViewById(R.id.${lower-case($projectName)}_title_text);
+	     mytitletext.setText("Read All ${$class/@name}s Panel");	
+	}
+	
 	public String getReadALLURL(Integer pageOffSet, Integer pageSize) {
 		return ${camelCase($projectName)}Welcome.baseURL + "${lower-case($class/@name)}/readall/0/10";
 	}
@@ -113,6 +121,7 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 	}
 
 	public void main() {
+		${lower-case($class/@name)}Adapter.clear();
 		loadPage(0, new Integer(getString(R.string.page_size)));
 	}
 
