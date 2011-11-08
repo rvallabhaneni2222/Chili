@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
+import android.content.Intent;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -25,12 +26,17 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import ${$groupID}.R;
+import android.widget.Button;
 import ${$groupID}.android.${camelCase($projectName)}Welcome;
+import info.yalamanchili.android.widgets.ReadAllPageBar;
 
 public class ReadAll${$class/@name}s extends Activity implements OnItemClickListener,OnClickListener{
 	private Integer pageOffSet = 0;
 	private ArrayList<JSONObject> ${lower-case($class/@name)}s = new ArrayList<JSONObject>();
 	private ListView ${lower-case($class/@name)}ListView;
+	private Button create;
+	private Button nextPage;
+	private Button previousPage;
 	private ${$class/@name}Adapter ${lower-case($class/@name)}Adapter;
 	
 	@Override
@@ -39,19 +45,43 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.entity_readall);
 		getControls();
+		setListeners();
 		int resID = R.layout.readall_list;
 		${lower-case($class/@name)}Adapter = new  ${$class/@name}Adapter(ReadAll${$class/@name}s.this, resID,
 				${lower-case($class/@name)}s);
 		${lower-case($class/@name)}ListView.setAdapter(${lower-case($class/@name)}Adapter);
 	}
 
+	public void setListeners() {
+		create.setOnClickListener(this);
+		nextPage.setOnClickListener(this);
+		previousPage.setOnClickListener(this);
+		${lower-case($class/@name)}ListView.setOnItemClickListener(this);
+	}
 	
 	public void getControls() {
-		 ${lower-case($class/@name)}ListView = (ListView) findViewById(R.id.readall_listview);
-	}
+	ReadAllPageBar pageBar=	(ReadAllPageBar)findViewById(R.id.read_all_page_bar);
+		create=pageBar.getCreateButton();
+		nextPage=pageBar.getNextPageButton();
+		previousPage=pageBar.getPreviousPageButton();
+		${lower-case($class/@name)}ListView = (ListView) findViewById(R.id.readall_listview);
+	}	
 
 	public String getReadALLURL(Integer pageOffSet, Integer pageSize) {
 		return ${camelCase($projectName)}Welcome.baseURL + "${lower-case($class/@name)}/readall/0/10";
+	}
+	
+	protected void loadNextPage() {
+		pageOffSet = pageOffSet + new Integer(getString(R.string.page_size));
+		loadPage(pageOffSet, new Integer(getString(R.string.page_size)));
+	}
+
+	protected void loadPreviousPage() {
+		if (pageOffSet >= new Integer(getString(R.string.page_size))) {
+			pageOffSet = pageOffSet
+					- new Integer(getString(R.string.page_size));
+			loadPage(pageOffSet, new Integer(getString(R.string.page_size)));
+		}
 	}
 	
 	protected void loadPage(int pageOffSet, int pageSize) {
@@ -86,9 +116,19 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 		loadPage(0, new Integer(getString(R.string.page_size)));
 	}
 
+	
 	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-
+//TODO support add ....	
+		if (arg0.getId() == create.getId()) {
+		Intent createIntent = new Intent(this, Create${$class/@name}.class);
+		startActivity(createIntent);
+		}
+		if (arg0.getId() == nextPage.getId()) {
+			loadNextPage();
+		}
+		if (arg0.getId() == previousPage.getId()) {
+			loadPreviousPage();
+		}
 	}
 
 	public void onItemClick(AdapterView<?> parent, View arg1, int position,

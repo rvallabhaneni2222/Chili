@@ -523,11 +523,12 @@
 			<ws:folder path="src/main/java"> 
 				<ws:folder path="${$groupIDWithFolder}/android/${$package/@name}/${lower-case($class/@name)}"> 
 				<ws:file  path="ReadAll${$class/@name}s.java" template="templates/androidy/src/main/java/entity/read_all.java.jet"/>
+				<ws:file  path="Create${$class/@name}.java" template="templates/androidy/src/main/java/entity/create_entity.java.jet"/>
 				</ws:folder>
 			</ws:folder>
 			 <%-- Create Entity CRUD layout xml's--%>
 			<ws:folder path="res/layout">
-			
+			<ws:file template="templates/androidy/res/layout/entity_create.xml.jet" path="${lower-case($class/@name)}_create.xml"/>
 			</ws:folder>
 			<%-- Create Entity Menu layout.xml--%>	
 			<ws:folder path="res/menu">
@@ -540,6 +541,7 @@
 	<ws:file template="templates/androidy/res/layout/list_item.xml.jet" path="list_item.xml"/>
 	<ws:file template="templates/androidy/res/layout/entity_readall.xml.jet" path="entity_readall.xml"/>
 	<ws:file template="templates/androidy/res/layout/readall_list.xml.jet" path="readall_list.xml"/>
+	<ws:file template="templates/androidy/res/layout/app_title_bar.xml.jet" path="${lower-case($projectName)}_title_bar.xml"/>
     </ws:folder>
     <ws:folder path="res/menu">
     </ws:folder>
