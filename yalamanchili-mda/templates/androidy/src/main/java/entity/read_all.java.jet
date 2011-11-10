@@ -75,6 +75,18 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 	     mytitletext.setText("Read All ${$class/@name}s Panel");	
 	}
 	
+	public void onItemClick(AdapterView<?> parent, View arg1, int position,
+			long id) {
+		JSONObject ${lower-case($class/@name)} = (JSONObject) parent.getItemAtPosition(position);
+		Intent intent = new Intent(this, Read${$class/@name}.class);
+		try {
+			intent.putExtra("id", ${lower-case($class/@name)}.getLong("id"));
+		} catch (JSONException e) {
+			//TODO
+			e.printStackTrace();
+		}		
+		startActivity(intent);
+	}
 	public String getReadALLURL(Integer pageOffSet, Integer pageSize) {
 		return ${camelCase($projectName)}Welcome.baseURL + "${lower-case($class/@name)}/readall/0/10";
 	}
@@ -138,11 +150,6 @@ public class ReadAll${$class/@name}s extends Activity implements OnItemClickList
 		if (arg0.getId() == previousPage.getId()) {
 			loadPreviousPage();
 		}
-	}
-
-	public void onItemClick(AdapterView<?> parent, View arg1, int position,
-			long id) {
-
 	}
 
 	public class ${$class/@name}Adapter extends ArrayAdapter<JSONObject> {
