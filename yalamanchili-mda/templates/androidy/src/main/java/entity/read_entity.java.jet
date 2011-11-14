@@ -170,7 +170,8 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 						ViewTextField ${lower-case($attribute/@name)}_textview = (ViewTextField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
-						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.getString("${lower-case($attribute/@name)}"));
+						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());
 				</c:iterate>
 	</c:if>
 	<%-- process parent class level 1 attributes--%>
@@ -178,14 +179,16 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
 						ViewTextField ${lower-case($attribute/@name)}_textview = (ViewTextField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
-						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.getString("${lower-case($attribute/@name)}"));
+						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());
 				</c:iterate>
 	</c:if>		
 	<%-- process parent class level 0 attributes--%>	
 				<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 						ViewTextField ${lower-case($attribute/@name)}_textview = (ViewTextField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
-						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.getString("${lower-case($attribute/@name)}"));
+						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());
 				</c:iterate>	
 
 	}
@@ -335,9 +338,9 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 			finish();
 		}
 		if (arg0 == update) {
-		//	Intent intent = new Intent(this, Update${$class/@name}.class);
-		//	intent.putExtra("entity", ${lower-case($class/@name)}.toString());
-		//	startActivity(intent);
+			Intent intent = new Intent(this, Update${$class/@name}.class);
+			intent.putExtra("entity", ${lower-case($class/@name)}.toString());
+			startActivity(intent);
 		}
 		if (arg0 == delete) {
 			Toast.makeText(getApplicationContext(), "aaa", Toast.LENGTH_SHORT);

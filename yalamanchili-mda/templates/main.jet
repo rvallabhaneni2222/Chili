@@ -525,6 +525,7 @@
 				<ws:file  path="ReadAll${$class/@name}s.java" template="templates/androidy/src/main/java/entity/read_all.java.jet"/>
 				<ws:file  path="Create${$class/@name}.java" template="templates/androidy/src/main/java/entity/create_entity.java.jet"/>
 				<ws:file  path="Read${$class/@name}.java" template="templates/androidy/src/main/java/entity/read_entity.java.jet"/>
+				<ws:file  path="Update${$class/@name}.java" template="templates/androidy/src/main/java/entity/update_entity.java.jet"/>
 				</ws:folder>
 			</ws:folder>
 			 <%-- Create Entity CRUD layout xml's--%>
