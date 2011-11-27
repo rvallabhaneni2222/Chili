@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.yalamanchili.android</groupId>
 	<artifactId>yalamanchili-android</artifactId>
-	<packaging>jar</packaging>
+	<packaging>apklib</packaging>
 	<version>1.1-SNAPSHOT</version>
 	<name>yalamanchili-android</name>
 	<url>http://maven.apache.org</url>
@@ -37,13 +37,30 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins
-						</groupId>
-				<artifactId>maven-compiler-plugin
-						</artifactId>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>maven-android-plugin</artifactId>
+				<version>2.9.0-beta-5</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
+					<assetsDirectory>${project.basedir}/assets</assetsDirectory>
+					<resourceDirectory>${project.basedir}/res</resourceDirectory>
+					<nativeLibrariesDirectory>${project.basedir}/src/main/native</nativeLibrariesDirectory>
+					<sdk>
+						<platform>7</platform>
+					</sdk>
+					<deleteConflictingFiles>true</deleteConflictingFiles>
+					<undeployBeforeDeploy>true</undeployBeforeDeploy>
+					<attachSources>true</attachSources>
+				</configuration>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -1,6 +1,8 @@
 package info.yalamanchili.android.views;
 
+import info.yalamanchili.android.R;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.CheckBox;
@@ -12,10 +14,23 @@ public class BooleanField extends LinearLayout {
 	protected TextView label;
 	protected CheckBox booleanBox;
 	protected TextView errorMsg;
+	protected boolean readOnly = false;
 
 	public BooleanField(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// read custom attributes
+		TypedArray a = context.obtainStyledAttributes(attrs,
+				R.styleable.BooleanField);
+		final int N = a.getIndexCount();
+		for (int i = 0; i < N; ++i) {
+			int attr = a.getIndex(i);
+			switch (attr) {
+			case R.styleable.BooleanField_readOnly:
+				readOnly = a.getBoolean(attr, false);
+				break;
+			}
+		}
+		a.recycle();
 		init();
 	}
 
@@ -28,6 +43,7 @@ public class BooleanField extends LinearLayout {
 		setOrientation(LinearLayout.VERTICAL);
 		label = new TextView(getContext());
 		booleanBox = new CheckBox(getContext());
+		booleanBox.setEnabled(!readOnly);
 		errorMsg = new TextView(getContext());
 		int lHeight = LayoutParams.WRAP_CONTENT;
 		int lWidth = LayoutParams.FILL_PARENT;
