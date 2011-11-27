@@ -32,7 +32,8 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 	@Override
 	protected String doInBackground(String... params) {
 		String result = "";
-		Log.d("debug", "HttpPutURI:" + params[0]);
+		Log.d("y-android", "HttpPutURI:" + params[0]);
+		Log.d("y-android", "Content:" + params[1]);
 		try {
 			HttpPut put = new HttpPut(params[0]);
 			put.setHeader("content-type", "application/json");

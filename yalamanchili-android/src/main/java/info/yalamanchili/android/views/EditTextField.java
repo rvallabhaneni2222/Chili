@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 public class EditTextField extends LinearLayout {
 
-	TextView label;
-	EditText text;
-	TextView errorMsg;
+	protected TextView label;
+	protected EditText text;
+	protected TextView errorMsg;
 
 	public EditTextField(Context context, AttributeSet attrs) {
 		super(context, attrs);
