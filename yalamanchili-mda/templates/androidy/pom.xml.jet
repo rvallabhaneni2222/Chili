@@ -19,6 +19,7 @@
 			<groupId>info.yalamanchili.android</groupId>
 			<artifactId>yalamanchili-android</artifactId>
 			<version>${'${yalamanchili.version}'}</version>
+			<type>apklib</type>
 		</dependency>
 	</dependencies>
 
