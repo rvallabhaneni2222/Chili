@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import info.yalamanchili.android.views.ViewTextField;
+import info.yalamanchili.android.views.StringField;
 import info.yalamanchili.android.views.BooleanField;
 import ${$groupID}.R;
 import info.yalamanchili.android.http.AsyncHttpGet;
@@ -171,7 +171,7 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$StringID'}" >
-						ViewTextField ${lower-case($attribute/@name)}_textview = (ViewTextField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());
@@ -183,7 +183,7 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.getBoolean("${lowercaseFirst($attribute/@name)}"));		 
 				 </c:when>
 					<c:otherwise>
-						ViewTextField ${lower-case($attribute/@name)}_textview = (ViewTextField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());					
@@ -196,7 +196,7 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$StringID'}" >
-						ViewTextField ${lower-case($attribute/@name)}_textview = (ViewTextField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());
@@ -208,7 +208,7 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.getBoolean("${lowercaseFirst($attribute/@name)}"));		 
 				 </c:when>
 					<c:otherwise>
-						ViewTextField ${lower-case($attribute/@name)}_textview = (ViewTextField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());					
@@ -220,7 +220,7 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 				<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$StringID'}" >
-						ViewTextField ${lower-case($attribute/@name)}_textview = (ViewTextField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());
@@ -232,7 +232,7 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.getBoolean("${lowercaseFirst($attribute/@name)}"));		 
 				 </c:when>
 					<c:otherwise>
-						ViewTextField ${lower-case($attribute/@name)}_textview = (ViewTextField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());					
