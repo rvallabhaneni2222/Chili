@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
+	
     android:id="@+id/widget54"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:${lower-case($projectName)}="http://schemas.android.com/apk/res/${$groupID}"
     >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="fill_parent"
@@ -22,8 +24,22 @@
 				 android:layout_width="wrap_content"
 				 android:layout_height="wrap_content"/>
 				 </c:when>
+				 <c:when test="${'$StringID'}" > 
+		        <info.yalamanchili.android.views.StringField
+		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        />	
+				 </c:when>				 
+				 <c:when test="${'$BooleanID'}" > 
+		        <info.yalamanchili.android.views.BooleanField
+		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        />	
+				 </c:when>				 
 					 <c:otherwise> 
-		        <info.yalamanchili.android.views.EditTextField
+		        <info.yalamanchili.android.views.StringField
 		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
@@ -45,8 +61,22 @@
 				 android:layout_width="wrap_content"
 				 android:layout_height="wrap_content"/>
 				 </c:when>
+				 <c:when test="${'$StringID'}" > 
+		        <info.yalamanchili.android.views.StringField
+		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        />	
+				 </c:when>					 
+				 <c:when test="${'$BooleanID'}" > 
+		        <info.yalamanchili.android.views.BooleanField
+		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        />	
+				 </c:when>					 
 					 <c:otherwise>
-		        <info.yalamanchili.android.views.EditTextField
+		        <info.yalamanchili.android.views.StringField
 		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
@@ -68,8 +98,22 @@
 				 android:layout_width="wrap_content"
 				 android:layout_height="wrap_content"/>
 				 </c:when>
+				 <c:when test="${'$StringID'}" > 
+		        <info.yalamanchili.android.views.StringField
+		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        />	
+				 </c:when>					 
+				 <c:when test="${'$BooleanID'}" > 
+		        <info.yalamanchili.android.views.BooleanField
+		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        />	
+				 </c:when>					 
 					 <c:otherwise>
-		        <info.yalamanchili.android.views.EditTextField
+		        <info.yalamanchili.android.views.StringField
 		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
