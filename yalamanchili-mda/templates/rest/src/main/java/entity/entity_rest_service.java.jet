@@ -7,6 +7,8 @@ import ${$groupID}.dao.${lower-case($package/@name)}.${lower-case($class/@name)}
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.dozer.Mapper;
+
 <c:if test="$enableHibernateSearch = 'true'">
 import info.yalamanchili.commons.DataType;
 import info.yalamanchili.commons.ReflectionUtils;
@@ -158,7 +160,9 @@ public class ${$class/@name}Service {
 	@In
 	protected EntityManager em;
 	
-
+	@In
+	private Mapper mapper;
+	
 	@GET
 	@Path("/read/{id}")
 	//@Restrict("#{s:hasRole('user')}")
@@ -176,7 +180,9 @@ public class ${$class/@name}Service {
 	@PUT
 	@Path("/update")
 	//@Restrict("#{s:hasRole('admin')}")
-	public void update(${$class/@name} entity) {
+	public void update(${$class/@name} object) {
+		${$class/@name} entity = dao.findById(object.getId());
+		mapper.map(object, entity);
 		dao.save(entity);
 	}
 

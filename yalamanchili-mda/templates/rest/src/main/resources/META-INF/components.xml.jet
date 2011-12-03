@@ -21,5 +21,7 @@
 	<!--<web:authentication-filter url-pattern="/seam/resource/restv1/crud/*" auth-type="basic"/>-->
 		<!-- currently erroring out with stack overflow with multiple calls  -->
  <!-- <security:identity authenticate-method="#{AutomanageRestResource.authenticate}" /> --> 
- 
+ 	<component name="mapper" class="org.dozer.DozerBeanMapper"
+		scope="application" startup="true">
+	</component>
 </components>
