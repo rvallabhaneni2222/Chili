@@ -5,18 +5,19 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class BooleanField extends LinearLayout {
+public class StringField extends LinearLayout {
 
 	protected TextView label;
-	protected CheckBox booleanBox;
+	protected TextView text;
 	protected TextView errorMsg;
+
 	protected boolean readOnly = false;
 
-	public BooleanField(Context context, AttributeSet attrs) {
+	public StringField(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// read custom attributes
 		TypedArray a = context.obtainStyledAttributes(attrs,
@@ -34,26 +35,29 @@ public class BooleanField extends LinearLayout {
 		init();
 	}
 
-	protected void init() {
+	public void init() {
 		setOrientation(LinearLayout.VERTICAL);
 		label = new TextView(getContext());
-		booleanBox = new CheckBox(getContext());
-		booleanBox.setEnabled(!readOnly);
+		if (readOnly) {
+			text = new TextView(getContext());
+		} else {
+			text = new EditText(getContext());
+		}
 		errorMsg = new TextView(getContext());
 		int lHeight = LayoutParams.WRAP_CONTENT;
 		int lWidth = LayoutParams.FILL_PARENT;
 		addView(label, new LinearLayout.LayoutParams(lWidth, lHeight));
-		addView(booleanBox, new LinearLayout.LayoutParams(lWidth, lHeight));
+		addView(text, new LinearLayout.LayoutParams(lWidth, lHeight));
 		addView(errorMsg, new LinearLayout.LayoutParams(lWidth, lHeight));
 		label.setTypeface(Typeface.DEFAULT_BOLD);
 	}
 
-	public void setValue(Boolean value) {
-		booleanBox.setChecked(value);
+	public void setValue(String value) {
+		text.setText(value);
 	}
 
-	public Boolean getValue() {
-		return booleanBox.isChecked();
+	public String getValue() {
+		return text.getText().toString();
 	}
 
 	public void setLabel(String label) {
