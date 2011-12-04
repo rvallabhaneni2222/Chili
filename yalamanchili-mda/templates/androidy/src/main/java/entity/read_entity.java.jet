@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import info.yalamanchili.android.views.StringField;
 import info.yalamanchili.android.views.BooleanField;
+import info.yalamanchili.android.views.DecimalField;
+import info.yalamanchili.android.views.NumericField;
 import ${$groupID}.R;
 import info.yalamanchili.android.http.AsyncHttpGet;
 import android.content.Intent;
@@ -171,19 +173,37 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$StringID'}" >
-						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());
 				 </c:when>
 				 <c:when test="${'$BooleanID'}" > 
-						BooleanField ${lower-case($attribute/@name)}_textview = (BooleanField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						BooleanField ${lower-case($attribute/@name)}_textview = (BooleanField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.getBoolean("${lowercaseFirst($attribute/@name)}"));		 
 				 </c:when>
+				 <c:when test="${'$IntegerID'}" > 
+						NumericField ${lower-case($attribute/@name)}_textview = (NumericField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
+						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
+						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+						NumericField ${lower-case($attribute/@name)}_textview = (NumericField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
+						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
+						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > 
+						DecimalField ${lower-case($attribute/@name)}_textview = (DecimalField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
+						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
+						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
+				 </c:when>				 				 				 
 					<c:otherwise>
-						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());					
@@ -196,48 +216,84 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$StringID'}" >
-						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());
 				 </c:when>
 				 <c:when test="${'$BooleanID'}" > 
-						BooleanField ${lower-case($attribute/@name)}_textview = (BooleanField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						BooleanField ${lower-case($attribute/@name)}_textview = (BooleanField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.getBoolean("${lowercaseFirst($attribute/@name)}"));		 
 				 </c:when>
+				 <c:when test="${'$IntegerID'}" > 
+						NumericField ${lower-case($attribute/@name)}_textview = (NumericField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
+						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
+						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+						NumericField ${lower-case($attribute/@name)}_textview = (NumericField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
+						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
+						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > 
+						DecimalField ${lower-case($attribute/@name)}_textview = (DecimalField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
+						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
+						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
+				 </c:when>				 				 				 
 					<c:otherwise>
-						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());					
 		 			</c:otherwise>
-		 		</c:choose>							
+		 		</c:choose>									
 				</c:iterate>
 	</c:if>		
 	<%-- process parent class level 0 attributes--%>	
 				<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$StringID'}" >
-						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());
 				 </c:when>
 				 <c:when test="${'$BooleanID'}" > 
-						BooleanField ${lower-case($attribute/@name)}_textview = (BooleanField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						BooleanField ${lower-case($attribute/@name)}_textview = (BooleanField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.getBoolean("${lowercaseFirst($attribute/@name)}"));		 
 				 </c:when>
+				 <c:when test="${'$IntegerID'}" > 
+						NumericField ${lower-case($attribute/@name)}_textview = (NumericField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
+						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
+						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+						NumericField ${lower-case($attribute/@name)}_textview = (NumericField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
+						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
+						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
+				 </c:when>
+				 <c:when test="${'$FloatID'}" > 
+						DecimalField ${lower-case($attribute/@name)}_textview = (DecimalField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
+						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
+						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
+				 </c:when>				 				 				 
 					<c:otherwise>
-						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${$class/@name}_read_${$attribute/@name});
+						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());					
 		 			</c:otherwise>
-		 		</c:choose>							
+		 		</c:choose>									
 				</c:iterate>	
 	}
 	
