@@ -16,34 +16,55 @@
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$DateID'}" >
-				 <TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
-					android:layout_height="wrap_content">
-				</TextView>
-		        <Button android:id ="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
-				 android:text="date"
-				 android:layout_width="wrap_content"
-				 android:layout_height="wrap_content"/>
+					 <TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
+						android:layout_height="wrap_content">
+					</TextView>
+			        <Button android:id ="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+					 android:text="date"
+					 android:layout_width="wrap_content"
+					 android:layout_height="wrap_content"/>
 				 </c:when>
 				 <c:when test="${'$StringID'}" > 
-		        <info.yalamanchili.android.views.StringField
-		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        />	
-				 </c:when>				 
+			        <info.yalamanchili.android.views.StringField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>	
+				 <c:when test="${'$IntegerID'}" > 
+			        <info.yalamanchili.android.views.NumericField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+			        <info.yalamanchili.android.views.NumericField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>	
+				 <c:when test="${'$FloatID'}" > 
+			        <info.yalamanchili.android.views.DecimalField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>					 				 					 			 
 				 <c:when test="${'$BooleanID'}" > 
-		        <info.yalamanchili.android.views.BooleanField
-		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        />	
+			        <info.yalamanchili.android.views.BooleanField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
 				 </c:when>				 
 					 <c:otherwise> 
-		        <info.yalamanchili.android.views.StringField
-		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        />	
+				        <info.yalamanchili.android.views.StringField
+				        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        />	
 		 			</c:otherwise>
 		 		</c:choose>
 				</c:iterate>
@@ -53,75 +74,114 @@
 				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$DateID'}" >
-				 <TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
-					android:layout_height="wrap_content">
-				</TextView>
-		        <Button android:id ="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
-				 android:text="date"
-				 android:layout_width="wrap_content"
-				 android:layout_height="wrap_content"/>
+					 <TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
+						android:layout_height="wrap_content">
+					</TextView>
+			        <Button android:id ="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+					 android:text="date"
+					 android:layout_width="wrap_content"
+					 android:layout_height="wrap_content"/>
 				 </c:when>
 				 <c:when test="${'$StringID'}" > 
-		        <info.yalamanchili.android.views.StringField
-		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        />	
-				 </c:when>					 
+			        <info.yalamanchili.android.views.StringField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>	
+				 <c:when test="${'$IntegerID'}" > 
+			        <info.yalamanchili.android.views.NumericField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+			        <info.yalamanchili.android.views.NumericField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>	
+				 <c:when test="${'$FloatID'}" > 
+			        <info.yalamanchili.android.views.DecimalField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>					 				 					 			 
 				 <c:when test="${'$BooleanID'}" > 
-		        <info.yalamanchili.android.views.BooleanField
-		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        />	
-				 </c:when>					 
-					 <c:otherwise>
-		        <info.yalamanchili.android.views.StringField
-		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        />		 
+			        <info.yalamanchili.android.views.BooleanField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>				 
+					 <c:otherwise> 
+				        <info.yalamanchili.android.views.StringField
+				        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        />	
 		 			</c:otherwise>
 		 		</c:choose>
-
 				</c:iterate>
 	</c:if>		
 	<%-- process parent class level 0 attributes--%>	
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$DateID'}" >
-				 <TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
-					android:layout_height="wrap_content">
-				</TextView>
-		        <Button android:id ="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
-				 android:text="date"
-				 android:layout_width="wrap_content"
-				 android:layout_height="wrap_content"/>
+					 <TextView android:text="${upper-case($attribute/@name)}" android:layout_width="wrap_content"
+						android:layout_height="wrap_content">
+					</TextView>
+			        <Button android:id ="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+					 android:text="date"
+					 android:layout_width="wrap_content"
+					 android:layout_height="wrap_content"/>
 				 </c:when>
 				 <c:when test="${'$StringID'}" > 
-		        <info.yalamanchili.android.views.StringField
-		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        />	
-				 </c:when>					 
+			        <info.yalamanchili.android.views.StringField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>	
+				 <c:when test="${'$IntegerID'}" > 
+			        <info.yalamanchili.android.views.NumericField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>
+				 <c:when test="${'$LongID'}" > 
+			        <info.yalamanchili.android.views.NumericField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>	
+				 <c:when test="${'$FloatID'}" > 
+			        <info.yalamanchili.android.views.DecimalField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>					 				 					 			 
 				 <c:when test="${'$BooleanID'}" > 
-		        <info.yalamanchili.android.views.BooleanField
-		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        />	
-				 </c:when>					 
-					 <c:otherwise>
-		        <info.yalamanchili.android.views.StringField
-		        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        />	
+			        <info.yalamanchili.android.views.BooleanField
+			        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        />	
+				 </c:when>				 
+					 <c:otherwise> 
+				        <info.yalamanchili.android.views.StringField
+				        android:id="@+id/${lower-case($class/@name)}_create_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        />	
 		 			</c:otherwise>
-		 		</c:choose>
-		
-			</c:iterate>
+		 		</c:choose>			</c:iterate>
 		        <Button android:id ="@+id/${lower-case($class/@name)}_create"
 				 android:text="Save"
 				 android:layout_width="wrap_content"

@@ -28,18 +28,52 @@
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 					<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 					 <c:when test="${'$DateID'}" >
-							<info.yalamanchili.android.views.StringField android:id="@+id/${$class/@name}_read_${$attribute/@name}" android:layout_width="wrap_content"
+							<info.yalamanchili.android.views.StringField android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}" android:layout_width="wrap_content"
 								android:layout_height="wrap_content" ${lower-case($projectName)}:readOnly="true">
 							</info.yalamanchili.android.views.StringField>					 
 					 </c:when>
+					 <c:when test="${'$IntegerID'}" > 
+				        <info.yalamanchili.android.views.NumericField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				         ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>
+					 <c:when test="${'$LongID'}" > 
+				        <info.yalamanchili.android.views.NumericField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				         ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>	
+					 <c:when test="${'$FloatID'}" > 
+				        <info.yalamanchili.android.views.DecimalField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>
 					 <c:when test="${'$BooleanID'}" > 
-							<info.yalamanchili.android.views.BooleanField
-								android:id="@+id/Dealer_read_isExclusive" android:layout_width="wrap_content"
-								android:layout_height="wrap_content" ${lower-case($projectName)}:readOnly="true">
-							</info.yalamanchili.android.views.BooleanField>			       
-					 </c:when>				 
+				        <info.yalamanchili.android.views.BooleanField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>	
+					 <c:when test="${'$StringID'}" > 
+				        <info.yalamanchili.android.views.StringField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>						 				 
 						 <c:otherwise> 
-							<info.yalamanchili.android.views.StringField android:id="@+id/${$class/@name}_read_${$attribute/@name}" android:layout_width="wrap_content"
+							<info.yalamanchili.android.views.StringField android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}" android:layout_width="wrap_content"
 								android:layout_height="wrap_content" ${lower-case($projectName)}:readOnly="true">
 							</info.yalamanchili.android.views.StringField>
 			 			</c:otherwise>
@@ -51,18 +85,52 @@
 				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
 					<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 					 <c:when test="${'$DateID'}" >
-							<info.yalamanchili.android.views.StringField android:id="@+id/${$class/@name}_read_${$attribute/@name}" android:layout_width="wrap_content"
+							<info.yalamanchili.android.views.StringField android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}" android:layout_width="wrap_content"
 								android:layout_height="wrap_content" ${lower-case($projectName)}:readOnly="true">
 							</info.yalamanchili.android.views.StringField>					 
 					 </c:when>
+					 <c:when test="${'$IntegerID'}" > 
+				        <info.yalamanchili.android.views.NumericField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				         ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>
+					 <c:when test="${'$LongID'}" > 
+				        <info.yalamanchili.android.views.NumericField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				         ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>	
+					 <c:when test="${'$FloatID'}" > 
+				        <info.yalamanchili.android.views.DecimalField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>
 					 <c:when test="${'$BooleanID'}" > 
-							<info.yalamanchili.android.views.BooleanField
-								android:id="@+id/Dealer_read_isExclusive" android:layout_width="wrap_content"
-								android:layout_height="wrap_content" automanage:readOnly="true">
-							</info.yalamanchili.android.views.BooleanField>			       
-					 </c:when>				 
+				        <info.yalamanchili.android.views.BooleanField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>	
+					 <c:when test="${'$StringID'}" > 
+				        <info.yalamanchili.android.views.StringField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>						 				 
 						 <c:otherwise> 
-							<info.yalamanchili.android.views.StringField android:id="@+id/${$class/@name}_read_${$attribute/@name}" android:layout_width="wrap_content"
+							<info.yalamanchili.android.views.StringField android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}" android:layout_width="wrap_content"
 								android:layout_height="wrap_content" ${lower-case($projectName)}:readOnly="true">
 							</info.yalamanchili.android.views.StringField>
 			 			</c:otherwise>
@@ -73,18 +141,52 @@
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 					<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 					 <c:when test="${'$DateID'}" >
-							<info.yalamanchili.android.views.StringField android:id="@+id/${$class/@name}_read_${$attribute/@name}" android:layout_width="wrap_content"
+							<info.yalamanchili.android.views.StringField android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}" android:layout_width="wrap_content"
 								android:layout_height="wrap_content" ${lower-case($projectName)}:readOnly="true">
 							</info.yalamanchili.android.views.StringField>					 
 					 </c:when>
+					 <c:when test="${'$IntegerID'}" > 
+				        <info.yalamanchili.android.views.NumericField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				         ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>
+					 <c:when test="${'$LongID'}" > 
+				        <info.yalamanchili.android.views.NumericField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				         ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>	
+					 <c:when test="${'$FloatID'}" > 
+				        <info.yalamanchili.android.views.DecimalField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>
 					 <c:when test="${'$BooleanID'}" > 
-							<info.yalamanchili.android.views.BooleanField
-								android:id="@+id/Dealer_read_isExclusive" android:layout_width="wrap_content"
-								android:layout_height="wrap_content" automanage:readOnly="true">
-							</info.yalamanchili.android.views.BooleanField>			       
-					 </c:when>				 
+				        <info.yalamanchili.android.views.BooleanField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>	
+					 <c:when test="${'$StringID'}" > 
+				        <info.yalamanchili.android.views.StringField
+				        android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        ${lower-case($projectName)}:readOnly="true"
+				        />	
+					 </c:when>						 				 
 						 <c:otherwise> 
-							<info.yalamanchili.android.views.StringField android:id="@+id/${$class/@name}_read_${$attribute/@name}" android:layout_width="wrap_content"
+							<info.yalamanchili.android.views.StringField android:id="@+id/${lower-case($class/@name)}_read_${lower-case($attribute/@name)}" android:layout_width="wrap_content"
 								android:layout_height="wrap_content" ${lower-case($projectName)}:readOnly="true">
 							</info.yalamanchili.android.views.StringField>
 			 			</c:otherwise>
