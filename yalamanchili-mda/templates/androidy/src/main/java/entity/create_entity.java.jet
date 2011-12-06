@@ -5,6 +5,7 @@ import info.yalamanchili.android.views.StringField;
 import info.yalamanchili.android.views.BooleanField;
 import info.yalamanchili.android.views.DecimalField;
 import info.yalamanchili.android.views.NumericField;
+import info.yalamanchili.android.commons.DateParser;
 
 import info.yalamanchili.android.http.AsyncHttpPut;
 import android.app.Activity;
@@ -38,16 +39,14 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 					 <c:when test="${'$IntegerID'}" > NumericField ${$attribute/@name}F;
 					 </c:when>
 					 <c:when test="${'$DateID'}" > 
-						Date ${$attribute/@name}= new Date();
+					 	Calendar ${$attribute/@name} = Calendar.getInstance();
 					 	Button ${$attribute/@name}B;
 													static final int ${upper-case($attribute/@name)}_ID = <f:unique/>;
 													private DatePickerDialog.OnDateSetListener ${$attribute/@name}DateSetListener = new DatePickerDialog.OnDateSetListener() {
 													
 														public void onDateSet(DatePicker view, int year, int monthOfYear,
 																int dayOfMonth) {
-														${$attribute/@name}.setDate(dayOfMonth);
-														${$attribute/@name}.setMonth(monthOfYear + 1);
-														${$attribute/@name}.setYear(year);
+															${$attribute/@name}.set(year, monthOfYear, dayOfMonth);
 														}
 														};
 					 </c:when>
@@ -70,16 +69,14 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 					 <c:when test="${'$IntegerID'}" > NumericField ${$attribute/@name}F;
 					 </c:when>
 					 <c:when test="${'$DateID'}" > 
-						Date ${$attribute/@name}= new Date();
+					 	Calendar ${$attribute/@name} = Calendar.getInstance();
 					 	Button ${$attribute/@name}B;
 													static final int ${upper-case($attribute/@name)}_ID = <f:unique/>;
 													private DatePickerDialog.OnDateSetListener ${$attribute/@name}DateSetListener = new DatePickerDialog.OnDateSetListener() {
 													
 														public void onDateSet(DatePicker view, int year, int monthOfYear,
 																int dayOfMonth) {
-														${$attribute/@name}.setDate(dayOfMonth);
-														${$attribute/@name}.setMonth(monthOfYear + 1);
-														${$attribute/@name}.setYear(year);
+															${$attribute/@name}.set(year, monthOfYear, dayOfMonth);
 														}
 														};
 					 </c:when>
@@ -96,31 +93,29 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 	<%-- process parent class level 0 attributes--%>	
 			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" > StringField ${$attribute/@name}F;
-				 </c:when>
-				 <c:when test="${'$IntegerID'}" > NumericField ${$attribute/@name}F;
-				 </c:when>
-				 <c:when test="${'$DateID'}" > 
-					Date ${$attribute/@name}= new Date();
-				 	Button ${$attribute/@name}B;
-												static final int ${upper-case($attribute/@name)}_ID = <f:unique/>;
-												private DatePickerDialog.OnDateSetListener ${$attribute/@name}DateSetListener = new DatePickerDialog.OnDateSetListener() {
-												
-													public void onDateSet(DatePicker view, int year, int monthOfYear,
-															int dayOfMonth) {
-													${$attribute/@name}.setDate(dayOfMonth);
-													${$attribute/@name}.setMonth(monthOfYear + 1);
-													${$attribute/@name}.setYear(year);
-													}
-													};
-				 </c:when>
-				 <c:when test="${'$BooleanID'}" > 
-				 BooleanField ${$attribute/@name}F;
-				 </c:when>
-				 <c:when test="${'$LongID'}" > NumericField ${$attribute/@name}F;
-				 </c:when>
-				 <c:when test="${'$FloatID'}" > DecimalField ${$attribute/@name}F;
-				 </c:when>
+					 <c:when test="${'$StringID'}" > StringField ${$attribute/@name}F;
+					 </c:when>
+					 <c:when test="${'$IntegerID'}" > NumericField ${$attribute/@name}F;
+					 </c:when>
+					 <c:when test="${'$DateID'}" > 
+					 	Calendar ${$attribute/@name} = Calendar.getInstance();
+					 	Button ${$attribute/@name}B;
+													static final int ${upper-case($attribute/@name)}_ID = <f:unique/>;
+													private DatePickerDialog.OnDateSetListener ${$attribute/@name}DateSetListener = new DatePickerDialog.OnDateSetListener() {
+													
+														public void onDateSet(DatePicker view, int year, int monthOfYear,
+																int dayOfMonth) {
+															${$attribute/@name}.set(year, monthOfYear, dayOfMonth);
+														}
+														};
+					 </c:when>
+					 <c:when test="${'$BooleanID'}" > 
+					 BooleanField ${$attribute/@name}F;
+					 </c:when>
+					 <c:when test="${'$LongID'}" > NumericField ${$attribute/@name}F;
+					 </c:when>
+					 <c:when test="${'$FloatID'}" > DecimalField ${$attribute/@name}F;
+					 </c:when>
 		 		</c:choose>
 			</c:iterate>	
 	
@@ -242,6 +237,9 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());				 
 					 </c:when>
 					 <c:when test="${'$DateID'}" > 
+						if (${$attribute/@name}.getTime().compareTo(new Date()) != 0) {
+							${lower-case($class/@name)}.put("${$attribute/@name}", DateParser.toString(${$attribute/@name}.getTime()));
+						}					 
 					 </c:when>
 					 <c:when test="${'$BooleanID'}" > 
 						 if (${$attribute/@name}F.getValue() != null)
@@ -273,6 +271,9 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());				 
 					 </c:when>
 					 <c:when test="${'$DateID'}" > 
+						if (${$attribute/@name}.getTime().compareTo(new Date()) != 0) {
+							${lower-case($class/@name)}.put("${$attribute/@name}", DateParser.toString(${$attribute/@name}.getTime()));
+						}						 
 					 </c:when>
 					 <c:when test="${'$BooleanID'}" > 
 						 if (${$attribute/@name}F.getValue() != null)
@@ -303,6 +304,9 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());				 
 					 </c:when>
 					 <c:when test="${'$DateID'}" > 
+						if (${$attribute/@name}.getTime().compareTo(new Date()) != 0) {
+							${lower-case($class/@name)}.put("${$attribute/@name}", DateParser.toString(${$attribute/@name}.getTime()));
+						}						 
 					 </c:when>
 					 <c:when test="${'$BooleanID'}" > 
 						 if (${$attribute/@name}F.getValue() != null)
@@ -373,10 +377,9 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 	
 	@Override
 	protected Dialog onCreateDialog(int id) {
-		Calendar c = Calendar.getInstance();
-		int cyear = c.get(Calendar.YEAR);
-		int cmonth = c.get(Calendar.MONTH);
-		int cday = c.get(Calendar.DAY_OF_MONTH);
+		int cyear = Calendar.getInstance().get(Calendar.YEAR);
+		int cmonth = Calendar.getInstance().get(Calendar.MONTH);
+		int cday = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		switch (id) {
 		<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
