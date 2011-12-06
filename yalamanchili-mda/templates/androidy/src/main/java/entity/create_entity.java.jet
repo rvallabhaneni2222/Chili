@@ -339,7 +339,7 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 				}
 			}.execute(getCreateURL(),wrapper.toString());
 	}
-		<%-- process parent class level 2 attributes--%>
+		<%-- process date fields parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
