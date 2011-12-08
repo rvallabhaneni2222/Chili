@@ -226,6 +226,11 @@ public abstract class CRUDComposite<T extends EntityProxy> extends Composite {
 		imageField.setImage(url);
 	}
 
+	protected void setImageField(String fieldName, String url) {
+		ImageField imageField = (ImageField) fields.get(fieldName);
+		imageField.setImage(url);
+	}
+
 	protected void setRichTextField(String fieldName, String value) {
 		RichTextField richTextField = (RichTextField) fields.get(fieldName);
 		richTextField.setValue(value);
