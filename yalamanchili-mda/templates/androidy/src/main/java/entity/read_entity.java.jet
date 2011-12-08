@@ -11,6 +11,7 @@ import info.yalamanchili.android.views.StringField;
 import info.yalamanchili.android.views.BooleanField;
 import info.yalamanchili.android.views.DecimalField;
 import info.yalamanchili.android.views.NumericField;
+import info.yalamanchili.android.views.CurrencyField;
 import ${$groupID}.R;
 import info.yalamanchili.android.http.AsyncHttpGet;
 import android.content.Intent;
@@ -201,13 +202,13 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
-				 </c:when>				 				 				 
-					<c:otherwise>
-						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
+				 </c:when>	
+				 <c:when test="${'$CurrencyID'}" > 
+						CurrencyField ${lower-case($attribute/@name)}_textview = (CurrencyField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
-						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());					
-		 			</c:otherwise>
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
+				 </c:when>					 			 				 				 
 		 		</c:choose>				
 				</c:iterate>
 	</c:if>
@@ -245,12 +246,12 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
 				 </c:when>				 				 				 
-					<c:otherwise>
-						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
+				 <c:when test="${'$CurrencyID'}" > 
+						CurrencyField ${lower-case($attribute/@name)}_textview = (CurrencyField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
-						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());					
-		 			</c:otherwise>
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
+				 </c:when>
 		 		</c:choose>									
 				</c:iterate>
 	</c:if>		
@@ -287,12 +288,12 @@ public class Read${$class/@name} extends Activity implements OnClickListener {
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
 						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
 				 </c:when>				 				 				 
-					<c:otherwise>
-						StringField ${lower-case($attribute/@name)}_textview = (StringField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
+				 <c:when test="${'$CurrencyID'}" > 
+						CurrencyField ${lower-case($attribute/@name)}_textview = (CurrencyField) this.findViewById(R.id.${lower-case($class/@name)}_read_${lower-case($attribute/@name)});
 						${lower-case($attribute/@name)}_textview.setLabel("${upper-case($attribute/@name)}");
 						if(${lower-case($class/@name)}.has("${lowercaseFirst($attribute/@name)}"))
-						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());					
-		 			</c:otherwise>
+						${lower-case($attribute/@name)}_textview.setValue(${lower-case($class/@name)}.get("${lowercaseFirst($attribute/@name)}").toString());		 
+				 </c:when>
 		 		</c:choose>									
 				</c:iterate>	
 	}

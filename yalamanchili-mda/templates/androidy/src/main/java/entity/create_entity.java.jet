@@ -5,6 +5,7 @@ import info.yalamanchili.android.views.StringField;
 import info.yalamanchili.android.views.BooleanField;
 import info.yalamanchili.android.views.DecimalField;
 import info.yalamanchili.android.views.NumericField;
+import info.yalamanchili.android.views.CurrencyField;
 import info.yalamanchili.android.commons.DateParser;
 
 import info.yalamanchili.android.http.AsyncHttpPut;
@@ -57,6 +58,8 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 					 </c:when>
 					 <c:when test="${'$FloatID'}" > DecimalField ${$attribute/@name}F;
 					 </c:when>
+					 <c:when test="${'$CurrencyID'}" > CurrencyField ${$attribute/@name}F;
+					 </c:when>					 
 			 		</c:choose>
 				</c:iterate>
 	</c:if>
@@ -87,6 +90,8 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 					 </c:when>
 					 <c:when test="${'$FloatID'}" > DecimalField ${$attribute/@name}F;
 					 </c:when>
+					 <c:when test="${'$CurrencyID'}" > CurrencyField ${$attribute/@name}F;
+					 </c:when>						 
 			 		</c:choose>
 				</c:iterate>
 	</c:if>		
@@ -116,6 +121,8 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 					 </c:when>
 					 <c:when test="${'$FloatID'}" > DecimalField ${$attribute/@name}F;
 					 </c:when>
+					 <c:when test="${'$CurrencyID'}" > CurrencyField ${$attribute/@name}F;
+					 </c:when>						 
 		 		</c:choose>
 			</c:iterate>	
 	
@@ -159,6 +166,9 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 				 <c:when test="${'$FloatID'}" >  ${$attribute/@name}F = (DecimalField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
 					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
 				 </c:when>
+				 <c:when test="${'$CurrencyID'}" >  ${$attribute/@name}F = (CurrencyField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
+					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 </c:when>				 
 		 		</c:choose>
 				</c:iterate>
 	</c:if>
@@ -184,6 +194,9 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 				 <c:when test="${'$FloatID'}" >  ${$attribute/@name}F = (DecimalField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
 					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
 				 </c:when>
+				 <c:when test="${'$CurrencyID'}" >  ${$attribute/@name}F = (CurrencyField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
+					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 </c:when>					 
 		 		</c:choose>
 				</c:iterate>
 	</c:if>		
@@ -208,6 +221,9 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 				 <c:when test="${'$FloatID'}" >  ${$attribute/@name}F = (DecimalField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
 					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
 				 </c:when>
+				 <c:when test="${'$CurrencyID'}" >  ${$attribute/@name}F = (CurrencyField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
+					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 </c:when>					 
 		 		</c:choose>
 				</c:iterate>	
 	}
@@ -253,6 +269,10 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
 						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
 					 </c:when>
+					 <c:when test="${'$CurrencyID'}" > 
+						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
+						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
+					 </c:when>					 
 						 <c:otherwise>
 			 			</c:otherwise>
 			 		</c:choose>
@@ -287,6 +307,10 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
 						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
 					 </c:when>
+					 <c:when test="${'$CurrencyID'}" > 
+						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
+						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
+					 </c:when>					 
 						 <c:otherwise>
 			 			</c:otherwise>
 			 		</c:choose>
@@ -320,6 +344,10 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
 						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
 					 </c:when>
+					 <c:when test="${'$CurrencyID'}" > 
+						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
+						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
+					 </c:when>					 
 						 <c:otherwise>
 			 			</c:otherwise>
 			 		</c:choose>
@@ -381,7 +409,7 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 		int cmonth = Calendar.getInstance().get(Calendar.MONTH);
 		int cday = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		switch (id) {
-		<%-- process parent class level 2 attributes--%>
+		<%-- process  date fields parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
