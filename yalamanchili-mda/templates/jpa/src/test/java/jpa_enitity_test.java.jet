@@ -12,9 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.UserTransaction;
-
-import net.sf.gilead.pojo.base.ILightEntity;
-import net.sf.gilead.pojo.gwt.LightEntity;
+import info.yalamanchili.gwt.jpa.AbstractEntity;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -45,9 +43,7 @@ public class ${$class/@name}JPATest {
 		return ShrinkWrap
 				.create(WebArchive.class, "test.war")
 				.addPackages(true, ${$class/@name}.class.getPackage(),
-						LightEntity.class.getPackage(),
-						ILightEntity.class.getPackage(),
-						YUser.class.getPackage())
+						AbstractEntity.class.getPackage())
 				.addManifestResource("test-persistence.xml", "persistence.xml")
 				.addWebResource(EmptyAsset.INSTANCE, "beans.xml");
 	}

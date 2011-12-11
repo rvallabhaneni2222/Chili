@@ -48,7 +48,11 @@
 				<exclusion>
 					<groupId>org.jboss.seam</groupId>
 					<artifactId>jboss-seam</artifactId>			
-				</exclusion>				
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
 			</exclusions>			
 		</dependency>
 		<dependency>

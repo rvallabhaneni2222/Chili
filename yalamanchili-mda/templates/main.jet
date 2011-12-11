@@ -14,13 +14,13 @@
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
 <c:setVariable select="'TRUE'" var="supportJAXB"/>
 <%--code generation properties--%>
-<c:setVariable select="'FALSE'" var="genMaster"/>
+<c:setVariable select="'TRUE'" var="genMaster"/>
 <c:setVariable select="'FALSE'" var="genApp"/>
-<c:setVariable select="'FALSE'" var="genJPA"/>
-<c:setVariable select="'FALSE'" var="genDAO"/>
-<c:setVariable select="'FALSE'" var="genEJB"/>
-<c:setVariable select="'FALSE'" var="genRest"/>
-<c:setVariable select="'FALSE'" var="genWebapp"/>
+<c:setVariable select="'TRUE'" var="genJPA"/>
+<c:setVariable select="'TRUE'" var="genDAO"/>
+<c:setVariable select="'TRUE'" var="genEJB"/>
+<c:setVariable select="'TRUE'" var="genRest"/>
+<c:setVariable select="'TRUE'" var="genWebapp"/>
 <c:setVariable select="'TRUE'" var="genAndroid"/>
 <c:setVariable select="'FALSE'" var="genIOS"/>
 <c:setVariable select="'FALSE'" var="genTest"/>
@@ -126,6 +126,10 @@
     <ws:file template="templates/jpa/src/main/resources/abbrevation.properties.jet" path="abbrevations.properties"/>
     </ws:folder>
     <ws:folder path="src/test/java">
+    <%-- Abstract Entity--%>
+     <ws:folder path="info/yalamanchili/gwt/jpa">
+		<ws:file path="AbstractEntity.java" template="templates/jpa/src/test/java/abstract_entity_test.java.jet" />
+	</ws:folder>    
     <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     	 <ws:folder path="${$groupIDWithFolder}/entity/${$package/@name}">
 			<%-- create test classes in the package--%>
@@ -203,7 +207,7 @@
 		</c:iterate>
     </ws:folder>
     <ws:folder path="src/main/resources">
-   <ws:file template="templates/ejb/main/resources/META-INF/ejb_components.xml.jet" path="META-INF/components.xml"/>
+   <ws:file template="templates/ejb/main/resources/META-INF/components.xml.jet" path="META-INF/components.xml"/>
    <ws:file template="templates/ejb/main/resources/META-INF/ejb_jar.xml.jet" path="META-INF/ejb-jar.xml"/>
     </ws:folder>
     <ws:folder path="src/test/java">
