@@ -4,20 +4,20 @@
 	<groupId>${$groupID}</groupId>
 	<artifactId>${$projectName}-jrs</artifactId>
 	<packaging>jar</packaging>
-	<version>${'${'}${$projectName}${'.version}'}</version>
+	<version>${$version}</version>
 	<name>${$projectName}-jrs</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-jpa</artifactId>
-			<version>${'${'}${$projectName}${'.version}'}</version>
+			<version>${'${'}${'project.version}'}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-dao</artifactId>
-			<version>${'${'}${$projectName}${'.version}'}</version>
+			<version>${'${'}${'project.version}'}</version>
 			<scope>provided</scope>
 		</dependency>		
 		<dependency>
@@ -127,7 +127,6 @@
 		</repository>
 	</repositories>
 	<properties>
-		<${$projectName}.version>${$version}</${$projectName}.version>
 		<yalamanchili.version>${$yalamanchili-version}</yalamanchili.version>
 	</properties>	
 </project>

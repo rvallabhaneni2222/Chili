@@ -4,6 +4,7 @@
 		<groupId>${$groupID}</groupId>
 		<artifactId>${$projectName}-master</artifactId>
 		<version>${$version}</version>
+		<relativePath>../${$projectName}-master/pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>${$groupID}</groupId>
@@ -15,31 +16,31 @@
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-jpa</artifactId>
-			<version>${'${'}${'pom.version}'}</version>
+			<version>${'${'}${'project.version}'}</version>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-dao</artifactId>
-			<version>${'${'}${'pom.version}'}</version>
+			<version>${'${'}${'project.version}'}</version>
 			<type>ejb</type>
 		</dependency>		
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-webapp</artifactId>
-			<version>${'${'}${'pom.version}'}</version>
+			<version>${'${'}${'project.version}'}</version>
 			<type>war</type>
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-jrs</artifactId>
-			<version>${'${'}${'pom.version}'}</version>
+			<version>${'${'}${'project.version}'}</version>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>${$groupID}</groupId>
 			<artifactId>${$projectName}-ejb</artifactId>
-			<version>${'${'}${'pom.version}'}</version>
+			<version>${'${'}${'project.version}'}</version>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
@@ -93,10 +94,10 @@
 						<configuration>
 							<tasks>
 								<delete
-									file="${jboss.home}/server/${jboss.configuration}/deploy/${project.artifactId}-${project.version}.ear" />
+									file="${'${jboss.home}'}/server/${'${jboss.configuration}'}/deploy/${'${project.artifactId}'}-${'${project.version}'}.ear" />
 								<copy
-									file="${project.build.directory}/${project.artifactId}-${project.version}.ear"
-									todir="${jboss.home}/server/${jboss.configuration}/deploy" />
+									file="${'${project.build.directory}'}/${'${project.artifactId}'}-${'${project.version}'}.ear"
+									todir="${'${jboss.home}'}/server/${'${jboss.configuration}'}/deploy" />
 							</tasks>
 						</configuration>
 						<goals>
@@ -108,7 +109,7 @@
 		</plugins>
 	</build>
 	<properties>
-		<jboss.home>${env.JBOSS_HOME}</jboss.home>
+		<jboss.home>${'${env.JBOSS_HOME}'}</jboss.home>
 		<jboss.configuration>default</jboss.configuration>
 	</properties>	
 </project>

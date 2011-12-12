@@ -4,6 +4,7 @@
 		<groupId>${$groupID}</groupId>
 		<artifactId>${$projectName}-master</artifactId>
 		<version>${$version}</version>
+		<relativePath>../${$projectName}-master/pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>${$groupID}</groupId>

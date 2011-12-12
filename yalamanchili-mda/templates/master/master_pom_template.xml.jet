@@ -291,6 +291,16 @@
 			<url>https://oss.sonatype.org/content/repositories/google-releases/</url>
 		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>google-maven-plugin</id>
+			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>google</id>
+			<url>https://oss.sonatype.org/content/repositories/google-releases/</url>
+		</pluginRepository>
+	</pluginRepositories>	
 	<properties>
 		<${$projectName}.version>${$version}</${$projectName}.version>
 		<yalamanchili.version>${$yalamanchili-version}</yalamanchili.version>

@@ -15,7 +15,7 @@
 <c:setVariable select="'TRUE'" var="supportJAXB"/>
 <%--code generation properties--%>
 <c:setVariable select="'TRUE'" var="genMaster"/>
-<c:setVariable select="'FALSE'" var="genApp"/>
+<c:setVariable select="'TRUE'" var="genApp"/>
 <c:setVariable select="'TRUE'" var="genJPA"/>
 <c:setVariable select="'TRUE'" var="genDAO"/>
 <c:setVariable select="'TRUE'" var="genEJB"/>
@@ -28,7 +28,7 @@
 <%--versions --%>
 <c:setVariable select="'1.1-SNAPSHOT'" var="yalamanchili-version"/>
 <c:setVariable select="'2.4.0'" var="gwt-version"/>
-<c:setVariable select="'2.3.0'" var="gwt-plugin-version"/>
+<c:setVariable select="'2.4.0'" var="gwt-plugin-version"/>
 <c:setVariable select="'2.2.2.Final'" var="seam-version"/>
 <%-- TODO removed use yalamanchili.version instead else override--%>
 <c:setVariable select="'1.0-SNAPSHOT'" var="yalamanchili-embedded-jboss-version"/>
