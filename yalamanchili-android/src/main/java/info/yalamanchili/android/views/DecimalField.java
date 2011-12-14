@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.text.InputType;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -90,7 +91,9 @@ public class DecimalField extends LinearLayout {
 		}
 
 		public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
-			if ((keyCode >= 7 && keyCode <= 16) || keyCode == 56) {
+			//numbers, backspace and decimal point
+			if ((keyCode >= 7 && keyCode <= 16) || keyCode == 56
+					|| keyCode == 67) {
 				return super.onKeyDown(keyCode, keyEvent);
 			}
 			return false;
