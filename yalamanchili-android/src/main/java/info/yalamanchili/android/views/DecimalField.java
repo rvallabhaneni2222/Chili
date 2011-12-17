@@ -6,8 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.text.InputType;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,6 +44,7 @@ public class DecimalField extends LinearLayout {
 		} else {
 			text = new DecimalView(getContext());
 			text.setInputType(InputType.TYPE_CLASS_NUMBER);
+			text.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		}
 		errorMsg = new TextView(getContext());
 		int lHeight = LayoutParams.WRAP_CONTENT;
@@ -89,14 +88,17 @@ public class DecimalField extends LinearLayout {
 		public DecimalView(Context context, AttributeSet attrs, int defStyle) {
 			super(context, attrs, defStyle);
 		}
-
-		public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
-			//numbers, backspace and decimal point
-			if ((keyCode >= 7 && keyCode <= 16) || keyCode == 56
-					|| keyCode == 67) {
-				return super.onKeyDown(keyCode, keyEvent);
-			}
-			return false;
-		}
+		// TODO having issue with this the keyCode does nto seemt o be
+		// consistent or being fired at all times. also having a issue with
+		// decimal point being visible.
+		// public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
+		// // numbers, backspace and decimal point
+		// Log.d("chili-android", new Integer(keyCode).toString());
+		// if ((keyCode >= 7 && keyCode <= 16) || keyCode == 56
+		// || keyCode == 67) {
+		// return super.onKeyDown(keyCode, keyEvent);
+		// }
+		// return false;
+		// }
 	}
 }

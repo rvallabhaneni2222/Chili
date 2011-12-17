@@ -6,8 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.text.InputType;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -88,14 +86,16 @@ public class NumericField extends LinearLayout {
 		public NumericView(Context context, AttributeSet attrs, int defStyle) {
 			super(context, attrs, defStyle);
 		}
-
-		public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
-			//numbers and back space
-			if ((keyCode >= 7 && keyCode <= 16) || keyCode == 67) {
-				return super.onKeyDown(keyCode, keyEvent);
-			}
-			return false;
-		}
+		// TODO having issue with this the keyCode does nto seemt o be
+		// consistent or being fired at all times.
+		// public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
+		// // numbers and back space
+		// Log.d("chili-android", new Integer(keyCode).toString());
+		// if ((keyCode >= 7 && keyCode <= 16) || keyCode == 67) {
+		// return super.onKeyDown(keyCode, keyEvent);
+		// }
+		// return false;
+		// }
 	}
 
 }
