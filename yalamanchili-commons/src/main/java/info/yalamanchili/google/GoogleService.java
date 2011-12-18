@@ -11,6 +11,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+/* Used to Login to google apps with token service and send meesages to  Android C2DM service*/
 public class GoogleService {
 	public static final String GOOGLE_LOGIN_URI = "https://www.google.com/accounts/ClientLogin";
 	public static final String GOOGLE_C2DM_SEND_URI = "http://android.apis.google.com/c2dm/send";
