@@ -221,10 +221,15 @@ public class ReflectionUtils {
 			try {
 				result = getterMethod.invoke(source);
 			} catch (Exception e) {
-				throw new RuntimeException(
-						"Failed to invoke getter method on field:"
-								+ getterMethod.getName() + "on:"
-								+ source.getClass().toString(), e);
+				if (getterMethod == null || source == null) {
+					throw new RuntimeException(
+							"Failed to invoke getter method Method or source is null");
+				} else {
+					throw new RuntimeException(
+							"Failed to invoke getter method on field:"
+									+ getterMethod.getName() + "on:"
+									+ source.getClass().toString(), e);
+				}
 			}
 		}
 		return result;
@@ -267,9 +272,14 @@ public class ReflectionUtils {
 		try {
 			setterMethod.invoke(source, value);
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to invoke setter method"
-					+ setterMethod.getName() + "on:"
-					+ source.getClass().getName(), e);
+			if (setterMethod == null || source == null) {
+				throw new RuntimeException(
+						"Failed to invoke setter method Method or source is null");
+			} else {
+				throw new RuntimeException("Failed to invoke setter method"
+						+ setterMethod.getName() + "on:"
+						+ source.getClass().getName(), e);
+			}
 		}
 	}
 

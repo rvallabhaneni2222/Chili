@@ -34,16 +34,16 @@ public class ValidatorUtilsTest {
 	@Test
 	public void testDecialMaxMin() {
 		Course c = new Course();
-		c.setWeight(new Float("22.9"));
+		c.setRating(new Float("22.9"));
 		Map<String, List<String>> values = ValidatorUtils.validateEntity(c);
-		assertTrue(values.keySet().contains("weight"));
-		assertEquals(values.get("weight").get(0).toString(),
+		assertTrue(values.keySet().contains("rating"));
+		assertEquals(values.get("rating").get(0).toString(),
 				"must be less than or equal to 5.0");
 
-		c.setWeight(new Float("-2.9"));
+		c.setRating(new Float("-2.9"));
 		Map<String, List<String>> values2 = ValidatorUtils.validateEntity(c);
-		assertTrue(values2.keySet().contains("weight"));
-		assertEquals(values2.get("weight").get(0).toString(),
+		assertTrue(values2.keySet().contains("rating"));
+		assertEquals(values2.get("rating").get(0).toString(),
 				"must be greater than or equal to 0.0");
 	}
 
@@ -59,7 +59,7 @@ public class ValidatorUtilsTest {
 	@Test
 	public void testValidateField() {
 		System.out.println(ValidatorUtils.validateField(Course.class.getName(),
-				"weight", new Float("1212.3")));
+				"rating", new Float("1212.3")));
 	}
 
 	@After

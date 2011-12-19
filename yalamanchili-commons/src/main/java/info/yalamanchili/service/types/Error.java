@@ -1,4 +1,4 @@
-package info.yalamanchili.commons.service.types;
+package info.yalamanchili.service.types;
 
 import java.io.Serializable;
 

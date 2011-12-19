@@ -28,13 +28,13 @@ public class Course implements Serializable {
 	@NotNull
 	@Size(min = 1)
 	protected String name;
-	@Future
-	protected Date startDate;
 	@Past
+	protected Date startDate;
+	@Future
 	protected Date endDate;
 	@DecimalMax(value = "5.0")
 	@DecimalMin("0.0")
-	protected Float weight;
+	protected Float rating;
 	@Max(60)
 	@Min(0)
 	protected Integer noOfStuents;
@@ -78,12 +78,12 @@ public class Course implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public Float getWeight() {
-		return weight;
+	public Float getRating() {
+		return rating;
 	}
 
-	public void setWeight(Float weight) {
-		this.weight = weight;
+	public void setRating(Float weight) {
+		this.rating = weight;
 	}
 
 	public Integer getNoOfStuents() {

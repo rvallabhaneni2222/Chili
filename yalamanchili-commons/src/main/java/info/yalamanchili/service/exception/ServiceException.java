@@ -1,6 +1,6 @@
-package info.yalamanchili.commons.service.exception;
+package info.yalamanchili.service.exception;
 
-import info.yalamanchili.commons.service.types.Errors;
+import info.yalamanchili.service.types.Errors;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class ServiceException extends Exception {
 	}
 
 	public ServiceException(StatusCode statusCode,
-			List<info.yalamanchili.commons.service.types.Error> errors) {
+			List<info.yalamanchili.service.types.Error> errors) {
 		this.statusCode = statusCode.value();
 		Errors ers = new Errors();
 		ers.setErrors(errors);
@@ -32,31 +32,31 @@ public class ServiceException extends Exception {
 
 	public ServiceException(StatusCode statusCode, String source,
 			ReasonCode reasonCode) {
-		this(statusCode, new info.yalamanchili.commons.service.types.Error(
-				source, reasonCode.toString()));
+		this(statusCode, new info.yalamanchili.service.types.Error(source,
+				reasonCode.toString()));
 	}
 
 	public ServiceException(StatusCode statusCode, String source,
 			ReasonCode reasonCode, String description) {
-		this(statusCode, new info.yalamanchili.commons.service.types.Error(
-				source, reasonCode.toString(), description));
+		this(statusCode, new info.yalamanchili.service.types.Error(source,
+				reasonCode.toString(), description));
 	}
 
 	public ServiceException(StatusCode statusCode,
-			info.yalamanchili.commons.service.types.Error... errs) {
+			info.yalamanchili.service.types.Error... errs) {
 		this.statusCode = statusCode.value();
 		this.errors = new Errors();
-		for (info.yalamanchili.commons.service.types.Error error : errs) {
+		for (info.yalamanchili.service.types.Error error : errs) {
 			this.errors.addError(error);
 		}
 	}
 
 	public ServiceException(StatusCode statusCode, MediaType mediaType,
-			info.yalamanchili.commons.service.types.Error... errs) {
+			info.yalamanchili.service.types.Error... errs) {
 		this.statusCode = statusCode.value();
 		this.mediaType = mediaType;
 		this.errors = new Errors();
-		for (info.yalamanchili.commons.service.types.Error error : errs) {
+		for (info.yalamanchili.service.types.Error error : errs) {
 			this.errors.addError(error);
 		}
 	}

@@ -1,4 +1,4 @@
-package info.yalamanchili.commons.service.types;
+package info.yalamanchili.service.types;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class Errors implements Serializable {
 	}
 
 	public void setErrors(
-			final List<info.yalamanchili.commons.service.types.Error> errors) {
+			final List<info.yalamanchili.service.types.Error> errors) {
 		this.errors = errors;
 	}
 
@@ -35,7 +35,7 @@ public class Errors implements Serializable {
 		getErrors().add(error);
 	}
 
-	private List<info.yalamanchili.commons.service.types.Error> errors = new ArrayList<Error>();
+	private List<info.yalamanchili.service.types.Error> errors = new ArrayList<Error>();
 
 	@Override
 	public String toString() {

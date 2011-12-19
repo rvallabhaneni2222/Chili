@@ -1,4 +1,4 @@
-package info.yalamanchili.commons.service.exception;
+package info.yalamanchili.service.exception;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;

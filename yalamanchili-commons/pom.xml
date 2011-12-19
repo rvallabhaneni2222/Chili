@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.1</version>
+			<version>4.8.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -53,6 +53,31 @@
 			<artifactId>requestfactory-server</artifactId>
 			<version>2.4.0</version>
 			<scope>provided</scope>
+		</dependency>
+		<!-- Mock Test Libs http://code.google.com/p/powermock/wiki/GettingStarted -->
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-easymock</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>3.0</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -108,6 +133,9 @@
 			</plugin>
 		</plugins>
 	</build>
+	<properties>
+		<powermock.version>1.4.10</powermock.version>
+	</properties>
 	<repositories>
 		<repository>
 			<id>yalamanchili</id>
