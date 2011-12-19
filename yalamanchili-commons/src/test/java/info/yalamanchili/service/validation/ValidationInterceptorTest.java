@@ -6,8 +6,6 @@ import static org.powermock.api.easymock.PowerMock.mockStatic;
 import static org.powermock.api.easymock.PowerMock.replayAll;
 import info.yalamanchili.commons.DateUtils;
 import info.yalamanchili.commons.entity.Course;
-import info.yalamanchili.service.validation.ValidationInterceptor;
-import info.yalamanchili.service.validation.ValidationMessages;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -44,14 +42,14 @@ public class ValidationInterceptorTest {
 	}
 
 	@Test
-	public void testInputs() {
+	public void testSimpleValidations() {
 		Object[] inputs = new Object[1];
-		Course c = new Course();
-		c.setEndDate(DateUtils.getNextDay(new Date(), -1));
-		c.setStartDate(DateUtils.getNextDay(new Date(), 1));
-		c.setTution(new BigDecimal("100.011"));
-		c.setNoOfStuents(61);
-		inputs[0] = c;
+		Course course = new Course();
+		course.setEndDate(DateUtils.getNextDay(new Date(), -1));
+		course.setStartDate(DateUtils.getNextDay(new Date(), 1));
+		course.setTution(new BigDecimal("100.011"));
+		course.setNoOfStuents(61);
+		inputs[0] = course;
 		validationInterceptor.validateInputs(inputs);
 		for (info.yalamanchili.service.types.Error err : ValidationMessages
 				.instance().getErrors()) {
@@ -59,6 +57,24 @@ public class ValidationInterceptorTest {
 			// System.out.println("----message:" + err.getDescription());
 		}
 		assertTrue(ValidationMessages.instance().getErrors().size() == 5);
+	}
+
+	@Test
+	// TODO find a way to test this
+	public void testComplexValidations() {
+		Object[] inputs = new Object[1];
+		Course course = new Course();
+		course.setName("Software Engineering");
+		course.setRating(new Float("2.5"));
+		course.setNoOfStuents(31);
+		inputs[0] = course;
+		validationInterceptor.validateInputs(inputs);
+		for (info.yalamanchili.service.types.Error err : ValidationMessages
+				.instance().getErrors()) {
+			System.out.println("----attribute:" + err.getReasonCode());
+			System.out.println("----message:" + err.getDescription());
+		}
+		// assertTrue(ValidationMessages.instance().getErrors().size() == 5);
 	}
 
 	@After
