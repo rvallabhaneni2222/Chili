@@ -1,4 +1,4 @@
-package info.yalamanchili.validation;
+package info.yalamanchili.service.validation;
 
 import static org.easymock.EasyMock.expect;
 import static org.junit.Assert.assertTrue;
@@ -6,6 +6,8 @@ import static org.powermock.api.easymock.PowerMock.mockStatic;
 import static org.powermock.api.easymock.PowerMock.replayAll;
 import info.yalamanchili.commons.DateUtils;
 import info.yalamanchili.commons.entity.Course;
+import info.yalamanchili.service.validation.ValidationInterceptor;
+import info.yalamanchili.service.validation.ValidationMessages;
 
 import java.math.BigDecimal;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package info.yalamanchili.validation;
+package info.yalamanchili.service.validation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

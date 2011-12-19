@@ -1,4 +1,4 @@
-package info.yalamanchili.validation;
+package info.yalamanchili.service.validation;
 
 import info.yalamanchili.inject.Locator;
 import info.yalamanchili.service.types.Error;
