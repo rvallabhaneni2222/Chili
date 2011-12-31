@@ -1,5 +1,6 @@
 package info.yalamanchili.service.validation;
 
+import info.yalamanchili.commons.ReflectionUtils;
 import info.yalamanchili.commons.ValidatorUtils;
 import info.yalamanchili.service.exception.ServiceException;
 import info.yalamanchili.service.exception.ServiceException.StatusCode;
@@ -7,6 +8,7 @@ import info.yalamanchili.service.types.Error;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,9 +20,17 @@ public class ValidationInterceptor {
 	@AroundInvoke
 	public Object transformReturn(InvocationContext context) throws Exception {
 		validateInputs(context.getParameters());
-		complexValidations(context);
+		processCommonValidators(context.getParameters());
+		processServiceValidators(context);
 		checkForErrors();
-		return context.proceed();
+		Object result = null;
+		try {
+			result = context.proceed();
+		} catch (Exception e) {
+			throw e;
+		}
+		checkForErrors();
+		return result;
 	}
 
 	protected void validateInputs(Object[] inputs) {
@@ -37,7 +47,26 @@ public class ValidationInterceptor {
 		addMessages(validations);
 	}
 
-	protected void complexValidations(InvocationContext ctx) throws Exception {
+	protected void processCommonValidators(Object[] args) throws Exception {
+		for (Object input : args) {
+			if (input != null) {
+				Map<Method, Object> methods = new HashMap<Method, Object>();
+				findValidationMethods(input, methods);
+				for (Method method : methods.keySet()) {
+					Object ref = ReflectionUtils.callGetterMethod(method,
+							methods.get(method));
+					Validator validator = getValidator(method);
+					if (validator != null) {
+						GenericValidator validatorIntf = (GenericValidator) validator
+								.value().newInstance();
+						validatorIntf.validate(ref);
+					}
+				}
+			}
+		}
+	}
+
+	protected void processServiceValidators(InvocationContext ctx) throws Exception {
 		Object[] args = ctx.getParameters();
 		ServiceValidator validator = getServiceValidator(ctx);
 		if (validator != null) {
@@ -68,6 +97,32 @@ public class ValidationInterceptor {
 		}
 	}
 
+	// returns all the getters that need to be validated
+	public static void findValidationMethods(Object input,
+			Map<Method, Object> result) {
+		List<Method> methods = ReflectionUtils.getGetterMethods(input
+				.getClass());
+		for (Method method : methods) {
+			if (method.isAnnotationPresent(Validator.class)) {
+				result.put(method, input);
+			}
+			if (method.isAnnotationPresent(Valid.class)
+					|| method.isAnnotationPresent(javax.validation.Valid.class)) {
+				Object ref = ReflectionUtils.callGetterMethod(method, input);
+				findValidationMethods(ref, result);
+			}
+		}
+	}
+
+	protected Validator getValidator(Method method) {
+		for (Annotation annotation : method.getAnnotations()) {
+			if (annotation.annotationType().equals(Validator.class)) {
+				return (Validator) annotation;
+			}
+		}
+		return null;
+	}
+
 	protected ServiceValidator getServiceValidator(InvocationContext ctx) {
 		for (Annotation annotation : ctx.getTarget().getClass()
 				.getAnnotations()) {
@@ -82,6 +137,7 @@ public class ValidationInterceptor {
 		for (String attributeName : validations.keySet()) {
 			for (String message : validations.get(attributeName)) {
 				Error validationError = new Error();
+				validationError.setSource(attributeName);
 				validationError.setReasonCode(attributeName);
 				validationError.setDescription(message);
 				ValidationMessages.instance().addError(validationError);

@@ -292,4 +292,20 @@ public class ReflectionUtils {
 					+ field.getName(), e);
 		}
 	}
+
+	public static List<Method> getGetterMethods(Class<?> clazz) {
+		List<Method> list = new ArrayList<Method>();
+		Method[] methods = clazz.getMethods();
+		for (int i = 0; i < methods.length; i++) {
+			Method method = methods[i];
+			if (method.getParameterTypes().length > 0) {
+				continue;
+			}
+			if (method.getName().startsWith("get")
+					&& !"getClass".equals(method.getName())) {
+				list.add(method);
+			}
+		}
+		return list;
+	}
 }
