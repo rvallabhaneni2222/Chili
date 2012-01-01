@@ -15,12 +15,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>info.yalamanchili.commons</groupId>
-			<artifactId>yalamanchili-commons</artifactId>
-			<version>1.1-SNAPSHOT</version>
-			<classifier>http-only</classifier>
-		</dependency>
-		<dependency>
 			<groupId>org.codehaus</groupId>
 			<artifactId>xstream
 			</artifactId>

@@ -1,7 +1,5 @@
 package info.yalamanchili.android.http;
 
-import info.yalamanchili.http.HttpHelper;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.HttpPut;
@@ -51,20 +49,34 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 	}
 
 	protected void onPostExecute(String result) {
-		Log.d("yalamanchili", "result:" + result);
 		dialog.dismiss();
 		StatusLine status = response.getStatusLine();
-		Log.d("debug", "HttpPut Response code" + status.getStatusCode());
-		/* http response success */
-		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 300) {
+		result = HttpHelper.convertResponseBody(response);
+		Log.d("y-android", "HttpPut Response code" + status.getStatusCode());
+		Log.d("y-android", "result:" + result);
+		// http response success
+		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 399) {
+			Log.d("y-android", "---OnResponse------");
 			onResponse(result);
-		} /* http response failure */
+		}
+		// validation errors
+		else if (status.getStatusCode() == 400) {
+			Log.d("y-android", "---OnValidationErrors------");
+			onValidationErrors(result);
+		}
+		// http response failure
 		else {
+			Log.d("y-android", "---OnFailure------");
 			throw new RuntimeException("http call failed with status code:"
 					+ status.getStatusCode());
 		}
 	}
 
 	protected abstract void onResponse(String result);
+
+	// override this to handle validation errors
+	protected void onValidationErrors(String errors) {
+
+	}
 
 }
