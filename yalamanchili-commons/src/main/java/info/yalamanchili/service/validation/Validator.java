@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
  * Annotated the getter method any service bean property
  * to perform any validations implemented by the GenericValdiator
  */
+//TODO can we use custom hibernate validator.?
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Validator {

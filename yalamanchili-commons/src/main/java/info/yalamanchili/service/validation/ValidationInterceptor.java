@@ -3,6 +3,7 @@ package info.yalamanchili.service.validation;
 import info.yalamanchili.commons.ReflectionUtils;
 import info.yalamanchili.commons.ValidatorUtils;
 import info.yalamanchili.service.exception.ServiceException;
+import info.yalamanchili.service.exception.ServiceException.ReasonCode;
 import info.yalamanchili.service.exception.ServiceException.StatusCode;
 import info.yalamanchili.service.types.Error;
 
@@ -19,9 +20,13 @@ public class ValidationInterceptor {
 
 	@AroundInvoke
 	public Object transformReturn(InvocationContext context) throws Exception {
+		System.out.println(context.getTarget().toString());
+		System.out.println(context.getMethod().toString());
 		validateInputs(context.getParameters());
-		processCommonValidators(context.getParameters());
-		processServiceValidators(context);
+		// TODO can we use custom hibernate valdiator here.
+		// processCommonValidators(context.getParameters());
+		// TODO is this needed for daos?
+		// processServiceValidators(context);
 		checkForErrors();
 		Object result = null;
 		try {
@@ -66,7 +71,8 @@ public class ValidationInterceptor {
 		}
 	}
 
-	protected void processServiceValidators(InvocationContext ctx) throws Exception {
+	protected void processServiceValidators(InvocationContext ctx)
+			throws Exception {
 		Object[] args = ctx.getParameters();
 		ServiceValidator validator = getServiceValidator(ctx);
 		if (validator != null) {
@@ -138,7 +144,8 @@ public class ValidationInterceptor {
 			for (String message : validations.get(attributeName)) {
 				Error validationError = new Error();
 				validationError.setSource(attributeName);
-				validationError.setReasonCode(attributeName);
+				validationError.setReasonCode(ReasonCode.INVALID_INPUT_VALUE
+						.toString());
 				validationError.setDescription(message);
 				ValidationMessages.instance().addError(validationError);
 			}
