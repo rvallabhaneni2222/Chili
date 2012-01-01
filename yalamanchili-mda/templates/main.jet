@@ -15,16 +15,16 @@
 <c:setVariable select="'TRUE'" var="supportJAXB"/>
 <%--code generation properties--%>
 <c:setVariable select="'FALSE'" var="genMaster"/>
-<c:setVariable select="'TRUE'" var="genApp"/>
+<c:setVariable select="'FALSE'" var="genApp"/>
 <c:setVariable select="'FALSE'" var="genJPA"/>
-<c:setVariable select="'FALSE'" var="genDAO"/>
+<c:setVariable select="'TRUE'" var="genDAO"/>
 <c:setVariable select="'FALSE'" var="genEJB"/>
-<c:setVariable select="'FALSE'" var="genRest"/>
+<c:setVariable select="'TRUE'" var="genRest"/>
 <c:setVariable select="'FALSE'" var="genWebapp"/>
 <c:setVariable select="'FALSE'" var="genAndroid"/>
 <c:setVariable select="'FALSE'" var="genIOS"/>
 <c:setVariable select="'FALSE'" var="genTest"/>
-<c:setVariable select="'TRUE'" var="genPOMS"/>
+<c:setVariable select="'FALSE'" var="genPOMS"/>
 <%--versions --%>
 <c:setVariable select="'1.1-SNAPSHOT'" var="yalamanchili-version"/>
 <c:setVariable select="'2.4.0'" var="gwt-version"/>
@@ -131,9 +131,9 @@
     </ws:folder>
     <ws:folder path="src/test/java">
     <%-- Abstract Entity--%>
-     <ws:folder path="info/yalamanchili/gwt/jpa">
+    <%-- <ws:folder path="info/yalamanchili/gwt/jpa">
 		<ws:file path="AbstractEntity.java" template="templates/jpa/src/test/java/abstract_entity_test.java.jet" />
-	</ws:folder>    
+	</ws:folder>   --%>
     <c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
     	 <ws:folder path="${$groupIDWithFolder}/entity/${$package/@name}">
 			<%-- create test classes in the package--%>
@@ -164,8 +164,14 @@
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">	
     		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
     		<ws:folder path="${$groupIDWithFolder}/dao/${$package/@name}/${lower-case($class/@name)}">
-				<%-- DAO class--%>
-				<ws:file path="{$class/@name}DAO.java" template="templates/dao/src/main/java/entity_dao.java.jet" />
+				<%-- DAO interface --%>
+				<ws:file path="{$class/@name}DAO.java" template="templates/dao/src/main/java/dao_interface.java.jet" />
+				<%-- DAO local interface--%>
+				<ws:file path="{$class/@name}DAOLocal.java" template="templates/dao/src/main/java/dao_local.java.jet" />				    		
+				<%-- DAO remote interface--%>
+				<ws:file path="{$class/@name}DAORemote.java" template="templates/dao/src/main/java/dao_remote.java.jet" />				
+				<%-- DAOImpl class--%>
+				<ws:file path="{$class/@name}DAOImpl.java" template="templates/dao/src/main/java/dao_impl.java.jet" />
 			</ws:folder>
 			</c:iterate>
 		</c:iterate>
@@ -436,7 +442,7 @@
     <ws:folder path="src/main/java">
 			<ws:folder path="${$groupIDWithFolder}/rest">
 			<%-- rest service class--%>
-			<ws:file  path="${camelCase($projectName)}Service.java" template="templates/rest/src/main/java/rest_manage.java.jet"/>
+			<ws:file  path="${camelCase($projectName)}Resource.java" template="templates/rest/src/main/java/rest_manage.java.jet"/>
 			</ws:folder>    
         	<%-- Iterate through packages and classes --%>
     	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">
@@ -472,7 +478,7 @@
 			</c:iterate>
 			<ws:folder path="${$groupIDWithFolder}/rest/${$package/@name}">
 			<%-- rest service class--%>
-			<ws:file  path="{$class/@name}Service.java" template="templates/rest/src/main/java/entity/entity_rest_service.java.jet"/>
+			<ws:file  path="{$class/@name}Resource.java" template="templates/rest/src/main/java/entity/entity_rest_service.java.jet"/>
 			</ws:folder>
 	</c:iterate>
 	</c:iterate>			

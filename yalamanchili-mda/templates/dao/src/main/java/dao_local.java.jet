@@ -1,0 +1,12 @@
+<java:format>
+<f:bundle basename="templates/resources/messages">
+<f:message>copyright</f:message>
+package ${$groupID}.dao.${lower-case($package/@name)}.${lower-case($class/@name)};
+import javax.ejb.Local;
+
+@Local
+public interface ${$class/@name}DAOLocal extends ${$class/@name}DAO {
+
+}
+</f:bundle>
+</java:format>

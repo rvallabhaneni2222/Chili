@@ -3,7 +3,9 @@
 package ${$groupID}.rest.${$package/@name};
 import info.yalamanchili.mapper.BeanMapper;
 import ${$groupID}.entity.${lower-case($package/@name)}.${$class/@name};
-import ${$groupID}.dao.${lower-case($package/@name)}.${lower-case($class/@name)}.${$class/@name}DAO;
+import info.yalamanchili.service.exception.ServiceException;
+
+import ${$groupID}.dao.${lower-case($package/@name)}.${lower-case($class/@name)}.${$class/@name}DAOLocal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -152,10 +154,10 @@ import org.jboss.seam.annotations.security.Restrict;
 @Consumes(value = { "application/xml", "application/json" })
 @Scope(ScopeType.STATELESS)
 @Transactional
-public class ${$class/@name}Service {
+public class ${$class/@name}Resource {
 
 	@In("${lower-case($class/@name)}Daoy")
-	protected ${$class/@name}DAO dao;
+	protected ${$class/@name}DAOLocal dao;
 	
 	@In
 	protected EntityManager em;
@@ -166,21 +168,21 @@ public class ${$class/@name}Service {
 	@GET
 	@Path("/read/{id}")
 	//@Restrict("#{s:hasRole('user')}")
-	public ${$class/@name} read(@PathParam("id") Long id) {
+	public ${$class/@name} read(@PathParam("id") Long id) throws ServiceException{
 		return dao.findById(id);
 	}
 
 	@PUT
 	@Path("/create")
 	//@Restrict("#{s:hasRole('admin')}")
-	public void create(${$class/@name} entity) {
+	public void create(${$class/@name} entity) throws ServiceException{
 		dao.save(entity);
 	}
 
 	@PUT
 	@Path("/update")
 	//@Restrict("#{s:hasRole('admin')}")
-	public void update(${$class/@name} object) {
+	public void update(${$class/@name} object) throws ServiceException{
 		${$class/@name} entity = dao.findById(object.getId());
 		mapper.map(object, entity);
 		dao.save(entity);
@@ -189,14 +191,14 @@ public class ${$class/@name}Service {
 	@DELETE
 	@Path("/delete/{id}")
 	//@Restrict("#{s:hasRole('admin')}")
-	public void delete(@PathParam("id") Long id) {
+	public void delete(@PathParam("id") Long id) throws ServiceException{
 		dao.delete(id);
 	}
 
 	@GET
 	@Path("/readall/{offset}/{limit}")
 	public List<${$class/@name}> readAll(@PathParam("offset") int offset,
-			@PathParam("limit") int limit) {
+			@PathParam("limit") int limit) throws ServiceException{
 		return dao.query(offset, limit);
 	}
 	
@@ -225,7 +227,7 @@ public class ${$class/@name}Service {
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 							  					  		 			@GET
 																	@Path("/read/{id}/${lower-case($class2/@name)}s")
-																	public Collection<${$class2/@name}> get${$class2/@name}s(@PathParam("id") Long id) {
+																	public Collection<${$class2/@name}> get${$class2/@name}s(@PathParam("id") Long id) throws ServiceException{
 																			return dao.findById(id).get${$class2/@name}s();
 																	}
 							  					  		 			</c:if> 
@@ -266,7 +268,7 @@ public class ${$class/@name}Service {
 							  					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
 							  					  		 			@GET
 																	@Path("/read/{id}/${lower-case($class2/@name)}s")
-																	public Collection<${$class2/@name}> get${$class2/@name}s(@PathParam("id") Long id) {
+																	public Collection<${$class2/@name}> get${$class2/@name}s(@PathParam("id") Long id) throws ServiceException{
 																		return dao.findById(id).get${$class2/@name}s();
 																	}
 							  					  		 			</c:if> 
@@ -308,7 +310,7 @@ public class ${$class/@name}Service {
   					  		 			<c:if test="$class2/@xmi.id = $association_connection_end_classID2"> 
   					  		 										@GET
 																	@Path("/read/{id}/${lower-case($class2/@name)}s")
-																	public Collection<${$class2/@name}> get${$class2/@name}s(@PathParam("id") Long id) {
+																	public Collection<${$class2/@name}> get${$class2/@name}s(@PathParam("id") Long id) throws ServiceException{
 																		return dao.findById(id).get${$class2/@name}s();
 																	}
   					  		 			
@@ -328,13 +330,13 @@ public class ${$class/@name}Service {
 	
 	@GET
 	@Path("/count")
-	public Long count() {
+	public Long count() throws ServiceException{
 		return dao.size();
 	}
 <c:if test="$enableHibernateSearch = 'true'">
 	@GET
 	@Path("/search/{searchText}")
-	public List<${$class/@name}> search(@PathParam("searchText") String searchText) {
+	public List<${$class/@name}> search(@PathParam("searchText") String searchText) throws ServiceException{
 		return dao.search(searchText);
 	}
 </c:if>		

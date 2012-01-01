@@ -7,6 +7,8 @@
 			<ejb-name>*</ejb-name>
 			<interceptor-class>org.jboss.seam.ejb.SeamInterceptor
 			</interceptor-class>
+			<interceptor-class>info.yalamanchili.service.validation.ValidationInterceptor
+			</interceptor-class>
 		</interceptor-binding>
 	</assembly-descriptor>
 </ejb-jar>
