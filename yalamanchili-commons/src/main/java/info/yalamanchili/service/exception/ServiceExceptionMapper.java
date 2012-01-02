@@ -1,5 +1,6 @@
 package info.yalamanchili.service.exception;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -15,7 +16,8 @@ public class ServiceExceptionMapper implements
 		if (exception.getErrors() != null
 				&& exception.getErrors().getErrors().size() > 0) {
 			builder.entity(exception.getErrors());
-			builder.type(exception.getMediaType());
+			// TODO set it from request context.
+			builder.type(MediaType.APPLICATION_JSON);
 		}
 
 		return builder.build();
