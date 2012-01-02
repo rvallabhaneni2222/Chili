@@ -51,7 +51,9 @@ public abstract class AsyncHttpPut extends AsyncTask<String, Integer, String> {
 	protected void onPostExecute(String result) {
 		dialog.dismiss();
 		StatusLine status = response.getStatusLine();
-		result = HttpHelper.convertResponseBody(response);
+		if (response.getEntity() != null) {
+			result = HttpHelper.convertResponseBody(response);
+		}
 		Log.d("y-android", "HttpPut Response code" + status.getStatusCode());
 		Log.d("y-android", "result:" + result);
 		// http response success
