@@ -3,23 +3,26 @@ package info.yalamanchili.android.views;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class BooleanField extends BaseField {
+public abstract class BaseTextField extends BaseField {
 
-	protected CheckBox booleanBox;
+	protected TextView text;
 
-	public BooleanField(Context context, AttributeSet attrs) {
+	public BaseTextField(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
 	@Override
 	protected void init() {
 		label = new TextView(getContext());
-		booleanBox = new CheckBox(getContext());
-		booleanBox.setEnabled(!readOnly);
+		if (readOnly) {
+			text = new TextView(getContext());
+		} else {
+			text = new EditText(getContext());
+		}
 		errorMsg = new TextView(getContext());
 	}
 
@@ -29,23 +32,16 @@ public class BooleanField extends BaseField {
 		int lHeight = LayoutParams.WRAP_CONTENT;
 		int lWidth = LayoutParams.FILL_PARENT;
 		addView(label, new LinearLayout.LayoutParams(lWidth, lHeight));
-		addView(booleanBox, new LinearLayout.LayoutParams(lWidth, lHeight));
+		addView(text, new LinearLayout.LayoutParams(lWidth, lHeight));
 		addView(errorMsg, new LinearLayout.LayoutParams(lWidth, lHeight));
 		label.setTypeface(Typeface.DEFAULT_BOLD);
 	}
 
-	@Override
-	protected void customize() {
-		// TODO Auto-generated method stub
-
+	public void setValue(String value) {
+		text.setText(value);
 	}
 
-	public void setValue(Boolean value) {
-		booleanBox.setChecked(value);
+	public String getValue() {
+		return text.getText().toString();
 	}
-
-	public Boolean getValue() {
-		return booleanBox.isChecked();
-	}
-
 }
