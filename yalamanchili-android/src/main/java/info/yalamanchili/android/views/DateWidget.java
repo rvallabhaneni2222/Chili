@@ -9,12 +9,13 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.DatePicker;
 
 public class DateWidget extends Activity {
 
 	protected static final int SUCCESS_RETURN_CODE = 100;
+	// TODO using this is not the best approach need to find a way to intercept
+	// the onresult override on datefield rather than on parent activity;
 	protected static Map<Integer, Date> dates = new HashMap<Integer, Date>();
 
 	public static Calendar date = Calendar.getInstance();
@@ -31,7 +32,6 @@ public class DateWidget extends Activity {
 		int cmonth = Calendar.getInstance().get(Calendar.MONTH);
 		int cday = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
-		
 		DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
 			public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -47,7 +47,8 @@ public class DateWidget extends Activity {
 
 	public static Date getDate(int id) {
 		Date date = dates.get(id);
-		dates.remove(id);
+		// TODO add this
+		// dates.remove(id);
 		return date;
 	}
 }

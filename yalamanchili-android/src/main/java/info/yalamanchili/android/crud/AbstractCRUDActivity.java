@@ -1,7 +1,9 @@
 package info.yalamanchili.android.crud;
 
+import info.yalamanchili.android.commons.DateParser;
 import info.yalamanchili.android.views.BaseField;
 import info.yalamanchili.android.views.BooleanField;
+import info.yalamanchili.android.views.DateField;
 import info.yalamanchili.android.views.DecimalField;
 import info.yalamanchili.android.views.Field;
 import info.yalamanchili.android.views.NumericField;
@@ -54,7 +56,10 @@ public abstract class AbstractCRUDActivity extends Activity implements
 			fields.put(key, booleanField);
 			break;
 		case DATE_FIELD:
-			// TODO DateField not implemented yet
+			DateField dateField = (DateField) findViewById(id);
+			dateField.setLabel(label);
+			dateField.setDateFieldId(id);
+			fields.put(key, dateField);
 			break;
 		}
 	}
@@ -95,10 +100,14 @@ public abstract class AbstractCRUDActivity extends Activity implements
 					}
 					continue;
 				}
-				// TODO DateField
-				// if (since.getTime().compareTo(new Date()) != 0) {
-				// dealer.put("since", DateParser.toString(since.getTime()));
-				// }
+				if (fields.get(fieldKey) instanceof DateField) {
+					DateField dateField = (DateField) fields.get(fieldKey);
+					if (dateField.getValue() != null) {
+						entity.put(fieldKey,
+								DateParser.toString(dateField.getValue()));
+					}
+					continue;
+				}
 			}
 			wrapper.put(key, entity);
 		} catch (JSONException e) {
