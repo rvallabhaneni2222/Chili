@@ -116,13 +116,11 @@ public abstract class AbstractCRUDActivity extends Activity implements
 					.getJSONObject("Errors");
 			// One Error Object
 			if (errorsObject.optJSONObject("Error") != null) {
-				Log.d("y-android", "object-----------------------");
 				JSONObject error = errorsObject.getJSONObject("Error");
 				showValidationMessage(error);
 			}
 			// is Array of Errors
 			else {
-				Log.d("y-android", "array-----------------------");
 				JSONArray errors = errorsObject.getJSONArray("Error");
 				int i = 0;
 				while (!errors.isNull(i)) {
