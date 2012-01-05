@@ -64,6 +64,7 @@ public abstract class AbstractCRUDActivity extends Activity implements
 		}
 	}
 
+	// TODO Move to AbstractCreateUpdateActivity
 	protected JSONObject populateEntityFromFields(String key, JSONObject entity) {
 		JSONObject wrapper = new JSONObject();
 		try {
