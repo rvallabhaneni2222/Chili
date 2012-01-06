@@ -23,15 +23,10 @@ import android.view.View.OnClickListener;
 
 public abstract class AbstractCRUDActivity extends Activity implements
 		OnClickListener {
-
+	protected JSONObject entity;
 	protected Map<String, BaseField> fields = new HashMap<String, BaseField>();
+	protected Map<String, Field> fieldTypes = new HashMap<String, Field>();
 
-	// TODO
-	// assign and add field.
-	// populate entity from fields. update/create
-	// on click
-	// on create
-	// url..
 	protected void addAndAssignField(int id, String key, String label,
 			Field type) {
 		switch (type) {
@@ -39,27 +34,32 @@ public abstract class AbstractCRUDActivity extends Activity implements
 			StringField stringField = (StringField) findViewById(id);
 			stringField.setLabel(label);
 			fields.put(key, stringField);
+			fieldTypes.put(key, type);
 			break;
 		case NUMERIC_FIELD:
 			NumericField numericField = (NumericField) findViewById(id);
 			numericField.setLabel(label);
 			fields.put(key, numericField);
+			fieldTypes.put(key, type);
 			break;
 		case DECIMAL_FIELD:
 			DecimalField deciamlField = (DecimalField) findViewById(id);
 			deciamlField.setLabel(label);
 			fields.put(key, deciamlField);
+			fieldTypes.put(key, type);
 			break;
 		case BOOLEAN_FIELD:
 			BooleanField booleanField = (BooleanField) findViewById(id);
 			booleanField.setLabel(label);
 			fields.put(key, booleanField);
+			fieldTypes.put(key, type);
 			break;
 		case DATE_FIELD:
 			DateField dateField = (DateField) findViewById(id);
 			dateField.setLabel(label);
 			dateField.setDateFieldId(id);
 			fields.put(key, dateField);
+			fieldTypes.put(key, type);
 			break;
 		}
 	}
@@ -116,6 +116,47 @@ public abstract class AbstractCRUDActivity extends Activity implements
 			throw new RuntimeException(e);
 		}
 		return wrapper;
+	}
+
+	protected void populateFieldsFromEntity() {
+		try {
+			for (String key : fields.keySet()) {
+				if (entity.has(key)) {
+					switch (fieldTypes.get(key)) {
+					case STRING_FIELD:
+						StringField stringField = (StringField) fields.get(key);
+						stringField.setValue((String) entity.get(key));
+						break;
+					case NUMERIC_FIELD:
+						NumericField numericField = (NumericField) fields
+								.get(key);
+						numericField.setValue((String) entity.get(key));
+						break;
+					case DECIMAL_FIELD:
+						DecimalField decimalField = (DecimalField) fields
+								.get(key);
+						decimalField.setValue((String) entity.get(key));
+						break;
+					case BOOLEAN_FIELD:
+						BooleanField booleanField = (BooleanField) fields
+								.get(key);
+						if (entity.get(key).toString().equalsIgnoreCase("true")) {
+							booleanField.setValue(true);
+						} else {
+							booleanField.setValue(false);
+						}
+						break;
+					case DATE_FIELD:
+						DateField dateField = (DateField) fields.get(key);
+						dateField.setValue((String) entity.get(key));
+						break;
+					}
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected void processValidationErrors(String errorsString) {

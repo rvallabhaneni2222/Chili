@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 public abstract class AbstractCreateActivity extends AbstractCRUDActivity {
 	protected Button create;
-	protected JSONObject entity;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

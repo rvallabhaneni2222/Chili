@@ -1,9 +1,11 @@
 package info.yalamanchili.android.crud;
 
+import info.yalamanchili.android.http.AsyncHttpGet;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import info.yalamanchili.android.http.AsyncHttpPut;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,8 +14,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public abstract class AbstractUpdateActivity extends AbstractCRUDActivity {
+public abstract class AbstractReadActivity extends AbstractCRUDActivity {
+	protected Button done;
 	protected Button update;
+	protected Button delete;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -21,23 +25,13 @@ public abstract class AbstractUpdateActivity extends AbstractCRUDActivity {
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(contentViewId());
 		customizeTitle();
+		done = (Button) findViewById(doneButtonId());
+		done.setOnClickListener(this);
 		update = (Button) findViewById(updateButtonId());
 		update.setOnClickListener(this);
+		delete = (Button) findViewById(deleteButtonId());
+		delete.setOnClickListener(this);
 		assignFields();
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		Log.d("ichili-android", "in update start");
-		try {
-			entity = new JSONObject(getIntent().getSerializableExtra("entity")
-					.toString());
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		populateFieldsFromEntity();
 	}
 
 	/* set the create panel id here */
@@ -45,6 +39,10 @@ public abstract class AbstractUpdateActivity extends AbstractCRUDActivity {
 
 	/* set the create button id here */
 	protected abstract int updateButtonId();
+
+	protected abstract int doneButtonId();
+
+	protected abstract int deleteButtonId();
 
 	protected abstract void assignFields();
 
@@ -64,41 +62,42 @@ public abstract class AbstractUpdateActivity extends AbstractCRUDActivity {
 	/* set the custom title text */
 	protected abstract String titleText();
 
-	public void onClick(View view) {
+	protected abstract String entityName();
 
-		if (view == update) {
-			preUpdate();
-			onUpdate();
+	public void onClick(View arg0) {
+		if (arg0 == done) {
+			finish();
+		}
+		if (arg0 == update) {
+			Intent intent = new Intent(this, updateClass());
+			intent.putExtra("entity", entity.toString());
+			startActivity(intent);
+		}
+		if (arg0 == delete) {
+			Toast.makeText(getApplicationContext(), "aaa", Toast.LENGTH_SHORT);
 		}
 	}
 
-	/* set the entity from the parent entity is exists */
-	/*
-	 * eg: if (getIntent().getSerializableExtra("entity") != null) { dealer =
-	 * (JSONObject) getIntent() .getSerializableExtra("entity"); } else { dealer
-	 * = new JSONObject(); }
-	 */
-	protected abstract void preUpdate();
+	public abstract Class<?> updateClass();
 
-	protected void onUpdate() {
-		new AsyncHttpPut(this) {
+	public abstract String getReadURL();
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		Log.d("chili-android", "in start");
+		new AsyncHttpGet(this) {
 			@Override
 			protected void onResponse(String result) {
-				Toast.makeText(AbstractUpdateActivity.this, "updated",
-						Toast.LENGTH_LONG);
-				finish();
+				try {
+					entity = (JSONObject) new JSONObject(result)
+							.get(entityName());
+					populateFieldsFromEntity();
+				} catch (JSONException e) {
+					e.printStackTrace();
+					// TODO
+				}
 			}
-
-			@Override
-			protected void onValidationErrors(String errorsString) {
-				processValidationErrors(errorsString);
-			}
-		}.execute(updateURL(), populateEntityFromFields(entityName(), entity)
-				.toString());
+		}.execute(getReadURL());
 	}
-
-	// TODO make this generic
-	protected abstract String updateURL();
-
-	protected abstract String entityName();
 }
