@@ -1,173 +1,51 @@
 <java:format>
 package ${$groupID}.android.${$package/@name}.${lower-case($class/@name)};
 import ${$groupID}.android.${camelCase($projectName)}Welcome;
-import info.yalamanchili.android.views.StringField;
-import info.yalamanchili.android.views.BooleanField;
-import info.yalamanchili.android.views.DecimalField;
-import info.yalamanchili.android.views.NumericField;
-import info.yalamanchili.android.views.CurrencyField;
-import info.yalamanchili.android.commons.DateParser;
-
-import info.yalamanchili.android.http.AsyncHttpPut;
-import android.app.Activity;
-import android.os.Bundle;
-import ${$groupID}.R;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.app.DatePickerDialog;
-import android.app.Dialog;import android.widget.DatePicker;
-import java.util.Date;
-import android.content.Intent;
-import android.widget.Toast;
-import android.view.Window;
-import android.widget.TextView;
-import java.util.Calendar;
-import android.text.TextUtils;
+import info.yalamanchili.android.crud.AbstractCreateActivity;
+import info.yalamanchili.android.views.Field;
 
 import org.json.JSONObject;
 
-public class Create${$class/@name} extends Activity implements OnClickListener {
+import ${$groupID}.R;
 
-	Button create;
-	
-	<%-- process parent class level 2 attributes--%>
-	<c:if test="not($class/@name = $parentClass2/@name)">
-				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">			
-					<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-					 <c:when test="${'$StringID'}" > StringField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$IntegerID'}" > NumericField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$DateID'}" > 
-					 	Calendar ${$attribute/@name} = Calendar.getInstance();
-					 	Button ${$attribute/@name}B;
-													static final int ${upper-case($attribute/@name)}_ID = <f:unique/>;
-													private DatePickerDialog.OnDateSetListener ${$attribute/@name}DateSetListener = new DatePickerDialog.OnDateSetListener() {
-													
-														public void onDateSet(DatePicker view, int year, int monthOfYear,
-																int dayOfMonth) {
-															${$attribute/@name}.set(year, monthOfYear, dayOfMonth);
-														}
-														};
-					 </c:when>
-					 <c:when test="${'$BooleanID'}" > 
-					 BooleanField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$LongID'}" > NumericField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$FloatID'}" > DecimalField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$CurrencyID'}" > CurrencyField ${$attribute/@name}F;
-					 </c:when>					 
-			 		</c:choose>
-				</c:iterate>
-	</c:if>
-	<%-- process parent class level 1 attributes--%>
-	<c:if test="not($class/@name = $parentClass1/@name)">
-				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
-					<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-					 <c:when test="${'$StringID'}" > StringField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$IntegerID'}" > NumericField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$DateID'}" > 
-					 	Calendar ${$attribute/@name} = Calendar.getInstance();
-					 	Button ${$attribute/@name}B;
-													static final int ${upper-case($attribute/@name)}_ID = <f:unique/>;
-													private DatePickerDialog.OnDateSetListener ${$attribute/@name}DateSetListener = new DatePickerDialog.OnDateSetListener() {
-													
-														public void onDateSet(DatePicker view, int year, int monthOfYear,
-																int dayOfMonth) {
-															${$attribute/@name}.set(year, monthOfYear, dayOfMonth);
-														}
-														};
-					 </c:when>
-					 <c:when test="${'$BooleanID'}" > 
-					 BooleanField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$LongID'}" > NumericField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$FloatID'}" > DecimalField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$CurrencyID'}" > CurrencyField ${$attribute/@name}F;
-					 </c:when>						 
-			 		</c:choose>
-				</c:iterate>
-	</c:if>		
-	<%-- process parent class level 0 attributes--%>	
-			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-					 <c:when test="${'$StringID'}" > StringField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$IntegerID'}" > NumericField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$DateID'}" > 
-					 	Calendar ${$attribute/@name} = Calendar.getInstance();
-					 	Button ${$attribute/@name}B;
-													static final int ${upper-case($attribute/@name)}_ID = <f:unique/>;
-													private DatePickerDialog.OnDateSetListener ${$attribute/@name}DateSetListener = new DatePickerDialog.OnDateSetListener() {
-													
-														public void onDateSet(DatePicker view, int year, int monthOfYear,
-																int dayOfMonth) {
-															${$attribute/@name}.set(year, monthOfYear, dayOfMonth);
-														}
-														};
-					 </c:when>
-					 <c:when test="${'$BooleanID'}" > 
-					 BooleanField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$LongID'}" > NumericField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$FloatID'}" > DecimalField ${$attribute/@name}F;
-					 </c:when>
-					 <c:when test="${'$CurrencyID'}" > CurrencyField ${$attribute/@name}F;
-					 </c:when>						 
-		 		</c:choose>
-			</c:iterate>	
+public class Create${$class/@name} extends AbstractCreateActivity {
+
+	@Override
+	protected int contentViewId() {
+		return R.layout.${lower-case($class/@name)}_create;
+	}
+
+	@Override
+	protected int createButtonId() {
+		return R.id.${lower-case($class/@name)}_create;
+	}
 	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		setContentView(R.layout.${lower-case($class/@name)}_create);
-		customizeTitle();
-		create = (Button) findViewById(R.id.${lower-case($class/@name)}_create);
-		create.setOnClickListener(this);
-		assignFields();
-	}
-	
-	public void customizeTitle(){
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.${lower-case($projectName)}_title_bar);
-	     TextView mytitletext = (TextView) findViewById(R.id.${lower-case($projectName)}_title_text);
-	     mytitletext.setText("Read ${$class/@name} Activity");	
-	}
-	
-	public void assignFields() {
+	protected void assignFields() {
 	<%-- process parent class level 2 attributes--%>
 	<c:if test="not($class/@name = $parentClass2/@name)">
 				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" >  ${$attribute/@name}F = (StringField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$StringID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.STRING_FIELD);
 				 </c:when>
-				 <c:when test="${'$IntegerID'}" >  ${$attribute/@name}F = (NumericField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$IntegerID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.NUMERIC_FIELD);
 				 </c:when>
-				 <c:when test="${'$DateID'}" >  ${$attribute/@name}B= (Button) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}B.setOnClickListener(this);
+				 <c:when test="${'$DateID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.DATE_FIELD);
 				 </c:when>
-				 <c:when test="${'$BooleanID'}" >  ${$attribute/@name}F = (BooleanField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$BooleanID'}" >  
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.BOOLEAN_FIELD);
 				 </c:when>
-				 <c:when test="${'$LongID'}" > ${$attribute/@name}F = (NumericField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$LongID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.NUMERIC_FIELD);
 				 </c:when>
-				 <c:when test="${'$FloatID'}" >  ${$attribute/@name}F = (DecimalField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$FloatID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.DECIMAL_FIELD);
 				 </c:when>
-				 <c:when test="${'$CurrencyID'}" >  ${$attribute/@name}F = (CurrencyField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$CurrencyID'}" >  
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.CURRENCY_FIELD);
 				 </c:when>				 
 		 		</c:choose>
 				</c:iterate>
@@ -176,279 +54,86 @@ public class Create${$class/@name} extends Activity implements OnClickListener {
 	<c:if test="not($class/@name = $parentClass1/@name)">
 				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" >  ${$attribute/@name}F = (StringField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$StringID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.STRING_FIELD);
 				 </c:when>
-				 <c:when test="${'$IntegerID'}" >  ${$attribute/@name}F = (NumericField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$IntegerID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.NUMERIC_FIELD);
 				 </c:when>
-				 <c:when test="${'$DateID'}" >  ${$attribute/@name}B= (Button) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}B.setOnClickListener(this);
+				 <c:when test="${'$DateID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.DATE_FIELD);
 				 </c:when>
-				 <c:when test="${'$BooleanID'}" >  ${$attribute/@name}F = (BooleanField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$BooleanID'}" >  
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.BOOLEAN_FIELD);
 				 </c:when>
-				 <c:when test="${'$LongID'}" > ${$attribute/@name}F = (NumericField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$LongID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.NUMERIC_FIELD);
 				 </c:when>
-				 <c:when test="${'$FloatID'}" >  ${$attribute/@name}F = (DecimalField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$FloatID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.DECIMAL_FIELD);
 				 </c:when>
-				 <c:when test="${'$CurrencyID'}" >  ${$attribute/@name}F = (CurrencyField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
-				 </c:when>					 
+				 <c:when test="${'$CurrencyID'}" >  
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.CURRENCY_FIELD);
+				 </c:when>				 
 		 		</c:choose>
 				</c:iterate>
 	</c:if>		
 	<%-- process parent class level 0 attributes--%>	
 				<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
 				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$StringID'}" >  ${$attribute/@name}F = (StringField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$StringID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.STRING_FIELD);
 				 </c:when>
-				 <c:when test="${'$IntegerID'}" >  ${$attribute/@name}F = (NumericField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
+				 <c:when test="${'$IntegerID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.NUMERIC_FIELD);
 				 </c:when>
-				 <c:when test="${'$DateID'}" >  ${$attribute/@name}B= (Button) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}B.setOnClickListener(this);
-				 </c:when>
-				 <c:when test="${'$BooleanID'}" >  ${$attribute/@name}F = (BooleanField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
-				 </c:when>
-				 <c:when test="${'$LongID'}" > ${$attribute/@name}F = (NumericField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
-				 </c:when>
-				 <c:when test="${'$FloatID'}" >  ${$attribute/@name}F = (DecimalField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
-				 </c:when>
-				 <c:when test="${'$CurrencyID'}" >  ${$attribute/@name}F = (CurrencyField) findViewById(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)});
-					 ${$attribute/@name}F.setLabel("${upper-case($attribute/@name)}");
-				 </c:when>					 
-		 		</c:choose>
-				</c:iterate>	
-	}
-	
-	public void onClick(View arg0) {
-	
-	if (arg0 == create) {
-		create.setEnabled(false);
-		JSONObject ${lower-case($class/@name)};
-		JSONObject wrapper = new JSONObject();
-			if (getIntent().getSerializableExtra("entity") != null) {
-				${lower-case($class/@name)} = (JSONObject) getIntent().getSerializableExtra("entity");
-			} else {
-				${lower-case($class/@name)} = new JSONObject();
-			}
-			try {
-	<%-- process parent class level 2 attributes--%>
-	<c:if test="not($class/@name = $parentClass2/@name)">
-				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
-					<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-					 <c:when test="${'$StringID'}" >
-						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
-						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
-					 </c:when>
-					 <c:when test="${'$IntegerID'}" > 
-						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
-						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());				 
-					 </c:when>
-					 <c:when test="${'$DateID'}" > 
-						if (${$attribute/@name}.getTime().compareTo(new Date()) != 0) {
-							${lower-case($class/@name)}.put("${$attribute/@name}", DateParser.toString(${$attribute/@name}.getTime()));
-						}					 
-					 </c:when>
-					 <c:when test="${'$BooleanID'}" > 
-						 if (${$attribute/@name}F.getValue() != null)
-							${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());				 
-					 </c:when>
-					 <c:when test="${'$LongID'}" > 
-						 if (${$attribute/@name}F.getValue() != null)
-								${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());	
-					 </c:when>
-					 <c:when test="${'$FloatID'}" > 
-						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
-						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
-					 </c:when>
-					 <c:when test="${'$CurrencyID'}" > 
-						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
-						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
-					 </c:when>					 
-						 <c:otherwise>
-			 			</c:otherwise>
-			 		</c:choose>
-				</c:iterate>
-	</c:if>
-	<%-- process parent class level 1 attributes--%>
-	<c:if test="not($class/@name = $parentClass1/@name)">
-				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
-					<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-					 <c:when test="${'$StringID'}" >
-						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
-						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
-					 </c:when>
-					 <c:when test="${'$IntegerID'}" > 
-						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
-						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());				 
-					 </c:when>
-					 <c:when test="${'$DateID'}" > 
-						if (${$attribute/@name}.getTime().compareTo(new Date()) != 0) {
-							${lower-case($class/@name)}.put("${$attribute/@name}", DateParser.toString(${$attribute/@name}.getTime()));
-						}						 
-					 </c:when>
-					 <c:when test="${'$BooleanID'}" > 
-						 if (${$attribute/@name}F.getValue() != null)
-							${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());				 
-					 </c:when>
-					 <c:when test="${'$LongID'}" > 
-						 if (${$attribute/@name}F.getValue() != null)
-								${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());	
-					 </c:when>
-					 <c:when test="${'$FloatID'}" > 
-						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
-						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
-					 </c:when>
-					 <c:when test="${'$CurrencyID'}" > 
-						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
-						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
-					 </c:when>					 
-						 <c:otherwise>
-			 			</c:otherwise>
-			 		</c:choose>
-				</c:iterate>
-	</c:if>		
-	<%-- process parent class level 0 attributes--%>	
-			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-					<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-					 <c:when test="${'$StringID'}" >
-						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
-						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
-					 </c:when>
-					 <c:when test="${'$IntegerID'}" > 
-						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
-						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());				 
-					 </c:when>
-					 <c:when test="${'$DateID'}" > 
-						if (${$attribute/@name}.getTime().compareTo(new Date()) != 0) {
-							${lower-case($class/@name)}.put("${$attribute/@name}", DateParser.toString(${$attribute/@name}.getTime()));
-						}						 
-					 </c:when>
-					 <c:when test="${'$BooleanID'}" > 
-						 if (${$attribute/@name}F.getValue() != null)
-							${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());				 
-					 </c:when>
-					 <c:when test="${'$LongID'}" > 
-						 if (${$attribute/@name}F.getValue() != null)
-								${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());	
-					 </c:when>
-					 <c:when test="${'$FloatID'}" > 
-						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
-						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
-					 </c:when>
-					 <c:when test="${'$CurrencyID'}" > 
-						 if (!TextUtils.isEmpty(${$attribute/@name}F.getValue())) 
-						 ${lower-case($class/@name)}.put("${$attribute/@name}",${$attribute/@name}F.getValue());
-					 </c:when>					 
-						 <c:otherwise>
-			 			</c:otherwise>
-			 		</c:choose>
-			</c:iterate>
-			wrapper.put("${lower-case($class/@name)}",${lower-case($class/@name)});	
-			} catch (Exception e) {
-				e.printStackTrace();
-			}	
-			new AsyncHttpPut(this) {
-				@Override
-				protected void onResponse(String result) {
-					Toast
-							.makeText(Create${$class/@name}.this, "created",
-									Toast.LENGTH_LONG);
-					finish();
-
-				}
-			}.execute(getCreateURL(),wrapper.toString());
-	}
-		<%-- process date fields parent class level 2 attributes--%>
-	<c:if test="not($class/@name = $parentClass2/@name)">
-				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
-				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
 				 <c:when test="${'$DateID'}" > 
-				 if (arg0 == ${$attribute/@name}B) {
-				showDialog(${upper-case($attribute/@name)}_ID);
-		}
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.DATE_FIELD);
 				 </c:when>
-		 		</c:choose>
-				</c:iterate>
-	</c:if>
-	<%-- process parent class level 1 attributes--%>
-	<c:if test="not($class/@name = $parentClass1/@name)">
-				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
-				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$DateID'}" >  
-				 if (arg0 == ${$attribute/@name}B) {
-				showDialog(${upper-case($attribute/@name)}_ID);
-		} 
+				 <c:when test="${'$BooleanID'}" >  
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.BOOLEAN_FIELD);
 				 </c:when>
-		 		</c:choose>
-				</c:iterate>
-	</c:if>		
-	<%-- process parent class level 0 attributes--%>	
-			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$DateID'}" >
-				 if (arg0 == ${$attribute/@name}B) {
-				showDialog(${upper-case($attribute/@name)}_ID);
-		}
+				 <c:when test="${'$LongID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.NUMERIC_FIELD);
 				 </c:when>
+				 <c:when test="${'$FloatID'}" > 
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.DECIMAL_FIELD);
+				 </c:when>
+				 <c:when test="${'$CurrencyID'}" >  
+				 addAndAssignField(R.id.${lower-case($class/@name)}_create_${lower-case($attribute/@name)}, "${$attribute/@name}","${upper-case($attribute/@name)}", Field.CURRENCY_FIELD);
+				 </c:when>				 
 		 		</c:choose>
-			</c:iterate>	
-	}
+				</c:iterate>					
+	}	
 	
 	@Override
-	protected Dialog onCreateDialog(int id) {
-		int cyear = Calendar.getInstance().get(Calendar.YEAR);
-		int cmonth = Calendar.getInstance().get(Calendar.MONTH);
-		int cday = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-		switch (id) {
-		<%-- process  date fields parent class level 2 attributes--%>
-	<c:if test="not($class/@name = $parentClass2/@name)">
-				<c:iterate select="$parentClass2/Classifier.feature/Attribute" var="attribute">
-				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$DateID'}" > 
-					case ${upper-case($attribute/@name)}_ID:
-					return new DatePickerDialog(this, ${$attribute/@name}DateSetListener, cyear, cmonth,
-							cday);
-				 </c:when>
-		 		</c:choose>
-				</c:iterate>
-	</c:if>
-	<%-- process parent class level 1 attributes--%>
-	<c:if test="not($class/@name = $parentClass1/@name)">
-				<c:iterate select="$parentClass1/Classifier.feature/Attribute" var="attribute">
-				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$DateID'}" >  
-					case ${upper-case($attribute/@name)}_ID:
-					return new DatePickerDialog(this, ${$attribute/@name}DateSetListener, cyear, cmonth,
-							cday);
-				 </c:when>
-		 		</c:choose>
-				</c:iterate>
-	</c:if>		
-	<%-- process parent class level 0 attributes--%>	
-			<c:iterate select="$class/Classifier.feature/Attribute" var="attribute">
-				<c:choose select="$attribute/StructuralFeature.type/DataType/@href" >
-				 <c:when test="${'$DateID'}" >
-					case ${upper-case($attribute/@name)}_ID:
-					return new DatePickerDialog(this, ${$attribute/@name}DateSetListener, cyear, cmonth,
-							cday);
-				 </c:when>
-		 		</c:choose>
-			</c:iterate>	
-		}
-		return null;
+	protected int appTitleBarId() {
+		return R.layout.${lower-case($projectName)}_title_bar;
 	}
-	
-	public String getCreateURL() {
+
+	@Override
+	protected int appTitleBArTextViewId() {
+		return R.id.${lower-case($projectName)}_title_text;
+	}
+
+	@Override
+	protected String titleText() {
+		return "Create ${$class/@name} Activity";
+	}
+
+	@Override
+	protected void preCreate() {
+		entity = new JSONObject();
+	}
+
+	@Override
+	protected String createURL() {
 		return ${camelCase($projectName)}Welcome.baseURL + "${lower-case($class/@name)}/create";
+	}
+
+	@Override
+	protected String entityName() {
+		return "${lower-case($class/@name)}";
 	}
 
 }

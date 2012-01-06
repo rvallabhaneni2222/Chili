@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">${camelCase($projectName)}</string>
+     <string name="base_url">http://10.0.2.2/${$projectName}-soa-${$version}/seam/resource/restv1/</string>
+     <string name="page_size">10</string>
+</resources>
