@@ -56,7 +56,6 @@ public class StringField extends BaseFieldWithTextBox {
 
 	@Override
 	public void validate() {
-		log.info("on change");
 		clearMessage();
 		GwtServiceAsync.instance().validateStringField(className,
 				attributeName, getText(), new ALAsyncCallback<List<String>>() {
