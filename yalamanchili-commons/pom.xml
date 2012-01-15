@@ -138,15 +138,16 @@
 	</properties>
 	<repositories>
 		<repository>
-			<id>yalamanchili</id>
-			<url> http://yalamanchili.googlecode.com/svn/maven2 </url>
+			<id>yalamanchili.info</id>
+			<name>yalamanchili repository</name>
+			<url>http://yalamanchili.info:8080/nexus/content/repositories/yalamanchili-snapshots/</url>
 		</repository>
 	</repositories>
 	<distributionManagement>
 		<repository>
-			<id>yalamanchili</id>
+			<id>yalamanchili.info</id>
 			<name>yalamanchili repository</name>
-			<url>https://yalamanchili.googlecode.com/svn/maven2</url>
+			<url>http://yalamanchili.info:8080/nexus/content/repositories/yalamanchili-snapshots/</url>
 		</repository>
 	</distributionManagement>
 </project>
