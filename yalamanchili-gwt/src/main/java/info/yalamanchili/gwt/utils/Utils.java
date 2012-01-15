@@ -63,4 +63,18 @@ public class Utils {
 		}
 		return value;
 	}
+
+	public static String getExceptionInfo(Throwable e) {
+		String result = "";
+		StackTraceElement[] stackTraceElements = e.getStackTrace();
+		result += e.toString() + "\n";
+		for (int i = 0; i < stackTraceElements.length; i++) {
+			result += "    at " + stackTraceElements[i] + "\n";
+		}
+		e = e.getCause();
+		if (e != null) {
+			result += "Caused by: ";
+		}
+		return result;
+	}
 }
