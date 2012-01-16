@@ -14,7 +14,7 @@
 		<module>../yalamanchili-commons</module>
 		<module>../yalamanchili-security</module>
 		<module>../yalamanchili-gwt</module>
-		<module>../yalamanchili-android</module>
+		<!--<module>../yalamanchili-android</module>-->
 	</modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
