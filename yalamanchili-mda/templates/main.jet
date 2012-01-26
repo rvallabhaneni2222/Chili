@@ -5,26 +5,29 @@
 <%--Set Global varibles like projectId,groupId,version...--%>
 <%--project properties--%>
 <c:setVariable select="lower-case(/XMI/XMI.content/Model/@name)" var="projectName"/>
-<c:setVariable select="'com.automanage.catalog'" var="groupID"/>
-<c:setVariable select="'com/automanage/catalog'" var="groupIDWithFolder"/>
-<c:setVariable select="'com_automanage_catalog'" var="groupIDWithUnderScore"/>
-<c:setVariable select="'1.1-SNAPSHOT'" var="version"/>
-<c:setVariable select="'D://codebase//automanage//trunk'" var="location"/>
+<%-- TODO get these from model and init the variables --%>
+<c:setVariable select="'info.yalamanchili.msa'" var="groupID"/>
+<c:setVariable select="'info/yalamanchili/msa'" var="groupIDWithFolder"/>
+<c:setVariable select="'info_yalamanchili_msa'" var="groupIDWithUnderScore"/>
+<c:setVariable select="'1.0-SNAPSHOT'" var="version"/>
+<c:setVariable select="'D://codebase//msa//trunk//msa-master'" var="location"/>
 <%--features--%>
 <c:setVariable select="'true'" var="enableHibernateSearch"/>
-<c:setVariable select="'TRUE'" var="supportJAXB"/>
+<%-- set true to add jaxb annotations to jpa classes--%>
+<c:setVariable select="'FALSE'" var="supportJAXB"/>
 <%--code generation properties--%>
 <c:setVariable select="'FALSE'" var="genMaster"/>
 <c:setVariable select="'FALSE'" var="genApp"/>
 <c:setVariable select="'FALSE'" var="genJPA"/>
 <c:setVariable select="'FALSE'" var="genDAO"/>
+<c:setVariable select="'TRUE'" var="genJAXB"/>
 <c:setVariable select="'FALSE'" var="genEJB"/>
 <c:setVariable select="'FALSE'" var="genRest"/>
 <c:setVariable select="'FALSE'" var="genWebapp"/>
-<c:setVariable select="'TRUE'" var="genAndroid"/>
+<c:setVariable select="'FALSE'" var="genAndroid"/>
 <c:setVariable select="'FALSE'" var="genIOS"/>
 <c:setVariable select="'FALSE'" var="genTest"/>
-<c:setVariable select="'FALSE'" var="genPOMS"/>
+<c:setVariable select="'TRUE'" var="genPOMS"/>
 <%--versions --%>
 <c:setVariable select="'1.1-SNAPSHOT'" var="yalamanchili-version"/>
 <c:setVariable select="'2.4.0'" var="gwt-version"/>
@@ -179,6 +182,28 @@
     <ws:folder path="src/main/resources">
 	   <ws:file template="templates/dao/src/main/resources/META-INF/components.xml.jet" path="META-INF/components.xml"/>
 	   <ws:file template="templates/dao/src/main/resources/META-INF/ejb_jar.xml.jet" path="META-INF/ejb-jar.xml"/>
+    </ws:folder>
+</ws:project>
+</c:if>
+
+<%--creates the service-types (JAXB) project--%>
+<c:if test="$genJAXB = 'TRUE'">
+<ws:project name="{$projectName}-types" location="{$location}/{$projectName}-types">
+	<c:if test="$genPOMS = 'TRUE'">	
+	<ws:file path="pom.xml" template="templates/jaxb/pom.xml.jet"/>
+	</c:if>
+    <ws:folder path="src/main/java">		
+    	<c:iterate select="/XMI/XMI.content/Model/Namespace.ownedElement/Package" var="package">	
+    		<c:iterate select="$package/Namespace.ownedElement/Class" var="class">
+    		<ws:folder path="${$groupIDWithFolder}/${$package/@name}">
+				<%-- JAXB class --%>
+				<ws:file path="{$class/@name}.java" template="templates/jaxb/src/main/java/jaxb.java.jet" />
+			</ws:folder>
+			</c:iterate>
+		</c:iterate>
+    </ws:folder>
+    <ws:folder path="src/main/resources">
+	   
     </ws:folder>
 </ws:project>
 </c:if>

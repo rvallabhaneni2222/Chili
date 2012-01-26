@@ -35,6 +35,12 @@
 	<c:if test="$stereotype/@name = 'Past'">
 		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="PastID"/>		
 	</c:if>
+	<c:if test="$stereotype/@name = 'JAXB'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="JAXBID"/>		
+	</c:if>	
+	<c:if test="$stereotype/@name = 'JPA'">
+		<c:setVariable select="concat($yalamanchiliMDANameSpace,$stereotype/@xmi.id)" var="JPAID"/>		
+	</c:if>	
 </c:iterate>
 <%-- check all packages for tagged Values --%>	
 <c:iterate select="$package/Namespace.ownedElement/TagDefinition" var="tagdefinition">
