@@ -9,21 +9,26 @@ import com.google.gwt.user.client.ui.Label;
  */
 public class ResponceStatusBar extends Label {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.google.gwt.user.client.ui.Label#setText(java.lang.String)
 	 */
 	public void setText(String text) {
 		setText(text);
+		setTitle(text);
 		addStyleName("y-gwt-ResponseStatusBar");
 	}
 
 	/**
 	 * Sets the delayed message.
 	 * 
-	 * @param message the new delayed message
+	 * @param message
+	 *            the new delayed message
 	 */
 	public void setDelayedMessage(String message) {
 		setText(message);
+		setTitle(message);
 		addStyleName("y-gwt-ResponseStatusBar");
 		Timer timer = new Timer() {
 			@Override

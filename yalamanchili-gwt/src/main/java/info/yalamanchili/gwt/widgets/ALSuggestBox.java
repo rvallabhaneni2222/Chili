@@ -36,6 +36,7 @@ public class ALSuggestBox extends Composite {
 		initWidget(panel);
 		label.setText(name);
 		panel.add(label);
+		box.setTitle(name);
 		panel.add(box);
 	}
 
