@@ -35,43 +35,9 @@ public class SyncHttp {
 			return null;
 	}
 
-	public static String httpGAEGet(String url) {
-		try {
-			response = HttpHelper.getGAEHttpClient().execute(new HttpGet(url));
-		} catch (Exception e) {
-			throw new RuntimeException("Http Get called failed for uri:" + url
-					+ e);
-		}
-		if (response != null)
-			return HttpHelper.convertResponse(response);
-		else
-			return null;
-	}
-
 	public static InputStream httpGetAsStream(String url) {
 		try {
 			response = HttpHelper.getHttpClient().execute(new HttpGet(url));
-		} catch (Exception e) {
-			throw new RuntimeException("Http Get called failed for uri:" + url
-					+ e);
-		}
-		if (response == null) {
-			return null;
-		}
-		if (response.getStatusLine().getStatusCode() >= 200
-				&& response.getStatusLine().getStatusCode() <= 399) {
-			try {
-				return response.getEntity().getContent();
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		} else
-			return null;
-	}
-
-	public static InputStream httpGAEGetAsStream(String url) {
-		try {
-			response = HttpHelper.getGAEHttpClient().execute(new HttpGet(url));
 		} catch (Exception e) {
 			throw new RuntimeException("Http Get called failed for uri:" + url
 					+ e);
