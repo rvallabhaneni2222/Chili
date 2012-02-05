@@ -1,5 +1,7 @@
 package info.yalamanchili.http;
 
+import info.yalamanchili.http.gae.GAEConnectionManager;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -8,7 +10,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 
 public class HttpHelper {
 	protected static DefaultHttpClient httpclient;
@@ -16,6 +21,17 @@ public class HttpHelper {
 	public static DefaultHttpClient getHttpClient() {
 		if (httpclient == null) {
 			httpclient = new DefaultHttpClient();
+			return httpclient;
+		} else {
+			return httpclient;
+		}
+	}
+
+	public static DefaultHttpClient getGAEHttpClient() {
+		HttpParams httpParams = new BasicHttpParams();
+		ClientConnectionManager connectionManager = new GAEConnectionManager();
+		if (httpclient == null) {
+			httpclient = new DefaultHttpClient(connectionManager, httpParams);
 			return httpclient;
 		} else {
 			return httpclient;

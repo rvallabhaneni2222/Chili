@@ -40,6 +40,12 @@
 			<version>4.1.1</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>1.6.0</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- needed for hibernate validator test -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
