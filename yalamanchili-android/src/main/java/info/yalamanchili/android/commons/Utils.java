@@ -5,6 +5,7 @@ import java.net.URL;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.Toast;
 
 public class Utils {
@@ -14,8 +15,8 @@ public class Utils {
 			Drawable d = Drawable.createFromStream(is, "src name");
 			return d;
 		} catch (Exception e) {
-			// TODO
-			e.printStackTrace();
+			Log.w("y-android",
+					"unable to load image and create Drawable from URL:" + url);
 			return null;
 		}
 	}
