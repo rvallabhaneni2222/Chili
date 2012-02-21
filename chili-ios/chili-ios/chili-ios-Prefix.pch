@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'chili-ios' target in the 'chili-ios' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
