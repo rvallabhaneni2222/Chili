@@ -1,6 +1,6 @@
 package info.yalamanchili.requestfactory;
 
-import info.yalamanchili.gwt.jpa.AbstractEntity;
+import info.yalamanchili.jpa.AbstractEntity;
 
 import com.google.web.bindery.requestfactory.shared.Locator;
 

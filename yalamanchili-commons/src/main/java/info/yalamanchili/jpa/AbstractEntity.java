@@ -1,4 +1,4 @@
-package info.yalamanchili.gwt.jpa;
+package info.yalamanchili.jpa;
 
 import java.io.Serializable;
 
@@ -11,8 +11,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import net.sf.gilead.pojo.gwt.LightEntity;
-
 /**
  * Default Parent/root entity for all jpa entities to serve id,version
  * properties and extends from LightEntity to suppport GWT-GILEAD
@@ -23,14 +21,13 @@ import net.sf.gilead.pojo.gwt.LightEntity;
 @XmlType
 @MappedSuperclass
 @XmlRootElement
-public abstract class AbstractEntity extends LightEntity implements
-		Serializable {
+public abstract class AbstractEntity implements Serializable {
 
-	
+	private static final long serialVersionUID = 1L;
+
 	@Version
 	private Integer version;
 
-	
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -38,10 +35,12 @@ public abstract class AbstractEntity extends LightEntity implements
 	public Long getId() {
 		return id;
 	}
+
 	@XmlElement
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	@XmlAttribute
 	public Integer getVersion() {
 		return version;
