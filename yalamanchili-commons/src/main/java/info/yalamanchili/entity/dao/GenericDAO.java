@@ -9,6 +9,8 @@ public interface GenericDAO<T> {
 
 	public void save(T instance) throws ServiceException;
 
+	public T update(T instance) throws ServiceException;
+
 	public List<T> query(int start, int limit) throws ServiceException;
 
 	public void delete(long id) throws ServiceException;
