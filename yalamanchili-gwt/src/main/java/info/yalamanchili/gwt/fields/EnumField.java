@@ -39,6 +39,15 @@ public class EnumField extends BaseField {
 				});
 	}
 
+	public EnumField(String labelName, String attributeName, String className,
+			Boolean readOnly, Boolean isRequired, String[] values) {
+		super(labelName, attributeName, className, readOnly, isRequired);
+		configureAddMainWidget();
+		for (String value : values) {
+			listBox.addItem(value.toString(), value.toString());
+		}
+	}
+
 	public void setValue(String var) {
 		listBox.clear();
 		listBox.addItem(var, var);
