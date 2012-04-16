@@ -1,7 +1,6 @@
 package info.yalamanchili.http;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -10,8 +9,8 @@ import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -56,19 +55,27 @@ public class SyncHttp {
 			return null;
 	}
 
-	public static String httpPut(String... params) {
+	public static String httpPut(String uri, String body, String contentType) {
+		HttpPut put = new HttpPut(uri);
+		return executeHttpCall(put, body, contentType);
+	}
+
+	public static String httpPost(String uri, String body, String contentType) {
+		HttpPost post = new HttpPost(uri);
+		return executeHttpCall(post, body, contentType);
+	}
+
+	protected static String executeHttpCall(
+			HttpEntityEnclosingRequestBase request,
+			String body, String contentType) {
+		request.setHeader("Content-Type", contentType);
 		try {
-			HttpPut put = new HttpPut(params[0]);
-			StringEntity entity = new StringEntity(params[1]);
-			put.setEntity(entity);
-			put.setHeader("Content-Type", "application/xml");
-			response = HttpHelper.getHttpClient().execute(put);
-		} catch (ClientProtocolException e) {
-			throw new RuntimeException("Http Put called failed for uri:"
-					+ params[0] + e);
-		} catch (IOException e) {
-			throw new RuntimeException("Http Put called failed for uri:"
-					+ params[0] + e);
+			 request.setEntity(new StringEntity(body));
+			System.out.println("http post body:" + body);
+			response = HttpHelper.getHttpClient().execute(request);
+		} catch (Exception e) {
+			throw new RuntimeException("Http call failed for uri:"
+					+ request.getURI().getRawPath() + e);
 		}
 		if (response != null) {
 			return HttpHelper.convertResponse(response);
@@ -76,6 +83,7 @@ public class SyncHttp {
 			return null;
 	}
 
+	// used by google service
 	public static String httpPost(String uri, String contentType,
 			Map<String, String> params) {
 		HttpPost post = new HttpPost(uri);
