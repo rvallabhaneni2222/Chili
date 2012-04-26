@@ -26,6 +26,12 @@ public class SyncHttp {
 	public static HttpResponse response;
 
 	public static String httpGet(String url, Map<String, String> headers) {
+		return httpGet(url, headers, false);
+	}
+
+	@Deprecated
+	public static String httpGet(String url, Map<String, String> headers,
+			boolean newClinet) {
 		logger.info("http get url:" + url);
 		HttpGet request = new HttpGet(url);
 		if (headers != null) {
@@ -36,10 +42,9 @@ public class SyncHttp {
 			}
 		}
 		try {
-			response = HttpHelper.getHttpClient().execute(request);
+			response = HttpHelper.getHttpClient(newClinet).execute(request);
 		} catch (Exception e) {
 			logger.warning("htt get call failed" + e.getLocalizedMessage());
-			HttpHelper.reset();
 			throw new RuntimeException("Http Get called failed for uri:" + url
 					+ e);
 		}
@@ -49,6 +54,7 @@ public class SyncHttp {
 			logger.info("http call returning null");
 			return null;
 		}
+
 	}
 
 	public static InputStream httpGetAsStream(String url) {
@@ -73,21 +79,33 @@ public class SyncHttp {
 			return null;
 	}
 
+	@Deprecated
 	public static String httpPut(String uri, String body,
 			Map<String, String> headers) {
+		return httpPut(uri, body, headers, false);
+	}
+
+	@Deprecated
+	public static String httpPost(String uri, String body,
+			Map<String, String> headers) {
+		return httpPost(uri, body, headers, false);
+	}
+
+	public static String httpPut(String uri, String body,
+			Map<String, String> headers, boolean newClient) {
 		HttpPut put = new HttpPut(uri);
-		return executeHttpCall(put, body, headers);
+		return executeHttpCall(put, body, headers, newClient);
 	}
 
 	public static String httpPost(String uri, String body,
-			Map<String, String> headers) {
+			Map<String, String> headers, boolean newClient) {
 		HttpPost post = new HttpPost(uri);
-		return executeHttpCall(post, body, headers);
+		return executeHttpCall(post, body, headers, newClient);
 	}
 
 	protected static String executeHttpCall(
 			HttpEntityEnclosingRequestBase request, String body,
-			Map<String, String> headers) {
+			Map<String, String> headers, boolean newClient) {
 		if (headers != null) {
 			for (String header : headers.keySet()) {
 				logger.info("header name:" + header);
@@ -98,10 +116,9 @@ public class SyncHttp {
 		try {
 			request.setEntity(new StringEntity(body));
 			logger.info("http body:" + body);
-			response = HttpHelper.getHttpClient().execute(request);
+			response = HttpHelper.getHttpClient(newClient).execute(request);
 		} catch (Exception e) {
 			logger.warning("http call failed:" + e.getLocalizedMessage());
-			HttpHelper.reset();
 			throw new RuntimeException("Http call failed for uri:"
 					+ request.getURI().getRawPath() + e);
 		}

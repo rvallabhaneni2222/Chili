@@ -27,6 +27,13 @@ public class HttpHelper {
 		}
 	}
 
+	public static DefaultHttpClient getHttpClient(boolean newClient) {
+		if (newClient || httpclient == null) {
+			httpclient = new DefaultHttpClient();
+		}
+		return httpclient;
+	}
+
 	public static void reset() {
 		httpclient = null;
 	}
