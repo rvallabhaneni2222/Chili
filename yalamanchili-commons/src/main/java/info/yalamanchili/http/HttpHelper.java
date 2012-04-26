@@ -3,6 +3,7 @@ package info.yalamanchili.http;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.logging.Logger;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -11,6 +12,10 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 public class HttpHelper {
+
+	private final static Logger logger = Logger.getLogger(HttpHelper.class
+			.getName());
+
 	protected static DefaultHttpClient httpclient;
 
 	public static DefaultHttpClient getHttpClient() {
@@ -20,6 +25,10 @@ public class HttpHelper {
 		} else {
 			return httpclient;
 		}
+	}
+
+	public static void reset() {
+		httpclient = null;
 	}
 
 	public static void setCredentials(String username, String password) {
@@ -34,7 +43,8 @@ public class HttpHelper {
 		BufferedReader reader = null;
 		InputStream in = null;
 		/* http response success */
-		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 300) {
+		logger.info("response code:" + status.getStatusCode());
+		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 399) {
 
 			try {
 				in = response.getEntity().getContent();
@@ -54,6 +64,8 @@ public class HttpHelper {
 		}
 		/* http response failure */
 		else {
+			logger.info("call failed:" + status.getStatusCode());
+			HttpHelper.reset();
 			throw new RuntimeException("http call failed with status code:"
 					+ status.getStatusCode());
 		}

@@ -38,7 +38,7 @@ public class GoogleService {
 			params.put("logintoken", logintoken);
 		if (logincaptcha != null)
 			params.put("logincaptcha", logincaptcha);
-		String response = SyncHttp.httpPost(GOOGLE_LOGIN_URI,
+		String response = SyncHttp.httpUrlEncodedFormEntityPost(GOOGLE_LOGIN_URI,
 				"application/x-www-form-urlencoded", params);
 		System.out.println("login response:" + response);
 		return getAuthToken(response);
