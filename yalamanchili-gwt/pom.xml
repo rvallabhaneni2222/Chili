@@ -95,10 +95,6 @@
 	<!-- download artifacts from this repo -->
 	<repositories>
 		<repository>
-			<id>yalamanchili</id>
-			<url> http://yalamanchili.googlecode.com/svn/maven2  </url>
-		</repository>
-		<repository>
 			<id>yalamanchili.info</id>
 			<name>yalamanchili.info</name>
 			<url>http://yalamanchili.info:8080/nexus/content/groups/public</url>
