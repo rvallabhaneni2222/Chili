@@ -93,6 +93,7 @@ public class SyncHttp {
 
 	public static String httpPut(String uri, String body,
 			Map<String, String> headers, boolean newClient) {
+		logger.info("uri:" + uri);
 		HttpPut put = new HttpPut(uri);
 		return executeHttpCall(put, body, headers, newClient);
 	}

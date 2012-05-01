@@ -52,8 +52,11 @@ public class HttpHelper {
 		/* http response success */
 		logger.info("response code:" + status.getStatusCode());
 		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 399) {
-
 			try {
+				if (response.getEntity() == null
+						|| response.getEntity().getContent() == null) {
+					return null;
+				}
 				in = response.getEntity().getContent();
 				reader = new BufferedReader(new InputStreamReader(in));
 				StringBuilder str = new StringBuilder();
