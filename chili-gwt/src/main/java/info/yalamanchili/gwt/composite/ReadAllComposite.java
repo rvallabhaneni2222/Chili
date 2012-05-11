@@ -18,8 +18,7 @@ import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 
-public abstract class ReadAllComposite extends ALComposite implements
-		ClickHandler, ChangeHandler {
+public abstract class ReadAllComposite extends ALComposite implements ClickHandler, ChangeHandler {
 
 	/** The panel. */
 	protected FlowPanel panel = new FlowPanel();
@@ -49,8 +48,7 @@ public abstract class ReadAllComposite extends ALComposite implements
 	protected ConstantsWithLookup constants;
 
 	/** The go to page. */
-	protected ListBoxField goToPage = new ListBoxField("Page: ",
-			Alignment.HORIZONTAL);
+	protected ListBoxField goToPage = new ListBoxField("Page: ", Alignment.HORIZONTAL);
 
 	/** The no of results l. */
 	protected Label noOfResultsL = new Label("Total Results:");
@@ -146,8 +144,7 @@ public abstract class ReadAllComposite extends ALComposite implements
 		if (event.getSource() == table) {
 			Cell clickedCell = table.getCellForEvent(event);
 			if (clickedCell != null && clickedCell.getRowIndex() != 0)
-				viewClicked(clickedCell.getRowIndex(),
-						clickedCell.getCellIndex());
+				viewClicked(clickedCell.getRowIndex(), clickedCell.getCellIndex());
 		}
 	}
 

@@ -27,8 +27,7 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 /**
  * The Class DateField.
  */
-public class DateField extends BaseField implements KeyPressHandler,
-		KeyUpHandler, KeyDownHandler {
+public class DateField extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler {
 
 	final TextBox dateField = new TextBox();
 	final Button dateButton = new Button("Date");
@@ -39,8 +38,7 @@ public class DateField extends BaseField implements KeyPressHandler,
 	}
 
 	@UiConstructor
-	public DateField(String labelName, String attributeName, String className,
-			Boolean readOnly, Boolean isRequired) {
+	public DateField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 		setReadOnly(readOnly);
 		configureAddMainWidget();
@@ -74,8 +72,7 @@ public class DateField extends BaseField implements KeyPressHandler,
 		datePicker.addValueChangeHandler(new ValueChangeHandler() {
 			public void onValueChange(ValueChangeEvent event) {
 				Date date = (Date) event.getValue();
-				String dateString = DateTimeFormat.getFormat("d MMMM yyyy")
-						.format(date);
+				String dateString = DateTimeFormat.getFormat("d MMMM yyyy").format(date);
 				dateField.setText(dateString);
 			}
 		});
@@ -84,11 +81,8 @@ public class DateField extends BaseField implements KeyPressHandler,
 			public void onClick(ClickEvent event) {
 				PopupPanel popupPanel = new PopupPanel(true);
 				popupPanel.add(datePicker);
-				popupPanel.setPopupPosition(
-						dateButton.getAbsoluteLeft()
-								+ dateButton.getOffsetWidth(),
-						dateButton.getAbsoluteTop()
-								+ dateButton.getOffsetHeight());
+				popupPanel.setPopupPosition(dateButton.getAbsoluteLeft() + dateButton.getOffsetWidth(),
+						dateButton.getAbsoluteTop() + dateButton.getOffsetHeight());
 				popupPanel.show();
 			}
 		};

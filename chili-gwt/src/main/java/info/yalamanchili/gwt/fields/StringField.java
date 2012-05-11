@@ -19,8 +19,7 @@ public class StringField extends BaseFieldWithTextBox {
 	Logger log = Logger.getLogger(StringField.class.getName());
 
 	@UiConstructor
-	public StringField(String labelName, String attributeName,
-			String className, Boolean readOnly, Boolean isRequired) {
+	public StringField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 

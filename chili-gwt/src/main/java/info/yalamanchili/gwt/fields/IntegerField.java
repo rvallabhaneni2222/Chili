@@ -10,8 +10,7 @@ import com.google.gwt.user.client.Window;
 
 public class IntegerField extends BaseFieldWithTextBox {
 	@UiConstructor
-	public IntegerField(String labelName, String attributeName,
-			String className, Boolean readOnly, Boolean isRequired) {
+	public IntegerField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 

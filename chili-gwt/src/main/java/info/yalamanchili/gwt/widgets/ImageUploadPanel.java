@@ -54,12 +54,11 @@ public class ImageUploadPanel extends ALComposite implements ClickHandler {
 				logger.info("Image name:" + fileUpload.getFilename());
 			}
 		});
-		formPanel
-				.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
-					public void onSubmitComplete(SubmitCompleteEvent event) {
-						// TODO display confirmation
-					}
-				});
+		formPanel.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
+			public void onSubmitComplete(SubmitCompleteEvent event) {
+				// TODO display confirmation
+			}
+		});
 	}
 
 	public void onClick(ClickEvent event) {

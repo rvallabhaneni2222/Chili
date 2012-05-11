@@ -16,8 +16,7 @@ public class CurrencyField extends BaseFieldWithTextBox {
 	protected static NumberFormat fmt = NumberFormat.getCurrencyFormat();
 
 	@UiConstructor
-	public CurrencyField(String labelName, String attributeName,
-			String className, Boolean readOnly, Boolean isRequired) {
+	public CurrencyField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 
@@ -52,8 +51,7 @@ public class CurrencyField extends BaseFieldWithTextBox {
 	public void onKeyPress(KeyPressEvent event) {
 		Integer eventValue = (int) event.getCharCode();
 		// TODO check is the entered key is number or dot
-		if (!(Character.isDigit(event.getCharCode()) || eventValue
-				.equals(new Integer(46)))) {
+		if (!(Character.isDigit(event.getCharCode()) || eventValue.equals(new Integer(46)))) {
 			setMessage("invalid value");
 			textbox.cancelKey();
 		} else {

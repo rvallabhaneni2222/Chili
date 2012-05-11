@@ -11,8 +11,7 @@ public class RichTextField extends BaseField {
 	RichTextToolBar bar = new RichTextToolBar(area);
 
 	@UiConstructor
-	public RichTextField(String labelName, String attributeName,
-			String className, Boolean readOnly, Boolean isRequired) {
+	public RichTextField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 		configureAddMainWidget();
 	}

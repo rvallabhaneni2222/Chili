@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
  * The Class LoadingWidget.
  */
 public class LoadingWidget extends PopupPanel {
-	
+
 	/** The loading. */
 	Label loading = new Label("Loading...");
 
@@ -21,7 +21,9 @@ public class LoadingWidget extends PopupPanel {
 		setWidget(loading);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.google.gwt.user.client.ui.PopupPanel#show()
 	 */
 	public void show() {
@@ -31,7 +33,9 @@ public class LoadingWidget extends PopupPanel {
 		super.show();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.google.gwt.user.client.ui.PopupPanel#hide()
 	 */
 	public void hide() {

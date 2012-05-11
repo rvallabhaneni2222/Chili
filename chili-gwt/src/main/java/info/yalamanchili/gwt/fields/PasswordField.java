@@ -10,8 +10,7 @@ public class PasswordField extends BaseField {
 	protected PasswordTextBox password = new PasswordTextBox();
 
 	@UiConstructor
-	public PasswordField(String labelName, String attributeName,
-			String className) {
+	public PasswordField(String labelName, String attributeName, String className) {
 		super(labelName, attributeName, className, false, false);
 		fieldPanel.insert(password, 1);
 	}

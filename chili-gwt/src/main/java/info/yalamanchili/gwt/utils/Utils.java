@@ -36,8 +36,7 @@ public class Utils {
 	 * used to get UI display value from constants for the give attribute in a
 	 * class
 	 */
-	public static String getAttributeLabel(String attribute,
-			String classCanonicalName, ConstantsWithLookup constants) {
+	public static String getAttributeLabel(String attribute, String classCanonicalName, ConstantsWithLookup constants) {
 		if (constants == null)
 			return attribute;
 		String key = classCanonicalName + "_" + attribute;

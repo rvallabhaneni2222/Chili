@@ -9,8 +9,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public abstract class BaseField extends Composite implements BlurHandler {
 
-	public BaseField(String labelName, String attributeName, String className,
-			Boolean readOnly, Boolean required) {
+	public BaseField(String labelName, String attributeName, String className, Boolean readOnly, Boolean required) {
 		this.readOnly = readOnly;
 		this.required = required;
 		this.attributeName = attributeName;

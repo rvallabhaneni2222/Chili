@@ -12,23 +12,21 @@ public class ImageField extends BaseField {
 
 	@UiConstructor
 	@Deprecated
-	public ImageField(String labelName, String attributeName, String className,
-			Boolean readOnly) {
+	public ImageField(String labelName, String attributeName, String className, Boolean readOnly) {
 		super(labelName, attributeName, className, readOnly, false);
 		configureAddMainWidget();
 	}
 
 	@UiConstructor
-	public ImageField(String labelName, String attributeName, String className,
-			Boolean readOnly, Boolean isRequired) {
+	public ImageField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 		configureAddMainWidget();
 	}
 
 	@UiConstructor
 	@Deprecated
-	public ImageField(String labelName, String attributeName, String className,
-			Boolean readOnly, String url, int width, int height) {
+	public ImageField(String labelName, String attributeName, String className, Boolean readOnly, String url,
+			int width, int height) {
 		super(labelName, attributeName, className, readOnly, false);
 		image.setUrl(url);
 		image.setPixelSize(width, height);
@@ -37,9 +35,8 @@ public class ImageField extends BaseField {
 
 	@UiConstructor
 	@Deprecated
-	public ImageField(String labelName, String attributeName, String className,
-			Boolean readOnly, Boolean isRequired, String url, int width,
-			int height) {
+	public ImageField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired,
+			String url, int width, int height) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 		image.setUrl(url);
 		image.setPixelSize(width, height);
@@ -47,9 +44,8 @@ public class ImageField extends BaseField {
 	}
 
 	@UiConstructor
-	public ImageField(String labelName, String attributeName, String className,
-			Boolean readOnly, Boolean isRequired, String url, String width,
-			String height) {
+	public ImageField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired,
+			String url, String width, String height) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 		setPixelSize(width, height);
 		image.setUrl(url);

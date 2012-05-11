@@ -6,16 +6,15 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.TextBox;
 
 //TODO move commons stuff to base field
-public abstract class BaseFieldWithTextBox extends BaseField implements
-		KeyPressHandler, KeyUpHandler, KeyDownHandler {
+public abstract class BaseFieldWithTextBox extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler {
 	protected TextBox textbox = new TextBox();
 
 	public TextBox getTextbox() {
 		return textbox;
 	}
 
-	public BaseFieldWithTextBox(String labelName, String attributeName,
-			String className, Boolean readOnly, Boolean required) {
+	public BaseFieldWithTextBox(String labelName, String attributeName, String className, Boolean readOnly,
+			Boolean required) {
 		super(labelName, attributeName, className, readOnly, required);
 		configureAddMainWidget();
 		textbox.setTitle(labelName);

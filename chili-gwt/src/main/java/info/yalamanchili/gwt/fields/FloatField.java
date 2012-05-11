@@ -10,8 +10,7 @@ import com.google.gwt.user.client.Window;
 
 public class FloatField extends BaseFieldWithTextBox {
 	@UiConstructor
-	public FloatField(String labelName, String attributeName, String className,
-			Boolean readOnly, Boolean isRequired) {
+	public FloatField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 
@@ -37,8 +36,7 @@ public class FloatField extends BaseFieldWithTextBox {
 	// TODO add logic to accept backspace as valid
 	public void onKeyPress(KeyPressEvent event) {
 		Integer eventValue = (int) event.getCharCode();
-		if (!(Character.isDigit(event.getCharCode()) || eventValue
-				.equals(new Integer(46)))) {
+		if (!(Character.isDigit(event.getCharCode()) || eventValue.equals(new Integer(46)))) {
 			setMessage("invalid value");
 			textbox.cancelKey();
 		} else {

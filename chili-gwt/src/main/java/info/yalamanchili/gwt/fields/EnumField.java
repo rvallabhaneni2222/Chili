@@ -14,8 +14,8 @@ public class EnumField extends BaseField {
 	Logger logger = Logger.getLogger(EnumField.class.getName());
 	protected final ListBox listBox = new ListBox();
 
-	public EnumField(String labelName, String attributeName, String className,
-			Boolean readOnly, Boolean isRequired, String[] values) {
+	public EnumField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired,
+			String[] values) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 		configureAddMainWidget();
 		for (String value : values) {

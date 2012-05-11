@@ -184,8 +184,7 @@ public class RichTextToolBar extends Composite {
 	}
 
 	/** Click Handler of the Toolbar **/
-	private class EventHandler implements ClickHandler, KeyUpHandler,
-			ChangeHandler {
+	private class EventHandler implements ClickHandler, KeyUpHandler, ChangeHandler {
 		public void onClick(ClickEvent event) {
 			if (event.getSource().equals(bold)) {
 				if (isHTMLMode()) {
@@ -195,81 +194,67 @@ public class RichTextToolBar extends Composite {
 				}
 			} else if (event.getSource().equals(italic)) {
 				if (isHTMLMode()) {
-					changeHtmlStyle(HTML_STYLE_OPEN_ITALIC,
-							HTML_STYLE_CLOSE_SPAN);
+					changeHtmlStyle(HTML_STYLE_OPEN_ITALIC, HTML_STYLE_CLOSE_SPAN);
 				} else {
 					styleTextFormatter.toggleItalic();
 				}
 			} else if (event.getSource().equals(underline)) {
 				if (isHTMLMode()) {
-					changeHtmlStyle(HTML_STYLE_OPEN_UNDERLINE,
-							HTML_STYLE_CLOSE_SPAN);
+					changeHtmlStyle(HTML_STYLE_OPEN_UNDERLINE, HTML_STYLE_CLOSE_SPAN);
 				} else {
 					styleTextFormatter.toggleUnderline();
 				}
 			} else if (event.getSource().equals(stroke)) {
 				if (isHTMLMode()) {
-					changeHtmlStyle(HTML_STYLE_OPEN_LINETHROUGH,
-							HTML_STYLE_CLOSE_SPAN);
+					changeHtmlStyle(HTML_STYLE_OPEN_LINETHROUGH, HTML_STYLE_CLOSE_SPAN);
 				} else {
 					styleTextFormatter.toggleStrikethrough();
 				}
 			} else if (event.getSource().equals(subscript)) {
 				if (isHTMLMode()) {
-					changeHtmlStyle(HTML_STYLE_OPEN_SUBSCRIPT,
-							HTML_STYLE_CLOSE_SUBSCRIPT);
+					changeHtmlStyle(HTML_STYLE_OPEN_SUBSCRIPT, HTML_STYLE_CLOSE_SUBSCRIPT);
 				} else {
 					styleTextFormatter.toggleSubscript();
 				}
 			} else if (event.getSource().equals(superscript)) {
 				if (isHTMLMode()) {
-					changeHtmlStyle(HTML_STYLE_OPEN_SUPERSCRIPT,
-							HTML_STYLE_CLOSE_SUPERSCRIPT);
+					changeHtmlStyle(HTML_STYLE_OPEN_SUPERSCRIPT, HTML_STYLE_CLOSE_SUPERSCRIPT);
 				} else {
 					styleTextFormatter.toggleSuperscript();
 				}
 			} else if (event.getSource().equals(alignleft)) {
 				if (isHTMLMode()) {
-					changeHtmlStyle(HTML_STYLE_OPEN_ALIGNLEFT,
-							HTML_STYLE_CLOSE_DIV);
+					changeHtmlStyle(HTML_STYLE_OPEN_ALIGNLEFT, HTML_STYLE_CLOSE_DIV);
 				} else {
-					styleTextFormatter
-							.setJustification(RichTextArea.Justification.LEFT);
+					styleTextFormatter.setJustification(RichTextArea.Justification.LEFT);
 				}
 			} else if (event.getSource().equals(alignmiddle)) {
 				if (isHTMLMode()) {
-					changeHtmlStyle(HTML_STYLE_OPEN_ALIGNCENTER,
-							HTML_STYLE_CLOSE_DIV);
+					changeHtmlStyle(HTML_STYLE_OPEN_ALIGNCENTER, HTML_STYLE_CLOSE_DIV);
 				} else {
-					styleTextFormatter
-							.setJustification(RichTextArea.Justification.CENTER);
+					styleTextFormatter.setJustification(RichTextArea.Justification.CENTER);
 				}
 			} else if (event.getSource().equals(alignright)) {
 				if (isHTMLMode()) {
-					changeHtmlStyle(HTML_STYLE_OPEN_ALIGNRIGHT,
-							HTML_STYLE_CLOSE_DIV);
+					changeHtmlStyle(HTML_STYLE_OPEN_ALIGNRIGHT, HTML_STYLE_CLOSE_DIV);
 				} else {
-					styleTextFormatter
-							.setJustification(RichTextArea.Justification.RIGHT);
+					styleTextFormatter.setJustification(RichTextArea.Justification.RIGHT);
 				}
 			} else if (event.getSource().equals(orderlist)) {
 				if (isHTMLMode()) {
-					changeHtmlStyle(HTML_STYLE_OPEN_ORDERLIST,
-							HTML_STYLE_CLOSE_ORDERLIST);
+					changeHtmlStyle(HTML_STYLE_OPEN_ORDERLIST, HTML_STYLE_CLOSE_ORDERLIST);
 				} else {
 					styleTextFormatter.insertOrderedList();
 				}
 			} else if (event.getSource().equals(unorderlist)) {
 				if (isHTMLMode()) {
-					changeHtmlStyle(HTML_STYLE_OPEN_UNORDERLIST,
-							HTML_STYLE_CLOSE_UNORDERLIST);
+					changeHtmlStyle(HTML_STYLE_OPEN_UNORDERLIST, HTML_STYLE_CLOSE_UNORDERLIST);
 				} else {
 					styleTextFormatter.insertUnorderedList();
 				}
 			} else if (event.getSource().equals(indentright)) {
 				if (isHTMLMode()) {
-					changeHtmlStyle(HTML_STYLE_OPEN_INDENTRIGHT,
-							HTML_STYLE_CLOSE_DIV);
+					changeHtmlStyle(HTML_STYLE_OPEN_INDENTRIGHT, HTML_STYLE_CLOSE_DIV);
 				} else {
 					styleTextFormatter.rightIndent();
 				}
@@ -334,25 +319,18 @@ public class RichTextToolBar extends Composite {
 		public void onChange(ChangeEvent event) {
 			if (event.getSource().equals(fontlist)) {
 				if (isHTMLMode()) {
-					changeHtmlStyle(
-							"<span style=\"font-family: "
-									+ fontlist.getValue(fontlist
-											.getSelectedIndex()) + ";\">",
-							HTML_STYLE_CLOSE_SPAN);
+					changeHtmlStyle("<span style=\"font-family: " + fontlist.getValue(fontlist.getSelectedIndex())
+							+ ";\">", HTML_STYLE_CLOSE_SPAN);
 				} else {
-					styleTextFormatter.setFontName(fontlist.getValue(fontlist
-							.getSelectedIndex()));
+					styleTextFormatter.setFontName(fontlist.getValue(fontlist.getSelectedIndex()));
 				}
 			} else if (event.getSource().equals(colorlist)) {
 				if (isHTMLMode()) {
 					changeHtmlStyle(
-							"<span style=\"color: "
-									+ colorlist.getValue(colorlist
-											.getSelectedIndex()) + ";\">",
+							"<span style=\"color: " + colorlist.getValue(colorlist.getSelectedIndex()) + ";\">",
 							HTML_STYLE_CLOSE_SPAN);
 				} else {
-					styleTextFormatter.setForeColor(colorlist
-							.getValue(colorlist.getSelectedIndex()));
+					styleTextFormatter.setForeColor(colorlist.getValue(colorlist.getSelectedIndex()));
 				}
 			}
 		}
@@ -363,29 +341,29 @@ public class RichTextToolBar extends Composite {
 	 * start
 	 **/
 	public static native JsArrayString getSelection(Element elem) /*-{
-		var txt = "";
-		var pos = 0;
-		var range;
-		var parentElement;
-		var container;
+																	var txt = "";
+																	var pos = 0;
+																	var range;
+																	var parentElement;
+																	var container;
 
-		if (elem.contentWindow.getSelection) {
-		txt = elem.contentWindow.getSelection();
-		pos = elem.contentWindow.getSelection().getRangeAt(0).startOffset;
-		} else if (elem.contentWindow.document.getSelection) {
-		txt = elem.contentWindow.document.getSelection();
-		pos = elem.contentWindow.document.getSelection().getRangeAt(0).startOffset;
-		} else if (elem.contentWindow.document.selection) {
-		range = elem.contentWindow.document.selection.createRange();
-		txt = range.text;
-		parentElement = range.parentElement();
-		container = range.duplicate();
-		container.moveToElementText(parentElement);
-		container.setEndPoint('EndToEnd', range);
-		pos = container.text.length - range.text.length;
-		}
-		return [""+txt,""+pos];
-	}-*/;
+																	if (elem.contentWindow.getSelection) {
+																	txt = elem.contentWindow.getSelection();
+																	pos = elem.contentWindow.getSelection().getRangeAt(0).startOffset;
+																	} else if (elem.contentWindow.document.getSelection) {
+																	txt = elem.contentWindow.document.getSelection();
+																	pos = elem.contentWindow.document.getSelection().getRangeAt(0).startOffset;
+																	} else if (elem.contentWindow.document.selection) {
+																	range = elem.contentWindow.document.selection.createRange();
+																	txt = range.text;
+																	parentElement = range.parentElement();
+																	container = range.duplicate();
+																	container.moveToElementText(parentElement);
+																	container.setEndPoint('EndToEnd', range);
+																	pos = container.text.length - range.text.length;
+																	}
+																	return [""+txt,""+pos];
+																	}-*/;
 
 	/** Method called to toggle the style in HTML-Mode **/
 	private void changeHtmlStyle(String startTag, String stopTag) {
@@ -393,8 +371,7 @@ public class RichTextToolBar extends Composite {
 		String txbuffer = styleText.getText();
 		Integer startpos = Integer.parseInt(tx.get(1));
 		String selectedText = tx.get(0);
-		styleText.setText(txbuffer.substring(0, startpos) + startTag
-				+ selectedText + stopTag
+		styleText.setText(txbuffer.substring(0, startpos) + startTag + selectedText + stopTag
 				+ txbuffer.substring(startpos + selectedText.length()));
 	}
 
@@ -434,51 +411,33 @@ public class RichTextToolBar extends Composite {
 	/** Initialize the options on the toolbar **/
 	private void buildTools() {
 		// Init the TOP Panel forst
-		topPanel.add(bold = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 0, 20,
-				20, GUI_HOVERTEXT_BOLD));
-		topPanel.add(italic = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 60,
-				20, 20, GUI_HOVERTEXT_ITALIC));
-		topPanel.add(underline = createToggleButton(HTTP_STATIC_ICONS_GIF, 0,
-				140, 20, 20, GUI_HOVERTEXT_UNDERLINE));
-		topPanel.add(stroke = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 120,
-				20, 20, GUI_HOVERTEXT_STROKE));
+		topPanel.add(bold = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 0, 20, 20, GUI_HOVERTEXT_BOLD));
+		topPanel.add(italic = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 60, 20, 20, GUI_HOVERTEXT_ITALIC));
+		topPanel.add(underline = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 140, 20, 20, GUI_HOVERTEXT_UNDERLINE));
+		topPanel.add(stroke = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 120, 20, 20, GUI_HOVERTEXT_STROKE));
 		topPanel.add(new HTML("&nbsp;"));
-		topPanel.add(subscript = createToggleButton(HTTP_STATIC_ICONS_GIF, 0,
-				600, 20, 20, GUI_HOVERTEXT_SUBSCRIPT));
-		topPanel.add(superscript = createToggleButton(HTTP_STATIC_ICONS_GIF, 0,
-				620, 20, 20, GUI_HOVERTEXT_SUPERSCRIPT));
+		topPanel.add(subscript = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 600, 20, 20, GUI_HOVERTEXT_SUBSCRIPT));
+		topPanel.add(superscript = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 620, 20, 20, GUI_HOVERTEXT_SUPERSCRIPT));
 		topPanel.add(new HTML("&nbsp;"));
-		topPanel.add(alignleft = createPushButton(HTTP_STATIC_ICONS_GIF, 0,
-				460, 20, 20, GUI_HOVERTEXT_ALIGNLEFT));
-		topPanel.add(alignmiddle = createPushButton(HTTP_STATIC_ICONS_GIF, 0,
-				420, 20, 20, GUI_HOVERTEXT_ALIGNCENTER));
-		topPanel.add(alignright = createPushButton(HTTP_STATIC_ICONS_GIF, 0,
-				480, 20, 20, GUI_HOVERTEXT_ALIGNRIGHT));
+		topPanel.add(alignleft = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 460, 20, 20, GUI_HOVERTEXT_ALIGNLEFT));
+		topPanel.add(alignmiddle = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 420, 20, 20, GUI_HOVERTEXT_ALIGNCENTER));
+		topPanel.add(alignright = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 480, 20, 20, GUI_HOVERTEXT_ALIGNRIGHT));
 		topPanel.add(new HTML("&nbsp;"));
-		topPanel.add(orderlist = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 80,
-				20, 20, GUI_HOVERTEXT_ORDERLIST));
-		topPanel.add(unorderlist = createPushButton(HTTP_STATIC_ICONS_GIF, 0,
-				20, 20, 20, GUI_HOVERTEXT_UNORDERLIST));
-		topPanel.add(indentright = createPushButton(HTTP_STATIC_ICONS_GIF, 0,
-				400, 20, 20, GUI_HOVERTEXT_IDENTRIGHT));
-		topPanel.add(indentleft = createPushButton(HTTP_STATIC_ICONS_GIF, 0,
-				540, 20, 20, GUI_HOVERTEXT_IDENTLEFT));
+		topPanel.add(orderlist = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 80, 20, 20, GUI_HOVERTEXT_ORDERLIST));
+		topPanel.add(unorderlist = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 20, 20, 20, GUI_HOVERTEXT_UNORDERLIST));
+		topPanel.add(indentright = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 400, 20, 20, GUI_HOVERTEXT_IDENTRIGHT));
+		topPanel.add(indentleft = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 540, 20, 20, GUI_HOVERTEXT_IDENTLEFT));
 		topPanel.add(new HTML("&nbsp;"));
-		topPanel.add(generatelink = createPushButton(HTTP_STATIC_ICONS_GIF, 0,
-				500, 20, 20, GUI_HOVERTEXT_LINK));
-		topPanel.add(breaklink = createPushButton(HTTP_STATIC_ICONS_GIF, 0,
-				640, 20, 20, GUI_HOVERTEXT_BREAKLINK));
+		topPanel.add(generatelink = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 500, 20, 20, GUI_HOVERTEXT_LINK));
+		topPanel.add(breaklink = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 640, 20, 20, GUI_HOVERTEXT_BREAKLINK));
 		topPanel.add(new HTML("&nbsp;"));
-		topPanel.add(insertline = createPushButton(HTTP_STATIC_ICONS_GIF, 0,
-				360, 20, 20, GUI_HOVERTEXT_HLINE));
-		topPanel.add(insertimage = createPushButton(HTTP_STATIC_ICONS_GIF, 0,
-				380, 20, 20, GUI_HOVERTEXT_IMAGE));
+		topPanel.add(insertline = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 360, 20, 20, GUI_HOVERTEXT_HLINE));
+		topPanel.add(insertimage = createPushButton(HTTP_STATIC_ICONS_GIF, 0, 380, 20, 20, GUI_HOVERTEXT_IMAGE));
 		topPanel.add(new HTML("&nbsp;"));
-		topPanel.add(removeformatting = createPushButton(HTTP_STATIC_ICONS_GIF,
-				20, 460, 20, 20, GUI_HOVERTEXT_REMOVEFORMAT));
+		topPanel.add(removeformatting = createPushButton(HTTP_STATIC_ICONS_GIF, 20, 460, 20, 20,
+				GUI_HOVERTEXT_REMOVEFORMAT));
 		topPanel.add(new HTML("&nbsp;"));
-		topPanel.add(texthtml = createToggleButton(HTTP_STATIC_ICONS_GIF, 0,
-				260, 20, 20, GUI_HOVERTEXT_SWITCHVIEW));
+		topPanel.add(texthtml = createToggleButton(HTTP_STATIC_ICONS_GIF, 0, 260, 20, 20, GUI_HOVERTEXT_SWITCHVIEW));
 
 		// Init the BOTTOM Panel
 		bottomPanel.add(fontlist = createFontList());
@@ -487,8 +446,8 @@ public class RichTextToolBar extends Composite {
 	}
 
 	/** Method to create a Toggle button for the toolbar **/
-	private ToggleButton createToggleButton(String url, Integer top,
-			Integer left, Integer width, Integer height, String tip) {
+	private ToggleButton createToggleButton(String url, Integer top, Integer left, Integer width, Integer height,
+			String tip) {
 		Image extract = new Image(url, left, top, width, height);
 		ToggleButton tb = new ToggleButton(extract);
 		tb.setHeight(height + "px");
@@ -501,8 +460,7 @@ public class RichTextToolBar extends Composite {
 	}
 
 	/** Method to create a Push button for the toolbar **/
-	private PushButton createPushButton(String url, Integer top, Integer left,
-			Integer width, Integer height, String tip) {
+	private PushButton createPushButton(String url, Integer top, Integer left, Integer width, Integer height, String tip) {
 		Image extract = new Image(url, left, top, width, height);
 		PushButton tb = new PushButton(extract);
 		tb.setHeight(height + "px");

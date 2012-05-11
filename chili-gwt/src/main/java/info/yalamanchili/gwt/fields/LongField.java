@@ -14,8 +14,7 @@ import com.google.gwt.user.client.Window;
  */
 public class LongField extends BaseFieldWithTextBox {
 	@UiConstructor
-	public LongField(String labelName, String attributeName, String className,
-			Boolean readOnly, Boolean isRequired) {
+	public LongField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 

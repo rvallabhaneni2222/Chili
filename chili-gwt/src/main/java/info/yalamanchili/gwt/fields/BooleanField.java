@@ -14,8 +14,7 @@ public class BooleanField extends BaseField {
 	}
 
 	@UiConstructor
-	public BooleanField(String text, String attributeName, String className,
-			Boolean readOnly, Boolean isRequired) {
+	public BooleanField(String text, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(text, attributeName, className, readOnly, isRequired);
 		box.setEnabled(!readOnly);
 		// box.setText(text);
