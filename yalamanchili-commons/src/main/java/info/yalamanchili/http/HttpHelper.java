@@ -13,8 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 public class HttpHelper {
 
-	private final static Logger logger = Logger.getLogger(HttpHelper.class
-			.getName());
+	private final static Logger logger = Logger.getLogger(HttpHelper.class.getName());
 
 	protected static DefaultHttpClient httpclient;
 
@@ -39,8 +38,7 @@ public class HttpHelper {
 	}
 
 	public static void setCredentials(String username, String password) {
-		getHttpClient().getCredentialsProvider().setCredentials(
-				new AuthScope(null, -1),
+		getHttpClient().getCredentialsProvider().setCredentials(new AuthScope(null, -1),
 				new UsernamePasswordCredentials(username, password));
 	}
 
@@ -51,33 +49,31 @@ public class HttpHelper {
 		InputStream in = null;
 		/* http response success */
 		logger.info("response code:" + status.getStatusCode());
-		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 399) {
-			try {
-				if (response.getEntity() == null
-						|| response.getEntity().getContent() == null) {
-					return null;
-				}
-				in = response.getEntity().getContent();
-				reader = new BufferedReader(new InputStreamReader(in));
-				StringBuilder str = new StringBuilder();
-				String line = null;
-				while ((line = reader.readLine()) != null) {
-					str.append(line + "\n");
-				}
-				reader.close();
-				in.close();
-				result = str.toString();
-			} catch (Exception e) {
-				throw new RuntimeException(e);
+		try {
+			if (response.getEntity() == null || response.getEntity().getContent() == null) {
+				return null;
 			}
+			in = response.getEntity().getContent();
+			reader = new BufferedReader(new InputStreamReader(in));
+			StringBuilder str = new StringBuilder();
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				str.append(line + "\n");
+			}
+			reader.close();
+			in.close();
+			result = str.toString();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		if (status.getStatusCode() >= 200 && status.getStatusCode() <= 399) {
 			return result;
 		}
 		/* http response failure */
 		else {
-			logger.info("call failed:" + status.getStatusCode());
+			logger.info("**********call failed****************:" + status.getStatusCode());
 			HttpHelper.reset();
-			throw new RuntimeException("http call failed with status code:"
-					+ status.getStatusCode());
+			throw new RuntimeException(result);
 		}
 	}
 }

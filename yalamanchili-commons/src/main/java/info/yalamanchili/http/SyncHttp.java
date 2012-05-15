@@ -20,18 +20,16 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
 public class SyncHttp {
-	private final static Logger logger = Logger.getLogger(SyncHttp.class
-			.getName());
+	private final static Logger logger = Logger.getLogger(SyncHttp.class.getName());
 
 	public static HttpResponse response;
 
+	@Deprecated
 	public static String httpGet(String url, Map<String, String> headers) {
 		return httpGet(url, headers, false);
 	}
 
-	@Deprecated
-	public static String httpGet(String url, Map<String, String> headers,
-			boolean newClinet) {
+	public static String httpGet(String url, Map<String, String> headers, boolean newClinet) {
 		logger.info("http get url:" + url);
 		HttpGet request = new HttpGet(url);
 		if (headers != null) {
@@ -45,8 +43,7 @@ public class SyncHttp {
 			response = HttpHelper.getHttpClient(newClinet).execute(request);
 		} catch (Exception e) {
 			logger.warning("htt get call failed" + e.getLocalizedMessage());
-			throw new RuntimeException("Http Get called failed for uri:" + url
-					+ e);
+			throw new RuntimeException("Http Get called failed for uri:" + url + e);
 		}
 		if (response != null)
 			return HttpHelper.convertResponse(response);
@@ -61,14 +58,12 @@ public class SyncHttp {
 		try {
 			response = HttpHelper.getHttpClient().execute(new HttpGet(url));
 		} catch (Exception e) {
-			throw new RuntimeException("Http Get called failed for uri:" + url
-					+ e);
+			throw new RuntimeException("Http Get called failed for uri:" + url + e);
 		}
 		if (response == null) {
 			return null;
 		}
-		if (response.getStatusLine().getStatusCode() >= 200
-				&& response.getStatusLine().getStatusCode() <= 399) {
+		if (response.getStatusLine().getStatusCode() >= 200 && response.getStatusLine().getStatusCode() <= 399) {
 			try {
 				return response.getEntity().getContent();
 			} catch (Exception e) {
@@ -80,32 +75,27 @@ public class SyncHttp {
 	}
 
 	@Deprecated
-	public static String httpPut(String uri, String body,
-			Map<String, String> headers) {
+	public static String httpPut(String uri, String body, Map<String, String> headers) {
 		return httpPut(uri, body, headers, false);
 	}
 
 	@Deprecated
-	public static String httpPost(String uri, String body,
-			Map<String, String> headers) {
+	public static String httpPost(String uri, String body, Map<String, String> headers) {
 		return httpPost(uri, body, headers, false);
 	}
 
-	public static String httpPut(String uri, String body,
-			Map<String, String> headers, boolean newClient) {
+	public static String httpPut(String uri, String body, Map<String, String> headers, boolean newClient) {
 		logger.info("uri:" + uri);
 		HttpPut put = new HttpPut(uri);
 		return executeHttpCall(put, body, headers, newClient);
 	}
 
-	public static String httpPost(String uri, String body,
-			Map<String, String> headers, boolean newClient) {
+	public static String httpPost(String uri, String body, Map<String, String> headers, boolean newClient) {
 		HttpPost post = new HttpPost(uri);
 		return executeHttpCall(post, body, headers, newClient);
 	}
 
-	protected static String executeHttpCall(
-			HttpEntityEnclosingRequestBase request, String body,
+	protected static String executeHttpCall(HttpEntityEnclosingRequestBase request, String body,
 			Map<String, String> headers, boolean newClient) {
 		if (headers != null) {
 			for (String header : headers.keySet()) {
@@ -119,9 +109,8 @@ public class SyncHttp {
 			logger.info("http body:" + body);
 			response = HttpHelper.getHttpClient(newClient).execute(request);
 		} catch (Exception e) {
-			logger.warning("http call failed:" + e.getLocalizedMessage());
-			throw new RuntimeException("Http call failed for uri:"
-					+ request.getURI().getRawPath() + e);
+			logger.warning("Error making http call:" + e.getLocalizedMessage());
+			throw new RuntimeException("Error making http call:" + request.getURI().getRawPath() + e);
 		}
 		if (response != null) {
 			return HttpHelper.convertResponse(response);
@@ -132,8 +121,7 @@ public class SyncHttp {
 	}
 
 	// used by google service
-	public static String httpUrlEncodedFormEntityPost(String uri,
-			String contentType, Map<String, String> params) {
+	public static String httpUrlEncodedFormEntityPost(String uri, String contentType, Map<String, String> params) {
 		HttpPost post = new HttpPost(uri);
 		post.setHeader("Content-Type", contentType);
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
@@ -142,14 +130,11 @@ public class SyncHttp {
 		}
 		try {
 			UrlEncodedFormEntity e = new UrlEncodedFormEntity(nvps, HTTP.UTF_8);
-			logger.info("http post body:"
-					+ new BufferedReader(new InputStreamReader(e.getContent()))
-							.readLine());
+			logger.info("http post body:" + new BufferedReader(new InputStreamReader(e.getContent())).readLine());
 			post.setEntity(e);
 			response = HttpHelper.getHttpClient().execute(post);
 		} catch (Exception e) {
-			throw new RuntimeException("Http Post called failed for uri:" + uri
-					+ e);
+			throw new RuntimeException("Http Post called failed for uri:" + uri + e);
 		}
 		if (response != null) {
 			return HttpHelper.convertResponse(response);
