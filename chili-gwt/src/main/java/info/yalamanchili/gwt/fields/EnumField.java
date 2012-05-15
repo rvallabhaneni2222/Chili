@@ -29,6 +29,7 @@ public class EnumField extends BaseField {
 	}
 
 	public String getValue() {
+		// TODO check if index is > 0 else null
 		return listBox.getItemText(listBox.getSelectedIndex());
 	}
 
