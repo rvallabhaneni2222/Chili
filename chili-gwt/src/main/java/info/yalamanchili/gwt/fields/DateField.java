@@ -63,6 +63,10 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
 		}
 	}
 
+	public void setValue(String date) {
+		dateField.setText(date);
+	}
+
 	public void setReadOnly(Boolean readOnly) {
 		// datePicker.setReadOnly(readOnly);
 	}

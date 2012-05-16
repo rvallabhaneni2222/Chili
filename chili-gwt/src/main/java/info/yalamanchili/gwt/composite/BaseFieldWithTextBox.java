@@ -40,4 +40,12 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
 	public void validate() {
 
 	}
+
+	public void setValue(String value) {
+		textbox.setText(value);
+	}
+
+	public String getValue() {
+		return textbox.getText();
+	}
 }

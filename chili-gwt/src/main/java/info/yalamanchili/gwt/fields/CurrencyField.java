@@ -15,12 +15,11 @@ public class CurrencyField extends BaseFieldWithTextBox {
 	// TODO add Local info to constructor
 	protected static NumberFormat fmt = NumberFormat.getCurrencyFormat();
 
-	@UiConstructor
 	public CurrencyField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 
-	public BigDecimal getValue() {
+	public BigDecimal getCurrency() {
 		BigDecimal value = null;
 		if (textbox.getText() == null || textbox.getText().trim().equals(""))
 			return null;
