@@ -25,6 +25,9 @@ public class PasswordField extends BaseField {
 
 	}
 
+	public void setReadOnly(Boolean readOnly) {
+	}
+
 	@Override
 	public void validate() {
 		// TODO Auto-generated method stub

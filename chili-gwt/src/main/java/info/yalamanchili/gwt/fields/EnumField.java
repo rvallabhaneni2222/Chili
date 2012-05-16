@@ -21,6 +21,7 @@ public class EnumField extends BaseField {
 		for (String value : values) {
 			listBox.addItem(value.toString(), value.toString());
 		}
+		setReadOnly(readOnly);
 	}
 
 	public void setValue(String var) {
@@ -36,6 +37,10 @@ public class EnumField extends BaseField {
 	@Override
 	protected void configureAddMainWidget() {
 		fieldPanel.insert(listBox, 0);
+	}
+
+	public void setReadOnly(Boolean readOnly) {
+		listBox.setEnabled(!readOnly);
 	}
 
 	@Override

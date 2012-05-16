@@ -14,6 +14,7 @@ public class RichTextField extends BaseField {
 	public RichTextField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
 		configureAddMainWidget();
+		setReadOnly(readOnly);
 	}
 
 	@Override
@@ -44,5 +45,9 @@ public class RichTextField extends BaseField {
 	public void validate() {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void setReadOnly(Boolean readOnly) {
+		area.setEnabled(readOnly);
 	}
 }

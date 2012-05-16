@@ -40,8 +40,8 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
 	@UiConstructor
 	public DateField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(labelName, attributeName, className, readOnly, isRequired);
-		setReadOnly(readOnly);
 		configureAddMainWidget();
+		setReadOnly(readOnly);
 	}
 
 	public Date getDate() {
@@ -68,7 +68,7 @@ public class DateField extends BaseField implements KeyPressHandler, KeyUpHandle
 	}
 
 	public void setReadOnly(Boolean readOnly) {
-		// datePicker.setReadOnly(readOnly);
+		dateField.setReadOnly(readOnly);
 	}
 
 	@Override

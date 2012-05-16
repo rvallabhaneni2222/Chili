@@ -93,9 +93,7 @@ public abstract class BaseField extends Composite implements BlurHandler {
 		return readOnly;
 	}
 
-	public void setReadOnly(Boolean readOnly) {
-		this.readOnly = readOnly;
-	}
+	public abstract void setReadOnly(Boolean readOnly);
 
 	@Override
 	public void onBlur(BlurEvent event) {

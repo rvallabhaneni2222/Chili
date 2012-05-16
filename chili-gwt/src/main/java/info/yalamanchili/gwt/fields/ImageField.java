@@ -79,4 +79,8 @@ public class ImageField extends BaseField {
 		// TODO Auto-generated method stub
 
 	}
+
+	public void setReadOnly(Boolean readOnly) {
+		// TODO
+	}
 }

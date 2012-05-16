@@ -18,6 +18,7 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
 		super(labelName, attributeName, className, readOnly, required);
 		configureAddMainWidget();
 		textbox.setTitle(labelName);
+		setReadOnly(readOnly);
 	}
 
 	protected void configureAddMainWidget() {
@@ -33,8 +34,8 @@ public abstract class BaseFieldWithTextBox extends BaseField implements KeyPress
 		textbox.addBlurHandler(this);
 	}
 
-	public void setReadOnly(Boolean readOnly) {
-		textbox.setReadOnly(true);
+	public void setReadOnly(Boolean readlOnly) {
+		textbox.setReadOnly(readOnly);
 	}
 
 	public void validate() {

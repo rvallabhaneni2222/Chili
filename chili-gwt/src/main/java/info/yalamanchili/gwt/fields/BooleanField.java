@@ -16,9 +16,9 @@ public class BooleanField extends BaseField {
 	@UiConstructor
 	public BooleanField(String text, String attributeName, String className, Boolean readOnly, Boolean isRequired) {
 		super(text, attributeName, className, readOnly, isRequired);
-		box.setEnabled(!readOnly);
 		// box.setText(text);
 		configureAddMainWidget();
+		setReadOnly(readOnly);
 	}
 
 	public void setValue(Boolean value) {
@@ -45,6 +45,10 @@ public class BooleanField extends BaseField {
 	public void validate() {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void setReadOnly(Boolean readlOnly) {
+		box.setEnabled(!readlOnly);
 	}
 
 }
