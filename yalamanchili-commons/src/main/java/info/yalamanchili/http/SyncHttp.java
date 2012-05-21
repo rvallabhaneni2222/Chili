@@ -105,7 +105,9 @@ public class SyncHttp {
 			}
 		}
 		try {
-			request.setEntity(new StringEntity(body));
+			if (body != null) {
+				request.setEntity(new StringEntity(body));
+			}
 			logger.info("http body:" + body);
 			response = HttpHelper.getHttpClient(newClient).execute(request);
 		} catch (Exception e) {
