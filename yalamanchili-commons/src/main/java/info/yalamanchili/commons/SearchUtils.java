@@ -1,5 +1,8 @@
 package info.yalamanchili.commons;
 
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,8 +23,48 @@ import org.hibernate.search.Search;
 public class SearchUtils {
 	private static final Log log = LogFactory.getLog(SearchUtils.class);
 
-	public static Query getLuceneQuery(String searchText, String defaultField, StandardAnalyzer anaylyzer,
-			String... fields) {
+	public static <T extends Serializable> String getSearchQueryString(T entity) {
+		String query = "FROM " + entity.getClass().getCanonicalName() + " WHERE ";
+		List<String> filters = new ArrayList<String>();
+		for (Field field : entity.getClass().getDeclaredFields()) {
+			if (!DataType.DEFAULT.equals(ReflectionUtils.getDataType(field))) {
+				for (Method method : entity.getClass().getMethods()) {
+					if (method.getName().compareToIgnoreCase("get" + field.getName()) == 0) {
+						try {
+							Object o = method.invoke(entity, null);
+							if (o instanceof String && o != null) {
+								filters.add(field.getName() + " LIKE '%" + o.toString().trim() + "%'");
+							}
+							if (o instanceof Long && o != null) {
+								filters.add(field.getName() + " = " + o.toString().trim());
+							}
+							if (o instanceof Integer && o != null) {
+								filters.add(field.getName() + " = " + o.toString().trim());
+							}
+							if (o instanceof Float && o != null) {
+								filters.add(field.getName() + " = " + o.toString().trim());
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+					}
+				}
+			}
+		}
+		int i = 0;
+		for (String filter : filters) {
+			query = query.concat(filter);
+			i++;
+			if (i < filters.size()) {
+				query = query.concat(" AND ");
+			}
+		}
+		log.debug("query String" + query);
+		return query;
+	}
+
+	public static Query getLuceneQuery(String searchText, StandardAnalyzer anaylyzer, String... fields) {
 		MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_30, fields, new StandardAnalyzer(
 				Version.LUCENE_30));
 		org.apache.lucene.search.Query luceneQuery = null;

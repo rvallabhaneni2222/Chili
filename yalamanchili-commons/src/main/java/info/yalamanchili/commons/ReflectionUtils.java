@@ -173,6 +173,7 @@ public class ReflectionUtils {
 	public static List<Field> getAllFields(Class<?> entity) {
 		List<Field> fields = new ArrayList<Field>();
 		do {
+			//TODO try calling getFields[] rather than getDeclaredFields();
 			fields.addAll(Arrays.asList(entity.getDeclaredFields()));
 			entity = entity.getSuperclass();
 
