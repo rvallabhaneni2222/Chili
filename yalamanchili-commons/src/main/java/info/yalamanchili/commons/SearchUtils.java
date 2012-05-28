@@ -1,6 +1,5 @@
 package info.yalamanchili.commons;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -23,10 +22,10 @@ import org.hibernate.search.Search;
 public class SearchUtils {
 	private static final Log log = LogFactory.getLog(SearchUtils.class);
 
-	public static <T extends Serializable> String getSearchQueryString(T entity) {
+	public static <T> String getSearchQueryString(T entity) {
 		String query = "FROM " + entity.getClass().getCanonicalName() + " WHERE ";
 		List<String> filters = new ArrayList<String>();
-		for (Field field : entity.getClass().getDeclaredFields()) {
+		for (Field field : ReflectionUtils.getAllFields(entity.getClass())) {
 			if (!DataType.DEFAULT.equals(ReflectionUtils.getDataType(field))) {
 				for (Method method : entity.getClass().getMethods()) {
 					if (method.getName().compareToIgnoreCase("get" + field.getName()) == 0) {
@@ -60,7 +59,7 @@ public class SearchUtils {
 				query = query.concat(" AND ");
 			}
 		}
-		log.debug("query String" + query);
+		log.info("query String" + query);
 		return query;
 	}
 
