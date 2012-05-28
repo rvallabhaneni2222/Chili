@@ -20,17 +20,15 @@ import org.hibernate.search.Search;
 public class SearchUtils {
 	private static final Log log = LogFactory.getLog(SearchUtils.class);
 
-	public static Query getLuceneQuery(String searchText, String defaultField,
-			StandardAnalyzer anaylyzer, String... fields) { 
-		MultiFieldQueryParser parser = new MultiFieldQueryParser(
-				Version.LUCENE_30, fields, new StandardAnalyzer(
-						Version.LUCENE_30));
+	public static Query getLuceneQuery(String searchText, String defaultField, StandardAnalyzer anaylyzer,
+			String... fields) {
+		MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_30, fields, new StandardAnalyzer(
+				Version.LUCENE_30));
 		org.apache.lucene.search.Query luceneQuery = null;
 		try {
 			luceneQuery = parser.parse(getSearchQuery(searchText, fields));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		return luceneQuery;
 	}
@@ -42,8 +40,7 @@ public class SearchUtils {
 	 */
 	public static FullTextSession getFullTextSession(EntityManager em) {
 		Session session = (Session) em.getDelegate();
-		return Search.getFullTextSession(session.getSessionFactory()
-				.getCurrentSession());
+		return Search.getFullTextSession(session.getSessionFactory().getCurrentSession());
 	}
 
 	// TODO fix issue with empty string
@@ -62,11 +59,11 @@ public class SearchUtils {
 				searchQuery.append(" ");
 			}
 		}
+		log.info("lucene search query:" + searchQuery.toString());
 		return searchQuery.toString();
 	}
 
-	public static List<String> splitSearchString(String searchText,
-			char seperator) {
+	public static List<String> splitSearchString(String searchText, char seperator) {
 		List<String> words = new ArrayList<String>();
 		Scanner searchTextScanner = new Scanner(searchText);
 		while (searchTextScanner.hasNext()) {
