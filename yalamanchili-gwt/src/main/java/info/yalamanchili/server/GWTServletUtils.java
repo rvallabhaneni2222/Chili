@@ -22,6 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 //TODO can merge the class methods into Gileadservice
+//TODO rename to more appriorate one like JPAQuery hlper
 public class GWTServletUtils {
 	private static final Log log = LogFactory.getLog(GWTServletUtils.class);
 
@@ -73,32 +74,25 @@ public class GWTServletUtils {
 	}
 
 	public static <T extends Serializable> String getSearchQueryString(T entity) {
-		String query = "FROM " + entity.getClass().getCanonicalName()
-				+ " WHERE ";
+		String query = "FROM " + entity.getClass().getCanonicalName() + " WHERE ";
 		List<String> filters = new ArrayList<String>();
 		for (Field field : entity.getClass().getDeclaredFields()) {
-			if (!DataType.DUMMY_FEILD
-					.equals(GWTServletUtils.getDataType(field))) {
+			if (!DataType.DUMMY_FEILD.equals(GWTServletUtils.getDataType(field))) {
 				for (Method method : entity.getClass().getMethods()) {
-					if (method.getName().compareToIgnoreCase(
-							"get" + field.getName()) == 0) {
+					if (method.getName().compareToIgnoreCase("get" + field.getName()) == 0) {
 						try {
 							Object o = method.invoke(entity, null);
 							if (o instanceof String && o != null) {
-								filters.add(field.getName() + " LIKE '%"
-										+ o.toString().trim() + "%'");
+								filters.add(field.getName() + " LIKE '%" + o.toString().trim() + "%'");
 							}
 							if (o instanceof Long && o != null) {
-								filters.add(field.getName() + " = "
-										+ o.toString().trim());
+								filters.add(field.getName() + " = " + o.toString().trim());
 							}
 							if (o instanceof Integer && o != null) {
-								filters.add(field.getName() + " = "
-										+ o.toString().trim());
+								filters.add(field.getName() + " = " + o.toString().trim());
 							}
 							if (o instanceof Float && o != null) {
-								filters.add(field.getName() + " = "
-										+ o.toString().trim());
+								filters.add(field.getName() + " = " + o.toString().trim());
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -120,16 +114,13 @@ public class GWTServletUtils {
 		return query;
 	}
 
-	public static <T extends Serializable> String getSuggestionsQueryForName(
-			String name, T entity) {
-		String query = "SELECT " + name + " FROM "
-				+ entity.getClass().getCanonicalName();
+	public static <T extends Serializable> String getSuggestionsQueryForName(String attributeName, T entity) {
+		String query = "SELECT " + attributeName + " FROM " + entity.getClass().getCanonicalName();
 		log.debug(query);
 		return query;
 	}
 
-	public static String getListBoxResultsQueryString(String className,
-			String[] columns) {
+	public static String getListBoxResultsQueryString(String className, String[] columns) {
 		String query = "SELECT id,";
 		for (String column : columns) {
 			query = query.concat(column + ",");
@@ -139,10 +130,8 @@ public class GWTServletUtils {
 		return query;
 	}
 
-	public static Map<Long, String> getListBoxValues(Class<?> clazz,
-			String[] columns, EntityManager em) {
-		String query = GWTServletUtils.getListBoxResultsQueryString(
-				clazz.getCanonicalName(), columns);
+	public static Map<Long, String> getListBoxValues(Class<?> clazz, String[] columns, EntityManager em) {
+		String query = GWTServletUtils.getListBoxResultsQueryString(clazz.getCanonicalName(), columns);
 		Map<Long, String> values = new HashMap<Long, String>();
 		Query getListBoxValues = em.createQuery(query);
 		for (Object obj : getListBoxValues.getResultList()) {
@@ -156,10 +145,8 @@ public class GWTServletUtils {
 		List<Field> fields = new ArrayList<Field>();
 		Map<Integer, Field> fieldsMap = new HashMap<Integer, Field>();
 		for (Field field : clazz.getDeclaredFields()) {
-			if (!DataType.DUMMY_FEILD
-					.equals(GWTServletUtils.getDataType(field))) {
-				log.debug("putting at: " + getLayoutPosition(field)
-						+ ":field :" + field.getName());
+			if (!DataType.DUMMY_FEILD.equals(GWTServletUtils.getDataType(field))) {
+				log.debug("putting at: " + getLayoutPosition(field) + ":field :" + field.getName());
 				fieldsMap.put(getLayoutPosition(field), field);
 			}
 		}
