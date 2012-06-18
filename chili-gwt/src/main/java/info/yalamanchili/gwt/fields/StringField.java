@@ -23,14 +23,6 @@ public class StringField extends BaseFieldWithTextBox {
 		super(labelName, attributeName, className, readOnly, isRequired);
 	}
 
-	public String getText() {
-		return textbox.getText();
-	}
-
-	public void setText(String text) {
-		textbox.setText(text);
-	}
-
 	// TODO can these be moved to a top level???
 	@Override
 	public void onKeyPress(KeyPressEvent arg0) {
