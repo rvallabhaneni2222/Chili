@@ -7,46 +7,50 @@ import com.google.gwt.user.client.ui.TextBox;
 
 //TODO move commons stuff to base field
 public abstract class BaseFieldWithTextBox extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler {
-	protected TextBox textbox = new TextBox();
 
-	public TextBox getTextbox() {
-		return textbox;
-	}
+    protected TextBox textbox = new TextBox();
 
-	public BaseFieldWithTextBox(String labelName, String attributeName, String className, Boolean readOnly,
-			Boolean required) {
-		super(labelName, attributeName, className, readOnly, required);
-		configureAddMainWidget();
-		textbox.setTitle(labelName);
-		setReadOnly(readOnly);
-	}
+    public TextBox getTextbox() {
+        return textbox;
+    }
 
-	protected void configureAddMainWidget() {
-		textbox.addStyleName("tfTextBox");
-		fieldPanel.insert(textbox, 0);
-		addListeners();
-	}
+    public BaseFieldWithTextBox(String labelName, String attributeName, String className, Boolean readOnly,
+            Boolean required) {
+        super(labelName, attributeName, className, readOnly, required);
+        configureAddMainWidget();
+        textbox.setTitle(labelName);
+        setReadOnly(readOnly);
+    }
 
-	protected void addListeners() {
-		textbox.addKeyPressHandler(this);
-		textbox.addKeyUpHandler(this);
-		textbox.addKeyDownHandler(this);
-		textbox.addBlurHandler(this);
-	}
+    protected void configureAddMainWidget() {
+        textbox.addStyleName("tfTextBox");
+        fieldPanel.insert(textbox, 0);
+        addListeners();
+    }
 
-	public void setReadOnly(Boolean readlOnly) {
-		textbox.setReadOnly(readOnly);
-	}
+    protected void addListeners() {
+        textbox.addKeyPressHandler(this);
+        textbox.addKeyUpHandler(this);
+        textbox.addKeyDownHandler(this);
+        textbox.addBlurHandler(this);
+    }
 
-	public void validate() {
+    public void setReadOnly(Boolean readlOnly) {
+        textbox.setReadOnly(readOnly);
+    }
 
-	}
+    public void validate() {
+    }
 
-	public void setValue(String value) {
-		textbox.setText(value);
-	}
+    public void setValue(String value) {
+        textbox.setText(value);
+    }
 
-	public String getValue() {
-		return textbox.getText();
-	}
+    public String getValue() {
+        if (textbox.getText() != null && textbox.getText().trim().length() > 0) {
+            return textbox.getText();
+        } else {
+            return null;
+        }
+    }
 }
