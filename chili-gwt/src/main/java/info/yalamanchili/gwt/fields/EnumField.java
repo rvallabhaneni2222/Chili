@@ -11,41 +11,42 @@ import com.google.gwt.user.client.ui.ListBox;
  * The Class EnumField.
  */
 public class EnumField extends BaseField {
-	Logger logger = Logger.getLogger(EnumField.class.getName());
-	protected final ListBox listBox = new ListBox();
 
-	public EnumField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired,
-			String[] values) {
-		super(labelName, attributeName, className, readOnly, isRequired);
-		configureAddMainWidget();
-		for (String value : values) {
-			listBox.addItem(value.toString(), value.toString());
-		}
-		setReadOnly(readOnly);
-	}
+    Logger logger = Logger.getLogger(EnumField.class.getName());
+    protected final ListBox listBox = new ListBox();
 
-	public void setValue(String var) {
-		listBox.clear();
-		listBox.addItem(var, var);
-	}
+    public EnumField(String labelName, String attributeName, String className, Boolean readOnly, Boolean isRequired,
+            String[] values) {
+        super(labelName, attributeName, className, readOnly, isRequired);
+        configureAddMainWidget();
+        for (String value : values) {
+            listBox.addItem(value.toString(), value.toString());
+        }
+        setReadOnly(readOnly);
+    }
 
-	public String getValue() {
-		// TODO check if index is > 0 else null
-		return listBox.getItemText(listBox.getSelectedIndex());
-	}
+    public void setValue(String var) {
+        listBox.clear();
+        listBox.addItem(var, var);
+    }
 
-	@Override
-	protected void configureAddMainWidget() {
-		fieldPanel.insert(listBox, 0);
-	}
+    public String getValue() {
+        // TODO check if index is > 0 else null
+        return listBox.getItemText(listBox.getSelectedIndex());
+    }
 
-	public void setReadOnly(Boolean readOnly) {
-		listBox.setEnabled(!readOnly);
-	}
+    @Override
+    protected void configureAddMainWidget() {
+        listBox.ensureDebugId(className + "_" + attributeName + "_LB");
+        fieldPanel.insert(listBox, 0);
+    }
 
-	@Override
-	public void validate() {
-		// TODO Auto-generated method stub
+    public void setReadOnly(Boolean readOnly) {
+        listBox.setEnabled(!readOnly);
+    }
 
-	}
+    @Override
+    public void validate() {
+        // TODO Auto-generated method stub
+    }
 }

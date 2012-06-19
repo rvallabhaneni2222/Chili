@@ -9,95 +9,90 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public abstract class BaseField extends Composite implements BlurHandler {
 
-	public BaseField(String labelName, String attributeName, String className, Boolean readOnly, Boolean required) {
-		this.readOnly = readOnly;
-		this.required = required;
-		this.attributeName = attributeName;
-		this.className = className;
-		if (required) {
-			label.setHTML(labelName + "<em>*</em>");
-			label.addStyleName("tfRequired");
-		} else {
-			label.setHTML(labelName);
-		}
-		configure();
-		addWidgets();
-		initWidget(panel);
-	}
+    public BaseField(String labelName, String attributeName, String className, Boolean readOnly, Boolean required) {
+        this.readOnly = readOnly;
+        this.required = required;
+        this.attributeName = attributeName;
+        this.className = className;
+        if (required) {
+            label.setHTML(labelName + "<em>*</em>");
+            label.addStyleName("tfRequired");
+        } else {
+            label.setHTML(labelName);
+        }
+        configure();
+        addWidgets();
+        initWidget(panel);
+    }
 
-	protected void configure() {
-		label.addStyleName("tfFieldHeader");
-		message.addStyleName("tfErrorMessage");
-	}
+    protected void configure() {
+        label.addStyleName("tfFieldHeader");
+        label.ensureDebugId(className + "_" + attributeName + "_L");
+        message.addStyleName("tfErrorMessage");
+        message.ensureDebugId(className + "_" + attributeName + "_L");
+    }
 
-	protected void addWidgets() {
-		panel.add(label);
-		fieldPanel.add(message);
-		panel.add(fieldPanel);
-	}
+    protected void addWidgets() {
+        panel.add(label);
+        fieldPanel.add(message);
+        panel.add(fieldPanel);
+    }
 
-	/* used to add main widget to fieldPanel and add style class info */
-	protected abstract void configureAddMainWidget();
+    /* used to add main widget to fieldPanel and add style class info */
+    protected abstract void configureAddMainWidget();
 
-	/** called for validate on blur */
-	protected abstract void validate();
+    /**
+     * called for validate on blur
+     */
+    protected abstract void validate();
+    protected FlowPanel panel = new FlowPanel();
+    protected HorizontalPanel fieldPanel = new HorizontalPanel();
+    protected HTML label = new HTML();
+    protected HTML message = new HTML();
+    protected Boolean isValid = false;
+    protected Boolean readOnly = false;
+    protected Boolean required = false;
+    // this is actual bean/entity attribute name can be used to validation
+    // purposes
+    public String attributeName = null;
+    public String className = null;
 
-	protected FlowPanel panel = new FlowPanel();
+    public FlowPanel getPanel() {
+        return panel;
+    }
 
-	protected HorizontalPanel fieldPanel = new HorizontalPanel();
+    public HTML getLabel() {
+        return label;
+    }
 
-	protected HTML label = new HTML();
+    public void setLabelText(String name) {
+        label.setHTML(name);
+    }
 
-	protected HTML message = new HTML();
+    public void setMessage(String text) {
+        message.setHTML(text);
+    }
 
-	protected Boolean isValid = false;
+    public void clearMessage() {
+        message.setHTML("");
+    }
 
-	protected Boolean readOnly = false;
+    public Boolean getValid() {
+        return isValid;
+    }
 
-	protected Boolean required = false;
+    public void setValid(Boolean valid) {
+        this.isValid = valid;
+    }
 
-	// this is actual bean/entity attribute name can be used to validation
-	// purposes
-	public String attributeName = null;
-	public String className = null;
+    public Boolean getReadOnly() {
+        return readOnly;
+    }
 
-	public FlowPanel getPanel() {
-		return panel;
-	}
+    public abstract void setReadOnly(Boolean readOnly);
 
-	public HTML getLabel() {
-		return label;
-	}
-
-	public void setLabelText(String name) {
-		label.setHTML(name);
-	}
-
-	public void setMessage(String text) {
-		message.setHTML(text);
-	}
-
-	public void clearMessage() {
-		message.setHTML("");
-	}
-
-	public Boolean getValid() {
-		return isValid;
-	}
-
-	public void setValid(Boolean valid) {
-		this.isValid = valid;
-	}
-
-	public Boolean getReadOnly() {
-		return readOnly;
-	}
-
-	public abstract void setReadOnly(Boolean readOnly);
-
-	@Override
-	public void onBlur(BlurEvent event) {
-		validate();
-	}
-
+    @Override
+    public void onBlur(BlurEvent event) {
+        validate();
+    }
 }

@@ -13,6 +13,7 @@ public class PasswordField extends BaseField {
 	public PasswordField(String labelName, String attributeName, String className) {
 		super(labelName, attributeName, className, false, false);
 		fieldPanel.insert(password, 1);
+                password.ensureDebugId(className + "_" + attributeName + "_PTB");
 	}
 
 	public String getPassword() {

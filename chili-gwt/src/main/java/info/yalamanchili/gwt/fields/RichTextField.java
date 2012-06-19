@@ -19,6 +19,7 @@ public class RichTextField extends BaseField {
 
 	@Override
 	protected void configureAddMainWidget() {
+            area.ensureDebugId(className + "_" + attributeName + "_TB");
 		area.addStyleName("y-gwt-RichTextEditor");
 		bar.addStyleName("y-gwt-RichTexttoolBar");
 		panel.insert(bar, 1);

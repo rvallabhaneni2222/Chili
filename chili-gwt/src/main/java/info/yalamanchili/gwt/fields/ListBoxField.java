@@ -27,6 +27,7 @@ public class ListBoxField extends Composite {
 		panel = new VerticalPanel();
 		initWidget(panel);
 		label.setText(labelName);
+                label.ensureDebugId(labelName + "_LB");
 		configure();
 		addWidgets();
 	}

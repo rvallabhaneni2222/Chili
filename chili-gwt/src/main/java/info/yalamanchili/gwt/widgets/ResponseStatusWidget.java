@@ -19,6 +19,7 @@ public class ResponseStatusWidget extends PopupPanel {
 	 */
 	public ResponseStatusWidget() {
 		super(true);
+                this.ensureDebugId("response_status_W");
 		setWidget(responseStatus);
 	}
 
