@@ -21,7 +21,7 @@ public class DateUtils {
         } else if (dateString.length() == 25) {
             formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT2);
         } else {
-            throw new RuntimeException("not supported date string format vaid ones are 1.yyyy-MM-dd'T'HH:mm:ss.SSSZZZ and 2.yyyy-MM-dd'T'HH:mm:ssZZZ");
+            throw new RuntimeException("not supported date string format vaid ones are 1.yyyy-MM-dd'T'HH:mm:ss.SSSZZZ and 2.yyyy-MM-dd'T'HH:mm:ssZZZ:input:" + dateString);
         }
         return formatter.parse(dateString);
     }
