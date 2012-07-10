@@ -15,6 +15,9 @@ public class DateUtils {
     }
 
     public static Date toDate(String dateString) {
+        if (dateString == null || dateString.isEmpty()) {
+            return null;
+        }
         DateTimeFormat formatter;
         if (dateString.length() == 29) {
             formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT);
@@ -27,6 +30,9 @@ public class DateUtils {
     }
 
     public static String getFormatedDate(String dateString, PredefinedFormat format) {
+        if (dateString == null || dateString.isEmpty()) {
+            return null;
+        }
         return DateTimeFormat.getFormat(format).format(toDate(dateString));
     }
 }
