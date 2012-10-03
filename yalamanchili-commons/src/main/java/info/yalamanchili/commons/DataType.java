@@ -6,6 +6,5 @@ package info.yalamanchili.commons;
  */
 public enum DataType {
 
-	INTEGER, LONG, STRING, DATE, FLOAT, BOOLEAN, ENUM, DEFAULT
-
+    INTEGER, LONG, STRING, DATE, FLOAT, BOOLEAN, ENUM, BIG_INTEGER, BIG_DECIMAL, DEFAULT
 }

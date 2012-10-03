@@ -2,6 +2,8 @@ package info.yalamanchili.commons;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -91,6 +93,12 @@ public class ReflectionUtils {
 		}
 		if (clazz.equals(Float.class)) {
 			return DataType.FLOAT;
+		}
+                if (clazz.equals(BigInteger.class)) {
+			return DataType.BIG_INTEGER;
+		}
+                if (clazz.equals(BigDecimal.class)) {
+			return DataType.BIG_DECIMAL;
 		}
 		if (clazz.isEnum()) {
 			return DataType.ENUM;
