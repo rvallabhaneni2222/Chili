@@ -8,9 +8,11 @@ package info.chili.dao;
 import info.chili.jpa.AbstractEntity;
 import info.chili.jpa.AbstractHandleEntity;
 import info.chili.jpa.validation.Validate;
+import info.chili.service.jrs.exception.ServiceException;
 import info.chili.spring.SpringContext;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -136,6 +138,32 @@ public abstract class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
         query.setParameter("targetEntityNameParam", target.getClass().getCanonicalName());
         query.setParameter("targetEntityIdParam", target.getId());
         return query.getResultList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<T> query(int start, int limit) {
+        Query findAllQuery = getEntityManager().createQuery("from " + entityCls.getCanonicalName(), entityCls);
+        findAllQuery.setFirstResult(start);
+        findAllQuery.setMaxResults(limit);
+        return findAllQuery.getResultList();
+    }
+
+    @Transactional(readOnly = true)
+    public T findById(Long id) {
+        return (T) getEntityManager().find(entityCls, id);
+    }
+
+    public void delete(Long id) {
+        delete(findById(id));
+    }
+
+    public void delete(T entity) {
+        try {
+            getEntityManager().remove(entity);
+            getEntityManager().flush();
+        } catch (javax.persistence.PersistenceException e) {
+            throw new ServiceException(ServiceException.StatusCode.INVALID_REQUEST, "DELETE", "SQLError", e.getMessage());
+        }
     }
 
     public abstract EntityManager getEntityManager();
