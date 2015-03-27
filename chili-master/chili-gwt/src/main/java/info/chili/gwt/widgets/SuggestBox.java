@@ -15,6 +15,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import info.chili.gwt.composite.BaseField;
+import info.chili.gwt.utils.Alignment;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandl
     public SuggestBox(ConstantsWithLookup constants,
             String attributeName, String className, Boolean readOnly,
             Boolean required) {
-        super(constants, attributeName, className, readOnly, required);
+        super(constants, attributeName, className, readOnly, required, Alignment.HORIZONTAL);
         configureAddMainWidget();
         box.ensureDebugId(className + "_" + attributeName + "_TB");
         setReadOnly(readOnly);
