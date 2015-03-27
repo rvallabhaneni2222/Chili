@@ -30,7 +30,7 @@ public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandl
     com.google.gwt.user.client.ui.SuggestBox box = new com.google.gwt.user.client.ui.SuggestBox(data);
     protected Map<String, String> map;
 
-    public SuggestBox(ConstantsWithLookup constants,//ddd
+    public SuggestBox(ConstantsWithLookup constants,
             String attributeName, String className, Boolean readOnly,
             Boolean required) {
         super(constants, attributeName, className, readOnly, required, Alignment.HORIZONTAL);
