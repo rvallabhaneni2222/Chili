@@ -18,6 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -146,6 +147,12 @@ public abstract class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
         findAllQuery.setFirstResult(start);
         findAllQuery.setMaxResults(limit);
         return findAllQuery.getResultList();
+    }
+
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public Long size() {
+        Query sizeQuery = getEntityManager().createQuery("select count (*) from " + entityCls.getCanonicalName());
+        return (Long) sizeQuery.getSingleResult();
     }
 
     @Transactional(readOnly = true)
