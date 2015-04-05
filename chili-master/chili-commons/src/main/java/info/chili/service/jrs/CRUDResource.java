@@ -46,6 +46,12 @@ public abstract class CRUDResource<T> {
         return (T) getDao().findById(id);
     }
 
+    @GET
+    @Path("/clone/{id}")
+    protected T clone(@PathParam("id") Long id) {
+        return (T) getDao().clone(id);
+    }
+
     @PUT
     @Validate
     public T save(T entity) {

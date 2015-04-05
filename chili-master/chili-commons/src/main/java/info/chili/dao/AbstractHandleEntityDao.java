@@ -16,6 +16,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -28,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Scope("prototype")
+//TODO should this inherit from crud dao?
 public abstract class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
 
     private static final Log log = LogFactory.getLog(AbstractHandleEntityDao.class);
@@ -35,6 +37,17 @@ public abstract class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
 
     public AbstractHandleEntityDao(Class cls) {
         this.entityCls = cls;
+    }
+
+    public T clone(Long id) {
+        try {
+            T clone = (T) entityCls.newInstance();
+            String[] ignore = {"id", "version"};
+            BeanUtils.copyProperties(findById(id), clone, ignore);
+            return clone;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public T save(T entity) {

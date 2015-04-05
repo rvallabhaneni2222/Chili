@@ -11,7 +11,6 @@ import info.chili.commons.BeanMapper;
 import info.chili.commons.DataType;
 import info.chili.commons.ReflectionUtils;
 import info.chili.commons.SearchUtils;
-import info.chili.jpa.validation.Validate;
 import info.chili.jpa.validation.ValidationUtils;
 import info.chili.service.jrs.ServiceMessages;
 import java.util.Collections;
@@ -26,6 +25,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
+import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -49,6 +49,17 @@ public abstract class CRUDDao<T> {
     @Transactional(readOnly = true)
     public T findById(Long id) {
         return (T) getEntityManager().find(entityCls, id);
+    }
+
+    public T clone(Long id) {
+        try {
+            T clone = (T) entityCls.newInstance();
+            String[] ignore = {"id", "version"};
+            BeanUtils.copyProperties(findById(id), clone, ignore);
+            return clone;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Transactional(readOnly = true)
