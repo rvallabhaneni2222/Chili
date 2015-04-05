@@ -15,7 +15,7 @@ import info.chili.gwt.utils.Utils;
 public abstract class UpdateComposite extends CRUDComposite implements ClickHandler {
 
     Logger logger = Logger.getLogger(UpdateComposite.class.getName());
-    public Button update = new Button("update");
+    public Button update = new Button("Update");
 
     public void initUpdateComposite(JSONObject entity, String className, final ConstantsWithLookup constants) {
         this.entity = entity;
@@ -25,6 +25,7 @@ public abstract class UpdateComposite extends CRUDComposite implements ClickHand
         basePanel.addStyleName("y-gwt-UpdateBasePanel");
         entityActionsPanel.add(update);
         update.addClickHandler(this);
+        update.addStyleName("y-gwt-updateB");
         populateFieldsFromEntity(entity);
     }
 

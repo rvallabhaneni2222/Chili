@@ -33,6 +33,15 @@ public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandl
     public SuggestBox(ConstantsWithLookup constants,
             String attributeName, String className, Boolean readOnly,
             Boolean required) {
+        super(constants, attributeName, className, readOnly, required);
+        configureAddMainWidget();
+        box.ensureDebugId(className + "_" + attributeName + "_TB");
+        setReadOnly(readOnly);
+    }
+
+    public SuggestBox(ConstantsWithLookup constants,
+            String attributeName, String className, Boolean readOnly,
+            Boolean required, Alignment alignement) {
         super(constants, attributeName, className, readOnly, required, Alignment.HORIZONTAL);
         configureAddMainWidget();
         box.ensureDebugId(className + "_" + attributeName + "_TB");

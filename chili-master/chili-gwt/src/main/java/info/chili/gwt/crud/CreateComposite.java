@@ -32,7 +32,7 @@ public abstract class CreateComposite extends CRUDComposite implements ClickHand
         this.type = type;
     }
     // TODO get button names from resource bundle
-    public Button create = new Button("create");
+    public Button create = new Button("Create");
     public Button add = new Button("add");
 
     public void initCreateComposite(String className, final ConstantsWithLookup constants) {
@@ -40,6 +40,7 @@ public abstract class CreateComposite extends CRUDComposite implements ClickHand
         if (CreateCompositeType.CREATE.equals(type)) {
             entityActionsPanel.add(create);
             create.addClickHandler(this);
+            create.addStyleName("y-gwt-createB");
         }
         if (CreateCompositeType.ADD.equals(type)) {
             entityActionsPanel.add(add);

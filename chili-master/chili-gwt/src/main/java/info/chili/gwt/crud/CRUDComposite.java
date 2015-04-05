@@ -95,6 +95,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         entityCaptionPanel.setContentWidget(entityPanel);
         basePanel.add(entityCaptionPanel);
         entityCaptionPanel.addStyleName("crudCompositeCaptionPanel");
+        entityActionsPanel.addStyleName("y-gwt-entityActionsPanel");
         entityCaptionPanel.setCaptionHTML(Utils.getKeyValue(entityName, constants));
         if (showDocumentationLink()) {
             configureDocumentationLink();

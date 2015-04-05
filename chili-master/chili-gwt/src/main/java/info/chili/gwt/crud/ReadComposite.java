@@ -50,8 +50,8 @@ public abstract class ReadComposite extends CRUDComposite {
 
     protected void configureClone() {
         entityActionsPanel.add(cloneB);
+        cloneB.addStyleName("y-gwt-cloneB");
         cloneB.addClickHandler(new ClickHandler() {
-
             @Override
             public void onClick(ClickEvent event) {
                 cloneClicked();
