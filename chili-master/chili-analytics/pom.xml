@@ -39,7 +39,7 @@
         </dependency>
     </dependencies>
     <properties>
-        <spring.mongodb>1.3.3.RELEASE</spring.mongodb>
+        <spring.mongodb>1.7.0.RELEASE</spring.mongodb>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>
