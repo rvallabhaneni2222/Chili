@@ -14,6 +14,7 @@ import java.util.List;
 import net.sf.uadetector.ReadableUserAgent;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author ayalamanchili
  */
 @Component
+@Scope("prototype")
 @Transactional
 public class EventsService {
 
