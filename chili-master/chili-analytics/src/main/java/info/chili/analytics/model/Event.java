@@ -10,6 +10,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -25,18 +26,22 @@ public class Event {
     /**
      *
      */
+    @Indexed
     protected String user;
     /**
      *
      */
+    @Indexed
     protected Date evenTimeStamp;
     /**
      *
      */
+    @Indexed
     protected String name;
     /**
      *
      */
+    @Indexed
     protected String type;
     /**
      *
