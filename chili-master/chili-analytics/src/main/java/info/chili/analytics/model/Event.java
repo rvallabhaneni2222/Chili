@@ -5,6 +5,7 @@
  */
 package info.chili.analytics.model;
 
+import info.chili.document.AbstractDocument;
 import java.util.Date;
 import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
@@ -20,9 +21,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "events")
 @XmlRootElement
 @XmlType
-public class Event {
-
-    public String _id;
+public class Event extends AbstractDocument{
     /**
      *
      */
