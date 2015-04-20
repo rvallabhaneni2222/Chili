@@ -79,7 +79,7 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
         formPanel.setMethod(FormPanel.METHOD_POST);
         fileUpload.setName(filePrefix);
         //http://stackoverflow.com/questions/13336851/iframe-refused-to-display-document-because-display-forbidden-by-x-frame-options
-        formPanel.setAction(ChiliClientConfig.instance().getFileUploadUrl() + "&output=embed");
+        formPanel.setAction(ChiliClientConfig.instance().getFileUploadUrl());
         addMoreFiles.addClickHandler(this);
     }
 
