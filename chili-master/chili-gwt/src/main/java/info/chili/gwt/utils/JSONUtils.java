@@ -39,7 +39,7 @@ public class JSONUtils {
         return array;
     }
 
-    protected static String getValueFromMap(JSONValue entity, String key) {
+    public static String getValueFromMap(JSONValue entity, String key) {
         JSONArray array = JSONUtils.toJSONArray(entity.isObject().get("entry"));
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).isObject().get("key").isString().stringValue().equals(key)) {
