@@ -39,6 +39,16 @@ public class JSONUtils {
         return array;
     }
 
+    protected static String getValueFromMap(JSONValue entity, String key) {
+        JSONArray array = JSONUtils.toJSONArray(entity.isObject().get("entry"));
+        for (int i = 0; i < array.size(); i++) {
+            if (array.get(i).isObject().get("key").isString().stringValue().equals(key)) {
+                return array.get(i).isObject().get("value").isString().stringValue();
+            }
+        }
+        return "";
+    }
+
     public static Map<String, String> convertKeyValueStringPairs(String jsonString) {
         if (jsonString != null && !jsonString.isEmpty()) {
             JSONObject listObject = JSONParser.parseLenient(jsonString).isObject();
