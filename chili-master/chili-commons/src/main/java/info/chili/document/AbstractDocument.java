@@ -6,7 +6,6 @@
 package info.chili.document;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 import org.springframework.data.annotation.Id;
 
@@ -27,6 +26,10 @@ public class AbstractDocument implements Serializable {
      */
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     /* 
