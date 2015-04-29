@@ -25,12 +25,6 @@ public class GenericPopup extends PopupPanel {
         return instance;
     }
 
-    public static void hideIfOpen() {
-        if (instance != null) {
-            instance.hide();
-        }
-    }
-
     public GenericPopup(Widget widget, int left, int top) {
         instance = this;
         addWidgets(widget, left, top);
