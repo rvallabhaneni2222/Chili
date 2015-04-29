@@ -56,6 +56,12 @@ public class GenericPopup extends PopupPanel {
         this.addStyleName("genericPopup");
     }
 
+    public static void hideIfOpen() {
+        if (instance != null) {
+            instance.hide();
+        }
+    }
+
     public void useStyleName(String styleName) {
         this.removeStyleName("genericPopup");
         this.addStyleName(styleName);

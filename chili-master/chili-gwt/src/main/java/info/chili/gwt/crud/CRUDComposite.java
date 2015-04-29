@@ -546,14 +546,27 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
                         maxWidth = bf.getValue().getLabel().getElement().getClientWidth();
                     }
                 }
-                for (Map.Entry<String, BaseField> bf : fields.entrySet()) {
-                    if (Alignment.HORIZONTAL.equals(bf.getValue().getAlignment())) {
-                        bf.getValue().getLabel().getElement().getStyle().setWidth(maxWidth + 5, Style.Unit.PX);
-                    }
-                }
+                doAlignFields(maxWidth + 5);
             }
         });
 
+    }
+
+    protected void alignFields(final int width) {
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            @Override
+            public void execute() {
+                doAlignFields(width);
+            }
+        });
+    }
+
+    protected void doAlignFields(final int width) {
+        for (Map.Entry<String, BaseField> bf : fields.entrySet()) {
+            if (Alignment.HORIZONTAL.equals(bf.getValue().getAlignment())) {
+                bf.getValue().getLabel().getElement().getStyle().setWidth(width, Style.Unit.PX);
+            }
+        }
     }
     //Audting support
 
