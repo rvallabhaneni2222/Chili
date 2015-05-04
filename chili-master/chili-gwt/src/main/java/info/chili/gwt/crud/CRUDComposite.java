@@ -552,7 +552,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
 
     }
 
-    protected void alignFields(final int width) {
+    public void alignFields(final int width) {
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
             @Override
             public void execute() {
