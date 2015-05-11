@@ -13,12 +13,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+import org.hibernate.envers.Audited;
 
 /**
  *
  * @author ayalamanchili
  */
 @Entity
+@Audited
+@XmlRootElement
+@XmlType
 public class Ci18nResourceBundle implements Serializable {
 
     @Id
@@ -70,8 +78,34 @@ public class Ci18nResourceBundle implements Serializable {
         return resources;
     }
 
+    @XmlTransient
     public void setResources(List<Ci18nResource> resources) {
         this.resources = resources;
+    }
+
+    @XmlRootElement
+    @XmlType
+    public static class CResourceBundleTable implements java.io.Serializable {
+
+        protected Long size;
+        protected List<Ci18nResourceBundle> entities;
+
+        public Long getSize() {
+            return size;
+        }
+
+        public void setSize(Long size) {
+            this.size = size;
+        }
+
+        @XmlElement
+        public List<Ci18nResourceBundle> getEntities() {
+            return entities;
+        }
+
+        public void setEntities(List<Ci18nResourceBundle> entities) {
+            this.entities = entities;
+        }
     }
 
 }

@@ -13,22 +13,29 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+import org.hibernate.envers.Audited;
 
 /**
  *
  * @author ayalamanchili
  */
 @Entity
+@Audited
+@XmlRootElement
+@XmlType
 @NamedQueries({
     @NamedQuery(
             name = "keys",
-            query = "select r.key from Resource r where r.resourceBundle.name = :bundleName and "
+            query = "select r.key from Ci18nResource r where r.resourceBundle.name = :bundleName and "
             + "r.resourceBundle.resourceLocale.language = :language and  "
             + "r.resourceBundle.resourceLocale.country = :country and "
             + "r.resourceBundle.resourceLocale.variant = :variant"),
     @NamedQuery(
             name = "value",
-            query = "select r.value from Resource r where r.resourceBundle.name = :bundleName and "
+            query = "select r.value from Ci18nResource r where r.resourceBundle.name = :bundleName and "
             + "r.resourceBundle.resourceLocale.language = :language and "
             + "r.resourceBundle.resourceLocale.country = :country and "
             + "r.resourceBundle.resourceLocale.variant = :variant and "
@@ -87,6 +94,7 @@ public class Ci18nResource implements Serializable {
         this.value = value;
     }
 
+    @XmlTransient
     public Ci18nResourceBundle getResourceBundle() {
         return resourceBundle;
     }
