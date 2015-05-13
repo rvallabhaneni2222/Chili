@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -32,7 +33,10 @@ public class Ci18nResourceBundle implements Serializable {
     @Id
     @GeneratedValue
     private Integer id;
-
+    /**
+     *
+     */
+    @NotEmpty
     private String name;
 
     private Ci18nResourceLocale resourceLocale;

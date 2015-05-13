@@ -6,6 +6,7 @@
 package info.chili.i18n.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,10 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -48,9 +51,11 @@ public class Ci18nResource implements Serializable {
     private Integer id;
 
     @Column(name = "_key")
+    @NotEmpty
     private String key;
 
     @Column(name = "_value")
+    @NotEmpty
     private String value;
 
     @ManyToOne
@@ -103,4 +108,28 @@ public class Ci18nResource implements Serializable {
         this.resourceBundle = resourceBundle;
     }
 
+    @XmlRootElement
+    @XmlType
+    public static class Ci18nResourceTable implements java.io.Serializable {
+
+        protected Long size;
+        protected List<Ci18nResource> entities;
+
+        public Long getSize() {
+            return size;
+        }
+
+        public void setSize(Long size) {
+            this.size = size;
+        }
+
+        @XmlElement
+        public List<Ci18nResource> getEntities() {
+            return entities;
+        }
+
+        public void setEntities(List<Ci18nResource> entities) {
+            this.entities = entities;
+        }
+    }
 }
