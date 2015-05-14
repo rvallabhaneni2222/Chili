@@ -5,6 +5,7 @@
  */
 package info.chili.i18n.dao;
 
+import info.chili.commons.BeanMapper;
 import info.chili.i18n.domain.Ci18nResource;
 import info.chili.i18n.domain.Ci18nResource.Ci18nResourceTable;
 import info.chili.i18n.domain.Ci18nResourceBundle;
@@ -32,6 +33,10 @@ public class Ci18nDao {
         em.merge(bundle);
     }
 
+    public void deleteBundle(Integer id) {
+        em.remove(em.find(Ci18nResourceBundle.class, id));
+    }
+
     public CResourceBundleTable getBundles(int start, int limit) {
         CResourceBundleTable res = new CResourceBundleTable();
         Query findAllQuery = em.createQuery("from " + Ci18nResourceBundle.class.getCanonicalName(), Ci18nResourceBundle.class);
@@ -48,8 +53,15 @@ public class Ci18nDao {
         em.merge(resource);
     }
 
-    public void updateResource(Ci18nResource resource) {
-        em.merge(resource);
+    public void updateResource(Ci18nResource entity) {
+        if (entity.getId() != null) {
+            entity = (Ci18nResource) BeanMapper.merge(entity, em.find(Ci18nResource.class, entity.getId()));
+        }
+        em.merge(entity);
+    }
+
+    public void deleteResource(Integer id) {
+        em.remove(em.find(Ci18nResource.class, id));
     }
 
     public Ci18nResourceTable getResources(Integer bundleId, Integer start, Integer limit) {
