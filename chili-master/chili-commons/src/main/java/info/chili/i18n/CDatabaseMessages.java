@@ -10,32 +10,34 @@ import java.util.Locale;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author ayalamanchili
  */
-@Component
-public class CDatabaseMessages {
+@Component("cDatabaseMessages")
+public class CDatabaseMessages implements MessageSource {
 
-    public static final String CHILI_DB_MESSAGES_BUNDLE = "chili-db-messages";
+    protected String bundleName;
+
     @PersistenceContext
     protected EntityManager em;
 
-    protected String bundleName = CHILI_DB_MESSAGES_BUNDLE;
-
     public Object handleGetObject(String key) {
-        return handleGetObject(CHILI_DB_MESSAGES_BUNDLE, key, Locale.ENGLISH);
+        return handleGetObject(bundleName, key, Locale.ENGLISH);
     }
 
     public Object handleGetObject(String key, Locale locale) {
-        return handleGetObject(CHILI_DB_MESSAGES_BUNDLE, key, locale);
+        return handleGetObject(bundleName, key, locale);
     }
 
-    public Object handleGetObject(String bundleName, String key, Locale locale) {
+    public String handleGetObject(String bundleName, String key, Locale locale) {
         try {
-            return em.createNamedQuery("value")
+            return (String) em.createNamedQuery("value")
                     .setParameter("bundleName", bundleName)
                     .setParameter("language", locale.getLanguage())
                     .setParameter("country", locale.getCountry())
@@ -47,8 +49,33 @@ public class CDatabaseMessages {
         }
     }
 
-    public static CDatabaseMessages instance() {
-        return SpringContext.getBean(CDatabaseMessages.class);
+    public String getBundleName() {
+        return bundleName;
+    }
+
+    public void setBundleName(String bundleName) {
+        this.bundleName = bundleName;
+    }
+
+    public static CDatabaseMessages instance(String bundleName) {
+        CDatabaseMessages res = (CDatabaseMessages) SpringContext.getBean("cDatabaseMessages");
+        res.setBundleName(bundleName);
+        return res;
+    }
+
+    @Override
+    public String getMessage(String string, Object[] os, String string1, Locale locale) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getMessage(String string, Object[] os, Locale locale) throws NoSuchMessageException {
+        return handleGetObject(bundleName, string, locale);
+    }
+
+    @Override
+    public String getMessage(MessageSourceResolvable msr, Locale locale) throws NoSuchMessageException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
