@@ -10,8 +10,7 @@ import java.util.Locale;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import org.springframework.context.MessageSource;
-import org.springframework.context.MessageSourceResolvable;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Component;
 
@@ -20,22 +19,25 @@ import org.springframework.stereotype.Component;
  * @author ayalamanchili
  */
 @Component("cDatabaseMessages")
-public class CDatabaseMessages implements MessageSource {
+//TODO implement //TODO implement 
+public class CDatabaseMessages {
+
+    public static final String CMESSAGES_CACHE_REGION = "cmessages";
 
     protected String bundleName;
 
     @PersistenceContext
     protected EntityManager em;
 
-    public Object handleGetObject(String key) {
+    protected Object handleGetObject(String key) {
         return handleGetObject(bundleName, key, Locale.ENGLISH);
     }
 
-    public Object handleGetObject(String key, Locale locale) {
+    protected Object handleGetObject(String key, Locale locale) {
         return handleGetObject(bundleName, key, locale);
     }
 
-    public String handleGetObject(String bundleName, String key, Locale locale) {
+    protected String handleGetObject(String bundleName, String key, Locale locale) {
         try {
             return (String) em.createNamedQuery("value")
                     .setParameter("bundleName", bundleName)
@@ -63,19 +65,9 @@ public class CDatabaseMessages implements MessageSource {
         return res;
     }
 
-    @Override
-    public String getMessage(String string, Object[] os, String string1, Locale locale) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
+    @Cacheable(CMESSAGES_CACHE_REGION)
     public String getMessage(String string, Object[] os, Locale locale) throws NoSuchMessageException {
         return handleGetObject(bundleName, string, locale);
-    }
-
-    @Override
-    public String getMessage(MessageSourceResolvable msr, Locale locale) throws NoSuchMessageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
