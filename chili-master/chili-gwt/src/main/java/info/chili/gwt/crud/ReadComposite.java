@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.Button;
 
 public abstract class ReadComposite extends CRUDComposite {
 
-    protected Button cloneB = new Button("Clone");
+    protected Button cloneB = new Button("Create Copy");
 
     protected void initReadComposite(JSONObject entity, String className, final ConstantsWithLookup constants) {
         this.entity = entity;
