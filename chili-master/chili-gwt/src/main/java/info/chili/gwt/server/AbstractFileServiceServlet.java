@@ -6,6 +6,7 @@ package info.chili.gwt.server;
 
 import info.chili.http.HttpHelper;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -21,7 +22,7 @@ import org.apache.http.client.methods.HttpRequestBase;
  *
  * @author ayalamanchili
  */
-public abstract class AbstractFileServiceServlet extends HttpServlet {
+public abstract class AbstractFileServiceServlet extends HttpServlet implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final static Logger logger = Logger.getLogger(AbstractFileServiceServlet.class.getName());
