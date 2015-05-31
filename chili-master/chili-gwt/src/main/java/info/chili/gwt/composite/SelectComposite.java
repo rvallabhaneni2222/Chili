@@ -27,8 +27,8 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
     private static Logger logger = Logger.getLogger(SelectComposite.class.getName());
     protected List<GenericListener> listeners = new ArrayList<GenericListener>();
     protected ListBox listBox = new ListBox();
-    protected Map<Integer, String> values;
-    protected Map<Integer, JSONObject> entityMap = new HashMap<Integer, JSONObject>();
+    protected Map<String, String> values;
+    protected Map<String, JSONObject> entityMap = new HashMap();
     protected JSONObject selectedObject = null;
 
     public SelectComposite(ConstantsWithLookup constants, String className, Boolean readOnly, Boolean isRequired, Alignment alignment) {
@@ -71,7 +71,7 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
                     values = populateValues(entities);
                     for (int i = 1; i <= entities.size(); i++) {
                         JSONObject entity = (JSONObject) entities.get(i - 1);
-                        Integer key = Integer.valueOf(JSONUtils.toString(entity, "id"));
+                        String key = JSONUtils.toString(entity, "id");
                         entityMap.put(key, entity);
                     }
                     // TODO see option to populate the drop down here by taking in the
@@ -82,11 +82,11 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         }
     }
 
-    protected Map<Integer, String> populateValues(JSONArray entities) {
-        Map<Integer, String> values = new HashMap<Integer, String>();
+    protected Map<String, String> populateValues(JSONArray entities) {
+        Map<String, String> values = new HashMap();
         for (int i = 1; i <= entities.size(); i++) {
             JSONObject entity = (JSONObject) entities.get(i - 1);
-            Integer key = Integer.valueOf(JSONUtils.toString(entity, "id"));
+            String key = JSONUtils.toString(entity, "id");
             String value = JSONUtils.toString(entity, "value");
             values.put(key, value);
         }
@@ -131,15 +131,15 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         }
     }
 
-    protected void populateDropDown(Map<Integer, String> values) {
+    protected void populateDropDown(Map<String, String> values) {
         //TODO avoid this sorting on client side
         values = Utils.sortByComparator(values);
         int i = 1;
-        for (Integer key : values.keySet()) {
+        for (String key : values.keySet()) {
             if (useConstants()) {
-                listBox.insertItem(Utils.getAttributeLabel(values.get(key), className, constants), key.toString(), i);
+                listBox.insertItem(Utils.getAttributeLabel(values.get(key), className, constants), key, i);
             } else {
-                listBox.insertItem(values.get(key), key.toString(), i);
+                listBox.insertItem(values.get(key), key, i);
             }
             i++;
         }
@@ -177,7 +177,7 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
 
     public JSONObject getSelectedObject() {
         if (listBox.getSelectedIndex() > 0) {
-            Integer entityId = Integer.valueOf(listBox.getValue(listBox.getSelectedIndex()));
+            String entityId = listBox.getValue(listBox.getSelectedIndex());
             return entityMap.get(entityId);
         } else {
             return null;
