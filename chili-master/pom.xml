@@ -22,8 +22,8 @@
         <module>chili-gwt</module>
         <module>chili-security</module>
         <module>chili-analytics</module>
-    <module>chili-bpm</module>
-  </modules>
+        <module>chili-bpm</module>
+    </modules>
     <build>
         <plugins>
             <plugin>
@@ -69,8 +69,8 @@
     <!-- download artifacts from this repo -->
     <repositories>
         <repository>
-            <id>tools.sstech.us</id>
-            <name>tools.sstech.us</name>
+            <id>sstech.us</id>
+            <name>sstech.us</name>
             <url>http://tools.sstech.us/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
@@ -83,8 +83,8 @@
     <!-- download plugins from this repo -->
     <pluginRepositories>
         <pluginRepository>
-            <id>tools.sstech.us</id>
-            <name>tools.sstech.us</name>
+            <id>sstech.us</id>
+            <name>sstech.us</name>
             <url>http://tools.sstech.us/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
@@ -97,15 +97,15 @@
     <distributionManagement>
         <!-- Publish the versioned releases here -->
         <repository>
-            <id>tools.sstech.us</id>
-            <name>tools.sstech.us</name>
+            <id>sstech.us</id>
+            <name>sstech.us</name>
             <url>http://tools.sstech.us/nexus/content/repositories/releases</url>
         </repository>
 
         <!-- Publish the versioned releases here -->
         <snapshotRepository>
-            <id>tools.sstech.us</id>
-            <name>tools.sstech.us</name>
+            <id>sstech.us</id>
+            <name>sstech.us</name>
             <url>http://tools.sstech.us/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
