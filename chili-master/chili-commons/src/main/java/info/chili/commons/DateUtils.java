@@ -197,7 +197,8 @@ public class DateUtils {
     public static Date firstDayOfWeek(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(Calendar.DAY_OF_WEEK, 2);
+        calendar.set(Calendar.DAY_OF_WEEK,
+                calendar.getActualMinimum(Calendar.DAY_OF_WEEK));
         return calendar.getTime();
     }
 
@@ -210,7 +211,8 @@ public class DateUtils {
     public static Date lastDayOfWeek(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(Calendar.DAY_OF_WEEK, 1);
+        calendar.set(Calendar.DAY_OF_WEEK,
+                calendar.getActualMaximum(Calendar.DAY_OF_WEEK));
         return calendar.getTime();
     }
 

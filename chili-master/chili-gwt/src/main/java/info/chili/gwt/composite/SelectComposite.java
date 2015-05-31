@@ -133,7 +133,9 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
 
     protected void populateDropDown(Map<String, String> values) {
         //TODO avoid this sorting on client side
-        values = Utils.sortByComparator(values);
+        if (sort()) {
+            values = Utils.sortByComparator(values);
+        }
         int i = 1;
         for (String key : values.keySet()) {
             if (useConstants()) {
@@ -148,6 +150,10 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
             //To support update panel drop downs
             onChange(null);
         }
+    }
+
+    protected boolean sort() {
+        return true;
     }
 
     protected boolean useConstants() {
