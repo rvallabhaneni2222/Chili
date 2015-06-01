@@ -188,6 +188,34 @@ public class DateUtils {
         return calendarStart.getTime();
     }
 
+    /**
+     * Monday of the week
+     *
+     * @param date
+     * @return
+     */
+    public static Date firstDayOfWeek(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_WEEK,
+                calendar.getActualMinimum(Calendar.DAY_OF_WEEK));
+        return calendar.getTime();
+    }
+
+    /**
+     * Sunday of the week
+     *
+     * @param date
+     * @return
+     */
+    public static Date lastDayOfWeek(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_WEEK,
+                calendar.getActualMaximum(Calendar.DAY_OF_WEEK));
+        return calendar.getTime();
+    }
+
     public static Integer getDaysCompletedInYear(Date date) {
         return null;
     }
