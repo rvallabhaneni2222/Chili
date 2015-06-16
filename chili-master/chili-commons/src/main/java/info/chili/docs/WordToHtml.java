@@ -24,7 +24,7 @@ import org.w3c.dom.Document;
  */
 public class WordToHtml {
 
-    public static void convert(final InputStream in) throws Exception {
+    public static String convert(final InputStream in) throws Exception {
         HWPFDocumentCore wordDocument = WordToHtmlUtils.loadDoc(in);
 
         WordToHtmlConverter wordToHtmlConverter = new WordToHtmlConverter(
@@ -45,6 +45,6 @@ public class WordToHtml {
         out.close();
 
         String result = new String(out.toByteArray());
-        System.out.println(result);
+        return result;
     }
 }
