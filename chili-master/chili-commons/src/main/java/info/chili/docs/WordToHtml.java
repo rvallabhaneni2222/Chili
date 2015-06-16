@@ -5,72 +5,46 @@
  */
 package info.chili.docs;
 
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.HWPFDocumentCore;
 import org.apache.poi.hwpf.converter.WordToHtmlConverter;
-import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.hwpf.converter.WordToHtmlUtils;
 import org.w3c.dom.Document;
 
 /**
  *
- * @author ayalamanchili
+ * @author anuyalamanchili
  */
 public class WordToHtml {
 
-    private File docFile;
-    private File file;
+    public static void convert(final InputStream in) throws Exception {
+        HWPFDocumentCore wordDocument = WordToHtmlUtils.loadDoc(in);
 
-    public WordToHtml(File docFile) {
-        this.docFile = docFile;
+        WordToHtmlConverter wordToHtmlConverter = new WordToHtmlConverter(
+                DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                .newDocument());
+        wordToHtmlConverter.processDocument(wordDocument);
+        Document htmlDocument = wordToHtmlConverter.getDocument();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        DOMSource domSource = new DOMSource(htmlDocument);
+        StreamResult streamResult = new StreamResult(out);
+
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer serializer = tf.newTransformer();
+        serializer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        serializer.setOutputProperty(OutputKeys.INDENT, "yes");
+        serializer.setOutputProperty(OutputKeys.METHOD, "html");
+        serializer.transform(domSource, streamResult);
+        out.close();
+
+        String result = new String(out.toByteArray());
+        System.out.println(result);
     }
-
-    public void convert(File file) {
-        this.file = file;
-
-        try {
-            FileInputStream finStream = new FileInputStream(docFile.getAbsolutePath());
-            HWPFDocument doc = new HWPFDocument(finStream);
-            WordExtractor wordExtract = new WordExtractor(doc);
-            Document newDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-            WordToHtmlConverter wordToHtmlConverter = new WordToHtmlConverter(newDocument);
-            wordToHtmlConverter.processDocument(doc);
-
-            StringWriter stringWriter = new StringWriter();
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-            transformer.setOutputProperty(OutputKeys.METHOD, "html");
-            transformer.transform(new DOMSource(wordToHtmlConverter.getDocument()), new StreamResult(stringWriter));
-
-            String html = stringWriter.toString();
-            FileOutputStream fos = new FileOutputStream(new File("html/sample.html"));
-            DataOutputStream dos;
-
-            try {
-                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
-                out.write(html);
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }
