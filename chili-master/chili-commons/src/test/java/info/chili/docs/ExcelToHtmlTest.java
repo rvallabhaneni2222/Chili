@@ -19,7 +19,7 @@ public class ExcelToHtmlTest {
 //    @Test
     public void testExcelToHtml() {
         try {
-            System.out.println(new ExcelToHtml(new FileInputStream(new File("/home/ayalamanchili/Downloads/Contracts Team Activity Report - Week of 04-27-15.xls"))).getHTML());
+            System.out.println(new XlsToHtml(new FileInputStream(new File("/home/ayalamanchili/Downloads/Contracts Team Activity Report - Week of 04-27-15.xls"))).getHTML());
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

@@ -5,323 +5,502 @@
  */
 package info.chili.docs;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.format.CellFormat;
+import org.apache.poi.ss.format.CellFormatResult;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.util.Formatter;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFPalette;
-import org.apache.poi.hssf.usermodel.HSSFPicture;
-import org.apache.poi.hssf.usermodel.HSSFPictureData;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFShape;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellValue;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.util.CellRangeAddress;
+import static org.apache.poi.ss.usermodel.CellStyle.*;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 /**
- * Use Apache POI to read an Excel (.xls) file and output an HTML table per
- * sheet.
+ * This example shows how to display a spreadsheet in HTML using the classes for
+ * spreadsheet display.
  *
- * @author howard
+ * @author Ken Arnold, Industrious Media LLC
  */
 public class ExcelToHtml {
 
-    final private StringBuilder out = new StringBuilder(65536);
-    final private SimpleDateFormat sdf;
-    final private HSSFWorkbook book;
-    final private HSSFPalette palette;
-    final private FormulaEvaluator evaluator;
-    private short colIndex;
-    private int rowIndex, mergeStart, mergeEnd;
-    // Row -> Column -> Pictures
-    private Map<Integer, Map<Short, List<HSSFPictureData>>> pix = new HashMap<Integer, Map<Short, List<HSSFPictureData>>>();
-
-    /**
-     * Generates HTML from the InputStream of an Excel file. Generates sheet
-     * name in HTML h1 element.
-     *
-     * @param in InputStream of the Excel file.
-     * @throws IOException When POI cannot read from the input stream.
-     */
-    public ExcelToHtml(final InputStream in) throws IOException {
-        sdf = new SimpleDateFormat("dd/MM/yyyy");
-        if (in == null) {
-            book = null;
-            palette = null;
-            evaluator = null;
-            return;
-        }
-        book = new HSSFWorkbook(in);
-        palette = book.getCustomPalette();
-        evaluator = book.getCreationHelper().createFormulaEvaluator();
-        for (int i = 0; i < book.getNumberOfSheets(); ++i) {
-            table(book.getSheetAt(i));
+    public static void main(String[] args) {
+        StringWriter result = new StringWriter();
+        try {
+            ExcelToHtml r = ExcelToHtml.create(new FileInputStream(new File("/home/ayalamanchili/Downloads/Contracts Team Activity Report - Week of 04-27-15.xls")), result);
+//            r.setCompleteHTML(true);
+            r.printPage();
+            System.out.println(result.toString());
+        } catch (IOException ex) {
+            Logger.getLogger(ExcelToHtml.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    /**
-     * (Each Excel sheet produces an HTML table) Generates an HTML table with no
-     * cell, border spacing or padding.
-     *
-     * @param sheet The Excel sheet.
-     */
-    private void table(final HSSFSheet sheet) {
-        if (sheet == null) {
-            return;
+    public static String convert(final InputStream in) {
+        StringWriter result = new StringWriter();
+        try {
+            ExcelToHtml r = ExcelToHtml.create(in, result);
+            r.setCompleteHTML(true);
+            r.printPage();
+            System.out.println(result.toString());
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
-        if (sheet.getDrawingPatriarch() != null) {
-            final List<HSSFShape> shapes = sheet.getDrawingPatriarch()
-                    .getChildren();
-            for (int i = 0; i < shapes.size(); ++i) {
-                if (shapes.get(i) instanceof HSSFPicture) {
-                    try {
-                        // Gain access to private field anchor.
-                        final HSSFShape pic = shapes.get(i);
-                        final Field f = HSSFShape.class
-                                .getDeclaredField("anchor");
-                        f.setAccessible(true);
-                        final HSSFClientAnchor anchor = (HSSFClientAnchor) f
-                                .get(pic);
-                        // Store picture cell row, column and picture data.
-                        if (!pix.containsKey(anchor.getRow1())) {
-                            pix.put(anchor.getRow1(),
-                                    new HashMap<Short, List<HSSFPictureData>>());
-                        }
-                        if (!pix.get(anchor.getRow1()).containsKey(
-                                anchor.getCol1())) {
-                            pix.get(anchor.getRow1()).put(anchor.getCol1(),
-                                    new ArrayList<HSSFPictureData>());
-                        }
-                        pix.get(anchor.getRow1())
-                                .get(anchor.getCol1())
-                                .add(book.getAllPictures().get(
-                                                ((HSSFPicture) pic).getPictureIndex()));
-                    } catch (final Exception e) {
-                        throw new RuntimeException(e);
-                    }
+        return result.toString();
+    }
+    private final Workbook wb;
+    private final Appendable output;
+    private boolean completeHTML;
+    private Formatter out;
+    private boolean gotBounds;
+    private int firstColumn;
+    private int endColumn;
+    private HtmlHelper helper;
+
+    private static final String DEFAULTS_CLASS = "excelDefaults";
+    private static final String COL_HEAD_CLASS = "colHeader";
+    private static final String ROW_HEAD_CLASS = "rowHeader";
+
+    private static final Map<Short, String> ALIGN = mapFor(ALIGN_LEFT, "left",
+            ALIGN_CENTER, "center", ALIGN_RIGHT, "right", ALIGN_FILL, "left",
+            ALIGN_JUSTIFY, "left", ALIGN_CENTER_SELECTION, "center");
+
+    private static final Map<Short, String> VERTICAL_ALIGN = mapFor(
+            VERTICAL_BOTTOM, "bottom", VERTICAL_CENTER, "middle", VERTICAL_TOP,
+            "top");
+
+    private static final Map<Short, String> BORDER = mapFor(BORDER_DASH_DOT,
+            "dashed 1pt", BORDER_DASH_DOT_DOT, "dashed 1pt", BORDER_DASHED,
+            "dashed 1pt", BORDER_DOTTED, "dotted 1pt", BORDER_DOUBLE,
+            "double 3pt", BORDER_HAIR, "solid 1px", BORDER_MEDIUM, "solid 2pt",
+            BORDER_MEDIUM_DASH_DOT, "dashed 2pt", BORDER_MEDIUM_DASH_DOT_DOT,
+            "dashed 2pt", BORDER_MEDIUM_DASHED, "dashed 2pt", BORDER_NONE,
+            "none", BORDER_SLANTED_DASH_DOT, "dashed 2pt", BORDER_THICK,
+            "solid 3pt", BORDER_THIN, "dashed 1pt");
+
+    @SuppressWarnings({"unchecked"})
+    private static <K, V> Map<K, V> mapFor(Object... mapping) {
+        Map<K, V> map = new HashMap<K, V>();
+        for (int i = 0; i < mapping.length; i += 2) {
+            map.put((K) mapping[i], (V) mapping[i + 1]);
+        }
+        return map;
+    }
+
+    /**
+     * Creates a new converter to HTML for the given workbook.
+     *
+     * @param wb The workbook.
+     * @param output Where the HTML output will be written.
+     *
+     * @return An object for converting the workbook to HTML.
+     */
+    public static ExcelToHtml create(Workbook wb, Appendable output) {
+        return new ExcelToHtml(wb, output);
+    }
+
+    /**
+     * Creates a new converter to HTML for the given workbook. If the path ends
+     * with "<tt>.xlsx</tt>" an {@link XSSFWorkbook} will be used; otherwise
+     * this will use an {@link HSSFWorkbook}.
+     *
+     * @param path The file that has the workbook.
+     * @param output Where the HTML output will be written.
+     *
+     * @return An object for converting the workbook to HTML.
+     */
+    public static ExcelToHtml create(String path, Appendable output)
+            throws IOException {
+        return create(new FileInputStream(path), output);
+    }
+
+    /**
+     * Creates a new converter to HTML for the given workbook. This attempts to
+     * detect whether the input is XML (so it should create an {@link
+     * XSSFWorkbook} or not (so it should create an {@link HSSFWorkbook}).
+     *
+     * @param in The input stream that has the workbook.
+     * @param output Where the HTML output will be written.
+     *
+     * @return An object for converting the workbook to HTML.
+     */
+    public static ExcelToHtml create(InputStream in, Appendable output)
+            throws IOException {
+        try {
+            Workbook wb = WorkbookFactory.create(in);
+            return create(wb, output);
+        } catch (InvalidFormatException e) {
+            throw new IllegalArgumentException("Cannot create workbook from stream", e);
+        }
+    }
+
+    private ExcelToHtml(Workbook wb, Appendable output) {
+        if (wb == null) {
+            throw new NullPointerException("wb");
+        }
+        if (output == null) {
+            throw new NullPointerException("output");
+        }
+        this.wb = wb;
+        this.output = output;
+        setupColorMap();
+    }
+
+    private void setupColorMap() {
+        if (wb instanceof HSSFWorkbook) {
+            helper = new HSSFHtmlHelper((HSSFWorkbook) wb);
+        } else if (wb instanceof XSSFWorkbook) {
+            helper = new XSSFHtmlHelper((XSSFWorkbook) wb);
+        } else {
+            throw new IllegalArgumentException(
+                    "unknown workbook type: " + wb.getClass().getSimpleName());
+        }
+    }
+
+    public void setCompleteHTML(boolean completeHTML) {
+        this.completeHTML = completeHTML;
+    }
+
+    public void printPage() throws IOException {
+        try {
+            ensureOut();
+            if (completeHTML) {
+                out.format(
+                        "<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>%n");
+                out.format("<html>%n");
+                out.format("<head>%n");
+                out.format("</head>%n");
+                out.format("<body>%n");
+            }
+
+            print();
+
+            if (completeHTML) {
+                out.format("</body>%n");
+                out.format("</html>%n");
+            }
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+            if (output instanceof Closeable) {
+                Closeable closeable = (Closeable) output;
+                closeable.close();
+            }
+        }
+    }
+
+    public void print() {
+        printInlineStyle();
+        printSheets();
+    }
+
+    private void printInlineStyle() {
+        //out.format("<link href=\"excelStyle.css\" rel=\"stylesheet\" type=\"text/css\">%n");
+        out.format("<style type=\"text/css\">%n");
+        printStyles();
+        out.format("</style>%n");
+    }
+
+    private void ensureOut() {
+        if (out == null) {
+            out = new Formatter(output);
+        }
+    }
+
+    protected static final String CSS = ".excelDefaults {\n"
+            + "	background-color: white;\n"
+            + "	color: black;\n"
+            + "	text-decoration: none;\n"
+            + "	direction: ltr;\n"
+            + "	text-transform: none;\n"
+            + "	text-indent: 0;\n"
+            + "	letter-spacing: 0;\n"
+            + "	word-spacing: 0;\n"
+            + "	white-space: normal;\n"
+            + "	unicode-bidi: normal;\n"
+            + "	vertical-align: 0;\n"
+            + "	background-image: none;\n"
+            + "	text-shadow: none;\n"
+            + "	list-style-image: none;\n"
+            + "	list-style-type: none;\n"
+            + "	padding: 0;\n"
+            + "	margin: 0;\n"
+            + "	border-collapse: collapse;\n"
+            + "	white-space: pre;\n"
+            + "	vertical-align: bottom;\n"
+            + "	font-style: normal;\n"
+            + "	font-family: sans-serif;\n"
+            + "	font-variant: normal;\n"
+            + "	font-weight: normal;\n"
+            + "	font-size: 10pt;\n"
+            + "	text-align: right;\n"
+            + "}\n"
+            + "\n"
+            + ".excelDefaults td {\n"
+            + "	padding: 1px 5px;\n"
+            + "	border: 1px solid silver;\n"
+            + "}\n"
+            + "\n"
+            + ".excelDefaults .colHeader {\n"
+            + "	background-color: silver;\n"
+            + "	font-weight: bold;\n"
+            + "	border: 1px solid black;\n"
+            + "	text-align: center;\n"
+            + "	padding: 1px 5px;\n"
+            + "}\n"
+            + "\n"
+            + ".excelDefaults .rowHeader {\n"
+            + "	background-color: silver;\n"
+            + "	font-weight: bold;\n"
+            + "	border: 1px solid black;\n"
+            + "	text-align: right;\n"
+            + "	padding: 1px 5px;\n"
+            + "}";
+
+    public void printStyles() {
+        ensureOut();
+
+        // First, copy the base css
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new InputStreamReader((new ByteArrayInputStream(CSS.getBytes()))));
+            String line;
+            while ((line = in.readLine()) != null) {
+                out.format("%s%n", line);
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException("Reading standard css", e);
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    //noinspection ThrowFromFinallyBlock
+                    throw new IllegalStateException("Reading standard css", e);
                 }
             }
         }
 
-        out.append("<table cellspacing='0' style='border-spacing:0; border-collapse:collapse;'>\n");
-        for (rowIndex = 0; rowIndex < sheet.getPhysicalNumberOfRows(); ++rowIndex) {
-            tr(sheet.getRow(rowIndex));
-        }
-        out.append("</table>\n");
-    }
-
-    /**
-     * (Each Excel sheet row becomes an HTML table row) Generates an HTML table
-     * row which has the same height as the Excel row.
-     *
-     * @param row The Excel row.
-     */
-    private void tr(final HSSFRow row) {
-        if (row == null) {
-            return;
-        }
-        out.append("<tr ");
-        // Find merged cells in current row.
-        for (int i = 0; i < row.getSheet().getNumMergedRegions(); ++i) {
-            final CellRangeAddress merge = row.getSheet().getMergedRegion(i);
-            if (rowIndex >= merge.getFirstRow()
-                    && rowIndex <= merge.getLastRow()) {
-                mergeStart = merge.getFirstColumn();
-                mergeEnd = merge.getLastColumn();
-                break;
+        // now add css for each used style
+        Set<CellStyle> seen = new HashSet<CellStyle>();
+        for (int i = 0; i < wb.getNumberOfSheets(); i++) {
+            Sheet sheet = wb.getSheetAt(i);
+            Iterator<Row> rows = sheet.rowIterator();
+            while (rows.hasNext()) {
+                Row row = rows.next();
+                for (Cell cell : row) {
+                    CellStyle style = cell.getCellStyle();
+                    if (!seen.contains(style)) {
+                        printStyle(style);
+                        seen.add(style);
+                    }
+                }
             }
         }
-        out.append("style='");
-        if (row.getHeight() != -1) {
-            out.append("height: ")
-                    .append(Math.round(row.getHeight() / 20.0 * 1.33333))
-                    .append("px; ");
-        }
-        out.append("'>\n");
-        for (colIndex = 0; colIndex < row.getLastCellNum(); ++colIndex) {
-            td(row.getCell(colIndex));
-        }
-        out.append("</tr>\n");
     }
 
-    /**
-     * (Each Excel sheet cell becomes an HTML table cell) Generates an HTML
-     * table cell which has the same font styles, alignments, colours and
-     * borders as the Excel cell.
-     *
-     * @param cell The Excel cell.
-     */
-    private void td(final HSSFCell cell) {
-        int colspan = 1;
-        if (colIndex == mergeStart) {
-            // First cell in the merging region - set colspan.
-            colspan = mergeEnd - mergeStart + 1;
-        } else if (colIndex == mergeEnd) {
-            // Last cell in the merging region - no more skipped cells.
-            mergeStart = -1;
-            mergeEnd = -1;
-            return;
-        } else if (mergeStart != -1 && mergeEnd != -1 && colIndex > mergeStart
-                && colIndex < mergeEnd) {
-            // Within the merging region - skip the cell.
-            return;
-        }
-        out.append("<td ");
-        if (colspan > 1) {
-            out.append("colspan='").append(colspan).append("' ");
-        }
-        if (cell == null) {
-            out.append("/>\n");
-            return;
-        }
-        out.append("style='");
-        final HSSFCellStyle style = cell.getCellStyle();
-        // Text alignment
-        switch (style.getAlignment()) {
-            case CellStyle.ALIGN_LEFT:
-                out.append("text-align: left; ");
-                break;
-            case CellStyle.ALIGN_RIGHT:
-                out.append("text-align: right; ");
-                break;
-            case CellStyle.ALIGN_CENTER:
-                out.append("text-align: center; ");
-                break;
-            default:
-                break;
-        }
-        // Font style, size and weight
-        final HSSFFont font = style.getFont(book);
-        if (font.getBoldweight() == HSSFFont.BOLDWEIGHT_BOLD) {
-            out.append("font-weight: bold; ");
+    private void printStyle(CellStyle style) {
+        out.format(".%s .%s {%n", DEFAULTS_CLASS, styleName(style));
+        styleContents(style);
+        out.format("}%n");
+    }
+
+    private void styleContents(CellStyle style) {
+        styleOut("text-align", style.getAlignment(), ALIGN);
+        styleOut("vertical-align", style.getAlignment(), VERTICAL_ALIGN);
+        fontStyle(style);
+        borderStyles(style);
+        helper.colorStyles(style, out);
+    }
+
+    private void borderStyles(CellStyle style) {
+        styleOut("border-left", style.getBorderLeft(), BORDER);
+        styleOut("border-right", style.getBorderRight(), BORDER);
+        styleOut("border-top", style.getBorderTop(), BORDER);
+        styleOut("border-bottom", style.getBorderBottom(), BORDER);
+    }
+
+    private void fontStyle(CellStyle style) {
+        Font font = wb.getFontAt(style.getFontIndex());
+
+        if (font.getBoldweight() >= HSSFFont.BOLDWEIGHT_BOLD) {
+            out.format("  font-weight: bold;%n");
         }
         if (font.getItalic()) {
-            out.append("font-style: italic; ");
+            out.format("  font-style: italic;%n");
         }
-        if (font.getUnderline() != HSSFFont.U_NONE) {
-            out.append("text-decoration: underline; ");
+
+        int fontheight = font.getFontHeightInPoints();
+        if (fontheight == 9) {
+            //fix for stupid ol Windows
+            fontheight = 10;
         }
-        out.append("font-size: ")
-                .append(Math.floor(font.getFontHeightInPoints() * 0.8))
-                .append("pt; ");
-        // Cell background and font colours
-        final short[] backRGB = style.getFillForegroundColorColor()
-                .getTriplet();
-        final HSSFColor foreColor = palette.getColor(font.getColor());
-        if (foreColor != null) {
-            final short[] foreRGB = foreColor.getTriplet();
-            if (foreRGB[0] != 0 || foreRGB[1] != 0 || foreRGB[2] != 0) {
-                out.append("color: rgb(").append(foreRGB[0]).append(',')
-                        .append(foreRGB[1]).append(',').append(foreRGB[2])
-                        .append(");");
-            }
-        }
-        if (backRGB[0] != 0 || backRGB[1] != 0 || backRGB[2] != 0) {
-            out.append("background-color: rgb(").append(backRGB[0]).append(',')
-                    .append(backRGB[1]).append(',').append(backRGB[2])
-                    .append(");");
-        }
-        // Border
-        if (style.getBorderTop() != HSSFCellStyle.BORDER_NONE) {
-            out.append("border-top-style: solid; ");
-        }
-        if (style.getBorderRight() != HSSFCellStyle.BORDER_NONE) {
-            out.append("border-right-style: solid; ");
-        }
-        if (style.getBorderBottom() != HSSFCellStyle.BORDER_NONE) {
-            out.append("border-bottom-style: solid; ");
-        }
-        if (style.getBorderLeft() != HSSFCellStyle.BORDER_NONE) {
-            out.append("border-left-style: solid; ");
-        }
-        out.append("'>");
-        String val = "";
-        try {
-            switch (cell.getCellType()) {
-                case HSSFCell.CELL_TYPE_STRING:
-                    val = cell.getStringCellValue();
-                    break;
-                case HSSFCell.CELL_TYPE_NUMERIC:
-                    // POI does not distinguish between integer and double, thus:
-                    final double original = cell.getNumericCellValue(),
-                     rounded = Math.round(original);
-                    if (Math.abs(rounded - original) < 0.00000000000000001) {
-                        val = String.valueOf((int) rounded);
-                    } else {
-                        val = String.valueOf(original);
-                    }
-                    break;
-                case HSSFCell.CELL_TYPE_FORMULA:
-                    final CellValue cv = evaluator.evaluate(cell);
-                    switch (cv.getCellType()) {
-                        case Cell.CELL_TYPE_BOOLEAN:
-                            out.append(cv.getBooleanValue());
-                            break;
-                        case Cell.CELL_TYPE_NUMERIC:
-                            out.append(cv.getNumberValue());
-                            break;
-                        case Cell.CELL_TYPE_STRING:
-                            out.append(cv.getStringValue());
-                            break;
-                        case Cell.CELL_TYPE_BLANK:
-                            break;
-                        case Cell.CELL_TYPE_ERROR:
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                default:
-                    // Neither string or number? Could be a date.
-                    try {
-                        val = sdf.format(cell.getDateCellValue());
-                    } catch (final Exception e1) {
-                    }
-            }
-        } catch (final Exception e) {
-            val = e.getMessage();
-        }
-        if ("null".equals(val)) {
-            val = "";
-        }
-        if (pix.containsKey(rowIndex)) {
-            if (pix.get(rowIndex).containsKey(colIndex)) {
-                for (final HSSFPictureData pic : pix.get(rowIndex)
-                        .get(colIndex)) {
-                    out.append("<img alt='Image in Excel sheet' src='data:");
-                    out.append(pic.getMimeType());
-                    out.append(";base64,");
-                    try {
-                        out.append(new String(
-                                Base64.encodeBase64(pic.getData()), "US-ASCII"));
-                    } catch (final UnsupportedEncodingException e) {
-                        throw new RuntimeException(e);
-                    }
-                    out.append("'/>");
-                }
-            }
-        }
-        out.append(val);
-        out.append("</td>\n");
+        out.format("  font-size: %dpt;%n", fontheight);
+
+        // Font color is handled with the other colors
     }
 
-    public String getHTML() {
-        return out.toString();
+    private String styleName(CellStyle style) {
+        if (style == null) {
+            style = wb.getCellStyleAt((short) 0);
+        }
+        StringBuilder sb = new StringBuilder();
+        Formatter fmt = new Formatter(sb);
+        try {
+            fmt.format("style_%02x", style.getIndex());
+            return fmt.toString();
+        } finally {
+            fmt.close();
+        }
+    }
+
+    private <K> void styleOut(String attr, K key, Map<K, String> mapping) {
+        String value = mapping.get(key);
+        if (value != null) {
+            out.format("  %s: %s;%n", attr, value);
+        }
+    }
+
+    private static int ultimateCellType(Cell c) {
+        int type = c.getCellType();
+        if (type == Cell.CELL_TYPE_FORMULA) {
+            type = c.getCachedFormulaResultType();
+        }
+        return type;
+    }
+
+    private void printSheets() {
+        ensureOut();
+        Sheet sheet = wb.getSheetAt(0);
+        printSheet(sheet);
+    }
+
+    public void printSheet(Sheet sheet) {
+        ensureOut();
+        out.format("<table class=%s>%n", DEFAULTS_CLASS);
+        printCols(sheet);
+        printSheetContent(sheet);
+        out.format("</table>%n");
+    }
+
+    private void printCols(Sheet sheet) {
+        out.format("<col/>%n");
+        ensureColumnBounds(sheet);
+        for (int i = firstColumn; i < endColumn; i++) {
+            out.format("<col/>%n");
+        }
+    }
+
+    private void ensureColumnBounds(Sheet sheet) {
+        if (gotBounds) {
+            return;
+        }
+
+        Iterator<Row> iter = sheet.rowIterator();
+        firstColumn = (iter.hasNext() ? Integer.MAX_VALUE : 0);
+        endColumn = 0;
+        while (iter.hasNext()) {
+            Row row = iter.next();
+            short firstCell = row.getFirstCellNum();
+            if (firstCell >= 0) {
+                firstColumn = Math.min(firstColumn, firstCell);
+                endColumn = Math.max(endColumn, row.getLastCellNum());
+            }
+        }
+        gotBounds = true;
+    }
+
+    private void printColumnHeads() {
+        out.format("<thead>%n");
+        out.format("  <tr class=%s>%n", COL_HEAD_CLASS);
+        out.format("    <th class=%s>&#x25CA;</th>%n", COL_HEAD_CLASS);
+        //noinspection UnusedDeclaration
+        StringBuilder colName = new StringBuilder();
+        for (int i = firstColumn; i < endColumn; i++) {
+            colName.setLength(0);
+            int cnum = i;
+            do {
+                colName.insert(0, (char) ('A' + cnum % 26));
+                cnum /= 26;
+            } while (cnum > 0);
+            out.format("    <th class=%s>%s</th>%n", COL_HEAD_CLASS, colName);
+        }
+        out.format("  </tr>%n");
+        out.format("</thead>%n");
+    }
+
+    private void printSheetContent(Sheet sheet) {
+        printColumnHeads();
+
+        out.format("<tbody>%n");
+        Iterator<Row> rows = sheet.rowIterator();
+        while (rows.hasNext()) {
+            Row row = rows.next();
+
+            out.format("  <tr>%n");
+            out.format("    <td class=%s>%d</td>%n", ROW_HEAD_CLASS,
+                    row.getRowNum() + 1);
+            for (int i = firstColumn; i < endColumn; i++) {
+                String content = "&nbsp;";
+                String attrs = "";
+                CellStyle style = null;
+                if (i >= row.getFirstCellNum() && i < row.getLastCellNum()) {
+                    Cell cell = row.getCell(i);
+                    if (cell != null) {
+                        style = cell.getCellStyle();
+                        attrs = tagStyle(cell, style);
+                        //Set the value that is rendered for the cell
+                        //also applies the format
+                        CellFormat cf = CellFormat.getInstance(
+                                style.getDataFormatString());
+                        CellFormatResult result = cf.apply(cell);
+                        content = result.text;
+                        if (content.equals("")) {
+                            content = "&nbsp;";
+                        }
+                    }
+                }
+                out.format("    <td class=%s %s>%s</td>%n", styleName(style),
+                        attrs, content);
+            }
+            out.format("  </tr>%n");
+        }
+        out.format("</tbody>%n");
+    }
+
+    private String tagStyle(Cell cell, CellStyle style) {
+        if (style.getAlignment() == ALIGN_GENERAL) {
+            switch (ultimateCellType(cell)) {
+                case HSSFCell.CELL_TYPE_STRING:
+                    return "style=\"text-align: left;\"";
+                case HSSFCell.CELL_TYPE_BOOLEAN:
+                case HSSFCell.CELL_TYPE_ERROR:
+                    return "style=\"text-align: center;\"";
+                case HSSFCell.CELL_TYPE_NUMERIC:
+                default:
+                    // "right" is the default
+                    break;
+            }
+        }
+        return "";
     }
 }
