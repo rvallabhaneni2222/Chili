@@ -142,15 +142,13 @@ public class DateUtils {
         return diffMonth;
     }
 
-    public static int getDiffYears(Date first, Date last) {
-        Calendar a = getCalendar(first);
-        Calendar b = getCalendar(last);
-        int diff = b.get(YEAR) - a.get(YEAR);
-        if (a.get(MONTH) > b.get(MONTH)
-                || (a.get(MONTH) == b.get(MONTH) && a.get(DATE) > b.get(DATE))) {
-            diff--;
+    public static int differenceInYears(Calendar date1, Calendar date2) {
+        int years = 0;
+        //difference in of years
+        if (date2.get(Calendar.MONTH) == date1.get(Calendar.MONTH)) {
+            years = date2.get(Calendar.YEAR) - date1.get(Calendar.YEAR);
         }
-        return diff;
+        return years;
     }
 
     public static Calendar getCalendar(Date date) {
