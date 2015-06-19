@@ -7,10 +7,18 @@ package info.chili.reporting;
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
 import ar.com.fdvs.dj.domain.DynamicReport;
+import ar.com.fdvs.dj.domain.Style;
 import ar.com.fdvs.dj.domain.builders.ReflectiveReportBuilder;
+import ar.com.fdvs.dj.domain.builders.StyleBuilder;
+import ar.com.fdvs.dj.domain.constants.Border;
+import ar.com.fdvs.dj.domain.constants.Font;
+import ar.com.fdvs.dj.domain.constants.HorizontalAlign;
+import ar.com.fdvs.dj.domain.constants.Transparency;
+import ar.com.fdvs.dj.domain.constants.VerticalAlign;
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
 import info.chili.commons.pdf.PDFUtils;
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -63,6 +71,44 @@ public class ReportGenerator {
             }
         }
         return Response.ok(filename.getBytes()).build();
+    }
+
+    public static <T> String generateExcelOrderedReport(List<T> data, String reportName, String location, String[] columnOrder) {
+        DynamicReport dynamicReport = null;
+        String filename = reportName + UUID.randomUUID().toString() + ".xls";
+        Style titleStyle = createTitleStyle();
+        if (data.size() > 0) {
+            dynamicReport = new ReflectiveReportBuilder(data, columnOrder).build();
+            try {
+                // the below code is necessary, if columns are set using AbstractColumn class
+                // dynamicReport.setColumns(columns);
+                dynamicReport.setTitle(reportName);
+                dynamicReport.setTitleStyle(titleStyle);
+                JasperPrint jasperPrint = DynamicJasperHelper.generateJasperPrint(dynamicReport, new ClassicLayoutManager(), data);
+                JRXlsExporter exporter = new JRXlsExporter();
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT,
+                        jasperPrint);
+                exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
+                        location + filename);
+                exporter.exportReport();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        return filename;
+    }
+
+    private static Style createTitleStyle() {
+        StyleBuilder styleBuilder = new StyleBuilder(true);
+        styleBuilder.setFont(Font.ARIAL_BIG_BOLD);
+        styleBuilder.setBorder(Border.THIN());
+        styleBuilder.setBorderColor(Color.BLACK);
+        styleBuilder.setBackgroundColor(Color.decode("#819FF7"));
+        styleBuilder.setTextColor(Color.WHITE);
+        styleBuilder.setHorizontalAlign(HorizontalAlign.CENTER);
+        styleBuilder.setVerticalAlign(VerticalAlign.MIDDLE);
+        styleBuilder.setTransparency(Transparency.OPAQUE);
+        return styleBuilder.build();
     }
 
     public static <T> String generateExcelReport(List<T> data, String reportName, String location) {
