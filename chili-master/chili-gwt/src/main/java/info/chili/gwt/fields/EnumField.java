@@ -20,7 +20,7 @@ import java.util.Map;
 public class EnumField extends BaseField {
 
     Logger logger = Logger.getLogger(EnumField.class.getName());
-    protected ListBox listBox;
+    public ListBox listBox;
     protected ConstantsWithLookup constants;
 
     public EnumField(ConstantsWithLookup constants, String attributeName, String className, Boolean readOnly, Boolean isRequired,
