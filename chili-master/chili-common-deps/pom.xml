@@ -180,6 +180,11 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.6.11</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
         <!-- JASYPT-->
         <dependency>
             <groupId>org.jasypt</groupId>
@@ -428,5 +433,6 @@
         <bouncycastle.version>1.47</bouncycastle.version>
         <daisydiff.version>1.2-NX3</daisydiff.version>
         <eclipse.core.runtime.version>20070801</eclipse.core.runtime.version>
+        <gson.version>2.2.4</gson.version>
     </properties>
 </project>

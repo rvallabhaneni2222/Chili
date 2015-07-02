@@ -30,27 +30,29 @@ public class BPMTaskDelegateRule extends AbstractEntity {
      *
      */
     @NotEmpty
+    @org.hibernate.annotations.Index(name = "BPM_TSK_RUL_PRC_ID")
     protected String bpmProcessId;
     /**
      *
      */
     @NotEmpty
+    @org.hibernate.annotations.Index(name = "BPM_TSK_RUL_TSK_ID")
     protected String bpmTaskId;
     /**
      *
      */
+    @org.hibernate.annotations.Index(name = "BPM_TSK_RUL_NM")
     @NotEmpty
     protected String ruleName;
     /**
      *
      */
-    @NotEmpty
     protected String ruleExpression;
     /**
      *
      */
     @Lob
-    protected String report;
+    protected String attributeData;
     /**
      *
      */
@@ -90,16 +92,16 @@ public class BPMTaskDelegateRule extends AbstractEntity {
         this.ruleExpression = ruleExpression;
     }
 
-    public String getReport() {
-        return report;
+    public String getAttributeData() {
+        return attributeData;
     }
 
-    public void setReport(String report) {
-        this.report = report;
+    public void setAttributeData(String attributeData) {
+        this.attributeData = attributeData;
     }
 
     public List<Entry> getAttributes() {
-        if (attributes == null) {
+        if (this.attributes == null) {
             this.attributes = new ArrayList();
         }
         return attributes;
@@ -107,6 +109,10 @@ public class BPMTaskDelegateRule extends AbstractEntity {
 
     public void setAttributes(List<Entry> attributes) {
         this.attributes = attributes;
+    }
+
+    public void addAttribute(Entry entry) {
+        this.getAttributes().add(entry);
     }
 
 }
