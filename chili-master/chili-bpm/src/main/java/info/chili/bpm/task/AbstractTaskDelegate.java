@@ -24,8 +24,4 @@ public abstract class AbstractTaskDelegate {
      * @return
      */
     public abstract Task getDelegationInfo(DelegateTask task, BPMTaskDelegateRule rule);
-
-    Object getDelegationInfo(DelegateTask task) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
