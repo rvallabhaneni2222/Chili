@@ -7,6 +7,7 @@ package info.chili.bpm.dao;
 
 import com.google.gson.Gson;
 import info.chili.bpm.domain.BPMTaskDelegateRule;
+import info.chili.dao.CRUDDao;
 import info.chili.spring.SpringContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,15 +21,25 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("bpmTaskDelegateRuleDao")
 @Scope("prototype")
-public class BPMTaskDelegateRuleDao {
+public class BPMTaskDelegateRuleDao extends CRUDDao<BPMTaskDelegateRule> {
 
     @PersistenceContext
     protected EntityManager em;
 
-    public void save(BPMTaskDelegateRule entity) {
+    public BPMTaskDelegateRuleDao() {
+        super(BPMTaskDelegateRule.class);
+    }
+
+    public BPMTaskDelegateRuleDao(Class cls) {
+        super(cls);
+    }
+
+    @Override
+    public BPMTaskDelegateRule save(BPMTaskDelegateRule entity) {
         Gson gson = new Gson();
         entity.setAttributeData(gson.toJson(entity.getAttributes()));
-        em.merge(entity);
+        entity = em.merge(entity);
+        return entity;
     }
 
     public BPMTaskDelegateRule find(String processId, String taskId) {
@@ -44,6 +55,11 @@ public class BPMTaskDelegateRuleDao {
 
     public static BPMTaskDelegateRuleDao instance() {
         return (BPMTaskDelegateRuleDao) SpringContext.getBean("bpmTaskDelegateRuleDao");
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return em;
     }
 
 }
