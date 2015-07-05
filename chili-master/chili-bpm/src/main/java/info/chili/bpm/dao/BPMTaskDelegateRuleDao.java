@@ -12,6 +12,7 @@ import info.chili.spring.SpringContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
@@ -42,6 +43,7 @@ public class BPMTaskDelegateRuleDao extends CRUDDao<BPMTaskDelegateRule> {
         return entity;
     }
 
+    @Cacheable(BPMTaskDelegateRule.BPM_TASK_DELEGATE_RULE_CACHE_REGION)
     public BPMTaskDelegateRule find(String processId, String taskId) {
         TypedQuery<BPMTaskDelegateRule> query = em.createQuery("from " + BPMTaskDelegateRule.class.getCanonicalName() + " where bpmProcessId=:processIdParam and bpmTaskId=:taskIdParam", BPMTaskDelegateRule.class);
         query.setParameter("processIdParam", processId);

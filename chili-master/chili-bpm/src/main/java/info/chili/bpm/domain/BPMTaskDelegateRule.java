@@ -26,6 +26,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @XmlRootElement
 public class BPMTaskDelegateRule extends AbstractEntity {
 
+    public static final String BPM_TASK_DELEGATE_RULE_CACHE_REGION = "bpm-task-delegate-rules";
+    
     /**
      *
      */
