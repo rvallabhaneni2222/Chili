@@ -31,6 +31,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.util.CellRangeAddress;
 
@@ -258,13 +259,18 @@ public class XlsToHtml {
                     val = cell.getStringCellValue();
                     break;
                 case HSSFCell.CELL_TYPE_NUMERIC:
-                    // POI does not distinguish between integer and double, thus:
-                    final double original = cell.getNumericCellValue(),
-                     rounded = Math.round(original);
-                    if (Math.abs(rounded - original) < 0.00000000000000001) {
-                        val = String.valueOf((int) rounded);
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        val = sdf.format(cell.getDateCellValue());
                     } else {
-                        val = String.valueOf(original);
+
+                        // POI does not distinguish between integer and double, thus:
+                        final double original = cell.getNumericCellValue(),
+                                rounded = Math.round(original);
+                        if (Math.abs(rounded - original) < 0.00000000000000001) {
+                            val = String.valueOf((int) rounded);
+                        } else {
+                            val = String.valueOf(original);
+                        }
                     }
                     break;
                 case HSSFCell.CELL_TYPE_FORMULA:

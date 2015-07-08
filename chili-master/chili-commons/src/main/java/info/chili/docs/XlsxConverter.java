@@ -14,6 +14,7 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -28,6 +29,7 @@ import org.apache.poi.hwpf.converter.HtmlDocumentFacade;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
@@ -38,6 +40,7 @@ import org.w3c.dom.Element;
 
 public class XlsxConverter {
 
+    final private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private XSSFWorkbook x;
     private HtmlDocumentFacade htmlDocumentFacade;
     private Element page;
@@ -68,7 +71,7 @@ public class XlsxConverter {
      *
      * @param in
      * @param filePath
-     * @return 
+     * @return
      * @throws InvalidFormatException
      * @throws IOException
      * @throws ParserConfigurationException
@@ -80,7 +83,7 @@ public class XlsxConverter {
         Integer sheetNum = converter.x.getNumberOfSheets();
         for (int i = 0; i < sheetNum; i++) {
             XSSFSheet sheet = converter.x.getSheet(converter.x.getSheetName(i));
-            String sheetName = converter.x.getSheetName(i);
+//            String sheetName = converter.x.getSheetName(i);
             //System.out.println("----starting process sheet : " + sheetName);
             // add sheet title
             {
@@ -259,7 +262,12 @@ public class XlsxConverter {
                     value = "\u00a0";
                     break;
                 case Cell.CELL_TYPE_NUMERIC:
-                    value = cell.getNumericCellValue();
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        value = sdf.format(cell.getDateCellValue());
+                    } else {
+                        value = cell.getNumericCellValue();
+                    }
+//                    value = cell.getNumericCellValue();
                     break;
                 case Cell.CELL_TYPE_BOOLEAN:
                     value = cell.getBooleanCellValue();
@@ -267,10 +275,16 @@ public class XlsxConverter {
                 case Cell.CELL_TYPE_FORMULA:
                     value = cell.getNumericCellValue();
                     break;
+                case Cell.CELL_TYPE_ERROR:
+                    value = cell.getDateCellValue();
+                    break;
                 default:
                     value = cell.getRichStringCellValue();
                     break;
             }
+//            if (DateUtil.isCellDateFormatted(cell)) {
+//                value = sdf.format(cell.getDateCellValue());
+//            }
             if (value instanceof XSSFRichTextString) {
                 processCellStyle(td, cell.getCellStyle(), (XSSFRichTextString) value, sID);
                 td.setTextContent(value.toString());

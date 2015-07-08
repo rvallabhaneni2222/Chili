@@ -60,7 +60,7 @@ public class ExcelToHtml {
             ExcelToHtml r = ExcelToHtml.create(in, result);
             r.setCompleteHTML(true);
             r.printPage();
-            System.out.println(result.toString());
+//            System.out.println(result.toString());
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
