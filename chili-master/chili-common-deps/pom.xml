@@ -405,13 +405,13 @@
     <distributionManagement>
         <!-- Publish the versioned releases here -->
         <repository>
-            <id>tools.sstech.us</id>
+            <id>sstech.us</id>
             <name>tools.sstech.us</name>
             <url>http://tools.sstech.us/nexus/content/repositories/releases</url>
         </repository>
         <!-- Publish the versioned releases here -->
         <snapshotRepository>
-            <id>tools.sstech.us</id>
+            <id>sstech.us</id>
             <name>tools.sstech.us</name>
             <url>http://tools.sstech.us/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
