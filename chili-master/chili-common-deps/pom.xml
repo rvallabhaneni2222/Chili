@@ -270,6 +270,11 @@
             <artifactId>poi-scratchpad</artifactId>  
             <version>${poi.version}</version>
         </dependency> 
+        <dependency>
+            <groupId>fr.opensagres.xdocreport</groupId>
+            <artifactId>org.apache.poi.xwpf.converter.xhtml</artifactId>
+            <version>${xdocreport.version}</version>
+        </dependency> 
         <!-- pdf box for pdf extraction-->
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
@@ -400,13 +405,13 @@
     <distributionManagement>
         <!-- Publish the versioned releases here -->
         <repository>
-            <id>tools.sstech.us</id>
+            <id>sstech.us</id>
             <name>tools.sstech.us</name>
             <url>http://tools.sstech.us/nexus/content/repositories/releases</url>
         </repository>
         <!-- Publish the versioned releases here -->
         <snapshotRepository>
-            <id>tools.sstech.us</id>
+            <id>sstech.us</id>
             <name>tools.sstech.us</name>
             <url>http://tools.sstech.us/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
@@ -424,6 +429,7 @@
         <guava.version>17.0</guava.version>
         <itext.version>2.0.8</itext.version>
         <poi.version>3.9</poi.version>
+        <xdocreport.version>1.0.5</xdocreport.version>
         <pdfbox.version>1.7.0</pdfbox.version>
         <jtidy.version>r938</jtidy.version>
         <jsoup.version>1.7.3</jsoup.version>

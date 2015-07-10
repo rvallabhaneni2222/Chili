@@ -37,8 +37,6 @@ public class BPMTaskDelegateRuleDao extends CRUDDao<BPMTaskDelegateRule> {
 
     @Override
     public BPMTaskDelegateRule save(BPMTaskDelegateRule entity) {
-        Gson gson = new Gson();
-        entity.setAttributeData(gson.toJson(entity.getAttributes()));
         entity = em.merge(entity);
         return entity;
     }
