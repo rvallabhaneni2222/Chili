@@ -273,7 +273,12 @@ public class XlsxConverter {
                     value = cell.getBooleanCellValue();
                     break;
                 case Cell.CELL_TYPE_FORMULA:
-                    value = cell.getNumericCellValue();
+                    try {
+                        value = cell.getNumericCellValue();
+                    } catch (Exception e) {
+                        value = "";
+                        e.printStackTrace();
+                    }
                     break;
                 case Cell.CELL_TYPE_ERROR:
                     value = cell.getDateCellValue();
