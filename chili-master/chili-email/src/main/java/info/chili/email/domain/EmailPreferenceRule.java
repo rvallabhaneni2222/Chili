@@ -28,13 +28,18 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Audited
 @Table(uniqueConstraints
-        = @UniqueConstraint(columnNames = {"name"}))
-@Unique(entity = EmailPreferenceRule.class, fields = {"name"}, message = "{email.preference.rule.name.not.unique.msg}")
+        = @UniqueConstraint(columnNames = {"ruleId"}))
+@Unique(entity = EmailPreferenceRule.class, fields = {"ruleId"}, message = "{email.preference.rule.id.not.unique.msg}")
 public class EmailPreferenceRule extends AbstractEntity {
 
     public static final String EMAIL_PREF_RULE_CACHE_REGION = "email-pref-rules";
     @Transient
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    @NotEmpty
+    protected String ruleId;
     /**
      *
      */
@@ -65,6 +70,17 @@ public class EmailPreferenceRule extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     @NotNull
     protected EmailPreferenceType actionName;
+
+    public EmailPreferenceRule() {
+    }
+
+    public String getRuleId() {
+        return ruleId;
+    }
+
+    public void setRuleId(String ruleId) {
+        this.ruleId = ruleId;
+    }
 
     public String getName() {
         return name;
