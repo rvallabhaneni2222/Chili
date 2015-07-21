@@ -29,6 +29,8 @@ import org.hibernate.validator.constraints.NotEmpty;
         = @UniqueConstraint(columnNames = {"userId", "emailPreferenceRuleId_id"}))
 public class UserEmailPreferenceRule extends AbstractEntity {
 
+    public static final String USER_EMAIL_PREF_RULE_CACHE_REGION = "user-email-pref-rules";
+    
     @NotEmpty
     protected String userId;
     @NotNull

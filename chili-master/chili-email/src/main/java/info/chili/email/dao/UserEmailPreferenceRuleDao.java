@@ -6,7 +6,6 @@
 package info.chili.email.dao;
 
 import info.chili.dao.CRUDDao;
-import info.chili.email.domain.EmailPreferenceRule;
 import info.chili.email.domain.UserEmailPreferenceRule;
 import info.chili.spring.SpringContext;
 import java.util.List;
@@ -37,7 +36,13 @@ public class UserEmailPreferenceRuleDao extends CRUDDao<UserEmailPreferenceRule>
         super(cls);
     }
 
-    @CacheEvict(value = EmailPreferenceRule.EMAIL_PREF_RULE_CACHE_REGION, allEntries = true)
+    @Override
+    @CacheEvict(value = UserEmailPreferenceRule.USER_EMAIL_PREF_RULE_CACHE_REGION, allEntries = true)
+    public void delete(Long id) {
+        super.delete(id);
+    }
+
+    @CacheEvict(value = UserEmailPreferenceRule.USER_EMAIL_PREF_RULE_CACHE_REGION, allEntries = true)
     public UserEmailPreferenceRule save(String userId, String ruleId) {
         UserEmailPreferenceRule entity = new UserEmailPreferenceRule();
         entity.setUserId(userId);
@@ -45,15 +50,15 @@ public class UserEmailPreferenceRuleDao extends CRUDDao<UserEmailPreferenceRule>
         return em.merge(entity);
     }
 
-    @Cacheable(EmailPreferenceRule.EMAIL_PREF_RULE_CACHE_REGION)
+    @Cacheable(value = UserEmailPreferenceRule.USER_EMAIL_PREF_RULE_CACHE_REGION, key = "{#root.methodName,#userId}")
     public List<UserEmailPreferenceRule> findRulesForUser(String userId) {
         TypedQuery<UserEmailPreferenceRule> query = em.createQuery("from " + UserEmailPreferenceRule.class.getCanonicalName() + " where userId=:userIdParam", UserEmailPreferenceRule.class);
         query.setParameter("userIdParam", userId);
         return query.getResultList();
     }
 
-    @Cacheable(EmailPreferenceRule.EMAIL_PREF_RULE_CACHE_REGION)
-    public UserEmailPreferenceRule findRulesForUser(String userId, String ruleId) {
+    @Cacheable(value = UserEmailPreferenceRule.USER_EMAIL_PREF_RULE_CACHE_REGION, key = "{#root.methodName,#userId,#ruleId}")
+    public UserEmailPreferenceRule findRuleForUser(String userId, String ruleId) {
         TypedQuery<UserEmailPreferenceRule> query = em.createQuery("from " + UserEmailPreferenceRule.class.getCanonicalName() + " where userId=:userIdParam and ruleId=:ruleIdParam", UserEmailPreferenceRule.class);
         query.setParameter("ruleIdParam", ruleId);
         query.setParameter("userIdParam", userId);

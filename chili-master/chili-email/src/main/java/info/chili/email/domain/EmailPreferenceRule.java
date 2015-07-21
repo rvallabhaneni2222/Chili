@@ -39,11 +39,13 @@ public class EmailPreferenceRule extends AbstractEntity {
      *
      */
     @NotEmpty
+    @org.hibernate.annotations.Index(name = "EML_PREF_RUL_ID")
     protected String ruleId;
     /**
      *
      */
     @NotEmpty
+    @org.hibernate.annotations.Index(name = "EML_PREF_RUL_NM")
     protected String name;
     /**
      *
@@ -53,11 +55,13 @@ public class EmailPreferenceRule extends AbstractEntity {
      *
      */
     @NotEmpty
+    @org.hibernate.annotations.Index(name = "EML_PREF_RUL_PRC_ID")
     protected String processId;
     /**
      *
      */
     @NotEmpty
+    @org.hibernate.annotations.Index(name = "EML_PREF_RUL_TSK_ID")
     protected String taskId;
     /**
      *
