@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>info.chili</groupId>
+        <artifactId>chili-master</artifactId>
+        <version>1.3-SNAPSHOT</version>
+    </parent>
+    <groupId>info.chili</groupId>
+    <artifactId>chili-email</artifactId>
+    <version>1.3-SNAPSHOT</version>
+    <name>chili-email</name>
+    <url>http://maven.apache.org</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>info.chili</groupId>
+            <artifactId>chili-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency> 
+        <dependency>
+            <groupId>info.chili</groupId>
+            <artifactId>chili-common-deps</artifactId>
+            <version>${project.version}</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>  
+    </dependencies>
+</project>

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package info.chili.bpm.dao;
+package info.chili.email.dao;
 
-import info.chili.bpm.domain.BPMTaskDelegateRule;
 import info.chili.dao.CRUDDao;
+import info.chili.email.domain.EmailPreferenceRule;
 import info.chili.spring.SpringContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,32 +19,31 @@ import org.springframework.stereotype.Repository;
  *
  * @author ayalamanchili
  */
-@Repository("bpmTaskDelegateRuleDao")
+@Repository
 @Scope("prototype")
-public class BPMTaskDelegateRuleDao extends CRUDDao<BPMTaskDelegateRule> {
+public class EmailPreferenceRuleDao extends CRUDDao<EmailPreferenceRule> {
 
     @PersistenceContext
     protected EntityManager em;
 
-    public BPMTaskDelegateRuleDao() {
-        super(BPMTaskDelegateRule.class);
+    public EmailPreferenceRuleDao() {
+        super(EmailPreferenceRule.class);
     }
 
-    public BPMTaskDelegateRuleDao(Class cls) {
+    public EmailPreferenceRuleDao(Class cls) {
         super(cls);
     }
 
     @Override
-    public BPMTaskDelegateRule save(BPMTaskDelegateRule entity) {
+    public EmailPreferenceRule save(EmailPreferenceRule entity) {
         entity = em.merge(entity);
         return entity;
     }
 
-    @Cacheable(BPMTaskDelegateRule.BPM_TASK_DELEGATE_RULE_CACHE_REGION)
-    public BPMTaskDelegateRule find(String processId, String taskId) {
-        TypedQuery<BPMTaskDelegateRule> query = em.createQuery("from " + BPMTaskDelegateRule.class.getCanonicalName() + " where bpmProcessId=:processIdParam and bpmTaskId=:taskIdParam", BPMTaskDelegateRule.class);
-        query.setParameter("processIdParam", processId);
-        query.setParameter("taskIdParam", taskId);
+    @Cacheable(EmailPreferenceRule.EMAIL_PREF_RULE_CACHE_REGION)
+    public EmailPreferenceRule find(String name) {
+        TypedQuery<EmailPreferenceRule> query = em.createQuery("from " + EmailPreferenceRule.class.getCanonicalName() + " where name=:nameParam", EmailPreferenceRule.class);
+        query.setParameter("nameParam", name);
         if (query.getResultList().size() > 0) {
             return query.getResultList().get(0);
         } else {
@@ -52,8 +51,8 @@ public class BPMTaskDelegateRuleDao extends CRUDDao<BPMTaskDelegateRule> {
         }
     }
 
-    public static BPMTaskDelegateRuleDao instance() {
-        return (BPMTaskDelegateRuleDao) SpringContext.getBean("bpmTaskDelegateRuleDao");
+    public static EmailPreferenceRuleDao instance() {
+        return (EmailPreferenceRuleDao) SpringContext.getBean(EmailPreferenceRuleDao.class);
     }
 
     @Override
