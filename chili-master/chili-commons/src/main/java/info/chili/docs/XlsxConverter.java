@@ -40,7 +40,7 @@ import org.w3c.dom.Element;
 
 public class XlsxConverter {
 
-    final private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    final private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
     private XSSFWorkbook x;
     private HtmlDocumentFacade htmlDocumentFacade;
     private Element page;

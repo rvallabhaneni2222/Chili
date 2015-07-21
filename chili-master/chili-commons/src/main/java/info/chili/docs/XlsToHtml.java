@@ -61,7 +61,7 @@ public class XlsToHtml {
      * @throws IOException When POI cannot read from the input stream.
      */
     public XlsToHtml(final InputStream in) throws IOException {
-        sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf = new SimpleDateFormat("MM/dd/yyyy");
         if (in == null) {
             book = null;
             palette = null;
