@@ -23,7 +23,8 @@
         <module>chili-security</module>
         <module>chili-analytics</module>
         <module>chili-bpm</module>
-    </modules>
+    <module>chili-email</module>
+  </modules>
     <build>
         <plugins>
             <plugin>
