@@ -5,16 +5,25 @@
  */
 package info.chili.email.dao;
 
+import com.google.common.base.Strings;
 import info.chili.dao.CRUDDao;
+import info.chili.email.domain.EmailPreferenceRule;
 import info.chili.email.domain.UserEmailPreferenceRule;
 import info.chili.spring.SpringContext;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -45,16 +54,30 @@ public class UserEmailPreferenceRuleDao extends CRUDDao<UserEmailPreferenceRule>
     @CacheEvict(value = UserEmailPreferenceRule.USER_EMAIL_PREF_RULE_CACHE_REGION, allEntries = true)
     public UserEmailPreferenceRule save(String userId, String ruleId) {
         UserEmailPreferenceRule entity = new UserEmailPreferenceRule();
-        entity.setUserId(userId);
-        entity.setEmailPreferenceRuleId(EmailPreferenceRuleDao.instance().find(ruleId));
+        if (Strings.isNullOrEmpty(userId)) {
+            entity.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
+        } else {
+            entity.setUserId(userId);
+        }
+        entity.setEmailPreferenceRule(EmailPreferenceRuleDao.instance().find(ruleId));
         return em.merge(entity);
     }
 
+    @Autowired
+    protected Mapper mapper;
+
     @Cacheable(value = UserEmailPreferenceRule.USER_EMAIL_PREF_RULE_CACHE_REGION, key = "{#root.methodName,#userId}")
-    public List<UserEmailPreferenceRule> findRulesForUser(String userId) {
+    public List<UserEmailPreferenceRuleDto> findRulesForUser(String userId) {
+        List<UserEmailPreferenceRuleDto> res = new ArrayList();
         TypedQuery<UserEmailPreferenceRule> query = em.createQuery("from " + UserEmailPreferenceRule.class.getCanonicalName() + " where userId=:userIdParam", UserEmailPreferenceRule.class);
         query.setParameter("userIdParam", userId);
-        return query.getResultList();
+        for (UserEmailPreferenceRule entity : query.getResultList()) {
+            UserEmailPreferenceRuleDto obj = mapper.map(entity.getEmailPreferenceRule(), UserEmailPreferenceRuleDto.class);
+            obj.setId(entity.getId());
+            res.add(obj);
+
+        }
+        return res;
     }
 
     @Cacheable(value = UserEmailPreferenceRule.USER_EMAIL_PREF_RULE_CACHE_REGION, key = "{#root.methodName,#userId,#ruleId}")
@@ -76,6 +99,24 @@ public class UserEmailPreferenceRuleDao extends CRUDDao<UserEmailPreferenceRule>
     @Override
     public EntityManager getEntityManager() {
         return em;
+    }
+
+    @XmlRootElement
+    @XmlType
+    public static class UserEmailPreferenceRuleDto extends EmailPreferenceRule {
+
+        private Long id;
+
+        @Override
+        public Long getId() {
+            return id;
+        }
+
+        @XmlElement
+        @Override
+        public void setId(Long id) {
+            this.id = id;
+        }
     }
 
 }

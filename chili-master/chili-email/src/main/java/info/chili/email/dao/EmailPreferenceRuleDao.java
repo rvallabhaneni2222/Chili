@@ -66,7 +66,7 @@ public class EmailPreferenceRuleDao extends CRUDDao<EmailPreferenceRule> {
     @Cacheable(value = EmailPreferenceRule.EMAIL_PREF_RULE_CACHE_REGION, key = "{#root.methodName}")
     public List<Entry> getDropDown() {
         List<Entry> result = new ArrayList<>();
-        String[] columns = {"id", "name"};
+        String[] columns = {"ruleId", "name"};
         Map<String, String> values = getEntityStringMapByParams(0, 1000, columns);
         for (String key : values.keySet()) {
             result.add(new Entry(key, values.get(key)));

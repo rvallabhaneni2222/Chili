@@ -26,7 +26,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Audited
 @Table(uniqueConstraints
-        = @UniqueConstraint(columnNames = {"userId", "emailPreferenceRuleId_id"}))
+        = @UniqueConstraint(columnNames = {"userId", "emailPreferenceRule_id"}))
 public class UserEmailPreferenceRule extends AbstractEntity {
 
     public static final String USER_EMAIL_PREF_RULE_CACHE_REGION = "user-email-pref-rules";
@@ -35,7 +35,7 @@ public class UserEmailPreferenceRule extends AbstractEntity {
     protected String userId;
     @NotNull
     @OneToOne
-    protected EmailPreferenceRule emailPreferenceRuleId;
+    protected EmailPreferenceRule emailPreferenceRule;
 
     public String getUserId() {
         return userId;
@@ -45,12 +45,12 @@ public class UserEmailPreferenceRule extends AbstractEntity {
         this.userId = userId;
     }
 
-    public EmailPreferenceRule getEmailPreferenceRuleId() {
-        return emailPreferenceRuleId;
+    public EmailPreferenceRule getEmailPreferenceRule() {
+        return emailPreferenceRule;
     }
 
-    public void setEmailPreferenceRuleId(EmailPreferenceRule emailPreferenceRuleId) {
-        this.emailPreferenceRuleId = emailPreferenceRuleId;
+    public void setEmailPreferenceRule(EmailPreferenceRule emailPreferenceRule) {
+        this.emailPreferenceRule = emailPreferenceRule;
     }
 
 }
