@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.ForeignKey;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -30,11 +31,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class UserEmailPreferenceRule extends AbstractEntity {
 
     public static final String USER_EMAIL_PREF_RULE_CACHE_REGION = "user-email-pref-rules";
-    
+
     @NotEmpty
     protected String userId;
     @NotNull
     @OneToOne
+    @ForeignKey(name = "FK_USR_EML_PREF_RUL")
     protected EmailPreferenceRule emailPreferenceRule;
 
     public String getUserId() {
