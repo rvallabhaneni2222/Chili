@@ -82,7 +82,7 @@ public class UserEmailPreferenceRuleDao extends CRUDDao<UserEmailPreferenceRule>
 
     @Cacheable(value = UserEmailPreferenceRule.USER_EMAIL_PREF_RULE_CACHE_REGION, key = "{#root.methodName,#userId,#ruleId}")
     public UserEmailPreferenceRule findRuleForUser(String userId, String ruleId) {
-        TypedQuery<UserEmailPreferenceRule> query = em.createQuery("from " + UserEmailPreferenceRule.class.getCanonicalName() + " where userId=:userIdParam and ruleId=:ruleIdParam", UserEmailPreferenceRule.class);
+        TypedQuery<UserEmailPreferenceRule> query = em.createQuery("from " + UserEmailPreferenceRule.class.getCanonicalName() + " where userId=:userIdParam and emailPreferenceRule.ruleId=:ruleIdParam", UserEmailPreferenceRule.class);
         query.setParameter("ruleIdParam", ruleId);
         query.setParameter("userIdParam", userId);
         if (query.getResultList().size() > 0) {
