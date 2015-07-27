@@ -67,6 +67,9 @@ public class UserEmailPreferenceRuleDao extends CRUDDao<UserEmailPreferenceRule>
         } else {
             entity.setUserId(userId);
         }
+        if (findRuleForUser(entity.getUserId(), ruleId) != null) {
+            return findRuleForUser(entity.getUserId(), ruleId);
+        }
         entity.setEmailPreferenceRule(EmailPreferenceRuleDao.instance().find(ruleId));
         return em.merge(entity);
     }
