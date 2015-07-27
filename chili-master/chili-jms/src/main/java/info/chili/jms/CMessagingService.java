@@ -14,17 +14,17 @@ import org.springframework.stereotype.Service;
  *
  * @author ayalamanchili
  */
-@Service
-public class MessageProducer {
+@Service(value = "cMessagingService")
+public class CMessagingService {
 
     @Autowired
     private JmsTemplate jmsTemplate;
 
-    public void sendMessageToDefaultDestination(final String message) {
+    public void send(final Object message) {
         jmsTemplate.convertAndSend(message);
     }
 
-    public static MessageProducer instance() {
-        return SpringContext.getBean(MessageProducer.class);
+    public static CMessagingService instance() {
+        return (CMessagingService) SpringContext.getBean("cMessagingService");
     }
 }
