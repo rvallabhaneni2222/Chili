@@ -18,7 +18,7 @@
             <artifactId>chili-commons</artifactId>
             <version>${project.version}</version>
         </dependency> 
-        <dependency>
+        <dependency> 
             <groupId>info.chili</groupId>
             <artifactId>chili-common-deps</artifactId>
             <version>${project.version}</version>
@@ -41,12 +41,12 @@
         <dependency>
             <groupId>org.apache.xbean</groupId>
             <artifactId>xbean-spring</artifactId>
-            <version>3.7</version>
+            <version>3.5</version>
         </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <activemq.version>5.11.1</activemq.version>
+        <activemq.version>5.2.0</activemq.version>
         <spring.version>4.0.5.RELEASE</spring.version>
     </properties>
 </project>
