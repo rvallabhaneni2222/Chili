@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
  *
  * @author ayalamanchili
  */
-@Service
-public class AdapterMessageService {
+@Service("cMessageAdapterPublisher")
+public class CMessageAdapterPublisher {
 
-    public void process(AdapterMessage msg) throws IllegalAccessException {
+    public void publish(CMessage msg) throws IllegalAccessException {
         try {
             for (String adapterName : SpringContext.getApplicationContext().getBeanNamesForType(Class.forName(msg.getAdapterName()))) {
                 Class cls = Class.forName(adapterName);
@@ -28,5 +28,9 @@ public class AdapterMessageService {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public static CMessageAdapterPublisher instance() {
+        return (CMessageAdapterPublisher) SpringContext.getBean("cMessageAdapterPublisher");
     }
 }

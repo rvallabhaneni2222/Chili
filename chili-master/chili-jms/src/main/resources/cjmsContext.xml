@@ -45,13 +45,13 @@
         <property name="defaultDestination" ref="destinationTopic" />
     </bean>
     
-    <!-- Message Consumer Container for Default Destination -->
+    <!-- Default Message Consumer Container for Default Destination -->
     <bean
         class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="connectionFactory" />
         <property name="destinationName" value="CHILI_DEFAULT_TOPIC" />
         <property name="pubSubDomain" value="true"/>
-        <property name="messageListener" ref="cMessagingServiceDefaultConsumer" />
+        <property name="messageListener" ref="cMessageConsumer" />
     </bean>
     
 </beans>

@@ -8,14 +8,20 @@ package info.chili.jms.adapter;
 import java.io.Serializable;
 
 /**
+ * holder to transfer payload from app to jms layer
  *
  * @author ayalamanchili
  * @param <T>
  */
-public class AdapterMessage<T> implements Serializable {
+public class CMessage<T> implements Serializable {
 
     protected String adapterName;
     protected T payload;
+
+    public CMessage(String adapterName, T payload) {
+        this.adapterName = adapterName;
+        this.payload = payload;
+    }
 
     public String getAdapterName() {
         return adapterName;

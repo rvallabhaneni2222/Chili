@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package info.chili.jms;
+package info.chili.jms.adapter;
 
 import info.chili.spring.SpringContext;
 import org.springframework.beans.factory.annotation.Autowired;
