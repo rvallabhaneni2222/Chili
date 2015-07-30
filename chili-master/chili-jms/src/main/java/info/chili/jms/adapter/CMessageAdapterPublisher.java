@@ -20,12 +20,11 @@ public class CMessageAdapterPublisher {
     public void publish(CMessage msg) throws IllegalAccessException {
         try {
             for (String adapterName : SpringContext.getApplicationContext().getBeanNamesForType(Class.forName(msg.getAdapterName()))) {
-                Class cls = Class.forName(adapterName);
-                Object obj = cls.newInstance();
-                Method method = cls.getDeclaredMethod("process", msg.getPayload().getClass());
+                Object obj = SpringContext.getBean(adapterName);
+                Method method = obj.getClass().getDeclaredMethod("process", msg.getPayload().getClass());
                 method.invoke(obj, msg.getPayload());
             }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
             throw new RuntimeException(ex);
         }
     }
