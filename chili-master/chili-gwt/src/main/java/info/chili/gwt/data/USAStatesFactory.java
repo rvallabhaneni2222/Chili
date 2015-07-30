@@ -15,6 +15,7 @@ public class USAStatesFactory {
 
     public static List<String> getStates() {
         List<String> states = new ArrayList<String>();
+        states.add("SELECT");
         states.add("AL");
         states.add("AK");
         states.add("AS");
