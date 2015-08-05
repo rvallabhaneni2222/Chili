@@ -7,7 +7,7 @@ package info.chili.email.dao;
 
 import com.google.common.base.Strings;
 import info.chili.dao.CRUDDao;
-import info.chili.email.CEmail;
+import info.chili.email.Email;
 import info.chili.email.domain.EmailPreferenceRule;
 import info.chili.email.domain.UserEmailPreferenceRule;
 import info.chili.spring.SpringContext;
@@ -50,7 +50,7 @@ public class UserEmailPreferenceRuleDao extends CRUDDao<UserEmailPreferenceRule>
     @Override
     @Caching(evict = {
         @CacheEvict(value = UserEmailPreferenceRule.USER_EMAIL_PREF_RULE_CACHE_REGION, allEntries = true),
-        @CacheEvict(value = CEmail.EMAILS_CACHE_KEY, allEntries = true)
+        @CacheEvict(value = Email.EMAILS_CACHE_KEY, allEntries = true)
     })
     public void delete(Long id) {
         super.delete(id);
@@ -58,7 +58,7 @@ public class UserEmailPreferenceRuleDao extends CRUDDao<UserEmailPreferenceRule>
 
     @Caching(evict = {
         @CacheEvict(value = UserEmailPreferenceRule.USER_EMAIL_PREF_RULE_CACHE_REGION, allEntries = true),
-        @CacheEvict(value = CEmail.EMAILS_CACHE_KEY, allEntries = true)
+        @CacheEvict(value = Email.EMAILS_CACHE_KEY, allEntries = true)
     })
     public UserEmailPreferenceRule save(String userId, String ruleId) {
         UserEmailPreferenceRule entity = new UserEmailPreferenceRule();
