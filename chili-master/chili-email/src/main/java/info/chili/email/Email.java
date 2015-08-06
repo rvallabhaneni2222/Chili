@@ -8,9 +8,11 @@
 package info.chili.email;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -19,11 +21,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public class Email implements Serializable {
-    public static final String EMAILS_CACHE_KEY = "emails";
 
+    public static final String EMAILS_CACHE_KEY = "emails";
+    @Indexed
     protected Set<String> tos;
     protected Set<String> ccs;
     protected Set<String> bccs;
+    @Indexed
     protected String subject = "";
     protected String body = "";
     protected Boolean html = false;
@@ -32,6 +36,8 @@ public class Email implements Serializable {
     protected String templateName;
     protected Map<String, Object> context;
     protected String emailPreferenceRuleId;
+    @Indexed
+    protected Date sentTimeStamp;
 
     public Email() {
     }
@@ -152,6 +158,14 @@ public class Email implements Serializable {
 
     public void setEmailPreferenceRuleId(String emailPreferenceRuleId) {
         this.emailPreferenceRuleId = emailPreferenceRuleId;
+    }
+
+    public Date getSentTimeStamp() {
+        return sentTimeStamp;
+    }
+
+    public void setSentTimeStamp(Date sentTimeStamp) {
+        this.sentTimeStamp = sentTimeStamp;
     }
 
     @Override

@@ -14,6 +14,11 @@
             <artifactId>chili-commons</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>info.chili</groupId>
+            <artifactId>chili-email</artifactId>
+            <version>${project.version}</version>
+        </dependency>        
         <!--uadetector-->
         <dependency>
             <groupId>net.sf.uadetector</groupId>
