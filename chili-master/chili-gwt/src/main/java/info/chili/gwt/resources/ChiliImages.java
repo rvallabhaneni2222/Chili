@@ -59,6 +59,15 @@ public interface ChiliImages extends ClientBundle {
     @Source("images/delete_icon_16_16.png")
     ImageResource deleteIcon_16_16();
 
+    @Source("images/print_icon_16_16.png")
+    ImageResource printIcon_16_16();
+
+    @Source("images/copy_icon_16_16.png")
+    ImageResource copyIcon_16_16();
+
+    @Source("images/cancel_icon_16_16.png")
+    ImageResource cancelIcon_16_16();
+
     @Source("images/close_icon_16_16.png")
     ImageResource closeIcon_16_16();
 }

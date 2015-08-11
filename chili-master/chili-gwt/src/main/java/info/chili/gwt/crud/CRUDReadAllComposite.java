@@ -44,8 +44,18 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
         if (event.getSource().equals(rowOptionsWidget.getDeleteLink())) {
             preDelete(rowOptionsWidget.getEntityId());
         }
+        if (event.getSource().equals(rowOptionsWidget.getPrintLink())) {
+            printClicked(rowOptionsWidget.getEntityId());
+        }
+        if (event.getSource().equals(rowOptionsWidget.getCopyLink())) {
+            copyClicked(rowOptionsWidget.getEntityId());
+        }
+        if (event.getSource().equals(rowOptionsWidget.getCancelLink())) {
+            cancelClicked(rowOptionsWidget.getEntityId());
+        }
     }
 
+//TODO make this non abstract
     public abstract void viewClicked(String entityId);
 
     public void preDelete(String entityId) {
@@ -57,20 +67,36 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
     /*
      * add logic to support deleting the record with the input entityId
      */
+    //TODO make this non abstract
     public abstract void deleteClicked(String entityId);
 
     /*
      * add logic (eg:navigation) on what to happen after succesfuull deleting
      * the row
      */
+    //TODO make this non abstract
     public abstract void postDeleteSuccess();
 
     /**
      * override this to add logic to perform on update row clicked
      */
+    //TODO make this non abstract
     public abstract void updateClicked(String entityId);
 
     protected void onQuickView(int row, String id) {
 
     }
+
+    public void printClicked(String entityId) {
+
+    }
+
+    public void copyClicked(String entityId) {
+
+    }
+
+    public void cancelClicked(String entityId) {
+
+    }
+
 }
