@@ -29,7 +29,7 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
         populateAuthorizationHeader(username, password);
         JSONObject user = new JSONObject();
         user.put("username", username.toLowerCase());
-        user.put("passwordHash", password);
+        user.put("passwordHash", "MYPASSWORD");
         return doPut(getLoginPath(), user.toString(), addHeaders(new HashMap<String, String>(), ""), true);
     }
 
