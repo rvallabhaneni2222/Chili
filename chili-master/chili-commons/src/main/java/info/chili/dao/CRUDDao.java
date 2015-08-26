@@ -13,6 +13,8 @@ import info.chili.commons.ReflectionUtils;
 import info.chili.commons.SearchUtils;
 import info.chili.jpa.validation.ValidationUtils;
 import info.chili.service.jrs.ServiceMessages;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -51,11 +53,18 @@ public abstract class CRUDDao<T> {
         return (T) getEntityManager().find(entityCls, id);
     }
 
-    public T clone(Long id) {
+    final static List<String> baseIgnoreFields = new ArrayList();
+
+    static {
+        baseIgnoreFields.add("id");
+        baseIgnoreFields.add("version");
+    }
+
+    public T clone(Long id, String... ignoreFields) {
         try {
             T clone = (T) entityCls.newInstance();
-            String[] ignore = {"id", "version"};
-            BeanUtils.copyProperties(findById(id), clone, ignore);
+            baseIgnoreFields.addAll(Arrays.asList(ignoreFields));
+            BeanUtils.copyProperties(findById(id), clone, baseIgnoreFields.toArray(new String[baseIgnoreFields.size()]));
             return clone;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
