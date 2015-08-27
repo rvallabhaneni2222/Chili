@@ -28,6 +28,10 @@ public abstract class AbstractRuleBasedTaskDelegateListner implements TaskListen
     public abstract void processTask(DelegateTask task);
 
     protected void processTaskDelegation(DelegateTask task) {
+        if (task.getExecution().getVariable("approvalManager") != null) {
+            task.setAssignee((String) task.getExecution().getVariable("approvalManager"));
+            return;
+        }
         String processId = task.getExecution().getProcessDefinitionId().substring(0, task.getExecution().getProcessDefinitionId().indexOf(":"));
         BPMTaskDelegateRule rule = BPMTaskDelegateRuleDao.instance().find(processId, task.getTaskDefinitionKey());
         if (rule != null) {
