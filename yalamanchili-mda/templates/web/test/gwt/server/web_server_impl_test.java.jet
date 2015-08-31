@@ -1,9 +1,0 @@
-<java:format>
-package ${$groupID}.server;
-
-
-public class ServerTest{
-
-
-}
-</java:format>
