@@ -18,6 +18,7 @@ import info.chili.gwt.utils.JSONUtils;
 import info.chili.gwt.utils.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -83,7 +84,7 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
     }
 
     protected Map<String, String> populateValues(JSONArray entities) {
-        Map<String, String> values = new HashMap();
+        Map<String, String> values = new LinkedHashMap();
         for (int i = 1; i <= entities.size(); i++) {
             JSONObject entity = (JSONObject) entities.get(i - 1);
             String key = JSONUtils.toString(entity, "id");
