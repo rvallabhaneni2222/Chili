@@ -11,6 +11,7 @@ import info.chili.commons.BeanMapper;
 import info.chili.commons.DataType;
 import info.chili.commons.ReflectionUtils;
 import info.chili.commons.SearchUtils;
+import info.chili.commons.SearchUtils.SearchCriteria;
 import info.chili.jpa.validation.ValidationUtils;
 import info.chili.service.jrs.ServiceMessages;
 import java.util.ArrayList;
@@ -188,16 +189,28 @@ public abstract class CRUDDao<T> {
     }
 
     @Transactional(readOnly = true)
+    @Deprecated
     public List<T> search(T entity, int start, int limit) {
-        Query searchQuery = getEntityManager().createQuery(SearchUtils.getSearchQuery(entity), entityCls);
+        return search(entity, start, limit, new SearchCriteria());
+    }
+
+    @Transactional(readOnly = true)
+    public List<T> search(T entity, int start, int limit, SearchUtils.SearchCriteria criteria) {
+        Query searchQuery = SearchUtils.getSearchQuery(getEntityManager(), entity, criteria);
         searchQuery.setFirstResult(start);
         searchQuery.setMaxResults(limit);
         return searchQuery.getResultList();
     }
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    @Deprecated
     public Long searchSize(T entity) {
-        Query sizeQuery = getEntityManager().createQuery(SearchUtils.getSearchSizeQuery(entity));
+        return searchSize(entity, new SearchCriteria());
+    }
+
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public Long searchSize(T entity, SearchUtils.SearchCriteria criteria) {
+        Query sizeQuery = getEntityManager().createQuery(SearchUtils.getSearchSizeQuery(entity, criteria));
         return (Long) sizeQuery.getSingleResult();
     }
 

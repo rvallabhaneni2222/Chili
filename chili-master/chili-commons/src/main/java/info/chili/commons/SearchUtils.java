@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -36,8 +37,8 @@ public class SearchUtils {
         }
         String[] searchTextFrags = searchString.trim().split(" ");
         StringBuilder query = new StringBuilder();
-        query.append("FROM " + cls.getCanonicalName() + " WHERE ");
-        List<String> filters = new ArrayList<String>();
+        query.append("FROM ").append(cls.getCanonicalName()).append(" WHERE ");
+        List<String> filters = new ArrayList<>();
         for (String cloumn : columns) {
             for (String searchFrag : searchTextFrags) {
                 filters.add(cloumn + " LIKE '%" + searchFrag.trim() + "%'");
@@ -60,12 +61,32 @@ public class SearchUtils {
         return "SELECT COUNT(*) " + getSearchQueryString(cls, searchText, columns);
     }
 
+    @Deprecated
     public static <T> String getSearchQuery(T entity) {
+        return getSearchQuery(entity, new SearchCriteria());
+    }
+
+    public static <T> javax.persistence.Query getSearchQuery(EntityManager em, T entity, SearchCriteria criteria) {
+        String qryStr = getSearchQuery(entity, criteria);
+        javax.persistence.Query q = em.createQuery(qryStr);
+        for (Field field : ReflectionUtils.getAllFields(entity.getClass())) {
+            Method getterMethod = ReflectionUtils.getGetterMethod(field, entity.getClass());
+            if (field.getType().isAssignableFrom(Date.class) && ReflectionUtils.callGetterMethod(getterMethod, entity) != null) {
+                Date startDate = (Date) ReflectionUtils.callGetterMethod(getterMethod, entity);
+                Date endDate = DateUtils.getNextDay(startDate, criteria.dateRange);
+                q.setParameter(field.getName() + "StartParam", startDate);
+                q.setParameter(field.getName() + "EndParam", endDate);
+            }
+        }
+        return q;
+    }
+
+    public static <T> String getSearchQuery(T entity, SearchCriteria criteria) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT DISTINCT ").append(convertEntityAlias(entity)).append(" FROM ").append(entity.getClass().getSimpleName()).append(" ").append(convertEntityAlias(entity));
-        List<String> filters = new ArrayList<String>();
-        List<Object> joins = new ArrayList<Object>();
-        getEntityNestedSearchFiltersAndJoins(entity, filters, joins);
+        List<String> filters = new ArrayList<>();
+        List<Object> joins = new ArrayList<>();
+        getEntityNestedSearchFiltersAndJoins(entity, filters, joins, criteria);
         int i = 0;
         for (Object joinEntity : joins) {
             if (i < joins.size()) {
@@ -87,18 +108,27 @@ public class SearchUtils {
         return sb.toString();
     }
 
+    @Deprecated
     public static <T> String getSearchSizeQuery(T entity) {
+        return getSearchQuery(entity, new SearchCriteria());
+    }
+
+    public static <T> String getSearchSizeQuery(T entity, SearchCriteria criteria) {
         String str1 = "SELECT DISTINCT " + convertEntityAlias(entity) + " FROM";
         String str2 = "SELECT COUNT(DISTINCT " + convertEntityAlias(entity) + ") FROM";
-        return getSearchQuery(entity).replace(str1, str2);
+        return getSearchQuery(entity, criteria).replace(str1, str2);
     }
 
     public static <T> Long getSearchSize(EntityManager em, T entity) {
-        javax.persistence.Query sizeQuery = em.createQuery(SearchUtils.getSearchSizeQuery(entity));
+        return getSearchSize(em, entity, new SearchCriteria());
+    }
+
+    public static <T> Long getSearchSize(EntityManager em, T entity, SearchCriteria criteria) {
+        javax.persistence.Query sizeQuery = em.createQuery(SearchUtils.getSearchSizeQuery(entity, criteria));
         return (Long) sizeQuery.getSingleResult();
     }
 
-    protected static <T> void getEntityNestedSearchFiltersAndJoins(T entity, List<String> filters, List<Object> joins) {
+    protected static <T> void getEntityNestedSearchFiltersAndJoins(T entity, List<String> filters, List<Object> joins, SearchCriteria criteria) {
         for (Field field : ReflectionUtils.getAllFields(entity.getClass())) {
             Method getterMethod = ReflectionUtils.getGetterMethod(field, entity.getClass());
             if (getterMethod != null) {
@@ -113,19 +143,22 @@ public class SearchUtils {
                     if (value.getClass().isEnum()) {
                         filters.add(convertEntityAlias(entity) + "." + field.getName() + " = '" + value.toString().trim() + "'");
                     }
+                    if (value instanceof Date) {
+                        filters.add(convertEntityAlias(entity) + "." + field.getName() + " BETWEEN :" + field.getName() + "StartParam" + " AND :" + field.getName() + "EndParam");
+                    }
                     if (value instanceof List || value instanceof Set) {
                         ArrayList list = (ArrayList) value;
                         if (list.size() > 0) {
                             Object child = list.get(0);
                             joins.add(child);
                             filters.add(convertEntityAlias(child) + "." + getEntityPropertyClassWithParent(entity, child) + ".id=" + convertEntityAlias(entity) + ".id");
-                            getEntityNestedSearchFiltersAndJoins(child, filters, joins);
+                            getEntityNestedSearchFiltersAndJoins(child, filters, joins, criteria);
                         }
                     }
                     if (value instanceof AbstractEntity) {
                         joins.add(value);
                         filters.add(getEntityPropertyClassWithChild(entity, value).toLowerCase() + "." + convertEntityAlias(value) + ".id=" + convertEntityAlias(value) + ".id");
-                        getEntityNestedSearchFiltersAndJoins(value, filters, joins);
+                        getEntityNestedSearchFiltersAndJoins(value, filters, joins, criteria);
                     }
                 }
             }
@@ -230,5 +263,19 @@ public class SearchUtils {
             words.add(searchTextScanner.next());
         }
         return words;
+    }
+
+    public static class SearchCriteria {
+
+        int dateRange = 30;
+
+        public int getDateRange() {
+            return dateRange;
+        }
+
+        public void setDateRange(int dateRange) {
+            this.dateRange = dateRange;
+        }
+
     }
 }
