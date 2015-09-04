@@ -5,23 +5,38 @@
  */
 package info.chili.document;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import org.apache.commons.lang.SerializationUtils;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.crypto.codec.Base64;
 
 /**
  *
- * @author anuyalamanchili
+ * @author ayalamanchili
+ * @param <T>
  */
 @Document(collection = "serializedentities")
-@XmlRootElement
-@XmlType
-public class SerializedEntity extends AbstractDocument {
+public class SerializedEntity<T> extends AbstractDocument {
 
+    protected String className;
+    protected String entityData;
     protected String targetClassName;
     protected String targetInstanceId;
-    protected String entityData;
-    protected String entityClassName;
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getEntityData() {
+        return entityData;
+    }
+
+    public void setEntityData(String entityData) {
+        this.entityData = entityData;
+    }
 
     public String getTargetClassName() {
         return targetClassName;
@@ -39,20 +54,8 @@ public class SerializedEntity extends AbstractDocument {
         this.targetInstanceId = targetInstanceId;
     }
 
-    public String getEntityData() {
-        return entityData;
+    public T getEntity() {
+        return (T) SerializationUtils.deserialize(Base64.decode(this.getEntityData().getBytes()));
     }
 
-    public void setEntityData(String entityData) {
-        this.entityData = entityData;
-    }
-
-    public String getEntityClassName() {
-        return entityClassName;
-    }
-
-    public void setEntityClassName(String entityClassName) {
-        this.entityClassName = entityClassName;
-    }
-    
 }

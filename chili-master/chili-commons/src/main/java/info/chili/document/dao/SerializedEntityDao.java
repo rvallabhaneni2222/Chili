@@ -7,30 +7,33 @@ package info.chili.document.dao;
 
 import info.chili.document.SerializedEntity;
 import info.chili.spring.SpringContext;
-
+import java.io.Serializable;
+import org.apache.commons.lang.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Component;
 
 /**
  *
- * @author anuyalamanchili
+ * @author ayalamanchili
+ * @param <T>
  */
 @Component
 @Scope("prototype")
-public class SerializedEntityDao {
+public class SerializedEntityDao<T> {
 
     @Autowired
     protected MongoOperations mongoTemplate;
 
-    public void save(Object obj, String targetClassName, String targetInstanceId) {
+    public <T extends Serializable> void save(T object, String targetclass, String targetInstanceId) {
         SerializedEntity entity = new SerializedEntity();
-        entity.setEntityClassName(obj.getClass().getCanonicalName());
-        entity.setEntityData(null);
-        entity.setTargetClassName(targetClassName);
+        entity.setClassName(object.getClass().getCanonicalName());
+        entity.setEntityData(new String(Base64.encode(SerializationUtils.serialize(object))));
+        entity.setTargetClassName(targetclass);
         entity.setTargetInstanceId(targetInstanceId);
         mongoTemplate.save(entity);
     }
@@ -42,8 +45,12 @@ public class SerializedEntityDao {
         return mongoTemplate.findOne(query, SerializedEntity.class);
     }
 
-    public Object findAndConvert(String targetClassName, String targetInstanceId) {
-        return null;
+    public T findAndConvert(String targetClassName, String targetInstanceId) {
+        return (T) convertToObject(find(targetClassName, targetInstanceId));
+    }
+
+    public Object convertToObject(SerializedEntity entity) {
+        return SerializationUtils.deserialize(Base64.decode(entity.getEntityData().getBytes()));
     }
 
     public static SerializedEntityDao instance() {
