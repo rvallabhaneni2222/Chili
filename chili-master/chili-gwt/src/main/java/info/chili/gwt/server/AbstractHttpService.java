@@ -30,7 +30,18 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
         JSONObject user = new JSONObject();
         user.put("username", username.toLowerCase());
         user.put("passwordHash", "MYPASSWORD");
-        return doPut(getLoginPath(), user.toString(), addHeaders(new HashMap<String, String>(), ""), true);
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("remote-ip", getRemoteIPAddress());
+        logger.info("user-id" + username.toLowerCase());
+        logger.info("remote-ip" + getThreadLocalRequest().getRemoteAddr());
+        System.out.println("user-id" + username.toLowerCase());
+        System.out.println("remote-ip" + getThreadLocalRequest().getRemoteAddr());
+        return doPut(getLoginPath(), user.toString(), addHeaders(headers, ""), true);
+    }
+
+    protected String getRemoteIPAddress() {
+
+        return getThreadLocalRequest().getRemoteAddr();
     }
 
     @Override

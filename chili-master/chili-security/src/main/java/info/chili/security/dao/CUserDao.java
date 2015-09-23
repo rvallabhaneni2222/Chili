@@ -7,7 +7,6 @@ package info.chili.security.dao;
 import info.chili.dao.CRUDDao;
 import info.chili.security.domain.CUser;
 import info.chili.spring.SpringContext;
-import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.context.annotation.Scope;
