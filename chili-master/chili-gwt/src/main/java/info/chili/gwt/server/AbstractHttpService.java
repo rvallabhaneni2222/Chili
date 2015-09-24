@@ -33,15 +33,14 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("remote-ip", getRemoteIPAddress());
         logger.info("user-id" + username.toLowerCase());
-        logger.info("remote-ip" + getThreadLocalRequest().getRemoteAddr());
+        logger.info("remote-ip" + getRemoteIPAddress());
         System.out.println("user-id" + username.toLowerCase());
-        System.out.println("remote-ip" + getThreadLocalRequest().getRemoteAddr());
+        System.out.println("remote-ip" + getRemoteIPAddress());
         return doPut(getLoginPath(), user.toString(), addHeaders(headers, ""), true);
     }
 
     protected String getRemoteIPAddress() {
-
-        return getThreadLocalRequest().getRemoteAddr();
+        return getThreadLocalRequest().getHeader("X-Forwarded-For");
     }
 
     @Override
