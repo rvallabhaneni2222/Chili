@@ -26,29 +26,32 @@ import org.springframework.stereotype.Repository;
 @Repository("cIPAddressDao")
 @Scope("prototype")
 public class CIPAddressDao {
-    
+
     @PersistenceContext
     protected EntityManager em;
-    
+
     @Autowired
     protected MongoOperations mongoTemplate;
-    
+
     public void addUserIPAddress(String userId, String ipAddress) {
         CUserIPAddress userip = new CUserIPAddress();
         userip.setUserId(userId);
         userip.setIpAddress(ipAddress);
         em.merge(userip);
     }
-    
+
     public void addIPAddress(CIPAddress ipAddress) {
         em.merge(ipAddress);
     }
-    
-    public boolean isValidIP(String ipAddress) {
+
+    public void recordUserIP(String ipAddress) {
         IPAddressRecord rec = new IPAddressRecord();
         rec.setIpAddress(ipAddress);
         rec.setUserId(SecurityUtils.getCurrentUser());
         mongoTemplate.save(rec);
+    }
+
+    public boolean isValidIP(String ipAddress) {
         if (isValidIP(ipAddress, CIPAddressType.GLOBAL_VALIDATED)) {
             return true;
         } else if (isValidUserIP(ipAddress)) {
@@ -56,30 +59,30 @@ public class CIPAddressDao {
         }
         return false;
     }
-    
+
     protected boolean isValidUserIP(String userId, String ipAddress) {
         TypedQuery<Long> qry = em.createQuery("select count(*) from " + CUserIPAddress.class.getCanonicalName() + " where userId=:userIdParam and ipAddress=:ipAddressParam", Long.class);
         qry.setParameter("userIdParam", userId);
         qry.setParameter("ipAddressParam", ipAddress);
         return qry.getSingleResult() > 0;
     }
-    
+
     protected boolean isValidUserIP(String ipAddress) {
         TypedQuery<Long> qry = em.createQuery("select count(*) from " + CUserIPAddress.class.getCanonicalName() + " where userId=:userIdParam and ipAddress=:ipAddressParam", Long.class);
         qry.setParameter("userIdParam", SecurityUtils.getCurrentUser());
         qry.setParameter("ipAddressParam", ipAddress);
         return qry.getSingleResult() > 0;
     }
-    
+
     protected boolean isValidIP(String ipAddress, CIPAddressType type) {
         TypedQuery<Long> qry = em.createQuery("select count(*) from " + CIPAddress.class.getCanonicalName() + " where ipAddress=:ipAddressParam and addressType=:typeParam", Long.class);
         qry.setParameter("ipAddressParam", ipAddress);
         qry.setParameter("typeParam", type);
         return qry.getSingleResult() > 0;
     }
-    
+
     public static CIPAddressDao instance() {
         return (CIPAddressDao) SpringContext.getBean("cIPAddressDao");
     }
-    
+
 }
