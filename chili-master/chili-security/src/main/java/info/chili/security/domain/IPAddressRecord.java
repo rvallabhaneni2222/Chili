@@ -5,36 +5,22 @@
  */
 package info.chili.security.domain;
 
-import info.chili.jpa.AbstractEntity;
-import info.chili.jpa.validation.Unique;
-import javax.persistence.Entity;
-import javax.validation.constraints.Size;
-import org.hibernate.annotations.Index;
-import org.hibernate.envers.Audited;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author ayalamanchili
  */
-@Entity
-@Audited
-@Unique(entity = CIPAddress.class, fields = {"ipAddress"})
-public class CUserIPAddress extends AbstractEntity {
+@Document(collection = "ipaddressrecords")
+public class IPAddressRecord {
 
     /**
      *
      */
-    @Size(max = 40)
-    @NotEmpty
-    @Index(name = "USR_IP_ADDR_USRID")
     protected String userId;
     /**
      *
      */
-    @Size(max = 40)
-    @NotEmpty
-    @Index(name = "USR_IP_ADDR")
     protected String ipAddress;
 
     public String getUserId() {
