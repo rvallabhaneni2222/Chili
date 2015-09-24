@@ -9,6 +9,7 @@ package info.chili.email;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -35,6 +36,7 @@ public class Email implements Serializable {
     protected Set<String> attachments;
     protected String templateName;
     protected Map<String, Object> context;
+    protected Map<String, String> headers;
     protected String emailPreferenceRuleId;
     @Indexed
     protected Date sentTimeStamp;
@@ -150,6 +152,17 @@ public class Email implements Serializable {
 
     public void setContext(Map<String, Object> context) {
         this.context = context;
+    }
+
+    public Map<String, String> getHeaders() {
+        if (this.headers == null) {
+            this.headers = new HashMap();
+        }
+        return headers;
+    }
+
+    public void setHeaders(Map<String, String> headers) {
+        this.headers = headers;
     }
 
     public String getEmailPreferenceRuleId() {
