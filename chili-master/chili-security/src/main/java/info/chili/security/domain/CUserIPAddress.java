@@ -22,6 +22,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Unique(entity = CIPAddress.class, fields = {"ipAddress"})
 public class CUserIPAddress extends AbstractEntity {
 
+    protected String name;
     /**
      *
      */
@@ -36,6 +37,14 @@ public class CUserIPAddress extends AbstractEntity {
     @NotEmpty
     @Index(name = "USR_IP_ADDR")
     protected String ipAddress;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getUserId() {
         return userId;
