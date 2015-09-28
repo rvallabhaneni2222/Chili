@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -35,6 +36,7 @@ public class Email implements Serializable {
     protected Boolean richText = false;
     protected Set<String> attachments;
     protected String templateName;
+    @Transient
     protected Map<String, Object> context;
     protected Map<String, String> headers;
     protected String emailPreferenceRuleId;
