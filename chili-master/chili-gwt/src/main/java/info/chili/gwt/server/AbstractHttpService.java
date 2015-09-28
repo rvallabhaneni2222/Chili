@@ -40,7 +40,11 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
     }
 
     protected String getRemoteIPAddress() {
-        return getThreadLocalRequest().getHeader("X-Forwarded-For");
+        if (getThreadLocalRequest().getHeader("X-Forwarded-For") != null) {
+            return getThreadLocalRequest().getHeader("X-Forwarded-For");
+        } else {
+            return getThreadLocalRequest().getRemoteAddr();
+        }
     }
 
     @Override
