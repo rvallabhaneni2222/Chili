@@ -32,7 +32,7 @@ public class CIPAddress extends AbstractEntity {
     /**
      *
      */
-    @Size(max = 16, message = "{user.passwordHash.length.invalid.msg}")
+    @Size(max = 40, message = "{user.passwordHash.length.invalid.msg}")
     @NotEmpty
     @Index(name = "IP_ADDR")
     protected String ipAddress;

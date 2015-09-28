@@ -34,10 +34,12 @@ public class CIPAddressDao {
     protected MongoOperations mongoTemplate;
 
     public void addUserIPAddress(String userId, String ipAddress) {
-        CUserIPAddress userip = new CUserIPAddress();
-        userip.setUserId(userId);
-        userip.setIpAddress(ipAddress);
-        em.merge(userip);
+        if (!isValidUserIP(userId, ipAddress)) {
+            CUserIPAddress userip = new CUserIPAddress();
+            userip.setUserId(userId);
+            userip.setIpAddress(ipAddress);
+            em.merge(userip);
+        }
     }
 
     public void addIPAddress(CIPAddress ipAddress) {
