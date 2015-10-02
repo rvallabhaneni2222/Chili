@@ -27,10 +27,14 @@ public abstract class AbstractFileServiceServlet extends HttpServlet implements 
     private static final long serialVersionUID = 1L;
     private final static Logger logger = Logger.getLogger(AbstractFileServiceServlet.class.getName());
     public final static String AUTH_HEADER_ATTR = "auth-header";
+    public int MAX_REQUEST_SIZE = 52428800;
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.log(Level.INFO, "in FileService Post");
+        if (request.getContentLength() > getMaxRequestSize()) {
+            throw new RuntimeException("max file upload size exceeded");
+        }
         //prepare request
         String url = getServiceBaseUrl();
         if (request.getParameter("passthrough") != null) {
@@ -80,6 +84,10 @@ public abstract class AbstractFileServiceServlet extends HttpServlet implements 
         if (request.getSession(false).getAttribute(AUTH_HEADER_ATTR) != null) {
             body.addHeader("Authorization", (String) request.getSession().getAttribute(AUTH_HEADER_ATTR));
         }
+    }
+
+    protected int getMaxRequestSize() {
+        return MAX_REQUEST_SIZE;
     }
 
     protected abstract String getServiceBaseUrl();
