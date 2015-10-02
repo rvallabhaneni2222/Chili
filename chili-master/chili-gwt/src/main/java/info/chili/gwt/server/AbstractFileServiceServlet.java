@@ -32,9 +32,7 @@ public abstract class AbstractFileServiceServlet extends HttpServlet implements 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.log(Level.INFO, "in FileService Post");
-        if (request.getContentLength() > getMaxRequestSize()) {
-            throw new RuntimeException("max file upload size exceeded");
-        }
+       
         //prepare request
         String url = getServiceBaseUrl();
         if (request.getParameter("passthrough") != null) {
