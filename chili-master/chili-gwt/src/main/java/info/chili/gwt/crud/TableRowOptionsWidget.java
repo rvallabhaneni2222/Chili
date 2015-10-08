@@ -160,10 +160,11 @@ public class TableRowOptionsWidget extends GenericTableRowOptionsWidget implemen
 
     @Override
     public void onMouseOut(MouseOutEvent event) {
-        GenericPopup.instance().hide();
+        if (GenericPopup.instance() != null) {
+            GenericPopup.instance().hide();
+        }
     }
 
     protected void onQuickView() {
-
     }
 }

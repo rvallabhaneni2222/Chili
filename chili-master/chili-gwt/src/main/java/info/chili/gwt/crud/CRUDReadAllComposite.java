@@ -29,6 +29,21 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
         optionsWidgetMap.put(String.valueOf(row), rowOptionsWidget);
     }
 
+    protected void createOptionsWidget(final String id, final int row, TableRowOptionsWidget.OptionsType... types) {
+        TableRowOptionsWidget rowOptionsWidget = new TableRowOptionsWidget(id, types) {
+            @Override
+            protected void onQuickView() {
+                CRUDReadAllComposite.this.onQuickView(row, id);
+            }
+        };
+        if (enableQuickView()) {
+            rowOptionsWidget.configureQuickViewLink();
+        }
+        rowOptionsWidget.initListeners(this);
+        table.setWidget(row, 0, rowOptionsWidget);
+        optionsWidgetMap.put(String.valueOf(row), rowOptionsWidget);
+    }
+
     protected boolean enableQuickView() {
         return false;
     }
