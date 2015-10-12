@@ -4,7 +4,9 @@
 package info.chili.gwt.crud;
 
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.user.client.Window;
+import info.chili.gwt.widgets.GenericPopup;
 
 public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOptionsWidget> {
 
@@ -14,6 +16,13 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
             @Override
             protected void onQuickView() {
                 CRUDReadAllComposite.this.onQuickView(row, id);
+            }
+
+            @Override
+            public void onMouseOut(MouseOutEvent event) {
+                if (GenericPopup.instance() != null && !enablePersistedQuickView()) {
+                    GenericPopup.instance().hide();
+                }
             }
         };
         createOptionsWidget(rowOptionsWidget, row, id);
@@ -34,6 +43,13 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
             @Override
             protected void onQuickView() {
                 CRUDReadAllComposite.this.onQuickView(row, id);
+            }
+
+            @Override
+            public void onMouseOut(MouseOutEvent event) {
+                if (GenericPopup.instance() != null && !enablePersistedQuickView()) {
+                    GenericPopup.instance().hide();
+                }
             }
         };
         if (enableQuickView()) {
@@ -114,4 +130,7 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
 
     }
 
+    protected boolean enablePersistedQuickView() {
+        return false;
+    }
 }
