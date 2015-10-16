@@ -6,7 +6,6 @@
 package info.chili.bpm.task;
 
 import info.chili.bpm.domain.BPMTaskDelegateRule;
-import info.chili.bpm.types.Task;
 import org.activiti.engine.delegate.DelegateTask;
 
 /**
@@ -23,5 +22,5 @@ public abstract class AbstractTaskDelegate {
      * @param rule
      * @return
      */
-    public abstract Task getDelegationInfo(DelegateTask task, BPMTaskDelegateRule rule);
+    public abstract void delegate(DelegateTask task, BPMTaskDelegateRule rule);
 }

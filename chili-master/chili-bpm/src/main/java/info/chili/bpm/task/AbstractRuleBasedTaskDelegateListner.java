@@ -36,7 +36,7 @@ public abstract class AbstractRuleBasedTaskDelegateListner implements TaskListen
         BPMTaskDelegateRule rule = BPMTaskDelegateRuleDao.instance().find(processId, task.getTaskDefinitionKey());
         if (rule != null) {
             AbstractTaskDelegate delegate = (AbstractTaskDelegate) SpringContext.getBean(rule.getRuleName());
-            task.setAssignee(delegate.getDelegationInfo(task, rule).getAssignee());
+            delegate.delegate(task, rule);
         }
     }
 
