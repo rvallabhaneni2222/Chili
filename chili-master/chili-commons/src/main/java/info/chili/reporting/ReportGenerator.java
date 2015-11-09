@@ -37,14 +37,14 @@ import net.sf.jasperreports.engine.export.JRXlsExporter;
 public class ReportGenerator {
 //TODO support for email report
 
-    public static <T> Response generateReport(List<T> data, String reportName, String format, String location) {
+    public static <T> Response generateReport(List<T> data, String reportName, String format, String location, String... columnOrder) {
         DynamicReport dynamicReport = null;
         if (Strings.isNullOrEmpty(reportName)) {
             reportName = "report";
         }
         String filename = reportName + UUID.randomUUID().toString() + "." + format;
         if (data.size() > 0) {
-            dynamicReport = new ReflectiveReportBuilder(data).build();
+            dynamicReport = new ReflectiveReportBuilder(data, columnOrder).build();
             try {
                 dynamicReport.setTitle(data.get(0).getClass().getSimpleName());
                 JasperPrint jasperPrint = DynamicJasperHelper.generateJasperPrint(dynamicReport, new ClassicLayoutManager(), data);
