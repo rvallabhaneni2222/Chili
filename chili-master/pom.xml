@@ -64,11 +64,7 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>
-    <scm>
-        <connection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master</connection>
-        <url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master</url>
-    </scm>    
+    </build>   
     <!-- download artifacts from this repo -->
     <repositories>
         <repository>

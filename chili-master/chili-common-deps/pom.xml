@@ -371,10 +371,6 @@
             </plugin>
         </plugins>
     </build>
-    <scm>
-        <connection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-common-deps</connection>
-        <url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-common-deps</url>
-    </scm>
     <!-- download artifacts from this repo -->
     <repositories>
         <repository>
