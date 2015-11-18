@@ -70,6 +70,9 @@ public class SearchUtils {
         String qryStr = getSearchQuery(entity, criteria);
         javax.persistence.Query q = em.createQuery(qryStr);
         for (Field field : ReflectionUtils.getAllFields(entity.getClass())) {
+            if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
             Method getterMethod = ReflectionUtils.getGetterMethod(field, entity.getClass());
             if (field.getType().isAssignableFrom(Date.class) && ReflectionUtils.callGetterMethod(getterMethod, entity) != null) {
                 Date startDate = (Date) ReflectionUtils.callGetterMethod(getterMethod, entity);
@@ -130,6 +133,9 @@ public class SearchUtils {
 
     protected static <T> void getEntityNestedSearchFiltersAndJoins(T entity, List<String> filters, List<Object> joins, SearchCriteria criteria) {
         for (Field field : ReflectionUtils.getAllFields(entity.getClass())) {
+            if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
             Method getterMethod = ReflectionUtils.getGetterMethod(field, entity.getClass());
             if (getterMethod != null) {
                 Object value = ReflectionUtils.callGetterMethod(getterMethod, entity);
