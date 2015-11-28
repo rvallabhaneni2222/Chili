@@ -95,10 +95,21 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
         }
     }
 
+    protected void deleteRow(String entityId) {
+        for (Integer i = 1; i <= table.getRowCount(); i++) {
+            TableRowOptionsWidget rowW = optionsWidgetMap.get(i.toString());
+            if (rowW.getEntityId().equals(entityId)) {
+                table.removeRow(i);
+            }
+            optionsWidgetMap.remove(i.toString());
+        }
+    }
     /*
      * add logic to support deleting the record with the input entityId
      */
+
     //TODO make this non abstract
+
     public abstract void deleteClicked(String entityId);
 
     /*
