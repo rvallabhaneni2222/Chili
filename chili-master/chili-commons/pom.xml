@@ -54,11 +54,7 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>
-    <scm>
-        <connection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-commons</connection>
-        <url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-commons</url>
-    </scm>     
+    </build>  
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

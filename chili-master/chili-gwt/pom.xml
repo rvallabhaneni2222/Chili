@@ -80,11 +80,7 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>
-    <scm>
-        <connection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-gwt</connection>
-        <url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-gwt</url>
-    </scm>     
+    </build>  
     <properties>
         <gwtVersion>2.7.0</gwtVersion>
         <spring.version>3.1.1.RELEASE</spring.version>

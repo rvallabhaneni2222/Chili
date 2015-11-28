@@ -371,16 +371,12 @@
             </plugin>
         </plugins>
     </build>
-    <scm>
-        <connection>scm:svn:https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-common-deps</connection>
-        <url>https://yalamanchili.googlecode.com/svn/yalamanchili/componenets/trunk/chili-master/chili-common-deps</url>
-    </scm>
     <!-- download artifacts from this repo -->
     <repositories>
         <repository>
-            <id>tools.sstech.us</id>
-            <name>tools.sstech.us</name>
-            <url>http://tools.sstech.us/nexus/content/groups/public</url>
+            <id>tools.sstech.mobi</id>
+            <name>tools.sstech.mobi</name>
+            <url>http://tools.sstech.mobi/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -391,9 +387,9 @@
         </repository>
         <!-- TODO temp fix for snapshots not being downloaded from repo-->
         <repository>
-            <id>tools.sstech.us.snapshots</id>
-            <name>tools.sstech.us</name>
-            <url>http://tools.sstech.us/nexus/content/repositories/snapshots</url>
+            <id>tools.sstech.mobi.snapshots</id>
+            <name>tools.sstech.mobi</name>
+            <url>http://tools.sstech.mobi/nexus/content/repositories/snapshots</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -406,9 +402,9 @@
     <!-- download plugins from this repo -->
     <pluginRepositories>
         <pluginRepository>
-            <id>tools.sstech.us</id>
-            <name>tools.sstech.us</name>
-            <url>http://tools.sstech.us/nexus/content/groups/public</url>
+            <id>tools.sstech.mobi</id>
+            <name>tools.sstech.mobi</name>
+            <url>http://tools.sstech.mobi/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -422,14 +418,14 @@
         <!-- Publish the versioned releases here -->
         <repository>
             <id>sstech.us</id>
-            <name>tools.sstech.us</name>
-            <url>http://tools.sstech.us/nexus/content/repositories/releases</url>
+            <name>tools.sstech.mobi</name>
+            <url>http://tools.sstech.mobi/nexus/content/repositories/releases</url>
         </repository>
         <!-- Publish the versioned releases here -->
         <snapshotRepository>
             <id>sstech.us</id>
-            <name>tools.sstech.us</name>
-            <url>http://tools.sstech.us/nexus/content/repositories/snapshots</url>
+            <name>tools.sstech.mobi</name>
+            <url>http://tools.sstech.mobi/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
     <properties>
