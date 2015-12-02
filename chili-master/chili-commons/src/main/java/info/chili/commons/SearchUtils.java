@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -153,9 +154,9 @@ public class SearchUtils {
                         filters.add(convertEntityAlias(entity) + "." + field.getName() + " BETWEEN :" + field.getName() + "StartParam" + " AND :" + field.getName() + "EndParam");
                     }
                     if (value instanceof List || value instanceof Set) {
-                        ArrayList list = (ArrayList) value;
+                        Collection list = (Collection) value;
                         if (list.size() > 0) {
-                            Object child = list.get(0);
+                            Object child = list.iterator().next();
                             joins.add(child);
                             filters.add(convertEntityAlias(child) + "." + getEntityPropertyClassWithParent(entity, child) + ".id=" + convertEntityAlias(entity) + ".id");
                             getEntityNestedSearchFiltersAndJoins(child, filters, joins, criteria);
