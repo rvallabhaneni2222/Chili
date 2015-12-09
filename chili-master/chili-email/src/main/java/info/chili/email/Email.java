@@ -7,6 +7,7 @@
  */
 package info.chili.email;
 
+import info.chili.document.AbstractDocument;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author yalamanchili
  */
 @Document
-public class Email implements Serializable {
+public class Email extends AbstractDocument implements Serializable {
 
     public static final String EMAILS_CACHE_KEY = "emails";
     @Indexed
