@@ -38,6 +38,11 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         setReadOnly(readOnly);
         //TODO should this be called in constructor or wait for child to invoke it on setting some url params?
         fetchDropDownData();
+        if (enableMultiSelect()) {
+            listBox.removeItem(0);
+            listBox.setMultipleSelect(true);
+            listBox.setVisibleItemCount(multiSelectVisibleItems());
+        }
     }
 
     public SelectComposite(ConstantsWithLookup constants, String className, Boolean readOnly, Boolean isRequired) {
@@ -45,6 +50,11 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         configureAddMainWidget();
         setReadOnly(readOnly);
         fetchDropDownData();
+        if (enableMultiSelect()) {
+            listBox.removeItem(0);
+            listBox.setMultipleSelect(true);
+            listBox.setVisibleItemCount(multiSelectVisibleItems());
+        }
     }
 
     @Override
@@ -56,6 +66,15 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         listBox.addBlurHandler(this);
     }
 
+    public boolean enableMultiSelect() {
+        return false;
+    }
+
+    public int multiSelectVisibleItems() {
+        return 4;
+    }
+
+    @Override
     public void setReadOnly(Boolean readOnly) {
         listBox.setEnabled(!readOnly);
     }
@@ -189,6 +208,19 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         } else {
             return null;
         }
+    }
+
+    public JSONArray getSelectedObjects() {
+        JSONArray selectedObjects = new JSONArray();
+        int j = 0;
+        for (int i = 0; i < listBox.getItemCount(); i++) {
+            if (listBox.isItemSelected(i)) {
+                String entityId = listBox.getValue(i);
+                selectedObjects.set(j, entityMap.get(entityId));
+                j++;
+            }
+        }
+        return selectedObjects;
     }
 
     public String getSelectedObjectId() {
