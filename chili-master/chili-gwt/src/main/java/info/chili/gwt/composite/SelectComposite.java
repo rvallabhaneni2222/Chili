@@ -31,6 +31,7 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
     protected Map<String, String> values;
     protected Map<String, JSONObject> entityMap = new HashMap();
     protected JSONObject selectedObject = null;
+    protected JSONArray selectedObjects = null;
 
     public SelectComposite(ConstantsWithLookup constants, String className, Boolean readOnly, Boolean isRequired, Alignment alignment) {
         super(constants, info.chili.gwt.utils.Utils.getStringCamelCase(className), className, readOnly, isRequired, alignment);
@@ -39,7 +40,6 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         //TODO should this be called in constructor or wait for child to invoke it on setting some url params?
         fetchDropDownData();
         if (enableMultiSelect()) {
-            listBox.removeItem(0);
             listBox.setMultipleSelect(true);
             listBox.setVisibleItemCount(multiSelectVisibleItems());
         }
@@ -51,7 +51,6 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         setReadOnly(readOnly);
         fetchDropDownData();
         if (enableMultiSelect()) {
-            listBox.removeItem(0);
             listBox.setMultipleSelect(true);
             listBox.setVisibleItemCount(multiSelectVisibleItems());
         }
@@ -127,6 +126,11 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         }
     }
 
+    public void setSelectedValues(JSONArray array) {
+        this.selectedObjects = array;
+        populateSelectedValues(null);
+    }
+
     public void addListner(GenericListener listner) {
         this.listeners.add(listner);
     }
@@ -151,6 +155,34 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         }
     }
 
+    /**
+     * use this 'id' is not the primary key
+     *
+     * @param idStr
+     */
+    public void populateSelectedValues(String idStr) {
+        String keyStr;
+        if (idStr == null) {
+            keyStr = "id";
+        } else {
+            keyStr = idStr;
+        }
+        for (int j = 0; j < selectedObjects.size(); j++) {
+            JSONObject selectObjInArray = selectedObjects.get(j).isObject();
+            logger.info("1111111111111111111111111111" + selectObjInArray.toString());
+            logger.info("1111111111111111111111111111" + entityMap.size());
+            for (int i = 0; i < listBox.getItemCount(); i++) {
+                logger.info("sssss" + listBox.getValue(i));
+                logger.info("sssss" + JSONUtils.toString(selectObjInArray, keyStr));
+                if (listBox.getItemText(i) != null && listBox.getValue(i).equalsIgnoreCase(JSONUtils.toString(selectObjInArray, keyStr))) {
+                    listBox.setItemSelected(i, true);
+                    break;
+                }
+            }
+        }
+
+    }
+
     protected void populateDropDown(Map<String, String> values) {
         //TODO avoid this sorting on client side
         if (sort()) {
@@ -170,6 +202,11 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
             //To support update panel drop downs
             onChange(null);
         }
+        if (selectedObjects != null) {
+            populateSelectedValues(null);
+            //To support update panel drop downs
+            onChange(null);
+        }
     }
 
     protected boolean sort() {
@@ -182,7 +219,9 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
 
     protected void initListBox() {
         listBox.clear();
-        listBox.insertItem("Select", 0);
+        if (!enableMultiSelect()) {
+            listBox.insertItem("Select", 0);
+        }
     }
 
     @Override
@@ -211,16 +250,16 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
     }
 
     public JSONArray getSelectedObjects() {
-        JSONArray selectedObjects = new JSONArray();
+        JSONArray selectedObjectsL = new JSONArray();
         int j = 0;
         for (int i = 0; i < listBox.getItemCount(); i++) {
             if (listBox.isItemSelected(i)) {
                 String entityId = listBox.getValue(i);
-                selectedObjects.set(j, entityMap.get(entityId));
+                selectedObjectsL.set(j, entityMap.get(entityId));
                 j++;
             }
         }
-        return selectedObjects;
+        return selectedObjectsL;
     }
 
     public String getSelectedObjectId() {
