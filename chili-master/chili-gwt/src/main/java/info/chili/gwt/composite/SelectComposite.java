@@ -169,18 +169,20 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         }
         for (int j = 0; j < selectedObjects.size(); j++) {
             JSONObject selectObjInArray = selectedObjects.get(j).isObject();
-            logger.info("1111111111111111111111111111" + selectObjInArray.toString());
-            logger.info("1111111111111111111111111111" + entityMap.size());
             for (int i = 0; i < listBox.getItemCount(); i++) {
-                logger.info("sssss" + listBox.getValue(i));
-                logger.info("sssss" + JSONUtils.toString(selectObjInArray, keyStr));
                 if (listBox.getItemText(i) != null && listBox.getValue(i).equalsIgnoreCase(JSONUtils.toString(selectObjInArray, keyStr))) {
                     listBox.setItemSelected(i, true);
                     break;
                 }
             }
         }
-
+        if(readOnly){
+            for (int i = 0; i < listBox.getItemCount(); i++) {
+                if(!listBox.isItemSelected(i)){
+                    listBox.removeItem(i);
+                }
+            }
+        }
     }
 
     protected void populateDropDown(Map<String, String> values) {
