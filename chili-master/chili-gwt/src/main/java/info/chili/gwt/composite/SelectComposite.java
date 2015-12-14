@@ -128,7 +128,9 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
 
     public void setSelectedValues(JSONArray array) {
         this.selectedObjects = array;
-        populateSelectedValues(null);
+        if (getSelectedObjects().size() == 0) {
+            populateSelectedValues(null);
+        }
     }
 
     public void addListner(GenericListener listner) {
@@ -176,9 +178,9 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
                 }
             }
         }
-        if(readOnly){
+        if (readOnly) {
             for (int i = 0; i < listBox.getItemCount(); i++) {
-                if(!listBox.isItemSelected(i)){
+                if (!listBox.isItemSelected(i)) {
                     listBox.removeItem(i);
                 }
             }
