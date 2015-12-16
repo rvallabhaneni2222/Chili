@@ -10,6 +10,8 @@ import com.google.common.collect.ImmutableList;
 import info.chili.analytics.model.Event;
 import info.chili.analytics.model.Event.EventsTable;
 import info.chili.analytics.utils.CachedUserAgentStringParser;
+import info.chili.commons.DateUtils;
+import java.util.Date;
 import java.util.List;
 import net.sf.uadetector.ReadableUserAgent;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -51,8 +53,10 @@ public class EventsService {
 
     public EventsTable getEvents(int start, int limit) {
         EventsTable res = new EventsTable();
-        Query query = new Query();
-        query.with(new Sort(Sort.Direction.DESC, "evenTimeStamp"));
+        Query query = new Query(new Criteria().andOperator(
+                Criteria.where("evenTimeStamp").gte(DateUtils.getNextDay(new Date(), -7)),
+                Criteria.where("evenTimeStamp").lt(new Date())
+        ));
         res.setEntities(mongoTemplate.find(query.limit(limit).skip(start), Event.class));
         res.setSize(mongoTemplate.count(query, Event.class));
         return res;
@@ -72,7 +76,13 @@ public class EventsService {
         if (!Strings.isNullOrEmpty(search.getOutput())) {
             query.addCriteria(Criteria.where("output").regex(search.getOutput().trim()));
         }
-        query.with(new Sort(Sort.Direction.DESC, "evenTimeStamp"));
+        if (search.getStartDate() != null && search.getEndDate() != null) {
+            query.addCriteria(new Criteria().andOperator(
+                    Criteria.where("evenTimeStamp").gte(search.getStartDate()),
+                    Criteria.where("evenTimeStamp").lte(search.getEndDate())));
+        } else {
+            query.with(new Sort(Sort.Direction.DESC, "evenTimeStamp"));
+        }
         return mongoTemplate.find(query.limit(100), Event.class);
     }
 }
