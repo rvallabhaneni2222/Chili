@@ -45,6 +45,7 @@ public class EmailEventsService {
             dto.setSentTimeStamp(email.getSentTimeStamp());
             dto.setSubject(email.getSubject());
             dto.setBody(email.getBody());
+            dto.setId(email.getId());
             res.getEntities().add(dto);
         }
         res.setSize(mongoTemplate.count(query, Email.class));
@@ -55,13 +56,13 @@ public class EmailEventsService {
         List<EmailEventDto> res = new ArrayList();
         Query query = new Query();
         if (!Strings.isNullOrEmpty(search.getTo())) {
-            query.addCriteria(Criteria.where("tos").regex(search.getTo(),"i"));
+            query.addCriteria(Criteria.where("tos").regex(search.getTo(), "i"));
         }
         if (!Strings.isNullOrEmpty(search.getBody())) {
-            query.addCriteria(Criteria.where("body").regex(search.getBody(),"i"));
+            query.addCriteria(Criteria.where("body").regex(search.getBody(), "i"));
         }
         if (!Strings.isNullOrEmpty(search.getSubject())) {
-             query.addCriteria(Criteria.where("subject").regex(search.getSubject(),"i"));
+            query.addCriteria(Criteria.where("subject").regex(search.getSubject(), "i"));
 
         }
         query.with(new Sort(Sort.Direction.DESC, "sentTimeStamp"));
@@ -80,10 +81,19 @@ public class EmailEventsService {
     @XmlType
     public static class EmailEventDto implements java.io.Serializable {
 
+        protected String id;
         protected String to;
         protected Date sentTimeStamp;
         protected String subject;
         protected String body;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public String getTo() {
             return to;

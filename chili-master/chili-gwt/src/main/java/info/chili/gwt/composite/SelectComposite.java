@@ -31,6 +31,7 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
     protected Map<String, String> values;
     protected Map<String, JSONObject> entityMap = new HashMap();
     protected JSONObject selectedObject = null;
+    protected JSONArray selectedObjects = null;
 
     public SelectComposite(ConstantsWithLookup constants, String className, Boolean readOnly, Boolean isRequired, Alignment alignment) {
         super(constants, info.chili.gwt.utils.Utils.getStringCamelCase(className), className, readOnly, isRequired, alignment);
@@ -38,6 +39,10 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         setReadOnly(readOnly);
         //TODO should this be called in constructor or wait for child to invoke it on setting some url params?
         fetchDropDownData();
+        if (enableMultiSelect()) {
+            listBox.setMultipleSelect(true);
+            listBox.setVisibleItemCount(multiSelectVisibleItems());
+        }
     }
 
     public SelectComposite(ConstantsWithLookup constants, String className, Boolean readOnly, Boolean isRequired) {
@@ -45,6 +50,10 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         configureAddMainWidget();
         setReadOnly(readOnly);
         fetchDropDownData();
+        if (enableMultiSelect()) {
+            listBox.setMultipleSelect(true);
+            listBox.setVisibleItemCount(multiSelectVisibleItems());
+        }
     }
 
     @Override
@@ -56,6 +65,15 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         listBox.addBlurHandler(this);
     }
 
+    public boolean enableMultiSelect() {
+        return false;
+    }
+
+    public int multiSelectVisibleItems() {
+        return 4;
+    }
+
+    @Override
     public void setReadOnly(Boolean readOnly) {
         listBox.setEnabled(!readOnly);
     }
@@ -108,6 +126,13 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         }
     }
 
+    public void setSelectedValues(JSONArray array) {
+        this.selectedObjects = array;
+        if (getSelectedObjects().size() == 0) {
+            populateSelectedValues(null);
+        }
+    }
+
     public void addListner(GenericListener listner) {
         this.listeners.add(listner);
     }
@@ -132,6 +157,36 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         }
     }
 
+    /**
+     * use this 'id' is not the primary key
+     *
+     * @param idStr
+     */
+    public void populateSelectedValues(String idStr) {
+        String keyStr;
+        if (idStr == null) {
+            keyStr = "id";
+        } else {
+            keyStr = idStr;
+        }
+        for (int j = 0; j < selectedObjects.size(); j++) {
+            JSONObject selectObjInArray = selectedObjects.get(j).isObject();
+            for (int i = 0; i < listBox.getItemCount(); i++) {
+                if (listBox.getItemText(i) != null && listBox.getValue(i).equalsIgnoreCase(JSONUtils.toString(selectObjInArray, keyStr))) {
+                    listBox.setItemSelected(i, true);
+                    break;
+                }
+            }
+        }
+        if (readOnly) {
+            for (int i = 0; i < listBox.getItemCount(); i++) {
+                if (!listBox.isItemSelected(i)) {
+                    listBox.removeItem(i);
+                }
+            }
+        }
+    }
+
     protected void populateDropDown(Map<String, String> values) {
         //TODO avoid this sorting on client side
         if (sort()) {
@@ -151,6 +206,11 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
             //To support update panel drop downs
             onChange(null);
         }
+        if (selectedObjects != null) {
+            populateSelectedValues(null);
+            //To support update panel drop downs
+            onChange(null);
+        }
     }
 
     protected boolean sort() {
@@ -163,7 +223,9 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
 
     protected void initListBox() {
         listBox.clear();
-        listBox.insertItem("Select", 0);
+        if (!enableMultiSelect()) {
+            listBox.insertItem("Select", 0);
+        }
     }
 
     @Override
@@ -189,6 +251,19 @@ public abstract class SelectComposite extends BaseField implements ClickHandler,
         } else {
             return null;
         }
+    }
+
+    public JSONArray getSelectedObjects() {
+        JSONArray selectedObjectsL = new JSONArray();
+        int j = 0;
+        for (int i = 0; i < listBox.getItemCount(); i++) {
+            if (listBox.isItemSelected(i)) {
+                String entityId = listBox.getValue(i);
+                selectedObjectsL.set(j, entityMap.get(entityId));
+                j++;
+            }
+        }
+        return selectedObjectsL;
     }
 
     public String getSelectedObjectId() {

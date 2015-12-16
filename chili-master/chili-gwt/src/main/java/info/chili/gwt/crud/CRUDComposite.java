@@ -309,6 +309,10 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         }
         if (fields.get(fieldKey) instanceof SelectComposite) {
             SelectComposite field = (SelectComposite) fields.get(fieldKey);
+            if (field.enableMultiSelect()) {
+                entity.put(fieldKey, field.getSelectedObjects());
+                return;
+            }
             if (field.getSelectedObject() != null) {
                 entity.put(fieldKey, field.getSelectedObject());
             } else {
@@ -413,7 +417,12 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         //Dropdown
         if (fields.get(fieldKey) instanceof SelectComposite && entity.get(fieldKey) != null) {
             SelectComposite selectComposite = (SelectComposite) fields.get(fieldKey);
-            selectComposite.setSelectedValue(entity.get(fieldKey).isObject());
+            logger.info("dddd" + entity.get(fieldKey).toString());
+            if (selectComposite.enableMultiSelect()) {
+                selectComposite.setSelectedValues(JSONUtils.toJSONArray(entity.get(fieldKey)));
+            } else if (entity.get(fieldKey).isObject() != null) {
+                selectComposite.setSelectedValue(entity.get(fieldKey).isObject());
+            }
         }
     }
 
