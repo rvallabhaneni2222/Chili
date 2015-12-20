@@ -40,6 +40,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import info.chili.gwt.composite.BaseFieldWithTextBox;
 import info.chili.gwt.composite.SelectComposite;
 import info.chili.gwt.date.DateUtils;
 import info.chili.gwt.fields.FileuploadField;
@@ -185,10 +186,10 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         if (DataType.IMAGE_FIELD.equals(type)) {
             FileuploadField fileUploadPanel = new FileuploadField(constants, attributeName, entityName,
                     "name", isRequired) {
-                        @Override
-                        public void onUploadComplete(String res) {
-                        }
-                    };
+                @Override
+                public void onUploadComplete(String res) {
+                }
+            };
             entityFieldsPanel.add(fileUploadPanel);
         }
         if (DataType.TEXT_AREA_FIELD.equals(type)) {
@@ -451,6 +452,10 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
     }
 
     protected void disableSubmitButtons() {
+    }
+
+    protected void setVisibleLengthSize(String fieldName, int size) {
+        ((BaseFieldWithTextBox) fields.get(fieldName)).getTextbox().setVisibleLength(size);
     }
 
     public void handleErrorResponse(Throwable err) {
