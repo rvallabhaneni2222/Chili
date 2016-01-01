@@ -63,10 +63,11 @@ public abstract class CMenuBar extends Composite implements ClickHandler {
     }
 
     public final void addDefaultItemStyle() {
-
         for (Label mi : menuItems.keySet()) {
             mi.setStyleName(SELECTED_MENU_ITEM_STYLE);
             break;
         }
     }
+    
+    
 }
