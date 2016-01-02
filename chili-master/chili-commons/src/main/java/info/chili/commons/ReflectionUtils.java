@@ -46,7 +46,6 @@ public class ReflectionUtils {
         LinkedHashMap<String, DataType> fields = getEntityFieldsInfo(clazz, ignoreEncryptedFields);
         try {
             for (String fieldName : fields.keySet()) {
-
                 for (Method method : t.getClass().getMethods()) {
                     if (method.getName().compareToIgnoreCase("get" + fieldName) == 0) {
                         if (fields.get(fieldName).equals(DataType.STRING)) {

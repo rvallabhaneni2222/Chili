@@ -14,6 +14,7 @@ import info.chili.service.jrs.types.Entry;
 import info.chili.spring.SpringContext;
 import info.chili.service.jrs.types.EntityAuditDataTbl;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -43,6 +44,16 @@ public class AuditService {
         return auditReader;
     }
 
+    public Object getVersion(Class cls, Long id, Integer version) {
+        List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
+        if (revNumbers.size() >= version) {
+            return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - version));
+        } else {
+            return null;
+        }
+    }
+//TODO is this getting the current or second recent?
+
     public Object mostRecentVersion(Class cls, Long id) {
         List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
         if (revNumbers.size() > 1) {
@@ -50,6 +61,74 @@ public class AuditService {
         } else {
             return null;
         }
+    }
+
+    public String tableWithRecentChanges(Object entity, Long id, String... ignoreFields) {
+        StringBuilder changesTable = new StringBuilder();
+        changesTable.append("<table>");
+        changesTable.append("<tr>");
+        changesTable.append("<td>");
+        changesTable.append("Field");
+        changesTable.append("</td>");
+        changesTable.append("<td>");
+        changesTable.append("Old Value");
+        changesTable.append("</td>");
+        changesTable.append("<td>");
+        changesTable.append("New Value");
+        changesTable.append("</td>");
+        changesTable.append("</tr>");
+        for (AuditChangeDto dto : compareWithRecentVersion(entity, id, ignoreFields)) {
+            changesTable.append("<tr>");
+            changesTable.append("<td>");
+            changesTable.append(dto.getPropertyName());
+            changesTable.append("</td>");
+            changesTable.append("<td>");
+            changesTable.append(dto.getOldValue());
+            changesTable.append("</td>");
+            changesTable.append("<td>");
+            changesTable.append(dto.getNewValue());
+            changesTable.append("</td>");
+            changesTable.append("</tr>");
+        }
+        changesTable.append("</table>");
+        return changesTable.toString();
+    }
+
+    public List<AuditChangeDto> compareWithRecentVersion(Object entity, Long id, String... ignoreFields) {
+        List<AuditChangeDto> changes = new ArrayList();
+        Object previousVersion = AuditService.instance().getVersion(entity.getClass(), id, 1);
+        if (previousVersion == null) {
+            return changes;
+        }
+        Map<String, Object> valuesMap = ReflectionUtils.getFieldsDataFromEntity(entity, entity.getClass(), true);
+        Map<String, Object> previousValuesMap = ReflectionUtils.getFieldsDataFromEntity(previousVersion, entity.getClass(), true);
+        for (Map.Entry<String, Object> entry : valuesMap.entrySet()) {
+            if (Arrays.asList(ignoreFields).contains(entry.getKey())) {
+                continue;
+            }
+            if (previousValuesMap.get(entry.getKey()) == null && entry.getValue() != null) {
+                AuditChangeDto dto = new AuditChangeDto();
+                dto.setPropertyName(entry.getKey());
+                dto.setOldValue("");
+                dto.setNewValue(entry.getValue().toString());
+                changes.add(dto);
+            }
+            if (previousValuesMap.get(entry.getKey()) != null && entry.getValue() == null) {
+                AuditChangeDto dto = new AuditChangeDto();
+                dto.setPropertyName(entry.getKey());
+                dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());
+                dto.setNewValue("");
+                changes.add(dto);
+            }
+            if (previousValuesMap.get(entry.getKey()) != null && entry.getValue() != null && !previousValuesMap.get(entry.getKey()).toString().equals(entry.getValue().toString())) {
+                AuditChangeDto dto = new AuditChangeDto();
+                dto.setPropertyName(entry.getKey());
+                dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());
+                dto.setNewValue(entry.getValue().toString());
+                changes.add(dto);
+            }
+        }
+        return changes;
     }
 
     //get recent changes on a entity

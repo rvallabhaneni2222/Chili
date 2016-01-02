@@ -7,7 +7,6 @@
  */
 package info.chili.service.jrs.types;
 
-import info.chili.service.jrs.types.Entries;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
