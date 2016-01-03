@@ -15,10 +15,12 @@ import info.chili.spring.SpringContext;
 import info.chili.service.jrs.types.EntityAuditDataTbl;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.springframework.context.annotation.Scope;
@@ -63,21 +65,21 @@ public class AuditService {
         }
     }
 
-    public String tableWithRecentChanges(Object entity, Long id, String... ignoreFields) {
+    public String buildChangesTable(List<AuditChangeDto> changes) {
         StringBuilder changesTable = new StringBuilder();
-        changesTable.append("<table>");
+        changesTable.append("<table border='2px'>");
         changesTable.append("<tr>");
-        changesTable.append("<td>");
+        changesTable.append("<td><b>");
         changesTable.append("Field");
         changesTable.append("</td>");
-        changesTable.append("<td>");
+        changesTable.append("<td><b>");
         changesTable.append("Old Value");
         changesTable.append("</td>");
-        changesTable.append("<td>");
+        changesTable.append("<td><b>");
         changesTable.append("New Value");
         changesTable.append("</td>");
         changesTable.append("</tr>");
-        for (AuditChangeDto dto : compareWithRecentVersion(entity, id, ignoreFields)) {
+        for (AuditChangeDto dto : changes) {
             changesTable.append("<tr>");
             changesTable.append("<td>");
             changesTable.append(dto.getPropertyName());
@@ -94,24 +96,25 @@ public class AuditService {
         return changesTable.toString();
     }
 
-    public List<AuditChangeDto> compareWithRecentVersion(Object entity, Long id, String... ignoreFields) {
+    public List<AuditChangeDto> compare(Object previousVersion, Object currentVersion, String... ignoreFields) {
         List<AuditChangeDto> changes = new ArrayList();
-        Object previousVersion = AuditService.instance().getVersion(entity.getClass(), id, 1);
+        ignoreFieldsList.addAll(Arrays.asList(ignoreFields));
         if (previousVersion == null) {
             return changes;
         }
-        Map<String, Object> valuesMap = ReflectionUtils.getFieldsDataFromEntity(entity, entity.getClass(), true);
-        Map<String, Object> previousValuesMap = ReflectionUtils.getFieldsDataFromEntity(previousVersion, entity.getClass(), true);
+        Map<String, Object> valuesMap = ReflectionUtils.getFieldsDataFromEntity(currentVersion, currentVersion.getClass(), true);
+        Map<String, Object> previousValuesMap = ReflectionUtils.getFieldsDataFromEntity(previousVersion, previousVersion.getClass(), true);
         for (Map.Entry<String, Object> entry : valuesMap.entrySet()) {
-            if (Arrays.asList(ignoreFields).contains(entry.getKey())) {
+            if (ignoreFieldsList.contains(entry.getKey())) {
                 continue;
             }
             if (previousValuesMap.get(entry.getKey()) == null && entry.getValue() != null) {
                 AuditChangeDto dto = new AuditChangeDto();
                 dto.setPropertyName(entry.getKey());
                 dto.setOldValue("");
-                dto.setNewValue(entry.getValue().toString());
+                dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + entry.getValue().toString() + "</font>");
                 changes.add(dto);
+                continue;
             }
             if (previousValuesMap.get(entry.getKey()) != null && entry.getValue() == null) {
                 AuditChangeDto dto = new AuditChangeDto();
@@ -119,16 +122,38 @@ public class AuditService {
                 dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());
                 dto.setNewValue("");
                 changes.add(dto);
+                continue;
             }
-            if (previousValuesMap.get(entry.getKey()) != null && entry.getValue() != null && !previousValuesMap.get(entry.getKey()).toString().equals(entry.getValue().toString())) {
-                AuditChangeDto dto = new AuditChangeDto();
-                dto.setPropertyName(entry.getKey());
-                dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());
-                dto.setNewValue(entry.getValue().toString());
-                changes.add(dto);
+            if (previousValuesMap.get(entry.getKey()) != null && entry.getValue() != null && !previousValuesMap.get(entry.getKey()).equals(entry.getValue())) {
+                if (entry.getValue() instanceof Date) {
+                    if (!DateUtils.isSameDay(((Date) entry.getValue()), ((Date) previousValuesMap.get(entry.getKey())))) {
+                        AuditChangeDto dto = new AuditChangeDto();
+                        dto.setPropertyName(entry.getKey());
+                        Date oldDate = (Date) previousValuesMap.get(entry.getKey());
+                        dto.setOldValue(info.chili.commons.DateUtils.removeTime(oldDate).toString());
+                        Date newDate = (Date) entry.getValue();
+                        dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + newDate.toString() + "</font>");
+                        changes.add(dto);
+                        continue;
+                    } else {
+                        continue;
+                    }
+                } else {
+                    AuditChangeDto dto = new AuditChangeDto();
+                    dto.setPropertyName(entry.getKey());
+                    dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());
+                    dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + entry.getValue().toString() + "</font>");
+                    changes.add(dto);
+                    continue;
+                }
             }
         }
         return changes;
+    }
+
+    public List<AuditChangeDto> compareWithRecentVersion(Object entity, Long id, String... ignoreFields) {
+        Object previousVersion = AuditService.instance().getVersion(entity.getClass(), id, 1);
+        return compare(previousVersion, entity, ignoreFields);
     }
 
     //get recent changes on a entity

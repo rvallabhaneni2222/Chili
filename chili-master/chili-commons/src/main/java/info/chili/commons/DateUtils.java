@@ -5,9 +5,6 @@ import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import static java.util.Calendar.DATE;
-import static java.util.Calendar.MONTH;
-import static java.util.Calendar.YEAR;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -33,6 +30,16 @@ public class DateUtils {
         int end = tempStr.indexOf(" ");
 
         return dateStr.substring(0, start) + tempStr.substring(end + 1);
+    }
+
+    public static Date removeTime(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 
     public final static Date getNextYear(Date now, int i) {
