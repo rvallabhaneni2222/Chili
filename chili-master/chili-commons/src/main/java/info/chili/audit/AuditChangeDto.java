@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement
 @XmlType
-public class AuditChageDto implements Serializable {
+public class AuditChangeDto implements Serializable {
 
     protected String propertyName;
     protected String newValue;
