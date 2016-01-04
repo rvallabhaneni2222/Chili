@@ -186,10 +186,10 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         if (DataType.IMAGE_FIELD.equals(type)) {
             FileuploadField fileUploadPanel = new FileuploadField(constants, attributeName, entityName,
                     "name", isRequired) {
-                @Override
-                public void onUploadComplete(String res) {
-                }
-            };
+                        @Override
+                        public void onUploadComplete(String res) {
+                        }
+                    };
             entityFieldsPanel.add(fileUploadPanel);
         }
         if (DataType.TEXT_AREA_FIELD.equals(type)) {
@@ -400,7 +400,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         // Currency Field
         if (DataType.CURRENCY_FIELD.equals(type)) {
             CurrencyField field = (CurrencyField) fields.get(fieldKey);
-            if (field.getTextbox().isReadOnly()) {
+            if (!field.getTextbox().isEnabled()) {
                 field.setValue(FormatUtils.formarCurrency(JSONUtils.toString(entity, fieldKey)));
             } else {
                 field.setValue(JSONUtils.toString(entity, fieldKey));
@@ -418,7 +418,6 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         //Dropdown
         if (fields.get(fieldKey) instanceof SelectComposite && entity.get(fieldKey) != null) {
             SelectComposite selectComposite = (SelectComposite) fields.get(fieldKey);
-            logger.info("dddd" + entity.get(fieldKey).toString());
             if (selectComposite.enableMultiSelect()) {
                 selectComposite.setSelectedValues(JSONUtils.toJSONArray(entity.get(fieldKey)));
             } else if (entity.get(fieldKey).isObject() != null) {
