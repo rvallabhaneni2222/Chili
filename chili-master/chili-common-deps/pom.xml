@@ -238,6 +238,12 @@
             <version>3.1</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache.commons.lang3.version}</version>
+            <type>jar</type>
+        </dependency>
         <!-- gauve -gwt-->
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -453,5 +459,6 @@
         <eclipse.core.runtime.version>20070801</eclipse.core.runtime.version>
         <gson.version>2.2.4</gson.version>
         <http.client.version>4.4.1</http.client.version>
+        <apache.commons.lang3.version>3.1</apache.commons.lang3.version>
     </properties>
 </project>
