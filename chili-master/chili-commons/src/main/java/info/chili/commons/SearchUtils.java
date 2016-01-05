@@ -29,7 +29,7 @@ public class SearchUtils {
 
     private static final Log log = LogFactory.getLog(SearchUtils.class);
 
-    public static String getSearchQueryString(Class cls, String searchString, List<String> columns) {
+    public static String getSearchQueryString(Class cls, String searchString, List<String> columns, boolean splitSearchString) {
         if (searchString.isEmpty()) {
             return null;
         }
@@ -41,8 +41,12 @@ public class SearchUtils {
         query.append("FROM ").append(cls.getCanonicalName()).append(" WHERE ");
         List<String> filters = new ArrayList<>();
         for (String cloumn : columns) {
-            for (String searchFrag : searchTextFrags) {
-                filters.add(cloumn + " LIKE '%" + searchFrag.trim() + "%'");
+            if (splitSearchString) {
+                for (String searchFrag : searchTextFrags) {
+                    filters.add(cloumn + " LIKE '%" + searchFrag.trim() + "%'");
+                }
+            } else {
+                filters.add(cloumn + " LIKE '%" + searchString.trim() + "%'");
             }
         }
         int i = 0;
@@ -57,9 +61,9 @@ public class SearchUtils {
         return query.toString();
     }
 
-    public static String getSearchSizeQuery(Class cls, String searchText, List<String> columns) {
+    public static String getSearchSizeQuery(Class cls, String searchText, List<String> columns, boolean splitSearchString) {
         //TODO avoid unnecessary call
-        return "SELECT COUNT(*) " + getSearchQueryString(cls, searchText, columns);
+        return "SELECT COUNT(*) " + getSearchQueryString(cls, searchText, columns, splitSearchString);
     }
 
     @Deprecated

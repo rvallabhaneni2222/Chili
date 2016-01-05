@@ -145,20 +145,20 @@ public abstract class CRUDDao<T> {
     }
 
     @Transactional(readOnly = true)
-    public List<T> search(String searchText, int start, int limit, List<String> columns, boolean useSQLSearch) {
+    public List<T> search(String searchText, int start, int limit, List<String> columns, boolean useSQLSearch, boolean splitText) {
         if (searchText.isEmpty()) {
             return Collections.EMPTY_LIST;
         }
         if (useSQLSearch) {
-            return sqlSearch(searchText, start, limit, columns);
+            return sqlSearch(searchText, start, limit, columns, true);
         } else {
             return hibernateSearch(searchText, start, limit);
         }
     }
 
     @Transactional(readOnly = true)
-    public List<T> sqlSearch(String searchText, int start, int limit, List<String> columns) {
-        Query searchQ = getEntityManager().createQuery(SearchUtils.getSearchQueryString(entityCls, searchText, columns));
+    public List<T> sqlSearch(String searchText, int start, int limit, List<String> columns, boolean splitSearch) {
+        Query searchQ = getEntityManager().createQuery(SearchUtils.getSearchQueryString(entityCls, searchText, columns, splitSearch));
         searchQ.setFirstResult(start);
         searchQ.setMaxResults(limit);
         return searchQ.getResultList();
@@ -216,7 +216,7 @@ public abstract class CRUDDao<T> {
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public Long searchSize(String searchText, List<String> columns) {
-        Query sizeQuery = getEntityManager().createQuery(SearchUtils.getSearchSizeQuery(entityCls, searchText, columns));
+        Query sizeQuery = getEntityManager().createQuery(SearchUtils.getSearchSizeQuery(entityCls, searchText, columns, true));
         return (Long) sizeQuery.getSingleResult();
     }
 
