@@ -51,4 +51,13 @@ public abstract class AbstractEntity implements Serializable {
     public Integer getVersion() {
         return version;
     }
+
+    /**
+     * override this to show short description of the entity
+     *
+     * @return
+     */
+    public String describe() {
+        return "";
+    }
 }
