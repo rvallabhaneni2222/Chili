@@ -5,6 +5,9 @@
  */
 package info.chili.docs;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -37,7 +40,16 @@ public class MakeHTML {
         public void appendDetail(StringBuffer buffer, String fieldName, Object value) {
             if (value.getClass().getName().startsWith("java.lang")) {
                 super.appendDetail(buffer, fieldName, value);
-            } else {
+            } else if (value instanceof Date) {
+                value = new SimpleDateFormat("MM/dd/yyyy").format(value);
+                super.appendDetail(buffer, fieldName, value);
+            } else if (value instanceof BigDecimal) {
+                BigDecimal val = (BigDecimal) value;
+                super.appendDetail(buffer, fieldName, val.doubleValue());
+            }else if (value.getClass().isEnum()) {
+                value = String.valueOf(value);
+                super.appendDetail(buffer, fieldName, value);
+            }else {
                 buffer.append(ReflectionToStringBuilder.toString(value, this));
             }
         }
