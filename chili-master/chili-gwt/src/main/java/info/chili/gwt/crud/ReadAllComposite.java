@@ -182,10 +182,14 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
      * @param noOfRecords the no of records
      */
     public void initPaging(Long noOfRecords) {
-        pageSize = new Integer(10);
+        pageSize = getPageSize();
         numberOfRecords = noOfRecords;
         setTotalResults(noOfRecords.intValue());
         createPageLinks();
+    }
+
+    protected Integer getPageSize() {
+        return 10;
     }
 
     public void setTotalResults(Integer noOfRecords) {
