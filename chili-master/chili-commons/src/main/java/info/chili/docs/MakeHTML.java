@@ -20,13 +20,13 @@ public class MakeHTML {
     private static final class HTMLStyle extends ToStringStyle {
 
         public HTMLStyle() {
-            setFieldSeparator("</td></tr>" + SystemUtils.LINE_SEPARATOR + "<tr><td>");
+            setFieldSeparator("</td></tr>" + SystemUtils.LINE_SEPARATOR + "<tr><td style=\"border: 1px solid rgb(204, 204, 204); padding: 5px 10px; \">");
 
             setContentStart("<table>" + SystemUtils.LINE_SEPARATOR
-                    + "<thead><tr><th>Field</th><th>Data</th></tr></thead>"
-                    + "<tbody><tr><td>");
+                    + "<thead><tr><th style=\"border: 1px solid rgb(204, 204, 204); padding: 5px 10px; background: rgb(238, 238, 238);\">Field</th><th style=\"border: 1px solid rgb(204, 204, 204); padding: 5px 10px; background: rgb(238, 238, 238);\">Data</th></tr></thead>"
+                    + "<tbody><tr><td style=\"border: 1px solid rgb(204, 204, 204); padding: 5px 10px; \">");
 
-            setFieldNameValueSeparator("</td><td>");
+            setFieldNameValueSeparator("</td><td style=\"border: 1px solid rgb(204, 204, 204); padding: 5px 10px; \">");
 
             setContentEnd("</td></tr>" + SystemUtils.LINE_SEPARATOR + "</tbody></table>");
 
@@ -46,10 +46,10 @@ public class MakeHTML {
             } else if (value instanceof BigDecimal) {
                 BigDecimal val = (BigDecimal) value;
                 super.appendDetail(buffer, fieldName, val.doubleValue());
-            }else if (value.getClass().isEnum()) {
+            } else if (value.getClass().isEnum()) {
                 value = String.valueOf(value);
                 super.appendDetail(buffer, fieldName, value);
-            }else {
+            } else {
                 buffer.append(ReflectionToStringBuilder.toString(value, this));
             }
         }
