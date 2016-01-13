@@ -30,13 +30,9 @@ public class Entry implements Serializable {
         this.value = value;
     }
 
-    public Entry(Long id, String... values) {
+    public Entry(Long id, String value, String value2) {
         this.id = id.toString();
-        StringBuilder sb = new StringBuilder();
-        for (String str : values) {
-            sb.append(str).append(" ");
-        }
-        this.value = sb.toString();
+        this.value = value + " " + value2;
     }
 
     public Entry(Long id, String value) {
