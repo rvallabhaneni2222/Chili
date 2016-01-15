@@ -7,8 +7,10 @@
  */
 package info.chili.service.jrs;
 
+import info.chili.commons.pdf.PDFUtils;
 import info.chili.service.jrs.types.Entry;
 import info.chili.dao.CRUDDao;
+import info.chili.docs.MakeHTML;
 import info.chili.jpa.validation.Validate;
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -117,6 +120,27 @@ public abstract class CRUDResource<T> {
     @Transactional(propagation = Propagation.NEVER)
     public String searchSize(T entity) {
         return getDao().searchSize(entity).toString();
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GET
+    @Path("/print")
+    @Produces({"application/pdf"})
+    public Response print(@QueryParam("id") Long id) {
+        if (getDao().findById(id) != null) {
+            String report = MakeHTML.makeHTML(getDao().findById(id)).replaceAll("<null>", "");
+            byte[] pdf = PDFUtils.convertToPDF(report);
+            return Response.ok(pdf)
+                    .header("content-disposition", "filename = print.pdf")
+                    .header("Content-Length", pdf)
+                    .build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     public abstract CRUDDao getDao();
