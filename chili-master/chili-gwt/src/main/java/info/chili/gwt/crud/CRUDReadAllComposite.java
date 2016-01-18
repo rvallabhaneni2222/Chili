@@ -15,6 +15,9 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
         TableRowOptionsWidget rowOptionsWidget = new TableRowOptionsWidget(type, id) {
             @Override
             protected void onQuickView() {
+                if (GenericPopup.instance() != null) {
+                    GenericPopup.instance().hide();
+                }
                 CRUDReadAllComposite.this.onQuickView(row, id);
             }
 
@@ -42,6 +45,9 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
         TableRowOptionsWidget rowOptionsWidget = new TableRowOptionsWidget(id, types) {
             @Override
             protected void onQuickView() {
+                if (GenericPopup.instance() != null) {
+                    GenericPopup.instance().hide();
+                }
                 CRUDReadAllComposite.this.onQuickView(row, id);
             }
 
@@ -99,7 +105,6 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
      */
 
     //TODO make this non abstract
-
     public abstract void deleteClicked(String entityId);
 
     /*
