@@ -30,7 +30,7 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
         headers.put("remote-ip", getRemoteIPAddress());
         if (username == null && password == null) {
             if (this.getThreadLocalRequest().getSession().getAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR) == null) {
-                throw new SecurityException("no-authorization-token");
+                throw new RuntimeException("no-authorization-token");
             } else {
                 return doGet(getLoginPath(), addHeaders(headers, ""), true);
             }
@@ -81,9 +81,9 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
     }
 
     protected void populateAuthorizationHeader(String username, String password) {
-            this.getThreadLocalRequest().getSession().removeAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR);
-            this.getThreadLocalRequest().getSession().setAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR, "Basic " + new String(Base64.encodeBase64((username.toLowerCase() + ":" + password).getBytes())));
-        }
+        this.getThreadLocalRequest().getSession().removeAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR);
+        this.getThreadLocalRequest().getSession().setAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR, "Basic " + new String(Base64.encodeBase64((username.toLowerCase() + ":" + password).getBytes())));
+    }
 
     protected abstract String getServicesRootURL();
 
