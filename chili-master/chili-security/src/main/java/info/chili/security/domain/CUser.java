@@ -40,6 +40,18 @@ public class CUser implements Serializable {
     private boolean enabled;
     private Set<CRole> roles;
 
+    public CUser() {
+    }
+
+    public CUser(String username) {
+        this.username = username;
+    }
+
+    public CUser(String username, String passwordHash) {
+        this.username = username;
+        this.passwordHash = passwordHash;
+    }
+
     @Id
     @GeneratedValue
     public Long getUserId() {

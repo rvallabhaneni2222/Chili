@@ -26,16 +26,19 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
 
     @Override
     public String login(String username, String password) throws Exception {
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("remote-ip", getRemoteIPAddress());
+        if (username == null && password == null) {
+            if (this.getThreadLocalRequest().getSession().getAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR) == null) {
+                throw new SecurityException("no-authorization-token");
+            } else {
+                return doGet(getLoginPath(), addHeaders(headers, ""), true);
+            }
+        }
         populateAuthorizationHeader(username, password);
         JSONObject user = new JSONObject();
         user.put("username", username.toLowerCase());
         user.put("passwordHash", "MYPASSWORD");
-        Map<String, String> headers = new HashMap<String, String>();
-        headers.put("remote-ip", getRemoteIPAddress());
-        logger.info("user-id" + username.toLowerCase());
-        logger.info("remote-ip" + getRemoteIPAddress());
-        System.out.println("user-id" + username.toLowerCase());
-        System.out.println("remote-ip" + getRemoteIPAddress());
         return doPut(getLoginPath(), user.toString(), addHeaders(headers, ""), true);
     }
 
@@ -78,9 +81,9 @@ public abstract class AbstractHttpService extends BaseRemoteService implements H
     }
 
     protected void populateAuthorizationHeader(String username, String password) {
-        this.getThreadLocalRequest().getSession().removeAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR);
-        this.getThreadLocalRequest().getSession().setAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR, "Basic " + new String(Base64.encodeBase64((username.toLowerCase() + ":" + password).getBytes())));
-    }
+            this.getThreadLocalRequest().getSession().removeAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR);
+            this.getThreadLocalRequest().getSession().setAttribute(AbstractFileServiceServlet.AUTH_HEADER_ATTR, "Basic " + new String(Base64.encodeBase64((username.toLowerCase() + ":" + password).getBytes())));
+        }
 
     protected abstract String getServicesRootURL();
 
