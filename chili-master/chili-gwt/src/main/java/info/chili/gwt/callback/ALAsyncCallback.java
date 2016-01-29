@@ -26,7 +26,7 @@ public abstract class ALAsyncCallback<T> implements AsyncCallback<T> {
     /**
      * The loading widget.
      */
-    LoadingWidget loadingWidget = new LoadingWidget();
+    protected LoadingWidget loadingWidget = new LoadingWidget();
 
     /**
      * Instantiates a new aL async callback.
@@ -78,8 +78,8 @@ public abstract class ALAsyncCallback<T> implements AsyncCallback<T> {
     public void setIsCompleted(Boolean isCompleted) {
         this.isCompleted = isCompleted;
     }
-    
-    public String getFailureMessage(){
+
+    public String getFailureMessage() {
         return "Call Failed";
     }
 }
