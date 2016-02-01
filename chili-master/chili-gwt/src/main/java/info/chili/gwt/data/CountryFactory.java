@@ -17,6 +17,7 @@ public class CountryFactory {
         List<String> countries = new ArrayList<String>();
         countries.add("USA");
         countries.add("INDIA");
+        countries.add("CANADA");
         return countries;
     }
 }
