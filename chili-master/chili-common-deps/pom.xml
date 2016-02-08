@@ -433,7 +433,7 @@
         <spring.mongodb>1.7.0.RELEASE</spring.mongodb>
         <jasper.version>4.5.1</jasper.version>
         <dynamic.jasper.version>4.0.0</dynamic.jasper.version>
-        <jersey.version>1.8</jersey.version>
+        <jersey.version>1.19</jersey.version>
         <guava.version>17.0</guava.version>
         <itext.version>2.0.8</itext.version>
         <poi.version>3.9</poi.version>
