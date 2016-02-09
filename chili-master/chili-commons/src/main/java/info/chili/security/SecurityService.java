@@ -86,7 +86,9 @@ public class SecurityService {
 //            throw new RuntimeException(ex);
         } finally {
             try {
-                fis.close();
+                if (fis != null) {
+                    fis.close();
+                }
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
