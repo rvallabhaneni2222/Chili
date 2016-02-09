@@ -4,11 +4,14 @@
  */
 package info.chili.commons;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -69,7 +72,7 @@ public class PropertyFileLoader {
                     result.load(in); // Can throw IOException
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException ex) {
             result = null;
         } finally {
             if (in != null) {
@@ -86,7 +89,7 @@ public class PropertyFileLoader {
                     + "]"
                     + " as "
                     + (LOAD_AS_RESOURCE_BUNDLE ? "a resource bundle"
-                    : "a classloader resource"));
+                            : "a classloader resource"));
         }
 
         return result;

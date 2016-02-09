@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class AuditChangeDto implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     protected String propertyName;
     protected String newValue;
     protected String oldValue;

@@ -18,6 +18,7 @@ import javax.persistence.TypedQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -46,7 +47,7 @@ public abstract class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
             String[] ignore = {"id", "version"};
             BeanUtils.copyProperties(findById(id), clone, ignore);
             return clone;
-        } catch (Exception ex) {
+        } catch (InstantiationException | IllegalAccessException | BeansException ex) {
             throw new RuntimeException(ex);
         }
     }

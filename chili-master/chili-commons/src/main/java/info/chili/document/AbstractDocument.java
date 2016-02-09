@@ -14,8 +14,8 @@ import org.springframework.data.annotation.Id;
  * @author ayalamanchili
  */
 public class AbstractDocument implements Serializable {
-//TODO _class??
 
+    private static final long serialVersionUID = 1L;
     @Id
     private String id;
 

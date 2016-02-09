@@ -22,7 +22,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @XmlRootElement
 @XmlType
 public class ProfileLog extends AbstractDocument {
-
+private static final long serialVersionUID = 1L;
     @Indexed
     protected Date evenTimeStamp;
     /**

@@ -8,11 +8,17 @@ package info.chili.commons;
 import com.google.common.io.Files;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.apache.poi.extractor.ExtractorFactory;
+import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
+import org.apache.xmlbeans.XmlException;
 
 /**
  *
@@ -62,7 +68,7 @@ public class FileSearchUtils {
         String content = "";
         try {
             content = ExtractorFactory.createExtractor(file).getText();
-        } catch (Exception e) {
+        } catch (IOException | OpenXML4JException | XmlException e) {
             throw new RuntimeException("error extractiong file contents", e);
         }
         return content;
@@ -75,8 +81,10 @@ public class FileSearchUtils {
             COSDocument cd = parser.getDocument();
             PDFTextStripper stripper = new PDFTextStripper();
             return stripper.getText(new PDDocument(cd));
-        } catch (Exception e) {
-            throw new RuntimeException("error extractiong PDF file contents", e);
+        }  catch (FileNotFoundException ex) {
+            throw new RuntimeException("error extractiong file contents", ex);
+        } catch (IOException ex) {
+           throw new RuntimeException("error extractiong file contents", ex);
         }
     }
 

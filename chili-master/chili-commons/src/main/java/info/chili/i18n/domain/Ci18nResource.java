@@ -46,6 +46,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 })
 public class Ci18nResource implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
     private Integer id;
@@ -111,7 +112,7 @@ public class Ci18nResource implements Serializable {
     @XmlRootElement
     @XmlType
     public static class Ci18nResourceTable implements java.io.Serializable {
-
+        
         protected Long size;
         protected List<Ci18nResource> entities;
 

@@ -23,6 +23,7 @@ import org.hibernate.envers.RevisionTimestamp;
 //TODO extend from defultauditentity?
 public class AuditRevisionEntity implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
     @RevisionNumber

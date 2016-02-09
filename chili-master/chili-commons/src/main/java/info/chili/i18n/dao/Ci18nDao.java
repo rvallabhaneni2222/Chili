@@ -43,7 +43,7 @@ public class Ci18nDao {
         findAllQuery.setFirstResult(start);
         findAllQuery.setMaxResults(limit);
         res.setEntities(findAllQuery.getResultList());
-        res.setSize(new Integer(findAllQuery.getResultList().size()).longValue());
+        res.setSize(((Integer) findAllQuery.getResultList().size()).longValue());
         return res;
     }
 

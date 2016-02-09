@@ -2,6 +2,7 @@ package info.chili.commons;
 
 import info.chili.jpa.AbstractEntity;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -45,48 +46,48 @@ public class ReflectionUtils {
         Map<String, Object> attributeValues = new HashMap<String, Object>();
         LinkedHashMap<String, DataType> fields = getEntityFieldsInfo(clazz, ignoreEncryptedFields);
         try {
-            for (String fieldName : fields.keySet()) {
+            for (Map.Entry<String, DataType> field : fields.entrySet()) {
                 for (Method method : t.getClass().getMethods()) {
-                    if (method.getName().compareToIgnoreCase("get" + fieldName) == 0) {
-                        if (fields.get(fieldName).equals(DataType.STRING)) {
+                    if (method.getName().compareToIgnoreCase("get" + field.getKey()) == 0) {
+                        if (field.getValue().equals(DataType.STRING)) {
                             String result = (String) method.invoke(t);
-                            attributeValues.put(fieldName, result);
+                            attributeValues.put(field.getKey(), result);
                         }
-                        if (fields.get(fieldName).equals(DataType.INTEGER)) {
+                        if (field.getValue().equals(DataType.INTEGER)) {
                             Integer result = (Integer) method.invoke(t);
-                            attributeValues.put(fieldName, result);
+                            attributeValues.put(field.getKey(), result);
                         }
-                        if (fields.get(fieldName).equals(DataType.LONG)) {
+                        if (field.getValue().equals(DataType.LONG)) {
                             Long result = (Long) method.invoke(t);
-                            attributeValues.put(fieldName, result);
+                            attributeValues.put(field.getKey(), result);
                         }
-                        if (fields.get(fieldName).equals(DataType.FLOAT)) {
+                        if (field.getValue().equals(DataType.FLOAT)) {
                             Float result = (Float) method.invoke(t);
-                            attributeValues.put(fieldName, result);
+                            attributeValues.put(field.getKey(), result);
                         }
-                        if (fields.get(fieldName).equals(DataType.BIG_DECIMAL)) {
+                        if (field.getValue().equals(DataType.BIG_DECIMAL)) {
                             BigDecimal result = (BigDecimal) method.invoke(t);
-                            attributeValues.put(fieldName, result);
+                            attributeValues.put(field.getKey(), result);
                         }
-                        if (fields.get(fieldName).equals(DataType.DATE)) {
+                        if (field.getValue().equals(DataType.DATE)) {
                             Date result = (Date) method.invoke(t);
-                            attributeValues.put(fieldName, result);
+                            attributeValues.put(field.getKey(), result);
                         }
-                        if (fields.get(fieldName).equals(DataType.BOOLEAN)) {
+                        if (field.getValue().equals(DataType.BOOLEAN)) {
                             Boolean result = (Boolean) method.invoke(t);
-                            attributeValues.put(fieldName, result);
+                            attributeValues.put(field.getKey(), result);
                         }
-                        if (fields.get(fieldName).equals(DataType.ENUM)) {
+                        if (field.getValue().equals(DataType.ENUM)) {
                             Object value = method.invoke(t);
                             if (value != null) {
                                 String result = method.invoke(t).toString();
-                                attributeValues.put(fieldName, result);
+                                attributeValues.put(field.getKey(), result);
                             }
                         }
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
         return attributeValues;
@@ -161,7 +162,7 @@ public class ReflectionUtils {
                 if (m.getName().equals("valueOf")) {
                     try {
                         var = (Enum<?>) m.invoke(entity, value);
-                    } catch (Exception e1) {
+                    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
                         throw new RuntimeException(
                                 "error gettng enum values on class:"
                                 + entity.getCanonicalName()
@@ -177,9 +178,9 @@ public class ReflectionUtils {
         StringBuilder sb = new StringBuilder();
         Map<String, Object> attributeValues = getFieldsDataFromEntity(entity,
                 entity.getClass());
-        for (String attribute : attributeValues.keySet()) {
-            if (attributeValues.get(attribute) != null) {
-                sb.append(attributeValues.get(attribute).toString());
+        for (Map.Entry<String, Object> attribute : attributeValues.entrySet()) {
+            if (attribute.getValue() != null) {
+                sb.append(attribute.getValue().toString());
                 sb.append(":");
             }
         }
@@ -264,8 +265,8 @@ public class ReflectionUtils {
         if (getterMethod != null) {
             try {
                 result = getterMethod.invoke(source);
-            } catch (Exception e) {
-                if (getterMethod == null || source == null) {
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                if (source == null) {
                     throw new RuntimeException(
                             "Failed to invoke getter method Method or source is null");
                 } else {

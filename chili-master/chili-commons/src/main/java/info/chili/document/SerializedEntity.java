@@ -17,6 +17,8 @@ import org.springframework.security.crypto.codec.Base64;
 @Document(collection = "serializedentities")
 public class SerializedEntity<T> extends AbstractDocument {
 
+    private static final long serialVersionUID = 1L;
+
     protected String className;
     protected String entityData;
     protected String targetClassName;

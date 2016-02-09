@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlType;
 //TODO move to commons
 public class EntityAuditDataTbl implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     protected List<Entries> entityAuditData;
 
     @XmlElement

@@ -18,6 +18,8 @@ import org.hibernate.validator.constraints.Length;
 @Embeddable
 public class Ci18nResourceLocale implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Column(length = 2, name = "clanguage")
     @Length(max = 2)
     private String language = "";

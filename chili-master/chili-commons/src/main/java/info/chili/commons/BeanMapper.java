@@ -1,8 +1,5 @@
 package info.chili.commons;
 
-import info.chili.commons.ReflectionUtils;
-import info.chili.commons.DataType;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -12,11 +9,8 @@ public class BeanMapper {
         Object target;
         try {
             target = source.getClass().newInstance();
-        } catch (Exception e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException("Could not create new Instance", e);
-        }
-        if (source == null) {
-            return null;
         }
         for (Field field : ReflectionUtils.getAllFields(source.getClass())) {
             if (!DataType.DEFAULT.equals(ReflectionUtils.getDataType(field))
@@ -32,7 +26,7 @@ public class BeanMapper {
         Object target;
         try {
             target = clazz.newInstance();
-        } catch (Exception e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException("Could not create new Instance", e);
         }
         if (source == null) {

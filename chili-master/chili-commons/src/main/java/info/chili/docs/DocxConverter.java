@@ -63,7 +63,6 @@ public class DocxConverter {
      */
     public static void main(String[] args) throws Exception {
         String filePath = "/home/ayalamanchili/Downloads/Status Report_Solution Team_WE 10 May 15.docx";
-        System.out.println(convert(new FileInputStream(new File(filePath))));
     }
 
     /**

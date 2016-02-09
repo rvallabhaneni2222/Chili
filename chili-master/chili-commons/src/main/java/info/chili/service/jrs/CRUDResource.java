@@ -80,8 +80,8 @@ public abstract class CRUDResource<T> {
             @QueryParam("column") List<String> columns) {
         List<Entry> result = new ArrayList<Entry>();
         Map<String, String> values = getDao().getEntityStringMapByParams(start, limit, columns.toArray(new String[columns.size()]));
-        for (String key : values.keySet()) {
-            result.add(new Entry(key, values.get(key)));
+        for (Map.Entry<String, String> entry : values.entrySet()) {
+            result.add(new Entry(entry.getKey(), entry.getValue()));
         }
         return result;
     }

@@ -29,6 +29,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -67,7 +68,7 @@ public abstract class CRUDDao<T> {
             baseIgnoreFields.addAll(Arrays.asList(ignoreFields));
             BeanUtils.copyProperties(findById(id), clone, baseIgnoreFields.toArray(new String[baseIgnoreFields.size()]));
             return clone;
-        } catch (Exception ex) {
+        } catch (InstantiationException | IllegalAccessException | BeansException ex) {
             throw new RuntimeException(ex);
         }
     }

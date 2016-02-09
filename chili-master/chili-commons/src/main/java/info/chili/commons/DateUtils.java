@@ -132,12 +132,6 @@ public class DateUtils {
 
     }
 
-    public static boolean IsLeapYear(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        return IsLeapYear(cal.getTime());
-    }
-
     public static int differenceInMonths(Date startDate, Date endDate) {
         Calendar startCalendar = new GregorianCalendar();
         startCalendar.setTime(startDate);

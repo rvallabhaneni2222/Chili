@@ -9,18 +9,22 @@ import info.chili.spring.SpringContext;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.Provider;
 import java.security.SecureRandom;
 import java.security.Security;
 import java.security.SignatureException;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,7 +44,7 @@ public class SecurityService {
     public PrivateKey getPrivateKey(String keyStoreName, String keyAlias, String keyPassword) {
         try {
             return (PrivateKey) keyStores.get(keyStoreName).getKey(keyAlias, keyPassword.toCharArray());
-        } catch (Exception ex) {
+        } catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -67,17 +71,25 @@ public class SecurityService {
     }
 
     public void initKeyStore(String keyStoreType, String name, String keyStorePassword, String keyStoreFilePath) {
+        FileInputStream fis = null;
         try {
             KeyStore ks = KeyStore.getInstance(keyStoreType);
-            ks.load(new FileInputStream(keyStoreFilePath), keyStorePassword.toCharArray());
+            fis = new FileInputStream(keyStoreFilePath);
+            ks.load(fis, keyStorePassword.toCharArray());
             if (keyStores.containsKey(name)) {
                 keyStores.remove(name);
             }
             keyStores.put(name, ks);
-        } catch (Exception ex) {
+        } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException ex) {
             //TODO 
             ex.printStackTrace();
 //            throw new RuntimeException(ex);
+        } finally {
+            try {
+                fis.close();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
@@ -85,10 +97,10 @@ public class SecurityService {
         try {
             KeyStore ks = KeyStore.getInstance(keyStoreType);
             ks.load(null, keyStorePassword.toCharArray());
-            FileOutputStream fos = new FileOutputStream(storeName);
-            ks.store(fos, keyStorePassword.toCharArray());
-            fos.close();
-        } catch (Exception ex) {
+            try (FileOutputStream fos = new FileOutputStream(storeName)) {
+                ks.store(fos, keyStorePassword.toCharArray());
+            }
+        } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -105,7 +117,7 @@ public class SecurityService {
             keyStore.setKeyEntry(certAlias, keyPair.getPrivate(), keyStorePW.toCharArray(), new java.security.cert.Certificate[]{cert});
             File file = new File(keyStoreFilePath);
             keyStore.store(new FileOutputStream(file), keyStorePW.toCharArray());
-        } catch (Exception ex) {
+        } catch (KeyStoreException | NoSuchAlgorithmException | SecurityException | SignatureException | InvalidKeyException | IOException | CertificateException ex) {
             throw new RuntimeException(ex);
         }
     }
