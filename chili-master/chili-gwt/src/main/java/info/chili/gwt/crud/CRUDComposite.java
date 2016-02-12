@@ -35,6 +35,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DisclosurePanel;
@@ -465,9 +466,11 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
                 JSONValue errors = JSONParser.parseLenient(err.getMessage());
                 processValidationErrors(errors);
             } catch (Exception e) {
+                Window.scrollTo (0 ,0);
                 new ResponseStatusWidget().show("Call Failed");
             }
         } else {
+            Window.scrollTo (0 ,0);
             new ResponseStatusWidget().show("Call Failed");
         }
         enableSubmitButtons();
@@ -501,6 +504,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
             }
         }
         if (genericErrorMessage != null) {
+            Window.scrollTo (0 ,0);
             new ResponseStatusWidget().show(genericErrorMessage);
         }
     }
