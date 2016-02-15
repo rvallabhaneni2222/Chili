@@ -78,7 +78,6 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
         formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
         formPanel.setMethod(FormPanel.METHOD_POST);
         fileUpload.setName(filePrefix);
-        
         formPanel.setAction(ChiliClientConfig.instance().getFileUploadUrl());
         addMoreFiles.addClickHandler(this);
     }
@@ -187,12 +186,15 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
     }
 
     protected String stripFileName(String fileName) {
+        String cleanName;
         if (fileName.lastIndexOf("\\") > 0) {
-            return fileName.substring(fileName.lastIndexOf("\\") + 1);
+            cleanName = fileName.substring(fileName.lastIndexOf("\\") + 1);
         } else {
-            return fileName;
+            cleanName = fileName;
         }
+        return cleanName.replaceAll("[^a-zA-Z0-9\\._]+", "_");
     }
+
     private static FileuploadField instance;
 
     public static FileuploadField instance() {
