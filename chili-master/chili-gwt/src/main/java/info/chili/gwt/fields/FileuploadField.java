@@ -170,7 +170,7 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
             String entityId = JSONUtils.toString(fileObj, "id");
             String url = JSONUtils.toString(fileObj, fileUrlFieldName) + "&";
             for (FileUpload upload : fileUploads) {
-                if (upload.getFilename().contains(FileUtils.getFileNameFromUrl(url))) {
+                if (upload.getFilename().replaceAll("[^a-zA-Z0-9\\._]+", "_").contains(FileUtils.getFileNameFromUrl(url))) {
                     upload.setName(filePrefix + "_" + entityId + "_");
                 }
             }
