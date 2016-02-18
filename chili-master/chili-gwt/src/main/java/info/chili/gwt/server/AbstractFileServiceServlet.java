@@ -32,15 +32,18 @@ public abstract class AbstractFileServiceServlet extends HttpServlet implements 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.log(Level.INFO, "in FileService Post");
-       
+
         //prepare request
         String url = getServiceBaseUrl();
         if (request.getParameter("passthrough") != null) {
             //passthrough mode calls the service method for the path
             url = url + request.getParameter("path") + "?" + request.getQueryString();
+        } else if (request.getParameter("public") != null) {
+            url = url.replaceAll("secured", "public");
+            url = url + "file/upload" + "?" + request.getQueryString();
         } else {
             //calls file upload services
-            url = url + "file/upload";
+            url = url + "file/upload" + "?" + request.getQueryString();
         }
         System.out.println("FileServiceServlet URL" + url);
         HttpPost post = new HttpPost(url);

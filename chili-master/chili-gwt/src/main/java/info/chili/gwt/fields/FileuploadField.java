@@ -38,7 +38,7 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
     protected boolean submitted = false;
     protected boolean required;
     FlowPanel panel = new FlowPanel();
-    FormPanel formPanel = new FormPanel();
+    protected FormPanel formPanel = new FormPanel();
     Label label = new Label("upload");
     FileUpload fileUpload = new FileUpload();
     List<FileUpload> fileUploads = new ArrayList<FileUpload>();
@@ -78,8 +78,16 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
         formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
         formPanel.setMethod(FormPanel.METHOD_POST);
         fileUpload.setName(filePrefix);
-        formPanel.setAction(ChiliClientConfig.instance().getFileUploadUrl());
+        formPanel.setAction(getUploadUrl());
         addMoreFiles.addClickHandler(this);
+    }
+
+    protected String getUploadUrl() {
+        return ChiliClientConfig.instance().getFileUploadUrl();
+    }
+
+    public void appendUploadUrl(String queryPath) {
+        formPanel.setAction(formPanel.getAction() + queryPath);
     }
 
     @Override
