@@ -51,6 +51,7 @@ public abstract class CRUDResource<T> {
 
     @GET
     @Path("/clone/{id}")
+    @Transactional(readOnly = true)
     protected T clone(@PathParam("id") Long id) {
         return (T) getDao().clone(id);
     }
@@ -69,13 +70,14 @@ public abstract class CRUDResource<T> {
 
     @PUT
     @Path("/validate")
+    @Transactional(readOnly = true)
     public void validate(T entity) {
         getDao().validate(entity);
     }
 
     @GET
     @Path("/dropdown/{start}/{limit}")
-    @Transactional(propagation = Propagation.NEVER)
+    @Transactional(readOnly = true)
     public List<Entry> getDropDown(@PathParam("start") int start, @PathParam("limit") int limit,
             @QueryParam("column") List<String> columns) {
         List<Entry> result = new ArrayList<Entry>();
@@ -88,14 +90,14 @@ public abstract class CRUDResource<T> {
 
     @GET
     @Path("/size")
-    @Transactional(propagation = Propagation.NEVER)
+    @Transactional(readOnly = true)
     public long size() {
         return getDao().size();
     }
 
     @GET
     @Path("/search/{searchText}/{start}/{limit}")
-    @Transactional(propagation = Propagation.NEVER)
+    @Transactional(readOnly = true)
     public List<T> search(@PathParam("searchText") String searchText, @PathParam("start") int start,
             @PathParam("limit") int limit, @QueryParam("column") List<String> columns) {
         return getDao().search(searchText, start, limit, columns, false, true);
@@ -103,21 +105,21 @@ public abstract class CRUDResource<T> {
 
     @GET
     @Path("/search_size/{searchText}")
-    @Transactional(propagation = Propagation.NEVER)
+    @Transactional(readOnly = true)
     public String searchSize(@PathParam("searchText") String searchText) {
         return getDao().searchSize(searchText).toString();
     }
 
     @PUT
     @Path("/search/{start}/{limit}")
-    @Transactional(propagation = Propagation.NEVER)
+    @Transactional(readOnly = true)
     public List<T> search(T entity, @PathParam("start") int start, @PathParam("limit") int limit) {
         return getDao().search(entity, start, limit);
     }
 
     @PUT
     @Path("/search_size")
-    @Transactional(propagation = Propagation.NEVER)
+    @Transactional(readOnly = true)
     public String searchSize(T entity) {
         return getDao().searchSize(entity).toString();
     }
@@ -130,6 +132,7 @@ public abstract class CRUDResource<T> {
     @GET
     @Path("/print")
     @Produces({"application/pdf"})
+    @Transactional(readOnly = true)
     public Response print(@QueryParam("id") Long id) {
         if (getDao().findById(id) != null) {
             String report = MakeHTML.makeHTML(getDao().findById(id)).replaceAll("<null>", "");
