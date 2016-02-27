@@ -9,8 +9,13 @@ public class DateUtils {
 
     private static final String DEFAULT_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZ";
     private static final String DEFAULT_FORMAT2 = "yyyy-MM-dd'T'HH:mm:ssZZZ";
+
     private static final String DEFAULT_FORMAT3 = "dd-MMM-YYYY'T'HH:mm:ss.SSSZZZ";
     private static final String DEFAULT_FORMAT4 = "dd-MMM-YYYY'T'HH:mm:ssZZZ";
+    /**
+     * unix
+     */
+    private static final String DEFAULT_FORMAT5 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     private static final String DEFAULT_FORMAT_TZ = "yyyy-MM-dd";
 
     public static String toDateString(Date date) {
@@ -27,16 +32,24 @@ public class DateUtils {
             return null;
         }
         DateTimeFormat formatter;
-        if (dateString.length() == 29) {
-            formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT);
-        } else if (dateString.length() == 25) {
-            formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT2);
-        } else if (dateString.length() == 30) {
-            formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT3);
-        } else if (dateString.length() == 26) {
-            formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT4);
-        } else {
-            throw new RuntimeException(dateString + " : is not supported date string format vaid ones are 1.yyyy-MM-dd'T'HH:mm:ss.SSSZZZ and 2.yyyy-MM-dd'T'HH:mm:ssZZZ:");
+        switch (dateString.length()) {
+            case 29:
+                formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT);
+                break;
+            case 25:
+                formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT2);
+                break;
+            case 24:
+                formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT5);
+                break;
+            case 30:
+                formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT3);
+                break;
+            case 26:
+                formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT4);
+                break;
+            default:
+                throw new RuntimeException(dateString + " : is not supported date string format");
         }
         return formatter.parse(dateString);
     }
