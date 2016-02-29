@@ -15,7 +15,7 @@ public class DateUtils {
     /**
      * unix
      */
-    private static final String DEFAULT_FORMAT5 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    private static final String DEFAULT_FORMAT5 = "yyyy-MM-dd'T'HH:mm:ssZ";
     private static final String DEFAULT_FORMAT_TZ = "yyyy-MM-dd";
 
     public static String toDateString(Date date) {
@@ -39,7 +39,7 @@ public class DateUtils {
             case 25:
                 formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT2);
                 break;
-            case 24:
+            case 22:
                 formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT5);
                 break;
             case 30:
