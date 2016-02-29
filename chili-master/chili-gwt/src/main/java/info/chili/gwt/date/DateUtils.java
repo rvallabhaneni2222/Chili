@@ -1,5 +1,7 @@
 package info.chili.gwt.date;
 
+
+
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import info.chili.gwt.config.ChiliClientConfig;
@@ -27,6 +29,10 @@ public class DateUtils {
         }
     }
 
+    public static void main(String... str) {
+        System.out.println("ddd:" + toDate("2016-02-04T00:00:00Z"));
+    }
+
     public static Date toDate(String dateString) {
         if (dateString == null || dateString.isEmpty()) {
             return null;
@@ -40,7 +46,7 @@ public class DateUtils {
             case 25:
                 formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT2);
                 break;
-            case 22:
+            case 20:
                 formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT5);
                 break;
             case 30:
