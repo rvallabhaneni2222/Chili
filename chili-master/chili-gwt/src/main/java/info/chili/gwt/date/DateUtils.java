@@ -31,6 +31,7 @@ public class DateUtils {
         if (dateString == null || dateString.isEmpty()) {
             return null;
         }
+        dateString = dateString.trim();
         DateTimeFormat formatter;
         switch (dateString.length()) {
             case 29:
@@ -49,7 +50,7 @@ public class DateUtils {
                 formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT4);
                 break;
             default:
-                throw new RuntimeException(dateString + " : is not supported date string format");
+                throw new RuntimeException(":" + dateString + ": is not supported date string format");
         }
         return formatter.parse(dateString);
     }
