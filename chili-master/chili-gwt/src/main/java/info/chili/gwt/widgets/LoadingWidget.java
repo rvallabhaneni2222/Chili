@@ -1,7 +1,7 @@
 package info.chili.gwt.widgets;
 
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 
 // TODO: Auto-generated Javadoc
@@ -13,8 +13,7 @@ public class LoadingWidget extends PopupPanel {
     /**
      * The loading.
      */
-//    Label loading = new Label("Loading...");
-    Image loading = new Image("https://apps.sstech.us/loading-icon.gif");
+    Label loading = new Label("Loading...");
 
     /**
      * Instantiates a new loading widget.
@@ -30,7 +29,7 @@ public class LoadingWidget extends PopupPanel {
      * @see com.google.gwt.user.client.ui.PopupPanel#show()
      */
     public void show() {
-        int left = Window.getClientWidth() / 2;
+        int left = Window.getClientWidth() / 3;
         this.setPopupPosition(left, 0);
         addStyleName("y-gwt-ResponseStatusBar");
         super.show();
@@ -42,7 +41,7 @@ public class LoadingWidget extends PopupPanel {
      * @see com.google.gwt.user.client.ui.PopupPanel#hide()
      */
     public void hide() {
-        removeStyleName("y-gwt-loadingimage");
+        removeStyleName("y-gwt-ResponseStatusBar");
         super.hide();
     }
 }
