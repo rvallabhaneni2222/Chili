@@ -166,6 +166,11 @@
             <version>1.6.11</version>
         </dependency>
         <dependency>
+            <groupId>org.owasp.esapi</groupId>
+            <artifactId>esapi</artifactId>
+            <version>${esapi.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${gson.version}</version>
@@ -450,5 +455,6 @@
         <gson.version>2.2.4</gson.version>
         <http.client.version>4.4.1</http.client.version>
         <apache.commons.lang3.version>3.1</apache.commons.lang3.version>
+        <esapi.version>2.1.0</esapi.version>
     </properties>
 </project>
