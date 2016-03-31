@@ -34,4 +34,4 @@
             <beans:bean id="saltGenerator" class="org.jasypt.salt.ZeroSaltGenerator"/>
         </beans:property>
     </beans:bean>
-</beans:beans>
+</beans:beans
