@@ -8,6 +8,7 @@ package info.chili.identity.service;
 import info.chili.security.domain.CUser;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
  * @author ayalamanchili
  */
 @Component
+@Scope("prototype")
 public class IdentityService {
 
     @PersistenceContext
