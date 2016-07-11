@@ -129,6 +129,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         createTableHeader();
         fillData(entities);
     }
+
     /*
      * (non-Javadoc)
      *
@@ -326,7 +327,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
 
     public void refresh() {
         table.removeAllRows();
-        preFetchTable(0);
+        preFetchTable((goToPage.getValue().intValue() * pageSize) - 10);
     }
 //TODO move to commons
 
