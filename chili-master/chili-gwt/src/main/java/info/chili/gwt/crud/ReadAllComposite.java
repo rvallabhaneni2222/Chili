@@ -326,7 +326,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
 
     public void refresh() {
         table.removeAllRows();
-        if (goToPage.getValue().intValue() > 0) {
+        if (goToPage.getListBox().getSelectedIndex() > 0) {
             preFetchTable((goToPage.getValue().intValue() * pageSize) - 10);
         } else {
             preFetchTable(0);
