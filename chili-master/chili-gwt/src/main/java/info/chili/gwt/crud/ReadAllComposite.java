@@ -135,7 +135,6 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
      *
      * @see info.yalamanchili.gwt.composite.ALComposite#configure()
      */
-
     @Override
     protected void configure() {
         configureTable();
@@ -327,7 +326,11 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
 
     public void refresh() {
         table.removeAllRows();
-        preFetchTable((goToPage.getValue().intValue() * pageSize) - 10);
+        if (goToPage.getValue().intValue() > 0) {
+            preFetchTable((goToPage.getValue().intValue() * pageSize) - 10);
+        } else {
+            preFetchTable(0);
+        }
     }
 //TODO move to commons
 
