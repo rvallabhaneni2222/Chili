@@ -70,7 +70,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
     protected String entityId;
     protected ConstantsWithLookup constants;
     protected String entityName;
-    protected Map<String, BaseField> fields = new HashMap<String, BaseField>();
+    public Map<String, BaseField> fields = new HashMap<String, BaseField>();
 
     public JSONObject getEntity() {
         return entity;
@@ -493,7 +493,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
                     focus = false;
                 }
             } else if (childIndex >= 0) {
-                setChildErrorMsg(getChildWidget(childIndex).fields, err, errSource);
+                setChildErrorMsg(getChildWidget(childIndex), err, errSource);
             } else {
                 //Generic error not specific to any field / class level error
                 if (genericErrorMessage == null) {
@@ -545,7 +545,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         }
     }
 
-    protected CRUDComposite getChildWidget(int childIndexWidget) {
+    protected Map<String, BaseField>  getChildWidget(int childIndexWidget) {
         return null;
     }
 

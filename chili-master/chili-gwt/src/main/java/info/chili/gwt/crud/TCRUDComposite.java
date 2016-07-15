@@ -73,7 +73,7 @@ public abstract class TCRUDComposite extends Composite implements KeyPressListen
     protected String entityId;
     protected ConstantsWithLookup constants;
     protected String entityName;
-    protected Map<String, BaseField> fields = new HashMap<String, BaseField>();
+    public Map<String, BaseField> fields = new HashMap<String, BaseField>();
 
     public JSONObject getEntity() {
         return entity;
@@ -127,6 +127,7 @@ public abstract class TCRUDComposite extends Composite implements KeyPressListen
      * the widgets
      */
     protected abstract void addWidgetsBeforeCaptionPanel();
+
     /*
      * adding and getting Fields
      */
