@@ -7,45 +7,65 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.Widget;
 
 public abstract class ReadComposite extends CRUDComposite {
 
     protected Button cloneB = new Button("Create Copy");
+    Anchor backL = new Anchor("Back");
 
     protected void initReadComposite(JSONObject entity, String className, final ConstantsWithLookup constants) {
         this.entity = entity;
+        entityFieldsPanel.add(backL);
         init(className, true, constants);
-        entityCaptionPanel.addStyleName("y-gwt-ReadEntityCaptionPanel");
-        entityFieldsPanel.addStyleName("y-gwt-ReadEntityDisplayWidget");
-        basePanel.addStyleName("y-gwt-ReadBasePanel");
+        configureRead();
         populateFieldsFromEntity(entity);
-        if (enableClone()) {
-            configureClone();
-        }
     }
 
     protected void initReadComposite(String id, String className, final ConstantsWithLookup constants) {
         this.entityId = id;
+        entityFieldsPanel.add(backL);
         init(className, true, constants);
-        entityCaptionPanel.addStyleName("y-gwt-ReadEntityCaptionPanel");
-        entityFieldsPanel.addStyleName("y-gwt-ReadEntityDisplayWidget");
-        basePanel.addStyleName("y-gwt-ReadBasePanel");
+        configureRead();
         loadEntity(entityId);
-        if (enableClone()) {
-            configureClone();
-        }
     }
 
     protected void initReadComposite(String className, final ConstantsWithLookup constants) {
+        entityFieldsPanel.add(backL);
         init(className, true, constants);
+        configureRead();
+        loadEntity(null);
+    }
+
+    protected void configureRead() {
         entityCaptionPanel.addStyleName("y-gwt-ReadEntityCaptionPanel");
         entityFieldsPanel.addStyleName("y-gwt-ReadEntityDisplayWidget");
         basePanel.addStyleName("y-gwt-ReadBasePanel");
-        loadEntity(null);
         if (enableClone()) {
             configureClone();
         }
+        backL.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                if (getReadAllPanel() != null) {
+                    Widget parent = ReadComposite.this.getParent();
+                    ReadComposite.this.removeFromParent();
+                    ((Panel) parent).add(getReadAllPanel());
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void addWidgetsBeforeCaptionPanel() {
+        basePanel.add(backL);
+    }
+
+    protected ReadAllComposite getReadAllPanel() {
+        return null;
     }
 
     protected void configureClone() {
