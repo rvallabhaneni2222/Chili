@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.resources.client.ImageResource;
 import info.chili.gwt.config.ChiliClientConfig;
 import info.chili.gwt.resources.ChiliImages;
 import info.chili.gwt.widgets.GenericPopup;
@@ -50,6 +51,14 @@ public class ImageField extends ALComposite implements ClickHandler {
                 setDefaultImage(width, height);
             }
         });
+        init(panel);
+    }
+    
+    public ImageField(String labelName, ImageResource imageResource, final int width, final int height, boolean showLabel) {
+        label.setText(labelName);
+        label.setVisible(showLabel);
+        setPixelSize(width, height);
+        image.setResource(imageResource);
         init(panel);
     }
 
