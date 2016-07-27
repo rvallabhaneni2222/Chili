@@ -19,7 +19,6 @@ public abstract class ReadComposite extends CRUDComposite {
 
     protected void initReadComposite(JSONObject entity, String className, final ConstantsWithLookup constants) {
         this.entity = entity;
-        entityFieldsPanel.add(backL);
         init(className, true, constants);
         configureRead();
         populateFieldsFromEntity(entity);
@@ -27,14 +26,12 @@ public abstract class ReadComposite extends CRUDComposite {
 
     protected void initReadComposite(String id, String className, final ConstantsWithLookup constants) {
         this.entityId = id;
-        entityFieldsPanel.add(backL);
         init(className, true, constants);
         configureRead();
         loadEntity(entityId);
     }
 
     protected void initReadComposite(String className, final ConstantsWithLookup constants) {
-        entityFieldsPanel.add(backL);
         init(className, true, constants);
         configureRead();
         loadEntity(null);
@@ -47,23 +44,32 @@ public abstract class ReadComposite extends CRUDComposite {
         if (enableClone()) {
             configureClone();
         }
-        backL.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                if (getReadAllPanel() != null) {
-                    Widget parent = ReadComposite.this.getParent();
-                    ReadComposite.this.removeFromParent();
-                    ((Panel) parent).add(getReadAllPanel());
+        if (enableBack()) {
+            entityFieldsPanel.add(backL);
+            backL.addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    if (getReadAllPanel() != null) {
+                        Widget parent = ReadComposite.this.getParent();
+                        ReadComposite.this.removeFromParent();
+                        ((Panel) parent).add(getReadAllPanel());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override
     protected void addWidgetsBeforeCaptionPanel() {
-        basePanel.add(backL);
+        if (enableBack()) {
+            basePanel.add(backL);
+        }
     }
 
+    protected boolean enableBack() {
+        return false;
+    }
+    
     protected ReadAllComposite getReadAllPanel() {
         return null;
     }
