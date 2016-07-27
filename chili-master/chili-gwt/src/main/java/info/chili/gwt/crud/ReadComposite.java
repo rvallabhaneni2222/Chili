@@ -19,6 +19,7 @@ public abstract class ReadComposite extends CRUDComposite {
 
     protected void initReadComposite(JSONObject entity, String className, final ConstantsWithLookup constants) {
         this.entity = entity;
+        configureBack();
         init(className, true, constants);
         configureRead();
         populateFieldsFromEntity(entity);
@@ -26,12 +27,14 @@ public abstract class ReadComposite extends CRUDComposite {
 
     protected void initReadComposite(String id, String className, final ConstantsWithLookup constants) {
         this.entityId = id;
+        configureBack();
         init(className, true, constants);
         configureRead();
         loadEntity(entityId);
     }
 
     protected void initReadComposite(String className, final ConstantsWithLookup constants) {
+        configureBack();
         init(className, true, constants);
         configureRead();
         loadEntity(null);
@@ -44,6 +47,9 @@ public abstract class ReadComposite extends CRUDComposite {
         if (enableClone()) {
             configureClone();
         }
+    }
+    
+    protected void configureBack() {
         if (enableBack()) {
             entityFieldsPanel.add(backL);
             backL.addClickHandler(new ClickHandler() {
