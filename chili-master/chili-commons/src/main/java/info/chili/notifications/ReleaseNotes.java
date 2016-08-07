@@ -7,7 +7,6 @@ package info.chili.notifications;
 
 import info.chili.document.AbstractDocument;
 import java.util.Date;
-import java.util.Set;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -26,9 +25,9 @@ public class ReleaseNotes extends AbstractDocument {
     protected Date endDate;
     protected String moreInformationLink;
     @Indexed
-    protected Set<String> roles;
+    protected String roles;
     @Indexed
-    protected Set<String> userIds;
+    protected String userIds;
     @Indexed
     protected Integer priority;
 
@@ -72,19 +71,19 @@ public class ReleaseNotes extends AbstractDocument {
         this.moreInformationLink = moreInformationLink;
     }
 
-    public Set<String> getRoles() {
+    public String getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<String> roles) {
+    public void setRoles(String roles) {
         this.roles = roles;
     }
 
-    public Set<String> getUserIds() {
+    public String getUserIds() {
         return userIds;
     }
 
-    public void setUserIds(Set<String> userIds) {
+    public void setUserIds(String userIds) {
         this.userIds = userIds;
     }
 

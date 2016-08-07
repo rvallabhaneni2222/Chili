@@ -13,5 +13,5 @@ import java.util.List;
  */
 public abstract class AbstractUserMessageService {
 
-    public abstract List<UserMessage> getMessages(String userId);
+    public abstract List<UserMessage> getMessages();
 }

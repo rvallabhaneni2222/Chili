@@ -19,13 +19,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserMessageService {
 
-    public List<UserMessage> getMessages(String userId) {
+    public List<UserMessage> getMessages() {
         List<UserMessage> messages = new ArrayList<>();
         try {
             for (String adapterName : SpringContext.getApplicationContext().getBeanNamesForType(AbstractUserMessageService.class)) {
                 Object obj = SpringContext.getBean(adapterName);
-                Method method = obj.getClass().getDeclaredMethod("getMessages", String.class);
-                messages.addAll((List<UserMessage>) method.invoke(obj, userId));
+                Method method = obj.getClass().getDeclaredMethod("getMessages");
+                messages.addAll((List<UserMessage>) method.invoke(obj));
             }
         } catch (IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
             throw new RuntimeException(ex);

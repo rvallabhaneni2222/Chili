@@ -26,10 +26,17 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import org.bouncycastle.jce.X509Principal;
 import org.bouncycastle.x509.X509V3CertificateGenerator;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,7 +46,55 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityService {
 
-    protected HashMap<String, KeyStore> keyStores = new HashMap<String, KeyStore>();
+    public String getCurrentUserName() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            return auth.getName();
+        }
+        return null;
+    }
+
+    public List<String> getCurrentUserRoles() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        if (context == null) {
+            return Collections.emptyList();
+        }
+        Authentication authentication = context.getAuthentication();
+        if (authentication == null) {
+            return Collections.emptyList();
+        }
+        List<String> roles = new ArrayList();
+        for (GrantedAuthority auth : authentication.getAuthorities()) {
+            roles.add(auth.getAuthority());
+        }
+        return roles;
+    }
+
+    public boolean hasAnyRole(String... roles) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        if (context == null) {
+            return false;
+        }
+        Authentication authentication = context.getAuthentication();
+        if (authentication == null) {
+            return false;
+        }
+
+        for (GrantedAuthority auth : authentication.getAuthorities()) {
+            for (String role : roles) {
+                if (role.equals(auth.getAuthority())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean hasRole(String role) {
+        return hasAnyRole(role);
+    }
+
+    protected HashMap<String, KeyStore> keyStores = new HashMap<>();
 
     public PrivateKey getPrivateKey(String keyStoreName, String keyAlias, String keyPassword) {
         try {
