@@ -500,12 +500,30 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
                     genericErrorMessage = new String();
                     genericErrorMessage = genericErrorMessage.concat("Error:");
                 }
-                genericErrorMessage = genericErrorMessage.concat(err.get("source").isString().stringValue() + ":" + err.get("description").isString().stringValue());
+                
+                if(err.get("description").isString().stringValue().contains("Validation failed")){
+                    String description = err.get("description").isString().stringValue();
+                    int firstIndex = 0;
+                    if(description.contains("interpolatedMessage")){
+                        StringBuilder errorMsg = new StringBuilder();
+                        while(description.indexOf("interpolatedMessage", firstIndex) != -1){
+                            firstIndex = description.indexOf("interpolatedMessage", firstIndex);
+                            int messageStartIndex = (firstIndex) + ("interpolatedMessage='".length());
+                            int messageEndIndex = description.indexOf("'", messageStartIndex);
+                            errorMsg.append("\n").append(description.substring(messageStartIndex, messageEndIndex));
+                            firstIndex = messageEndIndex;
+                        }
+                        genericErrorMessage = genericErrorMessage.concat(errorMsg.toString());
+                    }
+                }
+                else{
+                    genericErrorMessage = genericErrorMessage.concat(err.get("source").isString().stringValue() + ":" + err.get("description").isString().stringValue());
+                }
             }
         }
         if (genericErrorMessage != null) {
             Window.scrollTo (0 ,0);
-            new ResponseStatusWidget().show(genericErrorMessage);
+            Window.alert(genericErrorMessage);
         }
     }
 
