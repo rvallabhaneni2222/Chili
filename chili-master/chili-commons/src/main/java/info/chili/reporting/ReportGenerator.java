@@ -7,6 +7,7 @@ package info.chili.reporting;
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
 import ar.com.fdvs.dj.domain.DynamicReport;
+import ar.com.fdvs.dj.domain.DynamicReportOptions;
 import ar.com.fdvs.dj.domain.Style;
 import ar.com.fdvs.dj.domain.builders.StyleBuilder;
 import ar.com.fdvs.dj.domain.constants.Border;
@@ -35,7 +36,6 @@ import net.sf.jasperreports.engine.export.JRXlsExporter;
  */
 public class ReportGenerator {
 //TODO support for email report
-
     public static <T> Response generateReport(List<T> data, String reportName, String format, String location, String... columnOrder) {
         DynamicReport dynamicReport = null;
         if (Strings.isNullOrEmpty(reportName)) {
@@ -75,12 +75,14 @@ public class ReportGenerator {
     public static <T> String generateExcelOrderedReport(List<T> data, String reportName, String location, String[] columnOrder) {
         DynamicReport dynamicReport = null;
         String filename = reportName + UUID.randomUUID().toString() + ".xls";
+        DynamicReportOptions dynamicReportOptions = setDynamicStylesOptions();
         Style titleStyle = createTitleStyle();
         if (data.size() > 0) {
             dynamicReport = new ReflectiveReportBuilder(data, columnOrder).build();
             try {
                 // the below code is necessary, if columns are set using AbstractColumn class
                 // dynamicReport.setColumns(columns);
+                dynamicReport.setOptions(dynamicReportOptions);
                 dynamicReport.setTitle(reportName);
                 dynamicReport.setTitleStyle(titleStyle);
                 JasperPrint jasperPrint = DynamicJasperHelper.generateJasperPrint(dynamicReport, new ClassicLayoutManager(), data);
@@ -95,6 +97,30 @@ public class ReportGenerator {
             }
         }
         return filename;
+    }
+    
+    private static DynamicReportOptions setDynamicStylesOptions(){
+        
+        StyleBuilder oddRowBackgroundStyle = new StyleBuilder(true);
+        oddRowBackgroundStyle.setBackgroundColor(Color.decode("#BDC3C7"));
+        
+        StyleBuilder defaultHeaderStyle = new StyleBuilder(true);
+        defaultHeaderStyle.setBackgroundColor(Color.decode("#D7BDE2"));
+        defaultHeaderStyle.setTextColor(Color.BLACK);
+        defaultHeaderStyle.setFont(Font.ARIAL_MEDIUM_BOLD);
+        defaultHeaderStyle.setBorder(Border.THIN());
+        defaultHeaderStyle.setBorderColor(Color.BLACK);
+        defaultHeaderStyle.setHorizontalAlign(HorizontalAlign.CENTER);
+        defaultHeaderStyle.setVerticalAlign(VerticalAlign.MIDDLE);
+        defaultHeaderStyle.setTransparency(Transparency.OPAQUE);
+        defaultHeaderStyle.setStretchWithOverflow(true);
+        
+        DynamicReportOptions dynamicReportOptions = new DynamicReportOptions();
+        dynamicReportOptions.setDefaultHeaderStyle(defaultHeaderStyle.build());
+        dynamicReportOptions.setPrintBackgroundOnOddRows(true);
+        dynamicReportOptions.setOddRowBackgroundStyle(oddRowBackgroundStyle.build());
+        dynamicReportOptions.setTitleNewPage(false);
+        return dynamicReportOptions;
     }
 
     private static Style createTitleStyle() {
