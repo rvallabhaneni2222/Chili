@@ -7,6 +7,8 @@ package info.chili.notifications;
 
 import info.chili.document.AbstractDocument;
 import java.util.Date;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,6 +16,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  *
  * @author ayalamanchili
  */
+@XmlRootElement
+@XmlType
 @Document(collection = "releasenotes")
 public class ReleaseNotes extends AbstractDocument {
 
