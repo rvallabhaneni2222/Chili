@@ -14,4 +14,6 @@ import java.util.List;
 public abstract class AbstractUserMessageService {
 
     public abstract List<UserMessage> getMessages();
+
+    public abstract void acknowledgeMessage(String source, String id, String userId);
 }

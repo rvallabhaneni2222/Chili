@@ -35,4 +35,10 @@ public class UserMessageResource {
     public List<UserMessage> messages(@PathParam("start") int start, @PathParam("limit") int limit) {
         return userMessageService.getMessages();
     }
+
+    @GET
+    @Path("/message/accknowledge/{source}/{id}")
+    public void acknowledgeMessage(@PathParam("source") String source, @PathParam("id") String id) {
+        userMessageService.acknowledgeMessage(source, id, SecurityService.instance().getCurrentUserName());
+    }
 }

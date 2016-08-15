@@ -10,7 +10,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -31,5 +33,19 @@ public class UserMessageService {
             throw new RuntimeException(ex);
         }
         return messages;
+    }
+
+    @Async
+    @Transactional
+    public void acknowledgeMessage(String source, String id, String userId) {
+        try {
+            for (String adapterName : SpringContext.getApplicationContext().getBeanNamesForType(AbstractUserMessageService.class)) {
+                Object obj = SpringContext.getBean(adapterName);
+                Method method = obj.getClass().getDeclaredMethod("acknowledgeMessage");
+                method.invoke(obj, source, id, userId);
+            }
+        } catch (IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

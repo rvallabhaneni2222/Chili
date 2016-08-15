@@ -6,7 +6,9 @@
 package info.chili.notifications;
 
 import info.chili.document.AbstractDocument;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -34,6 +36,8 @@ public class ReleaseNotes extends AbstractDocument {
     protected String userIds;
     @Indexed
     protected Integer priority;
+
+    protected List<String> acknowledgedIds;
 
     public String getSummary() {
         return summary;
@@ -97,6 +101,17 @@ public class ReleaseNotes extends AbstractDocument {
 
     public void setPriority(Integer priority) {
         this.priority = priority;
+    }
+
+    public List<String> getAcknowledgedIds() {
+        if (acknowledgedIds == null) {
+            this.acknowledgedIds = new ArrayList<>();
+        }
+        return acknowledgedIds;
+    }
+
+    public void setAcknowledgedIds(List<String> acknowledgedIds) {
+        this.acknowledgedIds = acknowledgedIds;
     }
 
 }

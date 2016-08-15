@@ -37,10 +37,21 @@ public class RelesenotesMessageService extends AbstractUserMessageService {
         query.with(new Sort(Sort.Direction.DESC, "createdDate"));
         for (ReleaseNotes note : mongoTemplate.find(query.limit(10), ReleaseNotes.class)) {
             if (note.getUserIds().contains(securityService.getCurrentUserName()) || !Collections.disjoint(securityService.getCurrentUserRoles(), Arrays.asList(note.getRoles().split(",")))) {
-                messages.add(new UserMessage(note.getId(), note.getSummary(), note.getDetails(), note.getMoreInformationLink(), 0));
+                if (!note.getAcknowledgedIds().contains(securityService.getCurrentUserName())) {
+                    messages.add(new UserMessage(note.getId(), note.getClass().getCanonicalName(), note.getSummary(), note.getDetails(), note.getMoreInformationLink()));
+                }
             }
         }
         return messages;
+    }
+
+    @Override
+    public void acknowledgeMessage(String source, String id, String userId) {
+        if (source.equals(ReleaseNotes.class.getCanonicalName())) {
+            ReleaseNotes note = mongoTemplate.findById(id, ReleaseNotes.class);
+            note.getAcknowledgedIds().add(userId);
+            mongoTemplate.save(note);
+        }
     }
 
     public static RelesenotesMessageService instance() {

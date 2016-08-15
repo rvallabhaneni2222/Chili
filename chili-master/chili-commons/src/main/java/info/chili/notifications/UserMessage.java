@@ -16,29 +16,37 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class UserMessage {
 
-    protected String messageId;
+    protected String id;
+    protected String source;
     protected String summary;
     protected String details;
     protected String moreDetailsLink;
-    protected Integer priority;
-
     public UserMessage() {
     }
 
-    public UserMessage(String messageId, String summary, String details, String moreDetailsLink, Integer priority) {
-        this.messageId = messageId;
+    public UserMessage(String id, String source, String summary, String details, String moreDetailsLink) {
+        this.id = id;
+        this.source = source;
         this.summary = summary;
         this.details = details;
         this.moreDetailsLink = moreDetailsLink;
-        this.priority = priority;
     }
 
-    public String getMessageId() {
-        return messageId;
+    public String getId() {
+        return id;
     }
 
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+  
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public String getSummary() {
@@ -63,14 +71,6 @@ public class UserMessage {
 
     public void setMoreDetailsLink(String moreDetailsLink) {
         this.moreDetailsLink = moreDetailsLink;
-    }
-
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority;
     }
 
 }
