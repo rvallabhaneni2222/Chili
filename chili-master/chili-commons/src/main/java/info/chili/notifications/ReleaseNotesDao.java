@@ -8,8 +8,8 @@
  */
 package info.chili.notifications;
 
-import info.chili.notifications.ReleaseNotes;
 import info.chili.spring.SpringContext;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -18,7 +18,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-
 /**
  *
  * @author sudharani.bandaru
@@ -26,11 +25,12 @@ import org.springframework.stereotype.Repository;
 @Repository("releaseNotesDao")
 @Scope("prototype")
 public class ReleaseNotesDao {
-
+    
     @Autowired
     protected MongoOperations mongoTemplate;
-  
+    
     public void save(ReleaseNotes entity) {
+        entity.setCreatedDate(new Date());
         mongoTemplate.save(entity);
     }
     
@@ -39,7 +39,7 @@ public class ReleaseNotesDao {
         query.addCriteria(Criteria.where("userIds").is(userId.trim()));
         return mongoTemplate.findOne(query, ReleaseNotes.class);
     }
-
+    
     public void delete(String userId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("userIds").is(userId.trim()));
@@ -50,8 +50,9 @@ public class ReleaseNotesDao {
         Query query = new Query();
         return mongoTemplate.find(query, ReleaseNotes.class);
     }
+
     public static ReleaseNotesDao instance() {
         return (ReleaseNotesDao) SpringContext.getBean("releaseNotesDao");
     }
-
+    
 }

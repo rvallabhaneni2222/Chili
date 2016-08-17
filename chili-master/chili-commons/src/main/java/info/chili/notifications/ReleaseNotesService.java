@@ -43,13 +43,13 @@ public class ReleaseNotesService {
         return SpringContext.getBean(ReleaseNotesService.class);
     }
     
-
     public ReleaseNotesTable getReleaseNotes(int start, int limit) {
         ReleaseNotesTable res = new ReleaseNotesTable();
         Query query = new Query();
         query.with(new Sort(Sort.Direction.DESC, "userIds"));
         for (ReleaseNotes releaseNotes : mongoTemplate.find(query.limit(limit).skip(start), ReleaseNotes.class)) {
             ReleaseNotesDto dto = new ReleaseNotesDto();
+            dto.setId(releaseNotes.getId());
             dto.setSummary(releaseNotes.getSummary());
             dto.setDetails(releaseNotes.getDetails());
             dto.setEndDate(releaseNotes.getEndDate());
@@ -61,7 +61,7 @@ public class ReleaseNotesService {
         res.setSize(mongoTemplate.count(query, ReleaseNotes.class));
         return res;
     }
-
+    
     public List<ReleaseNotesDto> searchReleaseNotes(ReleaseNotesDto search) {
         List<ReleaseNotesDto> res = new ArrayList();
         Query query = new Query();
@@ -85,18 +85,27 @@ public class ReleaseNotesService {
             res.add(dto);
         }
         return res;
-    }    
-
+    }
+    
     @XmlRootElement
     @XmlType
     public static class ReleaseNotesDto implements java.io.Serializable {
-
+        
+        protected String id;
         protected String summary;
         protected String details;
         protected Date endDate;
         protected String userIds;
         protected String roles;
         protected String moreInformationLink;
+        
+        public String getId() {
+            return id;
+        }
+        
+        public void setId(String id) {
+            this.id = id;
+        }
 
         /**
          * @return the summary
@@ -125,7 +134,7 @@ public class ReleaseNotesService {
         public void setDetails(String details) {
             this.details = details;
         }
-        
+
         /**
          * @return the endDate
          */
@@ -138,7 +147,8 @@ public class ReleaseNotesService {
          */
         public void setEndDate(Date endDate) {
             this.endDate = endDate;
-        }        
+        }
+
         /**
          * @return the userIds
          */
@@ -180,24 +190,24 @@ public class ReleaseNotesService {
         public void setMoreInformationLink(String moreInformationLink) {
             this.moreInformationLink = moreInformationLink;
         }
-
+        
     }
-
+    
     @XmlRootElement
     @XmlType
     public static class ReleaseNotesTable implements java.io.Serializable {
-
+        
         protected Long size;
         protected List<ReleaseNotesDto> entities;
-
+        
         public Long getSize() {
             return size;
         }
-
+        
         public void setSize(Long size) {
             this.size = size;
         }
-
+        
         @XmlElement
         public List<ReleaseNotesDto> getEntities() {
             if (this.entities == null) {
@@ -205,10 +215,10 @@ public class ReleaseNotesService {
             }
             return entities;
         }
-
+        
         public void setEntities(List<ReleaseNotesDto> entities) {
             this.entities = entities;
         }
     }
-
+    
 }

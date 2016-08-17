@@ -38,7 +38,7 @@ public class RelesenotesMessageService extends AbstractUserMessageService {
         for (ReleaseNotes note : mongoTemplate.find(query.limit(10), ReleaseNotes.class)) {
             if (note.getUserIds().contains(securityService.getCurrentUserName()) || !Collections.disjoint(securityService.getCurrentUserRoles(), Arrays.asList(note.getRoles().split(",")))) {
                 if (!note.getAcknowledgedIds().contains(securityService.getCurrentUserName())) {
-                    messages.add(new UserMessage(note.getId(), note.getClass().getCanonicalName(), note.getSummary(), note.getDetails(), note.getMoreInformationLink()));
+                    messages.add(new UserMessage(note.getId(), note.getClass().getCanonicalName(), note.getSummary(), note.getDetails(), note.getMoreInformationLink(),note.getCreatedDate()));
                 }
             }
         }

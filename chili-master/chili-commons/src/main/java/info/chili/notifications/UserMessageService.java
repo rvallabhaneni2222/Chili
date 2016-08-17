@@ -41,7 +41,7 @@ public class UserMessageService {
         try {
             for (String adapterName : SpringContext.getApplicationContext().getBeanNamesForType(AbstractUserMessageService.class)) {
                 Object obj = SpringContext.getBean(adapterName);
-                Method method = obj.getClass().getDeclaredMethod("acknowledgeMessage");
+                Method method = obj.getClass().getDeclaredMethod("acknowledgeMessage", String.class, String.class, String.class);
                 method.invoke(obj, source, id, userId);
             }
         } catch (IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {

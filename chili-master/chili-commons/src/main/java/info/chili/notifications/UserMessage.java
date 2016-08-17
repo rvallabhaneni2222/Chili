@@ -5,6 +5,8 @@
  */
 package info.chili.notifications;
 
+import java.io.Serializable;
+import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -14,22 +16,25 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement
 @XmlType
-public class UserMessage {
+public class UserMessage implements Serializable {
 
     protected String id;
     protected String source;
     protected String summary;
     protected String details;
     protected String moreDetailsLink;
+    protected Date createdDate;
+
     public UserMessage() {
     }
 
-    public UserMessage(String id, String source, String summary, String details, String moreDetailsLink) {
+    public UserMessage(String id, String source, String summary, String details, String moreDetailsLink, Date createdDate) {
         this.id = id;
         this.source = source;
         this.summary = summary;
         this.details = details;
         this.moreDetailsLink = moreDetailsLink;
+        this.createdDate = createdDate;
     }
 
     public String getId() {
@@ -40,7 +45,6 @@ public class UserMessage {
         this.id = id;
     }
 
-  
     public String getSource() {
         return source;
     }
@@ -71,6 +75,14 @@ public class UserMessage {
 
     public void setMoreDetailsLink(String moreDetailsLink) {
         this.moreDetailsLink = moreDetailsLink;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
 }
