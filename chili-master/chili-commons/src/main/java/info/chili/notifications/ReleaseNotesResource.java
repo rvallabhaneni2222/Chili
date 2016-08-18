@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Consumes("application/json")
 @Transactional
 public class ReleaseNotesResource {
-    
+
     @Autowired
     protected ReleaseNotesService releaseNotesService;
     @Autowired
@@ -44,17 +44,17 @@ public class ReleaseNotesResource {
         releaseNotesDao.save(entity);
     }
 
-    @Path("/{userIds}")
+    @Path("/{id}")
     @GET
-    public ReleaseNotes read(@PathParam("userIds") String userIds) {
-        return releaseNotesDao.findById(userIds);
+    public ReleaseNotes read(@PathParam("id") String id) {
+        return releaseNotesDao.findById(id);
     }
 
     @PUT
-    @Path("/delete/{userIds}")
+    @Path("/delete/{id}")
     @Validate
-    public void delete(@PathParam("userIds") String userIds) {
-        releaseNotesDao.delete(userIds);
+    public void delete(@PathParam("id") String id) {
+        releaseNotesDao.delete(id);
     }
 
     @GET
@@ -63,5 +63,3 @@ public class ReleaseNotesResource {
         return releaseNotesService.getReleaseNotes(start, limit);
     }
 }
-
-

@@ -14,7 +14,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -25,27 +24,23 @@ import org.springframework.stereotype.Repository;
 @Repository("releaseNotesDao")
 @Scope("prototype")
 public class ReleaseNotesDao {
-    
+
     @Autowired
     protected MongoOperations mongoTemplate;
-    
+
     public void save(ReleaseNotes entity) {
         entity.setCreatedDate(new Date());
         mongoTemplate.save(entity);
     }
-    
-    public ReleaseNotes findById(String userId) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("userIds").is(userId.trim()));
-        return mongoTemplate.findOne(query, ReleaseNotes.class);
+
+    public ReleaseNotes findById(String id) {
+        return mongoTemplate.findById(id, ReleaseNotes.class);
     }
-    
-    public void delete(String userId) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("userIds").is(userId.trim()));
-        mongoTemplate.remove(mongoTemplate.findOne(query, ReleaseNotes.class));
+
+    public void delete(String id) {
+        mongoTemplate.remove(mongoTemplate.findById(id, ReleaseNotes.class));
     }
-    
+
     public List<ReleaseNotes> query() {
         Query query = new Query();
         return mongoTemplate.find(query, ReleaseNotes.class);
@@ -54,5 +49,5 @@ public class ReleaseNotesDao {
     public static ReleaseNotesDao instance() {
         return (ReleaseNotesDao) SpringContext.getBean("releaseNotesDao");
     }
-    
+
 }

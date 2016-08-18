@@ -9,8 +9,10 @@ import info.chili.document.AbstractDocument;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,11 +25,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "releasenotes")
 public class ReleaseNotes extends AbstractDocument {
 
+    @NotEmpty
     protected String summary;
     protected String details;
     @Indexed
     protected Date createdDate;
     @Indexed
+    @NotNull
+    protected Date effectiveDate;
+    @Indexed
+    @NotNull
     protected Date endDate;
     protected String moreInformationLink;
     @Indexed
@@ -61,6 +68,14 @@ public class ReleaseNotes extends AbstractDocument {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public Date getEffectiveDate() {
+        return effectiveDate;
+    }
+
+    public void setEffectiveDate(Date effectiveDate) {
+        this.effectiveDate = effectiveDate;
     }
 
     public Date getEndDate() {

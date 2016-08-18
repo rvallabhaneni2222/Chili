@@ -46,12 +46,13 @@ public class ReleaseNotesService {
     public ReleaseNotesTable getReleaseNotes(int start, int limit) {
         ReleaseNotesTable res = new ReleaseNotesTable();
         Query query = new Query();
-        query.with(new Sort(Sort.Direction.DESC, "userIds"));
+        query.with(new Sort(Sort.Direction.DESC, "createdDate"));
         for (ReleaseNotes releaseNotes : mongoTemplate.find(query.limit(limit).skip(start), ReleaseNotes.class)) {
             ReleaseNotesDto dto = new ReleaseNotesDto();
             dto.setId(releaseNotes.getId());
             dto.setSummary(releaseNotes.getSummary());
             dto.setDetails(releaseNotes.getDetails());
+            dto.setEffectiveDate(releaseNotes.getEffectiveDate());
             dto.setEndDate(releaseNotes.getEndDate());
             dto.setUserIds(releaseNotes.getUserIds());
             dto.setRoles(releaseNotes.getRoles());
@@ -94,6 +95,7 @@ public class ReleaseNotesService {
         protected String id;
         protected String summary;
         protected String details;
+        protected Date effectiveDate;
         protected Date endDate;
         protected String userIds;
         protected String roles;
@@ -133,6 +135,14 @@ public class ReleaseNotesService {
          */
         public void setDetails(String details) {
             this.details = details;
+        }
+        
+        public Date getEffectiveDate() {
+            return effectiveDate;
+        }
+        
+        public void setEffectiveDate(Date effectiveDate) {
+            this.effectiveDate = effectiveDate;
         }
 
         /**

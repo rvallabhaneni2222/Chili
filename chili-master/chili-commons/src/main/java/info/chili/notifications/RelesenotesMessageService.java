@@ -10,10 +10,12 @@ import info.chili.spring.SpringContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
@@ -35,10 +37,12 @@ public class RelesenotesMessageService extends AbstractUserMessageService {
         List<UserMessage> messages = new ArrayList();
         Query query = new Query();
         query.with(new Sort(Sort.Direction.DESC, "createdDate"));
+        query.addCriteria(Criteria.where("endDate").gte(new Date())
+                .and("effectiveDate").lt(new Date()));
         for (ReleaseNotes note : mongoTemplate.find(query.limit(10), ReleaseNotes.class)) {
             if (note.getUserIds().contains(securityService.getCurrentUserName()) || !Collections.disjoint(securityService.getCurrentUserRoles(), Arrays.asList(note.getRoles().split(",")))) {
                 if (!note.getAcknowledgedIds().contains(securityService.getCurrentUserName())) {
-                    messages.add(new UserMessage(note.getId(), note.getClass().getCanonicalName(), note.getSummary(), note.getDetails(), note.getMoreInformationLink(),note.getCreatedDate()));
+                    messages.add(new UserMessage(note.getId(), note.getClass().getCanonicalName(), note.getSummary(), note.getDetails(), note.getMoreInformationLink(), note.getCreatedDate()));
                 }
             }
         }
