@@ -5,6 +5,7 @@
  */
 package info.chili.notifications;
 
+import com.google.common.base.Strings;
 import info.chili.security.SecurityService;
 import info.chili.spring.SpringContext;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class RelesenotesMessageService extends AbstractUserMessageService {
         query.addCriteria(Criteria.where("endDate").gte(new Date())
                 .and("effectiveDate").lt(new Date()));
         for (ReleaseNotes note : mongoTemplate.find(query.limit(10), ReleaseNotes.class)) {
-            if (note.getUserIds().contains(securityService.getCurrentUserName()) || !Collections.disjoint(securityService.getCurrentUserRoles(), Arrays.asList(note.getRoles().split(",")))) {
+            if ((!Strings.isNullOrEmpty(note.getUserIds()) && securityService.getCurrentUserName().contains(note.getUserIds())) || (!Strings.isNullOrEmpty(note.getRoles()) && !Collections.disjoint(securityService.getCurrentUserRoles(), Arrays.asList(note.getRoles().split(","))))) {
                 if (!note.getAcknowledgedIds().contains(securityService.getCurrentUserName())) {
                     messages.add(new UserMessage(note.getId(), note.getClass().getCanonicalName(), note.getSummary(), note.getDetails(), note.getMoreInformationLink(), note.getCreatedDate()));
                 }

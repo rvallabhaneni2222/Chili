@@ -70,7 +70,7 @@ public class DateUtils {
     }
 
     public static String getFormatedDate(String dateString, PredefinedFormat format) {
-        if (dateString == null || "".equals(dateString)) {
+        if (dateString == null || dateString.isEmpty()) {
             return null;
         }
         if (ChiliClientConfig.instance().getTimeZone() != null) {
