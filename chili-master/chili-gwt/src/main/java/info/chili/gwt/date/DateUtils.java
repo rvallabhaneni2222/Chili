@@ -1,7 +1,5 @@
 package info.chili.gwt.date;
 
-
-
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import info.chili.gwt.config.ChiliClientConfig;
@@ -81,5 +79,15 @@ public class DateUtils {
         } else {
             return DateTimeFormat.getFormat(format).format(toDate(dateString));
         }
+    }
+
+    public static String formatDate(String dateString) {
+        String date = getFormatedDate(dateString, PredefinedFormat.DATE_SHORT);
+        String[] dates = date.split("-");
+        String formatteddate = "";
+        formatteddate = formatteddate.concat(dates[dates.length - 2]).concat("/");
+        formatteddate = formatteddate.concat(dates[dates.length - 1]).concat("/");
+        formatteddate = formatteddate.concat(dates[0]);
+        return formatteddate;
     }
 }
