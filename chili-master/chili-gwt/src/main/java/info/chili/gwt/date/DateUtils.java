@@ -82,12 +82,14 @@ public class DateUtils {
     }
 
     public static String formatDate(String dateString) {
-        String date = getFormatedDate(dateString, PredefinedFormat.DATE_SHORT);
-        String[] dates = date.split("-");
         String formatteddate = "";
-        formatteddate = formatteddate.concat(dates[dates.length - 2]).concat("/");
-        formatteddate = formatteddate.concat(dates[dates.length - 1]).concat("/");
-        formatteddate = formatteddate.concat(dates[0]);
-        return formatteddate;
+        String date = getFormatedDate(dateString, PredefinedFormat.DATE_SHORT);
+        if (date != null) {
+            String[] dates = date.split("-");
+            formatteddate = formatteddate.concat(dates[dates.length - 2]).concat("/");
+            formatteddate = formatteddate.concat(dates[dates.length - 1]).concat("/");
+            formatteddate = formatteddate.concat(dates[0]);
+        }
+            return formatteddate;
+        }
     }
-}
