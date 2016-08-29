@@ -9,7 +9,6 @@
 * Commons interceptors (profile, logging, input sanitizer)
 * Logging utils
 * Profiling support
-
 * reporting with Jasper
 * Itext based pdf reports
 * POI based word and excel support
@@ -36,7 +35,6 @@
 * JMS based systems orchestration and integration support
 * Support for SOAP,Rest and CSV baesd data sets out of box
 * Support for serilizable payload, Async processing and fault handling.
-* 
 
 ###### Chili-Analytics
 * Support for capture, track appliaction events (web, service, email etc)
