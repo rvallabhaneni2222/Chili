@@ -28,7 +28,7 @@
 * Support for Encryption, Hashing, Key rotation and more
 * User/Device based auditiong and security
 * OWASP based dependency validation
-* OWASP top 10 Interceptors
+* OWASP top 10 Filters (XSS Filter, SQL Injection Filter)
 * Security Store, Key and Certificate management
 * Obfuscation support for code and data
 
