@@ -16,10 +16,12 @@ public abstract class ReadComposite extends CRUDComposite {
 
     protected Button cloneB = new Button("Create Copy");
     Anchor backL = new Anchor("Back");
-
+    Anchor editL = new Anchor("edit");
+    
     protected void initReadComposite(JSONObject entity, String className, final ConstantsWithLookup constants) {
         this.entity = entity;
         configureBack();
+        configureEdit();
         init(className, true, constants);
         configureRead();
         populateFieldsFromEntity(entity);
@@ -28,6 +30,7 @@ public abstract class ReadComposite extends CRUDComposite {
     protected void initReadComposite(String id, String className, final ConstantsWithLookup constants) {
         this.entityId = id;
         configureBack();
+        configureEdit();
         init(className, true, constants);
         configureRead();
         loadEntity(entityId);
@@ -35,6 +38,7 @@ public abstract class ReadComposite extends CRUDComposite {
 
     protected void initReadComposite(String className, final ConstantsWithLookup constants) {
         configureBack();
+        configureEdit();
         init(className, true, constants);
         configureRead();
         loadEntity(null);
@@ -64,20 +68,43 @@ public abstract class ReadComposite extends CRUDComposite {
             });
         }
     }
+    
+    protected void configureEdit() {
+        if (enableEdit()) {
+            entityFieldsPanel.add(editL);
+            editL.addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    onEditClicked();
+                }
+            });
+        }
+     }
+    
+    protected void onEditClicked(){
+        
+    }
 
     @Override
     protected void addWidgetsBeforeCaptionPanel() {
         if (enableBack()) {
             basePanel.add(backL);
         }
+        if (enableEdit()) {
+            basePanel.add(editL);
+        }
     }
-
+    
     protected boolean enableBack() {
         return false;
     }
     
     protected ReadAllComposite getReadAllPanel() {
         return null;
+    }
+    
+    protected boolean enableEdit() {
+        return false;
     }
 
     protected void configureClone() {

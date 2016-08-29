@@ -9,7 +9,6 @@
 * Commons interceptors (profile, logging, input sanitizer)
 * Logging utils
 * Profiling support
-
 * reporting with Jasper
 * Itext based pdf reports
 * POI based word and excel support
@@ -28,7 +27,7 @@
 * Support for Encryption, Hashing, Key rotation and more
 * User/Device based auditiong and security
 * OWASP based dependency validation
-* OWASP top 10 Interceptors
+* OWASP top 10 Filters (XSS Filter, SQL Injection Filter)
 * Security Store, Key and Certificate management
 * Obfuscation support for code and data
 
@@ -36,7 +35,6 @@
 * JMS based systems orchestration and integration support
 * Support for SOAP,Rest and CSV baesd data sets out of box
 * Support for serilizable payload, Async processing and fault handling.
-* 
 
 ###### Chili-Analytics
 * Support for capture, track appliaction events (web, service, email etc)
