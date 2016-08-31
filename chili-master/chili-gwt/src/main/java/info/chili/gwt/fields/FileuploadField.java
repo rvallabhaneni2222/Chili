@@ -175,7 +175,10 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
     public List<JSONString> getFileNames() {
         List<JSONString> files = new ArrayList<JSONString>();
         for (String str : getFileNames(fileUpload.getElement()).split(";")) {
-            files.add(new JSONString(filePrefix + "_entityId_" + stripFileName(str)));
+            JSONString string1 = new JSONString(filePrefix + "_entityId_" + stripFileName(str));
+            if (!string1.stringValue().equalsIgnoreCase(filePrefix + "_entityId_")) {
+                files.add(new JSONString(filePrefix + "_entityId_" + stripFileName(str)));
+            }
         }
         return files;
     }
@@ -228,10 +231,10 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
         }
         onUploadComplete(event.getResults());
     }
+
     /*
      * override this to change the error message
      */
-
     protected void onFileUploadError(String err) {
         Window.alert(err);
     }
