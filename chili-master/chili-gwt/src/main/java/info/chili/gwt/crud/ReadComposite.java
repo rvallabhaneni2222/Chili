@@ -16,7 +16,7 @@ public abstract class ReadComposite extends CRUDComposite {
 
     protected Button cloneB = new Button("Create Copy");
     Anchor backL = new Anchor("Back");
-    Anchor editL = new Anchor("edit");
+    Anchor editL = new Anchor("Edit");
     
     protected void initReadComposite(JSONObject entity, String className, final ConstantsWithLookup constants) {
         this.entity = entity;
