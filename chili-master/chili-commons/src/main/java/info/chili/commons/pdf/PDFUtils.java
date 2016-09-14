@@ -1,12 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
  */
 package info.chili.commons.pdf;
 
 import com.google.common.base.Strings;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 import com.itextpdf.text.pdf.PdfStamper;
@@ -20,6 +23,7 @@ import info.chili.commons.DateUtils;
 import info.chili.security.SecurityService;
 import info.chili.security.Signature;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.PrivateKey;
@@ -164,5 +168,29 @@ public class PDFUtils {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public static byte[] generatePdf(PdfDocumentData data, String companyLogo) {
+        byte[] pdf = generatePdf(data);
+        ByteArrayOutputStream pdfOut = new ByteArrayOutputStream();
+        try {
+            PdfReader pdfReader = new PdfReader(pdf);
+            PdfStamper pdfStamper = new PdfStamper(pdfReader,
+                    pdfOut);
+            Image image = Image.getInstance("C:\\content-management\\office\\" + companyLogo);
+            for (int i = 1; i <= pdfReader.getNumberOfPages(); i++) {
+                PdfContentByte content = pdfStamper.getUnderContent(i);
+                //image.setAbsolutePosition(0f, 40f);
+                image.scaleAbsoluteHeight(40);
+                image.scaleAbsoluteWidth(image.getWidth());
+                image.setAbsolutePosition(70, 800);
+                content.addImage(image);
+            }
+            pdfStamper.close();
+            pdfReader.close();
+        } catch (IOException | DocumentException e) {
+            throw new RuntimeException(e);
+        }
+        return pdfOut.toByteArray();
     }
 }
