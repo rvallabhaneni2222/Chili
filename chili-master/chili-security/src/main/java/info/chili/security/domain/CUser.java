@@ -83,6 +83,7 @@ public class CUser implements Serializable {
         this.passwordHash = passwordHash;
     }
 
+    @org.hibernate.annotations.Index(name = "CUSER_ENABLED")
     public boolean isEnabled() {
         return enabled;
     }
