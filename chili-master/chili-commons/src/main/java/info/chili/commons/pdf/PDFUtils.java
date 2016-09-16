@@ -2,9 +2,9 @@
 * To change this license header, choose License Headers in Project Properties.
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
- */
+*/
 package info.chili.commons.pdf;
-
+ 
 import com.google.common.base.Strings;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
@@ -31,13 +31,13 @@ import java.security.cert.Certificate;
 import java.util.Date;
 import java.util.Map;
 import org.xhtmlrenderer.pdf.ITextRenderer;
-
+ 
 /**
- *
- * @author ayalamanchili
- */
+*
+* @author ayalamanchili
+*/
 public class PDFUtils {
-
+ 
     public static byte[] generatePdf(PdfDocumentData data) {
         byte[] pdfWithSignature = generatePdfWithFields(data);
         for (Signature signature : data.getSignatures()) {
@@ -55,7 +55,7 @@ public class PDFUtils {
         }
         return pdfOut.toByteArray();
     }
-
+ 
     public static byte[] signDocument(byte[] input, String keyStoreName, Signature signature) {
         ByteArrayOutputStream pdfOut = new ByteArrayOutputStream();
         try {
@@ -92,7 +92,7 @@ public class PDFUtils {
         }
         return pdfOut.toByteArray();
     }
-
+ 
     public static byte[] generatePdfWithFields(PdfDocumentData data) {
         ByteArrayOutputStream pdfOut = new ByteArrayOutputStream();
         try {
@@ -108,7 +108,7 @@ public class PDFUtils {
         }
         return pdfOut.toByteArray();
     }
-
+ 
     public static byte[] signPdf(byte[] pdfIn, String keyStoreName, Signature signature) {
         try {
             SecurityService securityService = SecurityService.instance();
@@ -144,7 +144,7 @@ public class PDFUtils {
 //            throw new RuntimeException(ex);
         }
     }
-
+ 
     public static byte[] convertToSignedPDF(String html, String keyStoreName, Signature... signatures) {
         byte[] pdf = convertToPDF(html);
         for (Signature signature : signatures) {
@@ -152,11 +152,11 @@ public class PDFUtils {
         }
         return pdf;
     }
-
+ 
     public static byte[] convertToSignedPDF(String html, String keyStoreName, Signature signature) {
         return signPdf(convertToPDF(html), keyStoreName, signature);
     }
-
+ 
     public static byte[] convertToPDF(String html) {
         ITextRenderer renderer = new ITextRenderer();
         renderer.setDocumentFromString(html);
@@ -169,7 +169,7 @@ public class PDFUtils {
             throw new RuntimeException(ex);
         }
     }
-
+ 
     public static byte[] generatePdf(PdfDocumentData data, String companyLogo) {
         byte[] pdf = generatePdf(data);
         ByteArrayOutputStream pdfOut = new ByteArrayOutputStream();
@@ -177,13 +177,18 @@ public class PDFUtils {
             PdfReader pdfReader = new PdfReader(pdf);
             PdfStamper pdfStamper = new PdfStamper(pdfReader,
                     pdfOut);
+ 
             Image image = Image.getInstance("C:\\content-management\\office\\" + companyLogo);
+            Rectangle pagesize;
             for (int i = 1; i <= pdfReader.getNumberOfPages(); i++) {
-                PdfContentByte content = pdfStamper.getUnderContent(i);
-                //image.setAbsolutePosition(0f, 40f);
-                image.scaleAbsoluteHeight(40);
-                image.scaleAbsoluteWidth(image.getWidth());
-                image.setAbsolutePosition(70, 800);
+                PdfContentByte content = pdfStamper.getOverContent(i);
+                pagesize = pdfReader.getPageSize(i);
+                float x = pagesize.getLeft() + 20;
+                float y = pagesize.getTop() - 57;
+                image.setAbsolutePosition(x, y);
+                image.scaleAbsoluteHeight(30);
+                image.scaleAbsoluteWidth(image.getWidth() / 3);
+                content.addImage(image);
                 content.addImage(image);
             }
             pdfStamper.close();
