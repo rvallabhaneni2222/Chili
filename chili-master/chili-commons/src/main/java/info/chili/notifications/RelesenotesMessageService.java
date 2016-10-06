@@ -26,22 +26,22 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RelesenotesMessageService extends AbstractUserMessageService {
-
+    
     @Autowired
     protected SecurityService securityService;
-
+    
     @Autowired
     protected MongoOperations mongoTemplate;
-
+    
     @Override
     public List<UserMessage> getMessages() {
         List<UserMessage> messages = new ArrayList();
         Query query = new Query();
         query.with(new Sort(Sort.Direction.DESC, "createdDate"));
         query.addCriteria(Criteria.where("endDate").gte(new Date())
-                .and("effectiveDate").lt(new Date()));
+                .and("effectiveDate").lte(new Date()));
         for (ReleaseNotes note : mongoTemplate.find(query.limit(10), ReleaseNotes.class)) {
-            if ((!Strings.isNullOrEmpty(note.getUserIds()) && securityService.getCurrentUserName().contains(note.getUserIds())) || (!Strings.isNullOrEmpty(note.getRoles()) && !Collections.disjoint(securityService.getCurrentUserRoles(), Arrays.asList(note.getRoles().split(","))))) {
+            if ((!Strings.isNullOrEmpty(note.getUserIds()) && Arrays.asList(note.getUserIds().split(",")).contains(securityService.getCurrentUserName())) || (!Strings.isNullOrEmpty(note.getRoles()) && !Collections.disjoint(securityService.getCurrentUserRoles(), Arrays.asList(note.getRoles().split(","))))) {
                 if (!note.getAcknowledgedIds().contains(securityService.getCurrentUserName())) {
                     messages.add(new UserMessage(note.getId(), note.getClass().getCanonicalName(), note.getSummary(), note.getDetails(), note.getMoreInformationLink(), note.getCreatedDate()));
                 }
@@ -49,7 +49,7 @@ public class RelesenotesMessageService extends AbstractUserMessageService {
         }
         return messages;
     }
-
+    
     @Override
     public void acknowledgeMessage(String source, String id, String userId) {
         if (source.equals(ReleaseNotes.class.getCanonicalName())) {
@@ -58,7 +58,7 @@ public class RelesenotesMessageService extends AbstractUserMessageService {
             mongoTemplate.save(note);
         }
     }
-
+    
     public static RelesenotesMessageService instance() {
         return SpringContext.getBean(RelesenotesMessageService.class);
     }
