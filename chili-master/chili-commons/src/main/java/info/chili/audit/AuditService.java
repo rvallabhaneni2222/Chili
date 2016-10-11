@@ -97,6 +97,10 @@ public class AuditService {
     }
 
     public List<AuditChangeDto> compare(Object previousVersion, Object currentVersion, String... ignoreFields) {
+        return compare(previousVersion, currentVersion, true, ignoreFields);
+    }
+
+    public List<AuditChangeDto> compare(Object previousVersion, Object currentVersion, boolean addStyle, String... ignoreFields) {
         List<AuditChangeDto> changes = new ArrayList();
         ignoreFieldsList.addAll(Arrays.asList(ignoreFields));
         if (previousVersion == null) {
@@ -112,8 +116,13 @@ public class AuditService {
                 AuditChangeDto dto = new AuditChangeDto();
                 dto.setPropertyName(entry.getKey());
                 dto.setOldValue("");
-                dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + entry.getValue().toString() + "</font>");
+                if (addStyle) {
+                    dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + entry.getValue().toString() + "</font>");
+                } else {
+                    dto.setNewValue(entry.getValue().toString());
+                }
                 changes.add(dto);
+
                 continue;
             }
             if (previousValuesMap.get(entry.getKey()) != null && entry.getValue() == null) {
@@ -132,17 +141,22 @@ public class AuditService {
                         Date oldDate = (Date) previousValuesMap.get(entry.getKey());
                         dto.setOldValue(info.chili.commons.DateUtils.removeTime(oldDate).toString());
                         Date newDate = (Date) entry.getValue();
-                        dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + newDate.toString() + "</font>");
+                        if (addStyle) {                        
+                            dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + newDate.toString() + "</font>");
+                        } else {
+                            dto.setNewValue(newDate.toString());
+                        }
                         changes.add(dto);
-                        continue;
-                    } else {
-                        continue;
-                    }
+                    } 
                 } else {
                     AuditChangeDto dto = new AuditChangeDto();
                     dto.setPropertyName(entry.getKey());
                     dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());
-                    dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + entry.getValue().toString() + "</font>");
+                    if (addStyle) {   
+                        dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + entry.getValue().toString() + "</font>");
+                    } else {
+                        dto.setNewValue(entry.getValue().toString());
+                    }
                     changes.add(dto);
                     continue;
                 }
@@ -153,7 +167,7 @@ public class AuditService {
 
     public List<AuditChangeDto> compareWithRecentVersion(Object entity, Long id, String... ignoreFields) {
         Object previousVersion = AuditService.instance().getVersion(entity.getClass(), id, 1);
-        return compare(previousVersion, entity, ignoreFields);
+        return compare(previousVersion, entity, false, ignoreFields);
     }
 
     //get recent changes on a entity
