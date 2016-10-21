@@ -17,9 +17,21 @@ public class DateUtils {
      */
     private static final String DEFAULT_FORMAT5 = "yyyy-MM-dd'T'HH:mm:ssZ";
     private static final String DEFAULT_FORMAT_TZ = "yyyy-MM-dd";
+    private static final String DEFAULT_FORMAT6 = "MM-dd-yyy";
+    
+    
 
     public static String toDateString(Date date) {
         DateTimeFormat formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT);
+        if (ChiliClientConfig.instance().getTimeZone() != null) {
+            return formatter.format(date, ChiliClientConfig.instance().getTimeZone());
+        } else {
+            return formatter.format(date);
+        }
+    }
+    
+    public static String toDateStringForBPMN(Date date) {
+        DateTimeFormat formatter = DateTimeFormat.getFormat(DEFAULT_FORMAT6);
         if (ChiliClientConfig.instance().getTimeZone() != null) {
             return formatter.format(date, ChiliClientConfig.instance().getTimeZone());
         } else {
@@ -80,6 +92,7 @@ public class DateUtils {
             return DateTimeFormat.getFormat(format).format(toDate(dateString));
         }
     }
+    
 
     public static String formatDate(String dateString) {
         String formatteddate = "";
