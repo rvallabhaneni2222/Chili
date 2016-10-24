@@ -5,6 +5,7 @@
  */
 package info.chili.document.dao;
 
+import com.google.common.base.Strings;
 import info.chili.document.SerializedEntity;
 import info.chili.spring.SpringContext;
 import java.io.Serializable;
@@ -29,6 +30,10 @@ public class SerializedEntityDao<T> {
     @Autowired
     protected MongoOperations mongoTemplate;
 
+    public void save(SerializedEntity entity) {
+        mongoTemplate.save(entity);
+    }
+
     public <T extends Serializable> void save(T object, String targetclass, String targetInstanceId) {
         SerializedEntity entity = new SerializedEntity();
         entity.setClassName(object.getClass().getCanonicalName());
@@ -38,15 +43,22 @@ public class SerializedEntityDao<T> {
         mongoTemplate.save(entity);
     }
 
-    public SerializedEntity find(String targetClassName, String targetInstanceId) {
+    public SerializedEntity find(String className, String targetClassName, String targetInstanceId) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("targetClassName").is(targetClassName));
-        query.addCriteria(Criteria.where("targetInstanceId").is(targetInstanceId));
+        if (!Strings.isNullOrEmpty(className)) {
+            query.addCriteria(Criteria.where("className").is(className));
+        }
+        if (!Strings.isNullOrEmpty(targetClassName)) {
+            query.addCriteria(Criteria.where("targetClassName").is(targetClassName));
+        }
+        if (!Strings.isNullOrEmpty(targetInstanceId)) {
+            query.addCriteria(Criteria.where("targetInstanceId").is(targetInstanceId));
+        }
         return mongoTemplate.findOne(query, SerializedEntity.class);
     }
 
     public T findAndConvert(String targetClassName, String targetInstanceId) {
-        return (T) convertToObject(find(targetClassName, targetInstanceId));
+        return (T) convertToObject(find(null, targetClassName, targetInstanceId));
     }
 
     public Object convertToObject(SerializedEntity entity) {

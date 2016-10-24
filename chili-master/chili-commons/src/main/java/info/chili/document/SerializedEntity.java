@@ -6,6 +6,7 @@
 package info.chili.document;
 
 import org.apache.commons.lang.SerializationUtils;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.codec.Base64;
 
@@ -18,8 +19,9 @@ import org.springframework.security.crypto.codec.Base64;
 public class SerializedEntity<T> extends AbstractDocument {
 
     private static final long serialVersionUID = 1L;
-
+    @NotEmpty
     protected String className;
+    @NotEmpty
     protected String entityData;
     protected String targetClassName;
     protected String targetInstanceId;
