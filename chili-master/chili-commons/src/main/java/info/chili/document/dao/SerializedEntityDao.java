@@ -9,6 +9,7 @@ import com.google.common.base.Strings;
 import info.chili.document.SerializedEntity;
 import info.chili.spring.SpringContext;
 import java.io.Serializable;
+import java.util.List;
 import org.apache.commons.lang.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -55,6 +56,20 @@ public class SerializedEntityDao<T> {
             query.addCriteria(Criteria.where("targetInstanceId").is(targetInstanceId));
         }
         return mongoTemplate.findOne(query, SerializedEntity.class);
+    }
+
+    public List<SerializedEntity> findAll(String className, String targetClassName, String targetInstanceId) {
+        Query query = new Query();
+        if (!Strings.isNullOrEmpty(className)) {
+            query.addCriteria(Criteria.where("className").is(className));
+        }
+        if (!Strings.isNullOrEmpty(targetClassName)) {
+            query.addCriteria(Criteria.where("targetClassName").is(targetClassName));
+        }
+        if (!Strings.isNullOrEmpty(targetInstanceId)) {
+            query.addCriteria(Criteria.where("targetInstanceId").is(targetInstanceId));
+        }
+        return mongoTemplate.find(query, SerializedEntity.class);
     }
 
     public T findAndConvert(String targetClassName, String targetInstanceId) {

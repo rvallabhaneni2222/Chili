@@ -3,6 +3,7 @@ package info.chili.commons.jrs;
 import info.chili.document.SerializedEntity;
 import info.chili.document.dao.SerializedEntityDao;
 import info.chili.jpa.validation.Validate;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -47,9 +48,15 @@ public class SerializedEntityResource {
     }
 
     @PUT
-    @Validate
+    @Path("/find")
     public SerializedEntity find(@QueryParam("className") String className, @QueryParam("targetClassName") String targetClassName, @QueryParam("targetClassName") String targetInstanceId) {
         return serializedEntityDao.find(className, targetClassName, targetInstanceId);
+    }
+
+    @PUT
+    @Path("/find-all")
+    public List<SerializedEntity> findAll(@QueryParam("className") String className, @QueryParam("targetClassName") String targetClassName, @QueryParam("targetClassName") String targetInstanceId) {
+        return serializedEntityDao.findAll(className, targetClassName, targetInstanceId);
     }
 
 }
