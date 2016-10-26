@@ -49,13 +49,13 @@ public class SerializedEntityResource {
 
     @PUT
     @Path("/find")
-    public SerializedEntity find(@QueryParam("className") String className, @QueryParam("targetClassName") String targetClassName, @QueryParam("targetClassName") String targetInstanceId) {
+    public SerializedEntity find(@QueryParam("className") String className, @QueryParam("targetClassName") String targetClassName, @QueryParam("targetInstanceId") String targetInstanceId) {
         return serializedEntityDao.find(className, targetClassName, targetInstanceId);
     }
 
     @PUT
     @Path("/find-all")
-    public List<SerializedEntity> findAll(@QueryParam("className") String className, @QueryParam("targetClassName") String targetClassName, @QueryParam("targetClassName") String targetInstanceId) {
+    public List<SerializedEntity> findAll(@QueryParam("className") String className, @QueryParam("targetClassName") String targetClassName, @QueryParam("targetInstanceId") String targetInstanceId) {
         return serializedEntityDao.findAll(className, targetClassName, targetInstanceId);
     }
 
