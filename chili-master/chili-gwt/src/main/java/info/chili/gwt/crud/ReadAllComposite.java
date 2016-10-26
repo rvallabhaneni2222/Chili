@@ -11,6 +11,8 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.OpenEvent;
+import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
@@ -20,6 +22,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -111,6 +114,9 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         this.constants = constants;
         init(basePanel);
         preFetchData();
+        if (enableDraft()) {
+            addDraftWidgets();
+        }
     }
 
     protected void preFetchData() {
@@ -128,6 +134,9 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         setTotalResults(entities.size());
         createTableHeader();
         fillData(entities);
+        if (enableDraft()) {
+            addDraftWidgets();
+        }
     }
 
     /*
@@ -361,6 +370,35 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         if (genericErrorMessage != null) {
             new ResponseStatusWidget().show(genericErrorMessage);
         }
+    }
+    
+    //Draft 
+    
+    protected boolean enableDraft() {
+        return false;
+    }
+    
+    protected DisclosurePanel draftDP;
+    
+//    protected void displayDraft() {
+//        
+//    }
+
+    protected String getDraftUrl() {
+        return "";
+    }
+
+    protected void addDraftWidgets() {
+        draftDP = new DisclosurePanel("Draft");
+        draftDP.setWidth("100%");
+        basePanel.add(draftDP);
+        draftDP.addOpenHandler(new OpenHandler<DisclosurePanel>() {
+            @Override
+            public void onOpen(OpenEvent<DisclosurePanel> event) {
+//                displayDraft();
+            }
+        });
+
     }
 
     protected void configureDocumentationLink() {
