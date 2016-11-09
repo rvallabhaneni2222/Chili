@@ -33,7 +33,7 @@ public class FileUtils {
     }
 
     public static boolean isDocument(String filename) {
-        String[] validImagesExtesions = {"PDF", "DOC", "DOCX", "TXT", "RTF"};
+        String[] validImagesExtesions = {"PDF", "DOC", "DOCX", "TXT", "RTF", "ZIP", "PPT", "PPTX", "XLS", "XLSX", "CSV", "HTM", "HTML"};
         for (String ext : validImagesExtesions) {
             if (ext.equalsIgnoreCase(getFileExtension(filename))) {
                 return true;

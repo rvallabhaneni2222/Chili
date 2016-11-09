@@ -3,6 +3,8 @@
  */
 package info.chili.gwt.fields;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
@@ -66,8 +68,42 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
     @Override
     protected void addListeners() {
         submit.addClickHandler(this);
+        fileUpload.addChangeHandler(new ChangeHandler() {
+            @Override
+            public void onChange(ChangeEvent event) {
+                validateFiles();
+            }
+        });
         formPanel.addSubmitHandler(this);
         formPanel.addSubmitCompleteHandler(this);
+    }
+
+    public boolean validateFiles() {
+        for (int i = 0; i < getNumberOfFiles(getFileUpload().getElement()); i++) {
+            String fileName = getFileName(getFileUpload().getElement(), i);
+            if (!ChiliClientConfig.instance().getAllowedFileExtensionsAsList().contains(FileUtils.getFileExtension(fileName))) {
+                Window.alert("Invalid File Extension. Please choose valid file");
+                clearFileUpload();
+                return false;
+            } else if (FileUtils.isDocument(fileName)) {
+                if (getFileSize(getFileUpload().getElement(), i) > ChiliClientConfig.instance().getFileSizeLimit()) {
+                    Window.alert("File size exceeded max limit:" + ChiliClientConfig.instance().getFileSizeLimit() / (1000000) + "MB");
+                    clearFileUpload();
+                    return false;
+                }
+            } else if (FileUtils.isImage(fileName)) {
+                if (getFileSize(getFileUpload().getElement(), i) > ChiliClientConfig.instance().getImageSizeLimit()) {
+                    Window.alert("Image size exceeded max limit:" + ChiliClientConfig.instance().getImageSizeLimit() / (1000000) + "MB");
+                    clearFileUpload();
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    protected void clearFileUpload() {
+        getFileUpload().getElement().setPropertyString("value", "");
     }
 
     @Override
@@ -201,6 +237,28 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
     }
     return ret;
 }-*/;
+
+    public static native String getFileName(Element input, int i) /*-{
+    //microsoft support
+    if (typeof (input.files) == 'undefined'
+            || typeof (input.files.length) == 'undefined') {
+        return input.value;
+    }
+    return input.files[i].name;
+}-*/;
+
+    public native int getNumberOfFiles(final Element input) /*-{
+           //microsoft support
+    if (typeof (input.files) == 'undefined'
+            || typeof (input.files.length) == 'undefined') {
+        return 1;
+    }
+            return input.files.length;
+        }-*/;
+
+    public native int getFileSize(final Element data, int fileNumber) /*-{
+            return data.files[fileNumber].size;
+        }-*/;
 
     public FileUpload getFileUpload() {
         return fileUpload;

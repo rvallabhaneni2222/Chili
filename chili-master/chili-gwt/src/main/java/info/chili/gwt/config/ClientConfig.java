@@ -5,6 +5,7 @@
 package info.chili.gwt.config;
 
 import com.google.gwt.i18n.client.TimeZone;
+import java.util.List;
 
 /**
  *
@@ -17,5 +18,11 @@ public interface ClientConfig {
     public String getFileDownloadUrl();
 
     public TimeZone getTimeZone();
+
+    public long getImageSizeLimit();
+
+    public long getFileSizeLimit();
+
+    public List<String> getAllowedFileExtensionsAsList();
 
 }
