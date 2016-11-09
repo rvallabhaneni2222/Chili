@@ -81,25 +81,41 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
     public boolean validateFiles() {
         for (int i = 0; i < getNumberOfFiles(getFileUpload().getElement()); i++) {
             String fileName = getFileName(getFileUpload().getElement(), i);
-            if (!ChiliClientConfig.instance().getAllowedFileExtensionsAsList().contains(FileUtils.getFileExtension(fileName))) {
+            if (!getValidFileExtensions().contains(FileUtils.getFileExtension(fileName))) {
                 Window.alert("Invalid File Extension. Please choose valid file");
                 clearFileUpload();
                 return false;
             } else if (FileUtils.isDocument(fileName)) {
-                if (getFileSize(getFileUpload().getElement(), i) > ChiliClientConfig.instance().getFileSizeLimit()) {
-                    Window.alert("File size exceeded max limit:" + ChiliClientConfig.instance().getFileSizeLimit() / (1000000) + "MB");
+                if (getFileSize(getFileUpload().getElement(), i) > getMaxFileSize()) {
+                    Window.alert("File size exceeded max limit:" + getMaxFileSize() / (1000000) + "MB");
                     clearFileUpload();
                     return false;
                 }
             } else if (FileUtils.isImage(fileName)) {
-                if (getFileSize(getFileUpload().getElement(), i) > ChiliClientConfig.instance().getImageSizeLimit()) {
-                    Window.alert("Image size exceeded max limit:" + ChiliClientConfig.instance().getImageSizeLimit() / (1000000) + "MB");
+                if (getFileSize(getFileUpload().getElement(), i) > getMaxImageSize()) {
+                    Window.alert("Image size exceeded max limit:" + getMaxImageSize() / (1000000) + "MB");
                     clearFileUpload();
                     return false;
                 }
+            } else if (getFileSize(getFileUpload().getElement(), i) > getMaxFileSize()) {
+                Window.alert("Default File size exceeded max limit:" + getMaxFileSize() / (1000000) + "MB");
+                clearFileUpload();
+                return false;
             }
         }
         return true;
+    }
+
+    protected List<String> getValidFileExtensions() {
+        return ChiliClientConfig.instance().getAllowedFileExtensionsAsList();
+    }
+
+    protected long getMaxFileSize() {
+        return ChiliClientConfig.instance().getFileSizeLimit();
+    }
+
+    protected long getMaxImageSize() {
+        return ChiliClientConfig.instance().getImageSizeLimit();
     }
 
     protected void clearFileUpload() {
