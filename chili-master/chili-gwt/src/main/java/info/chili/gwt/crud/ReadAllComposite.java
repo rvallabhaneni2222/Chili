@@ -114,7 +114,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         this.constants = constants;
         init(basePanel);
         preFetchData();
-        if (enableDraft()) {
+        if (enableDrafts()) {
             addDraftWidgets();
         }
     }
@@ -134,7 +134,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         setTotalResults(entities.size());
         createTableHeader();
         fillData(entities);
-        if (enableDraft()) {
+        if (enableDrafts()) {
             addDraftWidgets();
         }
     }
@@ -371,19 +371,17 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
             new ResponseStatusWidget().show(genericErrorMessage);
         }
     }
-    
+
     //Draft 
-    
-    protected boolean enableDraft() {
+    protected boolean enableDrafts() {
         return false;
     }
-    
+
     protected DisclosurePanel draftDP;
-    
+
 //    protected void displayDraft() {
 //        
 //    }
-
     protected String getDraftUrl() {
         return "";
     }
@@ -395,9 +393,13 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         draftDP.addOpenHandler(new OpenHandler<DisclosurePanel>() {
             @Override
             public void onOpen(OpenEvent<DisclosurePanel> event) {
-//                displayDraft();
+                displayDrafts();
             }
         });
+
+    }
+
+    protected void displayDrafts() {
 
     }
 

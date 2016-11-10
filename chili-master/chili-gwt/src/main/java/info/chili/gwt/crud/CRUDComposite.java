@@ -624,7 +624,6 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
                 auditDP.setContent(new ReadAllAuditDataPanel(entityName, getAuditUrl(), constants));
             }
         });
-
     }
     // view task support
 
