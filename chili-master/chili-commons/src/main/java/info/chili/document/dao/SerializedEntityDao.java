@@ -6,10 +6,14 @@
 package info.chili.document.dao;
 
 import com.google.common.base.Strings;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import info.chili.document.SerializedEntity;
 import info.chili.spring.SpringContext;
 import java.io.Serializable;
-import java.util.List;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 import org.apache.commons.lang.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -31,7 +35,10 @@ public class SerializedEntityDao<T> {
     @Autowired
     protected MongoOperations mongoTemplate;
 
-    public void save(SerializedEntity entity) {
+    public void save(@QueryParam("className") String className, String objData) {
+        SerializedEntity entity = new SerializedEntity();
+        entity.setClassName(className);
+        entity.setEntityData(objData);
         mongoTemplate.save(entity);
     }
 
@@ -58,7 +65,7 @@ public class SerializedEntityDao<T> {
         return mongoTemplate.findOne(query, SerializedEntity.class);
     }
 
-    public List<SerializedEntity> findAll(String className, String targetClassName, String targetInstanceId) {
+    public Response findAll(String className, String targetClassName, String targetInstanceId) {
         Query query = new Query();
         if (!Strings.isNullOrEmpty(className)) {
             query.addCriteria(Criteria.where("className").is(className));
@@ -69,7 +76,12 @@ public class SerializedEntityDao<T> {
         if (!Strings.isNullOrEmpty(targetInstanceId)) {
             query.addCriteria(Criteria.where("targetInstanceId").is(targetInstanceId));
         }
-        return mongoTemplate.find(query, SerializedEntity.class);
+        JsonArray entities = new JsonArray();
+        Gson gson = new Gson();
+        for (SerializedEntity e : mongoTemplate.find(query, SerializedEntity.class)) {
+            entities.add(gson.fromJson(e.getEntityData(), JsonObject.class));
+        }
+        return Response.ok(entities.toString()).build();
     }
 
     public T findAndConvert(String targetClassName, String targetInstanceId) {

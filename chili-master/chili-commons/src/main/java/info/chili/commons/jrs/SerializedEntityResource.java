@@ -3,14 +3,15 @@ package info.chili.commons.jrs;
 import info.chili.document.SerializedEntity;
 import info.chili.document.dao.SerializedEntityDao;
 import info.chili.jpa.validation.Validate;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -43,19 +44,19 @@ public class SerializedEntityResource {
 
     @PUT
     @Validate
-    public void save(SerializedEntity entity) {
-        serializedEntityDao.save(entity);
+    public void save(@QueryParam("className") String className, String entity) {
+        serializedEntityDao.save(className, entity);
     }
 
-    @PUT
+    @GET
     @Path("/find")
     public SerializedEntity find(@QueryParam("className") String className, @QueryParam("targetClassName") String targetClassName, @QueryParam("targetInstanceId") String targetInstanceId) {
         return serializedEntityDao.find(className, targetClassName, targetInstanceId);
     }
 
-    @PUT
+    @GET
     @Path("/find-all")
-    public List<SerializedEntity> findAll(@QueryParam("className") String className, @QueryParam("targetClassName") String targetClassName, @QueryParam("targetInstanceId") String targetInstanceId) {
+    public Response findAll(@QueryParam("className") String className, @QueryParam("targetClassName") String targetClassName, @QueryParam("targetInstanceId") String targetInstanceId) {
         return serializedEntityDao.findAll(className, targetClassName, targetInstanceId);
     }
 

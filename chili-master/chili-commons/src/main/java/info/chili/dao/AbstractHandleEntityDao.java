@@ -160,6 +160,19 @@ public abstract class AbstractHandleEntityDao<T extends AbstractHandleEntity> {
     }
 
     @Transactional(readOnly = true)
+    public AbstractHandleEntity findBySource(Long id, String sourceClassName) {
+        TypedQuery<AbstractHandleEntity> query = getEntityManager().createQuery("from " + entityCls.getCanonicalName() + " where sourceEntityName=:sourceEntityNameParam and sourceEntityId=:sourceEntityIdParam", AbstractHandleEntity.class);
+        query.setParameter("sourceEntityNameParam", sourceClassName);
+        query.setParameter("sourceEntityIdParam", id);
+        if (query.getResultList().size() > 0) {
+            return query.getResultList().get(0);
+        } else {
+            //TODO throw exception
+            return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
     public List<T> findAll(AbstractEntity source, AbstractEntity target) {
         TypedQuery<T> query = getEntityManager().createQuery("from " + entityCls.getCanonicalName() + " where sourceEntityName=:sourceEntityNameParam and sourceEntityId=:sourceEntityIdParam and targetEntityName=:targetEntityNameParam and targetEntityId=:targetEntityIdParam", entityCls);
         query.setParameter("sourceEntityNameParam", source.getClass().getCanonicalName());
