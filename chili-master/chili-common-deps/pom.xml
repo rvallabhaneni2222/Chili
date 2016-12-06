@@ -136,6 +136,16 @@
             <artifactId>spring-security-acl</artifactId>
             <version>${spring.security.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-ldap</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.directory.server</groupId>
+            <artifactId>apacheds-server-jndi</artifactId>
+            <version>${apacheds.server.jndi.version}</version>
+        </dependency>
         <!--mongo-db-->
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -427,6 +437,7 @@
     <properties>
         <spring.version>4.1.5.RELEASE</spring.version>
         <spring.security.version>4.1.0.RELEASE</spring.security.version>
+        <apacheds.server.jndi.version>1.5.5</apacheds.server.jndi.version>
         <!-- hibernate version-->
         <hibernate.version>3.6.10.Final</hibernate.version>
         <hibernate.commons.annotations.verion>3.2.0.Final</hibernate.commons.annotations.verion>
