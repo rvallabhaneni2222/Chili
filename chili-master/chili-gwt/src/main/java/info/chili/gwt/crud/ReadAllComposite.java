@@ -22,6 +22,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -38,7 +39,9 @@ import info.chili.gwt.utils.Utils;
 import info.chili.gwt.widgets.DocumentationWidget;
 import info.chili.gwt.widgets.GenericPopup;
 import info.chili.gwt.widgets.ResponseStatusWidget;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -108,6 +111,35 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
      * Set of entityId and widgets respectively
      */
     protected Map<String, T> optionsWidgetMap = new HashMap<String, T>();
+
+    protected void configureMultiSelect(int column, String actionText) {
+        Button select = new Button(actionText);
+        select.addClickHandler((ClickEvent event) -> {
+            multiSelectAction();
+        });
+        table.setWidget(0, column, select);
+    }
+
+    protected List<String> getSelectedIds() {
+        List<String> cbs = new ArrayList<>();
+        selectCBS.stream().filter((cb) -> (cb.getValue())).forEach((cb) -> {
+            cbs.add(cb.getTitle());
+        });
+        return cbs;
+    }
+
+    protected void multiSelectAction() {
+
+    }
+
+    protected List<CheckBox> selectCBS = new ArrayList();
+
+    protected void addSelectCheckBox(int i, int y, String id) {
+        CheckBox selectCB = new CheckBox();
+        selectCB.setTitle(id);
+        table.setWidget(i, y, selectCB);
+        selectCBS.add(selectCB);
+    }
 
     protected void initTable(String className, ConstantsWithLookup constants) {
         this.classCanonicalName = className;
