@@ -122,9 +122,11 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
 
     protected List<String> getSelectedIds() {
         List<String> cbs = new ArrayList<>();
-        selectCBS.stream().filter((cb) -> (cb.getValue())).forEach((cb) -> {
-            cbs.add(cb.getTitle());
-        });
+        for (CheckBox cb : selectCBS) {
+            if (cb.getValue()) {
+                cbs.add(cb.getTitle());
+            }
+        }
         return cbs;
     }
 
