@@ -1,5 +1,7 @@
 
 #### Modules
+###### [Chili Microservices](https://github.com/ayalamanchili/chili)
+
 ###### Chili commons
 * Complete Auditing and Version control for all entities
 * Digital signatures
