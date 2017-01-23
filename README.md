@@ -34,6 +34,7 @@
 * Obfuscation support for code and data
 
 ###### Chili Integration
+[Integration Model](chili/chili-master/chili-jms/Chili Adapter Integration Framework.png)
 * JMS based systems orchestration and integration support
 * Support for SOAP,Rest and CSV baesd data sets out of box
 * Support for serilizable payload, Async processing and fault handling.
