@@ -81,7 +81,7 @@ public abstract class FileuploadField extends ALComposite implements ClickHandle
     public boolean validateFiles() {
         for (int i = 0; i < getNumberOfFiles(getFileUpload().getElement()); i++) {
             String fileName = getFileName(getFileUpload().getElement(), i);
-            if (!getValidFileExtensions().contains(FileUtils.getFileExtension(fileName))) {
+            if (!getValidFileExtensions().contains(FileUtils.getFileExtension(fileName).toLowerCase())) {
                 Window.alert("Invalid File Extension. Please choose valid file");
                 clearFileUpload();
                 return false;
