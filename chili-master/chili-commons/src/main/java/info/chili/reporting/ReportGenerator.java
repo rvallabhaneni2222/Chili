@@ -1,6 +1,3 @@
-
-
-
 /*
 * To change this template, choose Tools | Templates
 * and open the template in the editor.
@@ -32,6 +29,8 @@ import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 
 /**
 *
@@ -77,9 +76,11 @@ public class ReportGenerator {
 
     public static <T> String generateExcelOrderedReport(List<T> data, String reportName, String location, String[] columnOrder) {
         DynamicReport dynamicReport = null;
-        String filename = reportName + UUID.randomUUID().toString() + ".xls";
+        String filename = reportName + UUID.randomUUID().toString() + ".xlsx";
         DynamicReportOptions dynamicReportOptions = setDynamicStylesOptions();
         dynamicReportOptions.getPage().setWidth(dynamicReportOptions.getPage().getWidth()+300);
+        dynamicReportOptions.setLeftMargin(0);
+		dynamicReportOptions.setTopMargin(0);
         Style titleStyle = createTitleStyle();
         if (data.size() > 0) {
             dynamicReport = new ReflectiveReportBuilder(data, columnOrder).build();
@@ -89,12 +90,15 @@ public class ReportGenerator {
                 dynamicReport.setOptions(dynamicReportOptions);
                 dynamicReport.setTitle(reportName);
                 dynamicReport.setTitleStyle(titleStyle);
+                dynamicReport.setOptions(dynamicReportOptions);
                 JasperPrint jasperPrint = DynamicJasperHelper.generateJasperPrint(dynamicReport, new ClassicLayoutManager(), data);
-                JRXlsExporter exporter = new JRXlsExporter();
+                jasperPrint.setProperty("net.sf.jasperreports.export.xls.freeze.row", "3");
+                JRXlsxExporter exporter = new JRXlsxExporter();
                 exporter.setParameter(JRExporterParameter.JASPER_PRINT,
                         jasperPrint);
                 exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
                         location + filename);
+                exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
                 exporter.exportReport();
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
@@ -125,6 +129,7 @@ public class ReportGenerator {
         dynamicReportOptions.setPrintBackgroundOnOddRows(true);
         dynamicReportOptions.setOddRowBackgroundStyle(oddRowBackgroundStyle.build());
         dynamicReportOptions.setTitleNewPage(false);
+        dynamicReportOptions.setIgnorePagination(true);
         return dynamicReportOptions;
     }
 
