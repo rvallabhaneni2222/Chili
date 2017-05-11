@@ -4,6 +4,8 @@ import info.chili.gwt.composite.ALComposite;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
@@ -12,7 +14,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import info.chili.gwt.resources.ChiliImages;
 
-public abstract class AbstractStatusPanel extends ALComposite implements ClickHandler {
+public abstract class AbstractStatusPanel extends ALComposite implements ClickHandler, MouseOverHandler {
 
     private static AbstractStatusPanel statusPanel;
 
@@ -46,6 +48,8 @@ public abstract class AbstractStatusPanel extends ALComposite implements ClickHa
         logoutLink.addClickHandler(this);
         notificationWidget.addClickHandler(this);
         tasksWidget.addClickHandler(this);
+        notificationWidget.addMouseOverHandler(this);
+        tasksWidget.addMouseOverHandler(this);
     }
 
     @Override
@@ -106,5 +110,14 @@ public abstract class AbstractStatusPanel extends ALComposite implements ClickHa
 
     public void setLogo(ImageResource imageResource) {
         logo.setResource(imageResource);
+    }
+
+    @Override
+    public void onMouseOver(MouseOverEvent event) {
+        if (event.getSource().equals(notificationWidget)) {
+            notificationWidget.setTitle("Notifications");
+        } else if (event.getSource().equals(tasksWidget)) {
+            tasksWidget.setTitle("Tasks");
+        }
     }
 }
