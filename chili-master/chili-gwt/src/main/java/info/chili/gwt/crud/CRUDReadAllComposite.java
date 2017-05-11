@@ -90,6 +90,9 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
         if (event.getSource().equals(rowOptionsWidget.getCancelLink())) {
             cancelClicked(rowOptionsWidget.getEntityId());
         }
+        if (event.getSource().equals(rowOptionsWidget.getMarkAsReadLink())) {
+            markAsReadClicked(rowOptionsWidget.getEntityId());
+        }
     }
 
 //TODO make this non abstract
@@ -136,6 +139,10 @@ public abstract class CRUDReadAllComposite extends ReadAllComposite<TableRowOpti
 
     }
 
+    public void markAsReadClicked(String entityId) {
+        
+    }
+     
     protected boolean enablePersistedQuickView() {
         return false;
     }

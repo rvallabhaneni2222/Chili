@@ -70,4 +70,7 @@ public interface ChiliImages extends ClientBundle {
 
     @Source("images/close_icon_16_16.png")
     ImageResource closeIcon_16_16();
+    
+    @Source("images/markAsRead_Icon.png")
+    ImageResource markAsRead_Icon();
 }

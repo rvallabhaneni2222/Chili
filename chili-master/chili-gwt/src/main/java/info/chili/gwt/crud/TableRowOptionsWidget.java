@@ -20,11 +20,12 @@ public class TableRowOptionsWidget extends GenericTableRowOptionsWidget implemen
     ClickableImage printLink = new ClickableImage("Print", ChiliImages.INSTANCE.printIcon_16_16());
     ClickableImage copyLink = new ClickableImage("Copy", ChiliImages.INSTANCE.copyIcon_16_16());
     ClickableImage cancelLink = new ClickableImage("Cancel", ChiliImages.INSTANCE.cancelIcon_16_16());
+    ClickableImage markAsReadLink = new ClickableImage("Mark As Read", ChiliImages.INSTANCE.markAsRead_Icon());
     ClickableImage quickViewLink;
 
     public enum OptionsType {
 
-        READ, UPDATE, DELETE, PRINT, COPY, CANCEL, READ_UPDATE, READ_UPDATE_DELETE, READ_DELETE, UPDATE_DELETE
+        READ, UPDATE, DELETE, PRINT, COPY, CANCEL, READ_UPDATE, READ_UPDATE_DELETE, READ_DELETE, UPDATE_DELETE, MARK_READ
     };
     protected OptionsType[] types;
 
@@ -56,6 +57,7 @@ public class TableRowOptionsWidget extends GenericTableRowOptionsWidget implemen
         printLink.addClickHandler(handler);
         copyLink.addClickHandler(handler);
         cancelLink.addClickHandler(handler);
+        markAsReadLink.addClickHandler(handler);
     }
 
     protected void configure() {
@@ -65,6 +67,7 @@ public class TableRowOptionsWidget extends GenericTableRowOptionsWidget implemen
         printLink.addStyleName("printLink");
         copyLink.addStyleName("copyLink");
         cancelLink.addStyleName("cancelLink");
+        markAsReadLink.addStyleName("markAsReadLink");
     }
 
     protected void configureQuickViewLink() {
@@ -122,6 +125,9 @@ public class TableRowOptionsWidget extends GenericTableRowOptionsWidget implemen
                 if (OptionsType.CANCEL.equals(type)) {
                     panel.add(cancelLink);
                 }
+                if (OptionsType.MARK_READ.equals(type)) {
+                    panel.add(markAsReadLink);
+                }
 
             }
         }
@@ -149,6 +155,10 @@ public class TableRowOptionsWidget extends GenericTableRowOptionsWidget implemen
 
     public ClickableImage getCancelLink() {
         return cancelLink;
+    }
+
+    public ClickableImage getMarkAsReadLink() {
+        return markAsReadLink;
     }
 
     @Override

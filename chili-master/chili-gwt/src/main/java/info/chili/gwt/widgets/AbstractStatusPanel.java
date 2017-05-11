@@ -29,7 +29,6 @@ public abstract class AbstractStatusPanel extends ALComposite implements ClickHa
     public HTML notificationWidget = new HTML();
     public HTML tasksWidget = new HTML();
 
-    
     public AbstractStatusPanel() {
         statusPanel = this;
         init(statusBar);
@@ -63,7 +62,6 @@ public abstract class AbstractStatusPanel extends ALComposite implements ClickHa
         statusBar.getCellFormatter().setHorizontalAlignment(0, 7, HasHorizontalAlignment.ALIGN_RIGHT);
         statusBar.getCellFormatter().setHorizontalAlignment(1, 2, HasHorizontalAlignment.ALIGN_RIGHT);
         statusBar.getCellFormatter().setHorizontalAlignment(1, 1, HasHorizontalAlignment.ALIGN_CENTER);
-        statusBar.getCellFormatter().setHorizontalAlignment(1, 9, HasHorizontalAlignment.ALIGN_RIGHT);
         logo.setResource(ChiliImages.INSTANCE.logo());
     }
 
@@ -81,9 +79,9 @@ public abstract class AbstractStatusPanel extends ALComposite implements ClickHa
     protected abstract void logoutClicked();
 
     protected abstract void createUserClicked();
-    
+
     protected abstract void notificationLinkClicked();
-    
+
     protected abstract void tasksLinkClicked();
 
     @Override
