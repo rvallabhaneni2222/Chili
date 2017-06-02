@@ -25,6 +25,7 @@ public abstract class ReadAllMatrixWidgetComposite extends ReadAllComposite<Tabl
         }
         mainPanel.remove(pagingPanel);
         captionPanel.setStyleName("readAllWidgetCompositeCaptionPanel");
+        table.addStyleName("y-gwt-WidgetTable");
     }
 
     @Override
