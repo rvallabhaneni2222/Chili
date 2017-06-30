@@ -112,12 +112,32 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
      */
     protected Map<String, T> optionsWidgetMap = new HashMap<String, T>();
 
+    protected ListBoxField selectListBox = new ListBoxField(false, Alignment.HORIZONTAL);
+
     protected void configureMultiSelect(int column, String actionText) {
         Button select = new Button(actionText);
         select.addClickHandler((ClickEvent event) -> {
             multiSelectAction();
         });
         table.setWidget(0, column, select);
+    }
+
+    protected void configureSelect(String... options) {
+        for (int i = 0; i < options.length; i++) {
+            selectListBox.addValue(new Long(i), options[i]);
+        }
+    }
+
+    protected void addButtonsToPagingPanel(List<Button> buttons) {
+        for (int i = 0; i < buttons.size(); i++) {
+            pagingPanel.add(buttons.get(i));
+        }
+    }
+
+    protected void removeButtonsToPagingPanel(List<Button> buttons) {
+        for (int i = 0; i < buttons.size(); i++) {
+            pagingPanel.remove(buttons.get(i));
+        }
     }
 
     protected List<String> getSelectedIds() {
@@ -201,6 +221,7 @@ public abstract class ReadAllComposite<T extends GenericTableRowOptionsWidget> e
         goToPage.addChangeHandler(this);
         table.addClickHandler(this);
         createButton.addClickHandler(this);
+        selectListBox.addChangeHandler(this);
     }
 
     @Override
