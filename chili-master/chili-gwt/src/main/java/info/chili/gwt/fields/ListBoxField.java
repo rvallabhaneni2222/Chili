@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 //TODO depreciate this and merge with DropDownField 
+
 public class ListBoxField extends Composite {
 
     /**
@@ -53,11 +54,30 @@ public class ListBoxField extends Composite {
         addWidgets();
     }
 
+    public ListBoxField(boolean isMultiSelect, Alignment alignment) {
+        listbox = new ListBox(isMultiSelect);
+        switch (alignment) {
+            case HORIZONTAL:
+                panel = new HorizontalPanel();
+                break;
+            case VERTICAL:
+                panel = new VerticalPanel();
+                break;
+        }
+        initWidget(panel);
+        configure();
+        addWidgetsWithoutLable();
+    }
+
     protected void configure() {
     }
 
     protected void addWidgets() {
         panel.add(label);
+        panel.add(listbox);
+    }
+
+    protected void addWidgetsWithoutLable() {
         panel.add(listbox);
     }
 
